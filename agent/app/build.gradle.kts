@@ -5,19 +5,13 @@ plugins {
 
 val bundleId = "digital.dutton.agent"
 
-// Copy models from nix store to assets before build
+// Copy whisper model from nix store to assets before build
 tasks.register<Copy>("copyModels") {
     val whisperModel = System.getenv("WHISPER_MODEL")
-    val llamaModel = System.getenv("LLAMA_MODEL")
 
     if (whisperModel != null) {
         from(whisperModel) {
             rename { "ggml-tiny.en-q5_1.bin" }
-        }
-    }
-    if (llamaModel != null) {
-        from(llamaModel) {
-            rename { "qwen2.5-0.5b-instruct-q4_k_m.gguf" }
         }
     }
     into("src/main/assets")

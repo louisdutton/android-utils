@@ -44,11 +44,6 @@
           sha256 = "sha256-x3xXZvHO8JtrfUfyG1Rsvd1BV4hrO11tT3CekeZsfCs=";
         };
 
-        llamaModel = pkgs.fetchurl {
-          url = "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf";
-          sha256 = "sha256-dKTajJ/bzRW9H20B1iFBDTHG/ACYb162h4JOe5PXqds=";
-        };
-
         # x86_64 libraries for box64 emulation
         pkgsX86 = import nixpkgs {
           system = "x86_64-linux";
@@ -137,7 +132,7 @@
             LLAMA=${llamaSrc}
             JNI=$src
 
-            CFLAGS="-O3 -fPIC -DNDEBUG -D_XOPEN_SOURCE=600 -DGGML_USE_CPU"
+            CFLAGS="-O2 -fPIC -DNDEBUG -D_XOPEN_SOURCE=600 -DGGML_USE_CPU"
             CXXFLAGS="$CFLAGS -std=c++17"
 
             GGML_INC="-I$WHISPER/ggml/include -I$WHISPER/ggml/src"
@@ -157,7 +152,7 @@
               -c $JNI/whisper_jni.cpp -o whisper_jni.o
 
             echo "Linking..."
-            $CXX -shared -o libagent_jni.so \
+            $CXX -shared -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384 -o libagent_jni.so \
               ggml.o ggml-alloc.o ggml-backend.o ggml-quants.o ggml-cpu.o whisper.o \
               whisper_jni.o \
               -llog -lm -ldl
@@ -187,7 +182,6 @@
 
             # Model paths for development
             WHISPER_MODEL = "${whisperModel}";
-            LLAMA_MODEL = "${llamaModel}";
 
             # Prebuilt JNI library
             AGENT_JNI_DIR = "${agentJni}/lib";

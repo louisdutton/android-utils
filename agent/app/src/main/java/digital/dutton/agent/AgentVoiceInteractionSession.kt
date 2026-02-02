@@ -30,7 +30,7 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
     private var audioRecorder: AudioRecorder? = null
     private var modelManager: ModelManager? = null
     private var intentResolver: IntentResolver? = null
-    private var modelsInitialized = false
+    private var whisperInitialized = false
 
     override fun onCreateContentView(): View {
         val layout = FrameLayout(context).apply {
@@ -69,17 +69,17 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
     private suspend fun processVoiceCommand() {
         try {
-            // Initialize models if needed
-            if (!modelsInitialized) {
-                updateStatus("Loading models...")
-                val initialized = initializeModels()
+            // Initialize whisper if needed
+            if (!whisperInitialized) {
+                updateStatus("Loading model...")
+                val initialized = initializeWhisper()
                 if (!initialized) {
-                    updateStatus("Models not available.\nPlease install models first.")
+                    updateStatus("Model not available.\nPlease install model first.")
                     delay(2000)
                     finish()
                     return
                 }
-                modelsInitialized = true
+                whisperInitialized = true
             }
 
             // Record audio
@@ -106,9 +106,9 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
                 return
             }
 
-            updateStatus("Heard: \"$transcription\"\n\n🤔 Thinking...")
+            updateStatus("Heard: \"$transcription\"")
 
-            // Get available apps and map intent
+            // Get available apps and map intent using keyword matching
             val apps = intentResolver!!.getLaunchableApps()
             val intent = mapToIntent(transcription, apps)
 
@@ -130,11 +130,10 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
         }
     }
 
-    private suspend fun initializeModels(): Boolean = withContext(Dispatchers.IO) {
+    private suspend fun initializeWhisper(): Boolean = withContext(Dispatchers.IO) {
         val mm = modelManager ?: return@withContext false
 
-        if (!mm.areModelsAvailable()) {
-            // Try copying from assets
+        if (!mm.isWhisperModelAvailable()) {
             mm.copyModelsFromAssets()
         }
 
@@ -143,20 +142,9 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
             return@withContext false
         }
 
-        if (!mm.isLlamaModelAvailable()) {
-            Log.e(TAG, "Llama model not available at ${mm.llamaModelPath}")
-            return@withContext false
-        }
-
-        val whisperOk = WhisperLib.initialize(mm.whisperModelPath)
-        if (!whisperOk) {
+        val ok = WhisperLib.initialize(mm.whisperModelPath)
+        if (!ok) {
             Log.e(TAG, "Failed to initialize Whisper")
-            return@withContext false
-        }
-
-        val llamaOk = LlamaLib.initialize(mm.llamaModelPath)
-        if (!llamaOk) {
-            Log.e(TAG, "Failed to initialize Llama")
             return@withContext false
         }
 
@@ -178,45 +166,38 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
         return audioData
     }
 
-    private suspend fun mapToIntent(transcription: String, apps: List<AppIntent>): Intent? {
+    private fun mapToIntent(transcription: String, apps: List<AppIntent>): Intent? {
         val ir = intentResolver ?: return null
+        val text = transcription.lowercase()
 
-        // First check for system intents
+        // Check for system intents
         val systemKeywords = listOf("settings", "wifi", "bluetooth", "display", "sound", "battery", "location", "airplane")
         for (keyword in systemKeywords) {
-            if (transcription.lowercase().contains(keyword)) {
+            if (text.contains(keyword)) {
                 ir.getSystemIntent(keyword)?.let { return it }
             }
         }
 
-        // Use LLM to determine which app to open
-        val appList = ir.formatAppsForPrompt(apps)
-        val prompt = """<|im_start|>system
-You are a voice assistant. Given a user's voice command and a list of available apps, respond with ONLY the exact app name to open. If no app matches, respond with "NONE".
-<|im_end|>
-<|im_start|>user
-Command: "$transcription"
+        // Extract app name from common patterns
+        val patterns = listOf(
+            Regex("(?:open|launch|start|run)\\s+(?:the\\s+)?(.+?)(?:\\s+app)?$"),
+            Regex("(?:go to|show me)\\s+(.+)"),
+            Regex("^(.+?)\\s*$")  // fallback: try whole phrase
+        )
 
-Available apps:
-$appList
-
-Which app should I open? Respond with only the app name or NONE.<|im_end|>
-<|im_start|>assistant
-"""
-
-        val response = withContext(Dispatchers.IO) {
-            LlamaLib.generate(prompt, 32)
-        }.trim()
-
-        Log.d(TAG, "LLM response: $response")
-
-        if (response.equals("NONE", ignoreCase = true) || response.isBlank()) {
-            return null
+        for (pattern in patterns) {
+            val match = pattern.find(text)
+            if (match != null) {
+                val appQuery = match.groupValues[1].trim()
+                val app = ir.findAppByName(apps, appQuery)
+                if (app != null) {
+                    Log.d(TAG, "Matched '$appQuery' to app '${app.name}'")
+                    return ir.createLaunchIntent(app)
+                }
+            }
         }
 
-        // Find the app
-        val app = ir.findAppByName(apps, response)
-        return app?.let { ir.createLaunchIntent(it) }
+        return null
     }
 
     private fun updateStatus(text: String) {
