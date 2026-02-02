@@ -32,20 +32,52 @@
           includeSystemImages = true;
         };
         androidSdk = androidPkgs.androidsdk;
+
+        # x86_64 libraries for box64 emulation
+        pkgsX86 = import nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+
+        box64Libs = pkgs.buildEnv {
+          name = "box64-libs";
+          paths = [
+            pkgsX86.glibc
+            pkgsX86.libgcc.lib
+            pkgsX86.zlib
+            pkgsX86.libpng
+            pkgsX86.expat
+          ];
+          pathsToLink = ["/lib"];
+        };
+
+        # Helper to wrap x86_64 binaries with box64
+        wrapBin = name: path:
+          pkgs.writeShellScriptBin name ''
+            export BOX64_LD_LIBRARY_PATH="${box64Libs}/lib"
+            exec ${pkgs.box64}/bin/box64 ${path} "$@"
+          '';
+
+        androidHome = "${androidSdk}/libexec/android-sdk";
+
+        # Wrapped Android SDK tools (aapt2 has no native ARM build)
+        aapt2Wrapped = wrapBin "aapt2" "${androidHome}/build-tools/${buildToolsVersion}/aapt2";
       in
         with pkgs; {
           devShells.default = mkShell rec {
             buildInputs = [
               androidSdk
+              android-tools # native adb/fastboot
+              box64
               gradle
               jdk
               nixd
               alejandra
             ];
 
-            ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
+            ANDROID_HOME = androidHome;
             ANDROID_NDK_ROOT = "${ANDROID_HOME}/ndk-bundle";
-            GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${ANDROID_HOME}/build-tools/${buildToolsVersion}/aapt2";
+            GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${aapt2Wrapped}/bin/aapt2";
           };
 
           packages.emulator = androidenv.emulateApp {
