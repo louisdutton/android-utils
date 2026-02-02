@@ -32,7 +32,6 @@
           includeSystemImages = true;
         };
         androidSdk = androidPkgs.androidsdk;
-
       in
         with pkgs; {
           devShells.default = mkShell rec {
