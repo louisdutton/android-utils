@@ -31,7 +31,6 @@ android {
     namespace = bundleId
     compileSdk = 35
     buildToolsVersion = "35.0.0"
-    ndkVersion = "27.0.12077973"
 
     defaultConfig {
         applicationId = bundleId
@@ -43,22 +42,12 @@ android {
         ndk {
             abiFilters += listOf("arm64-v8a")
         }
-
-        externalNativeBuild {
-            cmake {
-                cppFlags += listOf("-std=c++17")
-                arguments += listOf(
-                    "-DANDROID_STL=c++_shared",
-                    "-DCMAKE_BUILD_TYPE=Release"
-                )
-            }
-        }
     }
 
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
+    // Use prebuilt JNI library from nix
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs(System.getenv("AGENT_JNI_DIR") ?: "src/main/jniLibs")
         }
     }
 
