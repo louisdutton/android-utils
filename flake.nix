@@ -152,7 +152,7 @@
               -c $JNI/whisper_jni.cpp -o whisper_jni.o
 
             echo "Linking..."
-            $CXX -shared -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384 -o libagent_jni.so \
+            $CXX -shared -static-libstdc++ -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384 -o libagent_jni.so \
               ggml.o ggml-alloc.o ggml-backend.o ggml-quants.o ggml-cpu.o whisper.o \
               whisper_jni.o \
               -llog -lm -ldl
