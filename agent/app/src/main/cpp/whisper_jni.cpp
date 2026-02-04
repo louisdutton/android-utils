@@ -11,17 +11,29 @@ static whisper_context* g_context = nullptr;
 
 extern "C" {
 
+JNIEXPORT jstring JNICALL
+Java_digital_dutton_agent_WhisperLib_hello(JNIEnv* env, jobject /* this */) {
+    LOGI("Hello from JNI!");
+    return env->NewStringUTF("Hello from native code!");
+}
+
 JNIEXPORT jboolean JNICALL
 Java_digital_dutton_agent_WhisperLib_initialize(JNIEnv* env, jobject /* this */, jstring modelPath) {
+    LOGI("initialize() called");
+
     if (g_context != nullptr) {
+        LOGI("Freeing existing context");
         whisper_free(g_context);
         g_context = nullptr;
     }
 
     const char* path = env->GetStringUTFChars(modelPath, nullptr);
-    LOGI("Loading whisper model from: %s", path);
+    LOGI("Model path: %s", path);
 
+    LOGI("Creating default params...");
     whisper_context_params cparams = whisper_context_default_params();
+
+    LOGI("Calling whisper_init_from_file_with_params...");
     g_context = whisper_init_from_file_with_params(path, cparams);
 
     env->ReleaseStringUTFChars(modelPath, path);

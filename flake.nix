@@ -129,7 +129,6 @@
             AR=llvm-ar
 
             WHISPER=${whisperSrc}
-            LLAMA=${llamaSrc}
             JNI=$src
 
             CFLAGS="-O2 -fPIC -DNDEBUG -D_XOPEN_SOURCE=600 -DGGML_USE_CPU"

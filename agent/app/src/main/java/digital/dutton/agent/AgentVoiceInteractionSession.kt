@@ -83,7 +83,7 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
             }
 
             // Record audio
-            updateStatus("🎤 Listening...")
+            updateStatus("Listening...")
             val audioData = recordAudio()
 
             if (audioData.isEmpty()) {
@@ -94,7 +94,7 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
             }
 
             // Transcribe
-            updateStatus("🔄 Transcribing...")
+            updateStatus("Transcribing...")
             val transcription = withContext(Dispatchers.IO) {
                 WhisperLib.transcribe(audioData)
             }
