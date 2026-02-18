@@ -6,29 +6,32 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.service.voice.VoiceInteractionSession
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(context) {
     companion object {
         private const val TAG = "AgentSession"
-        private const val RECORDING_DURATION_MS = 5000L
     }
 
     private val scope = CoroutineScope(Dispatchers.Main + Job())
     private val handler = Handler(Looper.getMainLooper())
 
     private var statusText: TextView? = null
-    private var audioRecorder: AudioRecorder? = null
     private var intentResolver: IntentResolver? = null
+    private var speechRecognizer: SpeechRecognizer? = null
 
     override fun onCreateContentView(): View {
         val layout = FrameLayout(context).apply {
@@ -57,7 +60,14 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
         Log.d(TAG, "Session shown")
 
         intentResolver = IntentResolver(context)
-        audioRecorder = AudioRecorder()
+
+        if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+            updateStatus("Speech recognition not available")
+            handler.postDelayed({ finish() }, 2000)
+            return
+        }
+
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
 
         scope.launch {
             processVoiceCommand()
@@ -66,23 +76,8 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
     private suspend fun processVoiceCommand() {
         try {
-            // Record audio
             updateStatus("Listening...")
-            val audioData = recordAudio()
-
-            if (audioData.isEmpty()) {
-                updateStatus("No audio captured")
-                delay(1000)
-                finish()
-                return
-            }
-
-            // Transcribe via external API
-            updateStatus("Transcribing...")
-            val transcription = withContext(Dispatchers.IO) {
-                // TODO: send audioData to external transcription API
-                ""
-            }
+            val transcription = recognizeSpeech()
 
             if (transcription.isBlank()) {
                 updateStatus("Couldn't understand that")
@@ -93,7 +88,6 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
             updateStatus("Heard: \"$transcription\"")
 
-            // Get available apps and map intent using keyword matching
             val apps = intentResolver!!.getLaunchableApps()
             val intent = mapToIntent(transcription, apps)
 
@@ -115,26 +109,72 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
         }
     }
 
-    private suspend fun recordAudio(): FloatArray {
-        val recorder = audioRecorder ?: return floatArrayOf()
-
-        if (!recorder.startRecording()) {
-            Log.e(TAG, "Failed to start recording")
-            return floatArrayOf()
+    private suspend fun recognizeSpeech(): String = suspendCoroutine { continuation ->
+        val recognizer = speechRecognizer ?: run {
+            continuation.resume("")
+            return@suspendCoroutine
         }
 
-        val audioData = recorder.recordForDuration(RECORDING_DURATION_MS)
-        recorder.stopRecording()
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+        }
 
-        Log.d(TAG, "Recorded ${audioData.size} samples")
-        return audioData
+        recognizer.setRecognitionListener(object : RecognitionListener {
+            override fun onReadyForSpeech(params: Bundle?) {
+                Log.d(TAG, "Ready for speech")
+            }
+
+            override fun onBeginningOfSpeech() {
+                Log.d(TAG, "Speech started")
+            }
+
+            override fun onRmsChanged(rmsdB: Float) {}
+
+            override fun onBufferReceived(buffer: ByteArray?) {}
+
+            override fun onEndOfSpeech() {
+                Log.d(TAG, "Speech ended")
+                updateStatus("Processing...")
+            }
+
+            override fun onError(error: Int) {
+                val errorMsg = when (error) {
+                    SpeechRecognizer.ERROR_NO_MATCH -> "No speech detected"
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Speech timeout"
+                    SpeechRecognizer.ERROR_AUDIO -> "Audio error"
+                    SpeechRecognizer.ERROR_NETWORK -> "Network error"
+                    else -> "Error code: $error"
+                }
+                Log.e(TAG, "Recognition error: $errorMsg")
+                continuation.resume("")
+            }
+
+            override fun onResults(results: Bundle?) {
+                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                val result = matches?.firstOrNull() ?: ""
+                Log.d(TAG, "Recognition result: $result")
+                continuation.resume(result)
+            }
+
+            override fun onPartialResults(partialResults: Bundle?) {
+                val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                matches?.firstOrNull()?.let { partial ->
+                    updateStatus("Hearing: \"$partial\"")
+                }
+            }
+
+            override fun onEvent(eventType: Int, params: Bundle?) {}
+        })
+
+        recognizer.startListening(intent)
     }
 
     private fun mapToIntent(transcription: String, apps: List<AppIntent>): Intent? {
         val ir = intentResolver ?: return null
         val text = transcription.lowercase()
 
-        // Check for system intents
         val systemKeywords = listOf("settings", "wifi", "bluetooth", "display", "sound", "battery", "location", "airplane")
         for (keyword in systemKeywords) {
             if (text.contains(keyword)) {
@@ -142,11 +182,10 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
             }
         }
 
-        // Extract app name from common patterns
         val patterns = listOf(
             Regex("(?:open|launch|start|run)\\s+(?:the\\s+)?(.+?)(?:\\s+app)?$"),
             Regex("(?:go to|show me)\\s+(.+)"),
-            Regex("^(.+?)\\s*$")  // fallback: try whole phrase
+            Regex("^(.+?)\\s*$")
         )
 
         for (pattern in patterns) {
@@ -176,7 +215,8 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
     override fun onHide() {
         super.onHide()
-        audioRecorder?.release()
+        speechRecognizer?.destroy()
+        speechRecognizer = null
         Log.d(TAG, "Session hidden")
     }
 }
