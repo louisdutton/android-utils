@@ -1,6 +1,7 @@
 package digital.dutton.agent
 
 import android.app.role.RoleManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -17,6 +18,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -34,6 +38,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 data class ChatMessage(
     val id: String = java.util.UUID.randomUUID().toString(),
@@ -43,6 +48,7 @@ data class ChatMessage(
 
 class ChatViewModel : ViewModel() {
     private var client: GhostClient? = null
+    private var streamJob: kotlinx.coroutines.Job? = null
 
     private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val messages: StateFlow<List<ChatMessage>> = _messages.asStateFlow()
@@ -53,56 +59,33 @@ class ChatViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
+    private val _instances = MutableStateFlow<List<GhostInstance>>(emptyList())
+    val instances: StateFlow<List<GhostInstance>> = _instances.asStateFlow()
+
+    private val _currentInstance = MutableStateFlow<GhostInstance?>(null)
+    val currentInstance: StateFlow<GhostInstance?> = _currentInstance.asStateFlow()
+
     private var currentAssistantMessageId: String? = null
 
-    fun connect(serverUrl: String) {
+    fun connect(serverUrl: String, autoCreate: Boolean = true) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
                 val ghostClient = GhostClient(serverUrl)
                 client = ghostClient
-                ghostClient.createInstance()
+
+                // Load existing instances
+                refreshInstances()
+
+                if (autoCreate) {
+                    ghostClient.createInstance()
+                    refreshInstances()
+                    _currentInstance.value = _instances.value.find { it.id == ghostClient.currentInstanceId() }
+                    startStreaming(ghostClient)
+                }
+
                 _isConnected.value = true
                 _isLoading.value = false
-
-                // Start listening to events in separate coroutine
-                launch {
-                    try {
-                        ghostClient.streamEvents().collect { event ->
-                            when (event) {
-                                is GhostEvent.TurnBegin -> {
-                                    val msg = ChatMessage(content = "", isUser = false)
-                                    currentAssistantMessageId = msg.id
-                                    _messages.value = _messages.value + msg
-                                }
-                                is GhostEvent.Text -> {
-                                    currentAssistantMessageId?.let { id ->
-                                        _messages.value = _messages.value.map { msg ->
-                                            if (msg.id == id) msg.copy(content = msg.content + event.content)
-                                            else msg
-                                        }
-                                    }
-                                }
-                                is GhostEvent.TurnEnd -> {
-                                    currentAssistantMessageId = null
-                                    _isLoading.value = false
-                                }
-                                is GhostEvent.Error -> {
-                                    _messages.value = _messages.value + ChatMessage(
-                                        content = "Error: ${event.message}",
-                                        isUser = false
-                                    )
-                                    _isLoading.value = false
-                                }
-                            }
-                        }
-                    } catch (e: Exception) {
-                        _messages.value = _messages.value + ChatMessage(
-                            content = "Stream error: ${e.message}",
-                            isUser = false
-                        )
-                    }
-                }
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
                     content = "Connection failed: ${e.message}",
@@ -110,6 +93,118 @@ class ChatViewModel : ViewModel() {
                 )
                 _isConnected.value = false
                 _isLoading.value = false
+            }
+        }
+    }
+
+    fun refreshInstances() {
+        viewModelScope.launch {
+            try {
+                client?.let { c ->
+                    _instances.value = c.listInstances()
+                }
+            } catch (e: Exception) {
+                // Ignore refresh errors
+            }
+        }
+    }
+
+    fun selectInstance(instance: GhostInstance) {
+        viewModelScope.launch {
+            try {
+                val c = client ?: return@launch
+                streamJob?.cancel()
+                c.connectToInstance(instance.id)
+                _currentInstance.value = instance
+                _messages.value = emptyList()
+                startStreaming(c)
+            } catch (e: Exception) {
+                _messages.value = _messages.value + ChatMessage(
+                    content = "Failed to switch: ${e.message}",
+                    isUser = false
+                )
+            }
+        }
+    }
+
+    fun createInstance(workDir: String?) {
+        viewModelScope.launch {
+            try {
+                val c = client ?: return@launch
+                _isLoading.value = true
+                streamJob?.cancel()
+                c.createInstance(workDir)
+                refreshInstances()
+                _currentInstance.value = _instances.value.find { it.id == c.currentInstanceId() }
+                _messages.value = emptyList()
+                startStreaming(c)
+                _isLoading.value = false
+            } catch (e: Exception) {
+                _messages.value = _messages.value + ChatMessage(
+                    content = "Failed to create: ${e.message}",
+                    isUser = false
+                )
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun deleteInstance(instance: GhostInstance) {
+        viewModelScope.launch {
+            try {
+                val c = client ?: return@launch
+                c.deleteInstance(instance.id)
+                refreshInstances()
+                if (_currentInstance.value?.id == instance.id) {
+                    streamJob?.cancel()
+                    _currentInstance.value = null
+                    _messages.value = emptyList()
+                }
+            } catch (e: Exception) {
+                _messages.value = _messages.value + ChatMessage(
+                    content = "Failed to delete: ${e.message}",
+                    isUser = false
+                )
+            }
+        }
+    }
+
+    private fun startStreaming(ghostClient: GhostClient) {
+        streamJob = viewModelScope.launch {
+            try {
+                ghostClient.streamEvents().collect { event ->
+                    when (event) {
+                        is GhostEvent.TurnBegin -> {
+                            val msg = ChatMessage(content = "", isUser = false)
+                            currentAssistantMessageId = msg.id
+                            _messages.value = _messages.value + msg
+                        }
+                        is GhostEvent.Text -> {
+                            currentAssistantMessageId?.let { id ->
+                                _messages.value = _messages.value.map { msg ->
+                                    if (msg.id == id) msg.copy(content = msg.content + event.content)
+                                    else msg
+                                }
+                            }
+                        }
+                        is GhostEvent.TurnEnd -> {
+                            currentAssistantMessageId = null
+                            _isLoading.value = false
+                        }
+                        is GhostEvent.Error -> {
+                            _messages.value = _messages.value + ChatMessage(
+                                content = "Error: ${event.message}",
+                                isUser = false
+                            )
+                            _isLoading.value = false
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                _messages.value = _messages.value + ChatMessage(
+                    content = "Stream error: ${e.message}",
+                    isUser = false
+                )
             }
         }
     }
@@ -202,13 +297,30 @@ fun ChatScreen(
     val messages by viewModel.messages.collectAsState()
     val isConnected by viewModel.isConnected.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val instances by viewModel.instances.collectAsState()
+    val currentInstance by viewModel.currentInstance.collectAsState()
+
+    val context = LocalContext.current
+    val prefs = remember { context.getSharedPreferences("agent_prefs", Context.MODE_PRIVATE) }
+    val savedUrl = remember { prefs.getString("server_url", null) }
 
     var inputText by remember { mutableStateOf("") }
-    var serverUrl by remember { mutableStateOf("http://10.0.2.2:3000") } // Default for emulator
-    var showServerDialog by remember { mutableStateOf(!isConnected) }
+    var serverUrl by remember { mutableStateOf(savedUrl ?: "http://") }
+    var showServerDialog by remember { mutableStateOf(savedUrl == null) }
+    var showNewInstanceDialog by remember { mutableStateOf(false) }
+    var newWorkDir by remember { mutableStateOf("") }
+
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    // Auto-connect if we have a saved URL
+    LaunchedEffect(savedUrl) {
+        if (savedUrl != null && !isConnected) {
+            viewModel.connect(savedUrl)
+        }
+    }
 
     val listState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(messages.size) {
         if (messages.isNotEmpty()) {
@@ -230,6 +342,7 @@ fun ChatScreen(
             },
             confirmButton = {
                 TextButton(onClick = {
+                    prefs.edit().putString("server_url", serverUrl).apply()
                     viewModel.connect(serverUrl)
                     showServerDialog = false
                 }) {
@@ -239,31 +352,143 @@ fun ChatScreen(
         )
     }
 
-    Scaffold(
-        containerColor = Color.Black,
-        topBar = {
-            TopAppBar(
-                title = { Text("Agent") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Black,
-                    titleContentColor = Color.White
-                ),
-                actions = {
-                    if (!isConnected) {
-                        TextButton(onClick = { showServerDialog = true }) {
-                            Text("Connect", color = MaterialTheme.colorScheme.primary)
-                        }
-                    }
-                    IconButton(onClick = onSettingsClick) {
-                        Icon(
-                            Icons.Default.Settings,
-                            contentDescription = "Settings",
-                            tint = Color.White
+    if (showNewInstanceDialog) {
+        AlertDialog(
+            onDismissRequest = { showNewInstanceDialog = false },
+            title = { Text("New Instance") },
+            text = {
+                OutlinedTextField(
+                    value = newWorkDir,
+                    onValueChange = { newWorkDir = it },
+                    label = { Text("Work Directory (optional)") },
+                    singleLine = true
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.createInstance(newWorkDir.ifBlank { null })
+                    newWorkDir = ""
+                    showNewInstanceDialog = false
+                    scope.launch { drawerState.close() }
+                }) {
+                    Text("Create")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showNewInstanceDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(
+                drawerContainerColor = Color(0xFF121212)
+            ) {
+                Text(
+                    "Instances",
+                    modifier = Modifier.padding(16.dp),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.White
+                )
+                HorizontalDivider(color = Color(0xFF333333))
+
+                LazyColumn(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    items(instances, key = { it.id }) { instance ->
+                        val isSelected = instance.id == currentInstance?.id
+                        NavigationDrawerItem(
+                            label = {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text(
+                                            File(instance.workDir).name,
+                                            style = MaterialTheme.typography.bodyLarge
+                                        )
+                                        Text(
+                                            instance.workDir,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = Color.Gray
+                                        )
+                                    }
+                                    IconButton(
+                                        onClick = { viewModel.deleteInstance(instance) }
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Delete,
+                                            contentDescription = "Delete",
+                                            tint = Color.Gray
+                                        )
+                                    }
+                                }
+                            },
+                            selected = isSelected,
+                            onClick = {
+                                viewModel.selectInstance(instance)
+                                scope.launch { drawerState.close() }
+                            },
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                                unselectedContainerColor = Color.Transparent
+                            )
                         )
                     }
                 }
-            )
-        },
+
+                HorizontalDivider(color = Color(0xFF333333))
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Add, contentDescription = null) },
+                    label = { Text("New Instance") },
+                    selected = false,
+                    onClick = { showNewInstanceDialog = true },
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.Transparent
+                    )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+    ) {
+        Scaffold(
+            containerColor = Color.Black,
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                            Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.White)
+                        }
+                    },
+                    title = {
+                        Text(currentInstance?.let { File(it.workDir).name } ?: "Agent")
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Black,
+                        titleContentColor = Color.White
+                    ),
+                    actions = {
+                        if (!isConnected) {
+                            TextButton(onClick = { showServerDialog = true }) {
+                                Text("Connect", color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                        IconButton(onClick = onSettingsClick) {
+                            Icon(
+                                Icons.Default.Settings,
+                                contentDescription = "Settings",
+                                tint = Color.White
+                            )
+                        }
+                    }
+                )
+            },
         bottomBar = {
             ChatInputBar(
                 value = inputText,
@@ -303,6 +528,7 @@ fun ChatScreen(
                     }
                 }
             }
+        }
         }
     }
 }
