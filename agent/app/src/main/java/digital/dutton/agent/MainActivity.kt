@@ -1,6 +1,8 @@
 package digital.dutton.agent
 
 import android.app.role.RoleManager
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +23,7 @@ import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -449,6 +452,30 @@ fun ChatScreen(
                     label = { Text("New Instance") },
                     selected = false,
                     onClick = { showNewInstanceDialog = true },
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.Transparent
+                    )
+                )
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Refresh, contentDescription = null) },
+                    label = { Text("Update App") },
+                    selected = false,
+                    onClick = {
+                        val intent = Intent().apply {
+                            setClassName("com.termux", "com.termux.app.RunCommandService")
+                            action = "com.termux.RUN_COMMAND"
+                            putExtra("com.termux.RUN_COMMAND_PATH", "/data/data/com.termux/files/usr/bin/bash")
+                            putExtra("com.termux.RUN_COMMAND_ARGUMENTS", arrayOf("-c", "scp louis@mini:~/projects/android-utils/agent/app/build/outputs/apk/debug/app-debug.apk ~/app-debug.apk && termux-open ~/app-debug.apk"))
+                            putExtra("com.termux.RUN_COMMAND_BACKGROUND", false)
+                        }
+                        try {
+                            context.startService(intent)
+                            Toast.makeText(context, "Updating...", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "Failed: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                        scope.launch { drawerState.close() }
+                    },
                     colors = NavigationDrawerItemDefaults.colors(
                         unselectedContainerColor = Color.Transparent
                     )
