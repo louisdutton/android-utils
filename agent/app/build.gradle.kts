@@ -5,22 +5,6 @@ plugins {
 
 val bundleId = "digital.dutton.agent"
 
-// Copy whisper model from nix store to assets before build
-tasks.register<Copy>("copyModels") {
-    val whisperModel = System.getenv("WHISPER_MODEL")
-
-    if (whisperModel != null) {
-        from(whisperModel) {
-            rename { "ggml-tiny.en-q5_1.bin" }
-        }
-    }
-    into("src/main/assets")
-}
-
-tasks.named("preBuild") {
-    dependsOn("copyModels")
-}
-
 android {
     namespace = bundleId
     compileSdk = 35
@@ -33,16 +17,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        ndk {
-            abiFilters += listOf("arm64-v8a")
-        }
-    }
-
-    // Use prebuilt JNI library from nix
-    sourceSets {
-        getByName("main") {
-            jniLibs.srcDirs(System.getenv("AGENT_JNI_DIR") ?: "src/main/jniLibs")
-        }
     }
 
     buildTypes {

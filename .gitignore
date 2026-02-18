@@ -19,6 +19,3 @@ result-*
 # direnv
 .direnv/
 
-# AI Models (copied at build time from nix store)
-agent/app/src/main/assets/*.bin
-agent/app/src/main/assets/*.gguf

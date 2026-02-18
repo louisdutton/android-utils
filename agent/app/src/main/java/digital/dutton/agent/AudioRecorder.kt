@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 
 class AudioRecorder {
     companion object {
-        const val SAMPLE_RATE = 16000 // Whisper expects 16kHz
+        const val SAMPLE_RATE = 16000
         private const val CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO
         private const val AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT
     }

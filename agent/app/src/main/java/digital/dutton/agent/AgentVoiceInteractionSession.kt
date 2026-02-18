@@ -28,9 +28,7 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
     private var statusText: TextView? = null
     private var audioRecorder: AudioRecorder? = null
-    private var modelManager: ModelManager? = null
     private var intentResolver: IntentResolver? = null
-    private var whisperInitialized = false
 
     override fun onCreateContentView(): View {
         val layout = FrameLayout(context).apply {
@@ -58,7 +56,6 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
         super.onShow(args, showFlags)
         Log.d(TAG, "Session shown")
 
-        modelManager = ModelManager(context)
         intentResolver = IntentResolver(context)
         audioRecorder = AudioRecorder()
 
@@ -69,19 +66,6 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
     private suspend fun processVoiceCommand() {
         try {
-            // Initialize whisper if needed
-            if (!whisperInitialized) {
-                updateStatus("Loading model...")
-                val initialized = initializeWhisper()
-                if (!initialized) {
-                    updateStatus("Model not available.\nPlease install model first.")
-                    delay(2000)
-                    finish()
-                    return
-                }
-                whisperInitialized = true
-            }
-
             // Record audio
             updateStatus("Listening...")
             val audioData = recordAudio()
@@ -93,10 +77,11 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
                 return
             }
 
-            // Transcribe
+            // Transcribe via external API
             updateStatus("Transcribing...")
             val transcription = withContext(Dispatchers.IO) {
-                WhisperLib.transcribe(audioData)
+                // TODO: send audioData to external transcription API
+                ""
             }
 
             if (transcription.isBlank()) {
@@ -128,27 +113,6 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
             delay(2000)
             finish()
         }
-    }
-
-    private suspend fun initializeWhisper(): Boolean = withContext(Dispatchers.IO) {
-        val mm = modelManager ?: return@withContext false
-
-        if (!mm.isWhisperModelAvailable()) {
-            mm.copyModelsFromAssets()
-        }
-
-        if (!mm.isWhisperModelAvailable()) {
-            Log.e(TAG, "Whisper model not available at ${mm.whisperModelPath}")
-            return@withContext false
-        }
-
-        val ok = WhisperLib.initialize(mm.whisperModelPath)
-        if (!ok) {
-            Log.e(TAG, "Failed to initialize Whisper")
-            return@withContext false
-        }
-
-        true
     }
 
     private suspend fun recordAudio(): FloatArray {
