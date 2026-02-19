@@ -476,20 +476,34 @@ fun ChatScreen(
     }
 
     if (showNewSessionDialog) {
+        val workDirBase = prefs.getString("work_dir_base", "/home/louis/projects") ?: "/home/louis/projects"
         AlertDialog(
             onDismissRequest = { showNewSessionDialog = false },
             title = { Text("New Session") },
             text = {
-                OutlinedTextField(
-                    value = newWorkDir,
-                    onValueChange = { newWorkDir = it },
-                    label = { Text("Work Directory (optional)") },
-                    singleLine = true
-                )
+                Column {
+                    Text(
+                        text = "Base: $workDirBase",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    OutlinedTextField(
+                        value = newWorkDir,
+                        onValueChange = { newWorkDir = it },
+                        label = { Text("Project name (optional)") },
+                        singleLine = true
+                    )
+                }
             },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.createSession(newWorkDir.ifBlank { null })
+                    val fullPath = when {
+                        newWorkDir.isBlank() -> null
+                        newWorkDir.startsWith("/") -> newWorkDir
+                        else -> "${workDirBase.trimEnd('/')}/${newWorkDir.trimStart('/')}"
+                    }
+                    viewModel.createSession(fullPath)
                     newWorkDir = ""
                     showNewSessionDialog = false
                     scope.launch { drawerState.close() }
@@ -511,16 +525,19 @@ fun ChatScreen(
             ModalDrawerSheet(
                 drawerContainerColor = Color(0xFF121212)
             ) {
+                // Push content to bottom
+                Spacer(modifier = Modifier.weight(1f))
+
                 Text(
                     "Sessions",
                     modifier = Modifier.padding(16.dp),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color.White
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.Gray
                 )
-                HorizontalDivider(color = Color(0xFF333333))
 
                 LazyColumn(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.heightIn(max = 300.dp),
+                    reverseLayout = true
                 ) {
                     items(sessions, key = { it.id }) { session ->
                         val isSelected = session.id == currentSession?.id
@@ -577,7 +594,19 @@ fun ChatScreen(
                         unselectedContainerColor = Color.Transparent
                     )
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Settings, contentDescription = null) },
+                    label = { Text("Settings") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        onSettingsClick()
+                    },
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.Transparent
+                    )
+                )
+                Spacer(modifier = Modifier.navigationBarsPadding())
             }
         }
     ) {
@@ -611,76 +640,51 @@ fun ChatScreen(
                 }
             },
             bottomBar = {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    // Action bar row
-                    Surface(color = Color.Black) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                                Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.White)
-                            }
-                            Spacer(modifier = Modifier.weight(1f))
-                            if (!isConnected) {
-                                TextButton(onClick = { showServerDialog = true }) {
-                                    Text("Connect", color = MaterialTheme.colorScheme.primary)
+                ChatInputBar(
+                    value = inputText,
+                    onValueChange = { inputText = it },
+                    onSend = {
+                        if (inputText.isNotBlank() && isConnected) {
+                            viewModel.sendMessage(inputText.trim())
+                            inputText = ""
+                        }
+                    },
+                    onMenuClick = { scope.launch { drawerState.open() } },
+                    onMicClick = {
+                        if (isRecording) {
+                            audioRecorder.stopRecording()
+                        } else {
+                            scope.launch {
+                                isRecording = true
+                                try {
+                                    audioRecorder.startRecording()
+                                    isRecording = false
+                                    val file = audioRecorder.stopRecording()
+                                    if (file != null && file.exists() && whisperClient != null) {
+                                        isTranscribing = true
+                                        try {
+                                            val text = whisperClient.transcribe(file)
+                                            if (text.isNotBlank() && isConnected) {
+                                                viewModel.sendMessage(text.trim())
+                                            }
+                                        } catch (e: Exception) {
+                                            Toast.makeText(context, "Transcription failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        } finally {
+                                            isTranscribing = false
+                                            file.delete()
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    isRecording = false
+                                    Toast.makeText(context, "Recording failed: ${e.message}", Toast.LENGTH_SHORT).show()
                                 }
-                            }
-                            IconButton(onClick = onSettingsClick) {
-                                Icon(Icons.Default.Settings, contentDescription = "Settings", tint = Color.White)
                             }
                         }
-                    }
-                    // Input bar row
-                    ChatInputBar(
-                        value = inputText,
-                        onValueChange = { inputText = it },
-                        onSend = {
-                            if (inputText.isNotBlank() && isConnected) {
-                                viewModel.sendMessage(inputText.trim())
-                                inputText = ""
-                            }
-                        },
-                        onMicClick = {
-                            if (isRecording) {
-                                audioRecorder.stopRecording()
-                            } else {
-                                scope.launch {
-                                    isRecording = true
-                                    try {
-                                        audioRecorder.startRecording()
-                                        isRecording = false
-                                        val file = audioRecorder.stopRecording()
-                                        if (file != null && file.exists() && whisperClient != null) {
-                                            isTranscribing = true
-                                            try {
-                                                val text = whisperClient.transcribe(file)
-                                                if (text.isNotBlank()) {
-                                                    inputText = text
-                                                }
-                                            } catch (e: Exception) {
-                                                Toast.makeText(context, "Transcription failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                                            } finally {
-                                                isTranscribing = false
-                                                file.delete()
-                                            }
-                                        }
-                                    } catch (e: Exception) {
-                                        isRecording = false
-                                        Toast.makeText(context, "Recording failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            }
-                        },
-                        isRecording = isRecording,
-                        isTranscribing = isTranscribing,
-                        enabled = isConnected && !isLoading
-                    )
-                }
+                    },
+                    isRecording = isRecording,
+                    isTranscribing = isTranscribing,
+                    enabled = isConnected && !isLoading
+                )
             }
         ) { innerPadding ->
         LazyColumn(
@@ -857,6 +861,7 @@ fun ChatInputBar(
     value: String,
     onValueChange: (String) -> Unit,
     onSend: () -> Unit,
+    onMenuClick: () -> Unit,
     onMicClick: () -> Unit,
     isRecording: Boolean,
     isTranscribing: Boolean,
@@ -868,10 +873,13 @@ fun ChatInputBar(
     ) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 8.dp, vertical = 8.dp)
                 .navigationBarsPadding(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = onMenuClick) {
+                Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.White)
+            }
             OutlinedTextField(
                 value = value,
                 onValueChange = onValueChange,
@@ -923,16 +931,6 @@ fun ChatInputBar(
                         contentDescription = if (isRecording) "Stop" else "Dictate"
                     )
                 }
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            FilledIconButton(
-                onClick = onSend,
-                enabled = value.isNotBlank() && enabled && !isRecording && !isTranscribing
-            ) {
-                Icon(
-                    Icons.AutoMirrored.Filled.Send,
-                    contentDescription = "Send"
-                )
             }
         }
     }
@@ -1072,6 +1070,7 @@ fun SettingsScreen(
 
     var ghostUrl by remember { mutableStateOf(prefs.getString("server_url", "") ?: "") }
     var whisperUrl by remember { mutableStateOf(prefs.getString("whisper_url", "") ?: "") }
+    var workDirBase by remember { mutableStateOf(prefs.getString("work_dir_base", "/home/louis/projects") ?: "/home/louis/projects") }
     var developerMode by remember { mutableStateOf(prefs.getBoolean("developer_mode", false)) }
     var updateSource by remember { mutableStateOf(prefs.getString("update_source", "louis@mini:~/projects/android-utils/agent/app/build/outputs/apk/debug/app-debug.apk") ?: "") }
 
@@ -1134,17 +1133,33 @@ fun SettingsScreen(
                 )
             }
             item {
+                OutlinedTextField(
+                    value = workDirBase,
+                    onValueChange = { workDirBase = it },
+                    label = { Text("Work Directory Base Path") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = Color(0xFF333333)
+                    )
+                )
+            }
+            item {
                 Button(
                     onClick = {
                         prefs.edit()
                             .putString("server_url", ghostUrl)
                             .putString("whisper_url", whisperUrl)
+                            .putString("work_dir_base", workDirBase)
                             .apply()
                         Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Save Connection Settings")
+                    Text("Save Settings")
                 }
             }
 
