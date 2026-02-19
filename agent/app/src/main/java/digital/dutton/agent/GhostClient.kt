@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit
 
 sealed class GhostEvent {
     data class Text(val content: String) : GhostEvent()
+    data class ToolCall(val name: String, val input: String?) : GhostEvent()
+    data class ToolResult(val name: String, val output: String?) : GhostEvent()
     data class TurnEnd(val reason: String?) : GhostEvent()
     data class Error(val message: String) : GhostEvent()
     data object TurnBegin : GhostEvent()
@@ -127,10 +129,19 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
             override fun onEvent(eventSource: EventSource, id: String?, type: String?, data: String) {
                 try {
                     val json = JSONObject(data)
-                    val event = when (json.optString("type")) {
-                        "TextPart" -> GhostEvent.Text(json.optString("text", ""))
-                        "TurnBegin" -> GhostEvent.TurnBegin
-                        "TurnEnd" -> GhostEvent.TurnEnd(null)
+                    val eventType = json.optString("type").ifEmpty { json.optString("event") }
+                    val event = when (eventType) {
+                        "TextPart", "text" -> GhostEvent.Text(json.optString("text", json.optString("content", "")))
+                        "TurnBegin", "turn_begin" -> GhostEvent.TurnBegin
+                        "TurnEnd", "turn_end" -> GhostEvent.TurnEnd(null)
+                        "tool_call" -> GhostEvent.ToolCall(
+                            name = json.optString("name", "unknown"),
+                            input = json.optJSONObject("input")?.toString()
+                        )
+                        "tool_result" -> GhostEvent.ToolResult(
+                            name = json.optString("name", "unknown"),
+                            output = json.optString("output", null)
+                        )
                         "error" -> GhostEvent.Error(json.optString("message", "Unknown error"))
                         else -> null
                     }

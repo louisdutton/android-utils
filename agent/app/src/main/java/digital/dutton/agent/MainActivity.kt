@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material3.*
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.*
@@ -43,9 +44,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
 
+sealed class MessageContent {
+    data class Text(val content: String) : MessageContent()
+    data class ToolCall(val name: String, val input: String?) : MessageContent()
+    data class ToolResult(val name: String, val output: String?) : MessageContent()
+}
+
 data class ChatMessage(
     val id: String = java.util.UUID.randomUUID().toString(),
-    val content: String,
+    val content: MessageContent,
     val isUser: Boolean
 )
 
@@ -69,6 +76,7 @@ class ChatViewModel : ViewModel() {
     val currentInstance: StateFlow<GhostInstance?> = _currentInstance.asStateFlow()
 
     private var currentAssistantMessageId: String? = null
+    private var currentTextContent = StringBuilder()
 
     fun connect(serverUrl: String, autoCreate: Boolean = true) {
         viewModelScope.launch {
@@ -91,7 +99,7 @@ class ChatViewModel : ViewModel() {
                 _isLoading.value = false
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = "Connection failed: ${e.message}",
+                    content = MessageContent.Text("Connection failed: ${e.message}"),
                     isUser = false
                 )
                 _isConnected.value = false
@@ -123,7 +131,7 @@ class ChatViewModel : ViewModel() {
                 startStreaming(c)
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = "Failed to switch: ${e.message}",
+                    content = MessageContent.Text("Failed to switch: ${e.message}"),
                     isUser = false
                 )
             }
@@ -144,7 +152,7 @@ class ChatViewModel : ViewModel() {
                 _isLoading.value = false
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = "Failed to create: ${e.message}",
+                    content = MessageContent.Text("Failed to create: ${e.message}"),
                     isUser = false
                 )
                 _isLoading.value = false
@@ -165,7 +173,7 @@ class ChatViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = "Failed to delete: ${e.message}",
+                    content = MessageContent.Text("Failed to delete: ${e.message}"),
                     isUser = false
                 )
             }
@@ -178,25 +186,40 @@ class ChatViewModel : ViewModel() {
                 ghostClient.streamEvents().collect { event ->
                     when (event) {
                         is GhostEvent.TurnBegin -> {
-                            val msg = ChatMessage(content = "", isUser = false)
+                            currentTextContent.clear()
+                            val msg = ChatMessage(content = MessageContent.Text(""), isUser = false)
                             currentAssistantMessageId = msg.id
                             _messages.value = _messages.value + msg
                         }
                         is GhostEvent.Text -> {
                             currentAssistantMessageId?.let { id ->
+                                currentTextContent.append(event.content)
                                 _messages.value = _messages.value.map { msg ->
-                                    if (msg.id == id) msg.copy(content = msg.content + event.content)
+                                    if (msg.id == id) msg.copy(content = MessageContent.Text(currentTextContent.toString()))
                                     else msg
                                 }
                             }
                         }
+                        is GhostEvent.ToolCall -> {
+                            _messages.value = _messages.value + ChatMessage(
+                                content = MessageContent.ToolCall(event.name, event.input),
+                                isUser = false
+                            )
+                        }
+                        is GhostEvent.ToolResult -> {
+                            _messages.value = _messages.value + ChatMessage(
+                                content = MessageContent.ToolResult(event.name, event.output),
+                                isUser = false
+                            )
+                        }
                         is GhostEvent.TurnEnd -> {
                             currentAssistantMessageId = null
+                            currentTextContent.clear()
                             _isLoading.value = false
                         }
                         is GhostEvent.Error -> {
                             _messages.value = _messages.value + ChatMessage(
-                                content = "Error: ${event.message}",
+                                content = MessageContent.Text("Error: ${event.message}"),
                                 isUser = false
                             )
                             _isLoading.value = false
@@ -205,7 +228,7 @@ class ChatViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = "Stream error: ${e.message}",
+                    content = MessageContent.Text("Stream error: ${e.message}"),
                     isUser = false
                 )
             }
@@ -217,13 +240,13 @@ class ChatViewModel : ViewModel() {
         if (content.isBlank()) return
 
         viewModelScope.launch {
-            _messages.value = _messages.value + ChatMessage(content = content, isUser = true)
+            _messages.value = _messages.value + ChatMessage(content = MessageContent.Text(content), isUser = true)
             _isLoading.value = true
             try {
                 c.sendMessage(content)
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = "Failed to send: ${e.message}",
+                    content = MessageContent.Text("Failed to send: ${e.message}"),
                     isUser = false
                 )
                 _isLoading.value = false
@@ -312,6 +335,7 @@ fun ChatScreen(
     var showServerDialog by remember { mutableStateOf(savedUrl == null) }
     var showNewInstanceDialog by remember { mutableStateOf(false) }
     var newWorkDir by remember { mutableStateOf("") }
+    var developerMode by remember { mutableStateOf(prefs.getBoolean("developer_mode", false)) }
 
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -480,6 +504,19 @@ fun ChatScreen(
                         unselectedContainerColor = Color.Transparent
                     )
                 )
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Build, contentDescription = null) },
+                    label = { Text("Developer Mode") },
+                    selected = developerMode,
+                    onClick = {
+                        developerMode = !developerMode
+                        prefs.edit().putBoolean("developer_mode", developerMode).apply()
+                    },
+                    colors = NavigationDrawerItemDefaults.colors(
+                        selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        unselectedContainerColor = Color.Transparent
+                    )
+                )
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }
@@ -540,7 +577,7 @@ fun ChatScreen(
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(messages, key = { it.id }) { message ->
-                ChatBubble(message)
+                ChatBubble(message, developerMode)
             }
             if (isLoading && (messages.isEmpty() || messages.last().isUser)) {
                 item {
@@ -561,33 +598,87 @@ fun ChatScreen(
 }
 
 @Composable
-fun ChatBubble(message: ChatMessage) {
-    val bubbleColor = if (message.isUser) {
-        MaterialTheme.colorScheme.primary
-    } else {
-        MaterialTheme.colorScheme.surfaceVariant
-    }
-    val textColor = if (message.isUser) {
-        MaterialTheme.colorScheme.onPrimary
-    } else {
-        MaterialTheme.colorScheme.onSurfaceVariant
-    }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = if (message.isUser) Arrangement.End else Arrangement.Start
-    ) {
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            color = bubbleColor,
-            modifier = Modifier.widthIn(max = 280.dp)
-        ) {
-            Text(
-                text = message.content,
-                color = textColor,
-                modifier = Modifier.padding(12.dp),
-                style = MaterialTheme.typography.bodyLarge
-            )
+fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
+    when (val content = message.content) {
+        is MessageContent.Text -> {
+            if (message.isUser) {
+                // User messages: bubble aligned right
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.widthIn(max = 280.dp)
+                    ) {
+                        Text(
+                            text = content.content,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier.padding(12.dp),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+                }
+            } else {
+                // Assistant messages: full width, no bubble
+                Text(
+                    text = content.content,
+                    color = Color.White,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+        is MessageContent.ToolCall -> {
+            if (developerMode) {
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = Color(0xFF1A1A2E),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text(
+                            text = "→ ${content.name}",
+                            color = Color(0xFF64B5F6),
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                        content.input?.let { input ->
+                            Text(
+                                text = input.take(200) + if (input.length > 200) "..." else "",
+                                color = Color.Gray,
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(top = 4.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        is MessageContent.ToolResult -> {
+            if (developerMode) {
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = Color(0xFF1A2E1A),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text(
+                            text = "← ${content.name}",
+                            color = Color(0xFF81C784),
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                        content.output?.let { output ->
+                            Text(
+                                text = output.take(200) + if (output.length > 200) "..." else "",
+                                color = Color.Gray,
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(top = 4.dp)
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
