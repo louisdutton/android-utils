@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.*
@@ -240,6 +241,12 @@ class ChatViewModel : ViewModel() {
                 }
             } catch (e: kotlinx.coroutines.CancellationException) {
                 // Normal cancellation, don't show error
+            } catch (e: java.io.EOFException) {
+                // Normal stream end
+            } catch (e: java.io.InterruptedIOException) {
+                // Normal interruption
+            } catch (e: java.net.SocketException) {
+                // Normal socket close
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
                     content = MessageContent.Error("Stream error: ${e.message}"),
@@ -561,7 +568,16 @@ fun ChatScreen(
                         }
                     },
                     title = {
-                        Text(currentInstance?.let { File(it.workDir).name } ?: "Agent")
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                Icons.Default.Circle,
+                                contentDescription = if (isConnected) "Connected" else "Disconnected",
+                                tint = if (isConnected) Color(0xFF4CAF50) else Color(0xFFE57373),
+                                modifier = Modifier.size(12.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(currentInstance?.let { File(it.workDir).name } ?: "Agent")
+                        }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Black,

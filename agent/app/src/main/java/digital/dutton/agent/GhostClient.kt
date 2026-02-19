@@ -164,12 +164,17 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
             }
 
             override fun onFailure(eventSource: EventSource, t: Throwable?, response: Response?) {
-                // Don't report as error if it's just a cancellation/close
-                val msg = t?.message ?: ""
-                if (!msg.contains("canceled", ignoreCase = true) &&
-                    !msg.contains("closed", ignoreCase = true) &&
-                    !msg.contains("Socket closed", ignoreCase = true)) {
-                    trySend(GhostEvent.Error(msg.ifEmpty { "Connection failed" }))
+                // Only report unexpected errors, not normal closures
+                val isNormalClose = when (t) {
+                    null -> true
+                    is java.io.EOFException -> true
+                    is java.io.InterruptedIOException -> true
+                    is java.net.SocketException -> true
+                    is java.io.IOException -> t.message?.contains("canceled", ignoreCase = true) == true
+                    else -> false
+                }
+                if (!isNormalClose) {
+                    trySend(GhostEvent.Error(t?.message ?: "Connection failed"))
                 }
                 close(t)
             }
