@@ -25,7 +25,7 @@ sealed class GhostEvent {
     data object ConnectionClosed : GhostEvent()
 }
 
-data class GhostInstance(
+data class GhostSession(
     val id: String,
     val workDir: String,
     val status: String,
@@ -39,10 +39,10 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
         .readTimeout(0, TimeUnit.MILLISECONDS) // No timeout for SSE
         .build()
 
-    private var instanceId: String? = null
+    private var sessionId: String? = null
     private var eventSource: EventSource? = null
 
-    suspend fun listInstances(): List<GhostInstance> = withContext(Dispatchers.IO) {
+    suspend fun listSessions(): List<GhostSession> = withContext(Dispatchers.IO) {
         val request = Request.Builder()
             .url("$baseUrl/instances")
             .get()
@@ -50,15 +50,15 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
 
         val response = client.newCall(request).execute()
         if (!response.isSuccessful) {
-            throw IOException("Failed to list instances: ${response.code}")
+            throw IOException("Failed to list sessions: ${response.code}")
         }
 
         val body = response.body?.string() ?: throw IOException("Empty response")
         val result = JSONObject(body)
-        val instances = result.getJSONArray("instances")
-        (0 until instances.length()).map { i ->
-            val obj = instances.getJSONObject(i)
-            GhostInstance(
+        val sessions = result.getJSONArray("instances")
+        (0 until sessions.length()).map { i ->
+            val obj = sessions.getJSONObject(i)
+            GhostSession(
                 id = obj.getString("id"),
                 workDir = obj.getString("work_dir"),
                 status = obj.getString("status"),
@@ -67,7 +67,7 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
         }
     }
 
-    suspend fun createInstance(workDir: String? = null): String = withContext(Dispatchers.IO) {
+    suspend fun createSession(workDir: String? = null): String = withContext(Dispatchers.IO) {
         val json = JSONObject().apply {
             workDir?.let { put("work_dir", it) }
         }
@@ -79,24 +79,24 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
 
         val response = client.newCall(request).execute()
         if (!response.isSuccessful) {
-            throw IOException("Failed to create instance: ${response.code}")
+            throw IOException("Failed to create session: ${response.code}")
         }
 
         val body = response.body?.string() ?: throw IOException("Empty response")
         val result = JSONObject(body)
         val id = result.getString("id")
-        instanceId = id
+        sessionId = id
         id
     }
 
-    fun connectToInstance(id: String) {
-        instanceId = id
+    fun connectToSession(id: String) {
+        sessionId = id
     }
 
-    fun currentInstanceId(): String? = instanceId
+    fun currentSessionId(): String? = sessionId
 
     suspend fun sendMessage(content: String): Unit = withContext(Dispatchers.IO) {
-        val id = instanceId ?: throw IllegalStateException("No instance created")
+        val id = sessionId ?: throw IllegalStateException("No session created")
 
         val json = JSONObject().apply {
             put("content", content)
@@ -114,7 +114,7 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
     }
 
     fun streamEvents(): Flow<GhostEvent> = callbackFlow {
-        val id = instanceId ?: throw IllegalStateException("No instance created")
+        val id = sessionId ?: throw IllegalStateException("No session created")
 
         val request = Request.Builder()
             .url("$baseUrl/instances/$id/stream")
@@ -193,8 +193,8 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
         }
     }
 
-    suspend fun deleteInstance(id: String? = null): Unit = withContext(Dispatchers.IO) {
-        val targetId = id ?: instanceId ?: return@withContext
+    suspend fun deleteSession(id: String? = null): Unit = withContext(Dispatchers.IO) {
+        val targetId = id ?: sessionId ?: return@withContext
 
         val request = Request.Builder()
             .url("$baseUrl/instances/$targetId")
@@ -202,8 +202,8 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
             .build()
 
         client.newCall(request).execute()
-        if (targetId == instanceId) {
-            instanceId = null
+        if (targetId == sessionId) {
+            sessionId = null
         }
     }
 

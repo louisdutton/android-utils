@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -39,10 +40,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.ViewModel
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownColor
 import com.mikepenz.markdown.m3.markdownTypography
+import com.mikepenz.markdown.compose.components.markdownComponents
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,6 +60,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URI
+
+enum class Screen { Chat, Settings }
 
 sealed class MessageContent {
     data class Text(val content: String) : MessageContent()
@@ -68,6 +79,7 @@ data class ChatMessage(
 class ChatViewModel : ViewModel() {
     private var client: GhostClient? = null
     private var streamJob: kotlinx.coroutines.Job? = null
+    private var prefs: android.content.SharedPreferences? = null
 
     private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val messages: StateFlow<List<ChatMessage>> = _messages.asStateFlow()
@@ -78,14 +90,40 @@ class ChatViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    private val _instances = MutableStateFlow<List<GhostInstance>>(emptyList())
-    val instances: StateFlow<List<GhostInstance>> = _instances.asStateFlow()
+    private val _sessions = MutableStateFlow<List<GhostSession>>(emptyList())
+    val sessions: StateFlow<List<GhostSession>> = _sessions.asStateFlow()
 
-    private val _currentInstance = MutableStateFlow<GhostInstance?>(null)
-    val currentInstance: StateFlow<GhostInstance?> = _currentInstance.asStateFlow()
+    private val _currentSession = MutableStateFlow<GhostSession?>(null)
+    val currentSession: StateFlow<GhostSession?> = _currentSession.asStateFlow()
+
+    private val _sessionTitles = MutableStateFlow<Map<String, String>>(emptyMap())
+    val sessionTitles: StateFlow<Map<String, String>> = _sessionTitles.asStateFlow()
 
     private var currentAssistantMessageId: String? = null
     private var currentTextContent = StringBuilder()
+
+    fun initPrefs(prefs: android.content.SharedPreferences) {
+        this.prefs = prefs
+        // Load existing titles
+        val titles = mutableMapOf<String, String>()
+        prefs.all.forEach { (key, value) ->
+            if (key.startsWith("session_title_") && value is String) {
+                titles[key.removePrefix("session_title_")] = value
+            }
+        }
+        _sessionTitles.value = titles
+    }
+
+    fun getSessionTitle(sessionId: String): String {
+        return _sessionTitles.value[sessionId] ?: "New session"
+    }
+
+    private fun setSessionTitle(sessionId: String, firstMessage: String) {
+        if (_sessionTitles.value.containsKey(sessionId)) return
+        val title = firstMessage.take(40).let { if (firstMessage.length > 40) "$it..." else it }
+        _sessionTitles.value = _sessionTitles.value + (sessionId to title)
+        prefs?.edit()?.putString("session_title_$sessionId", title)?.apply()
+    }
 
     fun connect(serverUrl: String, autoCreate: Boolean = true) {
         viewModelScope.launch {
@@ -94,13 +132,13 @@ class ChatViewModel : ViewModel() {
                 val ghostClient = GhostClient(serverUrl)
                 client = ghostClient
 
-                // Load existing instances
-                refreshInstances()
+                // Load existing sessions
+                refreshSessions()
 
                 if (autoCreate) {
-                    ghostClient.createInstance()
-                    refreshInstances()
-                    _currentInstance.value = _instances.value.find { it.id == ghostClient.currentInstanceId() }
+                    ghostClient.createSession()
+                    refreshSessions()
+                    _currentSession.value = _sessions.value.find { it.id == ghostClient.currentSessionId() }
                     startStreaming(ghostClient)
                 }
 
@@ -117,11 +155,11 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun refreshInstances() {
+    fun refreshSessions() {
         viewModelScope.launch {
             try {
                 client?.let { c ->
-                    _instances.value = c.listInstances()
+                    _sessions.value = c.listSessions()
                 }
             } catch (e: Exception) {
                 // Ignore refresh errors
@@ -129,13 +167,13 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun selectInstance(instance: GhostInstance) {
+    fun selectSession(session: GhostSession) {
         viewModelScope.launch {
             try {
                 val c = client ?: return@launch
                 streamJob?.cancel()
-                c.connectToInstance(instance.id)
-                _currentInstance.value = instance
+                c.connectToSession(session.id)
+                _currentSession.value = session
                 _messages.value = emptyList()
                 startStreaming(c)
             } catch (e: Exception) {
@@ -147,15 +185,15 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun createInstance(workDir: String?) {
+    fun createSession(workDir: String?) {
         viewModelScope.launch {
             try {
                 val c = client ?: return@launch
                 _isLoading.value = true
                 streamJob?.cancel()
-                c.createInstance(workDir)
-                refreshInstances()
-                _currentInstance.value = _instances.value.find { it.id == c.currentInstanceId() }
+                c.createSession(workDir)
+                refreshSessions()
+                _currentSession.value = _sessions.value.find { it.id == c.currentSessionId() }
                 _messages.value = emptyList()
                 startStreaming(c)
                 _isLoading.value = false
@@ -169,15 +207,15 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun deleteInstance(instance: GhostInstance) {
+    fun deleteSession(session: GhostSession) {
         viewModelScope.launch {
             try {
                 val c = client ?: return@launch
-                c.deleteInstance(instance.id)
-                refreshInstances()
-                if (_currentInstance.value?.id == instance.id) {
+                c.deleteSession(session.id)
+                refreshSessions()
+                if (_currentSession.value?.id == session.id) {
                     streamJob?.cancel()
-                    _currentInstance.value = null
+                    _currentSession.value = null
                     _messages.value = emptyList()
                 }
             } catch (e: Exception) {
@@ -261,6 +299,13 @@ class ChatViewModel : ViewModel() {
         if (content.isBlank()) return
 
         viewModelScope.launch {
+            // Set session title from first message
+            val sessionId = _currentSession.value?.id
+            val isFirstMessage = _messages.value.none { it.isUser }
+            if (sessionId != null && isFirstMessage) {
+                setSessionTitle(sessionId, content)
+            }
+
             _messages.value = _messages.value + ChatMessage(content = MessageContent.Text(content), isUser = true)
             _isLoading.value = true
             try {
@@ -287,9 +332,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AgentTheme {
-                ChatScreen(
-                    onSettingsClick = { requestAssistantRole() }
-                )
+                var currentScreen by remember { mutableStateOf(Screen.Chat) }
+
+                when (currentScreen) {
+                    Screen.Chat -> ChatScreen(
+                        onSettingsClick = { currentScreen = Screen.Settings }
+                    )
+                    Screen.Settings -> SettingsScreen(
+                        onBack = { currentScreen = Screen.Chat },
+                        onRequestAssistantRole = { requestAssistantRole() }
+                    )
+                }
             }
         }
     }
@@ -344,17 +397,23 @@ fun ChatScreen(
     val messages by viewModel.messages.collectAsState()
     val isConnected by viewModel.isConnected.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val instances by viewModel.instances.collectAsState()
-    val currentInstance by viewModel.currentInstance.collectAsState()
+    val sessions by viewModel.sessions.collectAsState()
+    val currentSession by viewModel.currentSession.collectAsState()
+    val sessionTitles by viewModel.sessionTitles.collectAsState()
 
     val context = LocalContext.current
     val prefs = remember { context.getSharedPreferences("agent_prefs", Context.MODE_PRIVATE) }
     val savedUrl = remember { prefs.getString("server_url", null) }
 
+    // Initialize prefs in viewModel
+    LaunchedEffect(Unit) {
+        viewModel.initPrefs(prefs)
+    }
+
     var inputText by remember { mutableStateOf("") }
     var serverUrl by remember { mutableStateOf(savedUrl ?: "http://") }
     var showServerDialog by remember { mutableStateOf(savedUrl == null) }
-    var showNewInstanceDialog by remember { mutableStateOf(false) }
+    var showNewSessionDialog by remember { mutableStateOf(false) }
     var newWorkDir by remember { mutableStateOf("") }
     var developerMode by remember { mutableStateOf(prefs.getBoolean("developer_mode", false)) }
 
@@ -416,10 +475,10 @@ fun ChatScreen(
         )
     }
 
-    if (showNewInstanceDialog) {
+    if (showNewSessionDialog) {
         AlertDialog(
-            onDismissRequest = { showNewInstanceDialog = false },
-            title = { Text("New Instance") },
+            onDismissRequest = { showNewSessionDialog = false },
+            title = { Text("New Session") },
             text = {
                 OutlinedTextField(
                     value = newWorkDir,
@@ -430,16 +489,16 @@ fun ChatScreen(
             },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.createInstance(newWorkDir.ifBlank { null })
+                    viewModel.createSession(newWorkDir.ifBlank { null })
                     newWorkDir = ""
-                    showNewInstanceDialog = false
+                    showNewSessionDialog = false
                     scope.launch { drawerState.close() }
                 }) {
                     Text("Create")
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showNewInstanceDialog = false }) {
+                TextButton(onClick = { showNewSessionDialog = false }) {
                     Text("Cancel")
                 }
             }
@@ -453,7 +512,7 @@ fun ChatScreen(
                 drawerContainerColor = Color(0xFF121212)
             ) {
                 Text(
-                    "Instances",
+                    "Sessions",
                     modifier = Modifier.padding(16.dp),
                     style = MaterialTheme.typography.titleLarge,
                     color = Color.White
@@ -463,8 +522,9 @@ fun ChatScreen(
                 LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
-                    items(instances, key = { it.id }) { instance ->
-                        val isSelected = instance.id == currentInstance?.id
+                    items(sessions, key = { it.id }) { session ->
+                        val isSelected = session.id == currentSession?.id
+                        val title = sessionTitles[session.id] ?: "New session"
                         NavigationDrawerItem(
                             label = {
                                 Row(
@@ -474,17 +534,17 @@ fun ChatScreen(
                                 ) {
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
-                                            File(instance.workDir).name,
+                                            title,
                                             style = MaterialTheme.typography.bodyLarge
                                         )
                                         Text(
-                                            instance.workDir,
+                                            session.workDir,
                                             style = MaterialTheme.typography.bodySmall,
                                             color = Color.Gray
                                         )
                                     }
                                     IconButton(
-                                        onClick = { viewModel.deleteInstance(instance) }
+                                        onClick = { viewModel.deleteSession(session) }
                                     ) {
                                         Icon(
                                             Icons.Default.Delete,
@@ -496,7 +556,7 @@ fun ChatScreen(
                             },
                             selected = isSelected,
                             onClick = {
-                                viewModel.selectInstance(instance)
+                                viewModel.selectSession(session)
                                 scope.launch { drawerState.close() }
                             },
                             colors = NavigationDrawerItemDefaults.colors(
@@ -510,47 +570,10 @@ fun ChatScreen(
                 HorizontalDivider(color = Color(0xFF333333))
                 NavigationDrawerItem(
                     icon = { Icon(Icons.Default.Add, contentDescription = null) },
-                    label = { Text("New Instance") },
+                    label = { Text("New Session") },
                     selected = false,
-                    onClick = { showNewInstanceDialog = true },
+                    onClick = { showNewSessionDialog = true },
                     colors = NavigationDrawerItemDefaults.colors(
-                        unselectedContainerColor = Color.Transparent
-                    )
-                )
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Refresh, contentDescription = null) },
-                    label = { Text("Update App") },
-                    selected = false,
-                    onClick = {
-                        val intent = Intent().apply {
-                            setClassName("com.termux", "com.termux.app.RunCommandService")
-                            action = "com.termux.RUN_COMMAND"
-                            putExtra("com.termux.RUN_COMMAND_PATH", "/data/data/com.termux/files/usr/bin/bash")
-                            putExtra("com.termux.RUN_COMMAND_ARGUMENTS", arrayOf("-c", "scp louis@mini:~/projects/android-utils/agent/app/build/outputs/apk/debug/app-debug.apk ~/app-debug.apk && termux-open ~/app-debug.apk"))
-                            putExtra("com.termux.RUN_COMMAND_BACKGROUND", false)
-                        }
-                        try {
-                            context.startService(intent)
-                            Toast.makeText(context, "Updating...", Toast.LENGTH_SHORT).show()
-                        } catch (e: Exception) {
-                            Toast.makeText(context, "Failed: ${e.message}", Toast.LENGTH_LONG).show()
-                        }
-                        scope.launch { drawerState.close() }
-                    },
-                    colors = NavigationDrawerItemDefaults.colors(
-                        unselectedContainerColor = Color.Transparent
-                    )
-                )
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Build, contentDescription = null) },
-                    label = { Text("Developer Mode") },
-                    selected = developerMode,
-                    onClick = {
-                        developerMode = !developerMode
-                        prefs.edit().putBoolean("developer_mode", developerMode).apply()
-                    },
-                    colors = NavigationDrawerItemDefaults.colors(
-                        selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                         unselectedContainerColor = Color.Transparent
                     )
                 )
@@ -561,102 +584,105 @@ fun ChatScreen(
         Scaffold(
             containerColor = Color.Black,
             topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                            Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.White)
-                        }
-                    },
-                    title = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                Icons.Default.Circle,
-                                contentDescription = if (isConnected) "Connected" else "Disconnected",
-                                tint = if (isConnected) Color(0xFF4CAF50) else Color(0xFFE57373),
-                                modifier = Modifier.size(12.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(currentInstance?.let { File(it.workDir).name } ?: "Agent")
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Black,
-                        titleContentColor = Color.White
-                    ),
-                    actions = {
-                        if (!isConnected) {
-                            TextButton(onClick = { showServerDialog = true }) {
-                                Text("Connect", color = MaterialTheme.colorScheme.primary)
+                // Minimal status header
+                Surface(
+                    color = Color.Black,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .statusBarsPadding()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.Circle,
+                            contentDescription = if (isConnected) "Connected" else "Disconnected",
+                            tint = if (isConnected) Color(0xFF4CAF50) else Color(0xFFE57373),
+                            modifier = Modifier.size(10.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            currentSession?.let { sessionTitles[it.id] ?: "New session" } ?: "Agent",
+                            color = Color.White,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                }
+            },
+            bottomBar = {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    // Action bar row
+                    Surface(color = Color.Black) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.White)
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            if (!isConnected) {
+                                TextButton(onClick = { showServerDialog = true }) {
+                                    Text("Connect", color = MaterialTheme.colorScheme.primary)
+                                }
+                            }
+                            IconButton(onClick = onSettingsClick) {
+                                Icon(Icons.Default.Settings, contentDescription = "Settings", tint = Color.White)
                             }
                         }
-                        IconButton(onClick = onSettingsClick) {
-                            Icon(
-                                Icons.Default.Settings,
-                                contentDescription = "Settings",
-                                tint = Color.White
-                            )
-                        }
                     }
-                )
-            },
-        bottomBar = {
-            ChatInputBar(
-                value = inputText,
-                onValueChange = { inputText = it },
-                onSend = {
-                    if (inputText.isNotBlank() && isConnected) {
-                        viewModel.sendMessage(inputText.trim())
-                        inputText = ""
-                    }
-                },
-                onMicClick = {
-                    if (isRecording) {
-                        // Stop recording - the coroutine will finish and handle transcription
-                        audioRecorder.stopRecording()
-                    } else {
-                        // Start recording
-                        scope.launch {
-                            isRecording = true
-                            try {
-                                audioRecorder.startRecording()
-                                // Recording finished (stopRecording was called)
-                                isRecording = false
-                                val file = audioRecorder.stopRecording()
-                                if (file != null && file.exists() && whisperClient != null) {
-                                    isTranscribing = true
+                    // Input bar row
+                    ChatInputBar(
+                        value = inputText,
+                        onValueChange = { inputText = it },
+                        onSend = {
+                            if (inputText.isNotBlank() && isConnected) {
+                                viewModel.sendMessage(inputText.trim())
+                                inputText = ""
+                            }
+                        },
+                        onMicClick = {
+                            if (isRecording) {
+                                audioRecorder.stopRecording()
+                            } else {
+                                scope.launch {
+                                    isRecording = true
                                     try {
-                                        val text = whisperClient.transcribe(file)
-                                        if (text.isNotBlank()) {
-                                            inputText = text
+                                        audioRecorder.startRecording()
+                                        isRecording = false
+                                        val file = audioRecorder.stopRecording()
+                                        if (file != null && file.exists() && whisperClient != null) {
+                                            isTranscribing = true
+                                            try {
+                                                val text = whisperClient.transcribe(file)
+                                                if (text.isNotBlank()) {
+                                                    inputText = text
+                                                }
+                                            } catch (e: Exception) {
+                                                Toast.makeText(context, "Transcription failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                                            } finally {
+                                                isTranscribing = false
+                                                file.delete()
+                                            }
                                         }
                                     } catch (e: Exception) {
-                                        android.widget.Toast.makeText(
-                                            context,
-                                            "Transcription failed: ${e.message}",
-                                            android.widget.Toast.LENGTH_SHORT
-                                        ).show()
-                                    } finally {
-                                        isTranscribing = false
-                                        file.delete()
+                                        isRecording = false
+                                        Toast.makeText(context, "Recording failed: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
                                 }
-                            } catch (e: Exception) {
-                                isRecording = false
-                                android.widget.Toast.makeText(
-                                    context,
-                                    "Recording failed: ${e.message}",
-                                    android.widget.Toast.LENGTH_SHORT
-                                ).show()
                             }
-                        }
-                    }
-                },
-                isRecording = isRecording,
-                isTranscribing = isTranscribing,
-                enabled = isConnected && !isLoading
-            )
-        }
-    ) { innerPadding ->
+                        },
+                        isRecording = isRecording,
+                        isTranscribing = isTranscribing,
+                        enabled = isConnected && !isLoading
+                    )
+                }
+            }
+        ) { innerPadding ->
         LazyColumn(
             state = listState,
             modifier = Modifier
@@ -733,12 +759,23 @@ fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
                     }
                 }
             } else {
-                // Assistant messages: full width markdown
+                // Assistant messages: full width markdown with syntax highlighting
                 Markdown(
                     content = content.content,
                     colors = mdColors,
                     typography = mdTypography,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    components = markdownComponents(
+                        codeFence = { model ->
+                            // Extract language from code fence (```lang\ncode```)
+                            val language = model.node.children.firstOrNull()
+                                ?.let { child -> model.content.substring(child.startOffset, child.endOffset).trim() }
+                                ?.takeIf { it.isNotEmpty() && !it.contains('\n') }
+                            val codeContent = model.content.lines()
+                                .drop(1).dropLast(1).joinToString("\n")
+                            HighlightedCodeBlock(code = codeContent, language = language)
+                        }
+                    )
                 )
             }
         }
@@ -896,6 +933,299 @@ fun ChatInputBar(
                     Icons.AutoMirrored.Filled.Send,
                     contentDescription = "Send"
                 )
+            }
+        }
+    }
+}
+
+// Syntax highlighting colors (Atom One Dark theme)
+private val keywordColor = Color(0xFFC678DD)    // purple
+private val stringColor = Color(0xFF98C379)     // green
+private val commentColor = Color(0xFF5C6370)    // gray
+private val numberColor = Color(0xFFD19A66)     // orange
+private val functionColor = Color(0xFF61AFEF)   // blue
+private val typeColor = Color(0xFFE5C07B)       // yellow
+
+private fun highlightCode(code: String, language: String?): AnnotatedString {
+    val keywords = when (language?.lowercase()) {
+        "kotlin", "kt" -> setOf("fun", "val", "var", "class", "object", "interface", "if", "else", "when", "for", "while", "return", "import", "package", "private", "public", "internal", "protected", "override", "open", "abstract", "sealed", "data", "suspend", "inline", "companion", "const", "lateinit", "by", "lazy", "null", "true", "false", "is", "as", "in", "out", "try", "catch", "finally", "throw")
+        "java" -> setOf("class", "interface", "public", "private", "protected", "static", "final", "void", "int", "long", "double", "float", "boolean", "char", "byte", "short", "if", "else", "for", "while", "do", "switch", "case", "break", "continue", "return", "new", "this", "super", "extends", "implements", "import", "package", "try", "catch", "finally", "throw", "throws", "null", "true", "false")
+        "python", "py" -> setOf("def", "class", "if", "elif", "else", "for", "while", "return", "import", "from", "as", "try", "except", "finally", "raise", "with", "lambda", "yield", "pass", "break", "continue", "and", "or", "not", "in", "is", "None", "True", "False", "self", "async", "await")
+        "javascript", "js", "typescript", "ts" -> setOf("function", "const", "let", "var", "if", "else", "for", "while", "return", "import", "export", "from", "class", "extends", "new", "this", "super", "try", "catch", "finally", "throw", "async", "await", "null", "undefined", "true", "false", "typeof", "instanceof", "interface", "type", "enum")
+        "rust", "rs" -> setOf("fn", "let", "mut", "const", "if", "else", "match", "for", "while", "loop", "return", "use", "mod", "pub", "struct", "enum", "impl", "trait", "self", "Self", "true", "false", "Some", "None", "Ok", "Err", "async", "await", "move", "unsafe", "where")
+        "go", "golang" -> setOf("func", "var", "const", "if", "else", "for", "range", "return", "import", "package", "type", "struct", "interface", "map", "chan", "go", "defer", "select", "case", "switch", "break", "continue", "nil", "true", "false", "make", "new", "append", "len", "cap")
+        "shell", "bash", "sh", "zsh" -> setOf("if", "then", "else", "elif", "fi", "for", "while", "do", "done", "case", "esac", "function", "return", "exit", "export", "local", "readonly", "declare", "echo", "cd", "ls", "cat", "grep", "sed", "awk", "true", "false")
+        "c", "cpp", "c++" -> setOf("if", "else", "for", "while", "do", "switch", "case", "break", "continue", "return", "int", "long", "double", "float", "char", "void", "struct", "class", "public", "private", "protected", "static", "const", "virtual", "override", "nullptr", "true", "false", "new", "delete", "include", "define", "ifdef", "endif", "template", "typename", "namespace", "using", "auto")
+        else -> setOf("if", "else", "for", "while", "return", "function", "class", "true", "false", "null", "import", "export")
+    }
+
+    val types = setOf("String", "Int", "Long", "Double", "Float", "Boolean", "List", "Map", "Set", "Array", "Unit", "Any", "Nothing", "Object", "void", "int", "long", "double", "float", "boolean", "char", "byte", "short", "str", "dict", "list", "tuple", "bool", "number", "string", "Vec", "Option", "Result", "Box")
+
+    return buildAnnotatedString {
+        var i = 0
+        while (i < code.length) {
+            when {
+                // Comments
+                code.startsWith("//", i) -> {
+                    val end = code.indexOf('\n', i).let { if (it == -1) code.length else it }
+                    withStyle(SpanStyle(color = commentColor)) { append(code.substring(i, end)) }
+                    i = end
+                }
+                code.startsWith("#", i) && (i == 0 || code[i-1] == '\n' || code[i-1] == ' ') -> {
+                    val end = code.indexOf('\n', i).let { if (it == -1) code.length else it }
+                    withStyle(SpanStyle(color = commentColor)) { append(code.substring(i, end)) }
+                    i = end
+                }
+                // Strings
+                code[i] == '"' -> {
+                    val end = findStringEnd(code, i + 1, '"')
+                    withStyle(SpanStyle(color = stringColor)) { append(code.substring(i, end)) }
+                    i = end
+                }
+                code[i] == '\'' -> {
+                    val end = findStringEnd(code, i + 1, '\'')
+                    withStyle(SpanStyle(color = stringColor)) { append(code.substring(i, end)) }
+                    i = end
+                }
+                // Numbers
+                code[i].isDigit() -> {
+                    val end = findWordEnd(code, i)
+                    withStyle(SpanStyle(color = numberColor)) { append(code.substring(i, end)) }
+                    i = end
+                }
+                // Words (keywords, types, identifiers)
+                code[i].isLetter() || code[i] == '_' -> {
+                    val end = findWordEnd(code, i)
+                    val word = code.substring(i, end)
+                    when {
+                        word in keywords -> withStyle(SpanStyle(color = keywordColor)) { append(word) }
+                        word in types || word[0].isUpperCase() -> withStyle(SpanStyle(color = typeColor)) { append(word) }
+                        i + word.length < code.length && code[i + word.length] == '(' -> withStyle(SpanStyle(color = functionColor)) { append(word) }
+                        else -> append(word)
+                    }
+                    i = end
+                }
+                else -> {
+                    append(code[i])
+                    i++
+                }
+            }
+        }
+    }
+}
+
+private fun findStringEnd(code: String, start: Int, quote: Char): Int {
+    var i = start
+    while (i < code.length) {
+        if (code[i] == quote && (i == start || code[i-1] != '\\')) return i + 1
+        if (code[i] == '\n') return i
+        i++
+    }
+    return code.length
+}
+
+private fun findWordEnd(code: String, start: Int): Int {
+    var i = start
+    while (i < code.length && (code[i].isLetterOrDigit() || code[i] == '_')) i++
+    return i
+}
+
+@Composable
+fun HighlightedCodeBlock(code: String, language: String?) {
+    val annotatedCode = remember(code, language) { highlightCode(code, language) }
+
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = Color(0xFF1E1E1E),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column {
+            if (language != null) {
+                Text(
+                    text = language,
+                    color = Color(0xFF808080),
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                )
+            }
+            Text(
+                text = annotatedCode,
+                fontFamily = FontFamily.Monospace,
+                color = Color(0xFFE0E0E0),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .horizontalScroll(rememberScrollState())
+                    .padding(12.dp)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsScreen(
+    onBack: () -> Unit,
+    onRequestAssistantRole: () -> Unit
+) {
+    val context = LocalContext.current
+    val prefs = remember { context.getSharedPreferences("agent_prefs", Context.MODE_PRIVATE) }
+
+    var ghostUrl by remember { mutableStateOf(prefs.getString("server_url", "") ?: "") }
+    var whisperUrl by remember { mutableStateOf(prefs.getString("whisper_url", "") ?: "") }
+    var developerMode by remember { mutableStateOf(prefs.getBoolean("developer_mode", false)) }
+    var updateSource by remember { mutableStateOf(prefs.getString("update_source", "louis@mini:~/projects/android-utils/agent/app/build/outputs/apk/debug/app-debug.apk") ?: "") }
+
+    Scaffold(
+        containerColor = Color.Black,
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    }
+                },
+                title = { Text("Settings") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Black,
+                    titleContentColor = Color.White
+                )
+            )
+        }
+    ) { padding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp)
+        ) {
+            item {
+                Text("Connection", color = Color.White, style = MaterialTheme.typography.titleMedium)
+            }
+            item {
+                OutlinedTextField(
+                    value = ghostUrl,
+                    onValueChange = { ghostUrl = it },
+                    label = { Text("Ghost Server URL") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = Color(0xFF333333)
+                    )
+                )
+            }
+            item {
+                OutlinedTextField(
+                    value = whisperUrl,
+                    onValueChange = { whisperUrl = it },
+                    label = { Text("Whisper Server URL") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = Color(0xFF333333)
+                    )
+                )
+            }
+            item {
+                Button(
+                    onClick = {
+                        prefs.edit()
+                            .putString("server_url", ghostUrl)
+                            .putString("whisper_url", whisperUrl)
+                            .apply()
+                        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Save Connection Settings")
+                }
+            }
+
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+
+            item {
+                Text("Developer", color = Color.White, style = MaterialTheme.typography.titleMedium)
+            }
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Developer Mode", color = Color.White)
+                    Switch(
+                        checked = developerMode,
+                        onCheckedChange = {
+                            developerMode = it
+                            prefs.edit().putBoolean("developer_mode", it).apply()
+                        }
+                    )
+                }
+            }
+
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+
+            item {
+                Text("System", color = Color.White, style = MaterialTheme.typography.titleMedium)
+            }
+            item {
+                Button(
+                    onClick = onRequestAssistantRole,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Request Assistant Role")
+                }
+            }
+
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+
+            item {
+                Text("Updates", color = Color.White, style = MaterialTheme.typography.titleMedium)
+            }
+            item {
+                OutlinedTextField(
+                    value = updateSource,
+                    onValueChange = { updateSource = it },
+                    label = { Text("Update Source Path") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = Color(0xFF333333)
+                    )
+                )
+            }
+            item {
+                Button(
+                    onClick = {
+                        prefs.edit().putString("update_source", updateSource).apply()
+                        val intent = Intent().apply {
+                            setClassName("com.termux", "com.termux.app.RunCommandService")
+                            action = "com.termux.RUN_COMMAND"
+                            putExtra("com.termux.RUN_COMMAND_PATH", "/data/data/com.termux/files/usr/bin/bash")
+                            putExtra("com.termux.RUN_COMMAND_ARGUMENTS", arrayOf("-c", "scp $updateSource ~/app-debug.apk && termux-open ~/app-debug.apk"))
+                            putExtra("com.termux.RUN_COMMAND_BACKGROUND", false)
+                        }
+                        try {
+                            context.startService(intent)
+                            Toast.makeText(context, "Updating...", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "Failed: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Update App")
+                }
             }
         }
     }
