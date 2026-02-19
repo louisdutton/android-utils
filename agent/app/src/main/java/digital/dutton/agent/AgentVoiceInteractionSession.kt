@@ -6,20 +6,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.service.voice.VoiceInteractionSession
-import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.net.URI
 
 class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(context) {
     companion object {
@@ -31,7 +27,9 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
     private var statusText: TextView? = null
     private var intentResolver: IntentResolver? = null
-    private var speechRecognizer: SpeechRecognizer? = null
+    private var audioRecorder: AudioRecorder? = null
+    private var whisperClient: WhisperClient? = null
+    private var recordingJob: Job? = null
 
     override fun onCreateContentView(): View {
         val layout = FrameLayout(context).apply {
@@ -61,13 +59,25 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
         intentResolver = IntentResolver(context)
 
-        if (!SpeechRecognizer.isRecognitionAvailable(context)) {
-            updateStatus("Speech recognition not available")
+        // Initialize whisper client from saved prefs
+        val prefs = context.getSharedPreferences("agent_prefs", Context.MODE_PRIVATE)
+        val serverUrl = prefs.getString("server_url", null)
+        if (serverUrl == null) {
+            updateStatus("No server configured")
             handler.postDelayed({ finish() }, 2000)
             return
         }
 
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+        try {
+            val uri = URI(serverUrl)
+            val whisperUrl = "${uri.scheme}://${uri.host}:5932"
+            whisperClient = WhisperClient(whisperUrl)
+            audioRecorder = AudioRecorder(context.cacheDir)
+        } catch (e: Exception) {
+            updateStatus("Failed to initialize: ${e.message}")
+            handler.postDelayed({ finish() }, 2000)
+            return
+        }
 
         scope.launch {
             processVoiceCommand()
@@ -109,66 +119,42 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
         }
     }
 
-    private suspend fun recognizeSpeech(): String = suspendCoroutine { continuation ->
-        val recognizer = speechRecognizer ?: run {
-            continuation.resume("")
-            return@suspendCoroutine
+    private suspend fun recognizeSpeech(): String {
+        val recorder = audioRecorder ?: return ""
+        val client = whisperClient ?: return ""
+
+        // Start recording in background
+        recordingJob = scope.launch(Dispatchers.IO) {
+            try {
+                recorder.startRecording()
+            } catch (e: Exception) {
+                Log.e(TAG, "Recording error", e)
+            }
         }
 
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
-            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+        // Wait for 3 seconds of recording (or implement silence detection later)
+        delay(3000)
+
+        // Stop recording
+        val audioFile = recorder.stopRecording()
+        recordingJob?.join()
+
+        if (audioFile == null || !audioFile.exists()) {
+            Log.e(TAG, "No audio file")
+            return ""
         }
 
-        recognizer.setRecognitionListener(object : RecognitionListener {
-            override fun onReadyForSpeech(params: Bundle?) {
-                Log.d(TAG, "Ready for speech")
-            }
+        updateStatus("Transcribing...")
 
-            override fun onBeginningOfSpeech() {
-                Log.d(TAG, "Speech started")
-            }
-
-            override fun onRmsChanged(rmsdB: Float) {}
-
-            override fun onBufferReceived(buffer: ByteArray?) {}
-
-            override fun onEndOfSpeech() {
-                Log.d(TAG, "Speech ended")
-                updateStatus("Processing...")
-            }
-
-            override fun onError(error: Int) {
-                val errorMsg = when (error) {
-                    SpeechRecognizer.ERROR_NO_MATCH -> "No speech detected"
-                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Speech timeout"
-                    SpeechRecognizer.ERROR_AUDIO -> "Audio error"
-                    SpeechRecognizer.ERROR_NETWORK -> "Network error"
-                    else -> "Error code: $error"
-                }
-                Log.e(TAG, "Recognition error: $errorMsg")
-                continuation.resume("")
-            }
-
-            override fun onResults(results: Bundle?) {
-                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                val result = matches?.firstOrNull() ?: ""
-                Log.d(TAG, "Recognition result: $result")
-                continuation.resume(result)
-            }
-
-            override fun onPartialResults(partialResults: Bundle?) {
-                val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                matches?.firstOrNull()?.let { partial ->
-                    updateStatus("Hearing: \"$partial\"")
-                }
-            }
-
-            override fun onEvent(eventType: Int, params: Bundle?) {}
-        })
-
-        recognizer.startListening(intent)
+        return try {
+            val text = client.transcribe(audioFile)
+            audioFile.delete()
+            text
+        } catch (e: Exception) {
+            Log.e(TAG, "Transcription error", e)
+            audioFile.delete()
+            ""
+        }
     }
 
     private fun mapToIntent(transcription: String, apps: List<AppIntent>): Intent? {
@@ -215,8 +201,10 @@ class AgentVoiceInteractionSession(context: Context) : VoiceInteractionSession(c
 
     override fun onHide() {
         super.onHide()
-        speechRecognizer?.destroy()
-        speechRecognizer = null
+        recordingJob?.cancel()
+        audioRecorder?.stopRecording()
+        audioRecorder = null
+        whisperClient = null
         Log.d(TAG, "Session hidden")
     }
 }
