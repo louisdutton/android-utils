@@ -22,6 +22,12 @@ class AudioRecorder(private val cacheDir: File) {
         private const val SAMPLE_RATE = 16000
         private const val CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO
         private const val AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT
+
+        // Silence detection thresholds
+        private const val SILENCE_THRESHOLD_RMS = 500.0  // RMS below this = silence
+        private const val SILENCE_DURATION_MS = 1500L   // Stop after this much silence
+        private const val MIN_RECORDING_MS = 500L       // Minimum recording time
+        private const val MAX_RECORDING_MS = 30000L     // Maximum recording time
     }
 
     @SuppressLint("MissingPermission")
@@ -85,6 +91,89 @@ class AudioRecorder(private val cacheDir: File) {
     }
 
     fun isRecording() = isRecording
+
+    @SuppressLint("MissingPermission")
+    suspend fun startRecordingUntilSilence(): File? = withContext(Dispatchers.IO) {
+        val bufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT)
+        if (bufferSize == AudioRecord.ERROR || bufferSize == AudioRecord.ERROR_BAD_VALUE) {
+            throw IllegalStateException("Invalid buffer size: $bufferSize")
+        }
+
+        val recorder = AudioRecord(
+            MediaRecorder.AudioSource.MIC,
+            SAMPLE_RATE,
+            CHANNEL_CONFIG,
+            AUDIO_FORMAT,
+            bufferSize * 2
+        )
+
+        if (recorder.state != AudioRecord.STATE_INITIALIZED) {
+            recorder.release()
+            throw IllegalStateException("AudioRecord failed to initialize")
+        }
+
+        audioRecord = recorder
+        outputFile = File(cacheDir, "recording_${System.currentTimeMillis()}.wav")
+        val file = outputFile!!
+        totalBytesWritten = 0
+
+        val fos = FileOutputStream(file)
+        fileOutputStream = fos
+
+        writeWavHeader(fos, 0)
+
+        recorder.startRecording()
+        isRecording = true
+
+        val buffer = ByteArray(bufferSize)
+        val startTime = System.currentTimeMillis()
+        var lastSoundTime = startTime
+        var hasDetectedSpeech = false
+
+        while (isRecording && coroutineContext.isActive) {
+            val bytesRead = recorder.read(buffer, 0, bufferSize)
+            if (bytesRead > 0) {
+                fos.write(buffer, 0, bytesRead)
+                totalBytesWritten += bytesRead
+
+                val rms = calculateRms(buffer, bytesRead)
+                val now = System.currentTimeMillis()
+                val elapsed = now - startTime
+
+                if (rms > SILENCE_THRESHOLD_RMS) {
+                    lastSoundTime = now
+                    hasDetectedSpeech = true
+                }
+
+                // Stop conditions
+                if (elapsed > MAX_RECORDING_MS) break
+                if (hasDetectedSpeech && elapsed > MIN_RECORDING_MS) {
+                    val silenceDuration = now - lastSoundTime
+                    if (silenceDuration > SILENCE_DURATION_MS) break
+                }
+            }
+        }
+
+        fos.close()
+        fileOutputStream = null
+        recorder.stop()
+        recorder.release()
+        audioRecord = null
+        isRecording = false
+
+        updateWavHeader(file, totalBytesWritten)
+        file
+    }
+
+    private fun calculateRms(buffer: ByteArray, length: Int): Double {
+        var sum = 0.0
+        val samples = length / 2  // 16-bit = 2 bytes per sample
+        for (i in 0 until samples) {
+            val sample = (buffer[i * 2 + 1].toInt() shl 8) or (buffer[i * 2].toInt() and 0xFF)
+            sum += sample * sample
+        }
+        return kotlin.math.sqrt(sum / samples)
+    }
 
     private fun writeWavHeader(out: FileOutputStream, dataSize: Int) {
         val totalSize = dataSize + 36
