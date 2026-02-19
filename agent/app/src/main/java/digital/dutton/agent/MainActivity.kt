@@ -229,8 +229,14 @@ class ChatViewModel : ViewModel() {
                             )
                             _isLoading.value = false
                         }
+                        is GhostEvent.ConnectionClosed -> {
+                            // Connection closed, mark as disconnected for auto-reconnect
+                            _isConnected.value = false
+                        }
                     }
                 }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                // Normal cancellation, don't show error
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
                     content = MessageContent.Error("Stream error: ${e.message}"),
@@ -678,18 +684,20 @@ fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
                 Surface(
                     shape = RoundedCornerShape(8.dp),
                     color = Color(0xFF1A1A2E),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(1.dp, Color(0xFF64B5F6), RoundedCornerShape(8.dp))
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(
-                            text = "→ ${content.name}",
+                            text = "Tool: ${content.name}",
                             color = Color(0xFF64B5F6),
                             style = MaterialTheme.typography.labelMedium
                         )
                         content.input?.let { input ->
                             Text(
-                                text = input.take(200) + if (input.length > 200) "..." else "",
-                                color = Color.Gray,
+                                text = input.take(300) + if (input.length > 300) "..." else "",
+                                color = Color(0xFFAAAAAA),
                                 style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.padding(top = 4.dp)
                             )
@@ -703,18 +711,20 @@ fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
                 Surface(
                     shape = RoundedCornerShape(8.dp),
                     color = Color(0xFF1A2E1A),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(1.dp, Color(0xFF81C784), RoundedCornerShape(8.dp))
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(
-                            text = "← ${content.name}",
+                            text = "Tool: ${content.name}",
                             color = Color(0xFF81C784),
                             style = MaterialTheme.typography.labelMedium
                         )
                         content.output?.let { output ->
                             Text(
-                                text = output.take(200) + if (output.length > 200) "..." else "",
-                                color = Color.Gray,
+                                text = output.take(300) + if (output.length > 300) "..." else "",
+                                color = Color(0xFFAAAAAA),
                                 style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.padding(top = 4.dp)
                             )

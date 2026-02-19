@@ -22,6 +22,7 @@ sealed class GhostEvent {
     data class TurnEnd(val reason: String?) : GhostEvent()
     data class Error(val message: String) : GhostEvent()
     data object TurnBegin : GhostEvent()
+    data object ConnectionClosed : GhostEvent()
 }
 
 data class GhostInstance(
@@ -134,16 +135,27 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
                         "TextPart", "text" -> GhostEvent.Text(json.optString("text", json.optString("content", "")))
                         "TurnBegin", "turn_begin" -> GhostEvent.TurnBegin
                         "TurnEnd", "turn_end" -> GhostEvent.TurnEnd(null)
-                        "tool_call" -> GhostEvent.ToolCall(
-                            name = json.optString("name", "unknown"),
-                            input = json.optJSONObject("input")?.toString()
-                        )
-                        "tool_result" -> GhostEvent.ToolResult(
-                            name = json.optString("name", "unknown"),
-                            output = json.optString("output", null)
-                        )
+                        "ToolCall" -> {
+                            // Format: {"type":"ToolCall","function":{"name":"shell","arguments":"{...}"},"id":"..."}
+                            val func = json.optJSONObject("function")
+                            GhostEvent.ToolCall(
+                                name = func?.optString("name") ?: "unknown",
+                                input = func?.optString("arguments")
+                            )
+                        }
+                        "ToolResult" -> {
+                            // Format: {"type":"ToolResult","toolName":"shell","content":"...","toolCallId":"..."}
+                            GhostEvent.ToolResult(
+                                name = json.optString("toolName", "unknown"),
+                                output = json.optString("content", null)
+                            )
+                        }
                         "error" -> GhostEvent.Error(json.optString("message", "Unknown error"))
-                        else -> null
+                        "StepBegin", "StepEnd", "StatusUpdate" -> null // Ignore step/status events
+                        else -> {
+                            android.util.Log.d("GhostClient", "Unknown event: $eventType")
+                            null
+                        }
                     }
                     event?.let { trySend(it) }
                 } catch (e: Exception) {
@@ -152,11 +164,18 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
             }
 
             override fun onFailure(eventSource: EventSource, t: Throwable?, response: Response?) {
-                trySend(GhostEvent.Error(t?.message ?: "Connection failed"))
+                // Don't report as error if it's just a cancellation/close
+                val msg = t?.message ?: ""
+                if (!msg.contains("canceled", ignoreCase = true) &&
+                    !msg.contains("closed", ignoreCase = true) &&
+                    !msg.contains("Socket closed", ignoreCase = true)) {
+                    trySend(GhostEvent.Error(msg.ifEmpty { "Connection failed" }))
+                }
                 close(t)
             }
 
             override fun onClosed(eventSource: EventSource) {
+                trySend(GhostEvent.ConnectionClosed)
                 close()
             }
         }
