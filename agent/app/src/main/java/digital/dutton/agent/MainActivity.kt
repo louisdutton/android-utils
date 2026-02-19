@@ -35,7 +35,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.border
 import androidx.lifecycle.ViewModel
+import com.mikepenz.markdown.m3.Markdown
+import com.mikepenz.markdown.m3.markdownColor
+import com.mikepenz.markdown.m3.markdownTypography
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,6 +50,7 @@ import java.io.File
 
 sealed class MessageContent {
     data class Text(val content: String) : MessageContent()
+    data class Error(val message: String) : MessageContent()
     data class ToolCall(val name: String, val input: String?) : MessageContent()
     data class ToolResult(val name: String, val output: String?) : MessageContent()
 }
@@ -99,7 +104,7 @@ class ChatViewModel : ViewModel() {
                 _isLoading.value = false
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = MessageContent.Text("Connection failed: ${e.message}"),
+                    content = MessageContent.Error("Connection failed: ${e.message}"),
                     isUser = false
                 )
                 _isConnected.value = false
@@ -131,7 +136,7 @@ class ChatViewModel : ViewModel() {
                 startStreaming(c)
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = MessageContent.Text("Failed to switch: ${e.message}"),
+                    content = MessageContent.Error("Failed to switch: ${e.message}"),
                     isUser = false
                 )
             }
@@ -152,7 +157,7 @@ class ChatViewModel : ViewModel() {
                 _isLoading.value = false
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = MessageContent.Text("Failed to create: ${e.message}"),
+                    content = MessageContent.Error("Failed to create: ${e.message}"),
                     isUser = false
                 )
                 _isLoading.value = false
@@ -173,7 +178,7 @@ class ChatViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = MessageContent.Text("Failed to delete: ${e.message}"),
+                    content = MessageContent.Error("Failed to delete: ${e.message}"),
                     isUser = false
                 )
             }
@@ -219,7 +224,7 @@ class ChatViewModel : ViewModel() {
                         }
                         is GhostEvent.Error -> {
                             _messages.value = _messages.value + ChatMessage(
-                                content = MessageContent.Text("Error: ${event.message}"),
+                                content = MessageContent.Error(event.message),
                                 isUser = false
                             )
                             _isLoading.value = false
@@ -228,7 +233,7 @@ class ChatViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = MessageContent.Text("Stream error: ${e.message}"),
+                    content = MessageContent.Error("Stream error: ${e.message}"),
                     isUser = false
                 )
             }
@@ -246,7 +251,7 @@ class ChatViewModel : ViewModel() {
                 c.sendMessage(content)
             } catch (e: Exception) {
                 _messages.value = _messages.value + ChatMessage(
-                    content = MessageContent.Text("Failed to send: ${e.message}"),
+                    content = MessageContent.Error("Failed to send: ${e.message}"),
                     isUser = false
                 )
                 _isLoading.value = false
@@ -599,6 +604,28 @@ fun ChatScreen(
 
 @Composable
 fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
+    val mdColors = markdownColor(
+        text = Color.White,
+        codeText = Color(0xFFE0E0E0),
+        codeBackground = Color(0xFF1E1E1E),
+        dividerColor = Color(0xFF444444)
+    )
+    val mdTypography = markdownTypography(
+        h1 = MaterialTheme.typography.headlineLarge.copy(color = Color.White),
+        h2 = MaterialTheme.typography.headlineMedium.copy(color = Color.White),
+        h3 = MaterialTheme.typography.headlineSmall.copy(color = Color.White),
+        h4 = MaterialTheme.typography.titleLarge.copy(color = Color.White),
+        h5 = MaterialTheme.typography.titleMedium.copy(color = Color.White),
+        h6 = MaterialTheme.typography.titleSmall.copy(color = Color.White),
+        text = MaterialTheme.typography.bodyLarge.copy(color = Color.White),
+        code = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFFE0E0E0)),
+        quote = MaterialTheme.typography.bodyLarge.copy(color = Color(0xFFB0B0B0)),
+        paragraph = MaterialTheme.typography.bodyLarge.copy(color = Color.White),
+        ordered = MaterialTheme.typography.bodyLarge.copy(color = Color.White),
+        bullet = MaterialTheme.typography.bodyLarge.copy(color = Color.White),
+        list = MaterialTheme.typography.bodyLarge.copy(color = Color.White)
+    )
+
     when (val content = message.content) {
         is MessageContent.Text -> {
             if (message.isUser) {
@@ -621,12 +648,28 @@ fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
                     }
                 }
             } else {
-                // Assistant messages: full width, no bubble
+                // Assistant messages: full width markdown
+                Markdown(
+                    content = content.content,
+                    colors = mdColors,
+                    typography = mdTypography,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        is MessageContent.Error -> {
+            Surface(
+                shape = RoundedCornerShape(8.dp),
+                color = Color(0xFF2E1A1A),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, Color(0xFFCF6679), RoundedCornerShape(8.dp))
+            ) {
                 Text(
-                    text = content.content,
-                    color = Color.White,
-                    modifier = Modifier.fillMaxWidth(),
-                    style = MaterialTheme.typography.bodyLarge
+                    text = content.message,
+                    color = Color(0xFFCF6679),
+                    modifier = Modifier.padding(12.dp),
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }

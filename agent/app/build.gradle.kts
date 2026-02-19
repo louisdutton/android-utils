@@ -48,4 +48,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:okhttp-sse:4.12.0")
     implementation("org.json:json:20240303")
+    implementation("com.mikepenz:multiplatform-markdown-renderer-m3:0.13.0")
+    implementation("com.mikepenz:multiplatform-markdown-renderer:0.13.0")
 }
