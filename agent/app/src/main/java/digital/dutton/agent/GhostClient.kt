@@ -78,11 +78,15 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
             .build()
 
         val response = client.newCall(request).execute()
+        val body = response.body?.string()
         if (!response.isSuccessful) {
-            throw IOException("Failed to create session: ${response.code}")
+            val errorMsg = body?.let {
+                try { JSONObject(it).optString("error", it) } catch (e: Exception) { it }
+            } ?: "Unknown error"
+            throw IOException("Failed to create session (${response.code}): $errorMsg")
         }
 
-        val body = response.body?.string() ?: throw IOException("Empty response")
+        if (body == null) throw IOException("Empty response")
         val result = JSONObject(body)
         val id = result.getString("id")
         sessionId = id

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
@@ -125,21 +126,31 @@ class ChatViewModel : ViewModel() {
         prefs?.edit()?.putString("session_title_$sessionId", title)?.apply()
     }
 
-    fun connect(serverUrl: String, autoCreate: Boolean = true) {
+    fun connect(serverUrl: String) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
                 val ghostClient = GhostClient(serverUrl)
                 client = ghostClient
 
-                // Load existing sessions
-                refreshSessions()
+                // Load existing sessions (inline, not async)
+                val sessions = ghostClient.listSessions()
+                _sessions.value = sessions
 
-                if (autoCreate) {
+                // Only auto-create if no sessions exist at all
+                if (sessions.isEmpty()) {
                     ghostClient.createSession()
-                    refreshSessions()
+                    _sessions.value = ghostClient.listSessions()
                     _currentSession.value = _sessions.value.find { it.id == ghostClient.currentSessionId() }
                     startStreaming(ghostClient)
+                } else {
+                    // Resume most recent session
+                    val mostRecent = sessions.maxByOrNull { it.createdAt }
+                    if (mostRecent != null) {
+                        ghostClient.connectToSession(mostRecent.id)
+                        _currentSession.value = mostRecent
+                        startStreaming(ghostClient)
+                    }
                 }
 
                 _isConnected.value = true
@@ -411,7 +422,7 @@ fun ChatScreen(
     }
 
     var inputText by remember { mutableStateOf("") }
-    var serverUrl by remember { mutableStateOf(savedUrl ?: "http://") }
+    var serverUrl by remember { mutableStateOf(savedUrl ?: "") }
     var showServerDialog by remember { mutableStateOf(savedUrl == null) }
     var showNewSessionDialog by remember { mutableStateOf(false) }
     var newWorkDir by remember { mutableStateOf("") }
@@ -1065,6 +1076,8 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onRequestAssistantRole: () -> Unit
 ) {
+    BackHandler { onBack() }
+
     val context = LocalContext.current
     val prefs = remember { context.getSharedPreferences("agent_prefs", Context.MODE_PRIVATE) }
 
