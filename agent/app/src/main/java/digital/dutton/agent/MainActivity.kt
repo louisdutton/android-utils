@@ -26,6 +26,8 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.*
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.*
@@ -47,6 +49,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
+import java.net.URI
 
 sealed class MessageContent {
     data class Text(val content: String) : MessageContent()
@@ -348,6 +351,22 @@ fun ChatScreen(
     var newWorkDir by remember { mutableStateOf("") }
     var developerMode by remember { mutableStateOf(prefs.getBoolean("developer_mode", false)) }
 
+    // Dictation state
+    var isRecording by remember { mutableStateOf(false) }
+    var isTranscribing by remember { mutableStateOf(false) }
+    val audioRecorder = remember { AudioRecorder(context.cacheDir) }
+    val whisperClient = remember(savedUrl) {
+        savedUrl?.let { url ->
+            try {
+                val uri = URI(url)
+                val whisperUrl = "${uri.scheme}://${uri.host}:5932"
+                WhisperClient(whisperUrl)
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -574,6 +593,50 @@ fun ChatScreen(
                         inputText = ""
                     }
                 },
+                onMicClick = {
+                    if (isRecording) {
+                        // Stop recording - the coroutine will finish and handle transcription
+                        audioRecorder.stopRecording()
+                    } else {
+                        // Start recording
+                        scope.launch {
+                            isRecording = true
+                            try {
+                                audioRecorder.startRecording()
+                                // Recording finished (stopRecording was called)
+                                isRecording = false
+                                val file = audioRecorder.stopRecording()
+                                if (file != null && file.exists() && whisperClient != null) {
+                                    isTranscribing = true
+                                    try {
+                                        val text = whisperClient.transcribe(file)
+                                        if (text.isNotBlank()) {
+                                            inputText = text
+                                        }
+                                    } catch (e: Exception) {
+                                        android.widget.Toast.makeText(
+                                            context,
+                                            "Transcription failed: ${e.message}",
+                                            android.widget.Toast.LENGTH_SHORT
+                                        ).show()
+                                    } finally {
+                                        isTranscribing = false
+                                        file.delete()
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                isRecording = false
+                                android.widget.Toast.makeText(
+                                    context,
+                                    "Recording failed: ${e.message}",
+                                    android.widget.Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                },
+                isRecording = isRecording,
+                isTranscribing = isTranscribing,
                 enabled = isConnected && !isLoading
             )
         }
@@ -741,6 +804,9 @@ fun ChatInputBar(
     value: String,
     onValueChange: (String) -> Unit,
     onSend: () -> Unit,
+    onMicClick: () -> Unit,
+    isRecording: Boolean,
+    isTranscribing: Boolean,
     enabled: Boolean = true
 ) {
     Surface(
@@ -757,18 +823,26 @@ fun ChatInputBar(
                 value = value,
                 onValueChange = onValueChange,
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Message") },
+                placeholder = {
+                    Text(
+                        when {
+                            isRecording -> "Recording..."
+                            isTranscribing -> "Transcribing..."
+                            else -> "Message"
+                        }
+                    )
+                },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = { onSend() }),
                 singleLine = true,
-                enabled = enabled,
+                enabled = enabled && !isRecording && !isTranscribing,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFF1A1A1A),
                     unfocusedContainerColor = Color(0xFF1A1A1A),
                     disabledContainerColor = Color(0xFF1A1A1A),
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = Color(0xFF333333),
-                    disabledBorderColor = Color(0xFF333333),
+                    focusedBorderColor = if (isRecording) Color(0xFFE57373) else MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = if (isRecording) Color(0xFFE57373) else Color(0xFF333333),
+                    disabledBorderColor = if (isRecording) Color(0xFFE57373) else Color(0xFF333333),
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
                     disabledTextColor = Color.Gray,
@@ -778,8 +852,29 @@ fun ChatInputBar(
             )
             Spacer(modifier = Modifier.width(8.dp))
             FilledIconButton(
+                onClick = onMicClick,
+                enabled = enabled && !isTranscribing,
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = if (isRecording) Color(0xFFE57373) else MaterialTheme.colorScheme.primary
+                )
+            ) {
+                if (isTranscribing) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp,
+                        color = Color.White
+                    )
+                } else {
+                    Icon(
+                        if (isRecording) Icons.Default.Stop else Icons.Default.Mic,
+                        contentDescription = if (isRecording) "Stop" else "Dictate"
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            FilledIconButton(
                 onClick = onSend,
-                enabled = value.isNotBlank() && enabled
+                enabled = value.isNotBlank() && enabled && !isRecording && !isTranscribing
             ) {
                 Icon(
                     Icons.AutoMirrored.Filled.Send,
