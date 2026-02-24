@@ -818,19 +818,36 @@ fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
             }
         }
         is MessageContent.Error -> {
+            var expanded by remember { mutableStateOf(false) }
+            val firstLine = content.message.lines().first()
+            val hasMore = content.message.contains('\n') || content.message.length > 80
+
             Surface(
                 shape = RoundedCornerShape(8.dp),
                 color = Color(0xFF2E1A1A),
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color(0xFFCF6679), RoundedCornerShape(8.dp))
+                    .then(if (hasMore) Modifier.clickable { expanded = !expanded } else Modifier)
+                    .animateContentSize()
             ) {
-                Text(
-                    text = content.message,
-                    color = Color(0xFFCF6679),
-                    modifier = Modifier.padding(12.dp),
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                if (expanded) {
+                    Text(
+                        text = content.message,
+                        color = Color(0xFFCF6679),
+                        modifier = Modifier.padding(12.dp),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                } else {
+                    Text(
+                        text = firstLine.let { if (it.length > 80) it.take(80) + "…" else it } +
+                                if (hasMore) " ▸" else "",
+                        color = Color(0xFFCF6679),
+                        modifier = Modifier.padding(12.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 1
+                    )
+                }
             }
         }
         is MessageContent.ToolUse -> {
