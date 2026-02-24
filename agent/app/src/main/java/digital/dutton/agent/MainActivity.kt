@@ -629,6 +629,28 @@ fun ChatScreen(
                     )
                 )
                 NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Build, contentDescription = null) },
+                    label = { Text("Developer Mode") },
+                    badge = {
+                        Switch(
+                            checked = developerMode,
+                            onCheckedChange = {
+                                developerMode = it
+                                prefs.edit().putBoolean("developer_mode", it).apply()
+                            },
+                            modifier = Modifier.height(24.dp)
+                        )
+                    },
+                    selected = false,
+                    onClick = {
+                        developerMode = !developerMode
+                        prefs.edit().putBoolean("developer_mode", developerMode).apply()
+                    },
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.Transparent
+                    )
+                )
+                NavigationDrawerItem(
                     icon = { Icon(Icons.Default.Settings, contentDescription = null) },
                     label = { Text("Settings") },
                     selected = false,
@@ -851,7 +873,9 @@ fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
             }
         }
         is MessageContent.ToolUse -> {
-            ToolUseBubble(content = content, developerMode = developerMode)
+            if (developerMode) {
+                ToolUseBubble(content = content, developerMode = developerMode)
+            }
         }
     }
 }
@@ -1248,7 +1272,6 @@ fun SettingsScreen(
     var ghostUrl by remember { mutableStateOf(prefs.getString("server_url", "") ?: "") }
     var whisperUrl by remember { mutableStateOf(prefs.getString("whisper_url", "") ?: "") }
     var workDirBase by remember { mutableStateOf(prefs.getString("work_dir_base", "/home/louis/projects") ?: "/home/louis/projects") }
-    var developerMode by remember { mutableStateOf(prefs.getBoolean("developer_mode", false)) }
     var updateSource by remember { mutableStateOf(prefs.getString("update_source", "louis@mini:~/projects/android-utils/agent/app/build/outputs/apk/debug/app-debug.apk") ?: "") }
 
     Scaffold(
@@ -1337,28 +1360,6 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Save Settings")
-                }
-            }
-
-            item { Spacer(modifier = Modifier.height(8.dp)) }
-
-            item {
-                Text("Developer", color = Color.White, style = MaterialTheme.typography.titleMedium)
-            }
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("Developer Mode", color = Color.White)
-                    Switch(
-                        checked = developerMode,
-                        onCheckedChange = {
-                            developerMode = it
-                            prefs.edit().putBoolean("developer_mode", it).apply()
-                        }
-                    )
                 }
             }
 
