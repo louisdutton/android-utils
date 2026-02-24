@@ -40,7 +40,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.text.AnnotatedString
@@ -67,8 +69,12 @@ enum class Screen { Chat, Settings }
 sealed class MessageContent {
     data class Text(val content: String) : MessageContent()
     data class Error(val message: String) : MessageContent()
-    data class ToolCall(val name: String, val input: String?) : MessageContent()
-    data class ToolResult(val name: String, val output: String?) : MessageContent()
+    data class ToolUse(
+        val name: String,
+        val input: String?,
+        val output: String? = null,
+        val isError: Boolean = false
+    ) : MessageContent()
 }
 
 data class ChatMessage(
@@ -260,15 +266,32 @@ class ChatViewModel : ViewModel() {
                         }
                         is GhostEvent.ToolCall -> {
                             _messages.value = _messages.value + ChatMessage(
-                                content = MessageContent.ToolCall(event.name, event.input),
+                                content = MessageContent.ToolUse(
+                                    name = event.name,
+                                    input = event.input,
+                                    output = null,
+                                    isError = false
+                                ),
                                 isUser = false
                             )
                         }
                         is GhostEvent.ToolResult -> {
-                            _messages.value = _messages.value + ChatMessage(
-                                content = MessageContent.ToolResult(event.name, event.output),
-                                isUser = false
-                            )
+                            // Find the last ToolUse message without output and merge result into it
+                            val msgs = _messages.value.toMutableList()
+                            val idx = msgs.indexOfLast { msg ->
+                                val c = msg.content
+                                c is MessageContent.ToolUse && c.output == null
+                            }
+                            if (idx >= 0) {
+                                val existing = msgs[idx].content as MessageContent.ToolUse
+                                msgs[idx] = msgs[idx].copy(
+                                    content = existing.copy(
+                                        output = event.output,
+                                        isError = event.isError
+                                    )
+                                )
+                                _messages.value = msgs
+                            }
                         }
                         is GhostEvent.TurnEnd -> {
                             currentAssistantMessageId = null
@@ -810,56 +833,180 @@ fun ChatBubble(message: ChatMessage, developerMode: Boolean) {
                 )
             }
         }
-        is MessageContent.ToolCall -> {
-            if (developerMode) {
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFF1A1A2E),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .border(1.dp, Color(0xFF64B5F6), RoundedCornerShape(8.dp))
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text(
-                            text = "Tool: ${content.name}",
-                            color = Color(0xFF64B5F6),
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                        content.input?.let { input ->
-                            Text(
-                                text = input.take(300) + if (input.length > 300) "..." else "",
-                                color = Color(0xFFAAAAAA),
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.padding(top = 4.dp)
-                            )
-                        }
-                    }
+        is MessageContent.ToolUse -> {
+            ToolUseBubble(content = content, developerMode = developerMode)
+        }
+    }
+}
+
+/**
+ * Extract a short human-readable summary from tool input JSON.
+ * e.g. shell → "git diff", grep → "pattern in *.kt", read_file → "path/to/file"
+ */
+private fun toolInputSummary(name: String, input: String?): String {
+    if (input == null) return ""
+    return try {
+        val json = org.json.JSONObject(input)
+        when (name) {
+            "shell" -> json.optString("command", "").let { cmd ->
+                if (cmd.length > 60) cmd.take(60) + "…" else cmd
+            }
+            "grep" -> {
+                val pattern = json.optString("pattern", "")
+                val include = json.optString("include", "")
+                listOfNotNull(
+                    pattern.takeIf { it.isNotEmpty() },
+                    include.takeIf { it.isNotEmpty() }
+                ).joinToString(" in ")
+            }
+            "read_file" -> json.optString("path", "")
+            "write_file" -> json.optString("path", "")
+            "str_replace" -> json.optString("path", "")
+            "glob" -> json.optString("pattern", "")
+            "web_search" -> json.optString("query", "")
+            "web_fetch" -> json.optString("url", "").let { url ->
+                if (url.length > 60) url.take(60) + "…" else url
+            }
+            "spawn" -> json.optString("prompt", "").let { p ->
+                if (p.length > 60) p.take(60) + "…" else p
+            }
+            "think" -> "…"
+            "todo" -> json.optString("action", "")
+            else -> input.take(60).let { if (input.length > 60) "$it…" else it }
+        }
+    } catch (e: Exception) {
+        input.take(60).let { if (input.length > 60) "$it…" else it }
+    }
+}
+
+@Composable
+fun ToolUseBubble(content: MessageContent.ToolUse, developerMode: Boolean) {
+    var expanded by remember { mutableStateOf(false) }
+
+    val isComplete = content.output != null
+    val isError = content.isError
+    val isRunning = !isComplete
+
+    // Colors based on state
+    val bgColor = when {
+        isRunning -> Color(0xFF1A1A2E)  // blue-ish while running
+        isError -> Color(0xFF2E1A1A)     // red-ish on error
+        else -> Color(0xFF1A2E1A)        // green-ish on success
+    }
+    val borderColor = when {
+        isRunning -> Color(0xFF64B5F6)
+        isError -> Color(0xFFCF6679)
+        else -> Color(0xFF81C784)
+    }
+    val accentColor = borderColor
+
+    val summary = remember(content.name, content.input) {
+        toolInputSummary(content.name, content.input)
+    }
+
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = bgColor,
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, borderColor, RoundedCornerShape(8.dp))
+            .clickable(enabled = isComplete) { expanded = !expanded }
+            .animateContentSize()
+    ) {
+        Column(modifier = Modifier.padding(10.dp)) {
+            // Compact header line: ⚙ tool_name · summary
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                if (isRunning) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(14.dp),
+                        strokeWidth = 1.5.dp,
+                        color = accentColor
+                    )
+                } else {
+                    Icon(
+                        Icons.Default.Build,
+                        contentDescription = null,
+                        tint = accentColor,
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = content.name,
+                    color = accentColor,
+                    style = MaterialTheme.typography.labelMedium
+                )
+                if (summary.isNotEmpty()) {
+                    Text(
+                        text = "  ·  ",
+                        color = Color(0xFF666666),
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                    Text(
+                        text = summary,
+                        color = Color(0xFFAAAAAA),
+                        style = MaterialTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false)
+                    )
                 }
             }
-        }
-        is MessageContent.ToolResult -> {
-            if (developerMode) {
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFF1A2E1A),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .border(1.dp, Color(0xFF81C784), RoundedCornerShape(8.dp))
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
+
+            // Expanded content
+            if (expanded && isComplete) {
+                Spacer(modifier = Modifier.height(8.dp))
+                // Show input in developer mode
+                if (developerMode && content.input != null) {
+                    Text(
+                        text = "Input:",
+                        color = Color(0xFF888888),
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Surface(
+                        shape = RoundedCornerShape(4.dp),
+                        color = Color(0xFF111111),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 2.dp, bottom = 6.dp)
+                    ) {
                         Text(
-                            text = "Tool: ${content.name}",
-                            color = Color(0xFF81C784),
-                            style = MaterialTheme.typography.labelMedium
+                            text = content.input.take(1000) + if (content.input.length > 1000) "\n…" else "",
+                            color = Color(0xFF999999),
+                            style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
+                            modifier = Modifier
+                                .horizontalScroll(rememberScrollState())
+                                .padding(8.dp)
                         )
-                        content.output?.let { output ->
-                            Text(
-                                text = output.take(300) + if (output.length > 300) "..." else "",
-                                color = Color(0xFFAAAAAA),
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.padding(top = 4.dp)
-                            )
-                        }
+                    }
+                }
+                // Always show output when expanded
+                content.output?.let { output ->
+                    if (developerMode && content.input != null) {
+                        Text(
+                            text = "Output:",
+                            color = Color(0xFF888888),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                    Surface(
+                        shape = RoundedCornerShape(4.dp),
+                        color = Color(0xFF111111),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 2.dp)
+                    ) {
+                        Text(
+                            text = output.take(3000) + if (output.length > 3000) "\n…" else "",
+                            color = Color(0xFFCCCCCC),
+                            style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
+                            modifier = Modifier
+                                .horizontalScroll(rememberScrollState())
+                                .padding(8.dp)
+                        )
                     }
                 }
             }

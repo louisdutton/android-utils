@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 sealed class GhostEvent {
     data class Text(val content: String) : GhostEvent()
     data class ToolCall(val name: String, val input: String?) : GhostEvent()
-    data class ToolResult(val name: String, val output: String?) : GhostEvent()
+    data class ToolResult(val name: String, val output: String?, val isError: Boolean = false) : GhostEvent()
     data class TurnEnd(val reason: String?) : GhostEvent()
     data class Error(val message: String) : GhostEvent()
     data object TurnBegin : GhostEvent()
@@ -148,10 +148,11 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
                             )
                         }
                         "ToolResult" -> {
-                            // Format: {"type":"ToolResult","toolName":"shell","content":"...","toolCallId":"..."}
+                            // Format: {"type":"ToolResult","toolName":"shell","content":"...","toolCallId":"...","isError":false}
                             GhostEvent.ToolResult(
                                 name = json.optString("toolName", "unknown"),
-                                output = json.optString("content", null)
+                                output = json.optString("content", null),
+                                isError = json.optBoolean("isError", false)
                             )
                         }
                         "error" -> GhostEvent.Error(json.optString("message", "Unknown error"))
