@@ -132,40 +132,53 @@ class GhostClient(baseUrl: String = "http://localhost:3000") {
             }
 
             override fun onEvent(eventSource: EventSource, id: String?, type: String?, data: String) {
-                try {
-                    val json = JSONObject(data)
-                    val eventType = json.optString("type").ifEmpty { json.optString("event") }
-                    val event = when (eventType) {
-                        "TextPart", "text" -> GhostEvent.Text(json.optString("text", json.optString("content", "")))
-                        "TurnBegin", "turn_begin" -> GhostEvent.TurnBegin
-                        "TurnEnd", "turn_end" -> GhostEvent.TurnEnd(null)
-                        "ToolCall" -> {
-                            // Format: {"type":"ToolCall","function":{"name":"shell","arguments":"{...}"},"id":"..."}
-                            val func = json.optJSONObject("function")
-                            GhostEvent.ToolCall(
-                                name = func?.optString("name") ?: "unknown",
-                                input = func?.optString("arguments")
-                            )
-                        }
-                        "ToolResult" -> {
-                            // Format: {"type":"ToolResult","toolName":"shell","content":"...","toolCallId":"...","isError":false}
-                            GhostEvent.ToolResult(
-                                name = json.optString("toolName", "unknown"),
-                                output = json.optString("content", null),
-                                isError = json.optBoolean("isError", false)
-                            )
-                        }
-                        "error" -> GhostEvent.Error(json.optString("message", "Unknown error"))
-                        "StepBegin", "StepEnd", "StatusUpdate" -> null // Ignore step/status events
-                        else -> {
-                            android.util.Log.d("GhostClient", "Unknown event: $eventType")
-                            null
-                        }
-                    }
-                    event?.let { trySend(it) }
-                } catch (e: Exception) {
-                    trySend(GhostEvent.Error("Parse error: ${e.message}"))
+                // Skip empty or non-JSON data
+                val trimmed = data.trim()
+                if (trimmed.isEmpty() || (!trimmed.startsWith("{") && !trimmed.startsWith("["))) {
+                    android.util.Log.d("GhostClient", "Skipping non-JSON SSE data: ${trimmed.take(100)}")
+                    return
                 }
+
+                val json = try {
+                    JSONObject(trimmed)
+                } catch (e: Exception) {
+                    android.util.Log.w("GhostClient", "Failed to parse SSE JSON: ${trimmed.take(200)}", e)
+                    return // Silently skip unparseable data
+                }
+
+                val eventType = json.optString("type").ifEmpty { json.optString("event") }
+                val event = when (eventType) {
+                    "TextPart", "text" -> GhostEvent.Text(json.optString("text", json.optString("content", "")))
+                    "TurnBegin", "turn_begin" -> GhostEvent.TurnBegin
+                    "TurnEnd", "turn_end" -> GhostEvent.TurnEnd(null)
+                    "ToolCall" -> {
+                        // Format: {"type":"ToolCall","function":{"name":"shell","arguments":"{...}"},"id":"..."}
+                        val func = json.optJSONObject("function")
+                        GhostEvent.ToolCall(
+                            name = func?.optString("name") ?: "unknown",
+                            input = func?.optString("arguments")
+                        )
+                    }
+                    "ToolResult" -> {
+                        // Format: {"type":"ToolResult","toolName":"shell","content":"...","toolCallId":"...","isError":false}
+                        GhostEvent.ToolResult(
+                            name = json.optString("toolName", "unknown"),
+                            output = json.optString("content", null),
+                            isError = json.optBoolean("isError", false)
+                        )
+                    }
+                    "error" -> GhostEvent.Error(json.optString("message", "Unknown error"))
+                    // Silently ignore known infrastructure events
+                    "StepBegin", "StepEnd", "StatusUpdate",
+                    "content_block_start", "content_block_delta", "content_block_stop",
+                    "message_start", "message_delta", "message_stop",
+                    "ping" -> null
+                    else -> {
+                        android.util.Log.d("GhostClient", "Unknown event type: $eventType — ${trimmed.take(200)}")
+                        null
+                    }
+                }
+                event?.let { trySend(it) }
             }
 
             override fun onFailure(eventSource: EventSource, t: Throwable?, response: Response?) {
