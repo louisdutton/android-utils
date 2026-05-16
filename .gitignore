@@ -1,5 +1,6 @@
 # Gradle
 .gradle/
+.kotlin/
 build/
 local.properties
 
@@ -18,4 +19,3 @@ result-*
 
 # direnv
 .direnv/
-

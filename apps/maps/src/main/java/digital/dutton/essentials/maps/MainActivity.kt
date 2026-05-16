@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,10 +15,11 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -30,14 +32,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MapsApp() {
-    MaterialTheme(
-        colorScheme = darkColorScheme(
-            primary = Color(0xFF8FD6B0),
-            secondary = Color(0xFFF2C14E),
-            background = Color(0xFF0A0F0C),
-            surface = Color(0xFF101915)
-        )
-    ) {
+    MapsTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -76,4 +71,19 @@ private fun MapsApp() {
             }
         }
     }
+}
+
+@Composable
+private fun MapsTheme(content: @Composable () -> Unit) {
+    val context = LocalContext.current
+    val colorScheme = if (isSystemInDarkTheme()) {
+        dynamicDarkColorScheme(context)
+    } else {
+        dynamicLightColorScheme(context)
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        content = content,
+    )
 }

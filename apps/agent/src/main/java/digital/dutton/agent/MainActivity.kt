@@ -33,7 +33,9 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.*
 import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.*
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -1409,11 +1411,13 @@ fun SettingsScreen(
 
 @Composable
 fun AgentTheme(content: @Composable () -> Unit) {
-    val dynamicColors = dynamicDarkColorScheme(LocalContext.current)
-    val colorScheme = dynamicColors.copy(
-        background = Color.Black,
-        surface = Color.Black
-    )
+    val context = LocalContext.current
+    val colorScheme = if (isSystemInDarkTheme()) {
+        dynamicDarkColorScheme(context)
+    } else {
+        dynamicLightColorScheme(context)
+    }
+
     MaterialTheme(
         colorScheme = colorScheme,
         content = content

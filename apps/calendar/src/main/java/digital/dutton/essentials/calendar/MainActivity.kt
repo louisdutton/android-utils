@@ -10,6 +10,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,14 +28,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -155,14 +157,7 @@ private fun CalendarApp(
         viewModel.refreshPermissionState()
     }
 
-    MaterialTheme(
-        colorScheme = darkColorScheme(
-            primary = Color(0xFFFFC857),
-            secondary = Color(0xFF89CFF0),
-            background = Color(0xFF11100C),
-            surface = Color(0xFF1B1811),
-        ),
-    ) {
+    CalendarTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background,
@@ -174,6 +169,21 @@ private fun CalendarApp(
             )
         }
     }
+}
+
+@Composable
+private fun CalendarTheme(content: @Composable () -> Unit) {
+    val context = LocalContext.current
+    val colorScheme = if (isSystemInDarkTheme()) {
+        dynamicDarkColorScheme(context)
+    } else {
+        dynamicLightColorScheme(context)
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        content = content,
+    )
 }
 
 @Composable

@@ -21,8 +21,8 @@
           };
         };
 
-        platformVersion = "35";
-        buildToolsVersion = "35.0.0";
+        platformVersion = "36";
+        buildToolsVersion = "36.0.0";
         systemImageType = "default";
         emulatorAbiVersion =
           if pkgs.stdenv.hostPlatform.isAarch64
@@ -75,7 +75,7 @@
               androidSdk
               androidEmulator
               android-tools
-              gradle
+              gradle_9
               jdk21
               nixd
               alejandra
