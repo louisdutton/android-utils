@@ -1,11 +1,14 @@
 package digital.dutton.essentials.calendar.provider
 
 import android.Manifest
+import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.provider.CalendarContract
 import digital.dutton.essentials.calendar.data.CalendarEvent
+import digital.dutton.essentials.calendar.data.CalendarEventDraft
 import digital.dutton.essentials.calendar.data.CalendarRepository
 import digital.dutton.essentials.calendar.data.CalendarSource
 import digital.dutton.essentials.calendar.data.EventAvailability
@@ -61,9 +64,77 @@ class AndroidCalendarRepository(
         }.orEmpty()
     }
 
+    override suspend fun createEvent(event: CalendarEventDraft): Long = withContext(dispatcher) {
+        requireCalendarWritePermission()
+
+        val uri = context.contentResolver.insert(
+            CalendarContract.Events.CONTENT_URI,
+            event.toContentValues(),
+        ) ?: throw IllegalStateException("Android Calendar Provider did not return a new event URI.")
+
+        ContentUris.parseId(uri)
+    }
+
+    override suspend fun updateEvent(
+        eventId: Long,
+        event: CalendarEventDraft,
+    ) {
+        withContext(dispatcher) {
+            requireCalendarWritePermission()
+
+            val uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId)
+            val updatedRows = context.contentResolver.update(uri, event.toContentValues(), null, null)
+            if (updatedRows == 0) {
+                throw IllegalStateException("Event was not updated.")
+            }
+        }
+    }
+
+    override suspend fun deleteEvent(eventId: Long) {
+        withContext(dispatcher) {
+            requireCalendarWritePermission()
+
+            val uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId)
+            val deletedRows = context.contentResolver.delete(uri, null, null)
+            if (deletedRows == 0) {
+                throw IllegalStateException("Event was not deleted.")
+            }
+        }
+    }
+
     private fun requireCalendarReadPermission() {
         if (context.checkSelfPermission(Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             throw SecurityException("Calendar read permission has not been granted.")
+        }
+    }
+
+    private fun requireCalendarWritePermission() {
+        if (context.checkSelfPermission(Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            throw SecurityException("Calendar write permission has not been granted.")
+        }
+    }
+
+    private fun CalendarEventDraft.toContentValues(): ContentValues {
+        return ContentValues().apply {
+            put(CalendarContract.Events.CALENDAR_ID, calendarId)
+            put(CalendarContract.Events.TITLE, title.ifBlank { "Untitled" })
+            put(CalendarContract.Events.EVENT_LOCATION, location?.takeIf { it.isNotBlank() })
+            put(CalendarContract.Events.DESCRIPTION, description?.takeIf { it.isNotBlank() })
+            put(CalendarContract.Events.DTSTART, startMillis)
+            put(CalendarContract.Events.DTEND, endMillis)
+            put(CalendarContract.Events.ALL_DAY, if (allDay) 1 else 0)
+            put(CalendarContract.Events.EVENT_TIMEZONE, timeZone)
+            put(CalendarContract.Events.EVENT_END_TIMEZONE, timeZone)
+            put(CalendarContract.Events.AVAILABILITY, availability.toProviderValue())
+        }
+    }
+
+    private fun EventAvailability.toProviderValue(): Int {
+        return when (this) {
+            EventAvailability.Busy -> CalendarContract.Events.AVAILABILITY_BUSY
+            EventAvailability.Free -> CalendarContract.Events.AVAILABILITY_FREE
+            EventAvailability.Tentative -> CalendarContract.Events.AVAILABILITY_TENTATIVE
+            EventAvailability.Unknown -> CalendarContract.Events.AVAILABILITY_BUSY
         }
     }
 

@@ -26,6 +26,18 @@ data class CalendarEvent(
     val availability: EventAvailability,
 )
 
+data class CalendarEventDraft(
+    val calendarId: Long,
+    val title: String,
+    val location: String?,
+    val description: String?,
+    val startMillis: Long,
+    val endMillis: Long,
+    val allDay: Boolean,
+    val timeZone: String,
+    val availability: EventAvailability,
+)
+
 enum class EventAvailability {
     Busy,
     Free,

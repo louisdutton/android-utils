@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,20 +31,31 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.Menu
@@ -53,6 +66,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -63,18 +77,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import digital.dutton.essentials.calendar.data.CalendarEvent
+import digital.dutton.essentials.calendar.data.CalendarEventDraft
 import digital.dutton.essentials.calendar.data.CalendarSource
+import digital.dutton.essentials.calendar.data.EventAvailability
 import digital.dutton.essentials.calendar.provider.AndroidCalendarRepository
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -165,6 +184,39 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
             }
         }
     }
+
+    fun createEvent(event: CalendarEventDraft) {
+        mutateEvent { repository.createEvent(event) }
+    }
+
+    fun updateEvent(
+        eventId: Long,
+        event: CalendarEventDraft,
+    ) {
+        mutateEvent { repository.updateEvent(eventId, event) }
+    }
+
+    fun deleteEvent(eventId: Long) {
+        mutateEvent { repository.deleteEvent(eventId) }
+    }
+
+    private fun mutateEvent(action: suspend () -> Unit) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                action()
+            }.onSuccess {
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to update calendar.",
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -191,6 +243,9 @@ private fun CalendarApp(
                 state = state,
                 onRequestPermission = { permissionLauncher.launch(CalendarPermissions) },
                 onRefresh = viewModel::loadUpcomingEvents,
+                onCreateEvent = viewModel::createEvent,
+                onUpdateEvent = viewModel::updateEvent,
+                onDeleteEvent = viewModel::deleteEvent,
             )
         }
     }
@@ -216,9 +271,14 @@ private fun CalendarScreen(
     state: CalendarUiState,
     onRequestPermission: () -> Unit,
     onRefresh: () -> Unit,
+    onCreateEvent: (CalendarEventDraft) -> Unit,
+    onUpdateEvent: (Long, CalendarEventDraft) -> Unit,
+    onDeleteEvent: (Long) -> Unit,
 ) {
     var isMonthExpanded by rememberSaveable { mutableStateOf(true) }
+    var eventDialog by remember { mutableStateOf<EventDialogState?>(null) }
     val currentMonth = YearMonth.now()
+    val defaultCalendar = state.calendars.defaultWritableCalendar()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -230,6 +290,20 @@ private fun CalendarScreen(
                 onToggleMonth = { isMonthExpanded = !isMonthExpanded },
                 onToday = onRefresh,
             )
+        },
+        floatingActionButton = {
+            if (state.hasCalendarPermission && defaultCalendar != null) {
+                FloatingActionButton(
+                    onClick = {
+                        eventDialog = EventDialogState.Create(defaultCalendar.id)
+                    },
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Add,
+                        contentDescription = "Create event",
+                    )
+                }
+            }
         },
     ) { padding ->
         LazyColumn(
@@ -273,10 +347,57 @@ private fun CalendarScreen(
 
             sections.forEach { section ->
                 item(key = "date-${section.date}") {
-                    AgendaDaySection(section = section)
+                    AgendaDaySection(
+                        section = section,
+                        onEventClick = { event ->
+                            eventDialog = EventDialogState.Details(event)
+                        },
+                    )
                 }
             }
         }
+    }
+
+    when (val dialog = eventDialog) {
+        is EventDialogState.Create -> EventEditorDialog(
+            title = "New event",
+            calendars = state.calendars,
+            initialState = newEventFormState(dialog.calendarId),
+            onDismiss = { eventDialog = null },
+            onSave = { draft ->
+                onCreateEvent(draft)
+                eventDialog = null
+            },
+        )
+
+        is EventDialogState.Details -> EventDetailsDialog(
+            event = dialog.event,
+            onDismiss = { eventDialog = null },
+            onEdit = { eventDialog = EventDialogState.Edit(dialog.event) },
+            onDelete = { eventDialog = EventDialogState.Delete(dialog.event) },
+        )
+
+        is EventDialogState.Edit -> EventEditorDialog(
+            title = "Edit event",
+            calendars = state.calendars,
+            initialState = dialog.event.toFormState(),
+            onDismiss = { eventDialog = EventDialogState.Details(dialog.event) },
+            onSave = { draft ->
+                onUpdateEvent(dialog.event.id, draft)
+                eventDialog = null
+            },
+        )
+
+        is EventDialogState.Delete -> ConfirmDeleteDialog(
+            event = dialog.event,
+            onDismiss = { eventDialog = EventDialogState.Details(dialog.event) },
+            onDelete = {
+                onDeleteEvent(dialog.event.id)
+                eventDialog = null
+            },
+        )
+
+        null -> Unit
     }
 }
 
@@ -511,7 +632,10 @@ private fun MonthDayCell(
 }
 
 @Composable
-private fun AgendaDaySection(section: AgendaSection) {
+private fun AgendaDaySection(
+    section: AgendaSection,
+    onEventClick: (CalendarEvent) -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Top,
@@ -524,7 +648,10 @@ private fun AgendaDaySection(section: AgendaSection) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             section.events.forEach { event ->
-                AgendaEventBlock(event = event)
+                AgendaEventBlock(
+                    event = event,
+                    onClick = { onEventClick(event) },
+                )
             }
         }
     }
@@ -560,11 +687,15 @@ private fun DateRail(date: LocalDate) {
 }
 
 @Composable
-private fun AgendaEventBlock(event: CalendarEvent) {
+private fun AgendaEventBlock(
+    event: CalendarEvent,
+    onClick: () -> Unit,
+) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 58.dp),
+            .heightIn(min = 58.dp)
+            .clickable(onClick = onClick),
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         contentColor = MaterialTheme.colorScheme.onSurface,
         shape = RoundedCornerShape(4.dp),
@@ -603,6 +734,286 @@ private fun AgendaEventBlock(event: CalendarEvent) {
             }
         }
     }
+}
+
+@Composable
+private fun EventDetailsDialog(
+    event: CalendarEvent,
+    onDismiss: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+) {
+    Dialog(
+        onDismissRequest = onDismiss,
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(28.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            tonalElevation = 6.dp,
+        ) {
+            Column(
+                modifier = Modifier.padding(start = 24.dp, top = 18.dp, end = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = event.title,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            imageVector = Icons.Rounded.Close,
+                            contentDescription = "Close event details",
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.padding(end = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    DetailLine(
+                        label = "Time",
+                        value = event.detailDateTimeLabel(),
+                    )
+                    event.calendarName?.takeIf { it.isNotBlank() }?.let { calendar ->
+                        DetailLine(label = "Calendar", value = calendar)
+                    }
+                    event.location?.takeIf { it.isNotBlank() }?.let { location ->
+                        DetailLine(label = "Location", value = location)
+                    }
+                    event.description?.takeIf { it.isNotBlank() }?.let { description ->
+                        DetailLine(label = "Notes", value = description)
+                    }
+                }
+
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    TextButton(
+                        onClick = onDelete,
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error,
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Delete,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Text("Delete")
+                    }
+
+                    Button(onClick = onEdit) {
+                        Icon(
+                            imageVector = Icons.Rounded.Edit,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Text("Edit")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DetailLine(
+    label: String,
+    value: String,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
+}
+
+@Composable
+private fun EventEditorDialog(
+    title: String,
+    calendars: List<CalendarSource>,
+    initialState: EventFormState,
+    onDismiss: () -> Unit,
+    onSave: (CalendarEventDraft) -> Unit,
+) {
+    var formState by remember(initialState) { mutableStateOf(initialState) }
+    val calendarName = calendars.calendarName(formState.calendarId)
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                formState.error?.let { error ->
+                    Text(
+                        text = error,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+
+                Text(
+                    text = "Calendar: $calendarName",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.title,
+                    onValueChange = { formState = formState.copy(title = it, error = null) },
+                    label = { Text("Title") },
+                    singleLine = true,
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.date,
+                    onValueChange = { formState = formState.copy(date = it, error = null) },
+                    label = { Text("Date") },
+                    placeholder = { Text("YYYY-MM-DD") },
+                    singleLine = true,
+                )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Checkbox(
+                        checked = formState.allDay,
+                        onCheckedChange = {
+                            formState = formState.copy(allDay = it, error = null)
+                        },
+                    )
+                    Text(
+                        text = "All day",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        modifier = Modifier.weight(1f),
+                        value = formState.startTime,
+                        onValueChange = { formState = formState.copy(startTime = it, error = null) },
+                        label = { Text("Start") },
+                        placeholder = { Text("09:00") },
+                        singleLine = true,
+                        enabled = !formState.allDay,
+                    )
+                    OutlinedTextField(
+                        modifier = Modifier.weight(1f),
+                        value = formState.endTime,
+                        onValueChange = { formState = formState.copy(endTime = it, error = null) },
+                        label = { Text("End") },
+                        placeholder = { Text("10:00") },
+                        singleLine = true,
+                        enabled = !formState.allDay,
+                    )
+                }
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.location,
+                    onValueChange = { formState = formState.copy(location = it, error = null) },
+                    label = { Text("Location") },
+                    singleLine = true,
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.description,
+                    onValueChange = { formState = formState.copy(description = it, error = null) },
+                    label = { Text("Notes") },
+                    minLines = 2,
+                    maxLines = 4,
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    runCatching {
+                        formState.toDraft()
+                    }.onSuccess { draft ->
+                        onSave(draft)
+                    }.onFailure { error ->
+                        formState = formState.copy(
+                            error = error.message ?: "Check the event details.",
+                        )
+                    }
+                },
+            ) {
+                Text("Save")
+            }
+        },
+    )
+}
+
+@Composable
+private fun ConfirmDeleteDialog(
+    event: CalendarEvent,
+    onDismiss: () -> Unit,
+    onDelete: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Delete event?") },
+        text = {
+            Text("This removes \"${event.title}\" from the Android Calendar Provider.")
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = onDelete,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = MaterialTheme.colorScheme.onError,
+                ),
+            ) {
+                Text("Delete")
+            }
+        },
+    )
 }
 
 @Composable
@@ -645,7 +1056,33 @@ private data class AgendaSection(
     val events: List<CalendarEvent>,
 )
 
+private sealed interface EventDialogState {
+    data class Create(val calendarId: Long) : EventDialogState
+
+    data class Details(val event: CalendarEvent) : EventDialogState
+
+    data class Edit(val event: CalendarEvent) : EventDialogState
+
+    data class Delete(val event: CalendarEvent) : EventDialogState
+}
+
+private data class EventFormState(
+    val calendarId: Long,
+    val title: String,
+    val date: String,
+    val startTime: String,
+    val endTime: String,
+    val allDay: Boolean,
+    val location: String,
+    val description: String,
+    val error: String? = null,
+)
+
 private val WeekdayLabels = listOf("S", "M", "T", "W", "T", "F", "S")
+
+private val DateInputFormatter = DateTimeFormatter.ISO_LOCAL_DATE
+private val TimeInputFormatter = DateTimeFormatter.ofPattern("H:mm")
+private val TimeOutputFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
 private fun YearMonth.calendarCells(): List<LocalDate?> {
     val leadingEmptyCells = atDay(1).dayOfWeek.value % 7
@@ -677,6 +1114,110 @@ private fun Int.calendarCountLabel(): String {
     }
 }
 
+private fun List<CalendarSource>.defaultWritableCalendar(): CalendarSource? {
+    return firstOrNull { it.isVisible } ?: firstOrNull()
+}
+
+private fun List<CalendarSource>.calendarName(calendarId: Long): String {
+    return firstOrNull { it.id == calendarId }?.displayName ?: "Default calendar"
+}
+
+private fun newEventFormState(calendarId: Long): EventFormState {
+    val start = LocalTime.now()
+        .plusHours(1)
+        .truncatedTo(ChronoUnit.HOURS)
+    val end = start.plusHours(1)
+
+    return EventFormState(
+        calendarId = calendarId,
+        title = "",
+        date = LocalDate.now().format(DateInputFormatter),
+        startTime = start.format(TimeOutputFormatter),
+        endTime = end.format(TimeOutputFormatter),
+        allDay = false,
+        location = "",
+        description = "",
+    )
+}
+
+private fun CalendarEvent.toFormState(): EventFormState {
+    val zone = ZoneId.systemDefault()
+    val start = Instant.ofEpochMilli(startMillis).atZone(zone)
+    val end = Instant.ofEpochMilli(endMillis).atZone(zone)
+
+    return EventFormState(
+        calendarId = calendarId,
+        title = title,
+        date = start.toLocalDate().format(DateInputFormatter),
+        startTime = start.toLocalTime().format(TimeOutputFormatter),
+        endTime = end.toLocalTime().format(TimeOutputFormatter),
+        allDay = allDay,
+        location = location.orEmpty(),
+        description = description.orEmpty(),
+    )
+}
+
+private fun EventFormState.toDraft(): CalendarEventDraft {
+    if (calendarId <= 0L) {
+        throw IllegalArgumentException("Choose a calendar before saving.")
+    }
+
+    val cleanedTitle = title.trim()
+    if (cleanedTitle.isBlank()) {
+        throw IllegalArgumentException("Add a title.")
+    }
+
+    val eventDate = runCatching {
+        LocalDate.parse(date.trim(), DateInputFormatter)
+    }.getOrElse {
+        throw IllegalArgumentException("Use a date in YYYY-MM-DD format.")
+    }
+
+    val zone = ZoneId.systemDefault()
+    val startMillis: Long
+    val endMillis: Long
+
+    if (allDay) {
+        startMillis = eventDate.atStartOfDay(zone).toInstant().toEpochMilli()
+        endMillis = eventDate.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
+    } else {
+        val parsedStart = parseTime(startTime, "start")
+        val parsedEnd = parseTime(endTime, "end")
+        val start = eventDate.atTime(parsedStart).atZone(zone)
+        val end = eventDate.atTime(parsedEnd).atZone(zone)
+
+        if (!end.isAfter(start)) {
+            throw IllegalArgumentException("End time must be after start time.")
+        }
+
+        startMillis = start.toInstant().toEpochMilli()
+        endMillis = end.toInstant().toEpochMilli()
+    }
+
+    return CalendarEventDraft(
+        calendarId = calendarId,
+        title = cleanedTitle,
+        location = location.trim().takeIf { it.isNotBlank() },
+        description = description.trim().takeIf { it.isNotBlank() },
+        startMillis = startMillis,
+        endMillis = endMillis,
+        allDay = allDay,
+        timeZone = zone.id,
+        availability = EventAvailability.Busy,
+    )
+}
+
+private fun parseTime(
+    value: String,
+    fieldName: String,
+): LocalTime {
+    return runCatching {
+        LocalTime.parse(value.trim(), TimeInputFormatter)
+    }.getOrElse {
+        throw IllegalArgumentException("Use $fieldName time in HH:mm format.")
+    }
+}
+
 private fun LocalDate.agendaTitle(): String {
     return format(DateTimeFormatter.ofPattern("EEEE, d MMM"))
 }
@@ -692,6 +1233,18 @@ private fun CalendarEvent.timeRangeLabel(): String {
     val start = Instant.ofEpochMilli(startMillis).atZone(zone)
     val end = Instant.ofEpochMilli(endMillis).atZone(zone)
     return "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${end.format(DateTimeFormatter.ofPattern("HH:mm"))}"
+}
+
+private fun CalendarEvent.detailDateTimeLabel(): String {
+    val zone = ZoneId.systemDefault()
+    val start = Instant.ofEpochMilli(startMillis).atZone(zone)
+    val end = Instant.ofEpochMilli(endMillis).atZone(zone)
+
+    return if (allDay) {
+        "${start.toLocalDate().format(DateInputFormatter)} - All day"
+    } else {
+        "${start.toLocalDate().format(DateInputFormatter)}, ${start.toLocalTime().format(TimeOutputFormatter)} - ${end.toLocalTime().format(TimeOutputFormatter)}"
+    }
 }
 
 @Composable
