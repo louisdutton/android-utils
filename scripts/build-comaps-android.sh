@@ -12,6 +12,8 @@ fi
 : "${ANDROID_HOME:?ANDROID_HOME is not set. Run this script inside nix develop.}"
 export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
 export SKIP_MAP_DOWNLOAD="${SKIP_MAP_DOWNLOAD:-1}"
+export SKIP_GENERATE_STRINGS="${SKIP_GENERATE_STRINGS:-1}"
+export SKIP_GENERATE_SERBIAN_LATIN_STRINGS="${SKIP_GENERATE_SERBIAN_LATIN_STRINGS:-1}"
 
 "$maps_dir/tools/android/set_up_android.py" --sdk "$ANDROID_HOME"
 

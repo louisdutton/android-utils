@@ -18,7 +18,7 @@
     <string name="miles">Mylios</string>
     <!-- Update maps later button text -->
     <string name="later">Vėliau</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Ieškoti</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Ieškoti žemėlapyje</string>
@@ -617,7 +617,7 @@
     <string name="network">Tinklas: %s</string>
     <string name="trip_finished">Jūs pasiekėte kelionės tikslą!</string>
     <string name="ok">Gerai</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Rikiuoti…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Rikiuoti žymes</string>

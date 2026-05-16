@@ -18,7 +18,7 @@
     <string name="miles">Mil</string>
     <!-- Update maps later button text -->
     <string name="later">Daha sonra</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Axtar</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Xəritədə axtar</string>
@@ -71,7 +71,7 @@
     <string name="bookmark_set_name">Əlfəcin siyahı adı</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">Əlfəcinlər</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Əlfəcinlər və Qeydlər</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Ad</string>
@@ -642,7 +642,7 @@
     <string name="network">Şəbəkə: %s</string>
     <string name="trip_finished">Sən gəldin!</string>
     <string name="ok">Yaxşı</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Çeşid…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Əlfəcinləri çeşidləyin</string>

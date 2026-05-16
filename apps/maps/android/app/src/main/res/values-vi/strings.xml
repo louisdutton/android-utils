@@ -18,7 +18,7 @@
     <string name="miles">Dặm</string>
     <!-- Update maps later button text -->
     <string name="later">Để sau</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Tìm kiếm</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Tìm kiếm Bản đồ</string>
@@ -69,7 +69,7 @@
     <string name="bookmark_set_name">Tên danh sách</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">Địa điểm</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Ưa thích</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Tên</string>
@@ -613,7 +613,7 @@
     <string name="network">Mạng: %s</string>
     <string name="trip_finished">Bạn đã tới nơi!</string>
     <string name="ok">Ok</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Sắp xếp…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Sắp xếp Ưa thích</string>

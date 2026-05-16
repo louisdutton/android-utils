@@ -18,7 +18,7 @@
     <string name="miles">英哩</string>
     <!-- Update maps later button text -->
     <string name="later">以後再說</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">搜尋</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">搜尋地圖</string>
@@ -71,7 +71,7 @@
     <string name="bookmark_set_name">列表名稱</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">地點</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">最愛</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">名稱</string>
@@ -649,7 +649,7 @@
     <string name="network">網路： %s</string>
     <string name="trip_finished">您已到達目的地！</string>
     <string name="ok">好的</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">排序…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">最愛排序</string>

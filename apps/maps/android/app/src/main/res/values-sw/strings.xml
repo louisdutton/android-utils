@@ -237,7 +237,7 @@
     <string name="network">Mtandao: %s</string>
     <string name="trip_finished">Umefika!</string>
     <string name="ok">Sawa</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Ainisha…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Ainisha alamisho</string>

@@ -18,7 +18,7 @@
     <string name="miles">마일</string>
     <!-- Update maps later button text -->
     <string name="later">나중에</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">검색하기</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">지도 검색하기</string>
@@ -69,7 +69,7 @@
     <string name="bookmark_set_name">집합 이름을 즐겨찾기에 추가</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">북마크</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">북마크 및 트랙</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">이름</string>
@@ -616,7 +616,7 @@
     <string name="network">네트워크: %s</string>
     <string name="trip_finished">도착했습니다!</string>
     <string name="ok">OK</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">분류…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">북마크 분류하기</string>

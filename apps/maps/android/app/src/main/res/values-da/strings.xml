@@ -18,7 +18,7 @@
     <string name="miles">Mil</string>
     <!-- Update maps later button text -->
     <string name="later">Senere</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Søg</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Søg på kort</string>
@@ -71,7 +71,7 @@
     <string name="bookmark_set_name">Listenavn</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">Steder</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Favoritter</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Navn</string>
@@ -622,7 +622,7 @@
     <string name="network">Netværk: %s</string>
     <string name="trip_finished">Du er ankommet!</string>
     <string name="ok">Ok</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Sorter…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Sortér favoritter</string>

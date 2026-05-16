@@ -66,20 +66,6 @@ if (USE_CCACHE)
   endif()
 endif()
 
-if(${PLATFORM_MAC})
-  set(XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES)
-
-  # Metal language support
-  list(APPEND CMAKE_MODULE_PATH ${OMIM_ROOT}/3party/CMake-MetalShaderSupport/cmake)
-  include(CheckLanguage)
-  include(CMakeMetalInformation)
-  include(MetalShaderSupport)
-  check_language(Metal)
-  if(CMAKE_Metal_COMPILER)
-    enable_language(Metal)
-  endif()
-endif()
-
 # Global compile options for all configurations.
 if (MSVC)
   add_compile_options(/utf-8)
@@ -135,27 +121,6 @@ endif()
 
 find_package(Threads REQUIRED)
 
-# Scripts
-
-if (NOT PLATFORM_IPHONE AND NOT PLATFORM_ANDROID)
-  list(APPEND qt_components Core Network)
-  if (NOT SKIP_QT_GUI OR NOT SKIP_TESTS OR PYBINDINGS)
-    list(APPEND qt_components Widgets)
-  endif()
-  if (NOT SKIP_QT_GUI)
-    list(APPEND qt_components Gui Xml Svg OpenGL OpenGLWidgets)
-  endif()
-  # PATHS are hard-coded hints where to look for qt6 in addition to other places.
-  find_package(Qt6 COMPONENTS REQUIRED ${qt_components} PATHS $ENV{QT_PATH} /opt/homebrew/opt/qt@6 /usr/local/opt/qt@6 /usr/lib/x86_64-linux-gnu/qt6)
-
-  set(MINIMUM_REQUIRED_QT_VERSION 6.4.0)
-  if (Qt6_VERSION VERSION_LESS ${MINIMUM_REQUIRED_QT_VERSION})
-    message(FATAL_ERROR "Unsupported Qt version: ${Qt6_VERSION}, the minimum required is ${MINIMUM_REQUIRED_QT_VERSION}")
-  else()
-    message(STATUS "Found Qt version: ${Qt6_VERSION}")
-  endif()
-endif()
-
 # To allow #include "base/file_name.hpp" in all sources.
 include_directories("${CMAKE_HOME_DIRECTORY}" "${CMAKE_HOME_DIRECTORY}/libs" "${CMAKE_HOME_DIRECTORY}/tools")
 
@@ -202,7 +167,7 @@ include_directories("${OMIM_ROOT}/3party/boost")
 # without this, cmake might ignore the Python Virtual Environment when defined 
 set(Python3_FIND_VIRTUALENV FIRST)
 
-# Used in qt/ and shaders/
+# Used by shader generation.
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 execute_process(
@@ -226,21 +191,6 @@ endif()
 
 
 add_subdirectory(libs)
-
-if (PLATFORM_DESKTOP)
-  add_subdirectory(dev_sandbox)
-  add_subdirectory(generator)
-  add_subdirectory(tools)
-  if (NOT SKIP_QT_GUI)
-    add_subdirectory(qt)
-  endif()
-  if (GENERATOR_TOOL)
-    add_compile_options(-march=native -mtune=native)
-    message(STATUS "target CPU optimizations enabled, produced binaries will NOT work on a different CPU")
-  endif()
-endif()
-
-omim_add_test_subdirectory(libs/qt_tstfrm)
 
 if (PLATFORM_ANDROID)
   add_subdirectory(android/sdk/src/main/cpp)

@@ -18,7 +18,7 @@
     <string name="miles">Мілі</string>
     <!-- Update maps later button text -->
     <string name="later">Потым</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Пошук</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Пошук на карце</string>
@@ -69,7 +69,7 @@
     <string name="bookmark_set_name">Назва спісу закладак</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">Закладкі</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Закладкі і маршруты</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Назва</string>
@@ -633,7 +633,7 @@
     <string name="network">Сетка: %s</string>
     <string name="trip_finished">Вы прыбылі!</string>
     <string name="ok">Ок</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Сартаваць…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Сартаваць закладкі</string>

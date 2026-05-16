@@ -18,7 +18,7 @@
     <string name="miles">Miglia</string>
     <!-- Update maps later button text -->
     <string name="later">Più tardi</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Ricerca</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Cerca sulla mappa</string>
@@ -71,7 +71,7 @@
     <string name="bookmark_set_name">Nome dell\'elenco</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">Luoghi</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Luoghi preferiti</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Nome</string>
@@ -642,7 +642,7 @@
     <string name="network">Rete: %s</string>
     <string name="trip_finished">Sei arrivato!</string>
     <string name="ok">Ok</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Ordina…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Ordina i preferiti</string>

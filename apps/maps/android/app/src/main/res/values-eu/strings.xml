@@ -18,7 +18,7 @@
     <string name="miles">Miliak</string>
     <!-- Update maps later button text -->
     <string name="later">Geroago</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Bilatu</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Bilatu mapan</string>
@@ -71,7 +71,7 @@
     <string name="bookmark_set_name">Zerrendaren izena</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">Lekuak</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Gogokoak</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Izena</string>
@@ -644,7 +644,7 @@
     <string name="network">Sarea: %s</string>
     <string name="trip_finished">Iritsi zara!</string>
     <string name="ok">Ados</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Ordenatu…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Ordenatu markagailuak</string>

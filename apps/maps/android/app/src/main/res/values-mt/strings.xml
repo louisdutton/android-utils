@@ -18,7 +18,7 @@
     <string name="miles">Mili</string>
     <!-- Update maps later button text -->
     <string name="later">Aktar tard</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Fittex</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Fittex fuq il-mappa</string>
@@ -63,7 +63,7 @@
     <string name="add_new_set">Żid lista ġdida</string>
     <!-- Add Bookmark list dialog - hint when the list name is empty -->
     <string name="bookmark_set_name">Isem tal-lista tal-Bookmark</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Werrejja u Korsiji</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Isem</string>

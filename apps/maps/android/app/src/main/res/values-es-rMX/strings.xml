@@ -138,7 +138,7 @@
     <string name="no_available">No</string>
     <string name="trip_finished">¡Ya llegó!</string>
     <string name="ok">Ok</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Ordenar…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Ordenar marcadores</string>

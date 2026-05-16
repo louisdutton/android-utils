@@ -21,7 +21,7 @@
     <string name="miles">Miles</string>
     <!-- Update maps later button text -->
     <string name="later">Later</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Search</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Search Map</string>
@@ -734,7 +734,7 @@
     <string name="population">Population: %s</string>
     <string name="trip_finished">You have arrived!</string>
     <string name="ok">OK</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Sort…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Sort Favorites</string>
@@ -990,7 +990,7 @@
     <string name="download_resources_custom_url_message">Override the default map download server used for map downloads. Leave empty to use CoMaps default server.</string>
     <string name="download_resources_custom_url_summary_none">Not set</string>
     <string name="download_resources_custom_url_error_scheme">Please enter a URL starting with http:// or https://</string>
-    <!-- string name different as needs to match iOS -->
+    <!-- legacy string name retained for compatibility -->
     <string name="pref_alt_map_lang_handling">Alternative Map Languages</string>
     <string name="pref_alt_map_lang_handling_ignore_alternatives">Don\'t use alternatives</string>
     <string name="pref_alt_map_lang_handling_system_order">Use in system order</string>

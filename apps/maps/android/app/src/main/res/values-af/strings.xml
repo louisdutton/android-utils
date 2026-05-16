@@ -18,7 +18,7 @@
     <string name="miles">Myle</string>
     <!-- Update maps later button text -->
     <string name="later">Later</string>
-    <!-- View and button titles for accessibility, please also edit it in iphone/plist.txt -->
+    <!-- View and button titles for accessibility -->
     <string name="search">Soek</string>
     <!-- Search box placeholder text; Used when searching on the map itself, not when searching for a map -->
     <string name="search_map">Soek op die kaart</string>
@@ -67,7 +67,7 @@
     <string name="bookmark_set_name">Boekmerklysnaam</string>
     <!-- Should be used in the bookmarks-only context, see bookmarks_and_tracks if tracks are also implied. -->
     <string name="bookmarks">Boekmerke</string>
-    <!-- "Bookmarks and Tracks" dialog title, also sync it with iphone/plist.txt -->
+    <!-- "Bookmarks and Tracks" dialog title -->
     <string name="bookmarks_and_tracks">Boekmerke en paaie</string>
     <!-- Add bookmark dialog - bookmark name -->
     <string name="name">Adres</string>
@@ -610,7 +610,7 @@
     <string name="network">Netwerk: %s</string>
     <string name="trip_finished">U het aangekom!</string>
     <string name="ok">Goed</string>
-    <!-- max. 10 symbols, both iOS and Android -->
+    <!-- max. 10 symbols, Android -->
     <string name="sort">Sorteer…</string>
     <!-- Android, title, max 20-22 symbols -->
     <string name="sort_bookmarks">Sorteer boekmerke</string>
