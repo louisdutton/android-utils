@@ -12,6 +12,7 @@ local.properties
 *.apk
 *.ap_
 *.dex
+test-artifacts/
 
 # Nix
 result
