@@ -1255,7 +1255,7 @@ fun SettingsScreen(
     var ghostUrl by remember { mutableStateOf(prefs.getString("server_url", "") ?: "") }
     var whisperUrl by remember { mutableStateOf(prefs.getString("whisper_url", "") ?: "") }
     var workDirBase by remember { mutableStateOf(prefs.getString("work_dir_base", "/home/louis/projects") ?: "/home/louis/projects") }
-    var updateSource by remember { mutableStateOf(prefs.getString("update_source", "louis@mini:~/projects/android-utils/agent/app/build/outputs/apk/debug/app-debug.apk") ?: "") }
+    var updateSource by remember { mutableStateOf(prefs.getString("update_source", "louis@mini:~/projects/grapheneos-essentials/apps/agent/build/outputs/apk/debug/agent-debug.apk") ?: "") }
 
     Scaffold(
         containerColor = Color.Black,
@@ -1388,7 +1388,7 @@ fun SettingsScreen(
                             setClassName("com.termux", "com.termux.app.RunCommandService")
                             action = "com.termux.RUN_COMMAND"
                             putExtra("com.termux.RUN_COMMAND_PATH", "/data/data/com.termux/files/usr/bin/bash")
-                            putExtra("com.termux.RUN_COMMAND_ARGUMENTS", arrayOf("-c", "scp $updateSource ~/app-debug.apk && termux-open ~/app-debug.apk"))
+                            putExtra("com.termux.RUN_COMMAND_ARGUMENTS", arrayOf("-c", "scp $updateSource ~/grapheneos-essentials-agent.apk && termux-open ~/grapheneos-essentials-agent.apk"))
                             putExtra("com.termux.RUN_COMMAND_BACKGROUND", false)
                         }
                         try {

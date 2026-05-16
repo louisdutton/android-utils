@@ -14,6 +14,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android-utils"
+rootProject.name = "grapheneos-essentials"
 
-include(":agent:app")
+include(":apps:agent")
+include(":apps:maps")
+include(":apps:messaging")
+include(":apps:calendar")
