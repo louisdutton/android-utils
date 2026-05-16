@@ -6,6 +6,6 @@ own APK with a distinct application id.
 
 - `agent`: assistant and voice interaction app carried forward from the
   original project.
-- `maps`: open maps and navigation app scaffold.
+- `maps`: open maps, navigation, saved places, and calendar-linked locations.
 - `messaging`: messaging app scaffold.
-- `calendar`: calendar app scaffold.
+- `calendar`: provider-backed calendar app with event management.

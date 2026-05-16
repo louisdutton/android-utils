@@ -3,7 +3,9 @@ package digital.dutton.essentials.calendar
 import android.Manifest
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -58,6 +60,7 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Today
@@ -86,7 +89,9 @@ import digital.dutton.essentials.calendar.data.CalendarEvent
 import digital.dutton.essentials.calendar.data.CalendarEventDraft
 import digital.dutton.essentials.calendar.data.CalendarSource
 import digital.dutton.essentials.calendar.data.EventAvailability
+import digital.dutton.essentials.calendar.data.locationLink
 import digital.dutton.essentials.calendar.provider.AndroidCalendarRepository
+import digital.dutton.essentials.locations.EventLocationLink
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -275,6 +280,7 @@ private fun CalendarScreen(
     onUpdateEvent: (Long, CalendarEventDraft) -> Unit,
     onDeleteEvent: (Long) -> Unit,
 ) {
+    val context = LocalContext.current
     var isMonthExpanded by rememberSaveable { mutableStateOf(true) }
     var eventDialog by remember { mutableStateOf<EventDialogState?>(null) }
     val currentMonth = YearMonth.now()
@@ -375,6 +381,9 @@ private fun CalendarScreen(
             onDismiss = { eventDialog = null },
             onEdit = { eventDialog = EventDialogState.Edit(dialog.event) },
             onDelete = { eventDialog = EventDialogState.Delete(dialog.event) },
+            onOpenLocation = {
+                context.openEventLocationInMaps(dialog.event.locationLink())
+            },
         )
 
         is EventDialogState.Edit -> EventEditorDialog(
@@ -742,7 +751,10 @@ private fun EventDetailsDialog(
     onDismiss: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
+    onOpenLocation: () -> Unit,
 ) {
+    val locationLink = event.locationLink()
+
     Dialog(
         onDismissRequest = onDismiss,
     ) {
@@ -787,8 +799,8 @@ private fun EventDetailsDialog(
                     event.calendarName?.takeIf { it.isNotBlank() }?.let { calendar ->
                         DetailLine(label = "Calendar", value = calendar)
                     }
-                    event.location?.takeIf { it.isNotBlank() }?.let { location ->
-                        DetailLine(label = "Location", value = location)
+                    locationLink?.let { link ->
+                        DetailLine(label = "Location", value = link.location.displayAddress)
                     }
                     event.description?.takeIf { it.isNotBlank() }?.let { description ->
                         DetailLine(label = "Notes", value = description)
@@ -816,13 +828,29 @@ private fun EventDetailsDialog(
                         Text("Delete")
                     }
 
-                    Button(onClick = onEdit) {
-                        Icon(
-                            imageVector = Icons.Rounded.Edit,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Text("Edit")
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        if (locationLink != null) {
+                            TextButton(onClick = onOpenLocation) {
+                                Icon(
+                                    imageVector = Icons.Rounded.LocationOn,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp),
+                                )
+                                Text("Map")
+                            }
+                        }
+
+                        Button(onClick = onEdit) {
+                            Icon(
+                                imageVector = Icons.Rounded.Edit,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp),
+                            )
+                            Text("Edit")
+                        }
                     }
                 }
             }
@@ -1255,6 +1283,21 @@ private fun CalendarEvent.accentColor(): Color {
 private fun CalendarEvent.agendaMeta(): String {
     return listOfNotNull(
         calendarName?.takeIf { it.isNotBlank() },
-        location?.takeIf { it.isNotBlank() },
+        locationLink()?.location?.displayAddress,
     ).joinToString(" - ")
+}
+
+private fun Context.openEventLocationInMaps(link: EventLocationLink?) {
+    val providerLocation = link?.rawProviderLocation?.takeIf { it.isNotBlank() } ?: return
+    val geoUri = Uri.parse("geo:0,0?q=${Uri.encode(providerLocation)}")
+    val mapsIntent = Intent(Intent.ACTION_VIEW, geoUri)
+        .setPackage("digital.dutton.essentials.maps")
+
+    runCatching {
+        startActivity(mapsIntent)
+    }.onFailure {
+        runCatching {
+            startActivity(Intent(Intent.ACTION_VIEW, geoUri))
+        }
+    }
 }

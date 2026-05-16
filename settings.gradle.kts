@@ -16,6 +16,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "grapheneos-essentials"
 
+include(":core:locations")
+
 include(":apps:agent")
 include(":apps:maps")
 include(":apps:messaging")
