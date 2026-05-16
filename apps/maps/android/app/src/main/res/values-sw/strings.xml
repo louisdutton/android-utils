@@ -70,9 +70,7 @@
     <!-- Toast text when user hides UI with a long tap anywhere on the map -->
     <string name="long_tap_toast">Gusa kwa muda mrefu kwenye ramani tena ili kuona kiolesura</string>
     <!-- Preference title -->
-    <string name="google_play_services">Huduma za Mahali za Google Play</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Tambua kwa haraka kadirio la eneo lako kwa kutumia Bluetooth, WiFi au mtandao wa simu</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- deep purple color -->
@@ -209,11 +207,8 @@
     <string name="power_managment_setting_manual_max">Upeo wa kuhifadhi nishati</string>
     <string name="enable_logging_warning_message">Chaguo huwasha data kwa madhumuni ya uchunguzi. Itakuwa muhimu kwa wafanyakazi wetu ambao wanatatua matatizo ya programu. Washa chaguo hili kwa maombi ya mhudumu wa CoMaps tu.</string>
     <string name="driving_options_title">Machaguo ya njia</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Epuka barabara za ushuru</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Epuka barabara za vumbi</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Epuka vivuko vya feri</string>
     <string name="avoid_motorways">Epuka barabara</string>
     <string name="unable_to_calc_alert_title">Haiwezi kukokotoa njia</string>
@@ -315,24 +310,14 @@
     <string name="app_tip_08">Unaweza kurekebisha na kuboresha data ya ramani kwa urahisi.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Lengo letu kuu ni kujenga ramani za haraka, zinazozingatia faragha, na rahisi kutumia ambazo utapenda.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">Sasa unatumia CoMaps kwenye skrini ya simu</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Sasa unatumia ramani za kikaboni kwenye skrini ya gari</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Umeunganishwa kwenye Android Auto</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Endelea kwenye simu</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">Kwa skrini ya gari</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps zinahitaji ufikiaji wa eneo. Ikiwa salama, angalia arifa kwenye simu yako.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Programu hii inahitaji idhini yako</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">CoMaps katika Android Auto zinahitaji ruhusa ya eneo ili kufanya kazi kwa ufanisi</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">Ruhusa za ruzuku</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Kutembea kwa miguu</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->

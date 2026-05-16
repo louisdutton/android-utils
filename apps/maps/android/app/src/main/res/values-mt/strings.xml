@@ -421,8 +421,6 @@
     <string name="app_tip_02">Togħġbok l-app tagħna? Jekk jogħġbok agħti donazzjoni biex tappoġġja l-iżvilupp! Għadha ma togħġbokx? Jekk jogħġbok għidilna għaliex, u nirranġawha!</string>
     <string name="app_tip_03">Jekk taf żviluppatur tas-softwer, tista’ titolbu jimplimenta il-karatteristika li għandek bżonn.</string>
     <string name="app_tip_06">Tista’ tgħin sabiex tittraduċi l-applikazzjoni tagħna fil-lingwa tiegħek.</string>
-    <string name="aa_request_permission_activity_text">CoMaps ġo\' Android Auto jeħtieġ permessi tal-post biex jaħdem b ’mod effettiv</string>
-    <string name="aa_grant_permissions">Għati Permess</string>
     <string name="volume">Volum</string>
     <string name="bookmarks_export">Esporta l-bookmarks u l-korsiji kollha</string>
     <string name="clear_the_search">Neħħi t-tiftixa</string>
@@ -484,7 +482,6 @@
     <string name="dialog_routing_disclaimer_recommendations">— Ir-rotot issuġġeriti għandhom jinftiehmu biss bħala rakkomandazzjonijiet;</string>
     <string name="dialog_routing_disclaimer_borders">— Oqgħod attent bir-rotot fiż-żoni tal-fruntiera: ir-rotot maħluqa mill-app tagħna xi kultant jistgħu jaqsmu l-fruntieri tal-pajjiż f ’postijiet mhux awtorizzati.</string>
     <string name="dialog_routing_check_gps">Iċċekkja s-sinjal tal-GPS</string>
-    <string name="pref_use_google_play">Servizz proprjetarju li jikkombina GPS, Wi-Fi, netwerks ċellulari eċċ. biex jiddetermina l-lokazzjoni tiegħek b\'mod aktar preċiż. Jaf jikkonnettja mas-servers tal-Google.</string>
     <string name="dialog_routing_disclaimer_priority">— Il-kundizzjonijiet tat-toroq, il-liġijiet tat-traffiku, u s-sinjali tat-toroq dejjem jieħdu preċedenza fuq il-ħjiel tan-navigazzjoni;</string>
     <string name="day_off_today">Magħluq illum</string>
     <string name="yellow">Isfar</string>
@@ -576,7 +573,6 @@
     <string name="elevation_profile_time">Ħin:</string>
     <string name="elevation_profile_min_elevation">Elevazzjoni minima</string>
     <string name="app_tip_07">L-app tagħna hija żviluppata minn ftit dilettanti u l-komunita’.</string>
-    <string name="car_continue_on_the_phone">Kompli fuq il-mowbajl</string>
     <string name="edit_track">Editja l-Korsija</string>
     <string name="outdoor_seating">Sedili barra</string>
     <string name="download_map_title">Niżżel il-mappa ġenerali tad-dinja</string>
@@ -587,18 +583,15 @@
     <string name="continue_recording">Kompli Rrekordja</string>
     <string name="app_tip_01">Bid-donazzjonijiet u l-appoġġ tiegħek, nistgħu noħolqu l-aqwa mapep fid-dinja!</string>
     <string name="connection_failure">Falliment tal-konnessjoni</string>
-    <string name="aa_request_permission_notification">Din l-applikazzjoni teħtieġ il-permess tiegħek</string>
     <string name="start_track_recording">Rekord Track</string>
     <string name="enable_keep_screen_on">Żomm l-iskrin mixgħul</string>
     <string name="app_tip_00">Grazzi talli użajtu l-mapep tagħna mibnija mill-komunita’!</string>
-    <string name="car_used_on_the_car_screen">Issa qed tuża CoMaps fuq l-iskrin tal-karozza</string>
     <string name="app_tip_09">L-għan ewlieni tagħna huwa li nibnu mapep veloċi, iffukati fuq il-privatezza, u faċli biex jintużaw li se jinħabbu.</string>
     <string name="app_tip_05">Kont taf li l-post attwali tiegħek fuq il-mappa jista’ jintgħażel?</string>
     <string name="select_option">Agħżel l-għażla</string>
     <string name="app_tip_08">Tista’ faċilment tirranġa u ttejjeb l-informazzjoni tal-mappa.</string>
     <string name="car_used_on_the_phone_screen">Issa qed tuża CoMaps fuq l-iskrin tat-telefown</string>
     <string name="uri_open_location_failed">Ebda applikazzjoni installata li tista’ tiftaħ il-post</string>
-    <string name="aa_connected_title">Int imqabbad ma’ Android Auto</string>
     <string name="car_continue_in_the_car">Lejn l-iskrin tal-karozza</string>
     <string name="button_layer_outdoor">Barra</string>
     <string name="pref_tts_open_system_settings">Settings tas-sistema tas-sinteżi tad-diskors</string>
@@ -606,7 +599,6 @@
     <string name="error_no_file_manager_app">Ma jistax juri d-djalogu tal-għażla tal-fowlder għax l-ebda applikazzjoni xierqa mhi installata fuq it-tagħmir tiegħek. Installa applikazzjoni tal-maniġer tal-fajl u erġa ’pprova.</string>
     <string name="browser_not_available">Brawżer tal-web mhux disponibbli</string>
     <string name="view_menu">Ara l-Menu</string>
-    <string name="aa_location_permissions_request">CoMaps teħtieġ aċċess għall-post. Meta jkun sigur, iċċekkja n-notifika fuq il-mowbajl tiegħek.</string>
     <string name="pref_tts_no_system_tts">Is-settings tas-Sinteżi tad-diskors ma nstabux, żgur li t-tagħmir tiegħek jappoġġjah?</string>
     <string name="track_recording_alert_title">Issejvja fil-Bookmarks u l-Korsiji?</string>
     <string name="settings">Settings</string>
@@ -625,7 +617,6 @@
     <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Salvat</string>
     <string name="about_headline">Proġett miftuħ u imsaħħaħ mill-komunità</string>
-    <string name="google_play_services">Servizz ta\' Lokazzjoni Google Fused</string>
     <string name="hours_confirmed_time_ago">Ikkonfermat %s</string>
     <string name="existence_confirmed_time_ago">Ikkonfermata l-eżistenza %s</string>
 </resources>

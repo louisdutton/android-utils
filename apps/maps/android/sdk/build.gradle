@@ -160,9 +160,7 @@ project.afterEvaluate {
       def isWindows = DefaultNativePlatform.getCurrentOperatingSystem().isWindows()
       def bash = isWindows ? 'C:/Program Files/Git/bin/bash.exe' : 'bash'
 
-      if (!taskName.toString().contains('Google')) {
-        environment 'SKIP_MAP_DOWNLOAD', '1'
-      }
+      environment 'SKIP_MAP_DOWNLOAD', '1'
 
       commandLine bash, './configure.sh'
     }

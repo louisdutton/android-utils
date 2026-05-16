@@ -38,6 +38,19 @@ data/patterns_design.txt
 # Auto-generated from data/categories-strings/* by tools/unix/generate_categories.sh
 data/categories.txt
 
+# Fetched by Nix and materialized as local symlinks for the Android build.
+3party/boost
+3party/expat/expat
+3party/freetype/freetype
+3party/gflags
+3party/harfbuzz/harfbuzz
+3party/icu/icu
+3party/jansson/jansson
+3party/protobuf/protobuf
+3party/pugixml/pugixml
+3party/Vulkan-Headers
+data/borders
+
 # Compiled Python
 *.pyc
 

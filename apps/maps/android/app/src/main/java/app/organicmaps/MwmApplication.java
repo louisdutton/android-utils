@@ -22,7 +22,6 @@ import app.organicmaps.location.TrackRecordingService;
 import app.organicmaps.routing.NavigationService;
 import app.organicmaps.sdk.Map;
 import app.organicmaps.sdk.OrganicMaps;
-import app.organicmaps.sdk.display.DisplayManager;
 import app.organicmaps.sdk.location.LocationHelper;
 import app.organicmaps.sdk.location.LocationState;
 import app.organicmaps.sdk.location.SensorHelper;
@@ -49,10 +48,6 @@ public class MwmApplication extends Application implements Application.ActivityL
   @SuppressWarnings("NotNullFieldNotInitialized")
   @NonNull
   private OrganicMaps mOrganicMaps;
-
-  @SuppressWarnings("NotNullFieldNotInitialized")
-  @NonNull
-  private DisplayManager mDisplayManager;
 
   @Nullable
   private WeakReference<Activity> mTopActivity;
@@ -90,12 +85,6 @@ public class MwmApplication extends Application implements Application.ActivityL
   public SensorHelper getSensorHelper()
   {
     return getOrganicMaps().getSensorHelper();
-  }
-
-  @NonNull
-  public DisplayManager getDisplayManager()
-  {
-    return mDisplayManager;
   }
 
   @NonNull
@@ -142,7 +131,6 @@ public class MwmApplication extends Application implements Application.ActivityL
     TrackRecordingService.createNotificationChannel(this);
 
     registerActivityLifecycleCallbacks(this);
-    mDisplayManager = new DisplayManager();
   }
 
   public boolean initOrganicMaps(@NonNull Runnable onComplete) throws IOException
@@ -222,9 +210,7 @@ public class MwmApplication extends Application implements Application.ActivityL
 
     OsmUploadWork.startActionUploadOsmChanges(this);
 
-    if (!mDisplayManager.isDeviceDisplayUsed())
-      Logger.i(LOCATION_TAG, "Android Auto is active, keeping location in the background");
-    else if (RoutingController.get().isNavigating())
+    if (RoutingController.get().isNavigating())
       Logger.i(LOCATION_TAG, "Navigation is in progress, keeping location in the background");
     else if (!Map.isEngineCreated() || LocationState.getMode() == LocationState.PENDING_POSITION)
       Logger.i(LOCATION_TAG, "PENDING_POSITION mode, keeping location in the background");

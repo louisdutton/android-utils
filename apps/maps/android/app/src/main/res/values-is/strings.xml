@@ -359,9 +359,6 @@
     <string name="bookmarks_empty_list_title">Þessi listi er tómur</string>
     <string name="driving_options_title">Valkostir leiðagerðar</string>
     <string name="change_driving_options_btn">Valkostir leiðagerðar virkir</string>
-    <string name="aa_connected_title">Þú ert tengd(ur) við Android Auto</string>
-    <string name="car_continue_on_the_phone">Halda áfram í símanum</string>
-    <string name="aa_grant_permissions">Veita heimildir</string>
     <string name="bookmarks_export">Flytja út öll bókamerki og ferla</string>
     <string name="choose_color">Veldu lit</string>
     <string name="uri_open_location_failed">Ekkert forrit er uppsett sem gæti opnað staðsetninguna</string>
@@ -381,7 +378,6 @@
     <string name="pref_tts_street_names_title">Tilkynna götuheiti</string>
     <string name="pref_tts_test_voice_title">Prófa raddleiðsögn (TTS, texti-í-tal)</string>
     <string name="pref_map_auto_zoom">Sjálfvirkur aðdráttur</string>
-    <string name="google_play_services">Google Play staðsetningarþjónustur</string>
     <string name="dialog_routing_change_start">Aðlaga upphafsstað</string>
     <string name="dialog_routing_change_end">Aðlaga áfangastað</string>
     <string name="dialog_routing_intermediate_not_determined">Aðlagaðu milliáfangann þinn.</string>
@@ -421,7 +417,6 @@
     <string name="load_kmz_successful">Tókst að hlaða inn bókamerkjum! Þú getur skoðað þau á landakortinu eða í bókamerkjasafninu.</string>
     <string name="my_position_share_sms">Skoðaðu núverandi staðsetninguna mína á CoMaps landakortinu! %1$s eða %2$s Ertu ekki með ónettengd kort? Sæktu þau hér: https://www.comaps.app/download/</string>
     <string name="my_position_share_email_subject">Hæ, skoðaðu núverandi staðsetninguna mína á CoMaps landakortinu!</string>
-    <string name="pref_use_google_play">Ákvarðaðu í skyndi staðsetninguna þína með Bluetooth, WiFi eða farsímaneti</string>
     <string name="mobile_data_description">Farsímagagnatenging er nauðsynleg fyrir tilkynningar um uppfærslur á korti og til að senda inn breytingar.</string>
     <string name="category_post">Póstur</string>
     <string name="unknown_file_type">Forritið þekkti ekki skráategundina: \n%1$s</string>
@@ -459,7 +454,6 @@
     <string name="app_tip_08">Þú getur auðveldlega lagfært og bætt kortagögnin.</string>
     <string name="app_tip_09">Meginmarkmið okkar er að byggja hraðvirk og auðveld landakort sm þú kannt að meta og sem passa upp á persónuupplýsingar þínar.</string>
     <string name="car_used_on_the_phone_screen">Þú ert núna að nota CoMaps á símaskjánum</string>
-    <string name="aa_request_permission_activity_text">CoMaps í Android Auto þarf heimildir fyrir staðsetningar til að virka eðlilega</string>
     <string name="routing_add_finish_point">Notaðu leit eða ýttu á kortið til að bæta við áfangastað</string>
     <string name="dialog_routing_disclaimer_title">Þegar ferðast er eftir leið, skaltu hafa eftirfarandi í huga:</string>
     <string name="dialog_routing_disclaimer_beware">Vertu vakandi og settu öryggið ofar öllu á vegum úti!</string>
@@ -521,10 +515,7 @@
     <string name="app_tip_00">Takk fyrir að nota landakortin frá samfélaginu okkar!</string>
     <string name="app_tip_01">Með framlögum þínum og stuðningi getum við búið til bestu landakortin í heiminum!</string>
     <string name="app_tip_02">Líkar þér forritið okkar? Styrktu okkur til að styðja áframhaldandi þróun þess! Líkar þér ekki eitthvað? Láttu okkur vita og við munum laga það!</string>
-    <string name="car_used_on_the_car_screen">Þú ert núna að nota CoMaps á bílskjánum</string>
     <string name="car_continue_in_the_car">Yfir á skjá bílsins</string>
-    <string name="aa_location_permissions_request">CoMaps þarf aðgang að staðsetningu. Við gott tækifæri, þegar það er öruggt, skaltu skoða tilkynninguna á símanum þínum.</string>
-    <string name="aa_request_permission_notification">Þetta forrit þarf heimild frá þér</string>
     <string name="pref_tts_open_system_settings">Kerfisstillingar talgervils</string>
     <string name="pref_tts_no_system_tts">Stillingar talgervils fundust ekki, ertu viss um að tækið þitt sé með stuðning við slíkt?</string>
     <string name="power_save_dialog_summary">Til að tryggja nákvæma leiðsögn ættirðu að gera orkusparnaðarham óvirkan í raflöðustillingum símans.</string>

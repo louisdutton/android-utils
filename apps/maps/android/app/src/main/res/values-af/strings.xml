@@ -263,9 +263,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Werk kaart by</string>
     <!-- Preference title -->
-    <string name="google_play_services">Google Play Liggingdienste</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Bepaal vinnig jou benaderde ligging met behulp van Bluetooth, WiFi of mobiele netwerk</string>
     <!-- Text for routing error dialog -->
     <string name="routing_download_maps_along">Laai al die kaarte langs u roete af</string>
     <!-- Text for routing error dialog -->
@@ -585,9 +583,7 @@
     <string name="power_managment_setting_manual_max">Altyd</string>
     <string name="enable_logging_warning_message">Aktiveer hierdie opsie tydelik om ’n gedetailleerde diagnosestaat van u probleem op te neem en handmatig na ons te stuur d.m.v. die “Rapporteer ’n fout” in die Help-dialoog. Sulke state kan liggingsinligting bevat.</string>
     <string name="driving_options_title">Ompadopsies</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Vermy grondpaaie</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Vermy veerbootkruisings</string>
     <string name="unable_to_calc_alert_title">Kan nie ’n roete bereken nie</string>
     <string name="unable_to_calc_alert_subtitle">’n Roete kon nie gevind word nie. Dit kan deur ’n ompadopsies of onvolledige OpenStreetMap-data veroorsaak word. Verander u omwegopsies en probeer weer.</string>
@@ -683,11 +679,8 @@
     <!-- App tip #04 -->
     <string name="app_tip_04">Tik enige plek op die kaart om enigiets te kies. Tik lank om te versteek en om die koppelvlak terug te wys.</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps benodig liggingtoegang. Gaan die kennisgewing op jou foon na wanneer dit veilig is.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Hierdie toepassing benodig jou toestemming</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">CoMaps in Android Auto het \'n liggingtoestemming nodig om effektief te werk</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Stap</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->

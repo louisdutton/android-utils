@@ -47,6 +47,79 @@
           ln -s "${pkgs.llvm}/bin/llvm-ar" "$out/bin/clang-ar"
           ln -s "${pkgs.llvm}/bin/llvm-ranlib" "$out/bin/clang-ranlib"
         '';
+        comapsSource = pkgs.fetchgit {
+          url = "https://codeberg.org/comaps/comaps.git";
+          rev = "153f7d47b9eca13a51b78f875b37795ef09eed55";
+          fetchSubmodules = false;
+          hash = "sha256-U2larw4f4ESftwgalYDWn4Y7BL5w6AuDil1MTJyHWnE=";
+        };
+        comapsThirdParty = rec {
+          borders = pkgs.runCommand "comaps-borders-2026.05.06-11" {} ''
+            cp -R ${comapsSource}/data/borders "$out"
+          '';
+          boost = pkgs.fetchzip {
+            url = "https://archives.boost.io/release/1.85.0/source/boost_1_85_0.tar.bz2";
+            hash = "sha256-ZIZGXwJSlS/wqhexX31aihatQXlUdSzEfA9BADg/GiM=";
+          };
+          expatRoot = pkgs.fetchzip {
+            url = "https://github.com/libexpat/libexpat/archive/refs/tags/R_2_6_4.tar.gz";
+            hash = "sha256-ek8/3c8bKG+z7fIM+QCNsH7eoVGAt7z3bXBHZ3QjlS8=";
+          };
+          expat = "${expatRoot}/expat";
+          freetype = pkgs.fetchzip {
+            url = "https://github.com/freetype/freetype/archive/refs/tags/VER-2-13-2.tar.gz";
+            hash = "sha256-Io9k8xmOKrk+4GSi3PUU60X68T4BpG8dru1/KO+jVRk=";
+          };
+          gflags = pkgs.fetchzip {
+            url = "https://github.com/gflags/gflags/archive/refs/tags/v2.2.2.tar.gz";
+            hash = "sha256-4NLd/p72H7ZiFCCVjTfM/rDvZ8CVPMxYpnJ2O1od8ZA=";
+          };
+          harfbuzz = pkgs.fetchzip {
+            url = "https://github.com/harfbuzz/harfbuzz/archive/refs/tags/9.0.0.tar.gz";
+            hash = "sha256-2ieCf3ftNk851FZBDPVl+7QHWBqD729KiUxUyxi26Yg=";
+          };
+          icu = pkgs.fetchzip {
+            url = "https://github.com/unicode-org/icu/archive/refs/tags/release-75-1.tar.gz";
+            hash = "sha256-jJa5VTu77vx9l5FgPbEWpL/f3GrZLaGCvZA3vVZ+4Q4=";
+          };
+          jansson = pkgs.fetchzip {
+            url = "https://github.com/akheron/jansson/archive/refs/tags/v2.14.1.tar.gz";
+            hash = "sha256-ct/EzRDrHkZrCcm98XGCbjbOM2h3AAMldPoTWA5+dAE=";
+          };
+          protobufUpstream = pkgs.fetchzip {
+            url = "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.3.0.tar.gz";
+            hash = "sha256-PJVYMRGwYvtj+m0rbontjEPL5xFi/zgg18p76tL3qIg=";
+          };
+          protobuf = pkgs.runCommand "comaps-protobuf-3.3.0-patched" {} ''
+            cp -R ${protobufUpstream} "$out"
+            chmod -R u+w "$out"
+
+            substituteInPlace "$out/src/google/protobuf/generated_message_table_driven.h" \
+              --replace-fail "#define PROTOBUF_CONSTEXPR constexpr" "#define PROTOBUF_CONSTEXPR constexpr
+
+#include <type_traits>"
+
+            substituteInPlace "$out/src/google/protobuf/repeated_field.h" \
+              --replace-fail "#ifdef _MSC_VER
+// This is required for min/max on VS2013 only.
+#include <algorithm>
+#endif
+
+#include <iterator>" "#include <algorithm>
+#include <iterator>"
+
+            substituteInPlace "$out/src/google/protobuf/stubs/hash.h" \
+              --replace-fail "#elif defined(_MSC_VER) && !defined(_STLPORT_VERSION)" "#elif 0  /* Disabled for MSVC compatibility */"
+          '';
+          pugixml = pkgs.fetchzip {
+            url = "https://github.com/zeux/pugixml/archive/refs/tags/v1.15.tar.gz";
+            hash = "sha256-t/57lg32KgKPc7qRGQtO/GOwHRqoj78lllSaE/A8Z9Q=";
+          };
+          vulkanHeaders = pkgs.fetchzip {
+            url = "https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v1.4.322.tar.gz";
+            hash = "sha256-YDh67zrLl+ek7oJBQIfCHARa9yAzH8TsMLpGUtNQqjg=";
+          };
+        };
         systemImageType = "default";
         emulatorAbiVersion =
           if pkgs.stdenv.hostPlatform.isAarch64
@@ -136,6 +209,17 @@
             ANDROID_NDK_ROOT = "${androidHome}/ndk/${ndkVersion}";
             JAVA_HOME = jdk21.home;
             PYTHON = "${comapsPython}/bin/python3";
+            COMAPS_BORDERS_SRC = comapsThirdParty.borders;
+            COMAPS_BOOST_SRC = comapsThirdParty.boost;
+            COMAPS_EXPAT_SRC = comapsThirdParty.expat;
+            COMAPS_FREETYPE_SRC = comapsThirdParty.freetype;
+            COMAPS_GFLAGS_SRC = comapsThirdParty.gflags;
+            COMAPS_HARFBUZZ_SRC = comapsThirdParty.harfbuzz;
+            COMAPS_ICU_SRC = comapsThirdParty.icu;
+            COMAPS_JANSSON_SRC = comapsThirdParty.jansson;
+            COMAPS_PROTOBUF_SRC = comapsThirdParty.protobuf;
+            COMAPS_PUGIXML_SRC = comapsThirdParty.pugixml;
+            COMAPS_VULKAN_HEADERS_SRC = comapsThirdParty.vulkanHeaders;
 
             shellHook = ''
               unset PYTHONPATH

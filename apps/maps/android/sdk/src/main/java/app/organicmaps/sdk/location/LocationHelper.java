@@ -4,7 +4,6 @@ import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
@@ -294,45 +293,6 @@ public class LocationHelper implements BaseLocationProvider.Listener
       }
     }
     return minAccuracyProvider;
-  }
-
-  // Used by GoogleFusedLocationProvider.
-  @SuppressWarnings("unused")
-  @Override
-  @UiThread
-  public void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent)
-  {
-    Logger.d(TAG);
-
-    if (!isActive())
-    {
-      Logger.w(TAG, "Provider is not active");
-      return;
-    }
-
-    // Stop provider until location resolution is granted.
-    stop();
-    LocationState.nativeOnLocationError(LocationState.ERROR_GPS_OFF);
-
-    mListenersIterator.rewind();
-    while (mListenersIterator.hasNext())
-      mListenersIterator.next().onLocationResolutionRequired(pendingIntent);
-  }
-
-  // Used by GoogleFusedLocationProvider.
-  @SuppressWarnings("unused")
-  @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
-  @Override
-  @UiThread
-  public void onFusedLocationUnsupported()
-  {
-    // Try to downgrade to the native provider first and restart the service before notifying the user.
-    Logger.d(TAG, "provider = " + mLocationProvider.getClass().getSimpleName() + " is not supported,"
-                      + " downgrading to use native provider");
-    mLocationProvider.stop();
-    mLocationProvider = new AndroidNativeProvider(mContext, this);
-    mActive = true;
-    mLocationProvider.start(mInterval);
   }
 
   // RouteSimulationProvider doesn't really require location permissions.

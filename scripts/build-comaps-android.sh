@@ -15,6 +15,7 @@ export SKIP_MAP_DOWNLOAD="${SKIP_MAP_DOWNLOAD:-1}"
 export SKIP_GENERATE_STRINGS="${SKIP_GENERATE_STRINGS:-1}"
 export SKIP_GENERATE_SERBIAN_LATIN_STRINGS="${SKIP_GENERATE_SERBIAN_LATIN_STRINGS:-1}"
 
+"$repo_root/scripts/materialize-comaps-third-party.sh"
 "$maps_dir/tools/android/set_up_android.py" --sdk "$ANDROID_HOME"
 
 (

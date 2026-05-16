@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
-import app.organicmaps.MwmApplication;
 import app.organicmaps.R;
 import app.organicmaps.sdk.Framework;
 import app.organicmaps.util.Utils;
@@ -19,10 +18,6 @@ public class PlacePageUtils
   static void updateMapViewport(@NonNull View parent, int placePageDistanceToTop, int viewportMinHeight)
   {
     parent.post(() -> {
-      // Because of the post(), this lambda is called after the car.SurfaceRenderer.onStableAreaChanged() and breaks the
-      // visibleRect configuration
-      if (MwmApplication.from(parent.getContext()).getDisplayManager().isCarDisplayUsed())
-        return;
       final int screenWidth = parent.getWidth();
       if (placePageDistanceToTop >= viewportMinHeight)
         Framework.nativeSetVisibleRect(0, 0, screenWidth, placePageDistanceToTop);

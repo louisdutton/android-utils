@@ -20,9 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# For Guava used by Android Auto
--dontwarn java.lang.reflect.AnnotatedType
-
 # Disable obfuscation since it is open-source app.
 -dontobfuscate
 # R8 crypts the source line numbers in all log messages.

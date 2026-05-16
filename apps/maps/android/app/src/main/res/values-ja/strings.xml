@@ -279,9 +279,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">地図を更新</string>
     <!-- Preference title -->
-    <string name="google_play_services">Google 融合された位置予測プロバイダ</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Bluetooth、WiFi、またはモバイルネットワーク経由で、おおよその位置を素早く特定する</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -617,11 +615,8 @@
     <string name="power_managment_setting_manual_max">最大電力節約</string>
     <string name="enable_logging_warning_message">このオプションは診断目的でのデータ記録を有効にします。これはこのアプリケーションのトラブルシューティングを担当する当社のサポートスタッフの助けになります。このオプションはCoMapsにリクエストされた場合にのみ有効にしてください。</string>
     <string name="driving_options_title">経路オプション</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">有料道路を避ける</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">未舗装道路を使わない</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">フェリーを利用しない</string>
     <string name="avoid_motorways">高速道路を避ける</string>
     <string name="unable_to_calc_alert_title">ルートを計算できません</string>
@@ -740,24 +735,14 @@
     <string name="app_tip_08">地図データを簡単に修正および改善できます。</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">私たちの主な目標は、ユーザーに気に入っていただける、プライバシーを重視した使いやすいマップを高速に構築することです。</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">端末の画面でCoMapsを使用している</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">あなたは今、車の画面でCoMapsを使用している</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Android Autoに接続している</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">電話で続ける</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">車のスクリーンへ</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMapsは位置情報へのアクセスを必要とする。安全になったら、携帯電話の通知をチェックしよう。</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">このアプリはあなたの許可を必要とする</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">Android AutoのCoMapsを有効に機能させるには、位置情報の許可が必要です</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">許可を与える</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">ハイキング</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->

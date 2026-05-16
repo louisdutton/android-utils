@@ -89,7 +89,6 @@
     <string name="app_tip_04">Tipp irgendwo uf d Charte, zum öppis uuszwähle. Tipp lang, zum d Oberflächi uus- und wieder iizblende.</string>
     <string name="app_tip_06">Du chasch debi helfe, eusi App i dini Spraach z übersetze.</string>
     <string name="app_tip_09">Euses Hauptziel ischs, schnelli, dateschutzorientierti und benutzerfründlichi Charte z erstelle, wo du wirsch liebe.</string>
-    <string name="aa_location_permissions_request">CoMaps bruucht Zuegriff uf de Standort. Wenns sicher isch, prüef d Benachrichtigung uf dim Telefon.</string>
     <string name="pref_tts_no_system_tts">D Iistellige für d Sprachsynthese sind nöd gfunde worde. Bisch du sicher, dass dis Grät sie unterstützt?</string>
     <string name="error_no_file_manager_app">S Dialogfeld zur Ordneruuswahl cha nöd aazeigt werde, will kei geigneti App uf dim Grät installiert isch. Bitte installier e Dateimanager-App und versuechs nomal.</string>
     <string name="pref_backup_now_summary_ok">Sicherig erfolgriich abgschlosse</string>
@@ -256,8 +255,6 @@
     <string name="downloader_retry">Wiederhole</string>
     <string name="downloader_delete_map">Charte lösche</string>
     <string name="downloader_update_map">Charte aktualisiere</string>
-    <string name="google_play_services">Google Fused-Standortdienst</string>
-    <string name="pref_use_google_play">En proprietäre Dienst, wo GPS, Wi-Fi, Mobilfunknetz etc. kombiniert, zum de Standort genauer z bestimme. Er cha sich mit Google-Server verbinde.</string>
     <string name="routing_download_maps_along">Charte entlang de Route abelade</string>
     <string name="routing_requires_all_map">Zum Erstelle vonere Route müend alli Charte vo dim Standort bis zum Ziel abeglade und aktualisiert worde sii.</string>
     <string name="routing_not_enough_space">Nöd gnueg Speicherplatz</string>
@@ -490,13 +487,7 @@
     <string name="app_tip_07">Eusi App wird vo einige Enthusiaste und de Community entwicklet.</string>
     <string name="app_tip_08">Du chasch d Chartedate eifach korrigiere und verbessere.</string>
     <string name="car_used_on_the_phone_screen">Du verwendsch jetzt CoMaps uf dim Telefondisplay</string>
-    <string name="car_used_on_the_car_screen">Du verwendsch jetzt CoMaps uf em Bildschirm vom Auto</string>
-    <string name="aa_connected_title">Du bisch mit Android Auto verbunde</string>
-    <string name="car_continue_on_the_phone">Wiiter am Telefon</string>
     <string name="car_continue_in_the_car">Zum Autobildschirm</string>
-    <string name="aa_request_permission_notification">Die App bruucht dini Erlaubnis</string>
-    <string name="aa_request_permission_activity_text">CoMaps in Android Auto bruucht Standortberechtigunge, zum effektiv z funktioniere</string>
-    <string name="aa_grant_permissions">Erlaubnis erteile</string>
     <string name="button_layer_outdoor">Wandere</string>
     <string name="browser_not_available">Webbrowser isch nöd verfüegbar</string>
     <string name="volume">Luutstärchi</string>

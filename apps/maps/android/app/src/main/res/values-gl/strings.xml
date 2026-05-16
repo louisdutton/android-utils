@@ -99,10 +99,6 @@
     <string name="enable_keep_screen_on">Manter pantalla acesa</string>
     <string name="app_tip_09">O noso principal obxectivo é crear mapas rápidos, centrados na privacidade e fáciles de utilizar que lle encantarán.</string>
     <string name="car_used_on_the_phone_screen">Agora usa CoMaps na pantalla do teléfono</string>
-    <string name="aa_location_permissions_request">CoMaps necesita acceder á localización. Cando sexa seguro, comprobe a notificación no teléfono.</string>
-    <string name="aa_request_permission_notification">Esta aplicación necesita o seu permiso</string>
-    <string name="aa_request_permission_activity_text">CoMaps en Android Auto necesita permisos de localización para funcionar eficazmente</string>
-    <string name="aa_grant_permissions">Conceder permisos</string>
     <string name="select_option">Selecciona a opción</string>
     <string name="edit_track">Editar traxecto</string>
     <string name="uri_open_location_failed">Non hai ningunha aplicación instalada que poida abrir a localización</string>
@@ -227,10 +223,8 @@
     <string name="downloader_download_all_button">Descargar todos</string>
     <string name="downloader_downloading">Descargando:</string>
     <string name="downloader_delete_map_while_routing_dialog">Para eliminar o mapa, deteña a navegación</string>
-    <string name="pref_use_google_play">Un servizo propietario que combina GPS, Wi-Fi, redes móbiles etc. para determinar a túa localización de xeito máis preciso. Podería conectarse aos servidores de Google.</string>
     <string name="routing_failed_cross_mwm_building">Só se poden crear rutas que estean totalmente contidas nun mapa dunha soa rexión.</string>
     <string name="downloader_download_map">Descargar mapa</string>
-    <string name="google_play_services">Google Fused Location Service</string>
     <string name="routing_download_maps_along">Descargue todos os mapas do seu roteiro</string>
     <string name="routing_requires_all_map">Para crear unha ruta é necesario descargar e actualizar todos os mapas desde a súa localización ao seu destino.</string>
     <string name="routing_not_enough_space">Non hai suficiente espazo</string>
@@ -431,9 +425,6 @@
     <string name="app_tip_06">Pode axudar a traducir a nosa aplicación ao seu idioma.</string>
     <string name="app_tip_07">A nosa aplicación está desenvolta por uns poucos entusiastas e a comunidade.</string>
     <string name="app_tip_08">Pode arranxar e mellorar facilmente os datos do mapa.</string>
-    <string name="car_used_on_the_car_screen">Agora usa CoMaps na pantalla do coche</string>
-    <string name="aa_connected_title">Conectouse a Android Auto</string>
-    <string name="car_continue_on_the_phone">Pasar ao teléfono</string>
     <string name="car_continue_in_the_car">Á pantalla do coche</string>
     <string name="button_layer_outdoor">Sendeirismo</string>
     <string name="browser_not_available">A navegador web non está dispoñible</string>

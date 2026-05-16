@@ -5,6 +5,10 @@
 
 echo "Configuring the repository for development..."
 
+if [ -x "../../scripts/materialize-comaps-third-party.sh" ]; then
+  "../../scripts/materialize-comaps-third-party.sh"
+fi
+
 SKIP_MAP_DOWNLOAD="${SKIP_MAP_DOWNLOAD:-}"
 SKIP_GENERATE_SYMBOLS="${SKIP_GENERATE_SYMBOLS:-}"
 SKIP_GENERATE_DRULES="${SKIP_GENERATE_DRULES:-}"
@@ -73,7 +77,7 @@ Diff() {
 }
 
 
-echo "Using vendored third-party sources..."
+echo "Using materialized third-party sources..."
 
 if [ ! -d 3party/boost/boost ]; then
   echo "Bootstrapping the boost C++ library..."

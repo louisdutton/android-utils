@@ -452,8 +452,6 @@
     <string name="ok">OK</string>
     <string name="pref_map_3d_buildings_disabled_summary">3D zgrade su onemogućene u načinu rada za uštedu energije</string>
     <string name="downloader_queued">U redu čekanja</string>
-    <string name="google_play_services">Googleov objedinjeni servis za određivanje lokacije</string>
-    <string name="pref_use_google_play">Vlasnički servis koji kombinira GPS, Wi‑Fi i mobilne mreže radi preciznijeg određivanja lokacije. Može se povezivati s Googleovim poslužiteljima.</string>
     <string name="routing_download_maps_along">Preuzmite sve karte duž svoje rute</string>
     <string name="routing_requires_all_map">Kako bismo izradili rutu, moramo preuzeti i ažurirati sve karte od vaše lokacije do odredišta.</string>
     <string name="routing_not_enough_space">Nema dovoljno prostora</string>
@@ -534,14 +532,7 @@
     <string name="app_tip_08">Podatke karte možete jednostavno popraviti i poboljšati.</string>
     <string name="app_tip_09">Naš glavni cilj je izrada brzih, na privatnost usmjerenih i jednostavnih karata koje ćete obožavati.</string>
     <string name="car_used_on_the_phone_screen">Sada koristite CoMaps na zaslonu telefona</string>
-    <string name="car_used_on_the_car_screen">Sada koristite CoMaps na zaslonu automobila</string>
-    <string name="aa_connected_title">Povezani ste s Android Autom</string>
-    <string name="car_continue_on_the_phone">Nastavite na telefonu</string>
     <string name="car_continue_in_the_car">Na ekran automobila</string>
-    <string name="aa_location_permissions_request">CoMaps treba pristup lokaciji. Kad bude sigurno, provjeri obavijest na svom telefonu.</string>
-    <string name="aa_request_permission_notification">Ova aplikacija treba vaše dopuštenje</string>
-    <string name="aa_request_permission_activity_text">CoMaps u Android Auto zahtijeva dopuštenja za lokaciju kako bi učinkovito funkcionirao</string>
-    <string name="aa_grant_permissions">Dodijeli dopuštenja</string>
     <string name="button_layer_outdoor">Na otvorenom</string>
     <string name="browser_not_available">Web preglednik nije dostupan</string>
     <string name="hours_confirmed_time_ago">Potvrđeno %s</string>

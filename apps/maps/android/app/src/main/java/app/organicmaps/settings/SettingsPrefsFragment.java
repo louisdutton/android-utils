@@ -3,9 +3,7 @@ package app.organicmaps.settings;
 import static app.organicmaps.leftbutton.LeftButtonsHolder.DISABLE_BUTTON_CODE;
 import static app.organicmaps.sdk.editor.data.Language.DEFAULT_LANG_CODE;
 import static app.organicmaps.sdk.editor.data.Language.AUTO_LANG_CODE;
-import static app.organicmaps.util.Utils.isAndroidAutoSupported;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -22,7 +20,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceManager;
 import androidx.preference.TwoStatePreference;
-import app.organicmaps.MwmApplication;
 import app.organicmaps.R;
 import app.organicmaps.dialog.CustomMapServerDialog;
 import app.organicmaps.downloader.OnmapDownloader;
@@ -34,7 +31,6 @@ import app.organicmaps.sdk.Framework;
 import app.organicmaps.sdk.downloader.MapManager;
 import app.organicmaps.sdk.editor.OsmOAuth;
 import app.organicmaps.sdk.editor.data.Language;
-import app.organicmaps.sdk.location.LocationHelper;
 import app.organicmaps.sdk.routing.RoutingOptions;
 import app.organicmaps.sdk.search.SearchRecents;
 import app.organicmaps.sdk.settings.MapLanguageCode;
@@ -81,7 +77,6 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
     initEmulationBadStorage();
     initUseMobileDataPrefsCallbacks();
     initPowerManagementPrefsCallbacks();
-    initPlayServicesPrefsCallbacks();
     initSearchPrivacyPrefsCallbacks();
     initScreenSleepEnabledPrefsCallbacks();
     initShowOnLockScreenPrefsCallbacks();
@@ -89,7 +84,6 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
     initCustomMapDownloadUrlPrefsCallbacks();
     initOpenExternalLinksPrefsCallback();
     initIncognitoModePrefsCallback();
-    initAndroidAutoSupportPrefsCallback();
   }
 
   private void initLeftButtonPrefs()
@@ -255,10 +249,6 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
         final Intent intent = new Intent(Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS);
         intent.setData(Uri.fromParts("package", requireContext().getPackageName(), null));
         startActivity(intent);
-      } else if (key.equals(getString(R.string.pref_android_auto_support)))
-      {
-        if (!isAndroidAutoSupported(requireContext()))
-          Utils.openUrl(requireContext(), "https://www.comaps.app/support/how-to-use-android-auto/");
       }
     }
     return super.onPreferenceTreeClick(preference);
@@ -382,42 +372,6 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
       Framework.nativeSetAutoZoomEnabled((boolean) newValue);
       return true;
     });
-  }
-
-  private void initPlayServicesPrefsCallbacks()
-  {
-    final Preference pref = findPreference(getString(R.string.pref_play_services));
-    if (pref == null)
-      return;
-
-    if (!MwmApplication.from(requireContext())
-             .getLocationProviderFactory()
-             .isGoogleLocationAvailable(requireActivity().getApplicationContext()))
-      removePreference(getString(R.string.pref_privacy), pref);
-    else
-    {
-      ((TwoStatePreference) pref).setChecked(Config.useGoogleServices());
-      pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-        @SuppressLint("MissingPermission")
-        @Override
-        public boolean onPreferenceChange(@NonNull Preference preference, Object newValue)
-        {
-          final LocationHelper locationHelper = MwmApplication.from(requireContext()).getLocationHelper();
-          boolean oldVal = Config.useGoogleServices();
-          boolean newVal = (Boolean) newValue;
-          if (oldVal != newVal)
-          {
-            Config.setUseGoogleService(newVal);
-            if (locationHelper.isActive())
-            {
-              locationHelper.stop();
-              locationHelper.start();
-            }
-          }
-          return true;
-        }
-      });
-    }
   }
 
   private void initSearchPrivacyPrefsCallbacks()
@@ -676,22 +630,6 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
   public void onAppLanguageSelected()
   {
     getSettingsActivity().onBackPressed();
-  }
-
-  private void initAndroidAutoSupportPrefsCallback()
-  {
-    Preference aASupportPref = getPreference(getString(R.string.pref_android_auto_support));
-    boolean androidAutoState;
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-    {
-      androidAutoState = isAndroidAutoSupported(requireContext());
-      aASupportPref.setSummary(androidAutoState ? R.string.pref_aa_support_summary_yes: R.string.pref_aa_support_summary_no);
-      aASupportPref.setIcon(androidAutoState ? R.drawable.ic_car_enabled: R.drawable.ic_car_disabled);
-    }
-    else
-    {
-      aASupportPref.setVisible(false);
-    }
   }
 
   enum ThemeMode

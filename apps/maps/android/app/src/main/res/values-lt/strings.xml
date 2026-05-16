@@ -263,9 +263,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Naujinti žemėlapį</string>
     <!-- Preference title -->
-    <string name="google_play_services">„Google“ jungtinė vietos nustatymo paslauga</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Nuosavybinė paslauga, nustatanti jūsų vietą remdamasi GPS, belaidžio ryšio, mobiliųjų tinklų ir kitais duomenimis. Gali jungtis prie „Google“ serverių.</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -592,9 +590,7 @@
     <string name="power_managment_setting_manual_max">Visada</string>
     <string name="enable_logging_warning_message">Įjunkite šią parinktį, jei norite kurį laiką rašyti derinimo žurnalą. Pasinaudodami mygtuku „Pranešti apie klaidą“, esančiu žinyno dialogo lange, galėsite pranešti apie problemą, pridėdami sukauptą žurnalą. Žurnaluose gali būti vietos duomenų.</string>
     <string name="driving_options_title">Maršruto apskaičiavimo parinktys</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Vengti negrįstų kelių</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Vengti keltų</string>
     <string name="unable_to_calc_alert_title">Nepavyko apskaičiuoti maršruto</string>
     <string name="unable_to_calc_alert_subtitle">Deja, nepavyko rasti maršruto. Tikėtina, jog taip yra dėl jūsų pasirinktų parinkčių arba trūkstamų „OpenStreetMap“ duomenų. Pakeiskite parinktis ir bandykite dar kartą.</string>
@@ -690,11 +686,8 @@
     <!-- App tip #04 -->
     <string name="app_tip_04">Bakstelėkite bet kurį žemėlapio tašką norimam objektui pasirinkti. Bakstelėkite ir palaikykite, kad paslėptumėte ar vėl pamatytumėte programėlės sąsają.</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">„CoMaps“ programėlei reikia prieigos prie vietos . Kai bus saugu, patikrinkite pranešimą savo telefone.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Šiai programėlei reikia jūsų leidimo</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">Kad „Android Auto“ sistemoje „CoMaps“ veiktų efektyviai, reikia leidimo nustatyti buvimo vietą</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Žygiai pėsčiomis</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -768,7 +761,6 @@
     <string name="app_tip_08">Galite pataisyti ar papildyti žemėlapio duomenis.</string>
     <string name="app_tip_09">Mūsų pagrindinis tikslas – sukurti spartų, privatų ir paprastą naudotis žemėlapį, kuris patiktų visiems.</string>
     <string name="car_used_on_the_phone_screen">Dabar naudojatės „CoMaps“ telefono ekrane</string>
-    <string name="car_used_on_the_car_screen">Dabar naudojatės „CoMaps“ automobilio ekrane</string>
     <plurals name="bookmarks_places">
         <item quantity="one">%d pasižymėta vieta</item>
         <item quantity="few">%d pasižymėtos vietos</item>
@@ -785,11 +777,8 @@
     <string name="car_continue_in_the_car">Į automobilio ekraną</string>
     <string name="app_tip_07">Šią programėlę vysto keletas entuziastų ir suburta bendruomenė.</string>
     <string name="app_tip_03">Jeigu turite pažįstamą programuotoją, galite jo(s) paprašyti realizuoti funkciją, kurios jums reikia.</string>
-    <string name="aa_connected_title">Prisijungėte prie „Android Auto“</string>
-    <string name="car_continue_on_the_phone">Tęsti telefone</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="comma_separated_pair">%1$s %2$s</string>
-    <string name="aa_grant_permissions">Suteikti leidimą</string>
     <string name="translated_om_site_url">https://comaps.app/</string>
     <string name="app_site_url">https://comaps.app/</string>
     <string name="telegram_url">https://t.me/CoMapsApp/</string>

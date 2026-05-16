@@ -173,11 +173,6 @@
       android:widgetLayout="@layout/preference_switch"
       app:icon="@drawable/ic_speed"
       app:singleLineTitle="true" />
-    <Preference
-      android:key="@string/pref_android_auto_support"
-      android:order="5"
-      android:persistent="false"
-      android:title="@string/pref_aa_support_title" />
   </androidx.preference.PreferenceCategory>
 
   <PreferenceCategory
@@ -232,15 +227,6 @@
     android:key="@string/pref_privacy"
     android:order="5"
     android:title="@string/privacy">
-    <SwitchPreferenceCompat
-      android:defaultValue="true"
-      android:key="@string/pref_play_services"
-      android:order="1"
-      android:summary="@string/pref_use_google_play"
-      android:title="@string/google_play_services"
-      android:widgetLayout="@layout/preference_switch"
-      app:icon="@drawable/ic_wifi_find"
-      app:singleLineTitle="false" />
     <SwitchPreferenceCompat
       android:defaultValue="true"
       android:key="@string/pref_search_history"

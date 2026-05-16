@@ -315,9 +315,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Update Map</string>
     <!-- Preference title -->
-    <string name="google_play_services">Google Fused Location Service</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">A proprietary service that combines GPS, Wi-Fi, cellular networks etc. to determine your location more accurately. It may connect to Google servers.</string>
     <!-- Text for routing error dialog -->
     <string name="routing_download_maps_along">Download all of the maps along your route</string>
     <!-- Text for routing error dialog -->
@@ -702,11 +700,8 @@
     <string name="power_managment_setting_manual_max">Always</string>
     <string name="enable_logging_warning_message">Enable this option temporarily to record and manually send detailed diagnostic logs about your issue to us using \"Report a bug\" in the Help dialog. Logs may include location info.</string>
     <string name="driving_options_title">Routing options</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Avoid tolls</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Avoid unpaved roads</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Avoid ferries</string>
     <string name="avoid_motorways">Avoid freeways</string>
     <string name="avoid_steps">Avoid stairs</string>
@@ -845,24 +840,14 @@
     <string name="app_tip_08">You can easily fix and improve the map data.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Our main goal is to build fast, privacy-focused, easy-to-use maps that you will love.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">You are now using CoMaps on the phone screen</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">You are now using CoMaps on the car screen</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">You are connected to Android Auto</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Continue on the phone</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">To the car screen</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps needs location access. When it\'s safe, check the notification on your phone.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">This app needs your permission</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">CoMaps in Android Auto needs location permissions to work effectively</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">Grant Permissions</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Outdoors</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -1013,8 +998,5 @@
     <string name="pref_openexternallinks_summary">Open third-party links in CoMaps by default</string>
     <string name="pref_keyboard_typing_history_title">Keyboard incognito mode</string>
     <string name="pref_keyboard_typing_history_summary">Request system keyboard to not record typing history</string>
-    <string name="pref_aa_support_title">Android Auto</string>
-    <string name="pref_aa_support_summary_yes">The app has been installed from Google Play, you can use it in your car.</string>
-    <string name="pref_aa_support_summary_no">The app has not been installed from Google Play, you can\'t use it in your car. Press the setting to get more details on our FAQ.</string>
 
 </resources>

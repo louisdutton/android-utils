@@ -3,7 +3,6 @@ package app.organicmaps.sdk.location;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-import android.app.PendingIntent;
 import android.location.Location;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
@@ -17,14 +16,6 @@ public abstract class BaseLocationProvider
     void onLocationChanged(@NonNull Location location);
     @UiThread
     void onLocationDisabled();
-    // Used by GoogleFusedLocationProvider.
-    @SuppressWarnings("unused")
-    @UiThread
-    void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent);
-    // Used by GoogleFusedLocationProvider.
-    @SuppressWarnings("unused")
-    @UiThread
-    void onFusedLocationUnsupported();
   }
 
   @NonNull

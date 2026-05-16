@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Parses GTFS feeds urls:
 https://transit.land/        - Transitland
-https://storage.googleapis.com/storage/v1/b/mdb-csv/o/sources.csv?alt=media  
-                            - Mobility Database (https://mobilitydata.org/)  
+https://files.mobilitydatabase.org/feeds_v2.csv
+                            - Mobility Database (https://mobilitydata.org/)
 Crawls all the urls, loads feed zips and extracts to the specified directory."""
 
 import argparse
@@ -25,7 +25,7 @@ RAW_FILE_MOBILITYDB = "raw_mobilitydb.csv"
 URLS_FILE_TRANSITLAND = "feed_urls_transitland.txt"
 URLS_FILE_MOBILITYDB = "feed_urls_mobilitydb.txt"
 
-URL_MOBILITYDB_GTFS_SOURCE = "https://storage.googleapis.com/storage/v1/b/mdb-csv/o/sources.csv?alt=media"
+URL_MOBILITYDB_GTFS_SOURCE = "https://files.mobilitydatabase.org/feeds_v2.csv"
 
 THREADS_COUNT = 2
 MAX_INDEX_LEN = 4

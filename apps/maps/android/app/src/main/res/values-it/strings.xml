@@ -273,9 +273,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Aggiorna mappa</string>
     <!-- Preference title -->
-    <string name="google_play_services">Servizi di localizzazione Google Fused</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Servizio proprietario che combina GPS, Wi-Fi, rete telefonica ed altro per determinare la tua positione con maggiore accuratezza. Potrebbe connettersi ai server di Google.</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -614,11 +612,8 @@
     <string name="power_managment_setting_manual_max">Sempre</string>
     <string name="enable_logging_warning_message">Attiva questa opzione temporaneamente per registrare e inviarci manualmente dei log diagnostici riguardo al tuo problema usando \"Segnala un bug\" nella sezione Aiuto. I log potrebbero contenere informazioni sulla posizione.</string>
     <string name="driving_options_title">Impostazioni del percorso</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Evita le strade a pedaggio</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Evita le strade non asfaltate</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Evita i traghetti</string>
     <string name="avoid_motorways">Evita l\'autostrada</string>
     <string name="unable_to_calc_alert_title">Impossibile calcolare il percorso</string>
@@ -737,24 +732,14 @@
     <string name="app_tip_08">Puoi correggere e migliorare facilmente i dati della mappa.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Il nostro obiettivo principale è creare mappe veloci, incentrate sulla privacy e facili da usare che adorerai.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">Ora stai utilizzando CoMaps sullo schermo del telefono</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Ora stai utilizzando CoMaps sullo schermo dell\'auto</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Sei connesso ad Android Auto</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Continua sul telefono</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">Passa al display dell\'auto</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps ha bisogno di accedere alla posizione. Quando puoi farlo in sicurezza, controlla la notifica sul tuo telefono.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Questa app ha bisogno della tua autorizzazione</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">CoMaps in Android Auto ha bisogno di accedere alla posizione per funzionare efficacemente</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">Concedi l\'autorizzazione</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Escursioni</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->

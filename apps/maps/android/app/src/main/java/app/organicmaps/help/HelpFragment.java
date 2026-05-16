@@ -71,11 +71,7 @@ public class HelpFragment extends BaseMwmFragment implements View.OnClickListene
     setupItem(R.id.report, isLandscape, root);
     setupItem(R.id.copyright, false, root);
 
-    final MaterialTextView supportUsView = root.findViewById(R.id.support_us);
-    if (BuildConfig.FLAVOR.equals("google") && !TextUtils.isEmpty(mDonateUrl))
-      supportUsView.setVisibility(View.GONE);
-    else
-      setupItem(R.id.support_us, true, root);
+    setupItem(R.id.support_us, true, root);
 
     final MaterialButton donateView = root.findViewById(R.id.donate);
     if (TextUtils.isEmpty(mDonateUrl))

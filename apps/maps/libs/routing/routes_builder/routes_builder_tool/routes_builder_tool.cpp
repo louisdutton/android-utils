@@ -30,7 +30,7 @@ DEFINE_string(dump_path, "",
 DEFINE_string(data_path, "", "Data path.");
 DEFINE_string(resources_path, "", "Resources path.");
 
-DEFINE_string(api_name, "", "Api name, current options: mapbox,google");
+DEFINE_string(api_name, "", "Api name, current options: mapbox");
 DEFINE_string(api_token, "", "Token for chosen api.");
 
 DEFINE_uint64(start_from, 0, "The line number from which the tool should start reading.");

@@ -1,6 +1,5 @@
 #include "routing/routes_builder/routes_builder_tool/utils.hpp"
 
-#include "routing/routing_quality/api/google/google_api.hpp"
 #include "routing/routing_quality/api/mapbox/mapbox_api.hpp"
 
 #include "routing/checkpoints.hpp"
@@ -267,8 +266,6 @@ std::unique_ptr<routing_quality::api::RoutingApi> CreateRoutingApi(std::string c
 {
   if (name == "mapbox")
     return std::make_unique<routing_quality::api::mapbox::MapboxApi>(token);
-  if (name == "google")
-    return std::make_unique<routing_quality::api::google::GoogleApi>(token);
 
   LOG(LERROR, ("Unsupported api name:", name));
   UNREACHABLE();

@@ -266,9 +266,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Cập nhật Bản đồ</string>
     <!-- Preference title -->
-    <string name="google_play_services">Dịch vụ vị trí của Google Play</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Một dịch vụ độc quyền kết hợp GPS, Wi-Fi, mạng di động, v.v. để xác định vị trí của bạn chính xác hơn. Dịch vụ này có thể kết nối với máy chủ của Google.</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -585,11 +583,8 @@
     <string name="power_managment_setting_manual_max">Luôn luôn</string>
     <string name="enable_logging_warning_message">Tạm thời bật tùy chọn này để ghi và gửi thủ công nhật ký chẩn đoán chi tiết về vấn đề của bạn đến chúng tôi bằng \"Báo cáo lỗi\" trong mục Giúp đỡ. Nhật ký có thể gồm dữ liệu vị trí.</string>
     <string name="driving_options_title">Tùy chọn tuyến đường</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Tránh đường thu phí</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Tránh đường đất</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Tránh bến phà</string>
     <string name="avoid_motorways">Tránh xa lộ</string>
     <string name="unable_to_calc_alert_title">Không thể tạo tuyến đường</string>
@@ -691,24 +686,14 @@
     <string name="app_tip_08">Bạn có thể dễ dàng sửa chữa và cải thiện dữ liệu bản đồ.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Mục tiêu chính của chúng tôi là xây dựng các bản đồ nhanh chóng, tập trung vào quyền riêng tư, dễ sử dụng mà bạn sẽ yêu thích.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">Bạn hiện đang sử dụng CoMaps trên màn hình điện thoại</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Bạn hiện đang sử dụng bản CoMaps trên màn hình ô tô</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Bạn đã kết nối với Android Auto</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Tiếp tục trên điện thoại</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">Đến màn hình ô tô</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps cần quyền truy cập vị trí. Khi an toàn, hãy kiểm tra thông báo trên điện thoại của bạn.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Ứng dụng này cần sự cho phép của bạn</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">CoMaps trong Android Auto cần có quyền truy cập vị trí để hoạt động hiệu quả</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">Cấp quyền</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Ngoài trời</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->

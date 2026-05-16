@@ -94,7 +94,6 @@
     <string name="downloader_retry">Assaya Arta</string>
     <string name="downloader_delete_map">Dilea Mappa</string>
     <string name="downloader_update_map">Nowedhi Mappa</string>
-    <string name="google_play_services">Servis Tyller gans Google</string>
     <string name="routing_not_enough_space">Nyns eus dalghuster lowr</string>
     <string name="enable_location_services">Bywhewgh Servisyow Tyller mar pleg</string>
     <string name="create">Gwruthyl</string>
@@ -320,8 +319,6 @@
     <string name="app_tip_01">Gans agas argevrohow ha skoodhyans, ni a yll gul an mappys an gwella y\'n Nor!</string>
     <string name="app_tip_02">Yw da genes a\'gan app? Argevri mar pleg dhe skoodhya an displegyans! Yw na da genes a\'n hwath? Mar pleg, kedhlewgh dhyn prag ha ni a ewnhe a\'n!</string>
     <string name="app_tip_06">Ty a yll gweres treylya a\'gan app yn dhayeth.</string>
-    <string name="aa_connected_title">Dha vos lemmyn rosweythys dhe Android Auto</string>
-    <string name="aa_grant_permissions">Grontya grontys</string>
     <string name="button_layer_outdoor">Yn-mes</string>
     <string name="browser_not_available">Peurell nakavadow</string>
     <string name="volume">Ughelder</string>
@@ -427,7 +424,6 @@
     <string name="downloader_downloading">Owth Iskarga:</string>
     <string name="downloader_delete_map_while_routing_dialog">Rag dilea mappa, astelewgh navygacyon kyns, mar pleg</string>
     <string name="routing_failed_cross_mwm_building">Kerdhow a yll bos gwrys hepken mars a-berth yn mappa a unn pow yn leun yw.</string>
-    <string name="pref_use_google_play">Gonis perghenogel ow kesunya GPS, DiWi, rosweythyow klapkodh h.e. rag determya agas tyller yn kewar. Martesen y fydh junya dhe servellow Google.</string>
     <string name="routing_download_maps_along">Iskarga oll mappys a-hys agas kerdh</string>
     <string name="routing_requires_all_map">Rag gul kerdh, res yw dhyn iskarga ha nowedhi oll mappys dhyworth agas tyller dh\'agas diwedhva.</string>
     <string name="save">Sawya</string>
@@ -612,12 +608,7 @@
     <string name="app_tip_08">Ty gallos ewnhe ha gwellhe yn es an data map.</string>
     <string name="app_tip_09">Agan amkan chif yw byldya mappys uskis, privedh, ha es may ty a wra kara.</string>
     <string name="car_used_on_the_phone_screen">Ty ow devnydhya lemmyn CoMaps war an skrin klapkodh</string>
-    <string name="car_used_on_the_car_screen">Ty ow devnydhya lemmyn CoMaps war an skrin karr</string>
-    <string name="car_continue_on_the_phone">Pesya war an klapkodh</string>
     <string name="car_continue_in_the_car">Dhe an skrin karr</string>
-    <string name="aa_location_permissions_request">CoMaps res hedhas GPS. Pan y yw saw, checkya an messach war gas klapkodh.</string>
-    <string name="aa_request_permission_notification">An app ma res gas gront</string>
-    <string name="aa_request_permission_activity_text">CoMaps yn Android Auto res grontys GPS rag oberyans effeythus</string>
     <string name="pref_tts_open_system_settings">Settyansow system tekst-dhe-areth</string>
     <string name="pref_tts_no_system_tts">Settyansow tekst-dhe-areth na kavosys, Os ta sur gas devis skoodhya y?</string>
     <string name="drive_through">Drivya-dredh</string>

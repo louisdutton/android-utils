@@ -10,17 +10,12 @@ buildscript {
 
   dependencies {
     classpath libs.android.tools
-    classpath(libs.triplet.play.publisher)
     classpath(libs.huawei.publish)
   }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.triplet.play'
 apply plugin: 'ru.cian.huawei-publish-gradle-plugin'
-
-
-import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 
 def getCommitMessage() {
   return run(['git', '--no-pager', 'show', '-s', '--format=%s%n%n%b', 'HEAD']).trim()
@@ -45,7 +40,7 @@ android {
   dependenciesInfo {
     // Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
     includeInApk = false
-    // Disables dependency metadata when building Android App Bundles (for Google Play)
+    // Disables dependency metadata when building Android App Bundles.
     includeInBundle = false
   }
 
@@ -87,14 +82,6 @@ android {
     // 01 is a historical artefact, sorry.
     final int HUAWEI_VERSION_CODE_BASE = 01_00_00_00_00
 
-    google {
-      dimension 'default'
-      applicationIdSuffix '.google'
-      versionName = android.defaultConfig.versionName + '-Google'
-      buildConfigField 'String', 'SUPPORT_MAIL', '"gplay@comaps.app"'
-      buildConfigField 'String', 'REVIEW_URL', '"market://details?id=app.comaps.google"'
-    }
-
     // Distributed directly by the project, e.g. in repo releases, chats, etc.
     web {
       dimension 'default'
@@ -115,12 +102,6 @@ android {
       versionCode = HUAWEI_VERSION_CODE_BASE + android.defaultConfig.versionCode
       buildConfigField 'String', 'SUPPORT_MAIL', '"huawei@comaps.app"'
       buildConfigField 'String', 'REVIEW_URL', '"appmarket://details?id=app.comaps"'
-    }
-  }
-
-  playConfigs {
-    googleRelease {
-      enabled.set(true)
     }
   }
 
@@ -325,20 +306,6 @@ dependencies {
 
   coreLibraryDesugaring libs.android.tools.desugar
 
-  // Google Play Location Services
-  // TODO(@pastk): enabled via microG in all flavors,
-  // so move google/java/app/organicmaps/location/* into main/ and remove symlinks.
-  //
-  // Please add symlinks to google/java/app/organicmaps/location for each new gms-enabled flavor below:
-  // ```
-  // mkdir -p src/$flavor/java/app/organicmaps/
-  // ln -sf ../../../../google/java/app/organicmaps/location src/$flavor/java/app/organicmaps/
-  // ls -la src/$flavor/java/app/organicmaps/location/GoogleFusedLocationProvider.java
-  // ```
-  //
-  // microG project's FOSS re-implementation of the proprietary libs.google.services.location
-  implementation libs.microg.services.location
-
   // This line is added as a workaround for duplicate classes error caused by some outdated dependency:
   // > A failure occurred while executing com.android.build.gradle.internal.tasks.CheckDuplicatesRunnable
   // We don't use Kotlin, but some dependencies are actively using it.
@@ -347,8 +314,6 @@ dependencies {
   implementation(platform(libs.jetbrains.kotlin.bom))
   implementation libs.androidx.annotation
   implementation libs.androidx.appcompat
-  implementation libs.androidx.car.app
-  implementation libs.androidx.car.app.projected
   implementation libs.androidx.constraintlayout
   implementation libs.androidx.fragment
   implementation libs.androidx.preference
@@ -376,15 +341,6 @@ android.applicationVariants.all { variant ->
   def flavor = variant.getMergedFlavor()
   flavor.manifestPlaceholders += [FILE_PROVIDER_PLACEHOLDER : authorityValue]
   variant.resValue 'string', 'app_id', variant.applicationId
-}
-
-play {
-  enabled.set(false)
-  track.set('production')
-  defaultToAppBundles.set(true)
-  releaseStatus.set(ReleaseStatus.IN_PROGRESS)
-  userFraction.set(0.2d) // Rollout to 20% of users
-  serviceAccountCredentials.set(file('google-play.json'))
 }
 
 huaweiPublish {

@@ -255,7 +255,6 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Atualizar mapa</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Um serviço proprietário que combina GPS, Wi-Fi, redes móveis etc. para determinar sua localização com mais precisão. Ele pode se conectar aos servidores do Google.</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -550,11 +549,8 @@
     <string name="power_managment_setting_manual_max">Máxima economia de energia</string>
     <string name="enable_logging_warning_message">Ative esta opção temporariamente para criar registros de execução e manualmente nos enviar registros diagnósticos detalhados sobre seu problema usando \"Relatar um problema\" no diálogo de Ajuda. Registros de execução podem conter dados de localização.</string>
     <string name="driving_options_title">Opções de trajeto</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Evitar pedágios</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Evitar não pavimentadas</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Evitar balsas</string>
     <string name="avoid_motorways">Evitar rodovias</string>
     <string name="unable_to_calc_alert_title">Incapaz de calcular rota</string>
@@ -664,24 +660,14 @@
     <string name="app_tip_08">Você pode corrigir e melhorar facilmente os dados do mapa.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Nosso principal objetivo é construir mapas rápidos, focados na privacidade e fáceis de usar que você vai adorar.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">Agora você está usando o CoMaps na tela do telefone</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Agora você está usando o CoMaps na tela do carro</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Você está conectado ao Android Auto</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Continuar no celular</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">Para tela do carro</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">O CoMaps precisa de acesso à localização. Quando for seguro, verifique a notificação em seu telefone.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Este aplicativo precisa da sua permissão</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">O CoMaps no Android Auto precisa de uma permissão de localização para funcionar efetivamente</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">Conceder permissão</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Ar livre</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -740,7 +726,6 @@
     <string name="dialog_routing_change_intermediate">Não foi possível localizar o ponto intermediário</string>
     <string name="editor_time_from">De</string>
     <string name="how_to_support_us">Voluntarie-se e melhore o CoMaps</string>
-    <string name="google_play_services">Serviço de localização integrada do Google</string>
     <string name="editor_time_title">Horário de funcionamento</string>
     <string name="long_tap_toast">Dê um toque longo no mapa novamente para ver a interface</string>
     <string name="editor_time_add">Adicionar horário</string>

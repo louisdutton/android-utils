@@ -277,9 +277,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Haritayı Güncelle</string>
     <!-- Preference title -->
-    <string name="google_play_services">Google\'a Dayalı Konum Hizmetleri</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">GPS, Wi-Fi, mobile veri vs. aracılığıyla konumunuzu daha doğru saptayan özel mülkiyet bir servis. Google sunucularına bağlanabilir.</string>
     <!-- Text for routing error dialog -->
     <string name="routing_download_maps_along">Rota üzerindeki tüm haritaları indir</string>
     <!-- Text for routing error dialog -->
@@ -616,11 +614,8 @@
     <string name="power_managment_setting_manual_max">Her zaman</string>
     <string name="enable_logging_warning_message">Bu seçenek tanılama amacıyla günlüğe kaydetmeyi açar. Ekibimizin uygulamayla ilgili sorunları gidermesine yardımcı olabilir. Sorununuzla ilgili ayrıntılı günlükleri kaydetmek ve bize göndermek için bu seçeneği geçici olarak etkinleştirin.</string>
     <string name="driving_options_title">Yönlendirme seçenekleri</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Ücretli yollardan kaçın</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Asfaltsız yollardan kaçın</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Vapurdan kaçın</string>
     <string name="avoid_motorways">Otobandan kaçın</string>
     <string name="unable_to_calc_alert_title">Rota hesaplanamıyor</string>
@@ -743,24 +738,14 @@
     <string name="app_tip_08">Harita verilerini kolayca düzeltebilir ve iyileştirebilirsiniz.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Temel amacımız hızlı, gizlilik odaklı, kullanımı kolay, seveceğiniz bir harita uygulaması oluşturmaktır.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">Artık CoMaps\'i telefon ekranında kullanıyorsunuz</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Şu anda araç ekranında CoMaps kullanıyorsunuz</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Android Auto\'ya bağlandınız</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Telefonda devam et</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">Arabada göster</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps konum erişimine ihtiyacı vardır. Güvenli olduğunda, telefonunuzdaki bildirimi kontrol edin.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Bu uygulamanın izninize ihtiyacı var</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">Android Auto\'daki CoMaps etkin bir şekilde çalışması için konum izni gerekiyor</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">İzinleri Verin</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Açık Hava</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->

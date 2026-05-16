@@ -257,9 +257,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">नकाशा अद्ययावत करा</string>
     <!-- Preference title -->
-    <string name="google_play_services">Google Play स्थान सेवा</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">ब्लूटूथ, वायफाय किंवा मोबाइल नेटवर्क वापरून तुमचे अंदाजे स्थान द्रुतपणे निर्धारित करा</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -590,11 +588,8 @@
     <string name="power_managment_setting_manual_max">कमाल वीज बचत</string>
     <string name="enable_logging_warning_message">निदान करण्याकरिता हा पर्याय लॉगिंग चालू करतो. ह्याने ऍपच्या समस्यांचे निवारण करणे आम्हाला उपयुक्त ठरू शकते. तुमच्या समस्येबद्दल तपशीलवार नोंदी रेकॉर्ड करण्यासाठी आणि आम्हाला पाठवण्यासाठी हा पर्याय तात्पुरता चालू करा.</string>
     <string name="driving_options_title">मार्गशोधी पर्याय</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">टोल रस्ते टाळा</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">कच्चे मार्ग टाळा</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">जल मार्ग टाळा</string>
     <string name="avoid_motorways">मोटरवे टाळा</string>
     <string name="unable_to_calc_alert_title">मार्गाची गणना करण्यात अक्षम</string>
@@ -711,24 +706,14 @@
     <string name="app_tip_08">तुम्ही नकाशा डेटा सहजपणे दुरुस्त करू शकता आणि सुधारू शकता.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">आमचे मुख्य ध्येय जलद, गोपनीयता-केंद्रित, वापरण्यास-सुलभ नकाशे तयार करणे आहे जे तुम्हाला आवडतील.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">तुम्ही आता फोन स्क्रीनवर CoMaps वापरत आहात</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">तुम्ही आता कार स्क्रीनवर CoMaps वापरत आहात</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">तुम्ही Android Auto शी कनेक्ट आहात</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">फोनवर सुरू ठेवा</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">कारच्या स्क्रीनकडे</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps ला स्थान प्रवेश आवश्यक आहे. ते सुरक्षित असताना, तुमच्या फोनवरील सूचना तपासा.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">या अॅपला तुमची परवानगी आवश्यक आहे</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">Android Auto मधील CoMaps प्रभावीपणे कार्य करण्यासाठी स्थान परवानगी आवश्यक आहे</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">परवानग्या द्या</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">भटकंती</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->

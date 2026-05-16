@@ -17,7 +17,6 @@ import static app.organicmaps.sdk.util.Utils.dimen;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -36,7 +35,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CallSuper;
 import androidx.annotation.Keep;
@@ -88,9 +86,6 @@ import app.organicmaps.sdk.PlacePageActivationListener;
 import app.organicmaps.sdk.Router;
 import app.organicmaps.sdk.bookmarks.data.BookmarkManager;
 import app.organicmaps.sdk.bookmarks.data.MapObject;
-import app.organicmaps.sdk.display.DisplayChangedListener;
-import app.organicmaps.sdk.display.DisplayManager;
-import app.organicmaps.sdk.display.DisplayType;
 import app.organicmaps.sdk.downloader.MapManager;
 import app.organicmaps.sdk.downloader.UpdateInfo;
 import app.organicmaps.sdk.editor.Editor;
@@ -140,8 +135,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
                RoutingBottomMenuListener, BookmarkManager.BookmarksLoadingListener,
                FloatingSearchToolbarController.SearchToolbarListener,
                MenuBottomSheetFragment.MenuBottomSheetInterfaceWithHeader,
-               PlacePageController.PlacePageRouteSettingsListener, MapButtonsController.MapButtonClickListener,
-               DisplayChangedListener
+               PlacePageController.PlacePageRouteSettingsListener, MapButtonsController.MapButtonClickListener
 {
   private static final String TAG = MwmActivity.class.getSimpleName();
 
@@ -221,9 +215,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
   @SuppressWarnings("NotNullFieldNotInitialized")
   @NonNull
-  private ActivityResultLauncher<IntentSenderRequest> mLocationResolutionRequest;
-  @SuppressWarnings("NotNullFieldNotInitialized")
-  @NonNull
   private ActivityResultLauncher<SharingUtils.SharingIntent> mShareLauncher;
   @SuppressWarnings("NotNullFieldNotInitialized")
   @NonNull
@@ -233,15 +224,10 @@ public class MwmActivity extends BaseMwmFragmentActivity
   @NonNull
   private boolean mPowerSaveDisclaimerShown = false;
 
-  @SuppressWarnings("NotNullFieldNotInitialized")
-  @NonNull
-  private DisplayManager mDisplayManager;
-
   private PeriodicBackupRunner backupRunner;
 
   ManageRouteBottomSheet mManageRouteBottomSheet;
 
-  private boolean mRemoveDisplayListener = true;
   private static int mLastUiMode = Configuration.UI_MODE_TYPE_UNDEFINED;
 
   public interface LeftAnimationTrackListener
@@ -453,15 +439,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
   }
 
   @Override
-  public void onDisplayChangedToCar(@NonNull Runnable onTaskFinishedCallback)
-  {
-    mRemoveDisplayListener = false;
-    startActivity(new Intent(this, MapPlaceholderActivity.class));
-    mMapController.setOnDestroyListener(onTaskFinishedCallback);
-    finish();
-  }
-
-  @Override
   public void onConfigurationChanged(@NonNull Configuration newConfig)
   {
     super.onConfigurationChanged(newConfig);
@@ -509,8 +486,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
     // Note: You must call registerForActivityResult() before the fragment or activity is created.
     mLocationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
                                                            this::onLocationPermissionsResult);
-    mLocationResolutionRequest = registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(),
-                                                           this::onLocationResolutionResult);
     mPostNotificationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
                                                                    this::onPostNotificationPermissionResult);
     mPowerSaveSettings =
@@ -520,16 +495,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::onSettingsResult);
 
     mShareLauncher = SharingUtils.RegisterLauncher(this);
-
-    mDisplayManager = MwmApplication.from(this).getDisplayManager();
-    if (mDisplayManager.isCarDisplayUsed())
-    {
-      mRemoveDisplayListener = false;
-      startActivity(new Intent(this, MapPlaceholderActivity.class));
-      finish();
-      return;
-    }
-    mDisplayManager.addListener(DisplayType.Device, this);
 
     final Intent intent = getIntent();
     final boolean isLaunchByDeepLink = intent != null && !intent.hasCategory(Intent.CATEGORY_LAUNCHER);
@@ -1237,7 +1202,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
     Framework.nativeRemovePlacePageActivationListener(this);
     BookmarkManager.INSTANCE.removeLoadingListener(this);
     MwmApplication.from(this).getLocationHelper().removeListener(this);
-    if (mDisplayManager.isDeviceDisplayUsed() && !RoutingController.get().isNavigating())
+    if (!RoutingController.get().isNavigating())
     {
       LocationState.nativeRemoveListener();
       RoutingController.get().detach();
@@ -1263,14 +1228,10 @@ public class MwmActivity extends BaseMwmFragmentActivity
     super.onSafeDestroy();
     mLocationPermissionRequest.unregister();
     mLocationPermissionRequest = null;
-    mLocationResolutionRequest.unregister();
-    mLocationResolutionRequest = null;
     mPostNotificationPermissionRequest.unregister();
     mPostNotificationPermissionRequest = null;
     mPowerSaveSettings.unregister();
     mPowerSaveSettings = null;
-    if (mRemoveDisplayListener && !isChangingConfigurations())
-      mDisplayManager.removeListener(DisplayType.Device);
   }
 
   @Override
@@ -1445,11 +1406,8 @@ public class MwmActivity extends BaseMwmFragmentActivity
     if (navBottomSheetLineFrame != null)
       offsetY = Math.max(offsetY, navBottomSheetLineFrame.getHeight() + navBottomSheetNavBar.getHeight());
 
-    if (mDisplayManager.isDeviceDisplayUsed())
-    {
-      mMapController.updateBottomWidgetsOffset(offsetX, offsetY);
-      mMapController.updateMyPositionRoutingOffset(offsetY);
-    }
+    mMapController.updateBottomWidgetsOffset(offsetX, offsetY);
+    mMapController.updateMyPositionRoutingOffset(offsetY);
   }
 
   @Override
@@ -2095,49 +2053,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
       Logger.i(POWER_MANAGEMENT_TAG, "Power Save mode has been disabled on the device");
     else
       Logger.w(POWER_MANAGEMENT_TAG, "Power Save mode wasn't disabled on the device");
-  }
-
-  /**
-   * Called by GoogleFusedLocationProvider to request to GPS and/or Wi-Fi.
-   * @param pendingIntent an intent to launch.
-   */
-  @Override
-  @UiThread
-  public void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent)
-  {
-    Logger.d(LOCATION_TAG);
-
-    // Cancel our dialog in favor of system dialog.
-    dismissLocationErrorDialog();
-
-    // Launch system permission resolution dialog.
-    Logger.i(LOCATION_TAG, "Starting location resolution dialog");
-    IntentSenderRequest intentSenderRequest = new IntentSenderRequest.Builder(pendingIntent.getIntentSender()).build();
-    mLocationResolutionRequest.launch(intentSenderRequest);
-  }
-
-  /**
-   * Triggered by onLocationResolutionRequired().
-   * @param result invocation result.
-   */
-  @UiThread
-  private void onLocationResolutionResult(@NonNull ActivityResult result)
-  {
-    final int resultCode = result.getResultCode();
-    Logger.d(LOCATION_TAG, "resultCode = " + resultCode);
-
-    if (resultCode != Activity.RESULT_OK)
-    {
-      Logger.w(LOCATION_TAG, "Location resolution has been refused");
-      // Calls onMyPositionModeChanged(NOT_FOLLOW_NO_POSITION).
-      LocationState.nativeOnLocationError(LocationState.ERROR_GPS_OFF);
-      return;
-    }
-
-    Logger.i(LOCATION_TAG, "Location resolution has been granted, restarting location");
-
-    // Calls onMyPositionModeChanged(PENDING_POSITION).
-    LocationState.nativeStartPendingPositionMode();
   }
 
   /**

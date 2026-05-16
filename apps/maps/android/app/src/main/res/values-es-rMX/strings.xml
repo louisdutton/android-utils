@@ -20,9 +20,7 @@
     <!-- Settings «Route» category: Pop-up message when clicking «Test Voice Directions» -->
     <string name="pref_tts_playing_test_voice">Verifique el volumen o la configuración de texto a voz del sistema si no escucha la voz ahora.</string>
     <!-- Preference title -->
-    <string name="google_play_services">Servicios de ubicación de Google Play</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Determine rápidamente su ubicación aproximada mediante Bluetooth, WiFi o red móvil</string>
     <!-- red color -->
     <string name="red">Rojo</string>
     <!-- yellow color -->
@@ -195,13 +193,9 @@
     <!-- Description in preferences -->
     <string name="enable_keep_screen_on_description">Cuando está habilitado, la pantalla siempre estará encendida cuando se muestre el mapa.</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Ahora usa CoMaps en la pantalla del automóvil</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">A la pantalla del auto</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps necesita acceder a la ubicación. Cuando sea seguro, revise la notificación en el teléfono.</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">CoMaps en Android Auto necesita un permiso de ubicación para funcionar de manera eficaz</string>
     <string name="drive_through">Servicio al auto</string>
     <string name="back">Atrás</string>
     <string name="cancel">Cancelar</string>

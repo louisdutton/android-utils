@@ -30,6 +30,9 @@ if (NOT WITH_SYSTEM_PROVIDED_3PARTY)
   set(JANSSON_INSTALL OFF)
   set(JANSSON_WITHOUT_TESTS ON)
   add_subdirectory(jansson/jansson/)
+  if (TARGET jansson AND NOT TARGET jansson::jansson)
+    add_library(jansson::jansson ALIAS jansson)
+  endif()
   target_include_directories(jansson INTERFACE "${PROJECT_BINARY_DIR}/3party/jansson/jansson/include")
 
   # Add gflags library.

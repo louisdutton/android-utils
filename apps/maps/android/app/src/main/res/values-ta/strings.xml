@@ -336,8 +336,6 @@
     <string name="app_tip_08">வரைபடத் தரவை நீங்கள் எளிதாகச் சரிசெய்து மேம்படுத்தலாம்.</string>
     <string name="app_tip_09">நீங்கள் விரும்பும் வேகமான, தனியுரிமையை மையமாகக் கொண்ட, பயன்படுத்த எளிதான வரைபடங்களை உருவாக்குவதே எங்கள் முக்கிய குறிக்கோள்.</string>
     <string name="car_used_on_the_phone_screen">நீங்கள் இப்போது ஃபோன் திரையில் CoMaps ஐப் பயன்படுத்துகிறீர்கள்</string>
-    <string name="car_used_on_the_car_screen">நீங்கள் இப்போது கார் திரையில் CoMaps ஐப் பயன்படுத்துகிறீர்கள்</string>
-    <string name="car_continue_on_the_phone">தொலைபேசியில் தொடரவும்</string>
     <string name="car_continue_in_the_car">கார் திரைக்கு</string>
     <string name="button_layer_outdoor">வெளியில்</string>
     <string name="bookmarks_export">எல்லா இடங்களையும் தடங்களையும் ஏற்றுமதி செய்யவும்</string>
@@ -415,8 +413,6 @@
     <string name="downloader_cancel_all">அனைத்தையும் நீக்கறல்</string>
     <string name="downloader_delete_map_while_routing_dialog">வரைபடத்தை நீக்க, வழிசெலுத்தலை நிறுத்து</string>
     <string name="downloader_update_map">வரைபடத்தைப் புதுப்பிக்கவும்</string>
-    <string name="google_play_services">கூகுள் இணைந்த இருப்பிடச் பணி</string>
-    <string name="pref_use_google_play">GPS, Wi-Fi, செல்லுலார் நெட்வொர்க்குகள் போன்றவற்றை ஒருங்கிணைத்து உங்கள் இருப்பிடத்தை மிகவும் துல்லியமாகத் தீர்மானிக்கும் தனியுரிமைச் பணி. இது Google சேவையகங்களுடன் இணைக்கப்படலாம்.</string>
     <string name="routing_not_enough_space">போதுமான இடம் இல்லை</string>
     <string name="enable_location_services">இருப்பிடச் சேவைகளை இயக்கவும்</string>
     <string name="dialog_routing_cant_build_route">வழியை உருவாக்க முடியவில்லை</string>
@@ -557,11 +553,6 @@
     <string name="translated_om_site_url">https://comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="aa_connected_title">நீங்கள் ஆண்ட்ராய்டு தானி உடன் இணைக்கப்பட்டுள்ளீர்கள்</string>
-    <string name="aa_location_permissions_request">CoMaps க்கு இருப்பிட அணுகல் தேவை. பாதுகாப்பாக இருக்கும்போது, உங்கள் மொபைலில் உள்ள அறிவிப்பைச் சரிபார்க்கவும்.</string>
-    <string name="aa_request_permission_notification">இந்த பயன்பாட்டிற்கு உங்கள் இசைவு தேவை</string>
-    <string name="aa_request_permission_activity_text">ஆண்ட்ராய்டு தானி இல் CoMaps திறம்பட செயல்பட, இருப்பிட அனுமதிகள் தேவை</string>
-    <string name="aa_grant_permissions">அனுமதிகளை வழங்கவும்</string>
     <string name="browser_not_available">இணைய உலாவி கிடைக்கவில்லை</string>
     <string name="volume">ஒலி</string>
     <string name="pref_tts_open_system_settings">பேச்சு தொகுப்பு அமைப்பு அமைப்புகள்</string>

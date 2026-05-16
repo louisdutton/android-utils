@@ -61,9 +61,6 @@ public class NavigationService extends Service implements LocationListener
   @Nullable
   private static NotificationCompat.Builder mNotificationBuilder;
 
-  @Nullable
-  private static NotificationCompat.Extender mCarNotificationExtender;
-
   /**
    * Start the foreground service for turn-by-turn voice-guided navigation.
    *
@@ -74,21 +71,6 @@ public class NavigationService extends Service implements LocationListener
   {
     Logger.i(TAG);
     ContextCompat.startForegroundService(context, new Intent(context, NavigationService.class));
-  }
-
-  /**
-   * Start the foreground service for turn-by-turn voice-guided navigation.
-   *
-   * @param context                 Context to start service from.
-   * @param carNotificationExtender Extender used for displaying notifications in the Android Auto
-   */
-  @RequiresPermission(value = ACCESS_FINE_LOCATION)
-  public static void startForegroundService(@NonNull Context context,
-                                            @NonNull NotificationCompat.Extender carNotificationExtender)
-  {
-    Logger.i(TAG);
-    mCarNotificationExtender = carNotificationExtender;
-    startForegroundService(context);
   }
 
   /**
@@ -178,7 +160,6 @@ public class NavigationService extends Service implements LocationListener
     Logger.i(TAG);
 
     mNotificationBuilder = null;
-    mCarNotificationExtender = null;
     MwmApplication.from(this).getLocationHelper().removeListener(this);
     TtsPlayer.INSTANCE.stop();
 
@@ -317,9 +298,6 @@ public class NavigationService extends Service implements LocationListener
                                                          drawable, ContextCompat.getColor(this, R.color.base_accent));
       notificationBuilder.setLargeIcon(bitmap);
     }
-
-    if (mCarNotificationExtender != null)
-      notificationBuilder.extend(mCarNotificationExtender);
 
     // The notification object must be re-created for every update.
     NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notificationBuilder.build());

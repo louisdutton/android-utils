@@ -277,9 +277,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Atjaunināt karti</string>
     <!-- Preference title -->
-    <string name="google_play_services">Google Fused atrašanās vietu pakalpojums</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Īpašniecisks pakalpojums, kas apvieno GPS, Wi-Fi, mobilo sakaru tīklus u.c., lai pareizāk noteiktu atrašanās vietu. Tas var savienoties ar Google serveriem.</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -615,11 +613,8 @@
     <string name="power_managment_setting_manual_max">Vienmēr</string>
     <string name="enable_logging_warning_message">Uz laiku ieslēdziet šo opciju, lai reģistrētu un manuāli nosūtītu sīkākus žurnālus problēmu diagnostikai, izmantojot „Ziņot par kļūdu“ funkciju palīdzības lodziņā. Žurnāli var saturēt informāciju par atrašanās vietu.</string>
     <string name="driving_options_title">Maršruta opcijas</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Izvairīties no maksas ceļiem</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Izvairīties no zemes ceļiem</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Izvairīties no prāmjiem</string>
     <string name="avoid_motorways">Izvairīties no automaģistrālēm</string>
     <string name="unable_to_calc_alert_title">Neizdevās aprēķināt maršrutu</string>
@@ -732,18 +727,11 @@
     <string name="app_tip_08">Kartes datus varat viegli labot un papildināt.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Mūsu mērķis ir izveidot viegli lietojamas kartes, kas respektē jūsu privātumu un kuras jums patiks.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">Tagad „CoMaps“ izmantojat tālruņa ekrānā</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Tagad „CoMaps“ izmantojat automobiļa ekrānā</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Savienojās ar „Android Audio“</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Turpināt tālrunī</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">Uz auto ekrānu</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">Atļaut piekļuvi</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Aktīvā atpūta</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -790,11 +778,8 @@
     <string name="track_recording_toast_nothing_to_save">Pēdojums ir tukšs – nav nekā saglabājama</string>
     <string name="error_no_file_manager_app">Nevar attēlot mapes atlasīšanas logu, jo ierīcē nav uzstādīta piemērota lietotne. Lūgums uzstādīt datņu pārvaldnieka lietotni un mēģināt vēlreiz.</string>
     <string name="uri_open_location_failed">Nav uzstādīta neviena lietotne, kas varētu atvērt atrašanās vietu</string>
-    <string name="aa_request_permission_notification">Šai lietotnei ir nepieciešama jūsu atļauja</string>
     <string name="editor_about_osm">Jūsu labojumi tiek augšupielādēti sabiedriskajā <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> datubāzē. Lūdzu, nepievienojiet personisku vai ar autortiesībām aizsargātu informāciju.</string>
-    <string name="aa_location_permissions_request">CoMaps lietotnes darbībai ir nepieciešama piekļuve jūsu atrašanās vietai. Kad tas ir droši, pārbaudiet paziņojumu savā tālrunī.</string>
     <string name="editor_note_hint">Aprakstiet kļūdas kartē vai lietas, ko nevar izlabot, izmantojot CoMaps</string>
-    <string name="aa_request_permission_activity_text">CoMaps lietotnei ir nepieciešama atrašanās vietas atļauja sekmīgai Android Auto darbībai</string>
     <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>

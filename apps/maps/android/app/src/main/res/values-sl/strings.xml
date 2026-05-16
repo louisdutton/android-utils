@@ -153,7 +153,6 @@
     <string name="downloader_retry">Poskusi znova</string>
     <string name="downloader_delete_map">Izbriši zemljevid</string>
     <string name="downloader_update_map">Posodobi zemljevid</string>
-    <string name="pref_use_google_play">Lastniška storitev, ki s pomočjo več tehnologij, kot so GPS, Wi-Fi, mobilno omrežje itd., natančneje določi vašo lokacijo. Morda zahteva povezavo na Googlove strežnike.</string>
     <string name="routing_download_maps_along">Prenesite vse zemljevide, čez katere gre vaša pot</string>
     <string name="routing_requires_all_map">Preden lahko ustvarite povezavo, morate prenesti in posodobiti vse zemljevide med vašim trenutnim položajem in končnim ciljem.</string>
     <string name="routing_not_enough_space">Ni dovolj prostora</string>
@@ -528,7 +527,6 @@
     <string name="error_invalid_number">Neveljavno število</string>
     <string name="offline_explanation_title">Zemljevidi brez povezave</string>
     <string name="offline_explanation_text">Zemljevid morate prenesti, da siga lahko ogledujete in se po njem usmerjate.\nPrenesite zemljevide za območja, kjer nameravate potovati.</string>
-    <string name="google_play_services">Googleovo združeno zaznavanje položaja</string>
     <string name="create">Ustvari</string>
     <string name="editor_place_doesnt_exist_description">Opišite, kako to mesto izgleda sedaj, da pošljete obvestilo skupnosti OpenStreetMap</string>
     <string name="prefs_languages_information_off">Za nekatere jezike boste morali namestiti sintetizator govora ali dodatni jezikovni paket iz trgovine z orodji (Google Play, Galaxy Store, App Gallery, FDroid).\nOdprite nastavitve naprave → Jezik in vnos → Govor → Izhod besedila v govor.\nTukaj lahko upravljate nastavitve za sintezo govora (na primer prenesete jezikovni paket za uporabo brez povezave) in izberete drug gonilnik za pretvorbo besedila v govor.</string>
@@ -536,14 +534,7 @@
     <string name="avoid_steps">Izogni se stopnicam</string>
     <string name="translated_om_site_url">https://comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="car_used_on_the_car_screen">Trenutno uporabljate CoMaps na zaslonu vozila</string>
-    <string name="aa_connected_title">Trenutno ste povezani z Android Auto</string>
-    <string name="car_continue_on_the_phone">Nadaljuj na telefonu</string>
     <string name="car_continue_in_the_car">Na zaslon vozila</string>
-    <string name="aa_location_permissions_request">CoMaps potrebuje dostop do trenutnega položaja. Ko bo varno, preverite obvestila na vašem telefonu.</string>
-    <string name="aa_request_permission_notification">To orodje potrebuje vaše dovoljenje</string>
-    <string name="aa_request_permission_activity_text">CoMaps v Android Auto za učinkovito delovanje potrebuje položajna dovoljenja</string>
-    <string name="aa_grant_permissions">Podeli dovoljenja</string>
     <string name="button_layer_outdoor">Na prostem</string>
     <string name="browser_not_available">Spletni brskalnik ni na voljo</string>
     <string name="volume">Glasnost</string>

@@ -271,9 +271,7 @@
     <!-- Item in context menu. -->
     <string name="downloader_update_map">Абнавіць карту</string>
     <!-- Preference title -->
-    <string name="google_play_services">Службы месцазнаходжання Google Play</string>
     <!-- Preference text -->
-    <string name="pref_use_google_play">Хуткае вызначэнне прыблізнага месцазнаходжання з дапамогай Bluetooth, WiFi або мабільнай сеткі</string>
     <!-- Preference title -->
     <!-- Preference description -->
     <!-- Text for routing error dialog -->
@@ -605,11 +603,8 @@
     <string name="power_managment_setting_manual_max">Заўсёды</string>
     <string name="enable_logging_warning_message">Часова ўключыце гэты параметр , каб запісаць і ўручную адправіць нам падрабязную інфармацыю пра знойдзеную праблему праз кнопку «Паведаміць аб памылцы» ў акне «Даведка». Журнал падзей можа змяшчаць даныя пра месцазнаходжанне.</string>
     <string name="driving_options_title">Налады пракладвання маршрутаў</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_tolls">Пазбягаць платных дарог</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_unpaved">Пазбягаць грунтавых дарог</string>
-    <!-- Recommended length for CarPlay and Android Auto is around 25-27 characters -->
     <string name="avoid_ferry">Пазбягаць паромаў</string>
     <string name="avoid_motorways">Пазбягаць аўтамагістраляў</string>
     <string name="unable_to_calc_alert_title">Немагчыма пракласці маршрут</string>
@@ -726,24 +721,14 @@
     <string name="app_tip_08">Вы можаце лёгка выпраўляць і палепшаць даныя карты.</string>
     <!-- App tip #09 -->
     <string name="app_tip_09">Наша галоўная мэта - ствараць хуткія, арыентаваныя на прыватнасць і простыя ў выкарыстанні карты, якія вам спадабаюцца.</string>
-    <!-- Text on the Android Auto or CarPlay placeholder screen that maps are displayed on the phone screen -->
     <string name="car_used_on_the_phone_screen">Вы выкарыстоўваеце CoMaps на экране тэлефона</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
-    <string name="car_used_on_the_car_screen">Вы выкарыстоўваеце CoMaps на экране аўтамабіля</string>
-    <!-- Displayed on the phone screen. Android Auto connected -->
-    <string name="aa_connected_title">Вы падключаны да Android Auto</string>
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
-    <string name="car_continue_on_the_phone">Працягнуць на тэлефоне</string>
-    <!-- Displayed on the Android Auto or CarPlay screen. Button to display maps on the car screen instead of a phone. Must be no more than 18 symbols! -->
     <string name="car_continue_in_the_car">На экран аўто</string>
     <!-- Ask user to grant location permissions -->
-    <string name="aa_location_permissions_request">CoMaps патрабуе доступу да месцазнаходжання. Калі будзе бяспечна, праверце апавяшчэнне на тэлефоне.</string>
     <!-- Notification title for permission request from AA. -->
-    <string name="aa_request_permission_notification">Гэтай праграме патрабуецца ваш дазвол</string>
     <!-- The text in the activity for location permission request. -->
-    <string name="aa_request_permission_activity_text">Для эфектыўнай працы CoMaps у Android Auto патрабуецца дазвол на вызначэнне месцазнаходжання</string>
     <!-- Grant Permissions button. -->
-    <string name="aa_grant_permissions">Дазволіць</string>
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Актыўны адпачынак</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
