@@ -11,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,11 +21,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
@@ -40,17 +43,25 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Today
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
@@ -62,6 +73,7 @@ import digital.dutton.essentials.calendar.provider.AndroidCalendarRepository
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -205,12 +217,18 @@ private fun CalendarScreen(
     onRequestPermission: () -> Unit,
     onRefresh: () -> Unit,
 ) {
+    var isMonthExpanded by rememberSaveable { mutableStateOf(true) }
+    val currentMonth = YearMonth.now()
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             AgendaTopBar(
                 state = state,
-                onRefresh = onRefresh,
+                month = currentMonth,
+                isMonthExpanded = isMonthExpanded,
+                onToggleMonth = { isMonthExpanded = !isMonthExpanded },
+                onToday = onRefresh,
             )
         },
     ) { padding ->
@@ -218,8 +236,8 @@ private fun CalendarScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            contentPadding = PaddingValues(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             if (!state.hasCalendarPermission) {
                 item {
@@ -228,8 +246,13 @@ private fun CalendarScreen(
                 return@LazyColumn
             }
 
-            item {
-                DateStrip()
+            if (isMonthExpanded) {
+                item {
+                    MonthOverview(
+                        month = currentMonth,
+                        events = state.events,
+                    )
+                }
             }
 
             state.error?.let { message ->
@@ -250,14 +273,7 @@ private fun CalendarScreen(
 
             sections.forEach { section ->
                 item(key = "date-${section.date}") {
-                    AgendaDateHeader(section = section)
-                }
-
-                items(
-                    items = section.events,
-                    key = { event -> "${event.id}-${event.startMillis}" },
-                ) { event ->
-                    AgendaEventRow(event = event)
+                    AgendaDaySection(section = section)
                 }
             }
         }
@@ -268,29 +284,61 @@ private fun CalendarScreen(
 @Composable
 private fun AgendaTopBar(
     state: CalendarUiState,
-    onRefresh: () -> Unit,
+    month: YearMonth,
+    isMonthExpanded: Boolean,
+    onToggleMonth: () -> Unit,
+    onToday: () -> Unit,
 ) {
     TopAppBar(
+        navigationIcon = {
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Rounded.Menu,
+                    contentDescription = "Open navigation",
+                )
+            }
+        },
         title = {
-            Column(verticalArrangement = Arrangement.spacedBy(1.dp)) {
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .clickable(onClick = onToggleMonth)
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
                 Text(
-                    text = "Today",
-                    style = MaterialTheme.typography.titleLarge,
+                    text = month.format(DateTimeFormatter.ofPattern("MMMM")),
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                 )
-                Text(
-                    text = "${LocalDate.now().agendaTitle()} - ${state.agendaSubtitle()}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                Icon(
+                    imageVector = if (isMonthExpanded) {
+                        Icons.Rounded.KeyboardArrowUp
+                    } else {
+                        Icons.Rounded.KeyboardArrowDown
+                    },
+                    contentDescription = if (isMonthExpanded) {
+                        "Collapse month"
+                    } else {
+                        "Expand month"
+                    },
+                    modifier = Modifier.size(20.dp),
                 )
             }
         },
         actions = {
             if (state.hasCalendarPermission) {
-                IconButton(onClick = onRefresh) {
+                IconButton(onClick = onToday) {
                     Icon(
-                        imageVector = Icons.Rounded.Refresh,
-                        contentDescription = "Refresh agenda",
+                        imageVector = Icons.Rounded.Today,
+                        contentDescription = "Go to today",
+                    )
+                }
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Rounded.MoreVert,
+                        contentDescription = "More options",
                     )
                 }
             }
@@ -358,64 +406,201 @@ private fun CompactStatus(
 }
 
 @Composable
-private fun DateStrip() {
+private fun MonthOverview(
+    month: YearMonth,
+    events: List<CalendarEvent>,
+) {
     val today = LocalDate.now()
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(vertical = 4.dp),
+    val zone = ZoneId.systemDefault()
+    val eventDates = events.map { event -> event.startDate(zone) }.toSet()
+    val cells = month.calendarCells()
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(
-            items = (0L..6L).map(today::plusDays),
-            key = { date -> date.toString() },
-        ) { date ->
-            DateChip(
-                date = date,
-                selected = date == today,
+        Row(modifier = Modifier.fillMaxWidth()) {
+            WeekdayLabels.forEach { label ->
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = label,
+                    style = MaterialTheme.typography.labelSmall,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+        }
+
+        cells.chunked(7).forEach { week ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                week.forEach { date ->
+                    MonthDayCell(
+                        modifier = Modifier.weight(1f),
+                        date = date,
+                        selected = date == today,
+                        hasEvents = date in eventDates,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MonthDayCell(
+    modifier: Modifier = Modifier,
+    date: LocalDate?,
+    selected: Boolean,
+    hasEvents: Boolean,
+) {
+    Box(
+        modifier = modifier.height(34.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (date == null) return@Box
+
+        val contentColor = if (selected) {
+            MaterialTheme.colorScheme.onPrimary
+        } else {
+            MaterialTheme.colorScheme.onSurface
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(1.dp),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(28.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (selected) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            Color.Transparent
+                        },
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = date.dayOfMonth.toString(),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                    color = contentColor,
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .size(3.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (hasEvents) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            Color.Transparent
+                        },
+                    ),
             )
         }
     }
 }
 
 @Composable
-private fun DateChip(
-    date: LocalDate,
-    selected: Boolean,
-) {
-    val containerColor = if (selected) {
-        MaterialTheme.colorScheme.primaryContainer
-    } else {
-        MaterialTheme.colorScheme.surfaceContainerHigh
-    }
-    val contentColor = if (selected) {
-        MaterialTheme.colorScheme.onPrimaryContainer
-    } else {
-        MaterialTheme.colorScheme.onSurfaceVariant
-    }
+private fun AgendaDaySection(section: AgendaSection) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        DateRail(date = section.date)
 
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            section.events.forEach { event ->
+                AgendaEventBlock(event = event)
+            }
+        }
+    }
+}
+
+@Composable
+private fun DateRail(date: LocalDate) {
+    val isToday = date == LocalDate.now()
+    Column(
+        modifier = Modifier.width(48.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = date.dayOfMonth.toString(),
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Medium,
+            color = if (isToday) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurface
+            },
+        )
+        Text(
+            text = date.format(DateTimeFormatter.ofPattern("EEE")),
+            style = MaterialTheme.typography.labelMedium,
+            color = if (isToday) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
+        )
+    }
+}
+
+@Composable
+private fun AgendaEventBlock(event: CalendarEvent) {
     Surface(
         modifier = Modifier
-            .width(48.dp)
-            .height(58.dp),
-        color = containerColor,
-        contentColor = contentColor,
-        shape = RoundedCornerShape(16.dp),
-        tonalElevation = if (selected) 2.dp else 0.dp,
+            .fillMaxWidth()
+            .heightIn(min = 58.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        shape = RoundedCornerShape(4.dp),
     ) {
-        Column(
-            modifier = Modifier.padding(vertical = 7.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(
-                text = date.format(DateTimeFormatter.ofPattern("EEE")),
-                style = MaterialTheme.typography.labelSmall,
-                fontWeight = FontWeight.Medium,
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .width(4.dp)
+                    .heightIn(min = 58.dp)
+                    .background(event.accentColor()),
             )
-            Text(
-                text = date.format(DateTimeFormatter.ofPattern("d")),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-            )
+
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 9.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                Text(
+                    text = event.title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    text = event.timeRangeLabel(),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                val meta = event.agendaMeta()
+                if (meta.isNotEmpty()) {
+                    Text(
+                        text = meta,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
         }
     }
 }
@@ -448,97 +633,6 @@ private fun EmptyAgenda() {
     }
 }
 
-@Composable
-private fun AgendaDateHeader(section: AgendaSection) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp, bottom = 0.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Bottom,
-    ) {
-        Text(
-            text = section.date.relativeDateLabel(),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
-        Text(
-            text = section.events.size.eventCountLabel(),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
-}
-
-@Composable
-private fun AgendaEventRow(event: CalendarEvent) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        contentColor = MaterialTheme.colorScheme.onSurface,
-        shape = RoundedCornerShape(12.dp),
-        tonalElevation = 0.dp,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.Top,
-        ) {
-            Column(
-                modifier = Modifier.width(54.dp),
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.spacedBy(1.dp),
-            ) {
-                Text(
-                    text = event.startTimeLabel(),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                val endTime = event.endTimeLabel()
-                if (endTime.isNotEmpty()) {
-                    Text(
-                        text = endTime,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .width(3.dp)
-                    .height(52.dp)
-                    .clip(RoundedCornerShape(2.dp))
-                    .background(event.accentColor()),
-            )
-
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(3.dp),
-            ) {
-                Text(
-                    text = event.title,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                val meta = event.agendaMeta()
-                if (meta.isNotEmpty()) {
-                    Text(
-                        text = meta,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-        }
-    }
-}
-
 private fun Context.hasCalendarReadPermission(): Boolean {
     return ContextCompat.checkSelfPermission(
         this,
@@ -550,6 +644,15 @@ private data class AgendaSection(
     val date: LocalDate,
     val events: List<CalendarEvent>,
 )
+
+private val WeekdayLabels = listOf("S", "M", "T", "W", "T", "F", "S")
+
+private fun YearMonth.calendarCells(): List<LocalDate?> {
+    val leadingEmptyCells = atDay(1).dayOfWeek.value % 7
+    val dates = (1..lengthOfMonth()).map(::atDay)
+    val trailingEmptyCells = (7 - ((leadingEmptyCells + dates.size) % 7)) % 7
+    return List(leadingEmptyCells) { null } + dates + List(trailingEmptyCells) { null }
+}
 
 private fun List<CalendarEvent>.agendaSections(): List<AgendaSection> {
     val zone = ZoneId.systemDefault()
@@ -574,44 +677,21 @@ private fun Int.calendarCountLabel(): String {
     }
 }
 
-private fun Int.eventCountLabel(): String {
-    return when (this) {
-        1 -> "1 event"
-        else -> "$this events"
-    }
-}
-
 private fun LocalDate.agendaTitle(): String {
     return format(DateTimeFormatter.ofPattern("EEEE, d MMM"))
-}
-
-private fun LocalDate.relativeDateLabel(): String {
-    val today = LocalDate.now()
-    return when (this) {
-        today -> "Today"
-        today.plusDays(1) -> "Tomorrow"
-        else -> format(DateTimeFormatter.ofPattern("EEE, d MMM"))
-    }
 }
 
 private fun CalendarEvent.startDate(zone: ZoneId): LocalDate {
     return Instant.ofEpochMilli(startMillis).atZone(zone).toLocalDate()
 }
 
-private fun CalendarEvent.startTimeLabel(): String {
+private fun CalendarEvent.timeRangeLabel(): String {
     if (allDay) return "All day"
 
     val zone = ZoneId.systemDefault()
     val start = Instant.ofEpochMilli(startMillis).atZone(zone)
-    return start.format(DateTimeFormatter.ofPattern("HH:mm"))
-}
-
-private fun CalendarEvent.endTimeLabel(): String {
-    if (allDay) return ""
-
-    val zone = ZoneId.systemDefault()
     val end = Instant.ofEpochMilli(endMillis).atZone(zone)
-    return end.format(DateTimeFormatter.ofPattern("HH:mm"))
+    return "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${end.format(DateTimeFormatter.ofPattern("HH:mm"))}"
 }
 
 @Composable
