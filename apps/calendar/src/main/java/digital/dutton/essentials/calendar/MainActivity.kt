@@ -1111,6 +1111,12 @@ private val WeekdayLabels = listOf("S", "M", "T", "W", "T", "F", "S")
 private val DateInputFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 private val TimeInputFormatter = DateTimeFormatter.ofPattern("H:mm")
 private val TimeOutputFormatter = DateTimeFormatter.ofPattern("HH:mm")
+private const val MapsPackageName = "digital.dutton.essentials.maps"
+private const val LocationIntentExtraSource = "digital.dutton.essentials.locations.extra.SOURCE"
+private const val LocationIntentExtraCalendarEventId = "digital.dutton.essentials.locations.extra.CALENDAR_EVENT_ID"
+private const val LocationIntentExtraRawProviderLocation =
+    "digital.dutton.essentials.locations.extra.RAW_PROVIDER_LOCATION"
+private const val LocationIntentSourceCalendar = "calendar"
 
 private fun YearMonth.calendarCells(): List<LocalDate?> {
     val leadingEmptyCells = atDay(1).dayOfWeek.value % 7
@@ -1291,7 +1297,10 @@ private fun Context.openEventLocationInMaps(link: EventLocationLink?) {
     val providerLocation = link?.rawProviderLocation?.takeIf { it.isNotBlank() } ?: return
     val geoUri = Uri.parse("geo:0,0?q=${Uri.encode(providerLocation)}")
     val mapsIntent = Intent(Intent.ACTION_VIEW, geoUri)
-        .setPackage("digital.dutton.essentials.maps")
+        .setPackage(MapsPackageName)
+        .putExtra(LocationIntentExtraSource, LocationIntentSourceCalendar)
+        .putExtra(LocationIntentExtraCalendarEventId, link.eventId)
+        .putExtra(LocationIntentExtraRawProviderLocation, providerLocation)
 
     runCatching {
         startActivity(mapsIntent)

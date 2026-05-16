@@ -14,6 +14,20 @@ The previous MapLibre prototype lives at `apps/maps-legacy`. It remains useful
 as a small integration reference for `:core:locations`, `geo:` intents, and
 calendar location linking, but it is no longer the product Maps architecture.
 
+## Suite Intent Contract
+
+Calendar location handoff uses a normal Android map intent:
+`ACTION_VIEW geo:0,0?q=<event location>`. Calendar targets
+`digital.dutton.essentials.maps` when the suite Maps app is installed, while
+falling back to a generic `geo:` intent otherwise.
+
+For suite-to-suite launches, Calendar also adds
+`digital.dutton.essentials.locations.extra.SOURCE=calendar` and
+`digital.dutton.essentials.locations.extra.RAW_PROVIDER_LOCATION`. Maps checks
+for those extras before the inherited CoMaps URL parser runs, then opens a plain
+place search from the provider location. This preserves the legacy behavior where
+`0,0` is a sentinel for "address query only" rather than a real map viewport.
+
 ## Build Entry Points
 
 The suite Compose apps build from the root Gradle project:

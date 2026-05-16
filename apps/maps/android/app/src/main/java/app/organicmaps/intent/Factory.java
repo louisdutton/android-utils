@@ -5,7 +5,9 @@ import static app.organicmaps.api.Const.EXTRA_PICK_POINT;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.IntentCompat;
 import app.organicmaps.MwmActivity;
 import app.organicmaps.MwmApplication;
@@ -62,6 +64,63 @@ public class Factory
       final ContentResolver resolver = activity.getContentResolver();
       ThreadPool.getStorage().execute(() -> BookmarkManager.INSTANCE.importBookmarksFiles(resolver, uris, tempDir));
       return false;
+    }
+  }
+
+  public static class CalendarLocationProcessor implements IntentProcessor
+  {
+    private static final String EXTRA_SOURCE = "digital.dutton.essentials.locations.extra.SOURCE";
+    private static final String EXTRA_RAW_PROVIDER_LOCATION =
+        "digital.dutton.essentials.locations.extra.RAW_PROVIDER_LOCATION";
+    private static final String SOURCE_CALENDAR = "calendar";
+
+    @Override
+    public boolean process(@NonNull Intent intent, @NonNull MwmActivity target)
+    {
+      if (!Intent.ACTION_VIEW.equals(intent.getAction()))
+        return false;
+
+      if (!SOURCE_CALENDAR.equals(intent.getStringExtra(EXTRA_SOURCE)))
+        return false;
+
+      String location = intent.getStringExtra(EXTRA_RAW_PROVIDER_LOCATION);
+      if (TextUtils.isEmpty(location))
+        location = extractGeoQuery(intent.getData());
+
+      if (location != null)
+        location = location.trim();
+
+      if (TextUtils.isEmpty(location))
+        return false;
+
+      SearchEngine.INSTANCE.cancelInteractiveSearch();
+      SearchActivity.start(target, location);
+      return true;
+    }
+
+    @Nullable
+    private static String extractGeoQuery(@Nullable Uri uri)
+    {
+      if (uri == null || !"geo".equalsIgnoreCase(uri.getScheme()))
+        return null;
+
+      final String raw = uri.toString();
+      final int queryStart = raw.indexOf('?');
+      if (queryStart == -1 || queryStart == raw.length() - 1)
+        return null;
+
+      final String[] params = raw.substring(queryStart + 1).split("&");
+      for (String param : params)
+      {
+        final int equals = param.indexOf('=');
+        if (equals <= 0)
+          continue;
+
+        if ("q".equals(param.substring(0, equals)))
+          return Uri.decode(param.substring(equals + 1));
+      }
+
+      return null;
     }
   }
 
