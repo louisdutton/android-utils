@@ -2,6 +2,11 @@
 
 ## Android Development
 
+- `apps/maps` is the hard-forked CoMaps-derived production Maps app, imported
+  as normal source with its own Gradle project. Build it with:
+  `nix develop --no-write-lock-file --command ./scripts/build-comaps-android.sh`
+- The old MapLibre prototype is `:apps:maps-legacy`; keep it for integration
+  reference work, not as the production Maps target.
 - Prefer reusing an already-running Android emulator while iterating on app changes.
 - Before starting a new emulator, check for connected devices with:
   `nix develop --no-write-lock-file --command adb devices -l`

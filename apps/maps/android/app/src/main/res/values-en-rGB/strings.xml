@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SECTION: Strings -->
+    <!-- Choose measurement on first launch alert - choose metric system button -->
+    <string name="kilometres">Kilometres</string>
+    <!-- Detailed description of Measurement Units settings button -->
+    <string name="measurement_units_summary">Choose between miles and kilometres</string>
+    <!-- SECTION: Search categories -->
+    <!-- Search category for fuel stations; any changes should be duplicated in categories.txt @category_fuel! -->
+    <string name="category_fuel">Petrol</string>
+    <!-- SECTION: Other translations -->
+    <!-- gray color -->
+    <string name="gray">Grey</string>
+    <!-- blue gray color -->
+    <string name="blue_gray">Blue Grey</string>
+    <!-- SECTION: Routing dialogs strings -->
+    <string name="dialog_routing_disclaimer_borders">— Exercise caution with routes in border zones: the routes created by our app may sometimes cross country borders in unauthorised places.</string>
+    <!-- SECTION: Strings for downloading map from search -->
+    <string name="editor_zip_code">Postcode</string>
+    <string name="error_enter_correct_zip_code">Enter a valid postcode</string>
+    <string name="subway">Metro</string>
+    <string name="avoid_motorways">Avoid motorways</string>
+    <!-- SECTION: Bookmark types used for sorting -->
+    <string name="fuel_places">Petrol Stations</string>
+    <string name="transit_not_found">Metro navigation in this region is not available yet</string>
+    <string name="dialog_pedestrian_route_is_long_header">No metro route found</string>
+    <string name="dialog_pedestrian_route_is_long_message">Please choose a start or end point closer to a metro station</string>
+    <string name="bookmarks_and_tracks">Favourites</string>
+    <string name="share_bookmarks_email_subject">My CoMaps Favourites</string>
+    <string name="share_bookmarks_email_body">Hello! \n \nAttached are my Favourites, please open them in CoMaps. If you don\'t have it installed you can download it here: https://www.comaps.app/download/ \n \nEnjoy travelling with CoMaps!</string>
+    <string name="load_kmz_title">Loading Favourites</string>
+    <string name="load_kmz_successful">Favourites loaded successfully! You can find them on the map or on the Favourites Manager screen.</string>
+    <string name="load_kmz_failed">Failed to load Favourites. The file may be corrupted or defective.</string>
+    <string name="bookmark_lists">Favourite Lists</string>
+    <string name="bookmarks_import">Import Favourites</string>
+    <string name="sort_bookmarks">Sort Favourites</string>
+    <string name="bookmarks_export">Export all Favourites</string>
+    <string name="track_recording_alert_title">Save to Favourites?</string>
+    <string name="pref_backup_title">Backup Favourites</string>
+    <string name="pref_backup_now_summary_empty_lists">No Favourites to backup</string>
+    <string name="bookmark_color">Colour for Favourite</string>
+    <string name="choose_color">Choose Colour</string>
+    <string name="category_atm">Cash Machine</string>
+    <string name="app_tip_09">Our main goal is to build fast, privacy-focussed, easy-to-use maps that you will love.</string>
+    <string name="location_is_disabled_long_text">You currently have all Location Services for this device or application disabled. Please enable them in Settings.</string>
+    <string name="limited_accuracy">Limited Accuracy</string>
+    <string name="about_menu_title">About CoMaps</string>
+    <string name="about_proposition_1">• Easy to use and polished</string>
+    <string name="about_developed_by_enthusiasts">Fully open source, not for profit, transparent decision-making and finances.</string>
+    <string name="unsupported_phone">The app requires hardware accelerated OpenGL. Unfortunately, your device is not supported.</string>
+    <string name="not_enough_free_space_on_sdcard">Please free up some space on the SD card/USB storage first in order to use the app</string>
+    <string name="download_resources">Before you start using the app, please download the world overview map to your device. \nIt will use %s of storage.</string>
+    <string name="download_resources_continue">Go to Map</string>
+    <string name="downloading_country_can_proceed">Downloading %1$s (%2$s). You can now \nproceed to the map.</string>
+    <string name="download_country_ask">Download %1$s? (%2$s)</string>
+    <string name="search">Search</string>
+    <string name="app_site_url">https://comaps.app/</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kilometres">Kilometres</string>
+    <string name="choose_color">Choose Colour</string>
+    <string name="bookmark_color">Bookmark colour</string>
+    <string name="gray">Grey</string>
+    <string name="blue_gray">Blue Grey</string>
+    <string name="dialog_routing_disclaimer_borders">— Exercise caution with routes in border zones: the routes created by our app may sometimes cross country borders in unauthorised places.</string>
+</resources>

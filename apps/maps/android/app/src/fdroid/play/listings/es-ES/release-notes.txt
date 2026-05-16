@@ -1,0 +1,9 @@
+• Datos de OpenStreetMap a fecha del 4 de mayo
+• Botón "Revisar actualizaciones" en la pantalla de descargas para obtener nuevos mapas sin actualizar la app
+• Mostrar los semáforos del trayecto al navegar, pero con iconos más grandes
+• Mostrar categorías se muestra como grilla
+• Se agregó un ajuste de privacidad para habilitar el modo incognito del teclado del sistema
+• Señales de trafico específica de Eslovenia
+• Artículos de Wikipedia de Indonesia
+
+Más detalles en comaps.app/latest
