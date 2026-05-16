@@ -39,6 +39,13 @@ engines such as openrouteservice, OSRM, Valhalla, or GraphHopper can be useful
 for development comparisons, but they should not become the only production
 routing path.
 
+The current app may use the public FOSSGIS OSRM service at
+`routing.openstreetmap.de` as a low-volume development fallback. That service is
+not a production dependency: it requires attribution, a valid user agent, at
+most one request per second, and no scraping or heavy usage. Route requests sent
+there are calculated server-side and therefore disclose route endpoints to that
+server.
+
 The next implementation spike should compare:
 
 - Reusing or adapting the CoMaps/Organic Maps offline routing stack.
@@ -55,6 +62,33 @@ Evaluation criteria:
 - Uses open data and licenses compatible with the app suite.
 - Can share downloaded region data with offline map rendering/search where
   practical.
+
+## CoMaps / Organic Maps Routing Findings
+
+CoMaps is offline-first because its downloaded regional `.mwm` files contain
+the data used for rendering, search, and routing. Its Android routing layer is a
+thin JNI wrapper over the native C++ core: the UI selects a routing profile,
+sets route points, and calls into `Framework` / `RoutingManager`.
+
+The actual router is built around native `DataSource` / `MwmSet` storage and an
+`IndexRouter` that runs local graph search over generated routing sections. The
+map generator writes those routing sections, cross-region transitions, and
+cross-region weights into the `.mwm` files. Missing regions are surfaced as a
+`NeedMoreMaps` routing result, which the app turns into a prompt to download
+the maps along the route.
+
+This means `libs/routing` should not be treated as a small drop-in routing
+library for the current MapLibre implementation. The realistic choices are:
+
+- Adopt or fork more of the CoMaps native core, storage format, downloader, and
+  generator pipeline.
+- Keep the current MapLibre-based app and embed a separate offline routing
+  engine, accepting that map rendering/search/routing data may need careful
+  coordination or duplication.
+
+Before implementing production routing UI, run a focused architecture spike
+that compares those two paths on build complexity, APK/storage size, route
+quality, Android integration effort, and long-term maintenance.
 
 ## Remaining Functional Areas
 

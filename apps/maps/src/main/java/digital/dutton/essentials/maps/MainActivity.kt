@@ -80,8 +80,10 @@ import digital.dutton.essentials.locations.GeoPoint
 import digital.dutton.essentials.locations.MapLocation
 import digital.dutton.essentials.maps.data.AndroidDeviceLocationRepository
 import digital.dutton.essentials.maps.data.AndroidGeocoderLocationResolver
+import digital.dutton.essentials.maps.data.FallbackRoutePlanner
 import digital.dutton.essentials.maps.data.MapDataSources
 import digital.dutton.essentials.maps.data.MapStyleSource
+import digital.dutton.essentials.maps.data.PublicOsrmRoutePlanner
 import digital.dutton.essentials.maps.data.RoutePreview
 import digital.dutton.essentials.maps.data.SavedPlacesRepository
 import digital.dutton.essentials.maps.data.StraightLineRoutePlanner
@@ -136,6 +138,7 @@ data class MapsUiState(
     val hasLocationPermission: Boolean = false,
     val isSearching: Boolean = false,
     val isLocating: Boolean = false,
+    val isRouting: Boolean = false,
     val error: String? = null,
 )
 
@@ -143,7 +146,10 @@ class MapsViewModel(application: Application) : AndroidViewModel(application) {
     private val savedPlacesRepository = SavedPlacesRepository(application.applicationContext)
     private val deviceLocationRepository = AndroidDeviceLocationRepository(application.applicationContext)
     private val locationResolver = AndroidGeocoderLocationResolver(application.applicationContext)
-    private val routePlanner = StraightLineRoutePlanner()
+    private val routePlanner = FallbackRoutePlanner(
+        primary = PublicOsrmRoutePlanner(),
+        fallback = StraightLineRoutePlanner(),
+    )
 
     private val _uiState = MutableStateFlow(
         MapsUiState(savedPlaces = savedPlacesRepository.load()),
@@ -248,12 +254,16 @@ class MapsViewModel(application: Application) : AndroidViewModel(application) {
             return
         }
 
-        val route = routePlanner.previewRoute(origin, destination)
-        _uiState.update {
-            it.copy(
-                routePreview = route,
-                error = if (route == null) "Route unavailable" else null,
-            )
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRouting = true, error = null) }
+            val route = routePlanner.previewRoute(origin, destination)
+            _uiState.update {
+                it.copy(
+                    routePreview = route,
+                    isRouting = false,
+                    error = if (route == null) "Route unavailable" else null,
+                )
+            }
         }
     }
 
@@ -506,6 +516,7 @@ private fun PlacesTray(
                     SelectedPlace(
                         place = place,
                         routePreview = state.routePreview,
+                        isRouting = state.isRouting,
                         onSave = onSaveSelectedPlace,
                         onRoute = onRouteToSelectedPlace,
                     )
@@ -623,6 +634,7 @@ private fun PlacesTrayHeader(
 private fun SelectedPlace(
     place: MapLocation,
     routePreview: RoutePreview?,
+    isRouting: Boolean,
     onSave: () -> Unit,
     onRoute: () -> Unit,
 ) {
@@ -642,6 +654,13 @@ private fun SelectedPlace(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary,
             )
+            route.notice?.let { notice ->
+                Text(
+                    text = notice,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
 
         Row(
@@ -657,14 +676,24 @@ private fun SelectedPlace(
                 Spacer(modifier = Modifier.width(6.dp))
                 Text("Save")
             }
-            Button(onClick = onRoute) {
-                Icon(
-                    imageVector = Icons.Rounded.Navigation,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp),
-                )
+            Button(
+                onClick = onRoute,
+                enabled = !isRouting,
+            ) {
+                if (isRouting) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(18.dp),
+                        strokeWidth = 2.dp,
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Rounded.Navigation,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                    )
+                }
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("Route")
+                Text(if (isRouting) "Routing" else "Route")
             }
         }
     }

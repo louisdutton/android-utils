@@ -18,6 +18,7 @@ services are only development or optional fallback paths.
 - Search: Android `Geocoder` resolver.
 - Saved places: local app storage.
 - Calendar: `geo:` intents from Calendar event locations into Maps.
-- Routing: route-preview contract in place; offline routing engine pending.
+- Routing: public OSRM development fallback with a direct-line fallback; offline
+  routing engine pending.
 
 Future Maps work is tracked in [FEATURES.md](FEATURES.md).
