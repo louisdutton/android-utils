@@ -519,7 +519,6 @@
     <string name="pref_tts_open_system_settings">Kerfisstillingar talgervils</string>
     <string name="pref_tts_no_system_tts">Stillingar talgervils fundust ekki, ertu viss um að tækið þitt sé með stuðning við slíkt?</string>
     <string name="power_save_dialog_summary">Til að tryggja nákvæma leiðsögn ættirðu að gera orkusparnaðarham óvirkan í raflöðustillingum símans.</string>
-    <string name="nav_auto">Sjálfvirkt við leiðsögn</string>
     <string name="dialog_routing_disclaimer_borders">— Sýndu aðgætni á leiðum nálægt jaðarsvæðum: leiðirnar sem forritið útbýr gætu stundum farið yfir landamæri á stöðum sem ekki er leyfilegt að fara um.</string>
     <string name="routing_failed_cross_mwm_building">Leiðir er aðeins hægt að útbúa þar sem þær eru að fullu innan landakorts af stöku héraði.</string>
     <string name="routing_requires_all_map">Til þess að geta útbúið leiðina, þá þarf að sækja og uppfæra öll landakortin frá staðsetningunni þinni og að áfangastað.</string>

@@ -2,8 +2,6 @@
 <resources>
   <string-array name="app_tips">
     <item>@string/app_tip_00</item>
-    <item>@string/app_tip_01</item>
-    <item>@string/app_tip_02</item>
     <item>@string/app_tip_03</item>
     <item>@string/app_tip_04</item>
     <item>@string/app_tip_05</item>
@@ -47,10 +45,9 @@
   </string-array>
   
   <string-array name="map_style">
+    <item>@string/system_default</item>
     <item>@string/off</item>
     <item>@string/on</item>
-    <item>@string/auto</item>
-    <item>@string/nav_auto</item>
   </string-array>
 
   <string-array name="speed_cameras">

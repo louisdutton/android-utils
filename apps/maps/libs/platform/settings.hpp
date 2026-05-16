@@ -11,8 +11,7 @@ namespace settings
 /// Metric or Imperial.
 extern std::string_view kMeasurementUnits;
 extern std::string_view kDeveloperMode;
-// The following two settings are configured externally at the metaserver.
-extern std::string_view kDonateUrl;
+// This setting is configured externally at the metaserver.
 extern std::string_view kNY;
 
 template <class T>

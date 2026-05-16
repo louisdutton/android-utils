@@ -796,7 +796,6 @@
     <string name="edit_track">編輯軌跡</string>
     <string name="uri_open_location_failed">沒有安裝可以打開該位置的應用程式</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">自動導航</string>
     <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="telegram_url">https://t.me/CoMapsApp/</string>

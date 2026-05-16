@@ -708,7 +708,6 @@
     <string name="edit_track">Editar trilha</string>
     <string name="uri_open_location_failed">Nenhum aplicativo instalado que possa abrir o local</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Automático na navegação</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>
     <string name="about_proposition_3">• Não precisa de conexão à internet, rápido e leve</string>
     <string name="drive_through">Drive-through</string>

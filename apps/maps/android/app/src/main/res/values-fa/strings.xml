@@ -748,7 +748,6 @@
     <string name="edit_track">ویرایش مسیر</string>
     <string name="uri_open_location_failed">هیچ برنامه ای نصب نشده است که بتواند مکان را باز کند</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">خودکار در ناوبری</string>
     <string name="telegram_url">https://t.me/CoMapsApp</string>
     <string name="translated_om_site_url">https://comaps.app</string>
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android</string>

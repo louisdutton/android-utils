@@ -18,6 +18,7 @@ import app.organicmaps.MwmActivity;
 import app.organicmaps.R;
 import app.organicmaps.sdk.downloader.MapManager;
 import app.organicmaps.sdk.util.log.Logger;
+import app.organicmaps.util.UiUtils;
 import java.util.Objects;
 
 public class DownloaderNotifier
@@ -61,13 +62,16 @@ public class DownloaderNotifier
 
     final String countryName = MapManager.nativeGetName(countryId);
     final String title = mContext.getString(R.string.download_country_failed, countryName);
+    final int notificationColor =
+        UiUtils.getStyledColor(mContext, com.google.android.material.R.attr.colorSecondary,
+                               ContextCompat.getColor(mContext, R.color.md_theme_secondary));
 
     final Notification notification = new NotificationCompat.Builder(mContext, CHANNEL_ID)
                                           .setAutoCancel(true)
                                           .setCategory(NotificationCompat.CATEGORY_ERROR)
                                           .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                                           .setSmallIcon(R.drawable.ic_logo_small)
-                                          .setColor(ContextCompat.getColor(mContext, R.color.notification))
+                                          .setColor(notificationColor)
                                           .setContentTitle(title)
                                           .setShowWhen(true)
                                           .setTicker(title)
@@ -132,13 +136,16 @@ public class DownloaderNotifier
     if (mProgressNotificationBuilder == null || !Objects.equals(countryId, mNotificationCountryId))
     {
       mNotificationCountryId = countryId;
+      final int notificationColor =
+          UiUtils.getStyledColor(mContext, com.google.android.material.R.attr.colorSecondary,
+                                 ContextCompat.getColor(mContext, R.color.md_theme_secondary));
 
       mProgressNotificationBuilder =
           new NotificationCompat.Builder(mContext, CHANNEL_ID)
               .setAutoCancel(true)
               .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
               .setSmallIcon(R.drawable.ic_logo_small)
-              .setColor(ContextCompat.getColor(mContext, R.color.notification))
+              .setColor(notificationColor)
               .setShowWhen(true)
               .setContentIntent(getNotificationPendingIntent(countryId))
               .setSound(null);

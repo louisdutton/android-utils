@@ -796,7 +796,6 @@
     <string name="edit_track">编辑轨迹</string>
     <string name="uri_open_location_failed">未安装可以打开位置的应用</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">自动导航</string>
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="app_site_url">https://comaps.app/zh-Hans/</string>

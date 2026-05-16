@@ -402,16 +402,6 @@
     </activity>
 
     <activity
-        android:name="app.organicmaps.help.HelpActivity"
-        android:parentActivityName="app.organicmaps.MwmActivity"
-        android:exported="false">
-      <intent-filter>
-        <action android:name="app.organicmaps.help.HelpActivity" />
-        <category android:name="android.intent.category.DEFAULT" />
-      </intent-filter>
-    </activity>
-
-    <activity
         android:name="app.organicmaps.bookmarks.BookmarkCategoriesActivity"
         android:theme="@style/MwmTheme.WindowBg"
         android:configChanges="orientation|screenLayout|screenSize"

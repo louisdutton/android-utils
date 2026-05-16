@@ -728,7 +728,6 @@
     <string name="edit_track">Wysig Roete</string>
     <string name="uri_open_location_failed">Geen toepassing geïnstalleer wat die ligging kan oopmaak nie</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Outo in navigasie</string>
     <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>

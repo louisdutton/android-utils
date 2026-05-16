@@ -752,7 +752,6 @@
     <string name="edit_track">Rediger spor</string>
     <string name="uri_open_location_failed">Ingen app installeret, der kan åbne stedet</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Auto ved navigation</string>
     <string name="disconnect_usb_cable_title">Frakobl USB-kabel</string>
     <string name="editor_add_phone">Tilføj telefon</string>
     <string name="download_map_title">Download oversigtskortet over verden</string>

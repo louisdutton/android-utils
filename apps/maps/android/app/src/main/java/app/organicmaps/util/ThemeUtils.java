@@ -52,14 +52,4 @@ public final class ThemeUtils
   {
     return Config.UiTheme.isNight(Config.UiTheme.getCurrent());
   }
-
-  public static boolean isAutoTheme()
-  {
-    return Config.UiTheme.isAuto(Config.UiTheme.getUiThemeSettings());
-  }
-
-  public static boolean isNavAutoTheme()
-  {
-    return Config.UiTheme.isNavAuto(Config.UiTheme.getUiThemeSettings());
-  }
 }

@@ -39,7 +39,6 @@ import app.organicmaps.BuildConfig;
 import app.organicmaps.MwmActivity;
 import app.organicmaps.MwmApplication;
 import app.organicmaps.R;
-import app.organicmaps.sdk.util.Config;
 import app.organicmaps.sdk.util.Constants;
 import app.organicmaps.sdk.util.Distance;
 import app.organicmaps.sdk.util.StringUtils;
@@ -470,12 +469,4 @@ public class Utils
     return StringUtils.formatUsingUsLocale("%d:%02d", time.getHour(), time.getMinute());
   }
 
-  @NonNull
-  public static String getDonateUrl(@NonNull Context context)
-  {
-    final String url = Config.getDonateUrl();
-    if (url.isEmpty() || url.endsWith("comaps.app/donate/"))
-      return context.getString(R.string.app_site_url) + "donate/";
-    return url;
-  }
 }

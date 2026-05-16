@@ -776,7 +776,6 @@
     <string name="edit_track">Рэдагаваць маршрут</string>
     <string name="uri_open_location_failed">Не ўсталявана праграма, якая можа адкрыць месцазнаходжанне</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Аўто ў навігацыі</string>
     <string name="move_maps_error">Памылка перамяшчэння файлаў карты</string>
     <string name="menu">Меню</string>
     <string name="level_value_generic">Узровень: %s</string>

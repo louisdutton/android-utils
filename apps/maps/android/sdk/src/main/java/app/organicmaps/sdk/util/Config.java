@@ -44,7 +44,6 @@ public final class Config
 
   private static final String KEY_MISC_SHOW_ON_LOCK_SCREEN = "ShowOnLockScreen";
   private static final String KEY_MISC_AGPS_TIMESTAMP = "AGPSTimestamp";
-  private static final String KEY_DONATE_URL = "DonateUrl";
   private static final String KEY_PREF_SEARCH_HISTORY = "SearchHistoryEnabled";
 
   public static final String KEY_PREF_LAST_SEARCHED_TAB = "LastSearchTab";
@@ -252,20 +251,9 @@ public final class Config
     private static final String KEY_UI_THEME = "UiTheme";
     private static final String KEY_UI_THEME_SETTINGS = "UiThemeSettings";
 
-    public static final String AUTO = "auto";
     public static final String NIGHT = "night";
-    public static final String NAV_AUTO = "nav_auto";
     public static final String DEFAULT = "default";
-
-    public static boolean isAuto(@NonNull String theme)
-    {
-      return AUTO.equals(theme);
-    }
-
-    public static boolean isNavAuto(@NonNull String theme)
-    {
-      return NAV_AUTO.equals(theme);
-    }
+    public static final String SYSTEM = "system";
 
     public static boolean isNight(@NonNull String theme)
     {
@@ -275,6 +263,11 @@ public final class Config
     public static boolean isDefault(@NonNull String theme)
     {
       return DEFAULT.equals(theme);
+    }
+
+    public static boolean isSystem(@NonNull String theme)
+    {
+      return SYSTEM.equals(theme);
     }
 
     @NonNull
@@ -298,11 +291,11 @@ public final class Config
     @NonNull
     public static String getUiThemeSettings()
     {
-      final String res = getString(KEY_UI_THEME_SETTINGS, DEFAULT);
-      if (isValid(res) || isAuto(res) || isNavAuto(res))
+      final String res = getString(KEY_UI_THEME_SETTINGS, SYSTEM);
+      if (isValid(res) || isSystem(res))
         return res;
 
-      return DEFAULT;
+      return SYSTEM;
     }
 
     public static boolean setUiThemeSettings(String theme)
@@ -390,12 +383,6 @@ public final class Config
   public static void setTransliteration(boolean value)
   {
     nativeSetTransliteration(value);
-  }
-
-  @NonNull
-  public static String getDonateUrl()
-  {
-    return getString(KEY_DONATE_URL);
   }
 
   public static void init(@NonNull Context context, @NonNull SharedPreferences prefs, @NonNull String flavor,

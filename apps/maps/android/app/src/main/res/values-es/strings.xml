@@ -798,7 +798,6 @@
     <string name="edit_track">Editar trayecto</string>
     <string name="uri_open_location_failed">No hay ninguna aplicación instalada que pueda abrir la ubicación</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Auto en navegación</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="level_value_generic">Nivel: %s</string>

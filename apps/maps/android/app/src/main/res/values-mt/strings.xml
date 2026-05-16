@@ -429,7 +429,6 @@
     <string name="website_menu">Link tal-menu</string>
     <string name="open_in_app">Iftaħ f’ Applikazzjoni Oħra</string>
     <string name="choose_color">Agħżel Kulur</string>
-    <string name="nav_auto">Auto fin-navigazzjoni</string>
     <plurals name="bookmarks_places">
         <item quantity="one">bookmark ta\' %d</item>
         <item quantity="two">bookmarks ta\' %d</item>

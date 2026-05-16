@@ -566,7 +566,6 @@
     <string name="error_no_file_manager_app">உங்கள் சாதனத்தில் பொருத்தமான பயன்பாடு எதுவும் நிறுவப்படாததால் கோப்புறை தேர்வு உரையாடலைக் காட்ட முடியவில்லை. கோப்பு மேலாளர் பயன்பாட்டை நிறுவி மீண்டும் முயற்சிக்கவும்.</string>
     <string name="choose_color">வண்ணத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="uri_open_location_failed">இருப்பிடத்தைத் திறக்கக்கூடிய பயன்பாடு எதுவும் நிறுவப்படவில்லை</string>
-    <string name="nav_auto">வழிசெலுத்தலில் தானியங்கு</string>
     <string name="pref_left_button_title">இடது பொத்தான் அமைப்பு</string>
     <string name="pref_left_button_disable">முடக்கு</string>
     <string name="pref_backup_title">காப்புப்பிரதி பிடித்தவை</string>

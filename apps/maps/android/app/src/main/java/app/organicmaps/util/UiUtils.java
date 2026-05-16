@@ -328,6 +328,22 @@ public final class UiUtils
     }
   }
 
+  @ColorInt
+  public static int getStyledColor(@NonNull Context context, @AttrRes int res, @ColorInt int fallback)
+  {
+    TypedArray a = null;
+    try
+    {
+      a = context.obtainStyledAttributes(new int[] {res});
+      return a.getColor(0, fallback);
+    }
+    finally
+    {
+      if (a != null)
+        a.recycle();
+    }
+  }
+
   public static void expandTouchAreaForView(@NonNull final View view, final int top, final int left, final int bottom,
                                             final int right)
   {

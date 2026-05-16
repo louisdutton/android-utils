@@ -787,7 +787,6 @@
     <string name="edit_track">Rediger spor</string>
     <string name="uri_open_location_failed">Ingen app installert som kan åpne stedet</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Auto i navigasjon</string>
     <string name="error_enter_correct_level">Angi et gyldig etasjenummer</string>
     <string name="editor_level">Etasje (0 er nederste etasje)</string>
     <string name="pref_left_button_disable">Deaktiver</string>

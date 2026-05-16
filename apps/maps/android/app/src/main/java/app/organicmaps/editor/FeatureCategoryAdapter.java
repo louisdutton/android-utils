@@ -131,22 +131,31 @@ public class FeatureCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
       mNoteEditText = itemView.findViewById(R.id.note_edit_text);
       mSendNoteButton = itemView.findViewById(R.id.send_note_button);
       mSendNoteButton.setOnClickListener(v -> listener.onSendNoteClicked());
+      final int secondary =
+          UiUtils.getStyledColor(mSendNoteButton.getContext(), com.google.android.material.R.attr.colorSecondary,
+                                 ContextCompat.getColor(mSendNoteButton.getContext(), R.color.md_theme_secondary));
+      final int surfaceVariant =
+          UiUtils.getStyledColor(mSendNoteButton.getContext(), com.google.android.material.R.attr.colorSurfaceVariant,
+                                 ContextCompat.getColor(mSendNoteButton.getContext(), R.color.md_theme_surfaceVariant));
+      final int onSecondary =
+          UiUtils.getStyledColor(mSendNoteButton.getContext(), com.google.android.material.R.attr.colorOnSecondary,
+                                 ContextCompat.getColor(mSendNoteButton.getContext(), R.color.md_theme_onSecondary));
+      final int onSurfaceVariant =
+          UiUtils.getStyledColor(mSendNoteButton.getContext(), com.google.android.material.R.attr.colorOnSurfaceVariant,
+                                 ContextCompat.getColor(mSendNoteButton.getContext(),
+                                                        R.color.md_theme_onSurfaceVariant));
       final ColorStateList bgButtonColor = new ColorStateList(
           new int[][] {
               new int[] {android.R.attr.state_enabled}, // enabled
               new int[] {-android.R.attr.state_enabled} // disabled
           },
-          new int[] {ContextCompat.getColor(mSendNoteButton.getContext(), R.color.base_accent),
-                     ContextCompat.getColor(mSendNoteButton.getContext(), R.color.button_accent_disabled)});
+          new int[] {secondary, surfaceVariant});
       final ColorStateList textButtonColor = new ColorStateList(
           new int[][] {
               new int[] {android.R.attr.state_enabled}, // enabled
               new int[] {-android.R.attr.state_enabled} // disabled
           },
-          new int[] {ContextCompat.getColor(mSendNoteButton.getContext(),
-                                            UiUtils.getStyledResourceId(mSendNoteButton.getContext(),
-                                                                        android.R.attr.textColorPrimaryInverse)),
-                     ContextCompat.getColor(mSendNoteButton.getContext(), R.color.button_accent_text_disabled)});
+          new int[] {onSecondary, onSurfaceVariant});
       mSendNoteButton.setBackgroundTintList(bgButtonColor);
       mSendNoteButton.setTextColor(textButtonColor);
       mNoteEditText.addTextChangedListener(new StringUtils.SimpleTextWatcher() {

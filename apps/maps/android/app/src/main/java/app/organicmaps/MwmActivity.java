@@ -5,7 +5,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.POST_NOTIFICATIONS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static app.organicmaps.leftbutton.LeftButtonsHolder.BUTTON_ADD_PLACE_CODE;
-import static app.organicmaps.leftbutton.LeftButtonsHolder.BUTTON_HELP_CODE;
 import static app.organicmaps.leftbutton.LeftButtonsHolder.BUTTON_RECORD_TRACK_CODE;
 import static app.organicmaps.leftbutton.LeftButtonsHolder.BUTTON_SETTINGS_CODE;
 import static app.organicmaps.sdk.location.LocationState.FOLLOW;
@@ -60,7 +59,6 @@ import app.organicmaps.downloader.OnmapDownloader;
 import app.organicmaps.editor.EditorActivity;
 import app.organicmaps.editor.EditorHostFragment;
 import app.organicmaps.editor.FeatureCategoryActivity;
-import app.organicmaps.help.HelpActivity;
 import app.organicmaps.intent.Factory;
 import app.organicmaps.intent.IntentProcessor;
 import app.organicmaps.leftbutton.LeftButton;
@@ -185,7 +183,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
   private boolean mRestoreRoutingPlanFragmentNeeded;
   @Nullable
   private Bundle mSavedForTabletState;
-  private String mDonatesUrl;
 
   private int mNavBarHeight;
 
@@ -372,12 +369,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
   private void onAddPlace()
   {
     showPositionChooserForEditor(false, false);
-  }
-
-  private void showHelp()
-  {
-    Intent intent = new Intent(this, HelpActivity.class);
-    startActivity(intent);
   }
 
   private void showSearch(String query)
@@ -718,32 +709,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
       @Override
       public String getCode()
       {
-        return BUTTON_HELP_CODE;
-      }
-
-      @Override
-      public String getPrefsName()
-      {
-        return getString(R.string.about_help);
-      }
-
-      @Override
-      public void drawIcon(FloatingActionButton imageView)
-      {
-        imageView.setImageResource(R.drawable.ic_logo_monochrome);
-      }
-
-      @Override
-      public void onClick(FloatingActionButton left)
-      {
-        Intent intent = new Intent(MwmActivity.this, HelpActivity.class);
-        MwmActivity.this.startActivity(intent);
-      }
-    });
-    buttonsHolder.registerButton(new LeftButton() {
-      @Override
-      public String getCode()
-      {
         return BUTTON_ADD_PLACE_CODE;
       }
 
@@ -875,7 +840,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
       closeFloatingPanels();
       showBottomSheet(MAIN_MENU_ID);
     }
-    case help -> showHelp();
     case trackRecordingStatus -> showTrackSaveDialog();
     }
   }
@@ -2284,11 +2248,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
     showDownloader(false);
   }
 
-  public void onDonateOptionSelected()
-  {
-    Utils.openUrl(this, mDonatesUrl);
-  }
-
   public void onSettingsOptionSelected()
   {
     closeFloatingPanels();
@@ -2412,10 +2371,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
       items.add(new MenuBottomSheetItem(R.string.download_maps, R.drawable.ic_download, getDownloadMapsCounter(),
                                         this::onDownloadMapsOptionSelected));
 
-      mDonatesUrl = Utils.getDonateUrl(getApplicationContext());
-      if (!mDonatesUrl.isEmpty())
-        items.add(new MenuBottomSheetItem(R.string.donate, R.drawable.ic_donate, this::onDonateOptionSelected));
-
       if (!BUTTON_SETTINGS_CODE.equals(activeLeftButton))
         items.add(new MenuBottomSheetItem(R.string.settings, R.drawable.ic_settings, this::onSettingsOptionSelected));
 
@@ -2425,9 +2380,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
       items.add(new MenuBottomSheetItem(R.string.share_my_location, R.drawable.ic_share,
                                         this::onShareLocationOptionSelected));
-
-      if (!BUTTON_HELP_CODE.equals(activeLeftButton))
-        items.add(new MenuBottomSheetItem(R.string.about_help, R.drawable.ic_logo_monochrome, this::showHelp));
 
       return items;
     }

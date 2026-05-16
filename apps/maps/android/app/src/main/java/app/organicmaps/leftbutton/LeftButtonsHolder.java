@@ -15,11 +15,10 @@ public class LeftButtonsHolder
   private static volatile LeftButtonsHolder instance;
 
   public static final String DISABLE_BUTTON_CODE = "disable";
-  public static final String BUTTON_HELP_CODE = "help";
   public static final String BUTTON_SETTINGS_CODE = "settings";
   public static final String BUTTON_ADD_PLACE_CODE = "add-place";
   public static final String BUTTON_RECORD_TRACK_CODE = "record-track";
-  private static final String DEFAULT_BUTTON_CODE = BUTTON_HELP_CODE;
+  private static final String DEFAULT_BUTTON_CODE = BUTTON_SETTINGS_CODE;
 
   private final String leftButtonPreferenceKey;
 
@@ -42,10 +41,11 @@ public class LeftButtonsHolder
   public String getActiveButtonCode()
   {
     String activeButtonCode = prefs.getString(leftButtonPreferenceKey, DEFAULT_BUTTON_CODE);
-    if (!TextUtils.isEmpty(activeButtonCode))
+    if (!TextUtils.isEmpty(activeButtonCode) && availableButtons.containsKey(activeButtonCode))
       return activeButtonCode;
-    else
-      return null;
+    if (availableButtons.containsKey(DEFAULT_BUTTON_CODE))
+      return DEFAULT_BUTTON_CODE;
+    return DISABLE_BUTTON_CODE;
   }
 
   @Nullable

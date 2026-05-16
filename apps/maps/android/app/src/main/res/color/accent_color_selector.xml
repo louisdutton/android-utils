@@ -2,14 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <item android:color="@color/base_accent"
+  <item android:color="?attr/colorSecondary"
         android:state_selected="true"/>
 
-  <item android:color="@color/base_accent"
+  <item android:color="?attr/colorSecondary"
       android:state_checked="true"/>
 
-  <item android:color="@color/base_accent"
+  <item android:color="?attr/colorSecondary"
       app:layers_enabled="true"/>
 
-  <item android:color="@color/icon_tint"/>
+  <item android:color="?attr/colorOnSurfaceVariant"/>
 </selector>

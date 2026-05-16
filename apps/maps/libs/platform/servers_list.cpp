@@ -35,7 +35,7 @@ std::optional<MetaConfig> ParseMetaConfig(std::string const & jsonStr)
       json_t const * value;
       json_object_foreach(settings, key, value)
       {
-        if (key == settings::kDonateUrl || key == settings::kNY)
+        if (key == settings::kNY)
         {
           char const * valueStr = json_string_value(value);
           if (value)

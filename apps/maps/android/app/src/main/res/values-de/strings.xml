@@ -790,7 +790,6 @@
     <string name="edit_track">Track bearbeiten</string>
     <string name="uri_open_location_failed">Keine App installiert, die den Speicherort öffnen kann</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Auto in der Navigation</string>
     <string name="menu">Menü</string>
     <string name="read_in_wikipedia">Wikipedia</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>

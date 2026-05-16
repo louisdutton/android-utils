@@ -769,7 +769,6 @@
     <string name="edit_track">Upravit trasu</string>
     <string name="uri_open_location_failed">Není nainstalována žádná aplikace, která by mohla otevřít umístění</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Automaticky v navigaci</string>
     <string name="closes_in">Zavírá za %s</string>
     <string name="menu">Nabídka</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>

@@ -765,7 +765,6 @@
     <string name="edit_track">Pēdojuma labošana</string>
     <string name="change_map_locale">Kartes valoda</string>
     <string name="wikimedia_commons">Vikikrātuve</string>
-    <string name="nav_auto">Automātisks navigācijas laikā</string>
     <string name="start_track_recording">Ierakstīt pēdojumu</string>
     <string name="stop_track_recording">Apstādināt pēdojuma ierakstīšanu</string>
     <string name="stop_without_saving">Pārtraukt ierakstīšanu</string>

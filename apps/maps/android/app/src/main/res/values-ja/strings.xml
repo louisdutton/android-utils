@@ -790,7 +790,6 @@
     <string name="edit_track">ルートを編集</string>
     <string name="uri_open_location_failed">場所を開くことができるアプリがインストールされていません</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">ナビゲーションオート</string>
     <string name="level_value_generic">階層：%s</string>
     <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="instagram_url">https://www.instagram.com/comaps.app/</string>

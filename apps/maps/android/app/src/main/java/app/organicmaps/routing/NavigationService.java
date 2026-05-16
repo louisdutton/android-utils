@@ -43,6 +43,7 @@ import app.organicmaps.sdk.util.Config;
 import app.organicmaps.sdk.util.LocationUtils;
 import app.organicmaps.sdk.util.log.Logger;
 import app.organicmaps.util.Graphics;
+import app.organicmaps.util.UiUtils;
 
 public class NavigationService extends Service implements LocationListener
 {
@@ -130,6 +131,9 @@ public class NavigationService extends Service implements LocationListener
     final PendingIntent exitPendingIntent =
         PendingIntent.getService(context, 0, exitIntent, PendingIntent.FLAG_UPDATE_CURRENT | FLAG_IMMUTABLE);
 
+    final int notificationColor = UiUtils.getStyledColor(context, com.google.android.material.R.attr.colorSecondary,
+                                                         ContextCompat.getColor(context, R.color.md_theme_secondary));
+
     mNotificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                                .setCategory(NotificationCompat.CATEGORY_NAVIGATION)
                                .setPriority(NotificationManager.IMPORTANCE_LOW)
@@ -141,7 +145,7 @@ public class NavigationService extends Service implements LocationListener
                                .setContentIntent(pendingIntent)
                                .addAction(0, context.getString(R.string.navigation_stop_button), exitPendingIntent)
                                .setColorized(isColorizedSupported())
-                               .setColor(ContextCompat.getColor(context, R.color.notification));
+                               .setColor(notificationColor);
 
     return mNotificationBuilder;
   }
@@ -293,9 +297,11 @@ public class NavigationService extends Service implements LocationListener
     final Drawable drawable = AppCompatResources.getDrawable(this, routingInfo.carDirection.getTurnRes());
     if (drawable != null)
     {
-      final Bitmap bitmap = isColorizedSupported() ? Graphics.drawableToBitmap(drawable)
-                                                   : Graphics.drawableToBitmapWithTint(
-                                                         drawable, ContextCompat.getColor(this, R.color.base_accent));
+      final int notificationColor = UiUtils.getStyledColor(this, com.google.android.material.R.attr.colorSecondary,
+                                                           ContextCompat.getColor(this, R.color.md_theme_secondary));
+      final Bitmap bitmap =
+          isColorizedSupported() ? Graphics.drawableToBitmap(drawable)
+                                 : Graphics.drawableToBitmapWithTint(drawable, notificationColor);
       notificationBuilder.setLargeIcon(bitmap);
     }
 

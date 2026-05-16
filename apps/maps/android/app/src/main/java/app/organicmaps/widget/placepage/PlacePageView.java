@@ -814,10 +814,10 @@ public class PlacePageView extends Fragment
 
       final int editButtonColor =
           shouldEnableEditPlace
-              ? ContextCompat.getColor(
-                    getContext(),
-                    UiUtils.getStyledResourceId(getContext(), com.google.android.material.R.attr.colorSecondary))
-              : ContextCompat.getColor(getContext(), R.color.button_accent_text_disabled);
+              ? UiUtils.getStyledColor(getContext(), com.google.android.material.R.attr.colorSecondary,
+                                       ContextCompat.getColor(getContext(), R.color.md_theme_secondary))
+              : UiUtils.getStyledColor(getContext(), com.google.android.material.R.attr.colorOnSurfaceVariant,
+                                       ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant));
 
       mTvEditPlace.setTextColor(editButtonColor);
       mTvAddPlace.setTextColor(editButtonColor);

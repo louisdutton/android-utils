@@ -560,7 +560,6 @@
     <string name="choose_color">Izberi barvo</string>
     <string name="edit_track">Uredi sled</string>
     <string name="uri_open_location_failed">Ni nameščenega orodja, ki bi lahko odprlo zemljepisni položaj</string>
-    <string name="nav_auto">Samodejno v potnem usmerjanju</string>
     <string name="zoom_in">Približaj</string>
     <string name="zoom_out">Oddalji</string>
     <string name="pref_left_button_title">Nastavitev levega gumba</string>

@@ -762,7 +762,6 @@
     <string name="edit_track">Nyomvonal szerkesztése</string>
     <string name="uri_open_location_failed">Nincs telepített alkalmazás, amely meg tudná nyitni a helyet</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Automatikus navigáció</string>
     <string name="wikimedia_commons">Wikimédia Commons</string>
     <string name="empty_street_name_error">Adjon meg egy utcanevet</string>
     <string name="read_in_wikipedia">Wikipédia</string>

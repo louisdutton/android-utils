@@ -796,7 +796,6 @@
     <string name="edit_track">Редагувати маршрут</string>
     <string name="uri_open_location_failed">Не встановлено застосунок, який може відкрити розташування</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Авто в навігації</string>
     <string name="level_value_generic">Поверх: %s</string>
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="wikimedia_commons">Вікісховище</string>

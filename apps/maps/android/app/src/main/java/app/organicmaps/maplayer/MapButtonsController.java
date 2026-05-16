@@ -209,13 +209,6 @@ public class MapButtonsController extends Fragment
       mLeftButton.drawIcon(leftButtonView);
       leftButtonView.setContentDescription(mLeftButton.getPrefsName());
       leftButtonView.setOnClickListener((v) -> mLeftButton.onClick(leftButtonView));
-      //      else
-      //      {
-      //        helpButton.setImageResource(R.drawable.ic_launcher);
-      //      }
-      //      // Keep this button colorful in normal theme.
-      //      if (!ThemeUtils.isNightTheme())
-      //        helpButton.getDrawable().setTintList(null);
     }
     else if (leftButtonView != null)
     {
@@ -524,7 +517,6 @@ public class MapButtonsController extends Fragment
     search,
     bookmarks,
     menu,
-    help,
     trackRecordingStatus
   }
 

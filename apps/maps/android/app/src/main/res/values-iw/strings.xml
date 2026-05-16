@@ -783,7 +783,6 @@
     <string name="edit_track">עריכת מסלול</string>
     <string name="uri_open_location_failed">לא מותקנת אפליקציה שיכולה לפתוח את המיקום</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">אוטומטי בניווט</string>
     <string name="telegram_url">https://t.me/CoMapsApp</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="translated_om_site_url">https://comaps.app</string>

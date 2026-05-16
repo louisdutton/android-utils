@@ -572,7 +572,6 @@
     <string name="error_no_file_manager_app">Dijalog za odabir mape nije moguće prikazati jer na vašem uređaju nije instalirana odgovarajuća aplikacija. Instalirajte aplikaciju za upravljanje datotekama i pokušajte ponovno.</string>
     <string name="choose_color">Odaberi boju</string>
     <string name="uri_open_location_failed">Nije instalirana aplikacija koja može otvoriti lokaciju</string>
-    <string name="nav_auto">Automatska tema u navigaciji</string>
     <string name="pref_left_button_title">Postavke lijevog gumba</string>
     <string name="pref_left_button_disable">Onemogući</string>
     <string name="pref_backup_summary">Automatsko sigurnosno kopiranje u mapu na vašem uređaju</string>

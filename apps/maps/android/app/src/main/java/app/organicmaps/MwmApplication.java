@@ -34,6 +34,7 @@ import app.organicmaps.sdk.util.ConnectionState;
 import app.organicmaps.sdk.util.log.Logger;
 import app.organicmaps.util.ThemeSwitcher;
 import app.organicmaps.util.Utils;
+import com.google.android.material.color.DynamicColors;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
@@ -118,6 +119,7 @@ public class MwmApplication extends Application implements Application.ActivityL
     Logger.i(TAG, "Initializing application");
 
     sInstance = this;
+    DynamicColors.applyToActivitiesIfAvailable(this);
 
     PreferenceManager.setDefaultValues(this, R.xml.prefs_main, false);
     mOrganicMaps = new OrganicMaps(getApplicationContext(), BuildConfig.FLAVOR, BuildConfig.APPLICATION_ID,

@@ -365,7 +365,6 @@
     <string name="edit_track">Hariri Njia</string>
     <string name="uri_open_location_failed">Hakuna Programu iliyosakinishwa inayoweza kufungua eneo</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Urambazaji otomatiki</string>
     <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>

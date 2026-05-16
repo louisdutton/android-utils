@@ -17,7 +17,7 @@
     android:paddingEnd="@dimen/margin_quarter"
     android:maxLines="1"
     android:text="you"
-    android:textColor="@color/base_accent"
+    android:textColor="?attr/colorSecondary"
     android:textSize="@dimen/text_size_icon_title" />
   <com.google.android.material.imageview.ShapeableImageView
     android:id="@+id/image"

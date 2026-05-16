@@ -478,8 +478,7 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
   private void initMapStylePrefsCallbacks()
   {
     final ListPreference pref = getPreference(getString(R.string.pref_map_style));
-    pref.setEntryValues(new CharSequence[] {Config.UiTheme.DEFAULT, Config.UiTheme.NIGHT, Config.UiTheme.AUTO,
-                                            Config.UiTheme.NAV_AUTO});
+    pref.setEntryValues(new CharSequence[] {Config.UiTheme.SYSTEM, Config.UiTheme.DEFAULT, Config.UiTheme.NIGHT});
     pref.setValue(Config.UiTheme.getUiThemeSettings());
     pref.setSummary(pref.getEntry());
     pref.setOnPreferenceChangeListener((preference, newValue) -> {
@@ -634,10 +633,9 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
 
   enum ThemeMode
   {
+    SYSTEM(Config.UiTheme.SYSTEM),
     DEFAULT(Config.UiTheme.DEFAULT),
-    NIGHT(Config.UiTheme.NIGHT),
-    AUTO(Config.UiTheme.AUTO),
-    NAV_AUTO(Config.UiTheme.NAV_AUTO);
+    NIGHT(Config.UiTheme.NIGHT);
 
     @NonNull
     private final String mMode;
@@ -655,7 +653,7 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
         if (each.mMode.equals(src))
           return each;
       }
-      return AUTO;
+      return SYSTEM;
     }
   }
 }

@@ -8,11 +8,11 @@
     <item name="android:textViewStyle">@style/MwmWidget.TextView</item>
     <item name="android:forceDarkAllowed" tools:targetApi="Q">false</item>
 
-    <item name="android:textColorPrimary">@color/text_light</item>
+    <item name="android:textColorPrimary">?colorOnSurface</item>
     <item name="android:textColorPrimaryInverse">@color/text_dark</item>
-    <item name="android:textColorSecondary">@color/text_light_subtitle</item>
+    <item name="android:textColorSecondary">?colorOnSurfaceVariant</item>
     <item name="android:windowBackground">?appBackground</item>
-    <item name="android:colorPrimaryDark">@color/bg_primary_dark</item>
+    <item name="android:colorPrimaryDark">?colorPrimary</item>
     <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     <item name="android:fontFamily">@string/robotoRegular</item>
     <item name="android:colorBackgroundCacheHint">@null</item>
@@ -23,49 +23,49 @@
 
     <item name="alertDialogTheme">@style/MwmTheme.M3.AlertDialog</item>
     <item name="materialAlertDialogTheme">@style/MwmTheme.M3.AlertDialog</item>
-    <item name="windowBackgroundForced">@color/bg_window</item>
-    <item name="cardBackground">@color/bg_cards</item>
-    <item name="titleDialogTheme">@color/white_primary</item>
-    <item name="textDialogTheme">@color/white_secondary</item>
+    <item name="windowBackgroundForced">?colorSurface</item>
+    <item name="cardBackground">?colorSurfaceContainer</item>
+    <item name="titleDialogTheme">?colorOnSurface</item>
+    <item name="textDialogTheme">?colorOnSurfaceVariant</item>
     <item name="fullscreenDialogTheme">@style/MwmTheme.DialogFragment.Fullscreen</item>
-    <item name="colorAccent">@color/base_accent</item>
+    <item name="colorAccent">?colorSecondary</item>
     <item name="colorAccentTransparent">@color/base_accent_transparent</item>
     <item name="colorBtnHighlight">@color/white_24</item>
     <item name="panel">@color/bg_panel</item>
-    <item name="colorLogo">@color/base_accent</item>
-    <item name="iconTint">@color/white_secondary</item>
-    <item name="iconTintDisabled">@color/white_12</item>
-    <item name="iconTintActive">@color/yellow</item>
-    <item name="iconTintLight">@color/icon_tint_light</item>
+    <item name="colorLogo">?colorPrimary</item>
+    <item name="iconTint">?colorOnSurfaceVariant</item>
+    <item name="iconTintDisabled">?colorOutlineVariant</item>
+    <item name="iconTintActive">?colorSecondary</item>
+    <item name="iconTintLight">?colorOnSurface</item>
     <item name="android:textColorLink">?colorSecondary</item>
 
-    <item name="secondary">@color/text_light_hint</item>
-    <item name="dividerHorizontal">@color/divider</item>
+    <item name="secondary">?colorOnSurfaceVariant</item>
+    <item name="dividerHorizontal">?colorOutlineVariant</item>
 
-    <item name="ppBackground">@color/bg_cards</item>
-    <item name="ppButtonsBackground">@color/bg_window</item>
-    <item name="ppFloatingMarkerIconColor">@color/white_54</item>
+    <item name="ppBackground">?colorSurfaceContainerLow</item>
+    <item name="ppButtonsBackground">?colorSurfaceContainer</item>
+    <item name="ppFloatingMarkerIconColor">?colorOnSurfaceVariant</item>
 
     <item name="navNextTurnFrame">@drawable/bg_nav_next_turn</item>
     <item name="navNextNextTurnFrame">@drawable/bg_nav_next_next_turn</item>
-    <item name="navLanesBackgroundColor">@color/bg_primary</item>
-    <item name="navLaneArrowActiveColor">@color/nav_lane_arrow_active</item>
-    <item name="navLaneArrowInactiveColor">@color/nav_lane_arrow_inactive</item>
+    <item name="navLanesBackgroundColor">?colorPrimaryContainer</item>
+    <item name="navLaneArrowActiveColor">?colorOnPrimaryContainer</item>
+    <item name="navLaneArrowInactiveColor">?colorOutlineVariant</item>
 
     <item name="buttonBackground">@drawable/button</item>
     <item name="buttonTextColor">@color/button_text</item>
     <item name="buttonTextColorDisabled">@color/button_text_disabled</item>
-    <item name="buttonDialogTextColor">@color/base_accent</item>
+    <item name="buttonDialogTextColor">?colorPrimary</item>
 
     <item name="accentButtonBackground">@drawable/button_accent</item>
-    <item name="accentButtonTextColor">@color/button_accent_text</item>
+    <item name="accentButtonTextColor">?colorOnSecondary</item>
     <!-- TODO: remove accentButtonTextColorDisabled attribute and use everywhere
                accentButtonTextColor selector -->
-    <item name="accentButtonTextColorDisabled">@color/button_accent_text_disabled</item>
+    <item name="accentButtonTextColorDisabled">?colorOnSurfaceVariant</item>
 
     <item name="primaryButtonBackground">@drawable/button_accent</item>
 
-    <item name="menuBackground">@color/bg_menu</item>
+    <item name="menuBackground">?colorSurfaceContainerHigh</item>
 
     <item name="myPositionButtonAnimation">@drawable/ic_menu_location_pending</item>
     <item name="trafficLoadingAnimation">@drawable/anim_traffic_loading</item>
@@ -86,7 +86,7 @@
     <item name="android:textAppearanceSmall">@style/MwmTextAppearance.Body4</item>
     <item name="android:textAppearanceMedium">@style/MwmTextAppearance.Body2</item>
     <item name="android:textAppearanceLarge">@style/MwmTextAppearance.Body1</item>
-    <item name="drivingOptionsViewBg">@color/bg_primary_dark</item>
+    <item name="drivingOptionsViewBg">?colorSurfaceContainerHighest</item>
     <item name="elevationProfilePropertyBg">@drawable/bg_rounded_rect</item>
     <item name="elevationProfilePropIconTint">@color/white_secondary</item>
     <item name="altitudeBg">@drawable/bg_altitude</item>
@@ -95,18 +95,18 @@
     <item name="elevationProfileSelectedPointBg">@drawable/bg_point_desc</item>
     <item name="elevationProfileSelectedPointTriangle">@drawable/ic_ascent</item>
     <item name="elevationProfileFloatingTriangle">@drawable/ic_triangle_elevation</item>
-    <item name="elevationProfileColor">@color/elevation_profile</item>
+    <item name="elevationProfileColor">?colorSecondary</item>
     <item name="android:popupMenuStyle">@style/Widget.Material3.PopupMenu</item>
 
     <item name="bottomSheetStyle">@style/MwmWidget.BottomSheet</item>
     <item name="bottomSheetDialogTheme">@style/MwmTheme.BottomSheetDialog</item>
 
     <!-- M3 colors -->
-    <item name="colorPrimary">@color/bg_primary</item>
+    <item name="colorPrimary">@color/md_theme_primary</item>
     <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
     <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
     <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
-    <item name="colorSecondary">@color/base_accent</item>
+    <item name="colorSecondary">@color/md_theme_secondary</item>
     <item name="colorOnSecondary">@color/md_theme_onSecondary</item>
     <item name="colorSecondaryContainer">@color/md_theme_secondaryContainer</item>
     <item name="colorOnSecondaryContainer">@color/md_theme_onSecondaryContainer</item>
@@ -149,7 +149,7 @@
     <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
     <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
 
-    <item name="appBackground">@color/bg_app</item>
+    <item name="appBackground">?colorSurface</item>
   </style>
 
   <style name="MwmTheme" parent="MwmTheme.Base"/>

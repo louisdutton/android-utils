@@ -708,7 +708,6 @@
     <string name="edit_track">Редактиране на маршрут</string>
     <string name="uri_open_location_failed">Не е инсталирано приложение, което може да отвори местоположението</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Автоматично в навигацията</string>
     <string name="parks">Паркове</string>
     <string name="deep_purple">Тъмно Лилаво</string>
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>

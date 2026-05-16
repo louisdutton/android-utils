@@ -797,7 +797,6 @@
     <string name="edit_track">عدِّل المسار</string>
     <string name="uri_open_location_failed">لم تثبت أي تطبيق يمكنه فتح الموقع</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">تلقائي في التنقل</string>
     <string name="translated_om_site_url">https://comaps.app/ar</string>
     <string name="telegram_url">https://t.me/CoMapsApp</string>
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android</string>

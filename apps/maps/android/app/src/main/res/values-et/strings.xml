@@ -781,7 +781,6 @@
     <string name="edit_track">Muuda rada</string>
     <string name="uri_open_location_failed">Ei ole paigaldatud rakendust, mis oskaks asukohta avada</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Automaatne tee juhatamine</string>
     <string name="about_headline">Avatud projekt, mida toetab toimekas kogukond</string>
     <string name="about_proposition_1">• Viimistletud ja lihtsaltkasutatav</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>

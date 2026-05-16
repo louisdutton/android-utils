@@ -807,7 +807,6 @@
     <string name="edit_track">Редактировать маршрут</string>
     <string name="uri_open_location_failed">Не установлено приложение, которое может открыть местоположение</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Авто в навигации</string>
     <string name="wikimedia_commons">Викисклад</string>
     <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>

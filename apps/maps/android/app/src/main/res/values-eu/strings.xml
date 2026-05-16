@@ -789,7 +789,6 @@
     <string name="edit_track">Editatu arrastoa</string>
     <string name="uri_open_location_failed">Ez dago kokapena ireki dezakeen aplikaziorik instalatuta</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Nabigazioan automatikoa</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>
     <string name="instagram_url">https://www.instagram.com/comaps.app/</string>

@@ -221,6 +221,7 @@
     <string name="on">On</string>
     <!-- Generic «Auto» string -->
     <string name="auto">Auto</string>
+    <string name="system_default">System default</string>
     <!-- Settings «Map» category: «Perspective view» title -->
     <string name="pref_map_3d_title">Perspective view</string>
     <!-- Settings «Map» category: «3D buildings» title -->
@@ -894,8 +895,6 @@
     <string name="choose_color">Choose Color</string>
     <string name="edit_track">Edit Track</string>
     <string name="uri_open_location_failed">No app installed that can open the location</string>
-    <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Auto in navigation</string>
     <string name="pref_left_button_title">Left button setup</string>
     <string name="pref_left_button_disable">Disable</string>
 

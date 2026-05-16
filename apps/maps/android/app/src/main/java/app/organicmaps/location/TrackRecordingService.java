@@ -31,6 +31,7 @@ import app.organicmaps.sdk.location.LocationListener;
 import app.organicmaps.sdk.location.TrackRecorder;
 import app.organicmaps.sdk.util.LocationUtils;
 import app.organicmaps.sdk.util.log.Logger;
+import app.organicmaps.util.UiUtils;
 
 public class TrackRecordingService extends Service implements LocationListener
 {
@@ -103,6 +104,10 @@ public class TrackRecordingService extends Service implements LocationListener
     if (mNotificationBuilder != null)
       return mNotificationBuilder;
 
+    final int notificationColor =
+        UiUtils.getStyledColor(context, com.google.android.material.R.attr.colorSecondary,
+                               ContextCompat.getColor(context, R.color.md_theme_secondary));
+
     mNotificationBuilder =
         new NotificationCompat.Builder(context, TRACK_REC_CHANNEL_ID)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
@@ -115,7 +120,7 @@ public class TrackRecordingService extends Service implements LocationListener
             .setContentTitle(context.getString(R.string.track_recording))
             .addAction(0, context.getString(R.string.navigation_stop_button), getExitPendingIntent(context))
             .setContentIntent(getPendingIntent(context))
-            .setColor(ContextCompat.getColor(context, R.color.notification));
+            .setColor(notificationColor);
 
     return mNotificationBuilder;
   }
@@ -200,6 +205,10 @@ public class TrackRecordingService extends Service implements LocationListener
     if (mWarningBuilder != null)
       return mWarningBuilder;
 
+    final int warningColor =
+        UiUtils.getStyledColor(context, com.google.android.material.R.attr.colorError,
+                               ContextCompat.getColor(context, R.color.md_theme_error));
+
     mWarningBuilder =
         new NotificationCompat.Builder(context, TRACK_REC_CHANNEL_ID)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
@@ -215,7 +224,7 @@ public class TrackRecordingService extends Service implements LocationListener
                 context.getString(R.string.dialog_routing_location_turn_wifi)))
             .addAction(0, context.getString(R.string.navigation_stop_button), getExitPendingIntent(context))
             .setContentIntent(getPendingIntent(context))
-            .setColor(ContextCompat.getColor(context, R.color.notification_warning));
+            .setColor(warningColor);
 
     return mWarningBuilder;
   }

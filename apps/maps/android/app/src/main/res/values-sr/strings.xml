@@ -776,7 +776,6 @@
     <string name="edit_track">Измените путању</string>
     <string name="uri_open_location_failed">Нема инсталираних апликација које могу да отворе локацију.</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Аутоматски у навигацији</string>
     <string name="elevation_profile_max_elevation">Максимална висина</string>
     <string name="elevation_profile_min_elevation">Минимална висина</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>

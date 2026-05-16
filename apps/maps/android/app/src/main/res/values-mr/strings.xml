@@ -761,7 +761,6 @@
     <string name="edit_track">मार्ग संपादित करा</string>
     <string name="uri_open_location_failed">स्थान उघडू शकणारे कोणतेही ॲप स्थापित केलेले नाही</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">नेव्हिगेशनमध्ये ऑटो</string>
     <string name="pref_tts_street_names_title">मार्गांची नावे घोषित करा</string>
     <string name="about_proposition_1">• जाहिराती नाही, माहितीचा मागोवा नाही, डेटा संग्रहण नाही</string>
     <string name="donate">दान करा</string>

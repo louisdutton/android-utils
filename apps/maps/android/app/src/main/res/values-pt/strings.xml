@@ -764,7 +764,6 @@
     <string name="edit_track">Editar trajeto</string>
     <string name="uri_open_location_failed">Nenhuma aplicação instalada que possa abrir a localização</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Auto na navegação</string>
     <string name="menu">Menu</string>
     <string name="app_site_url">https://comaps.app/pt/</string>
     <string name="editor_level">Piso (0 é o rés de chão)</string>

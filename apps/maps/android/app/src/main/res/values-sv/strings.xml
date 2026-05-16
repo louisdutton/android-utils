@@ -749,7 +749,6 @@
     <string name="edit_track">Redigera spår</string>
     <string name="uri_open_location_failed">Ingen app installerad som kan öppna platsen</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Auto i navigering</string>
     <string name="prefs_group_general">Allmänna inställningar</string>
     <string name="prefs_group_information">Information</string>
     <string name="menu">Meny</string>

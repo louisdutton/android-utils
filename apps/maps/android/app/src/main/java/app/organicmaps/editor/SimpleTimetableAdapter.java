@@ -376,22 +376,29 @@ class SimpleTimetableAdapter extends RecyclerView.Adapter<SimpleTimetableAdapter
       final boolean enable = mComplementItem != null && mComplementItem.weekdays.length != 0;
       final String text = mFragment.getString(R.string.editor_time_add);
       mAdd.setEnabled(enable);
+      final int secondary = UiUtils.getStyledColor(mAdd.getContext(), com.google.android.material.R.attr.colorSecondary,
+                                                   ContextCompat.getColor(mAdd.getContext(), R.color.md_theme_secondary));
+      final int surfaceVariant =
+          UiUtils.getStyledColor(mAdd.getContext(), com.google.android.material.R.attr.colorSurfaceVariant,
+                                 ContextCompat.getColor(mAdd.getContext(), R.color.md_theme_surfaceVariant));
+      final int onSecondary =
+          UiUtils.getStyledColor(mAdd.getContext(), com.google.android.material.R.attr.colorOnSecondary,
+                                 ContextCompat.getColor(mAdd.getContext(), R.color.md_theme_onSecondary));
+      final int onSurfaceVariant =
+          UiUtils.getStyledColor(mAdd.getContext(), com.google.android.material.R.attr.colorOnSurfaceVariant,
+                                 ContextCompat.getColor(mAdd.getContext(), R.color.md_theme_onSurfaceVariant));
       final ColorStateList bgButtonColor = new ColorStateList(
           new int[][] {
               new int[] {android.R.attr.state_enabled}, // enabled
               new int[] {-android.R.attr.state_enabled} // disabled
           },
-          new int[] {ContextCompat.getColor(mAdd.getContext(), R.color.base_accent),
-                     ContextCompat.getColor(mAdd.getContext(), R.color.button_accent_disabled)});
+          new int[] {secondary, surfaceVariant});
       final ColorStateList textButtonColor = new ColorStateList(
           new int[][] {
               new int[] {android.R.attr.state_enabled}, // enabled
               new int[] {-android.R.attr.state_enabled} // disabled
           },
-          new int[] {
-              ContextCompat.getColor(mAdd.getContext(), UiUtils.getStyledResourceId(
-                                                            mAdd.getContext(), android.R.attr.textColorPrimaryInverse)),
-              ContextCompat.getColor(mAdd.getContext(), R.color.button_accent_text_disabled)});
+          new int[] {onSecondary, onSurfaceVariant});
       mAdd.setBackgroundTintList(bgButtonColor);
       mAdd.setTextColor(textButtonColor);
       mAdd.setText(enable ? text + " (" + TimeFormatUtils.formatWeekdays(mComplementItem) + ")" : text);

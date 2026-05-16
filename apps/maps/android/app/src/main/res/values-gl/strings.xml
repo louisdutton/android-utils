@@ -102,7 +102,6 @@
     <string name="select_option">Selecciona a opción</string>
     <string name="edit_track">Editar traxecto</string>
     <string name="uri_open_location_failed">Non hai ningunha aplicación instalada que poida abrir a localización</string>
-    <string name="nav_auto">Auto en navegación</string>
     <string name="measurement_units">Unidades de medida</string>
     <string name="continue_button">Continuar</string>
     <string name="category_pharmacy">Farmacia</string>

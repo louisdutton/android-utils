@@ -798,7 +798,6 @@
     <string name="edit_track">Edytuj trasę</string>
     <string name="uri_open_location_failed">Brak zainstalowanej aplikacji, która może otworzyć lokalizację</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Automatyczna nawigacja</string>
     <string name="level_value_generic">Piętro: %s</string>
     <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>

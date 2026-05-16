@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 import app.organicmaps.sdk.Framework;
 import app.organicmaps.sdk.bookmarks.data.BookmarkManager;
 import app.organicmaps.sdk.bookmarks.data.ElevationInfo;
@@ -159,7 +160,7 @@ public class ChartController implements OnChartValueSelectedListener
     set.setFillColor(color);
     set.setDrawHorizontalHighlightIndicator(false);
     set.setHighlightLineWidth(lineThickness);
-    set.setHighLightColor(ContextCompat.getColor(mContext, R.color.base_accent_transparent));
+    set.setHighLightColor(ColorUtils.setAlphaComponent(color, 0x1E));
 
     LineData data = new LineData(set);
     data.setValueTextSize(mContext.getResources().getDimensionPixelSize(R.dimen.text_size_icon_title));

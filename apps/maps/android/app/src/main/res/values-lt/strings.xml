@@ -735,7 +735,6 @@
     <string name="edit_track">Redaguoti trasą</string>
     <string name="uri_open_location_failed">Neįdiegta programėlė, galinti atverti vietą</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">Automatinė naviguojant</string>
     <string name="bookmarks_and_tracks">Parankiniai</string>
     <string name="location_settings">Vietos nustatymai</string>
     <string name="maps_storage_summary">Pasirinkite aplanką atsiųstiems žemėlapiams įrašyti</string>

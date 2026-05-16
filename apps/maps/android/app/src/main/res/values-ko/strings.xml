@@ -746,7 +746,6 @@
     <string name="edit_track">경로 편집</string>
     <string name="uri_open_location_failed">위치를 열 수 있는 앱이 설치되어 있지 않습니다.</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="nav_auto">내비게이션에서 자동</string>
     <string name="change_map_locale">지도 언어</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="translated_om_site_url">https://comaps.app/</string>
