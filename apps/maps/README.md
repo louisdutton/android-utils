@@ -9,13 +9,15 @@ location strings, then resolve those strings into `MapLocation` records when
 the Maps app has coordinates or saved-place metadata.
 
 The current implementation uses MapLibre Native Android with the public
-OpenFreeMap Liberty style as a development map source. Service-facing pieces are
-behind small interfaces so online tile, geocoding, and routing providers can be
-replaced by self-hosted or offline implementations without changing the app UI.
+OpenFreeMap Liberty style as a development map source. The product target is an
+offline-first Maps app with downloaded map data, search, and routing. Hosted
+services are only development or optional fallback paths.
 
 - Rendering: MapLibre `MapView` hosted from Compose.
 - Device location: Android framework `LocationManager`.
-- Search: Android `Geocoder` resolver, treated as best effort.
+- Search: Android `Geocoder` resolver.
 - Saved places: local app storage.
 - Calendar: `geo:` intents from Calendar event locations into Maps.
-- Routing: route-preview contract in place; production routing backend pending.
+- Routing: route-preview contract in place; offline routing engine pending.
+
+Future Maps work is tracked in [FEATURES.md](FEATURES.md).
