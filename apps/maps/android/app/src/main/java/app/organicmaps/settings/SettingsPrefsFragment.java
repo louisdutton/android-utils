@@ -64,7 +64,6 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
 
     initStoragePrefCallbacks();
     initMeasureUnitsPrefsCallbacks();
-    initZoomPrefsCallbacks();
     initMapStylePrefsCallbacks();
     initAutoDownloadPrefsCallbacks();
     initLargeFontSizePrefsCallbacks();
@@ -491,17 +490,6 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
       final ThemeMode mode = ThemeMode.getInstance(themeName);
       final CharSequence summary = pref.getEntries()[mode.ordinal()];
       pref.setSummary(summary);
-      return true;
-    });
-  }
-
-  private void initZoomPrefsCallbacks()
-  {
-    final Preference pref = getPreference(getString(R.string.pref_show_zoom_buttons));
-
-    ((TwoStatePreference) pref).setChecked(Config.showZoomButtons());
-    pref.setOnPreferenceChangeListener((preference, newValue) -> {
-      Config.setShowZoomButtons((boolean) newValue);
       return true;
     });
   }

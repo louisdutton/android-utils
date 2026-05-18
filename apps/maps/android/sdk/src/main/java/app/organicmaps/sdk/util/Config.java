@@ -32,7 +32,6 @@ public final class Config
   private static final String KEY_APP_STORAGE = "StoragePath";
 
   private static final String KEY_DOWNLOADER_AUTO = "AutoDownloadEnabled";
-  private static final String KEY_PREF_ZOOM_BUTTONS = "ZoomButtonsEnabled";
 
   private static final String KEY_MISC_DISCLAIMER_ACCEPTED = "IsDisclaimerApproved";
   private static final String KEY_MISC_TTS_MESSAGE_DELIVERED = "TtsMessageDelivered";
@@ -179,16 +178,6 @@ public final class Config
   public static void setAutodownloadEnabled(boolean enabled)
   {
     setBool(KEY_DOWNLOADER_AUTO, enabled);
-  }
-
-  public static boolean showZoomButtons()
-  {
-    return getBool(KEY_PREF_ZOOM_BUTTONS, true);
-  }
-
-  public static void setShowZoomButtons(boolean show)
-  {
-    setBool(KEY_PREF_ZOOM_BUTTONS, show);
   }
 
   public static boolean isKeepScreenOnEnabled()

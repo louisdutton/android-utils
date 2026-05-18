@@ -3,20 +3,19 @@
 1.BASEMAP
 2.BOUNDARY
 3.NATURAL
-	3.1 Main natural
-	3.2 Vegetation
+  3.1 Main natural
+  3.2 Vegetation
 4.LANDUSE
-	4.1 Main landuse
-	4.2 Aerodrome
+  4.1 Main landuse
+  4.2 Aerodrome
   4.3 Barriers
   4.4 Buildings
 5.ROADS
   5.1 All roads
-	5.2 Bridges
+  5.2 Bridges
   5.3 Tunnels
-  5.4 Piste
   5.5 Transport
- 6.LABELS COLORS
+6.LABELS COLORS
   6.1 Main labels
   6.2 Natural labels
   6.3 Place labels
@@ -24,168 +23,163 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+/* GrapheneOS Essentials dark vehicle palette: neutral roads on an OLED base. */
+
 /* 1.BASEMAP */
 
-@background: #050505;
+@background: #050607;
 
 /* 2.BOUNDARY */
 
-@border_country: #4C4C4C;
-@border_region: #5C5C5C;
+@border_country: #3F4246;
+@border_region: #33363A;
 
 /* 3.NATURAL */
 /* 3.1 Main natural */
 
-@glacier: #111111;
-@water: #002222;
-@water_bad: #00261e;
-@river: #062026;
-@wetland: #001919;
-@beach: #28281A;
-@barerock: #302A2A;
-@desert: #191007;
+@glacier: #181A1C;
+@water: #10181C;
+@water_bad: #11171A;
+@river: #172226;
+@wetland: #14181A;
+@beach: #151617;
+@barerock: #171819;
+@desert: #141516;
 
 /*3.2 Vegetation*/
 
-@forest: #090F0A;
-@green0: #090F0A;
-@green1: #090F0A;
-@green2: #090F0A;
-@green3: #090F0A;
-@green4: #090F0A;
-@green5: #090F0A;
-@green6: #2F4000;
+@forest: #0D0F10;
+@green0: #0B0D0E;
+@green1: #0D0F10;
+@green2: #0E1011;
+@green3: #0F1112;
+@green4: #101213;
+@green5: #111314;
+@green6: #1A1D20;
 
 /* 4.LANDUSE */
 /*4.1 Main landuse*/
 
-/*
-@university: #261F13;
-@hospital: #261916;
-*/
-@general_area: #000000;
-@industrial: #0D0A0D;
-@construction_area: #0D0A0D;
-@sport: #070F0A;
-@military: #B71C1C;
-@prison: #7f7f7f;
-@parking: #191509;
-@parking_l: #1F190A;
-@farmland: #151500;
-@farmyard: #212106;
+@general_area: #050607;
+@industrial: #101214;
+@construction_area: #111315;
+@sport: #16181A;
+@military: #43282B;
+@prison: #3E4144;
+@parking: #151719;
+@parking_l: #17191B;
+@farmland: #111315;
+@farmyard: #121416;
 
 /*4.2 Aerodrome*/
 
-@aerodrome0: #1B1821;
-@aerodrome1: #1B1821;
-@aerodrome2: #1B1821;
-@aerodrome3: #1B1821;
-@aerodrome4: #1B1821;
-@aerodrome5: #1B1821;
+@aerodrome0: #14191D;
+@aerodrome1: #14191C;
+@aerodrome2: #13181B;
+@aerodrome3: #13171A;
+@aerodrome4: #121619;
+@aerodrome5: #111518;
 
 /* 4.3 Barriers */
-@fence: #444444;
-@hedge: #143C14;
-@cliff: #7D4F23;
+@fence: #2A2D30;
+@hedge: #1D2022;
+@cliff: #24272A;
 
 /* 4.4 Buildings */
 
-@building0: #191919;
-@building1: #1D1D1D;
-@building_border0: #1C1C1C;
+@building0: #16181A;
+@building1: #1B1D20;
+@building_border0: #0D0F10;
 
 /* 5.ROADS */
 /* 5.1 All roads */
 
-@trunk0: #4C2A19;
-@trunk1: #4C2A17;
-@primary0:  #5E351D;
-@primary1: #5E351D;
-@primary2: #5E351D;
-@secondary0: #3B3939;
-@residential: #363434;
-@unclassified: #333131;
-@pedestrian: #4D4744;
-@footway: #2B2827;
-@cycleway: #6E3D47;
-@construction: #332F2D;
-@track: #5F532D;
-@path: #944A12;
-@bridleway: #2B2827;
+@trunk0: #565A5E;
+@trunk1: #505458;
+@primary0: #5B5F63;
+@primary1: #55595D;
+@primary2: #4F5357;
+@secondary0: #43474B;
+@residential: #303438;
+@unclassified: #2E3236;
+@pedestrian: #34383C;
+@footway: #292D31;
+@cycleway: #383D44;
+@construction: #34383C;
+@track: #303438;
+@path: #34383C;
+@bridleway: #25292D;
 
 /* 5.2 Bridges */
 
-@bridge_background: #121212;
-@bridge_casing: #0D0D0D;
-@casing_road:  #0D0D0D;
+@bridge_background: #151719;
+@bridge_casing: #34383C;
+@casing_road: #404448;
 
 /* 5.3 Tunnels */
 
-@trunk_tunnel: #381F14;
-@trunk_tunnel_casing: #000000;
-@primary_tunnel: #4C2A1B;
-@primary_tunnel_casing: #000000;
-@secondary_tunnel: #2B2827;
-@secondary_tunnel_casing:  #000000;
-@tertiary_tunnel: #2B2827;
-@tertiary_tunnel_casing:  #000000;
-@unclassified_tunnel: #2B2827;
-@unclassified_tunnel_casing: #000000;
+@trunk_tunnel: #24282C;
+@trunk_tunnel_casing: #08090A;
+@primary_tunnel: #23272B;
+@primary_tunnel_casing: #08090A;
+@secondary_tunnel: #22262A;
+@secondary_tunnel_casing: #08090A;
+@tertiary_tunnel: #202428;
+@tertiary_tunnel_casing: #08090A;
+@unclassified_tunnel: #1D2125;
+@unclassified_tunnel_casing: #08090A;
 
 /* 5.5 Transport */
 
-@railway_light: #2C2630;
-@railway: #3A2F40;
-@railway_tourism: #3D3128;
-@railway_tunnel: #222222;
-@railway_dash: #050505;
-/* @aerialway: #4E4E3D; */
-@tram: #5C5C51;
-/* @ferry: #2A4541; */
+@railway_light: #34383E;
+@railway: #42464C;
+@railway_tourism: #3E4145;
+@railway_tunnel: #1A1D20;
+@railway_dash: #070809;
+@tram: #45494D;
 
 /* 6.LABELS COLORS */
 /* 6.1 Main labels */
 
-@label_dark: #888888;
-@label_medium: #8C8C8C;
-@label_light: #666666;
-@label_halo_medium: #111100;
-@label_halo_light: #060600;
+@label_dark: #A4A8AC;
+@label_medium: #85898D;
+@label_light: #676B70;
+@label_halo_medium: #050607;
+@label_halo_light: #030405;
 
 /* 6.2 Natural labels */
 
-@water_label: #004A59;
-@water_light_label: #004A59;
-@park_label: #2B4918;
-@halo_park_label: #111;
+@water_label: #6F8790;
+@water_light_label: #8297A0;
+@park_label: #7C8183;
+@halo_park_label: #040506;
 
 /* 6.3 Place labels */
 
-@city_label: #999999;
-@country_label: #444444;
-@state_label: #444444;
-@district_label: #555555;
-@housenumber: #6C6C6C;
-@building_label: #737373;
-@poi_label: #666666;
-@subway_label: #555555;
-@shop_label: #6B425C;
-@industry_label: #574469;
-@food_label: #8C491C;
-@entertainment_label: #8C311B;
-@culture_label: #6E4426;
-@hotel_label: #614A43;
-@sport_label: #2B5C4B;
-@nature_label: #3C612E;
-@water_label: #0A6074;
-@neutral_label: #51585E;
-@healthcare_label: #983E44;
-@public_transport_label: #2F6499;
-@emergency_label: #247F52;
+@city_label: #B3B7BB;
+@country_label: #70757A;
+@state_label: #6A6F74;
+@district_label: #85898D;
+@housenumber: #666B70;
+@building_label: #5E6368;
+@poi_label: #8B8F93;
+@subway_label: #969A9E;
+@shop_label: #8E8882;
+@industry_label: #7F858B;
+@food_label: #A08B63;
+@entertainment_label: #92877C;
+@culture_label: #8C8378;
+@hotel_label: #88827C;
+@sport_label: #7F8784;
+@nature_label: #7D8481;
+@neutral_label: #7D8389;
+@healthcare_label: #967E7E;
+@public_transport_label: #7F96A8;
+@emergency_label: #9A7D7D;
 
 /* 6.4 Road labels */
 
-@shield_text: #303030;
-@shield_text_halo: #000000;
-@shield: #999999;
-@shield_outline: #303030;
+@shield_text: #D1D5D9;
+@shield_text_halo: #050607;
+@shield: #101214;
+@shield_outline: #5A5F64;

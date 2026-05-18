@@ -16,6 +16,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?selectableItemBackgroundBorderless"
     app:srcCompat="?homeAsUpIndicator"
+    app:tint="?colorOnSurface"
     android:scaleType="center"
     android:contentDescription="@string/back"/>
 
@@ -41,8 +42,8 @@
     android:layout_weight="0"
     android:minHeight="@dimen/search_progress_size"
     android:minWidth="@dimen/search_progress_size"
-    app:trackColor="@color/text_light"
-    app:indicatorColor="@color/text_light"
+    app:trackColor="?colorSurfaceVariant"
+    app:indicatorColor="?colorPrimary"
     android:indeterminate="true"/>
 
   <com.google.android.material.imageview.ShapeableImageView
@@ -54,7 +55,8 @@
     android:background="?selectableItemBackgroundBorderless"
     android:contentDescription="@string/clear_the_search"
     android:scaleType="center"
-    app:srcCompat="@drawable/ic_close"/>
+    app:srcCompat="@drawable/ic_close"
+    app:tint="?colorOnSurface"/>
 
   <com.google.android.material.imageview.ShapeableImageView
     android:id="@+id/voice_input"
@@ -66,6 +68,7 @@
     android:contentDescription="@null"
     android:scaleType="center"
     app:srcCompat="@drawable/ic_mic_white"
+    app:tint="?colorOnSurface"
     android:visibility="gone"
     tools:visibility="visible"/>
 </LinearLayout>

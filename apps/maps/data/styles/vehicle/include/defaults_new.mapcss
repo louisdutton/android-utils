@@ -8,12 +8,12 @@ way|z13-::*
   linejoin: round;
 }
 
-way|z1-15::*
+way|z1-12::*
 {
   linecap: butt;
 }
 
-way|z16-::*
+way|z13-::*
 {
   linecap: round;
 }

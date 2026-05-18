@@ -23,13 +23,6 @@
       android:title="@string/measurement_units"
       app:icon="@drawable/ic_straighten"
       app:singleLineTitle="false" />
-    <SwitchPreferenceCompat
-      android:key="@string/pref_show_zoom_buttons"
-      android:order="2"
-      android:summary="@string/pref_zoom_summary"
-      android:title="@string/pref_zoom_title"
-      android:widgetLayout="@layout/preference_switch"
-      app:singleLineTitle="false" />
     <ListPreference
       android:key="@string/pref_left_button"
       android:order="3"

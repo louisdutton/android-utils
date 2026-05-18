@@ -16,7 +16,7 @@
   <View
     android:layout_width="match_parent"
     android:layout_height="@dimen/action_bar_extended_height"
-    android:background="?colorPrimary"/>
+    android:background="?colorSurface"/>
   <FrameLayout
     style="@style/MwmWidget.FrameLayout.Elevation"
     android:layout_width="match_parent"

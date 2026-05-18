@@ -22,19 +22,20 @@
       android:background="?selectableItemBackgroundBorderless"
       android:scaleType="center"
       app:srcCompat="@drawable/ic_logout"
+      app:tint="?colorOnSurface"
       android:contentDescription="@string/logout" />
     </com.google.android.material.appbar.MaterialToolbar>
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="@dimen/margin_base"
-      android:background="?colorPrimary">
+      android:background="?colorSurfaceContainer">
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/user_profile_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:trackColor="@color/text_light"
-        app:indicatorColor="@color/text_light"
+        app:trackColor="?colorSurfaceVariant"
+        app:indicatorColor="?colorPrimary"
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="invisible"
@@ -62,7 +63,7 @@
             android:id="@+id/user_profile_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/text_light"
+            android:textColor="?colorOnSurface"
             tools:ignore="UnusedAttribute"
             android:breakStrategy="balanced"
             android:autoSizeMinTextSize="@dimen/text_size_body_3"
@@ -73,7 +74,7 @@
             android:id="@+id/user_sent_edits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/text_light"
+            android:textColor="?colorOnSurface"
             android:textSize="35sp"
             android:textStyle="bold"
             tools:text="2,000,000" />
@@ -83,7 +84,7 @@
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_body_1"
             android:text="@string/editor_profile_changes"
-            android:textColor="@color/white_primary" />
+            android:textColor="?colorOnSurfaceVariant" />
       </LinearLayout>
     </LinearLayout>
   </FrameLayout>

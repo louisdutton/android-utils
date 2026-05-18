@@ -1194,6 +1194,16 @@ line|z14-[highway=secondary]::border,
 line|z15-[highway=secondary_link]::border,
 {casing-color: @secondary1_border; casing-opacity: 1;}
 
+line|z13-[highway=motorway]::border,
+line|z13-[highway=motorway_link]::border,
+line|z13-[highway=trunk]::border,
+line|z13-[highway=trunk_link]::border,
+line|z13-[highway=primary]::border,
+line|z13-[highway=primary_link]::border,
+line|z13-[highway=secondary]::border,
+line|z13-[highway=secondary_link]::border,
+{casing-linecap: round; casing-linejoin: round;}
+
 /* Border width is 0.25 if original road width is <2 and 0.5 otherwise.
    If width with border is <= 2 then remove the border. */
 

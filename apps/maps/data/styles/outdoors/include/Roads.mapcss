@@ -302,6 +302,16 @@ line|z14-[highway=secondary]::border,
 line|z15-[highway=secondary_link]::border,
 {casing-color: @secondary1_border; casing-opacity: 1;}
 
+line|z13-[highway=motorway]::border,
+line|z13-[highway=motorway_link]::border,
+line|z13-[highway=trunk]::border,
+line|z13-[highway=trunk_link]::border,
+line|z13-[highway=primary]::border,
+line|z13-[highway=primary_link]::border,
+line|z13-[highway=secondary]::border,
+line|z13-[highway=secondary_link]::border,
+{casing-linecap: round; casing-linejoin: round;}
+
 line|z10[highway=motorway],
 line|z10[highway=trunk],
 {width: 2.6}

@@ -416,6 +416,12 @@ public class PlacePageController
   }
 
   @Override
+  public void onPlacePageBookmarkClick()
+  {
+    onBookmarkBtnClicked();
+  }
+
+  @Override
   public void onPlacePageRequestClose()
   {
     mPlacePageBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -606,6 +612,7 @@ public class PlacePageController
   private void updateButtons(MapObject mapObject, boolean showBackButton, boolean showRoutingButton)
   {
     List<PlacePageButtons.ButtonType> buttons = new ArrayList<>();
+    PlacePageButtons.ButtonType bookmarkButton = null;
     if (mapObject.getRoadWarningMarkType() != RoadWarningMarkType.UNKNOWN)
     {
       RoadWarningMarkType markType = mapObject.getRoadWarningMarkType();
@@ -629,11 +636,13 @@ public class PlacePageController
       // If we can show the add route button, put it in the place of the bookmark button
       // And move the bookmark button at the end
       if (needToShowRoutingButtons && RoutingController.get().isStopPointAllowed())
+      {
         buttons.add(PlacePageButtons.ButtonType.ROUTE_ADD);
+        bookmarkButton = getBookmarkButtonType(mapObject);
+      }
       else
       {
-        buttons.add(mapObject.isBookmark() ? PlacePageButtons.ButtonType.BOOKMARK_DELETE
-                                           : PlacePageButtons.ButtonType.BOOKMARK_SAVE);
+        bookmarkButton = getBookmarkButtonType(mapObject);
         if (mapObject.isTrack())
           buttons.add(PlacePageButtons.ButtonType.TRACK_DELETE);
       }
@@ -642,11 +651,18 @@ public class PlacePageController
       {
         buttons.add(PlacePageButtons.ButtonType.ROUTE_TO);
         if (RoutingController.get().isStopPointAllowed())
-          buttons.add(mapObject.isBookmark() ? PlacePageButtons.ButtonType.BOOKMARK_DELETE
-                                             : PlacePageButtons.ButtonType.BOOKMARK_SAVE);
+          bookmarkButton = getBookmarkButtonType(mapObject);
       }
     }
+    mViewModel.setBookmarkButton(bookmarkButton);
     mViewModel.setCurrentButtons(buttons);
+  }
+
+  @NonNull
+  private static PlacePageButtons.ButtonType getBookmarkButtonType(@NonNull MapObject mapObject)
+  {
+    return mapObject.isBookmark() ? PlacePageButtons.ButtonType.BOOKMARK_DELETE
+                                  : PlacePageButtons.ButtonType.BOOKMARK_SAVE;
   }
 
   @Override

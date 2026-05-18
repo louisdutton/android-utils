@@ -91,11 +91,12 @@
 
   <style name="MwmTextAppearance.Toolbar">
     <item name="android:textSize">@dimen/text_size_toolbar</item>
-    <item name="android:textColor">@color/text_light</item>
+    <item name="android:textColor">?colorOnSurface</item>
   </style>
 
   <style name="MwmTextAppearance.Toolbar.Search">
-    <item name="android:textColorHint">@color/text_light_hint</item>
+    <item name="android:textColor">?colorOnSurface</item>
+    <item name="android:textColorHint">?colorOnSurfaceVariant</item>
   </style>
 
   <style name="MwmTextAppearance.NavMenu">
@@ -155,7 +156,7 @@
   </style>
 
   <style name="MwmTextAppearance.Tab" parent="MwmTextAppearance.Body3">
-    <item name="android:textColor">@color/white_secondary</item>
+    <item name="android:textColor">?colorOnSurfaceVariant</item>
   </style>
 
   <style name="MwmTextAppearance.Headline1"

@@ -709,7 +709,7 @@ def komap_mapswithme(options):
                 for st in zstyle:
                     if st.get('casing-width') not in (None, 0) or st.get('casing-width-add') is not None:  # and (st.get('width') or st.get('fill-color')):
                         is_area_st = 'fill-color' in st
-                        if has_lines and not is_area_st and st.get('casing-linecap', 'butt') == 'butt':
+                        if has_lines and not is_area_st:
                             dr_line = LineRuleProto()
 
                             base_width = st.get('width', 0)

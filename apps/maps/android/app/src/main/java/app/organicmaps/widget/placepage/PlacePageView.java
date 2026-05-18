@@ -65,6 +65,7 @@ import app.organicmaps.sdk.util.concurrency.UiThread;
 import app.organicmaps.sdk.widget.placepage.CoordinatesFormat;
 import app.organicmaps.util.Graphics;
 import app.organicmaps.util.SharingUtils;
+import app.organicmaps.util.ThemeUtils;
 import app.organicmaps.util.UiUtils;
 import app.organicmaps.util.Utils;
 import app.organicmaps.util.bottomsheet.MenuBottomSheetFragment;
@@ -115,6 +116,7 @@ public class PlacePageView extends Fragment
   private static final List<CoordinatesFormat> visibleCoordsFormat =
       Arrays.asList(CoordinatesFormat.LatLonDMS, CoordinatesFormat.LatLonDecimal, CoordinatesFormat.OLCFull,
                     CoordinatesFormat.UTM, CoordinatesFormat.MGRS, CoordinatesFormat.OSMLink);
+  private final Observer<PlacePageButtons.ButtonType> mBookmarkButtonObserver = this::refreshBookmarkButton;
   private View mFrame;
 
   // Preview.
@@ -127,6 +129,7 @@ public class PlacePageView extends Fragment
   private ArrowView mAvDirection;
   private MaterialTextView mTvDistance;
   private MaterialTextView mTvAddress;
+  private MaterialButton mBookmarkButton;
   // Details.
   private MaterialTextView mTvLatlon;
   private View mWifi;
@@ -294,6 +297,8 @@ public class PlacePageView extends Fragment
 
     MaterialButton shareButton = mPreview.findViewById(R.id.share_button);
     shareButton.setOnClickListener(this::shareClickListener);
+    mBookmarkButton = mPreview.findViewById(R.id.bookmark_button);
+    mBookmarkButton.setOnClickListener((v) -> mPlacePageViewListener.onPlacePageBookmarkClick());
 
     final MaterialButton closeButton = mPreview.findViewById(R.id.close_button);
     closeButton.setOnClickListener((v) -> mPlacePageViewListener.onPlacePageRequestClose());
@@ -370,6 +375,7 @@ public class PlacePageView extends Fragment
   {
     super.onStart();
     mViewModel.getMapObject().observe(requireActivity(), this);
+    mViewModel.getBookmarkButton().observe(requireActivity(), mBookmarkButtonObserver);
     BookmarkManager.INSTANCE.addSharingListener(this);
     MwmApplication.from(requireContext()).getLocationHelper().addListener(this);
     MwmApplication.from(requireContext()).getSensorHelper().addListener(this);
@@ -380,6 +386,7 @@ public class PlacePageView extends Fragment
   {
     super.onStop();
     mViewModel.getMapObject().removeObserver(this);
+    mViewModel.getBookmarkButton().removeObserver(mBookmarkButtonObserver);
     BookmarkManager.INSTANCE.removeSharingListener(this);
     MwmApplication.from(requireContext()).getLocationHelper().removeListener(this);
     MwmApplication.from(requireContext()).getSensorHelper().removeListener(this);
@@ -524,6 +531,26 @@ public class PlacePageView extends Fragment
       mTvOsmDescription.setText(osmDescription);
       mOsmDescriptionContainer.setVisibility(VISIBLE);
     }
+  }
+
+  private void refreshBookmarkButton(@Nullable PlacePageButtons.ButtonType buttonType)
+  {
+    if (mBookmarkButton == null)
+      return;
+
+    if (buttonType != PlacePageButtons.ButtonType.BOOKMARK_SAVE
+        && buttonType != PlacePageButtons.ButtonType.BOOKMARK_DELETE)
+    {
+      UiUtils.hide(mBookmarkButton);
+      return;
+    }
+
+    boolean saved = buttonType == PlacePageButtons.ButtonType.BOOKMARK_DELETE;
+    mBookmarkButton.setIconResource(saved ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
+    mBookmarkButton.setIconTint(ColorStateList.valueOf(
+        ThemeUtils.getColor(requireContext(), saved ? R.attr.iconTintActive : R.attr.iconTint)));
+    mBookmarkButton.setContentDescription(getString(saved ? R.string.saved : R.string.save));
+    UiUtils.show(mBookmarkButton);
   }
 
   void refreshCategoryPreview()
@@ -1311,6 +1338,7 @@ public class PlacePageView extends Fragment
     void onPlacePageContentChanged(int previewHeight, int frameHeight);
 
     void onPlacePageRequestToggleState();
+    void onPlacePageBookmarkClick();
     void onPlacePageRequestClose();
   }
 }

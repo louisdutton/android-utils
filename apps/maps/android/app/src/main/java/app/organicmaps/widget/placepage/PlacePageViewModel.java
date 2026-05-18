@@ -9,6 +9,7 @@ import java.util.List;
 public class PlacePageViewModel extends ViewModel
 {
   private final MutableLiveData<List<PlacePageButtons.ButtonType>> mCurrentButtons = new MutableLiveData<>();
+  private final MutableLiveData<PlacePageButtons.ButtonType> mBookmarkButton = new MutableLiveData<>();
   private final MutableLiveData<MapObject> mMapObject = new MutableLiveData<>();
   private final MutableLiveData<Integer> mPlacePageWidth = new MutableLiveData<>();
   private final MutableLiveData<Integer> mPlacePageDistanceToTop = new MutableLiveData<>();
@@ -22,6 +23,16 @@ public class PlacePageViewModel extends ViewModel
   public void setCurrentButtons(List<PlacePageButtons.ButtonType> buttons)
   {
     mCurrentButtons.setValue(buttons);
+  }
+
+  public LiveData<PlacePageButtons.ButtonType> getBookmarkButton()
+  {
+    return mBookmarkButton;
+  }
+
+  public void setBookmarkButton(PlacePageButtons.ButtonType button)
+  {
+    mBookmarkButton.setValue(button);
   }
 
   public MutableLiveData<MapObject> getMapObject()

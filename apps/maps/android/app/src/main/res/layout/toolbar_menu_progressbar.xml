@@ -6,5 +6,5 @@
   android:layout_height="@dimen/height_block_base"
   android:padding="@dimen/margin_half"
   android:indeterminate="true"
-  app:trackColor="@color/text_light"
-  app:indicatorColor="@color/text_light" />
+  app:trackColor="?colorSurfaceVariant"
+  app:indicatorColor="?colorPrimary" />

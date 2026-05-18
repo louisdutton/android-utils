@@ -35,7 +35,6 @@ import app.organicmaps.sdk.maplayer.isolines.IsolinesManager;
 import app.organicmaps.sdk.maplayer.subway.SubwayManager;
 import app.organicmaps.sdk.maplayer.traffic.TrafficManager;
 import app.organicmaps.sdk.routing.RoutingController;
-import app.organicmaps.sdk.util.Config;
 import app.organicmaps.util.ThemeUtils;
 import app.organicmaps.util.UiUtils;
 import app.organicmaps.util.WindowInsetUtils;
@@ -111,11 +110,6 @@ public class MapButtonsController extends Fragment
 
     initBottomButtons();
 
-    final View zoomFrame = mFrame.findViewById(R.id.zoom_buttons_container);
-    mFrame.findViewById(R.id.nav_zoom_in)
-        .setOnClickListener((v) -> mMapButtonClickListener.onMapButtonClick(MapButtons.zoomIn));
-    mFrame.findViewById(R.id.nav_zoom_out)
-        .setOnClickListener((v) -> mMapButtonClickListener.onMapButtonClick(MapButtons.zoomOut));
     final View myPosition = mFrame.findViewById(R.id.my_position);
     mNavMyPosition =
         new MyPositionButton(myPosition, (v) -> mMapButtonClickListener.onMapButtonClick(MapButtons.myPosition));
@@ -142,7 +136,6 @@ public class MapButtonsController extends Fragment
     // Used to get the maximum height the buttons will evolve in
     mFrame.addOnLayoutChangeListener(new MapButtonsController.ContentViewLayoutChangeListener(mFrame));
 
-    mButtonsMap.put(MapButtons.zoom, zoomFrame);
     mButtonsMap.put(MapButtons.myPosition, myPosition);
 
     if (mToggleMapLayerButton != null)
@@ -224,7 +217,6 @@ public class MapButtonsController extends Fragment
       return;
     switch (button)
     {
-    case zoom: UiUtils.showIf(show && Config.showZoomButtons(), buttonView); break;
     case toggleMapLayer:
       if (mToggleMapLayerButton != null)
         UiUtils.showIf(show && !isInNavigationMode(), mToggleMapLayerButton);
@@ -380,16 +372,7 @@ public class MapButtonsController extends Fragment
     {
       final View button = entry.getValue();
       if (button.getParent() == parent)
-      {
-        int toleranceOffset = switch (entry.getKey())
-        {
-          case zoomIn, zoomOut, zoom -> -140;
-          default ->
-            0;
-            // Allow offset tolerance for zoom buttons
-        };
-        showButton(getViewTopOffset(translation, button) >= toleranceOffset, entry.getKey());
-      }
+        showButton(getViewTopOffset(translation, button) >= 0, entry.getKey());
     }
   }
 
@@ -511,9 +494,6 @@ public class MapButtonsController extends Fragment
   {
     myPosition,
     toggleMapLayer,
-    zoomIn,
-    zoomOut,
-    zoom,
     search,
     bookmarks,
     menu,

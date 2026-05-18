@@ -18,7 +18,8 @@
       android:layout_height="?actionBarSize"
       android:scaleType="centerInside"
       android:layout_gravity="end|center_vertical"
-      app:srcCompat="@drawable/ic_done"/>
+      app:srcCompat="@drawable/ic_done"
+      app:tint="?colorOnSurface"/>
   </com.google.android.material.appbar.MaterialToolbar>
   <androidx.core.widget.NestedScrollView
     android:scrollbars="none"

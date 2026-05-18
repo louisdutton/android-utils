@@ -825,8 +825,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
   {
     switch (button)
     {
-    case zoomIn -> Map.zoomIn();
-    case zoomOut -> Map.zoomOut();
     case myPosition ->
     {
       Logger.i(LOCATION_TAG, "The location button pressed");
