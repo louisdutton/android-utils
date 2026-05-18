@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application' version '9.2.1' apply false
+    id 'com.android.library' version '9.2.1' apply false
+    id 'com.google.devtools.ksp' version '2.3.8' apply false
+}
+
+ext {
+    androidx_appcompat_version = '1.7.1'
+    androidx_constraintlayout_version = '2.2.1'
+    androidx_core_version = '1.18.0'
+    androidx_documentfile_version = '1.1.0'
+    androidx_emoji2_version = '1.6.0'
+    androidx_exifinterface_version = '1.4.2'
+    androidx_recyclerview_version = '1.4.0'
+    androidx_testrunner_version = '1.7.0'
+    androidx_viewpager_version = '1.1.0'
+    androidx_work_version = '2.11.2'
+    autodispose_version = '1.4.1'
+    billing_version = '8.0.0'
+    conductor_version = '3.1.9'
+    coroutines_version = '1.11.0'
+    dagger_version = '2.59.2'
+    espresso_version = '3.7.0'
+    exoplayer_version = '2.19.1'
+    flexbox_version = '3.0.0'
+    glide_version = '5.0.7'
+    junit_version = '4.13.2'
+    lifecycle_version = '2.10.0'
+    lifecycle_extensions_version = '2.2.0'
+    material_version = '1.14.0'
+    mockito_version = '5.23.0'
+    moshi_version = '1.15.2'
+    okhttp3_version = '5.3.2'
+    room_version = '2.8.4'
+    rxandroid_version = '2.1.1'
+    rxdogtag_version = '0.2.0'
+    rxbinding_version = '2.2.0'
+    rxjava_version = '2.2.21'
+    rxkotlin_version = '2.4.0'
+    rx_preferences_version = '2.0.1'
+    timber_version = '5.0.1'
+
+    abiCodes = ['armeabi-v7a': 1, 'arm64-v8a': 2]
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.layout.buildDirectory
+}

@@ -20,5 +20,4 @@ include(":core:locations")
 
 include(":apps:agent")
 include(":apps:maps-legacy")
-include(":apps:messaging")
 include(":apps:calendar")

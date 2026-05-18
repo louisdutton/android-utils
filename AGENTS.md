@@ -5,6 +5,9 @@
 - `apps/maps` is the hard-forked CoMaps-derived production Maps app, imported
   as normal source with its own Gradle project. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-comaps-android.sh`
+- `apps/messages` is the hard-forked Quik-derived production Messages app,
+  imported as normal source with its own Gradle project. Build it with:
+  `nix develop --no-write-lock-file --command ./scripts/build-messages-android.sh`
 - To build Maps with the bundled offline Cornwall rail timetable, use:
   `./scripts/build-maps-android-with-rail.sh`
   Generated rail assets default to `/tmp/grapheneos-essentials-rail-assets`.
