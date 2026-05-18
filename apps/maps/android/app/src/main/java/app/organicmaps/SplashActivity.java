@@ -5,9 +5,11 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Keep;
@@ -15,10 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.OnApplyWindowInsetsListener;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import app.organicmaps.downloader.DownloaderActivity;
 import app.organicmaps.intent.Factory;
 import app.organicmaps.sdk.location.LocationHelper;
@@ -39,6 +37,9 @@ public class SplashActivity extends AppCompatActivity
   private static final long DELAY = 100;
 
   private boolean mCanceled = false;
+  private boolean mKeepDefaultSplashVisible = true;
+  @Nullable
+  private View mSplashContentView;
 
   @SuppressWarnings("NotNullFieldNotInitialized")
   @NonNull
@@ -57,18 +58,8 @@ public class SplashActivity extends AppCompatActivity
   {
     super.onCreate(savedInstanceState);
     UiThread.cancelDelayedTasks(mInitCoreDelayedTask);
-    setContentView(R.layout.activity_splash);
+    keepDefaultSplashUntilReady();
 
-    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_view), new OnApplyWindowInsetsListener() {
-      @NonNull
-      @Override
-      public WindowInsetsCompat onApplyWindowInsets(@NonNull View v, @NonNull WindowInsetsCompat insets)
-      {
-        Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-        v.setPadding(0, 0, 0, systemBars.bottom);
-        return insets;
-      }
-    });
     mPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
                                                    result -> Config.setLocationRequested());
     mApiRequest = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -88,6 +79,7 @@ public class SplashActivity extends AppCompatActivity
     if (!Config.isLocationRequested() && !LocationUtils.checkLocationPermission(this))
     {
       Logger.d(TAG, "Requesting location permissions");
+      releaseDefaultSplash();
       mPermissionRequest.launch(new String[] {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION});
       return;
     }
@@ -115,6 +107,7 @@ public class SplashActivity extends AppCompatActivity
   private void showFatalErrorDialog(@StringRes int titleId, @StringRes int messageId, Exception error)
   {
     mCanceled = true;
+    releaseDefaultSplash();
     new MaterialAlertDialogBuilder(this, R.style.MwmTheme_M3_AlertDialog)
         .setTitle(titleId)
         .setMessage(messageId)
@@ -184,13 +177,42 @@ public class SplashActivity extends AppCompatActivity
     if (Factory.isStartedForApiResult(intent))
     {
       // Wait for the result from MwmActivity for API callers.
+      releaseDefaultSplash();
       mApiRequest.launch(intent);
       return;
     }
 
     Config.setFirstStartDialogSeen(this);
     startActivity(intent);
+    releaseDefaultSplash();
     finish();
+  }
+
+  private void releaseDefaultSplash()
+  {
+    mKeepDefaultSplashVisible = false;
+    if (mSplashContentView != null)
+      mSplashContentView.invalidate();
+  }
+
+  private void keepDefaultSplashUntilReady()
+  {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S)
+      return;
+
+    mSplashContentView = findViewById(android.R.id.content);
+    mSplashContentView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+      @Override
+      public boolean onPreDraw()
+      {
+        if (mKeepDefaultSplashVisible)
+          return false;
+
+        mSplashContentView.getViewTreeObserver().removeOnPreDrawListener(this);
+        mSplashContentView = null;
+        return true;
+      }
+    });
   }
 
   private boolean isManageSpaceActivity(Intent intent)

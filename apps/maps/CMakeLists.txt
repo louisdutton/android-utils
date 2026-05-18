@@ -51,6 +51,14 @@ endif()
 
 message(STATUS "Using compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
 
+# CMake 3.22 defaults Clang IPO link options to gold, but modern Android NDKs
+# on macOS no longer provide a usable gold linker. Keep IPO/LTO enabled while
+# selecting lld explicitly for Android release builds.
+if (PLATFORM_ANDROID AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_C_LINK_OPTIONS_IPO "-fuse-ld=lld")
+  set(CMAKE_CXX_LINK_OPTIONS_IPO "-fuse-ld=lld")
+endif()
+
 if (CMAKE_UNITY_BUILD)
   message(STATUS "Using Unity Build with batch ${CMAKE_UNITY_BUILD_BATCH_SIZE}, use -DCMAKE_UNITY_BUILD=OFF to disable it.")
 endif()

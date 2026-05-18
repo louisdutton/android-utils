@@ -154,6 +154,14 @@
 
   <style name="MwmTheme" parent="MwmTheme.Base"/>
 
+  <style name="MwmTheme.Splash">
+    <item name="android:windowBackground">?colorSurface</item>
+    <item name="android:navigationBarColor">?colorSurface</item>
+    <item name="android:statusBarColor">?colorSurface</item>
+    <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
+    <item name="android:windowLightStatusBar" tools:targetApi="M">false</item>
+  </style>
+
   <style name="MwmTheme.DialogFragment.Fullscreen" parent="Theme.Material3.DayNight">
     <item name="android:textColorHint">@color/text_light_hint</item>
   </style>
