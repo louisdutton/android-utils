@@ -20,9 +20,12 @@ package dev.octoshrimpy.quik.common.util
 
 import android.content.Context
 import android.graphics.Color
+import android.view.ContextThemeWrapper
 import androidx.core.content.res.getColorOrThrow
+import com.google.android.material.color.DynamicColors
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.model.Recipient
 import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.Observable
@@ -74,12 +77,28 @@ class Colors @Inject constructor(
     private val tertiaryTextLuminance = measureLuminance(context.getColorCompat(R.color.textTertiaryDark))
 
     fun theme(recipient: Recipient? = null): Theme {
-        return Theme(prefs.theme().get(), this)
+        return Theme(materialPrimary(), this)
     }
 
     fun themeObservable(recipient: Recipient? = null): Observable<Theme> {
-        return prefs.theme().asObservable()
-                .map { color -> Theme(color, this) }
+        return Observable.merge(
+            prefs.theme().asObservable().map { Unit },
+            prefs.black.asObservable().map { Unit },
+            prefs.night.asObservable().map { Unit },
+            prefs.nightMode.asObservable().map { Unit }
+        ).map { theme(recipient) }
+    }
+
+    private fun materialPrimary(): Int {
+        val baseContext = ContextThemeWrapper(
+            context,
+            if (prefs.black.get()) R.style.AppTheme_Black else R.style.AppTheme
+        )
+        val themedContext = DynamicColors.wrapContextIfAvailable(baseContext)
+        return themedContext.resolveThemeColor(
+            androidx.appcompat.R.attr.colorPrimary,
+            context.getColorCompat(R.color.tools_theme)
+        )
     }
 
     fun highlightColorForTheme(theme: Int): Int = FloatArray(3)

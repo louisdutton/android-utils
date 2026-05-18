@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
+import com.google.android.material.color.DynamicColors
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDispose
 import dev.octoshrimpy.quik.R
@@ -96,6 +97,7 @@ abstract class QkThemedActivity : QkActivity() {
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(getActivityThemeRes(prefs.black.get()))
+        DynamicColors.applyToActivityIfAvailable(this)
         super.onCreate(savedInstanceState)
 
         // When certain preferences change, we need to recreate the activity

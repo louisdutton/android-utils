@@ -98,6 +98,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.max
 import com.google.android.material.R as MaterialR
 
 
@@ -189,11 +190,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.contentView) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
             view.updatePadding(
                 left = initialLeft + systemBars.left,
                 top = initialTop + systemBars.top,
                 right = initialRight + systemBars.right,
-                bottom = initialBottom + systemBars.bottom,
+                bottom = initialBottom + max(systemBars.bottom, ime.bottom),
             )
             insets
         }

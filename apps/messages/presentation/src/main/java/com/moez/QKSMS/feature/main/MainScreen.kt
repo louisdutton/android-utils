@@ -1,5 +1,6 @@
 package dev.octoshrimpy.quik.feature.main
 
+import android.content.Context
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -66,6 +67,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -82,16 +84,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.util.DateFormatter
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.model.SearchResult
 import dev.octoshrimpy.quik.repository.SyncRepository
 import kotlinx.coroutines.flow.distinctUntilChanged
+import com.google.android.material.R as MaterialR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,6 +104,7 @@ fun MessagesMainScreen(
     state: MainState,
     conversationRows: List<ConversationRowModel>,
     query: String,
+    blackTheme: Boolean,
     selectedConversationIds: Set<Long>,
     dateFormatter: DateFormatter,
     onQueryChanged: (String) -> Unit,
@@ -125,12 +131,7 @@ fun MessagesMainScreen(
 ) {
     val context = LocalContext.current
     val darkTheme = isSystemInDarkTheme()
-    val colorScheme = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && darkTheme -> dynamicDarkColorScheme(context)
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> dynamicLightColorScheme(context)
-        darkTheme -> darkColorScheme()
-        else -> lightColorScheme()
-    }
+    val colorScheme = messagesColorScheme(context, darkTheme, blackTheme)
 
     MaterialTheme(colorScheme = colorScheme) {
         Surface(color = MaterialTheme.colorScheme.background) {
@@ -164,6 +165,59 @@ fun MessagesMainScreen(
             )
         }
     }
+}
+
+private fun messagesColorScheme(
+    context: Context,
+    darkTheme: Boolean,
+    blackTheme: Boolean,
+): ColorScheme {
+    val scheme = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && darkTheme -> dynamicDarkColorScheme(context)
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> dynamicLightColorScheme(context)
+        darkTheme -> darkColorScheme()
+        else -> lightColorScheme()
+    }
+    val base = scheme.copy(
+        primary = context.materialColor(androidx.appcompat.R.attr.colorPrimary, scheme.primary),
+        onPrimary = context.materialColor(MaterialR.attr.colorOnPrimary, scheme.onPrimary),
+        primaryContainer = context.materialColor(MaterialR.attr.colorPrimaryContainer, scheme.primaryContainer),
+        onPrimaryContainer = context.materialColor(MaterialR.attr.colorOnPrimaryContainer, scheme.onPrimaryContainer),
+        secondary = context.materialColor(MaterialR.attr.colorSecondary, scheme.secondary),
+        onSecondary = context.materialColor(MaterialR.attr.colorOnSecondary, scheme.onSecondary),
+        secondaryContainer = context.materialColor(MaterialR.attr.colorSecondaryContainer, scheme.secondaryContainer),
+        onSecondaryContainer = context.materialColor(MaterialR.attr.colorOnSecondaryContainer, scheme.onSecondaryContainer),
+        background = context.materialColor(MaterialR.attr.colorSurface, scheme.surface),
+        onBackground = context.materialColor(MaterialR.attr.colorOnSurface, scheme.onSurface),
+        surface = context.materialColor(MaterialR.attr.colorSurface, scheme.surface),
+        onSurface = context.materialColor(MaterialR.attr.colorOnSurface, scheme.onSurface),
+        surfaceVariant = context.materialColor(MaterialR.attr.colorSurfaceVariant, scheme.surfaceVariant),
+        onSurfaceVariant = context.materialColor(MaterialR.attr.colorOnSurfaceVariant, scheme.onSurfaceVariant),
+        surfaceContainer = context.materialColor(MaterialR.attr.colorSurfaceContainer, scheme.surfaceContainer),
+        surfaceContainerHigh = context.materialColor(MaterialR.attr.colorSurfaceContainerHigh, scheme.surfaceContainerHigh),
+        surfaceContainerHighest = context.materialColor(MaterialR.attr.colorSurfaceContainerHighest, scheme.surfaceContainerHighest),
+        outline = context.materialColor(MaterialR.attr.colorOutline, scheme.outline),
+        outlineVariant = context.materialColor(MaterialR.attr.colorOutlineVariant, scheme.outlineVariant),
+    )
+
+    return if (blackTheme && darkTheme) {
+        base.copy(
+            background = Color.Black,
+            surface = Color.Black,
+            surfaceContainerLowest = Color.Black,
+            surfaceContainerLow = Color.Black,
+            surfaceContainer = Color.Black,
+            surfaceContainerHigh = Color(0xFF101010),
+            surfaceContainerHighest = Color(0xFF181818),
+            surfaceVariant = Color(0xFF202020),
+        )
+    } else {
+        base
+    }
+}
+
+private fun Context.materialColor(attr: Int, fallback: Color): Color {
+    return Color(resolveThemeColor(attr, fallback.toArgb()))
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -457,7 +511,9 @@ private fun MessagesDrawer(
                 selected = state.page is Inbox,
                 onClick = { onNavigate(NavItem.INBOX) },
                 colors = NavigationDrawerItemDefaults.colors(
-                    selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    selectedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
                 ),
             )
             NavigationDrawerItem(
@@ -465,6 +521,11 @@ private fun MessagesDrawer(
                 icon = { Icon(Icons.Rounded.Archive, contentDescription = null) },
                 selected = state.page is Archived,
                 onClick = { onNavigate(NavItem.ARCHIVED) },
+                colors = NavigationDrawerItemDefaults.colors(
+                    selectedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                ),
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             NavigationDrawerItem(
@@ -603,7 +664,7 @@ private fun ConversationRow(
     onLongClick: () -> Unit,
 ) {
     val rowColor = when {
-        selected -> MaterialTheme.colorScheme.secondaryContainer
+        selected -> MaterialTheme.colorScheme.surfaceContainerHigh
         else -> MaterialTheme.colorScheme.background
     }
 

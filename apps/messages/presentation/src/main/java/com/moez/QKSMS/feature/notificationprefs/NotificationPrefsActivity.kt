@@ -24,6 +24,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.core.view.isVisible
 import dev.octoshrimpy.quik.common.ViewModelFactory
 import androidx.lifecycle.ViewModelProviders
@@ -35,6 +36,7 @@ import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.QkDialog
 import dev.octoshrimpy.quik.common.base.QkThemedActivity
 import dev.octoshrimpy.quik.common.util.extensions.animateLayoutChanges
+import dev.octoshrimpy.quik.common.util.extensions.applySystemBarPadding
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.common.widget.PreferenceView
 import dev.octoshrimpy.quik.databinding.NotificationPrefsActivityBinding
@@ -63,8 +65,10 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = NotificationPrefsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applySystemBarPadding()
         setTitle(R.string.title_notification_prefs)
         showBackButton(true)
         viewModel.bindView(this)

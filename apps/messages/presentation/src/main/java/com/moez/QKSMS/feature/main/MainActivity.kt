@@ -121,6 +121,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 state = uiState,
                 conversationRows = conversationRows,
                 query = searchQuery,
+                blackTheme = prefs.black.get(),
                 selectedConversationIds = selectedConversationIds.toSet(),
                 dateFormatter = dateFormatter,
                 onQueryChanged = { query ->
