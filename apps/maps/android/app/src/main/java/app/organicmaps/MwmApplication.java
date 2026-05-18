@@ -32,6 +32,7 @@ import app.organicmaps.sdk.routing.RoutingController;
 import app.organicmaps.sdk.util.Config;
 import app.organicmaps.sdk.util.ConnectionState;
 import app.organicmaps.sdk.util.log.Logger;
+import app.organicmaps.transit.rail.RailScheduleUpdateWork;
 import app.organicmaps.util.ThemeSwitcher;
 import app.organicmaps.util.Utils;
 import com.google.android.material.color.DynamicColors;
@@ -131,6 +132,7 @@ public class MwmApplication extends Application implements Application.ActivityL
     DownloaderNotifier.createNotificationChannel(this);
     NavigationService.createNotificationChannel(this);
     TrackRecordingService.createNotificationChannel(this);
+    RailScheduleUpdateWork.schedule(this);
 
     registerActivityLifecycleCallbacks(this);
   }

@@ -75,6 +75,7 @@ import app.organicmaps.widget.placepage.sections.PlacePageChargeSocketsFragment;
 import app.organicmaps.widget.placepage.sections.PlacePageLinksFragment;
 import app.organicmaps.widget.placepage.sections.PlacePageOpeningHoursFragment;
 import app.organicmaps.widget.placepage.sections.PlacePagePhoneFragment;
+import app.organicmaps.widget.placepage.sections.PlacePageRailDeparturesFragment;
 import app.organicmaps.widget.placepage.sections.PlacePageTrackFragment;
 import app.organicmaps.widget.placepage.sections.PlacePageWikipediaFragment;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -105,6 +106,7 @@ public class PlacePageView extends Fragment
   private static final String PHONE_FRAGMENT_TAG = "PHONE_FRAGMENT_TAG";
   private static final String OPENING_HOURS_FRAGMENT_TAG = "OPENING_HOURS_FRAGMENT_TAG";
   private static final String LINKS_FRAGMENT_TAG = "LINKS_FRAGMENT_TAG";
+  private static final String RAIL_DEPARTURES_FRAGMENT_TAG = "RAIL_DEPARTURES_FRAGMENT_TAG";
   private static final String TRACK_SHARE_MENU_ID = "TRACK_SHARE_MENU_ID";
 
   private static final int SHORT_HORIZON_CLOSE_MIN = 60;
@@ -430,6 +432,12 @@ public class PlacePageView extends Fragment
   private void updateLinksView()
   {
     updateViewFragment(PlacePageLinksFragment.class, LINKS_FRAGMENT_TAG, R.id.place_page_links_fragment, true);
+  }
+
+  private void updateRailDeparturesView()
+  {
+    updateViewFragment(PlacePageRailDeparturesFragment.class, RAIL_DEPARTURES_FRAGMENT_TAG,
+                       R.id.place_page_rail_departures_fragment, mMapObject.isRailwayStation());
   }
 
   private void updateOpeningHoursView()
@@ -826,6 +834,7 @@ public class PlacePageView extends Fragment
       UiUtils.showIf(UiUtils.isVisible(mEditPlace) || UiUtils.isVisible(mAddPlace), mEditTopSpace);
     }
     updateLinksView();
+    updateRailDeparturesView();
     updateOpeningHoursView();
     updateWikipediaView();
     updateBookmarkView();

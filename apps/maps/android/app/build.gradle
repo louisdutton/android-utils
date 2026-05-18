@@ -21,6 +21,10 @@ def getCommitMessage() {
   return run(['git', '--no-pager', 'show', '-s', '--format=%s%n%n%b', 'HEAD']).trim()
 }
 
+def quotedBuildConfigString(value) {
+  return '"' + value.toString().replace('\\', '\\\\').replace('"', '\\"') + '"'
+}
+
 project.ext.appId = 'digital.dutton.essentials.maps'
 project.ext.appName = 'Maps'
 
@@ -70,10 +74,20 @@ android {
     buildConfigField 'String', 'SUPPORT_MAIL', '"android@comaps.app"'
     // Should be customized in flavors.
     buildConfigField 'String', 'REVIEW_URL', '""'
+    buildConfigField 'String', 'RAIL_SCHEDULE_MANIFEST_URL',
+        quotedBuildConfigString(project.findProperty('railScheduleManifestUrl') ?: '')
 
     base.archivesName = appName.replaceAll('\\s','') + '-' + defaultConfig.versionCode
 
     ndk.debugSymbolLevel = 'full'
+  }
+
+  sourceSets {
+    main {
+      def railScheduleAssetDir = project.findProperty('railScheduleAssetDir')
+      if (railScheduleAssetDir)
+        assets.srcDir(file(railScheduleAssetDir))
+    }
   }
 
   flavorDimensions += 'default'
@@ -225,7 +239,7 @@ android {
   // TODO: Load all minor files via separate call to ReadAsString which can correctly handle compressed files in zip containers.
   androidResources {
     ignoreAssetsPattern = '!.svn:!.git:!.DS_Store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~'
-    noCompress = ['txt', 'bin', 'html', 'png', 'json', 'mwm', 'ttf', 'sdf', 'ui', 'config', 'csv', 'spv', 'obj']
+    noCompress = ['txt', 'bin', 'html', 'png', 'json', 'mwm', 'ttf', 'sdf', 'ui', 'config', 'csv', 'spv', 'obj', 'gz', 'gzip']
     // Some languages not supported by Android require to be specified here to be applied
     localeFilters += [
             "en",

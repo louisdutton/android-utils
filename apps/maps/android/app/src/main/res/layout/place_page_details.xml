@@ -17,10 +17,16 @@
     android:orientation="vertical">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/place_page_charge_sockets_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/place_page_charge_sockets_fragment" />
+      android:id="@+id/place_page_rail_departures_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:layout="@layout/place_page_rail_departures_fragment" />
+
+    <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/place_page_charge_sockets_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:layout="@layout/place_page_charge_sockets_fragment" />
 
     <androidx.fragment.app.FragmentContainerView
       android:id="@+id/place_page_wikipedia_fragment"

@@ -177,6 +177,16 @@
 \n%2$s</string>
     <!-- resource for context menu -->
     <string name="edit">Edit</string>
+    <!-- Place page section title for offline train station departure boards. -->
+    <string name="rail_departures_title">Departures</string>
+    <!-- Place page status when the offline train timetable has not been installed. -->
+    <string name="rail_timetable_missing">Train timetable not installed</string>
+    <!-- Place page status when no further trains are scheduled today. -->
+    <string name="rail_departures_empty_today">No more scheduled departures today</string>
+    <!-- Place page metadata, %s is a localized date. -->
+    <string name="rail_timetable_valid_until">Timetable valid until %s</string>
+    <!-- Short relative departure time, %d is minutes until departure. -->
+    <string name="rail_departure_minutes">%d min</string>
     <!-- Warning message when doing search around current position -->
     <string name="unknown_current_position">Your location hasn\'t been determined yet</string>
     <!-- Alert message that we can't run Map Storage settings due to some reasons. -->

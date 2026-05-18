@@ -220,6 +220,8 @@
             COMAPS_PROTOBUF_SRC = comapsThirdParty.protobuf;
             COMAPS_PUGIXML_SRC = comapsThirdParty.pugixml;
             COMAPS_VULKAN_HEADERS_SRC = comapsThirdParty.vulkanHeaders;
+            RAIL_SCHEDULE_ASSET_ROOT = "/tmp/grapheneos-essentials-rail-assets";
+            RAIL_SCHEDULE_CACHE_DIR = "/tmp/grapheneos-essentials-rail-cache";
 
             shellHook = ''
               unset PYTHONPATH

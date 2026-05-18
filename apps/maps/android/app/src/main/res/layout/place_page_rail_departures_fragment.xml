@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/rail_departures_frame"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="?ppBackground"
+  android:clickable="true"
+  android:focusable="false"
+  android:orientation="vertical"
+  tools:visibility="visible">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_half"
+    android:paddingEnd="@dimen/margin_base"
+    android:paddingStart="@dimen/margin_base"
+    android:paddingTop="@dimen/margin_half">
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/rail_departures_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/rail_departures_title"
+      android:textAppearance="@style/MwmTextAppearance.PlacePage"
+      tools:text="Departures" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/rail_departures_station"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_eighth"
+      android:textAppearance="@style/MwmTextAppearance.Body4"
+      android:textColor="?colorOnSurfaceVariant"
+      tools:text="Penzance (PNZ)" />
+
+    <LinearLayout
+      android:id="@+id/rail_departures_list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_half"
+      android:orientation="vertical"
+      tools:ignore="UselessLeaf" />
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/rail_departures_status"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_half"
+      android:textAppearance="@style/MwmTextAppearance.Body4"
+      android:textColor="?colorOnSurfaceVariant"
+      tools:text="Timetable valid until 30 Jun 2026" />
+  </LinearLayout>
+
+  <include layout="@layout/item_divider" />
+</LinearLayout>

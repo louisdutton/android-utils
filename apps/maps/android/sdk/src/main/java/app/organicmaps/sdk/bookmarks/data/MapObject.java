@@ -320,7 +320,17 @@ public class MapObject implements PlacePageData
 
   public boolean hasAtm()
   {
-    return mRawTypes.contains("amenity-atm");
+    return hasRawType("amenity-atm");
+  }
+
+  public boolean hasRawType(@NonNull String rawType)
+  {
+    return mRawTypes != null && mRawTypes.contains(rawType);
+  }
+
+  public boolean isRailwayStation()
+  {
+    return hasRawType("railway-station") || hasRawType("railway-halt") || hasRawType("building-train_station");
   }
   public String getOrganic()
   {
@@ -343,6 +353,8 @@ public class MapObject implements PlacePageData
   }
   private String getFeatureType(String match)
   {
+    if (mRawTypes == null)
+      return null;
     for (String type : mRawTypes) {
       if (type.startsWith(match)) {
         return type;
