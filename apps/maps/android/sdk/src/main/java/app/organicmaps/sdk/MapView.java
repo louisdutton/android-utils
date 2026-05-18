@@ -12,6 +12,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ConfigurationHelper;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import app.organicmaps.sdk.display.DisplayType;
 import app.organicmaps.sdk.util.Utils;
 import app.organicmaps.sdk.util.log.Logger;
@@ -92,6 +95,9 @@ public class MapView extends SurfaceView
   @Override
   public boolean onTouchEvent(@NonNull MotionEvent event)
   {
+    if (isBottomSystemGestureStart(event))
+      return false;
+
     int action = event.getActionMasked();
     int pointerIndex = event.getActionIndex();
     switch (action)
@@ -125,6 +131,21 @@ public class MapView extends SurfaceView
   {
     super.performClick();
     return false;
+  }
+
+  private boolean isBottomSystemGestureStart(@NonNull MotionEvent event)
+  {
+    if (event.getActionMasked() != MotionEvent.ACTION_DOWN)
+      return false;
+
+    WindowInsetsCompat insets = ViewCompat.getRootWindowInsets(this);
+    if (insets == null)
+      return false;
+
+    Insets mandatoryGestures = insets.getInsets(WindowInsetsCompat.Type.mandatorySystemGestures());
+    Insets systemGestures = insets.getInsets(WindowInsetsCompat.Type.systemGestures());
+    int bottomGestureInset = Math.max(mandatoryGestures.bottom, systemGestures.bottom);
+    return bottomGestureInset > 0 && event.getY() >= getHeight() - bottomGestureInset;
   }
 
   @NonNull

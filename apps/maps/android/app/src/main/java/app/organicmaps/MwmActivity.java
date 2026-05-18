@@ -2287,7 +2287,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
       window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
       int flags = window.getDecorView().getSystemUiVisibility();
-      flags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+      flags &= ~View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1)
         flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
