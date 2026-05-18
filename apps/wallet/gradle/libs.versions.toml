@@ -1,0 +1,53 @@
+[versions]
+# AndroidX
+compose = "2026.05.00"
+kotlin = "2.3.21"
+
+# Testing
+androidXTest = "1.7.0"
+
+[libraries]
+# AndroidX
+androidx-appcompat-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.1" }
+androidx-constraintlayout-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
+androidx-core-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.18.0" }
+androidx-core-core-remoteviews = { group = "androidx.core", name = "core-remoteviews", version = "1.1.0" }
+androidx-exifinterface-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.2" }
+androidx-palette-palette = { group = "androidx.palette", name = "palette", version = "1.0.0" }
+androidx-preference-preference = { group = "androidx.preference", name = "preference", version = "1.2.1" }
+com-google-android-material-material = { group = "com.google.android.material", name = "material", version = "1.14.0" }
+com-android-tools-desugar_jdk_libs = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.1.5" }
+
+# Compose
+androidx-activity-activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.13.0" }
+androidx-compose-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose" }
+androidx-compose-foundation-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-compose-material3-material3 = { group = "androidx.compose.material3", name = "material3"}
+androidx-compose-material-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.8" }
+androidx-compose-ui-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android" }
+androidx-compose-ui-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+
+# Third-party
+com-journeyapps-zxing_android_embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version = "4.3.0" }
+com-github-yalantis-ucrop = { group = "com.github.yalantis", name = "ucrop", version = "2.2.11" }
+com-google-zxing-core = { group = "com.google.zxing", name = "core", version = "3.5.4" }
+org-apache-commons-commons_csv = { group = "org.apache.commons", name = "commons-csv", version = "1.9.0" }
+com-jaredrummler-colorpicker = { group = "com.jaredrummler", name = "colorpicker", version = "1.1.0" }
+net-lingala-zip4j-zip4j = { group = "net.lingala.zip4j", name = "zip4j", version = "2.11.6" }
+# Testing
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidXTest" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidXTest" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidXTest" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version = "1.3.0" }
+androidx-test-uiautomator-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version = "2.3.0" }
+androidx-test-espresso-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.7.0" }
+junit-junit = { group = "junit", name = "junit", version = "4.13.2" }
+org-robolectric-robolectric = { group = "org.robolectric", name = "robolectric", version = "4.16.1" }
+
+[plugins]
+com-android-application = { id = "com.android.application", version = "9.2.1" }
+org-jetbrains-kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+[bundles]
+androidx-test = ["androidx-test-core", "androidx-test-runner"]

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<quickaccesswallet-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="protect.card_locker.preferences.SettingsActivity"
+    android:shortcutLongLabel="@string/wallet_quick_access_long_label"
+    android:shortcutShortLabel="@string/wallet_quick_access_short_label"
+    android:targetActivity="protect.card_locker.MainActivity" />
