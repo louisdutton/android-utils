@@ -379,9 +379,11 @@ class MainViewModel @Inject constructor(
                 .doOnNext { view.clearSelection() }
                 .filter { conversations -> conversations.size == 1 }
                 .map { conversations -> conversations.first() }
+                .observeOn(Schedulers.io())
                 .mapNotNull(conversationRepo::getConversation)
                 .map { conversation -> conversation.recipients }
                 .mapNotNull { recipients -> recipients[0]?.address?.takeIf { recipients.size == 1 } }
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(navigator::addContact)
                 .autoDispose(view.scope())
                 .subscribe()
@@ -436,7 +438,9 @@ class MainViewModel @Inject constructor(
         view.optionsItemIntent
             .filter { itemId -> itemId == R.id.rename }
             .withLatestFrom(view.conversationsSelectedIntent) { _, conversationIds -> conversationIds.first() }
+            .observeOn(Schedulers.io())
             .mapNotNull { conversationId -> conversationRepo.getConversation(conversationId) }
+            .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(view.scope())
             .subscribe { conversation -> view.showRenameDialog(conversation.name) }
 
@@ -459,6 +463,7 @@ class MainViewModel @Inject constructor(
                 .subscribe { ratingManager.dismiss() }
 
         view.conversationsSelectedIntent
+                .observeOn(Schedulers.io())
                 .withLatestFrom(state) { selection, state ->
                     val conversations = selection.mapNotNull(conversationRepo::getConversation)
                     val add = conversations.firstOrNull()

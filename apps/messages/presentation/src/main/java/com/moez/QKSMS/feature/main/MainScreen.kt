@@ -29,6 +29,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Archive
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Block
+import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.DoneAll
 import androidx.compose.material.icons.rounded.Inbox
@@ -43,6 +44,7 @@ import androidx.compose.material.icons.rounded.SelectAll
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Sms
 import androidx.compose.material.icons.rounded.Unarchive
+import androidx.compose.material.icons.rounded.VolumeUp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DividerDefaults
@@ -62,6 +64,8 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -73,6 +77,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -85,16 +90,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.recyclerview.widget.ItemTouchHelper
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.model.SearchResult
 import dev.octoshrimpy.quik.repository.SyncRepository
+import dev.octoshrimpy.quik.util.Preferences
 import kotlinx.coroutines.flow.distinctUntilChanged
 import com.google.android.material.R as MaterialR
 
@@ -105,6 +113,8 @@ fun MessagesMainScreen(
     conversationRows: List<ConversationRowModel>,
     query: String,
     blackTheme: Boolean,
+    swipeRightAction: Int,
+    swipeLeftAction: Int,
     selectedConversationIds: Set<Long>,
     dateFormatter: DateFormatter,
     onQueryChanged: (String) -> Unit,
@@ -116,6 +126,7 @@ fun MessagesMainScreen(
     onSnackbarAction: () -> Unit,
     onConversationClick: (Long) -> Unit,
     onConversationLongClick: (Long) -> Unit,
+    onConversationSwipe: (Long, Int) -> Unit,
     onSearchResultClick: (SearchResult) -> Unit,
     onSelectAll: () -> Unit,
     onArchive: () -> Unit,
@@ -139,6 +150,8 @@ fun MessagesMainScreen(
                 state = state,
                 conversationRows = conversationRows,
                 query = query,
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
                 selectedConversationIds = selectedConversationIds,
                 dateFormatter = dateFormatter,
                 onQueryChanged = onQueryChanged,
@@ -150,6 +163,7 @@ fun MessagesMainScreen(
                 onSnackbarAction = onSnackbarAction,
                 onConversationClick = onConversationClick,
                 onConversationLongClick = onConversationLongClick,
+                onConversationSwipe = onConversationSwipe,
                 onSearchResultClick = onSearchResultClick,
                 onSelectAll = onSelectAll,
                 onArchive = onArchive,
@@ -226,6 +240,8 @@ private fun MessagesMainContent(
     state: MainState,
     conversationRows: List<ConversationRowModel>,
     query: String,
+    swipeRightAction: Int,
+    swipeLeftAction: Int,
     selectedConversationIds: Set<Long>,
     dateFormatter: DateFormatter,
     onQueryChanged: (String) -> Unit,
@@ -237,6 +253,7 @@ private fun MessagesMainContent(
     onSnackbarAction: () -> Unit,
     onConversationClick: (Long) -> Unit,
     onConversationLongClick: (Long) -> Unit,
+    onConversationSwipe: (Long, Int) -> Unit,
     onSearchResultClick: (SearchResult) -> Unit,
     onSelectAll: () -> Unit,
     onArchive: () -> Unit,
@@ -270,6 +287,7 @@ private fun MessagesMainContent(
 
     ModalNavigationDrawer(
         drawerState = drawerState,
+        gesturesEnabled = drawerState.currentValue == DrawerValue.Open,
         drawerContent = {
             MessagesDrawer(
                 state = state,
@@ -324,10 +342,13 @@ private fun MessagesMainContent(
                 state = state,
                 conversationRows = conversationRows,
                 paddingValues = paddingValues,
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
                 selectedConversationIds = selectedConversationIds,
                 dateFormatter = dateFormatter,
                 onConversationClick = onConversationClick,
                 onConversationLongClick = onConversationLongClick,
+                onConversationSwipe = onConversationSwipe,
                 onSearchResultClick = onSearchResultClick,
             )
         }
@@ -562,10 +583,13 @@ private fun MessagesPage(
     state: MainState,
     conversationRows: List<ConversationRowModel>,
     paddingValues: PaddingValues,
+    swipeRightAction: Int,
+    swipeLeftAction: Int,
     selectedConversationIds: Set<Long>,
     dateFormatter: DateFormatter,
     onConversationClick: (Long) -> Unit,
     onConversationLongClick: (Long) -> Unit,
+    onConversationSwipe: (Long, Int) -> Unit,
     onSearchResultClick: (SearchResult) -> Unit,
 ) {
     Box(
@@ -577,17 +601,25 @@ private fun MessagesPage(
             is Inbox -> ConversationList(
                 rows = conversationRows,
                 emptyText = "Your conversations will appear here",
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
+                swipesEnabled = selectedConversationIds.isEmpty(),
                 selectedConversationIds = selectedConversationIds,
                 onConversationClick = onConversationClick,
                 onConversationLongClick = onConversationLongClick,
+                onConversationSwipe = onConversationSwipe,
             )
 
             is Archived -> ConversationList(
                 rows = conversationRows,
                 emptyText = "Your archived conversations will appear here",
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
+                swipesEnabled = selectedConversationIds.isEmpty(),
                 selectedConversationIds = selectedConversationIds,
                 onConversationClick = onConversationClick,
                 onConversationLongClick = onConversationLongClick,
+                onConversationSwipe = onConversationSwipe,
             )
 
             is Searching -> SearchResults(
@@ -631,9 +663,13 @@ private fun SearchResults(
 private fun ConversationList(
     rows: List<ConversationRowModel>,
     emptyText: String,
+    swipeRightAction: Int,
+    swipeLeftAction: Int,
+    swipesEnabled: Boolean,
     selectedConversationIds: Set<Long>,
     onConversationClick: (Long) -> Unit,
     onConversationLongClick: (Long) -> Unit,
+    onConversationSwipe: (Long, Int) -> Unit,
 ) {
     if (rows.isEmpty()) {
         EmptyState(emptyText)
@@ -648,8 +684,12 @@ private fun ConversationList(
             ConversationRow(
                 row = row,
                 selected = row.id in selectedConversationIds,
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
+                swipesEnabled = swipesEnabled,
                 onClick = { onConversationClick(row.id) },
                 onLongClick = { onConversationLongClick(row.id) },
+                onSwipe = { direction -> onConversationSwipe(row.id, direction) },
             )
         }
     }
@@ -660,92 +700,167 @@ private fun ConversationList(
 private fun ConversationRow(
     row: ConversationRowModel,
     selected: Boolean,
+    swipeRightAction: Int,
+    swipeLeftAction: Int,
+    swipesEnabled: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
+    onSwipe: (Int) -> Unit,
 ) {
     val rowColor = when {
         selected -> MaterialTheme.colorScheme.surfaceContainerHigh
         else -> MaterialTheme.colorScheme.background
     }
+    val dismissState = rememberSwipeToDismissBoxState(
+        confirmValueChange = { value ->
+            when (value) {
+                SwipeToDismissBoxValue.StartToEnd -> onSwipe(ItemTouchHelper.RIGHT)
+                SwipeToDismissBoxValue.EndToStart -> onSwipe(ItemTouchHelper.LEFT)
+                SwipeToDismissBoxValue.Settled -> Unit
+            }
+            false
+        },
+        positionalThreshold = { distance -> distance * 0.4f },
+    )
 
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onLongClick,
-            ),
-        color = rowColor,
+    SwipeToDismissBox(
+        state = dismissState,
+        enableDismissFromStartToEnd = swipesEnabled && swipeRightAction != Preferences.SWIPE_ACTION_NONE,
+        enableDismissFromEndToStart = swipesEnabled && swipeLeftAction != Preferences.SWIPE_ACTION_NONE,
+        backgroundContent = {
+            SwipeActionBackground(
+                direction = dismissState.dismissDirection,
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
+            )
+        },
     ) {
-        Row(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 72.dp)
-                .padding(horizontal = 16.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .combinedClickable(
+                    onClick = onClick,
+                    onLongClick = onLongClick,
+                ),
+            color = rowColor,
         ) {
-            Avatar(text = row.avatarText, unread = row.unread)
-            Spacer(modifier = Modifier.width(14.dp))
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center,
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 72.dp)
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = row.title,
-                        modifier = Modifier.weight(1f),
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Medium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    row.timestamp?.let {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-                Row(
-                    modifier = Modifier.padding(top = 3.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                Avatar(text = row.avatarText, unread = row.unread)
+                Spacer(modifier = Modifier.width(14.dp))
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    Text(
-                        text = row.snippet,
-                        modifier = Modifier.weight(1f),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (row.unread) {
-                            MaterialTheme.colorScheme.onSurface
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        },
-                        fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Normal,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    if (row.pinned) {
-                        Icon(
-                            Icons.Rounded.PushPin,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(16.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = row.title,
+                            modifier = Modifier.weight(1f),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
+                        row.timestamp?.let {
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
-                    if (row.unread) {
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(8.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary),
+                    Row(
+                        modifier = Modifier.padding(top = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = row.snippet,
+                            modifier = Modifier.weight(1f),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (row.unread) {
+                                MaterialTheme.colorScheme.onSurface
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            },
+                            fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Normal,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
+                        if (row.pinned) {
+                            Icon(
+                                Icons.Rounded.PushPin,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .size(16.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        if (row.unread) {
+                            Box(
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .size(8.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.primary),
+                            )
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SwipeActionBackground(
+    direction: SwipeToDismissBoxValue,
+    swipeRightAction: Int,
+    swipeLeftAction: Int,
+) {
+    val action = when (direction) {
+        SwipeToDismissBoxValue.StartToEnd -> swipeRightAction
+        SwipeToDismissBoxValue.EndToStart -> swipeLeftAction
+        SwipeToDismissBoxValue.Settled -> Preferences.SWIPE_ACTION_NONE
+    }
+    val icon = swipeActionIcon(action)
+    val alignment = when (direction) {
+        SwipeToDismissBoxValue.EndToStart -> Alignment.CenterEnd
+        else -> Alignment.CenterStart
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .padding(horizontal = 24.dp),
+        contentAlignment = alignment,
+    ) {
+        icon?.let {
+            Icon(
+                imageVector = it,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        }
+    }
+}
+
+private fun swipeActionIcon(action: Int): ImageVector? {
+    return when (action) {
+        Preferences.SWIPE_ACTION_ARCHIVE -> Icons.Rounded.Archive
+        Preferences.SWIPE_ACTION_DELETE -> Icons.Rounded.Delete
+        Preferences.SWIPE_ACTION_BLOCK -> Icons.Rounded.Block
+        Preferences.SWIPE_ACTION_CALL -> Icons.Rounded.Call
+        Preferences.SWIPE_ACTION_READ -> Icons.Rounded.MarkEmailRead
+        Preferences.SWIPE_ACTION_UNREAD -> Icons.Rounded.MarkEmailUnread
+        Preferences.SWIPE_ACTION_SPEAK -> Icons.Rounded.VolumeUp
+        else -> null
     }
 }
 
@@ -774,8 +889,12 @@ private fun SearchResultRow(
             pinned = conversation.pinned,
         ),
         selected = false,
+        swipeRightAction = Preferences.SWIPE_ACTION_NONE,
+        swipeLeftAction = Preferences.SWIPE_ACTION_NONE,
+        swipesEnabled = false,
         onClick = onClick,
         onLongClick = onClick,
+        onSwipe = {},
     )
 }
 

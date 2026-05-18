@@ -43,6 +43,7 @@ import dev.octoshrimpy.quik.feature.changelog.ChangelogDialog
 import dev.octoshrimpy.quik.manager.ChangelogManager
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.repository.SyncRepository
+import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
@@ -87,6 +88,8 @@ class MainActivity : QkThemedActivity(), MainView {
     private var uiState by mutableStateOf(MainState())
     private var conversationRows by mutableStateOf<List<ConversationRowModel>>(emptyList())
     private var searchQuery by mutableStateOf("")
+    private var swipeRightAction by mutableStateOf(Preferences.SWIPE_ACTION_ARCHIVE)
+    private var swipeLeftAction by mutableStateOf(Preferences.SWIPE_ACTION_ARCHIVE)
 
     override val onNewIntentIntent: Observable<Intent> = onNewIntentSubject
     override val activityResumedIntent: Observable<Boolean> = activityResumedSubject
@@ -122,6 +125,8 @@ class MainActivity : QkThemedActivity(), MainView {
                 conversationRows = conversationRows,
                 query = searchQuery,
                 blackTheme = prefs.black.get(),
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
                 selectedConversationIds = selectedConversationIds.toSet(),
                 dateFormatter = dateFormatter,
                 onQueryChanged = { query ->
@@ -136,6 +141,9 @@ class MainActivity : QkThemedActivity(), MainView {
                 onSnackbarAction = { snackbarButtonSubject.onNext(Unit) },
                 onConversationClick = ::openOrToggleConversation,
                 onConversationLongClick = ::toggleConversationSelection,
+                onConversationSwipe = { conversationId, direction ->
+                    swipeConversationSubject.onNext(conversationId to direction)
+                },
                 onSearchResultClick = { result ->
                     navigator.showConversation(result.conversation.id, result.query)
                 },
@@ -173,7 +181,11 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun onResume() =
-        super.onResume().also { activityResumedSubject.onNext(true) }
+        super.onResume().also {
+            swipeRightAction = prefs.swipeRight.get()
+            swipeLeftAction = prefs.swipeLeft.get()
+            activityResumedSubject.onNext(true)
+        }
 
     override fun onPause() =
         super.onPause().also { activityResumedSubject.onNext(false) }

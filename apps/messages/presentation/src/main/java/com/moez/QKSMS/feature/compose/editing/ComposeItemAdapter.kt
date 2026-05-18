@@ -72,11 +72,11 @@ class ComposeItemAdapter @Inject constructor(
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val item = getItem(adapterPosition)
+                val item = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 clicks.onNext(item)
             }
             binding.root.setOnLongClickListener {
-                val item = getItem(adapterPosition)
+                val item = getItemOrNull(bindingAdapterPosition) ?: return@setOnLongClickListener true
                 longClicks.onNext(item)
                 true
             }
@@ -166,10 +166,15 @@ class ComposeItemAdapter @Inject constructor(
 
     private fun bindPerson(binding: ContactListItemBinding, contact: Contact, prev: ComposeItem?) {
         binding.index.isVisible = true
-        binding.index.text = if (contact.name.getOrNull(0)?.isLetter() == true) contact.name[0].toString() else "#"
+        val firstChar = contact.name.firstOrNull()
+        val previousFirstChar = (prev as? ComposeItem.Person)?.value?.name?.firstOrNull()
+        val previousLetterMatches = previousFirstChar?.let { previous ->
+            firstChar?.equals(previous, ignoreCase = true) == true
+        } == true
+        binding.index.text = firstChar?.takeIf { it.isLetter() }?.toString() ?: "#"
         binding.index.isVisible = prev !is ComposeItem.Person ||
-                (contact.name[0].isLetter() && !contact.name[0].equals(prev.value.name[0], ignoreCase = true)) ||
-                (!contact.name[0].isLetter() && prev.value.name[0].isLetter())
+                (firstChar?.isLetter() == true && !previousLetterMatches) ||
+                (firstChar?.isLetter() != true && previousFirstChar?.isLetter() == true)
 
         binding.icon.isVisible = false
 
@@ -207,6 +212,10 @@ class ComposeItemAdapter @Inject constructor(
 
     override fun areContentsTheSame(old: ComposeItem, new: ComposeItem): Boolean {
         return false
+    }
+
+    private fun getItemOrNull(position: Int): ComposeItem? {
+        return position.takeIf { it != RecyclerView.NO_POSITION }?.let(data::getOrNull)
     }
 
 }
