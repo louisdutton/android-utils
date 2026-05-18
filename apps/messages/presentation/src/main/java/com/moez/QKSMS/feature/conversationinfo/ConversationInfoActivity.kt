@@ -19,11 +19,13 @@
 package dev.octoshrimpy.quik.feature.conversationinfo
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
 import dev.octoshrimpy.quik.common.base.QkThemedActivity
+import dev.octoshrimpy.quik.common.util.extensions.applySystemBarPadding
 import dev.octoshrimpy.quik.databinding.ContainerActivityBinding
 
 class ConversationInfoActivity : QkThemedActivity() {
@@ -34,8 +36,10 @@ class ConversationInfoActivity : QkThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ContainerActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applySystemBarPadding()
 
         router = Conductor.attachRouter(this, binding.container, savedInstanceState)
         if (!router.hasRootController()) {

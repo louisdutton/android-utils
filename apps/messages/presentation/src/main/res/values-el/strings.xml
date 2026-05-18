@@ -194,7 +194,6 @@
     <string name="settings_black_title">Νυχτερινή λειτουργία καθαρού μαύρου</string>
     <string name="settings_night_start_title">Ώρα έναρξης</string>
     <string name="settings_night_end_title">Ώρα λήξης</string>
-    <string name="settings_automatic_colors_title">Αυτόματος χρωματισμός επαφών</string>
     <string name="settings_text_size_title">Μέγεθος γραμματοσειράς</string>
     <string name="settings_system_font_title">Χρήση γραμματοσειράς συστήματος</string>
     <string name="settings_auto_emoji_title">Αυτόματα emoji</string>

@@ -61,13 +61,13 @@
                 app:layout_constraintEnd_toStartOf="@id/simIndex"
                 app:layout_constraintStart_toEndOf="@id/timestamp"
                 app:layout_constraintTop_toTopOf="@id/timestamp"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="?attr/colorOnSurfaceVariant" />
 
             <dev.octoshrimpy.quik.common.widget.QkTextView
                 android:id="@+id/simIndex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorSecondary"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintBottom_toBottomOf="@id/timestamp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/sim"
@@ -112,7 +112,7 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:background="@drawable/circle"
-                    android:backgroundTint="?attr/bubbleColor"
+                    android:backgroundTint="?attr/colorSurfaceContainerHigh"
                     android:clickable="false"
                     android:foreground="?attr/selectableItemBackground"
                     android:indeterminate="false"
@@ -163,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:autoLink="email|phone|web"
                         android:background="@drawable/message_only"
-                        android:backgroundTint="?attr/bubbleColor"
+                        android:backgroundTint="?attr/colorPrimaryContainer"
                         android:gravity="start|center_vertical"
                         android:minHeight="36dp"
                         android:textIsSelectable="true" />
@@ -183,7 +183,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/message_only"
-                            android:backgroundTint="?android:attr/colorBackground"
+                            android:backgroundTint="?attr/colorSurfaceContainerHighest"
                             android:elevation="2dp"
                             android:maxLines="1"
                             android:paddingStart="8dp"
@@ -191,7 +191,7 @@
                             android:paddingEnd="8dp"
                             android:paddingBottom="4dp"
                             android:text="👍"
-                            android:textColor="?android:attr/textColorPrimary"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -207,7 +207,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="12dp"
                 android:background="@drawable/circle"
-                android:backgroundTint="?attr/bubbleColor"
+                android:backgroundTint="?attr/colorSurfaceContainerHigh"
                 android:baselineAlignBottom="true"
                 android:contentDescription="@string/compose_message_send_now"
                 android:padding="6dp"
@@ -231,7 +231,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="12dp"
                 android:contentDescription="@string/compose_message_attachment"
-                android:textColor="?android:attr/textColorSecondary"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 app:textSize="tertiary"
                 tools:text="Sending..." />
 
@@ -240,7 +240,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/circle"
-                android:backgroundTint="?attr/bubbleColor"
+                android:backgroundTint="?attr/colorSurfaceContainerHigh"
                 android:baselineAlignBottom="false"
                 android:contentDescription="@string/compose_message_send_now"
                 android:padding="6dp"

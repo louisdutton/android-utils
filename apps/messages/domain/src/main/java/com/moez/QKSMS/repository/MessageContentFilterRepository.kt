@@ -20,13 +20,12 @@ package dev.octoshrimpy.quik.repository
 
 import dev.octoshrimpy.quik.model.MessageContentFilter
 import dev.octoshrimpy.quik.model.MessageContentFilterData
-import io.realm.RealmResults
 
 interface MessageContentFilterRepository {
 
     fun createFilter(data: MessageContentFilterData)
 
-    fun getMessageContentFilters(): RealmResults<MessageContentFilter>
+    fun getMessageContentFilters(): List<MessageContentFilter>
 
     fun getMessageContentFilter(id: Long): MessageContentFilter?
 

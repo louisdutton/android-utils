@@ -37,6 +37,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class FileBinder @Inject constructor(colors: Colors, private val context: Context) : PartBinder() {
 
@@ -82,17 +83,27 @@ class FileBinder @Inject constructor(colors: Colors, private val context: Contex
             binding.filename.text = part.getBestFilename()
         }
 
-        if (!message.isMe()) {
-            binding.fileBackground.setBackgroundTint(theme.theme)
-            binding.icon.setTint(theme.textPrimary)
-            binding.filename.setTextColor(theme.textPrimary)
-            binding.size.setTextColor(theme.textTertiary)
+        val itemContext = holder.itemView.context
+        val container = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorPrimaryContainer)
         } else {
-            binding.fileBackground.setBackgroundTint(holder.itemView.context.resolveThemeColor(R.attr.bubbleColor))
-            binding.icon.setTint(holder.itemView.context.resolveThemeColor(android.R.attr.textColorSecondary))
-            binding.filename.setTextColor(holder.itemView.context.resolveThemeColor(android.R.attr.textColorPrimary))
-            binding.size.setTextColor(holder.itemView.context.resolveThemeColor(android.R.attr.textColorTertiary))
+            itemContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
         }
+        val content = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
+        } else {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnSurface)
+        }
+        val secondary = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
+        } else {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+        }
+
+        binding.fileBackground.setBackgroundTint(container)
+        binding.icon.setTint(secondary)
+        binding.filename.setTextColor(content)
+        binding.size.setTextColor(secondary)
     }
 
 }

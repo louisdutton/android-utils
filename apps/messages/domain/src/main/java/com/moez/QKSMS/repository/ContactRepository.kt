@@ -23,13 +23,12 @@ import dev.octoshrimpy.quik.model.Contact
 import dev.octoshrimpy.quik.model.ContactGroup
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.realm.RealmResults
 
 interface ContactRepository {
 
     fun findContactUri(address: String): Single<Uri>
 
-    fun getContacts(): RealmResults<Contact>
+    fun getContacts(): List<Contact>
 
     fun getUnmanagedContact(lookupKey: String): Contact?
 

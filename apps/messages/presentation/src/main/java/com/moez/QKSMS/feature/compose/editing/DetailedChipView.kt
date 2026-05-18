@@ -23,17 +23,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.RelativeLayout
-import dev.octoshrimpy.quik.common.util.Colors
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.databinding.ContactChipDetailedBinding
 import dev.octoshrimpy.quik.injection.appComponent
 import dev.octoshrimpy.quik.model.Recipient
-import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class DetailedChipView(context: Context) : RelativeLayout(context) {
-
-    @Inject lateinit var colors: Colors
 
     private val binding: ContactChipDetailedBinding
 
@@ -54,12 +52,10 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
         binding.name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
         binding.info.text = recipient.address
 
-        colors.theme(recipient).let { theme ->
-            binding.card.setBackgroundTint(theme.theme)
-            binding.name.setTextColor(theme.textPrimary)
-            binding.info.setTextColor(theme.textTertiary)
-            binding.delete.setTint(theme.textPrimary)
-        }
+        binding.card.setBackgroundTint(context.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh))
+        binding.name.setTextColor(context.resolveThemeColor(MaterialR.attr.colorOnSurface))
+        binding.info.setTextColor(context.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant))
+        binding.delete.setTint(context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary))
     }
 
     fun show() {

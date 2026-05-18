@@ -25,6 +25,7 @@ import dev.octoshrimpy.quik.model.Recipient
 import dev.octoshrimpy.quik.util.GlideApp
 import dev.octoshrimpy.quik.util.tryOrNull
 import timber.log.Timber
+import com.google.android.material.R as MaterialR
 
 
 fun Recipient.getThemedIcon(context: Context, theme: Colors.Theme, width: Int, height: Int): IconCompat {
@@ -54,11 +55,13 @@ fun Recipient.getThemedIcon(context: Context, theme: Colors.Theme, width: Int, h
             val textView = view.findViewById<QkTextView>(R.id.initial)
             val iconView = view.findViewById<ImageView>(R.id.icon)
             val photoView = view.findViewById<ImageView>(R.id.photo)
+            val containerColor = themedContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHighest)
+            val contentColor = themedContext.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
 
             photoView.visibility = GONE
-            view.setBackgroundColor(theme.theme)
-            view.setBackgroundTint(theme.theme)
-            textView.setTextColor(theme.textPrimary)
+            view.setBackgroundColor(containerColor)
+            view.setBackgroundTint(containerColor)
+            textView.setTextColor(contentColor)
             TextViewCompat.setAutoSizeTextTypeWithDefaults(textView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE)
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, height * 0.5f)
             iconView.layoutParams = FrameLayout.LayoutParams((width * 0.5).toInt(), (height * 0.5).toInt(),
@@ -84,7 +87,7 @@ fun Recipient.getThemedIcon(context: Context, theme: Colors.Theme, width: Int, h
             else {
                 textView.visibility = GONE
                 iconView.visibility = VISIBLE
-                iconView.setTint(theme.textPrimary)
+                iconView.setTint(contentColor)
             }
 
             container.apply {

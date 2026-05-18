@@ -18,15 +18,14 @@
  */
 package dev.octoshrimpy.quik.model
 
-import io.realm.RealmObject
-import io.realm.annotations.Index
-import io.realm.annotations.PrimaryKey
-
-open class EmojiReaction : RealmObject() {
-    @PrimaryKey var id: Long = 0
+open class EmojiReaction : ModelObject() {
+    var id: Long = 0
 
     /** The reaction message ID itself */
-    @Index var reactionMessageId: Long = 0
+    var reactionMessageId: Long = 0
+
+    /** The message this reaction is attached to */
+    var targetMessageId: Long = 0
 
     /** The sender's address (phone number) */
     var senderAddress: String = ""
@@ -38,5 +37,5 @@ open class EmojiReaction : RealmObject() {
     var originalMessageText: String = ""
 
     /** Thread ID for easier querying */
-    @Index var threadId: Long = 0
+    var threadId: Long = 0
 }

@@ -28,7 +28,6 @@ import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 @Singleton
@@ -67,9 +66,6 @@ class Colors @Inject constructor(
             .map { res -> context.resources.obtainTypedArray(res) }
             .map { typedArray -> (0 until typedArray.length()).map(typedArray::getColorOrThrow) }
 
-    private val randomColors: List<Int> = context.resources.obtainTypedArray(R.array.random_colors)
-            .let { typedArray -> (0 until typedArray.length()).map(typedArray::getColorOrThrow) }
-
     private val minimumContrastRatio = 2
 
     // Cache these values so they don't need to be recalculated
@@ -78,21 +74,11 @@ class Colors @Inject constructor(
     private val tertiaryTextLuminance = measureLuminance(context.getColorCompat(R.color.textTertiaryDark))
 
     fun theme(recipient: Recipient? = null): Theme {
-        val pref = prefs.theme(recipient?.id ?: 0)
-        val color = when {
-            recipient == null || !prefs.autoColor.get() || pref.isSet -> pref.get()
-            else -> generateColor(recipient)
-        }
-        return Theme(color, this)
+        return Theme(prefs.theme().get(), this)
     }
 
     fun themeObservable(recipient: Recipient? = null): Observable<Theme> {
-        val pref = when {
-            recipient == null -> prefs.theme()
-            prefs.autoColor.get() -> prefs.theme(recipient.id, generateColor(recipient))
-            else -> prefs.theme(recipient.id, prefs.theme().get())
-        }
-        return pref.asObservable()
+        return prefs.theme().asObservable()
                 .map { color -> Theme(color, this) }
     }
 
@@ -133,8 +119,4 @@ class Colors @Inject constructor(
         return 0.2126 * array[0] + 0.7152 * array[1] + 0.0722 * array[2] + 0.05
     }
 
-    private fun generateColor(recipient: Recipient): Int {
-        val index = recipient.address.hashCode().absoluteValue % randomColors.size
-        return randomColors[index]
-    }
 }

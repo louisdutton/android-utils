@@ -196,7 +196,6 @@
     <string name="settings_black_title">Črn nočni način</string>
     <string name="settings_night_start_title">Začetni čas</string>
     <string name="settings_night_end_title">Čas končanja</string>
-    <string name="settings_automatic_colors_title">Samodejne barve stikov</string>
     <string name="settings_text_size_title">Velikost pisave</string>
     <string name="settings_system_font_title">Uporabi sistemsko pisavo</string>
     <string name="settings_auto_emoji_title">Samodejni čustvenček</string>

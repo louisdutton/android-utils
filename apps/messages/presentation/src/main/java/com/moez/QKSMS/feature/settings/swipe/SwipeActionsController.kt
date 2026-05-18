@@ -30,6 +30,7 @@ import dev.octoshrimpy.quik.common.QkDialog
 import dev.octoshrimpy.quik.common.base.QkController
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.animateLayoutChanges
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.databinding.SwipeActionsControllerBinding
@@ -38,6 +39,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class SwipeActionsController : QkController<SwipeActionsControllerBinding, SwipeActionsView, SwipeActionsState, SwipeActionsPresenter>(), SwipeActionsView {
 
@@ -60,12 +62,18 @@ class SwipeActionsController : QkController<SwipeActionsControllerBinding, Swipe
     }
 
     override fun onViewCreated() {
-        colors.theme().let { theme ->
-            binding.rightIcon.setBackgroundTint(theme.theme)
-            binding.rightIcon.setTint(theme.textPrimary)
-            binding.leftIcon.setBackgroundTint(theme.theme)
-            binding.leftIcon.setTint(theme.textPrimary)
-        }
+        val primary = binding.root.context.resolveThemeColor(
+            androidx.appcompat.R.attr.colorPrimary,
+            colors.theme().theme
+        )
+        val onPrimary = binding.root.context.resolveThemeColor(
+            MaterialR.attr.colorOnPrimary,
+            colors.theme().textPrimary
+        )
+        binding.rightIcon.setBackgroundTint(primary)
+        binding.rightIcon.setTint(onPrimary)
+        binding.leftIcon.setBackgroundTint(primary)
+        binding.leftIcon.setTint(onPrimary)
 
         binding.right.postDelayed({ binding.right.animateLayoutChanges = true }, 100)
         binding.left.postDelayed({ binding.left.animateLayoutChanges = true }, 100)

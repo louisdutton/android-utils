@@ -194,7 +194,6 @@
     <string name="settings_black_title">Rein schwarzer Nachtmodus</string>
     <string name="settings_night_start_title">Anfang</string>
     <string name="settings_night_end_title">Ende</string>
-    <string name="settings_automatic_colors_title">Automatische Kontaktfarben</string>
     <string name="settings_text_size_title">Schriftgröße</string>
     <string name="settings_system_font_title">Systemschriftart verwenden</string>
     <string name="settings_auto_emoji_title">Automatische Emoji</string>

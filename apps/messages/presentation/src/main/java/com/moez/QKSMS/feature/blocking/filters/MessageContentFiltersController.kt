@@ -27,6 +27,7 @@ import com.uber.autodispose.autoDispose
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkController
 import dev.octoshrimpy.quik.common.util.Colors
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.common.widget.PreferenceView
@@ -38,6 +39,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class MessageContentFiltersController : QkController<MessageContentFiltersControllerBinding, MessageContentFiltersView, MessageContentFiltersState,
         MessageContentFiltersPresenter>(), MessageContentFiltersView {
@@ -65,8 +67,10 @@ class MessageContentFiltersController : QkController<MessageContentFiltersContro
 
     override fun onViewCreated() {
         super.onViewCreated()
-        binding.add.setBackgroundTint(colors.theme().theme)
-        binding.add.setTint(colors.theme().textPrimary)
+        val primary = binding.add.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme)
+        val onPrimary = binding.add.context.resolveThemeColor(MaterialR.attr.colorOnPrimary, colors.theme().textPrimary)
+        binding.add.setBackgroundTint(primary)
+        binding.add.setTint(onPrimary)
         adapter.emptyView = binding.empty
         binding.filters.adapter = adapter
     }

@@ -97,7 +97,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 @Composable
 fun MessagesMainScreen(
     state: MainState,
-    listVersion: Int,
+    conversationRows: List<ConversationRowModel>,
     query: String,
     selectedConversationIds: Set<Long>,
     dateFormatter: DateFormatter,
@@ -108,8 +108,8 @@ fun MessagesMainScreen(
     onDrawerChanged: (Boolean) -> Unit,
     onNavigate: (NavItem) -> Unit,
     onSnackbarAction: () -> Unit,
-    onConversationClick: (Conversation) -> Unit,
-    onConversationLongClick: (Conversation) -> Unit,
+    onConversationClick: (Long) -> Unit,
+    onConversationLongClick: (Long) -> Unit,
     onSearchResultClick: (SearchResult) -> Unit,
     onSelectAll: () -> Unit,
     onArchive: () -> Unit,
@@ -136,7 +136,7 @@ fun MessagesMainScreen(
         Surface(color = MaterialTheme.colorScheme.background) {
             MessagesMainContent(
                 state = state,
-                listVersion = listVersion,
+                conversationRows = conversationRows,
                 query = query,
                 selectedConversationIds = selectedConversationIds,
                 dateFormatter = dateFormatter,
@@ -170,7 +170,7 @@ fun MessagesMainScreen(
 @Composable
 private fun MessagesMainContent(
     state: MainState,
-    listVersion: Int,
+    conversationRows: List<ConversationRowModel>,
     query: String,
     selectedConversationIds: Set<Long>,
     dateFormatter: DateFormatter,
@@ -181,8 +181,8 @@ private fun MessagesMainContent(
     onDrawerChanged: (Boolean) -> Unit,
     onNavigate: (NavItem) -> Unit,
     onSnackbarAction: () -> Unit,
-    onConversationClick: (Conversation) -> Unit,
-    onConversationLongClick: (Conversation) -> Unit,
+    onConversationClick: (Long) -> Unit,
+    onConversationLongClick: (Long) -> Unit,
     onSearchResultClick: (SearchResult) -> Unit,
     onSelectAll: () -> Unit,
     onArchive: () -> Unit,
@@ -250,7 +250,11 @@ private fun MessagesMainContent(
             },
             floatingActionButton = {
                 if (state.page is Inbox || state.page is Archived) {
-                    FloatingActionButton(onClick = onCompose) {
+                    FloatingActionButton(
+                        onClick = onCompose,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                    ) {
                         Icon(Icons.Rounded.Add, contentDescription = null)
                     }
                 }
@@ -264,7 +268,7 @@ private fun MessagesMainContent(
         ) { paddingValues ->
             MessagesPage(
                 state = state,
-                listVersion = listVersion,
+                conversationRows = conversationRows,
                 paddingValues = paddingValues,
                 selectedConversationIds = selectedConversationIds,
                 dateFormatter = dateFormatter,
@@ -495,17 +499,14 @@ private fun MessagesDrawer(
 @Composable
 private fun MessagesPage(
     state: MainState,
-    listVersion: Int,
+    conversationRows: List<ConversationRowModel>,
     paddingValues: PaddingValues,
     selectedConversationIds: Set<Long>,
     dateFormatter: DateFormatter,
-    onConversationClick: (Conversation) -> Unit,
-    onConversationLongClick: (Conversation) -> Unit,
+    onConversationClick: (Long) -> Unit,
+    onConversationLongClick: (Long) -> Unit,
     onSearchResultClick: (SearchResult) -> Unit,
 ) {
-    @Suppress("UNUSED_VARIABLE")
-    val observedVersion = listVersion
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -513,19 +514,17 @@ private fun MessagesPage(
     ) {
         when (val page = state.page) {
             is Inbox -> ConversationList(
-                conversations = page.data?.toList().orEmpty(),
+                rows = conversationRows,
                 emptyText = "Your conversations will appear here",
                 selectedConversationIds = selectedConversationIds,
-                dateFormatter = dateFormatter,
                 onConversationClick = onConversationClick,
                 onConversationLongClick = onConversationLongClick,
             )
 
             is Archived -> ConversationList(
-                conversations = page.data?.toList().orEmpty(),
+                rows = conversationRows,
                 emptyText = "Your archived conversations will appear here",
                 selectedConversationIds = selectedConversationIds,
-                dateFormatter = dateFormatter,
                 onConversationClick = onConversationClick,
                 onConversationLongClick = onConversationLongClick,
             )
@@ -569,14 +568,13 @@ private fun SearchResults(
 
 @Composable
 private fun ConversationList(
-    conversations: List<Conversation>,
+    rows: List<ConversationRowModel>,
     emptyText: String,
     selectedConversationIds: Set<Long>,
-    dateFormatter: DateFormatter,
-    onConversationClick: (Conversation) -> Unit,
-    onConversationLongClick: (Conversation) -> Unit,
+    onConversationClick: (Long) -> Unit,
+    onConversationLongClick: (Long) -> Unit,
 ) {
-    if (conversations.isEmpty()) {
+    if (rows.isEmpty()) {
         EmptyState(emptyText)
         return
     }
@@ -585,13 +583,12 @@ private fun ConversationList(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 8.dp),
     ) {
-        items(conversations, key = { it.id }) { conversation ->
+        items(rows, key = { it.id }) { row ->
             ConversationRow(
-                conversation = conversation,
-                selected = conversation.id in selectedConversationIds,
-                dateFormatter = dateFormatter,
-                onClick = { onConversationClick(conversation) },
-                onLongClick = { onConversationLongClick(conversation) },
+                row = row,
+                selected = row.id in selectedConversationIds,
+                onClick = { onConversationClick(row.id) },
+                onLongClick = { onConversationLongClick(row.id) },
             )
         }
     }
@@ -600,19 +597,11 @@ private fun ConversationList(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ConversationRow(
-    conversation: Conversation,
+    row: ConversationRowModel,
     selected: Boolean,
-    dateFormatter: DateFormatter,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
-    val title = conversation.getTitle().ifBlank { "Unknown" }
-    val snippet = when {
-        conversation.draft.isNotEmpty() -> "Draft: ${conversation.draft}"
-        conversation.me -> "You: ${conversation.snippet.orEmpty()}"
-        else -> conversation.snippet.orEmpty()
-    }
-    val unread = conversation.unread
     val rowColor = when {
         selected -> MaterialTheme.colorScheme.secondaryContainer
         else -> MaterialTheme.colorScheme.background
@@ -634,7 +623,7 @@ private fun ConversationRow(
                 .padding(horizontal = 16.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Avatar(title = title, unread = unread)
+            Avatar(text = row.avatarText, unread = row.unread)
             Spacer(modifier = Modifier.width(14.dp))
             Column(
                 modifier = Modifier.weight(1f),
@@ -642,42 +631,39 @@ private fun ConversationRow(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = title,
+                        text = row.title,
                         modifier = Modifier.weight(1f),
                         style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = if (unread) FontWeight.SemiBold else FontWeight.Medium,
+                        fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Medium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    conversation.date
-                        .takeIf { it > 0 }
-                        ?.let(dateFormatter::getConversationTimestamp)
-                        ?.let {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
+                    row.timestamp?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
                 }
                 Row(
                     modifier = Modifier.padding(top = 3.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = snippet,
+                        text = row.snippet,
                         modifier = Modifier.weight(1f),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = if (unread) {
+                        color = if (row.unread) {
                             MaterialTheme.colorScheme.onSurface
                         } else {
                             MaterialTheme.colorScheme.onSurfaceVariant
                         },
-                        fontWeight = if (unread) FontWeight.SemiBold else FontWeight.Normal,
+                        fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Normal,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    if (conversation.pinned) {
+                    if (row.pinned) {
                         Icon(
                             Icons.Rounded.PushPin,
                             contentDescription = null,
@@ -687,7 +673,7 @@ private fun ConversationRow(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    if (unread) {
+                    if (row.unread) {
                         Box(
                             modifier = Modifier
                                 .padding(start = 8.dp)
@@ -708,17 +694,32 @@ private fun SearchResultRow(
     dateFormatter: DateFormatter,
     onClick: () -> Unit,
 ) {
+    val conversation = result.conversation
+    val title = conversation.getTitle().ifBlank { "Unknown" }
+    val snippet = when {
+        conversation.draft.isNotEmpty() -> "Draft: ${conversation.draft}"
+        conversation.me -> "You: ${conversation.snippet.orEmpty()}"
+        else -> conversation.snippet.orEmpty()
+    }
+
     ConversationRow(
-        conversation = result.conversation,
+        row = ConversationRowModel(
+            id = conversation.id,
+            title = title,
+            avatarText = title.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
+            snippet = snippet,
+            timestamp = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp),
+            unread = conversation.unread,
+            pinned = conversation.pinned,
+        ),
         selected = false,
-        dateFormatter = dateFormatter,
         onClick = onClick,
         onLongClick = onClick,
     )
 }
 
 @Composable
-private fun Avatar(title: String, unread: Boolean) {
+private fun Avatar(text: String, unread: Boolean) {
     val color = if (unread) {
         MaterialTheme.colorScheme.primaryContainer
     } else {
@@ -738,13 +739,23 @@ private fun Avatar(title: String, unread: Boolean) {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = title.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
+            text = text,
             style = MaterialTheme.typography.titleMedium,
             color = textColor,
             fontWeight = FontWeight.SemiBold,
         )
     }
 }
+
+data class ConversationRowModel(
+    val id: Long,
+    val title: String,
+    val avatarText: String,
+    val snippet: String,
+    val timestamp: String?,
+    val unread: Boolean,
+    val pinned: Boolean,
+)
 
 @Composable
 private fun EmptyState(text: String) {

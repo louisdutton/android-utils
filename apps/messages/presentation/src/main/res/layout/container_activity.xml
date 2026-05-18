@@ -25,8 +25,7 @@
     <androidx.appcompat.widget.Toolbar
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/toolbar"
-        style="@style/Toolbar"
-        android:elevation="8dp">
+        style="@style/Toolbar">
 
         <dev.octoshrimpy.quik.common.widget.QkTextView
             android:id="@+id/toolbarTitle"
@@ -35,15 +34,15 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/divider" />
+
     <com.bluelinelabs.conductor.ChangeHandlerFrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/divider" />
 
 </LinearLayout>

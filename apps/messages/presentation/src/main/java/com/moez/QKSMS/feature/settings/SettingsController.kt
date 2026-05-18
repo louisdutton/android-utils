@@ -41,6 +41,7 @@ import dev.octoshrimpy.quik.common.QkDialog
 import dev.octoshrimpy.quik.common.base.QkController
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.animateLayoutChanges
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.common.widget.PreferenceView
@@ -56,6 +57,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class SettingsController : QkController<SettingsControllerBinding, SettingsView, SettingsState, SettingsPresenter>(), SettingsView {
 
@@ -143,7 +145,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     override fun messageLinkHandlingSelected(): Observable<Int> = messageLinkHandlingDialog.adapter.menuItemClicks
 
     override fun render(state: SettingsState) {
-        binding.theme.findViewById<View>(R.id.themePreview)?.setBackgroundTint(state.theme)
+        binding.theme.findViewById<View>(R.id.themePreview)
+            ?.setBackgroundTint(binding.contentView.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, state.theme))
         binding.night.summary = state.nightModeSummary
         nightModeDialog.adapter.selectedItem = state.nightModeId
         binding.nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
@@ -168,8 +171,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
         binding.textSize.summary = state.textSizeSummary
         textSizeDialog.adapter.selectedItem = state.textSizeId
-
-        binding.autoColor.checkbox?.isChecked = state.autoColor
 
         binding.systemFont.checkbox?.isChecked = state.systemFontEnabled
 
@@ -211,7 +212,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         view?.run {
             Snackbar.make(binding.contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
                 setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
-                setActionTextColor(colors.theme().theme)
+                setActionTextColor(context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme))
                 show()
             }
         }

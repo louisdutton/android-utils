@@ -39,6 +39,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class VCardBinder @Inject constructor(colors: Colors, private val context: Context) : PartBinder() {
 
@@ -73,17 +74,27 @@ class VCardBinder @Inject constructor(colors: Colors, private val context: Conte
                 }
         }
 
-        if (!message.isMe()) {
-            binding.vCardBackground.setBackgroundTint(theme.theme)
-            binding.vCardAvatar.setTint(theme.textPrimary)
-            binding.name.setTextColor(theme.textPrimary)
-            binding.label.setTextColor(theme.textTertiary)
+        val itemContext = holder.itemView.context
+        val container = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorPrimaryContainer)
         } else {
-            binding.vCardBackground.setBackgroundTint(holder.itemView.context.resolveThemeColor(R.attr.bubbleColor))
-            binding.vCardAvatar.setTint(holder.itemView.context.resolveThemeColor(android.R.attr.textColorSecondary))
-            binding.name.setTextColor(holder.itemView.context.resolveThemeColor(android.R.attr.textColorPrimary))
-            binding.label.setTextColor(holder.itemView.context.resolveThemeColor(android.R.attr.textColorTertiary))
+            itemContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
         }
+        val content = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
+        } else {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnSurface)
+        }
+        val secondary = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
+        } else {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+        }
+
+        binding.vCardBackground.setBackgroundTint(container)
+        binding.vCardAvatar.setTint(secondary)
+        binding.name.setTextColor(content)
+        binding.label.setTextColor(secondary)
     }
 
 }

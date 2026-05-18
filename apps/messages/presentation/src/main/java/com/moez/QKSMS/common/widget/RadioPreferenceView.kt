@@ -26,20 +26,18 @@ import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.forwardTouches
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeAttribute
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.databinding.RadioPreferenceViewBinding
 import dev.octoshrimpy.quik.injection.appComponent
-import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class RadioPreferenceView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
-    @Inject lateinit var colors: Colors
     private var layout: RadioPreferenceViewBinding
 
     var title: String? = null
@@ -87,9 +85,9 @@ class RadioPreferenceView @JvmOverloads constructor(
 
         val themeColor = when (isInEditMode) {
             true -> context.resources.getColor(R.color.tools_theme)
-            false -> colors.theme().theme
+            false -> context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
         }
-        val textSecondary = context.resolveThemeColor(android.R.attr.textColorTertiary)
+        val textSecondary = context.resolveThemeColor(MaterialR.attr.colorOutline)
         layout.radioButton.buttonTintList = ColorStateList(states, intArrayOf(themeColor, textSecondary))
         layout.radioButton.forwardTouches(this)
 

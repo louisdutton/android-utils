@@ -194,7 +194,6 @@
     <string name="settings_black_title">সম্পূর্ণ কালো রাত্রি মোড</string>
     <string name="settings_night_start_title">শুরুর সময়</string>
     <string name="settings_night_end_title">শেষের সময়</string>
-    <string name="settings_automatic_colors_title">যোগাযোগদের স্বয়ংক্রিয় রং</string>
     <string name="settings_text_size_title">ফন্টের আকার</string>
     <string name="settings_system_font_title">সিস্টেম ফন্ট ব্যবহার করুন</string>
     <string name="settings_auto_emoji_title">স্বয়ংক্রিয় ইমোজি</string>

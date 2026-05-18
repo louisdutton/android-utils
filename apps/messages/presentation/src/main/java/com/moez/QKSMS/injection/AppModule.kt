@@ -23,6 +23,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import androidx.room.Room
 import androidx.work.WorkerFactory
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.squareup.moshi.Moshi
@@ -34,6 +35,17 @@ import dev.octoshrimpy.quik.blocking.BlockingManager
 import dev.octoshrimpy.quik.common.util.BillingManagerImpl
 import dev.octoshrimpy.quik.common.util.NotificationManagerImpl
 import dev.octoshrimpy.quik.common.util.ShortcutManagerImpl
+import dev.octoshrimpy.quik.database.BlockingDao
+import dev.octoshrimpy.quik.database.ContactDao
+import dev.octoshrimpy.quik.database.ConversationDao
+import dev.octoshrimpy.quik.database.EmojiReactionDao
+import dev.octoshrimpy.quik.database.MessageDao
+import dev.octoshrimpy.quik.database.MessageContentFilterDao
+import dev.octoshrimpy.quik.database.MessagesDatabase
+import dev.octoshrimpy.quik.database.MmsPartDao
+import dev.octoshrimpy.quik.database.RecipientDao
+import dev.octoshrimpy.quik.database.ScheduledMessageDao
+import dev.octoshrimpy.quik.database.SyncStateDao
 import dev.octoshrimpy.quik.feature.conversationinfo.injection.ConversationInfoComponent
 import dev.octoshrimpy.quik.feature.themepicker.injection.ThemePickerComponent
 import dev.octoshrimpy.quik.listener.ContactAddedListener
@@ -115,6 +127,48 @@ class AppModule(private var application: Application) {
     fun provideRxPreferences(preferences: SharedPreferences): RxSharedPreferences {
         return RxSharedPreferences.create(preferences)
     }
+
+    @Provides
+    @Singleton
+    fun provideMessagesDatabase(context: Context): MessagesDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            MessagesDatabase::class.java,
+            "messages.db"
+        )
+            .fallbackToDestructiveMigration(true)
+            .build()
+    }
+
+    @Provides
+    fun provideMessageDao(database: MessagesDatabase): MessageDao = database.messages()
+
+    @Provides
+    fun provideMmsPartDao(database: MessagesDatabase): MmsPartDao = database.mmsParts()
+
+    @Provides
+    fun provideConversationDao(database: MessagesDatabase): ConversationDao = database.conversations()
+
+    @Provides
+    fun provideRecipientDao(database: MessagesDatabase): RecipientDao = database.recipients()
+
+    @Provides
+    fun provideContactDao(database: MessagesDatabase): ContactDao = database.contacts()
+
+    @Provides
+    fun provideSyncStateDao(database: MessagesDatabase): SyncStateDao = database.syncState()
+
+    @Provides
+    fun provideBlockingDao(database: MessagesDatabase): BlockingDao = database.blocking()
+
+    @Provides
+    fun provideMessageContentFilterDao(database: MessagesDatabase): MessageContentFilterDao = database.messageContentFilters()
+
+    @Provides
+    fun provideScheduledMessageDao(database: MessagesDatabase): ScheduledMessageDao = database.scheduledMessages()
+
+    @Provides
+    fun provideEmojiReactionDao(database: MessagesDatabase): EmojiReactionDao = database.emojiReactions()
 
     @Provides
     @Singleton

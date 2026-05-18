@@ -19,16 +19,14 @@
 package dev.octoshrimpy.quik.model
 
 import android.telephony.PhoneNumberUtils
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import java.util.Locale
 
 open class Recipient(
-    @PrimaryKey var id: Long = 0,
+    var id: Long = 0,
     var address: String = "",
     var contact: Contact? = null,
     var lastUpdate: Long = 0
-) : RealmObject() {
+) : ModelObject() {
 
     /**
      * Return a string that can be displayed to represent the name of this contact

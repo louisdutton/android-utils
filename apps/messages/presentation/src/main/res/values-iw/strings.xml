@@ -196,7 +196,6 @@
     <string name="settings_black_title">מצב לילה שחור טהור</string>
     <string name="settings_night_start_title">זמן התחלה</string>
     <string name="settings_night_end_title">זמן סיום</string>
-    <string name="settings_automatic_colors_title">צבעים אוטומטיים לאנשי קשר</string>
     <string name="settings_text_size_title">גודל גופן</string>
     <string name="settings_system_font_title">שימוש בגופן המערכת</string>
     <string name="settings_auto_emoji_title">אימוג׳י אוטומטי</string>

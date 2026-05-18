@@ -194,7 +194,6 @@
     <string name="settings_black_title">Musta yötilä</string>
     <string name="settings_night_start_title">Aloitusaika</string>
     <string name="settings_night_end_title">Lopetusaika</string>
-    <string name="settings_automatic_colors_title">Automaattiset yhteystietojen värit</string>
     <string name="settings_text_size_title">Fonttikoko</string>
     <string name="settings_system_font_title">Käytä järjestelmäfonttia</string>
     <string name="settings_auto_emoji_title">Automaattinen emoji</string>

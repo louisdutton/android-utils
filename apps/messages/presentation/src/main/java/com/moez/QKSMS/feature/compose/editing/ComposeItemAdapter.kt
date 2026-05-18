@@ -27,6 +27,7 @@ import dev.octoshrimpy.quik.common.base.QkAdapter
 import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.forwardTouches
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.extensions.associateByNotNull
 import dev.octoshrimpy.quik.model.Contact
@@ -40,6 +41,7 @@ import dev.octoshrimpy.quik.databinding.ContactListItemBinding
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class ComposeItemAdapter @Inject constructor(
     private val colors: Colors,
@@ -62,7 +64,7 @@ class ComposeItemAdapter @Inject constructor(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ContactListItemBinding.inflate(layoutInflater, parent, false)
 
-        binding.icon.setTint(colors.theme().theme)
+        binding.icon.setTint(parent.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme))
 
         binding.numbers.setRecycledViewPool(numbersViewPool)
         binding.numbers.adapter = PhoneNumberAdapter()

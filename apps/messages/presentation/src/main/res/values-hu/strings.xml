@@ -194,7 +194,6 @@
     <string name="settings_black_title">Éjfekete mód</string>
     <string name="settings_night_start_title">Kezdés ideje</string>
     <string name="settings_night_end_title">Befejezés ideje</string>
-    <string name="settings_automatic_colors_title">Névjegyek automatikus színezése</string>
     <string name="settings_text_size_title">Betűméret</string>
     <string name="settings_system_font_title">Rendszer betűtípusának használata</string>
     <string name="settings_auto_emoji_title">Automatikus emodzsi</string>

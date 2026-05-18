@@ -31,6 +31,7 @@ import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColorStateList
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.databinding.PreferenceViewBinding
 import dev.octoshrimpy.quik.injection.appComponent
+import com.google.android.material.R as MaterialR
 
 class PreferenceView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -81,7 +82,7 @@ class PreferenceView @JvmOverloads constructor(
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
 
-        layout.icon.imageTintList = context.resolveThemeColorStateList(android.R.attr.textColorSecondary)
+        layout.icon.imageTintList = context.resolveThemeColorStateList(MaterialR.attr.colorOnSurfaceVariant)
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView).run {
             title = getString(R.styleable.PreferenceView_title)

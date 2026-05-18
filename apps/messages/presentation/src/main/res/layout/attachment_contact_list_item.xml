@@ -22,7 +22,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:background="?attr/bubbleColor">
+    tools:background="?attr/colorSurfaceContainerHigh">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_person_black_24dp"
-            app:tint="?android:attr/textColorSecondary"
+            app:tint="?attr/colorOnSurfaceVariant"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -86,8 +86,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="2dp"
         android:background="@drawable/circle"
-        android:backgroundTint="?attr/bubbleColor"
+        android:backgroundTint="?attr/colorSurfaceContainerHighest"
         android:src="@drawable/ic_cancel_black_24dp"
-        app:tint="?android:attr/textColorSecondary" />
+        app:tint="?attr/colorOnSurfaceVariant" />
 
 </FrameLayout>

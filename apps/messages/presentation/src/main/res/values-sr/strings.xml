@@ -195,7 +195,6 @@
     <string name="settings_black_title">Потпуно црни ноћни мод</string>
     <string name="settings_night_start_title">Време почетка</string>
     <string name="settings_night_end_title">Време завршетка</string>
-    <string name="settings_automatic_colors_title">Аутоматске боје за контакте</string>
     <string name="settings_text_size_title">Величина слова</string>
     <string name="settings_system_font_title">Користи системски фонт</string>
     <string name="settings_auto_emoji_title">Аутоматски емотикони</string>

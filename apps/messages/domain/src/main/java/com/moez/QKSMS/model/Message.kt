@@ -24,12 +24,8 @@ import android.provider.Telephony.Mms
 import android.provider.Telephony.MmsSms
 import android.provider.Telephony.Sms
 import dev.octoshrimpy.quik.extensions.joinTo
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.Index
-import io.realm.annotations.PrimaryKey
 
-open class Message : RealmObject() {
+open class Message : ModelObject() {
     companion object {
         const val TYPE_SMS = "sms"
         const val TYPE_MMS = "mms"
@@ -37,12 +33,12 @@ open class Message : RealmObject() {
 
     enum class AttachmentType { TEXT, IMAGE, VIDEO, AUDIO, SLIDESHOW, NOT_LOADED }
 
-    @PrimaryKey var id: Long = 0
+    var id: Long = 0
 
-    @Index var threadId: Long = 0
+    var threadId: Long = 0
 
     // The MMS-SMS content provider returns messages where duplicate ids can exist. This is because
-    // SMS and MMS are stored in separate tables. We can't use these ids as our realm message id
+    // SMS and MMS are stored in separate tables. We can't use these ids as our local message id
     // since it's our primary key for the single message object, so we'll store the original id in
     // case we need to access the original message item in the content provider
     var contentId: Long = 0
@@ -77,9 +73,9 @@ open class Message : RealmObject() {
     var mmsStatus: Int = 0
     var subject: String = ""
     var textContentType: String = ""
-    var parts: RealmList<MmsPart> = RealmList()
+    var parts: MutableList<MmsPart> = mutableListOf()
     var isEmojiReaction: Boolean = false
-    val emojiReactions: RealmList<EmojiReaction> = RealmList()
+    val emojiReactions: MutableList<EmojiReaction> = mutableListOf()
 
     var sendAsGroup: Boolean = false
 

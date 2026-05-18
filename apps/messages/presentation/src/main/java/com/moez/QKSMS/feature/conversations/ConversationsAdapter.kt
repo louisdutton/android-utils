@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.Navigator
 import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
+import dev.octoshrimpy.quik.common.base.QkListAdapter
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
@@ -47,7 +47,7 @@ class ConversationsAdapter @Inject constructor(
     private val scheduledMessageRepo: ScheduledMessageRepository,
     private val navigator: Navigator,
     private val phoneNumberUtils: PhoneNumberUtils
-) : QkRealmAdapter<Conversation, QkBindingViewHolder<ConversationListItemBinding>>() {
+) : QkListAdapter<Conversation, QkBindingViewHolder<ConversationListItemBinding>>() {
     private val disposables = CompositeDisposable()
 
     init {
@@ -123,14 +123,8 @@ class ConversationsAdapter @Inject constructor(
         if (conversation.draft.isNotEmpty()) binding.snippet.setTypeface(null, Typeface.ITALIC)
 
         // Get Scheduled Messages
-        val disposable = scheduledMessageRepo
-            .getScheduledMessagesForConversation(conversation.id)
-            .asFlowable()
-            .toObservable()
-            .subscribe { messages ->
-                binding.scheduled.isVisible = messages.isNotEmpty()
-            }
-        disposables.add(disposable)
+        binding.scheduled.isVisible =
+            scheduledMessageRepo.getScheduledMessagesForConversation(conversation.id).isNotEmpty()
 
         binding.pinned.isVisible = conversation.pinned
         binding.unread.setTint(theme)

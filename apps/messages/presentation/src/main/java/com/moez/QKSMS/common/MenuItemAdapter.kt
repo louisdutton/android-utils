@@ -34,6 +34,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 data class MenuItem(val title: String, val actionId: Int)
 
@@ -68,8 +69,9 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
                 intArrayOf(android.R.attr.state_activated),
                 intArrayOf(-android.R.attr.state_activated))
 
-        val text = parent.context.resolveThemeColor(android.R.attr.textColorTertiary)
-        binding.check.imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, text))
+        val primary = parent.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme)
+        val text = parent.context.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+        binding.check.imageTintList = ColorStateList(states, intArrayOf(primary, text))
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {

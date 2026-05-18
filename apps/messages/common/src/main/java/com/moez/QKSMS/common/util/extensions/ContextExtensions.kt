@@ -63,15 +63,22 @@ fun Context.resolveThemeColor(attributeId: Int, default: Int = 0): Int {
     val outValue = TypedValue()
     val wasResolved = theme.resolveAttribute(attributeId, outValue, true)
 
-    return if (wasResolved) getColorCompat(outValue.resourceId) else default
+    return when {
+        !wasResolved -> default
+        outValue.resourceId != 0 -> getColorCompat(outValue.resourceId)
+        else -> outValue.data
+    }
 }
 
 fun Context.resolveThemeColorStateList(attributeId: Int, default: Int = 0): ColorStateList {
     val outValue = TypedValue()
     val wasResolved = theme.resolveAttribute(attributeId, outValue, true)
 
-
-    return getColorStateListCompat(if (wasResolved) outValue.resourceId else default)
+    return when {
+        !wasResolved -> getColorStateListCompat(default)
+        outValue.resourceId != 0 -> getColorStateListCompat(outValue.resourceId)
+        else -> ColorStateList.valueOf(outValue.data)
+    }
 }
 
 fun Context.makeToast(@StringRes res: Int, duration: Int = Toast.LENGTH_SHORT) {

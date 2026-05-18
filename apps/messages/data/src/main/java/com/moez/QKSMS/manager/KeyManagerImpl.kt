@@ -18,13 +18,14 @@
  */
 package dev.octoshrimpy.quik.manager
 
-import dev.octoshrimpy.quik.model.Message
-import io.realm.Realm
+import dev.octoshrimpy.quik.database.MessageDao
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class KeyManagerImpl @Inject constructor() : KeyManager {
+class KeyManagerImpl @Inject constructor(
+    private val messageDao: MessageDao
+) : KeyManager {
 
     private var initialized = false
     private var maxValue: Long = 0
@@ -42,9 +43,7 @@ class KeyManagerImpl @Inject constructor() : KeyManager {
      */
     override fun newId(): Long {
         if (!initialized) {
-            maxValue = Realm.getDefaultInstance().use { realm ->
-                realm.where(Message::class.java).max("id")?.toLong() ?: 0L
-            }
+            maxValue = messageDao.maxMessageId() ?: 0L
             initialized = true
         }
 

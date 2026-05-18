@@ -193,7 +193,6 @@
     <string name="settings_black_title">โหมดกลางคืนแบบมืดสนิท</string>
     <string name="settings_night_start_title">เวลาเริ่มต้น</string>
     <string name="settings_night_end_title">เวลาสิ้นสุด</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">ขนาดแบบอักษร</string>
     <string name="settings_system_font_title">ใช้แบบอักษรของระบบ</string>
     <string name="settings_auto_emoji_title">อีโมจิอัตโนมัติ</string>

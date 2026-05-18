@@ -22,17 +22,15 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.appcompat.widget.SwitchCompat
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.withAlpha
 import dev.octoshrimpy.quik.injection.appComponent
 import dev.octoshrimpy.quik.util.Preferences
+import com.google.android.material.R as MaterialR
 import javax.inject.Inject
 
 class QkSwitch @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : SwitchCompat(context, attrs) {
 
-    @Inject lateinit var colors: Colors
     @Inject lateinit var prefs: Preferences
 
     init {
@@ -45,20 +43,24 @@ class QkSwitch @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         super.onAttachedToWindow()
 
         if (!isInEditMode) {
+            val primary = context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+            val onSurface = context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+            val outline = context.resolveThemeColor(MaterialR.attr.colorOutline)
+            val surfaceContainerHighest = context.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHighest)
             val states = arrayOf(
                     intArrayOf(-android.R.attr.state_enabled),
                     intArrayOf(android.R.attr.state_checked),
                     intArrayOf())
 
             thumbTintList = ColorStateList(states, intArrayOf(
-                    context.resolveThemeColor(R.attr.switchThumbDisabled),
-                    colors.theme().theme,
-                    context.resolveThemeColor(R.attr.switchThumbEnabled)))
+                    onSurface.withAlpha(0x61),
+                    primary,
+                    outline))
 
             trackTintList = ColorStateList(states, intArrayOf(
-                    context.resolveThemeColor(R.attr.switchTrackDisabled),
-                    colors.theme().theme.withAlpha(0x4D),
-                    context.resolveThemeColor(R.attr.switchTrackEnabled)))
+                    surfaceContainerHighest.withAlpha(0x61),
+                    primary.withAlpha(0x52),
+                    surfaceContainerHighest))
         }
     }
 }

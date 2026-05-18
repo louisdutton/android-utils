@@ -26,6 +26,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkController
 import dev.octoshrimpy.quik.common.util.Colors
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.injection.appComponent
@@ -36,6 +37,7 @@ import io.reactivex.subjects.Subject
 import dev.octoshrimpy.quik.databinding.BlockedNumbersControllerBinding
 import dev.octoshrimpy.quik.databinding.BlockedNumbersAddDialogBinding
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class BlockedNumbersController : QkController<BlockedNumbersControllerBinding, BlockedNumbersView, BlockedNumbersState, BlockedNumbersPresenter>(),
     BlockedNumbersView {
@@ -64,8 +66,10 @@ class BlockedNumbersController : QkController<BlockedNumbersControllerBinding, B
 
     override fun onViewCreated() {
         super.onViewCreated()
-        binding.add.setBackgroundTint(colors.theme().theme)
-        binding.add.setTint(colors.theme().textPrimary)
+        val primary = binding.add.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme)
+        val onPrimary = binding.add.context.resolveThemeColor(MaterialR.attr.colorOnPrimary, colors.theme().textPrimary)
+        binding.add.setBackgroundTint(primary)
+        binding.add.setTint(onPrimary)
         adapter.emptyView = binding.empty
         binding.numbers.adapter = adapter
     }

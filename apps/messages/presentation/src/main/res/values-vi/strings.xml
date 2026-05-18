@@ -193,7 +193,6 @@
     <string name="settings_black_title">Giao diện tối AMOLED</string>
     <string name="settings_night_start_title">Thời gian bắt đầu</string>
     <string name="settings_night_end_title">Thời gian kết thúc</string>
-    <string name="settings_automatic_colors_title">Tự động hiện màu sắc của liên hệ</string>
     <string name="settings_text_size_title">Cỡ chữ</string>
     <string name="settings_system_font_title">Sử dụng font chữ hệ thống</string>
     <string name="settings_auto_emoji_title">Emoji tự động</string>

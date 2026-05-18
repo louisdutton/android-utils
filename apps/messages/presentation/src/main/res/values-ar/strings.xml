@@ -198,7 +198,6 @@
     <string name="settings_black_title">وضع ليلي بسوادٍ حالك</string>
     <string name="settings_night_start_title">وقت البدء</string>
     <string name="settings_night_end_title">وقت الانتهاء</string>
-    <string name="settings_automatic_colors_title">تلوين جهات الاتصال تلقائيا</string>
     <string name="settings_text_size_title">حجم الخط</string>
     <string name="settings_system_font_title">استخدم خط النظام</string>
     <string name="settings_auto_emoji_title">إيموجي تلقائية</string>

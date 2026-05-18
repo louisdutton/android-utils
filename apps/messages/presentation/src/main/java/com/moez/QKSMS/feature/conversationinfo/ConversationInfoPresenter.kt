@@ -27,7 +27,6 @@ import dev.octoshrimpy.quik.common.Navigator
 import dev.octoshrimpy.quik.common.base.QkPresenter
 import dev.octoshrimpy.quik.common.util.ClipboardUtils
 import dev.octoshrimpy.quik.common.util.extensions.makeToast
-import dev.octoshrimpy.quik.extensions.asObservable
 import dev.octoshrimpy.quik.extensions.mapNotNull
 import dev.octoshrimpy.quik.feature.conversationinfo.ConversationInfoItem.ConversationInfoMedia
 import dev.octoshrimpy.quik.feature.conversationinfo.ConversationInfoItem.ConversationInfoRecipient
@@ -40,6 +39,7 @@ import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.repository.ConversationRepository
 import dev.octoshrimpy.quik.repository.MessageRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
@@ -66,8 +66,7 @@ class ConversationInfoPresenter @Inject constructor(
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
 
     init {
-        disposables += conversationRepo.getConversationAsync(threadId)
-                .asObservable()
+        disposables += conversationRepo.observeConversation(threadId)
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->
                     if (!conversation.isValid) {
@@ -85,13 +84,14 @@ class ConversationInfoPresenter @Inject constructor(
         disposables += Observables
                 .combineLatest(
                         conversation,
-                        messageRepo.getPartsForConversation(threadId).asObservable()
+                        Observable.fromCallable { messageRepo.getPartsForConversation(threadId) }
+                                .subscribeOn(Schedulers.io())
                 ) { conversation, parts ->
                     val data = mutableListOf<ConversationInfoItem>()
 
                     // If some data was deleted, this isn't the place to handle it
-                    if (!conversation.isLoaded || !conversation.isValid || !parts.isLoaded || !parts.isValid) {
-                        return@combineLatest
+                    if (!conversation.isLoaded || !conversation.isValid) {
+                        return@combineLatest emptyList<ConversationInfoItem>()
                     }
 
                     data += conversation.recipients.map(::ConversationInfoRecipient)
@@ -102,9 +102,10 @@ class ConversationInfoPresenter @Inject constructor(
                             blocked = conversation.blocked)
                     data += parts.map(::ConversationInfoMedia)
 
-                    newState { copy(data = data) }
+                    data
                 }
-                .subscribe()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { data -> newState { copy(data = data) } }
     }
 
     override fun bindIntents(view: ConversationInfoView) {

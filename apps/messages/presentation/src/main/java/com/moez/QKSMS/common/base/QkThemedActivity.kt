@@ -34,17 +34,19 @@ import dev.octoshrimpy.quik.common.util.extensions.resolveThemeBoolean
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.extensions.Optional
 import dev.octoshrimpy.quik.extensions.asObservable
-import dev.octoshrimpy.quik.extensions.mapNotNull
+import dev.octoshrimpy.quik.model.Recipient
 import dev.octoshrimpy.quik.repository.ConversationRepository
 import dev.octoshrimpy.quik.repository.MessageRepository
 import dev.octoshrimpy.quik.util.PhoneNumberUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 /**
  * Base activity that automatically applies any necessary theme theme settings and colors
@@ -72,27 +74,24 @@ abstract class QkThemedActivity : QkActivity() {
     val theme: Observable<Colors.Theme> = threadId
             .distinctUntilChanged()
             .switchMap { threadId ->
-                val conversation = conversationRepo.getConversation(threadId)
-                when {
-                    conversation == null -> Observable.just(Optional(null))
-
-                    conversation.recipients.size == 1 -> Observable.just(Optional(conversation.recipients.first()))
-
-                    else -> messageRepo.getLastIncomingMessage(conversation.id)
-                            .asObservable()
-                            .mapNotNull { messages -> messages.firstOrNull() }
-                            .distinctUntilChanged { message -> message.address }
-                            .mapNotNull { message ->
-                                conversation.recipients.find { recipient ->
-                                    phoneNumberUtils.compare(recipient.address, message.address)
-                                }
-                            }
-                            .map { recipient -> Optional(recipient) }
-                            .startWith(Optional(conversation.recipients.firstOrNull()))
-                            .distinctUntilChanged()
-                }
+                Observable.fromCallable { themeRecipient(threadId) }
+                    .subscribeOn(Schedulers.io())
             }
             .switchMap { colors.themeObservable(it.value) }
+
+    private fun themeRecipient(threadId: Long): Optional<Recipient> {
+        val conversation = conversationRepo.getConversation(threadId) ?: return Optional(null)
+        if (conversation.recipients.size == 1) return Optional(conversation.recipients.first())
+
+        val lastIncomingMessage = messageRepo.getLastIncomingMessage(conversation.id).firstOrNull()
+        val recipient = lastIncomingMessage?.let { message ->
+            conversation.recipients.find { recipient ->
+                phoneNumberUtils.compare(recipient.address, message.address)
+            }
+        } ?: conversation.recipients.firstOrNull()
+
+        return Optional(recipient)
+    }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,7 +119,7 @@ abstract class QkThemedActivity : QkActivity() {
         }
 
         // Set the color for the recent apps title
-        val toolbarColor = resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+        val toolbarColor = resolveThemeColor(MaterialR.attr.colorSurface)
         val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
         val taskDesc = ActivityManager.TaskDescription(getString(R.string.app_name), icon, toolbarColor)
         setTaskDescription(taskDesc)
@@ -130,14 +129,15 @@ abstract class QkThemedActivity : QkActivity() {
         super.onPostCreate(savedInstanceState)
 
         // Set the color for the overflow and navigation icon
-        val textSecondary = resolveThemeColor(android.R.attr.textColorSecondary)
+        val textSecondary = resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+        val primary = resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
         toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textSecondary) }
 
         // Update the colours of the menu items
-        Observables.combineLatest(menu, theme) { menu, theme ->
+        Observables.combineLatest(menu, theme) { menu, _ ->
             menu.iterator().forEach { menuItem ->
                 val tint = when (menuItem.itemId) {
-                    in getColoredMenuItems() -> theme.theme
+                    in getColoredMenuItems() -> primary
                     else -> textSecondary
                 }
 

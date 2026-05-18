@@ -18,8 +18,6 @@
  */
 package dev.octoshrimpy.quik.model
 
-import io.realm.RealmObject
-
-open class EmojiSyncNeeded : RealmObject() {
+open class EmojiSyncNeeded : ModelObject() {
     var createdAt: Long = System.currentTimeMillis()
 }

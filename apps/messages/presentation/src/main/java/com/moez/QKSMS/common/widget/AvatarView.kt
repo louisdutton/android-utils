@@ -24,7 +24,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.util.Colors
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.databinding.AvatarViewBinding
@@ -32,27 +32,24 @@ import dev.octoshrimpy.quik.injection.appComponent
 import dev.octoshrimpy.quik.model.Recipient
 import dev.octoshrimpy.quik.util.GlideApp
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class AvatarView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
-    @Inject lateinit var colors: Colors
     @Inject lateinit var navigator: Navigator
 
     private var lookupKey: String? = null
     private var fullName: String? = null
     private var photoUri: String? = null
     private var lastUpdated: Long? = null
-    private var theme: Colors.Theme
     private var layout: AvatarViewBinding
 
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
         }
-
-        theme = colors.theme()
 
         layout = AvatarViewBinding.inflate(LayoutInflater.from(context), this)
         setBackgroundResource(R.drawable.circle)
@@ -67,7 +64,6 @@ class AvatarView @JvmOverloads constructor(
         fullName = recipient?.contact?.name
         photoUri = recipient?.contact?.photoUri
         lastUpdated = recipient?.contact?.lastUpdate
-        theme = colors.theme(recipient)
         updateView()
     }
 
@@ -80,10 +76,11 @@ class AvatarView @JvmOverloads constructor(
     }
 
     private fun updateView() {
-        // Apply theme
-        setBackgroundTint(theme.theme)
-        layout.initial.setTextColor(theme.textPrimary)
-        layout.icon.setTint(theme.textPrimary)
+        val container = context.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHighest)
+        val content = context.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+        setBackgroundTint(container)
+        layout.initial.setTextColor(content)
+        layout.icon.setTint(content)
 
         val initials = fullName
                 ?.substringBefore(',')

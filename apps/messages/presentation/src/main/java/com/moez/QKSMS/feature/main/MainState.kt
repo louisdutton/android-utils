@@ -21,7 +21,6 @@ package dev.octoshrimpy.quik.feature.main
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.model.SearchResult
 import dev.octoshrimpy.quik.repository.SyncRepository
-import io.realm.RealmResults
 
 data class MainState(
     val hasError: Boolean = false,
@@ -42,7 +41,7 @@ data class Inbox(
     val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
-    val data: RealmResults<Conversation>? = null,
+    val data: List<Conversation>? = null,
     val selected: Int = 0
 ) : MainPage()
 
@@ -55,6 +54,6 @@ data class Archived(
     val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
-    val data: RealmResults<Conversation>? = null,
+    val data: List<Conversation>? = null,
     val selected: Int = 0
 ) : MainPage()

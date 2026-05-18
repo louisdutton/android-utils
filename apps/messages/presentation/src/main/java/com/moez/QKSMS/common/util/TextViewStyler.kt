@@ -29,9 +29,11 @@ import dev.octoshrimpy.quik.common.util.TextViewStyler.Companion.SIZE_SECONDARY
 import dev.octoshrimpy.quik.common.util.TextViewStyler.Companion.SIZE_TERTIARY
 import dev.octoshrimpy.quik.common.util.TextViewStyler.Companion.SIZE_TOOLBAR
 import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.widget.QkEditText
 import dev.octoshrimpy.quik.common.widget.QkTextView
 import dev.octoshrimpy.quik.util.Preferences
+import com.google.android.material.R as MaterialR
 import javax.inject.Inject
 
 
@@ -123,7 +125,9 @@ class TextViewStyler @Inject constructor(
         }
 
         when (colorAttr) {
-            COLOR_THEME -> textView.setTextColor(colors.theme().theme)
+            COLOR_THEME -> textView.setTextColor(
+                textView.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme)
+            )
             COLOR_PRIMARY_ON_THEME -> textView.setTextColor(colors.theme().textPrimary)
             COLOR_SECONDARY_ON_THEME -> textView.setTextColor(colors.theme().textSecondary)
             COLOR_TERTIARY_ON_THEME -> textView.setTextColor(colors.theme().textTertiary)
@@ -132,7 +136,8 @@ class TextViewStyler @Inject constructor(
         setTextSize(textView, textSizeAttr)
 
         if (textView is EditText) {
-            val drawable = textView.resources.getDrawable(R.drawable.cursor).apply { setTint(colors.theme().theme) }
+            val cursorColor = textView.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme)
+            val drawable = textView.resources.getDrawable(R.drawable.cursor).apply { setTint(cursorColor) }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 textView.textCursorDrawable = drawable
             }

@@ -194,7 +194,6 @@
     <string name="settings_black_title">Modo noturno preto puro</string>
     <string name="settings_night_start_title">Hora de início</string>
     <string name="settings_night_end_title">Hora de término</string>
-    <string name="settings_automatic_colors_title">Cores de contato automáticas</string>
     <string name="settings_text_size_title">Tamanho da fonte</string>
     <string name="settings_system_font_title">Usar fonte do sistema</string>
     <string name="settings_auto_emoji_title">Emoji automático</string>

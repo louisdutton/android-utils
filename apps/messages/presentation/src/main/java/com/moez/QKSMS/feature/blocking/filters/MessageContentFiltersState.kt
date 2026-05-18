@@ -19,8 +19,7 @@
 package dev.octoshrimpy.quik.feature.blocking.filters
 
 import dev.octoshrimpy.quik.model.MessageContentFilter
-import io.realm.RealmResults
 
 data class MessageContentFiltersState(
-    val filters: RealmResults<MessageContentFilter>? = null
+    val filters: List<MessageContentFilter>? = null
 )

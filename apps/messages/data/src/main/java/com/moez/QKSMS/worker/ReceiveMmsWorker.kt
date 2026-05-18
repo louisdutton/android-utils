@@ -161,7 +161,7 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
                     }
 
                     // Because we use the smsmms library for receiving and storing MMS, we'll need
-                    // to check if it should be blocked after we've pulled it into realm. If it
+                    // to check if it should be blocked after we've pulled it into the local database. If it
                     // turns out that it should be dropped, then delete it
                     // TODO Don't store blocked messages in the first place
                     val action = blockingClient.shouldBlock(message.address).blockingGet()

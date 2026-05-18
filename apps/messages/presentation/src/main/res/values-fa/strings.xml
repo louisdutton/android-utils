@@ -192,7 +192,6 @@
     <string name="settings_black_title">سان شب مشکی ناب</string>
     <string name="settings_night_start_title">زمان آغاز</string>
     <string name="settings_night_end_title">زمان پایان</string>
-    <string name="settings_automatic_colors_title">رنگ همدرنگِ خودکار</string>
     <string name="settings_text_size_title">اندازه قلم</string>
     <string name="settings_system_font_title">قلم سامانه را بکار‌گیر</string>
     <string name="settings_auto_emoji_title">دیمگ خودکار</string>

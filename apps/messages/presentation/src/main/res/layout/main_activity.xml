@@ -52,7 +52,7 @@
                 android:layout_marginBottom="8dp"
                 android:minHeight="40dp"
                 android:background="@drawable/rounded_rectangle_24dp"
-                android:backgroundTint="?attr/bubbleColor"
+                android:backgroundTint="?attr/colorSurfaceContainerHigh"
                 android:hint="@string/title_conversations"
                 android:inputType="text"
                 android:maxLines="1"
@@ -103,13 +103,13 @@
             android:src="@drawable/ic_add_black_24dp"
             app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:backgroundTint="@color/tools_theme"
-            app:tint="@color/white" />
+            android:backgroundTint="?attr/colorPrimary"
+            app:tint="?attr/colorOnPrimary" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow"
+            android:layout_height="1dp"
+            android:background="?android:attr/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />

@@ -196,7 +196,6 @@
     <string name="settings_black_title">Повністю чорний нічний режим</string>
     <string name="settings_night_start_title">Час початку</string>
     <string name="settings_night_end_title">Час завершення</string>
-    <string name="settings_automatic_colors_title">Автоматичні кольори контактів</string>
     <string name="settings_text_size_title">Розмір шрифта</string>
     <string name="settings_system_font_title">Використовувати системний шрифт</string>
     <string name="settings_auto_emoji_title">Автоматичні emoji</string>

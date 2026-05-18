@@ -22,14 +22,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
+import dev.octoshrimpy.quik.common.base.QkListAdapter
 import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
 import dev.octoshrimpy.quik.model.MessageContentFilter
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import dev.octoshrimpy.quik.databinding.MessageContentFilterListItemBinding
 
-class MessageContentFiltersAdapter : QkRealmAdapter<MessageContentFilter, QkBindingViewHolder<MessageContentFilterListItemBinding>>() {
+class MessageContentFiltersAdapter : QkListAdapter<MessageContentFilter, QkBindingViewHolder<MessageContentFilterListItemBinding>>() {
 
     val removeMessageContentFilter: Subject<Long> = PublishSubject.create()
 

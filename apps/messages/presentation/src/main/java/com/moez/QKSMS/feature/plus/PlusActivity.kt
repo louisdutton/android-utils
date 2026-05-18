@@ -42,6 +42,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class PlusActivity : QkThemedActivity(), PlusView {
 
@@ -90,10 +91,10 @@ class PlusActivity : QkThemedActivity(), PlusView {
         binding.toolbarLayout.collapsingToolbar.setCollapsedTitleTextColor(textPrimary)
         binding.toolbarLayout.collapsingToolbar.setExpandedTitleColor(textPrimary)
 
-        val theme = colors.theme().theme
-        binding.donate.setBackgroundTint(theme)
-        binding.upgrade.setBackgroundTint(theme)
-        binding.thanksIcon.setTint(theme)
+        val primary = resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme)
+        binding.donate.setBackgroundTint(primary)
+        binding.upgrade.setBackgroundTint(primary)
+        binding.thanksIcon.setTint(primary)
     }
 
     override fun render(state: PlusState) {

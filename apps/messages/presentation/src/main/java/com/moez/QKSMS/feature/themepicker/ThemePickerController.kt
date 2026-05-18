@@ -29,6 +29,7 @@ import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkController
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.dpToPx
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.databinding.ThemePickerControllerBinding
@@ -38,6 +39,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class ThemePickerController(
     val recipientId: Long = 0L
@@ -95,7 +97,7 @@ class ThemePickerController(
     override fun showQksmsPlusSnackbar() {
         Snackbar.make(binding.contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
             setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
-            setActionTextColor(colors.theme().theme)
+            setActionTextColor(binding.contentView.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme))
             show()
         }
     }

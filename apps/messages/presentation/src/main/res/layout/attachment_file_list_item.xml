@@ -22,7 +22,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:background="?attr/bubbleColor">
+    tools:background="?attr/colorSurfaceContainerHigh">
 
     <FrameLayout
         android:id="@+id/thumbnailBounds"
@@ -60,8 +60,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="2dp"
         android:background="@drawable/circle"
-        android:backgroundTint="?attr/bubbleColor"
+        android:backgroundTint="?attr/colorSurfaceContainerHighest"
         android:src="@drawable/ic_cancel_black_24dp"
-        app:tint="?android:attr/textColorSecondary" />
+        app:tint="?attr/colorOnSurfaceVariant" />
 
 </FrameLayout>

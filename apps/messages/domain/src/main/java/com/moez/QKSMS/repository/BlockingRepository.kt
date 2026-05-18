@@ -19,13 +19,12 @@
 package dev.octoshrimpy.quik.repository
 
 import dev.octoshrimpy.quik.model.BlockedNumber
-import io.realm.RealmResults
 
 interface BlockingRepository {
 
     fun blockNumber(vararg addresses: String)
 
-    fun getBlockedNumbers(): RealmResults<BlockedNumber>
+    fun getBlockedNumbers(): List<BlockedNumber>
 
     fun getBlockedNumber(id: Long): BlockedNumber?
 

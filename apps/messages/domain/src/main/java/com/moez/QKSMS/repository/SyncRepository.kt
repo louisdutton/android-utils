@@ -32,6 +32,8 @@ interface SyncRepository {
 
     val syncProgress: Observable<SyncProgress>
 
+    fun lastMessageSync(): Long
+
     fun syncMessages()
 
     fun syncMessage(uri: Uri, messageId: Long = 0): Message?

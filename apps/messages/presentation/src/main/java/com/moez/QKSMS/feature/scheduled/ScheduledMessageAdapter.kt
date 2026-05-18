@@ -25,7 +25,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
+import dev.octoshrimpy.quik.common.base.QkListAdapter
 import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
 import dev.octoshrimpy.quik.databinding.ScheduledMessageListItemBinding
 import dev.octoshrimpy.quik.common.util.DateFormatter
@@ -43,7 +43,7 @@ class ScheduledMessageAdapter @Inject constructor(
     private val contactRepo: ContactRepository,
     private val dateFormatter: DateFormatter,
     private val phoneNumberUtils: PhoneNumberUtils
-) : QkRealmAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageListItemBinding>>() {
+) : QkListAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageListItemBinding>>() {
 
     private val contacts by lazy { contactRepo.getContacts() }
     private val contactCache = ContactCache()

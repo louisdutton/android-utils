@@ -196,7 +196,6 @@
     <string name="settings_black_title">Полностью чёрный ночной режим</string>
     <string name="settings_night_start_title">Время начала</string>
     <string name="settings_night_end_title">Время окончания</string>
-    <string name="settings_automatic_colors_title">Автоматические цвета контактов</string>
     <string name="settings_text_size_title">Размер шрифта</string>
     <string name="settings_system_font_title">Использовать системный шрифт</string>
     <string name="settings_auto_emoji_title">Автоматические emoji</string>

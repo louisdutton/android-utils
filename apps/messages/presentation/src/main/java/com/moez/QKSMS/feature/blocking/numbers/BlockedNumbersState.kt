@@ -19,8 +19,7 @@
 package dev.octoshrimpy.quik.feature.blocking.numbers
 
 import dev.octoshrimpy.quik.model.BlockedNumber
-import io.realm.RealmResults
 
 data class BlockedNumbersState(
-    val numbers: RealmResults<BlockedNumber>? = null
+    val numbers: List<BlockedNumber>? = null
 )

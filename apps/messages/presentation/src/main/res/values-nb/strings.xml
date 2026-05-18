@@ -194,7 +194,6 @@
     <string name="settings_black_title">Ren svart nattmodus</string>
     <string name="settings_night_start_title">Starttid</string>
     <string name="settings_night_end_title">Sluttidspunkt</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Skriftstørrelse</string>
     <string name="settings_system_font_title">Bruk systemskrift</string>
     <string name="settings_auto_emoji_title">Automatisk emoji</string>

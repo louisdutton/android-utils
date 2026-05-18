@@ -18,17 +18,12 @@
  */
 package dev.octoshrimpy.quik.model
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.Index
-import io.realm.annotations.PrimaryKey
-
 open class Conversation(
-    @PrimaryKey var id: Long = 0,
-    @Index var archived: Boolean = false,
-    @Index var blocked: Boolean = false,
-    @Index var pinned: Boolean = false,
-    var recipients: RealmList<Recipient> = RealmList(),
+    var id: Long = 0,
+    var archived: Boolean = false,
+    var blocked: Boolean = false,
+    var pinned: Boolean = false,
+    var recipients: MutableList<Recipient> = mutableListOf(),
     var lastMessage: Message? = null,
     var draft: String = "",
     var draftDate: Long = 0,
@@ -39,7 +34,7 @@ open class Conversation(
     var name: String = "", // custom title
 
     var sendAsGroup: Boolean = true,
-) : RealmObject() {
+) : ModelObject() {
 
     val date: Long get() = lastMessage?.date ?: if (draft.isNotEmpty()) draftDate else 0
     val snippet: String? get() = lastMessage?.getSummary()

@@ -21,14 +21,14 @@ package dev.octoshrimpy.quik.feature.blocking.numbers
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
+import dev.octoshrimpy.quik.common.base.QkListAdapter
 import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
 import dev.octoshrimpy.quik.model.BlockedNumber
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import dev.octoshrimpy.quik.databinding.BlockedNumberListItemBinding
 
-class BlockedNumbersAdapter : QkRealmAdapter<BlockedNumber, QkBindingViewHolder<BlockedNumberListItemBinding>>() {
+class BlockedNumbersAdapter : QkListAdapter<BlockedNumber, QkBindingViewHolder<BlockedNumberListItemBinding>>() {
 
     val unblockAddress: Subject<Long> = PublishSubject.create()
 

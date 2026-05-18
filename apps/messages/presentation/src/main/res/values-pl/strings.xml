@@ -232,7 +232,6 @@
     <string name="settings_black_title">Czarne tło w trybie nocnym</string>
     <string name="settings_night_start_title">Czas rozpoczęcia</string>
     <string name="settings_night_end_title">Czas zakończenia</string>
-    <string name="settings_automatic_colors_title">Automatyczne kolory kontaktów</string>
     <string name="settings_text_size_title">Rozmiar czcionki</string>
     <string name="settings_system_font_title">Używaj czcionki systemowej</string>
     <string name="settings_system_show_stt_title">Pokaż przycisk zamiany mowy na tekst</string>

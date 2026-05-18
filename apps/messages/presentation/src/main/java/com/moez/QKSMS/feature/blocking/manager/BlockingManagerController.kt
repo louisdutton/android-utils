@@ -10,7 +10,6 @@ import androidx.core.view.isInvisible
 import com.jakewharton.rxbinding2.view.clicks
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkController
-import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.databinding.BlockingManagerControllerBinding
 import dev.octoshrimpy.quik.injection.appComponent
@@ -19,6 +18,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class BlockingManagerController : QkController<BlockingManagerControllerBinding, BlockingManagerView, BlockingManagerState, BlockingManagerPresenter>(),
     BlockingManagerView {
@@ -26,7 +26,6 @@ class BlockingManagerController : QkController<BlockingManagerControllerBinding,
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): BlockingManagerControllerBinding =
         BlockingManagerControllerBinding.inflate(inflater, container, false)
 
-    @Inject lateinit var colors: Colors
     @Inject override lateinit var presenter: BlockingManagerPresenter
 
     private val activityResumedSubject: PublishSubject<Unit> = PublishSubject.create()
@@ -46,8 +45,9 @@ class BlockingManagerController : QkController<BlockingManagerControllerBinding,
                 intArrayOf(android.R.attr.state_activated),
                 intArrayOf(-android.R.attr.state_activated))
 
-        val textTertiary = view.context.resolveThemeColor(android.R.attr.textColorTertiary)
-        val imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, textTertiary))
+        val primary = view.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+        val textTertiary = view.context.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+        val imageTintList = ColorStateList(states, intArrayOf(primary, textTertiary))
 
         binding.qksms.actionView.imageTintList = imageTintList
         binding.callBlocker.actionView.imageTintList = imageTintList

@@ -193,7 +193,6 @@
     <string name="settings_black_title">ピュアブラック夜間モード</string>
     <string name="settings_night_start_title">開始時刻</string>
     <string name="settings_night_end_title">終了時刻</string>
-    <string name="settings_automatic_colors_title">自動的に連絡先に色をつける</string>
     <string name="settings_text_size_title">フォントサイズ</string>
     <string name="settings_system_font_title">システムフォントを使用する</string>
     <string name="settings_auto_emoji_title">自動絵文字</string>

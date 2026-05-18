@@ -25,7 +25,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
+import dev.octoshrimpy.quik.common.base.QkListAdapter
 import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.databinding.BlockedListItemBinding
@@ -37,7 +37,7 @@ import javax.inject.Inject
 class BlockedMessagesAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter
-) : QkRealmAdapter<Conversation, QkBindingViewHolder<BlockedListItemBinding>>() {
+) : QkListAdapter<Conversation, QkBindingViewHolder<BlockedListItemBinding>>() {
 
     val clicks: PublishSubject<Long> = PublishSubject.create()
 

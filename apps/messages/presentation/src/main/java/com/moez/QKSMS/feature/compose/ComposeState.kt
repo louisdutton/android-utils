@@ -23,7 +23,6 @@ import dev.octoshrimpy.quik.model.Attachment
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.model.Message
 import dev.octoshrimpy.quik.model.Recipient
-import io.realm.RealmResults
 
 data class ComposeState(
     val hasError: Boolean = false,
@@ -37,7 +36,7 @@ data class ComposeState(
     val searchSelectionId: Long = -1,
     val searchSelectionPosition: Int = 0,
     val searchResults: Int = 0,
-    val messages: Pair<Conversation, RealmResults<Message>>? = null,
+    val messages: Pair<Conversation, List<Message>>? = null,
     val selectedMessages: Int = 0,
     val selectedMessagesHaveText: Boolean = false,
     val scheduled: Long = 0,

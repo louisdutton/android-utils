@@ -23,14 +23,11 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
-import io.realm.OrderedRealmCollection
-import io.realm.RealmList
-import io.realm.RealmModel
-import io.realm.RealmRecyclerViewAdapter
-import io.realm.RealmResults
+import java.io.Serializable
 import timber.log.Timber
 
-abstract class QkRealmAdapter<T : RealmModel, VH : QkViewHolder> : RealmRecyclerViewAdapter<T, VH>(null, true) {
+abstract class QkListAdapter<T : Serializable, VH : QkViewHolder> : RecyclerView.Adapter<VH>() {
+    private var currentData: List<T>? = null
 
     /**
      * This view can be set, and the adapter will automatically control the visibility of this view
@@ -41,12 +38,8 @@ abstract class QkRealmAdapter<T : RealmModel, VH : QkViewHolder> : RealmRecycler
             if (field === value) return
 
             field = value
-            value?.setVisible(getData()?.isLoaded == true && getData()?.isEmpty() == true)
+            value?.setVisible(getData()?.isEmpty() == true)
         }
-
-    private val emptyListener: (OrderedRealmCollection<T>) -> Unit = { data ->
-        emptyView?.setVisible(data.isLoaded && data.isEmpty())
-    }
 
     val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()
 
@@ -100,7 +93,7 @@ abstract class QkRealmAdapter<T : RealmModel, VH : QkViewHolder> : RealmRecycler
         if (needToSelectAll) {
             for (position in 0 until itemCount)
                 selection += getItemId(position)
-            }
+        }
 
         // fire a single change event now
         selectionChanges.onNext(selection)
@@ -108,48 +101,24 @@ abstract class QkRealmAdapter<T : RealmModel, VH : QkViewHolder> : RealmRecycler
         notifyDataSetChanged()
     }
 
-    override fun getItem(index: Int): T? {
+    fun getData(): List<T>? = currentData
+
+    open fun updateData(data: List<T>?) {
+        if (currentData === data) return
+
+        currentData = data
+        emptyView?.setVisible(data?.isEmpty() == true)
+        notifyDataSetChanged()
+    }
+
+    open fun getItem(index: Int): T? {
         if (index < 0) {
             Timber.w("Only indexes >= 0 are allowed. Input was: $index")
             return null
         }
 
-        return super.getItem(index)
+        return currentData?.getOrNull(index)
     }
 
-    override fun updateData(data: OrderedRealmCollection<T>?) {
-        if (getData() === data) return
-
-        removeListener(getData())
-        addListener(data)
-
-        data?.run(emptyListener)
-
-        super.updateData(data)
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        addListener(getData())
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        removeListener(getData())
-    }
-
-    private fun addListener(data: OrderedRealmCollection<T>?) {
-        when (data) {
-            is RealmResults<T> -> data.addChangeListener(emptyListener)
-            is RealmList<T> -> data.addChangeListener(emptyListener)
-        }
-    }
-
-    private fun removeListener(data: OrderedRealmCollection<T>?) {
-        when (data) {
-            is RealmResults<T> -> data.removeChangeListener(emptyListener)
-            is RealmList<T> -> data.removeChangeListener(emptyListener)
-        }
-    }
-
+    override fun getItemCount(): Int = currentData?.size ?: 0
 }

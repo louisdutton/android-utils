@@ -42,12 +42,13 @@ import androidx.core.net.toUri
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.common.QkMediaPlayer
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
+import dev.octoshrimpy.quik.common.base.QkListAdapter
 import dev.octoshrimpy.quik.common.base.QkViewHolder
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.TextViewStyler
 import dev.octoshrimpy.quik.common.util.extensions.dpToPx
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setPadding
 import dev.octoshrimpy.quik.common.util.extensions.setTint
@@ -73,11 +74,11 @@ import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Provider
+import com.google.android.material.R as MaterialR
 
 class MessagesAdapter @Inject constructor(
     subscriptionManager: SubscriptionManagerCompat,
@@ -88,7 +89,7 @@ class MessagesAdapter @Inject constructor(
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val textViewStyler: TextViewStyler,
-) : QkRealmAdapter<Message, QkViewHolder>() {
+) : QkListAdapter<Message, QkViewHolder>() {
     class AudioState(
         var partId: Long = -1,
         var state: QkMediaPlayer.PlayingState = QkMediaPlayer.PlayingState.Stopped,
@@ -112,7 +113,7 @@ class MessagesAdapter @Inject constructor(
     val partContextMenuRegistrar: Subject<View> = PublishSubject.create()
     val reactionClicks: Subject<Long> = PublishSubject.create()
 
-    var data: Pair<Conversation, RealmResults<Message>>? = null
+    var data: Pair<Conversation, List<Message>>? = null
         set(value) {
             if (field === value) return
 
@@ -144,6 +145,8 @@ class MessagesAdapter @Inject constructor(
         val body: TextView
         val parts: View
         val status: View
+        val primary = parent.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+        val surfaceContainerHigh = parent.context.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
 
         if (viewType == VIEW_TYPE_MESSAGE_OUT) {
             val binding = MessageListItemOutBinding.inflate(inflater, parent, false)
@@ -151,10 +154,13 @@ class MessagesAdapter @Inject constructor(
             body = binding.body
             parts = binding.parts
             status = binding.status
-            binding.cancelIcon.setTint(theme.theme)
-            binding.cancel.setTint(theme.theme)
-            binding.sendNowIcon.setTint(theme.theme)
-            binding.resendIcon.setTint(theme.theme)
+            binding.cancelIcon.setTint(primary)
+            binding.cancel.setTint(primary)
+            binding.cancel.setBackgroundTint(surfaceContainerHigh)
+            binding.sendNowIcon.setTint(primary)
+            binding.sendNowIcon.setBackgroundTint(surfaceContainerHigh)
+            binding.resendIcon.setTint(primary)
+            binding.resendIcon.setBackgroundTint(surfaceContainerHigh)
         } else {
             val binding = MessageListItemInBinding.inflate(inflater, parent, false)
             view = binding.root
@@ -195,10 +201,16 @@ class MessagesAdapter @Inject constructor(
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
 
-        val theme = when (message.isOutgoingMessage()) {
-            true -> colors.theme()
-            false -> colors.theme(contactCache[message.address])
-        }
+        val theme = colors.theme()
+        val itemContext = holder.itemView.context
+        val primary = itemContext.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+        val primaryContainer = itemContext.resolveThemeColor(MaterialR.attr.colorPrimaryContainer)
+        val onPrimaryContainer = itemContext.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
+        val surfaceContainerHigh = itemContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
+        val surfaceContainerHighest = itemContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHighest)
+        val onSurface = itemContext.resolveThemeColor(MaterialR.attr.colorOnSurface)
+        val onSurfaceVariant = itemContext.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+        val outline = itemContext.resolveThemeColor(MaterialR.attr.colorOutline)
 
         // Update the selected state
         holder.itemView.isActivated = isSelected(message.id) || highlight == message.id
@@ -224,6 +236,14 @@ class MessagesAdapter @Inject constructor(
             reactions = binding.reactions
             reactionText = binding.reactionText
             status = binding.status
+
+            binding.cancel.setBackgroundTint(surfaceContainerHigh)
+            binding.cancel.setTint(primary)
+            binding.cancelIcon.setTint(primary)
+            binding.sendNowIcon.setBackgroundTint(surfaceContainerHigh)
+            binding.sendNowIcon.setTint(primary)
+            binding.resendIcon.setBackgroundTint(surfaceContainerHigh)
+            binding.resendIcon.setTint(primary)
 
             // bind the cancelFrame (cancel button) and send now button
             val isCancellable = message.isSending() && message.date > System.currentTimeMillis()
@@ -269,11 +289,13 @@ class MessagesAdapter @Inject constructor(
             }
 
             body.apply {
-                highlightColor = theme.theme.withAlpha(0x5d)
+                setTextColor(onPrimaryContainer)
+                setBackgroundTint(primaryContainer)
+                highlightColor = primary.withAlpha(0x5d)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    textSelectHandle?.setTint(theme.theme.withAlpha(0xad))
-                    textSelectHandleLeft?.setTint(theme.theme.withAlpha(0xad))
-                    textSelectHandleRight?.setTint(theme.theme.withAlpha(0xad))
+                    textSelectHandle?.setTint(primary.withAlpha(0xad))
+                    textSelectHandleLeft?.setTint(primary.withAlpha(0xad))
+                    textSelectHandleRight?.setTint(primary.withAlpha(0xad))
                 }
             }
         } else {
@@ -294,16 +316,23 @@ class MessagesAdapter @Inject constructor(
             }
 
             body.apply {
-                setTextColor(theme.textPrimary)
-                setBackgroundTint(theme.theme)
-                highlightColor = R.attr.bubbleColor.withAlpha(0x5d)
+                setTextColor(onSurface)
+                setBackgroundTint(surfaceContainerHigh)
+                highlightColor = outline.withAlpha(0x5d)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    textSelectHandle?.setTint(R.attr.bubbleColor.withAlpha(0x7d))
-                    textSelectHandleLeft?.setTint(R.attr.bubbleColor.withAlpha(0x7d))
-                    textSelectHandleRight?.setTint(R.attr.bubbleColor.withAlpha(0x7d))
+                    textSelectHandle?.setTint(outline.withAlpha(0x7d))
+                    textSelectHandleLeft?.setTint(outline.withAlpha(0x7d))
+                    textSelectHandleRight?.setTint(outline.withAlpha(0x7d))
                 }
             }
         }
+
+        timestamp.setTextColor(onSurfaceVariant)
+        sim.setTint(onSurfaceVariant)
+        simIndex.setTextColor(onSurfaceVariant)
+        status.setTextColor(onSurfaceVariant)
+        reactionText.setTextColor(onSurface)
+        reactionText.setBackgroundTint(surfaceContainerHighest)
 
         val subject = message.getCleansedSubject()
 
@@ -414,6 +443,7 @@ class MessagesAdapter @Inject constructor(
                     isMe = message.isMe()
                 )
             )
+            setBackgroundTint(if (message.isMe()) primaryContainer else surfaceContainerHigh)
         }
 
         // Bind the parts

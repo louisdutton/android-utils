@@ -24,6 +24,7 @@ import androidx.emoji2.text.EmojiCompat
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
+import com.google.android.material.color.DynamicColors
 import com.uber.rxdogtag.RxDogTag
 import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer
 import dagger.android.AndroidInjector
@@ -31,7 +32,6 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.util.FileLoggingTree
-import dev.octoshrimpy.quik.database.RoomRealmStore
 import dev.octoshrimpy.quik.injection.AppComponentManager
 import dev.octoshrimpy.quik.injection.appComponent
 import dev.octoshrimpy.quik.interactor.SpeakThreads
@@ -40,7 +40,6 @@ import dev.octoshrimpy.quik.manager.ReferralManager
 import dev.octoshrimpy.quik.migration.QkMigration
 import dev.octoshrimpy.quik.util.NightModeManager
 import dev.octoshrimpy.quik.worker.HousekeepingWorker
-import io.realm.Realm
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,15 +63,13 @@ class QKApplication : Application(), HasAndroidInjector {
 
     override fun onCreate() {
         super.onCreate()
+        DynamicColors.applyToActivitiesIfAvailable(this)
 
         // set translated "no messages" string for speakThreads interactor
         SpeakThreads.setNoMessagesString(getString(R.string.speak_no_messages))
 
         AppComponentManager.init(this)
         appComponent.inject(this)
-
-        Realm.init(this)
-        Realm.setStore(RoomRealmStore(this))
 
         qkMigration.performMigration()
 

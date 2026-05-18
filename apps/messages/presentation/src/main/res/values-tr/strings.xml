@@ -194,7 +194,6 @@
     <string name="settings_black_title">Saf siyah gece modu</string>
     <string name="settings_night_start_title">Başlama zamanı</string>
     <string name="settings_night_end_title">Bitiş Zamanı</string>
-    <string name="settings_automatic_colors_title">Otomatik kişi renkleri</string>
     <string name="settings_text_size_title">Yazı tipi boyutu</string>
     <string name="settings_system_font_title">Sistem yazı tipini kullan</string>
     <string name="settings_auto_emoji_title">Otomatik emoji</string>

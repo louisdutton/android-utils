@@ -37,6 +37,7 @@ import dev.octoshrimpy.quik.repository.ConversationRepository
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class PagerTitleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
 
@@ -96,9 +97,10 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
                 .distinctUntilChanged()
                 .map { recipientId -> Optional(conversationRepo.getRecipient(recipientId)) }
                 .switchMap { recipient -> colors.themeObservable(recipient.value) }
-                .map { theme ->
-                    val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
-                    ColorStateList(states, intArrayOf(theme.theme, textSecondary))
+                .map {
+                    val primary = context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+                    val textSecondary = context.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
+                    ColorStateList(states, intArrayOf(primary, textSecondary))
                 }
                 .autoDispose(ViewScopeProvider.from(this))
                 .subscribe { colorStateList ->

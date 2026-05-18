@@ -195,7 +195,6 @@
     <string name="settings_black_title">Potpuno crni noćni način</string>
     <string name="settings_night_start_title">Vrijeme početka</string>
     <string name="settings_night_end_title">Vrijeme završetka</string>
-    <string name="settings_automatic_colors_title">Automatske boje kontakata</string>
     <string name="settings_text_size_title">Veličina fonta</string>
     <string name="settings_system_font_title">Koristi font sustava</string>
     <string name="settings_auto_emoji_title">Automatski emoji</string>

@@ -40,10 +40,10 @@
         android:layout_weight="1"
         android:duplicateParentState="true"
         android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingTop="16dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="16dp">
+        android:paddingStart="24dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
 
         <dev.octoshrimpy.quik.common.widget.QkTextView
             android:id="@+id/titleView"
@@ -68,7 +68,7 @@
         android:id="@+id/widgetFrame"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:duplicateParentState="true" />
 
 </merge>

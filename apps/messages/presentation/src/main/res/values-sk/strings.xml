@@ -196,7 +196,6 @@
     <string name="settings_black_title">Čisto čierny nočný režim</string>
     <string name="settings_night_start_title">Čas spustenia</string>
     <string name="settings_night_end_title">Čas ukončenia</string>
-    <string name="settings_automatic_colors_title">Automatické farby kontaktov</string>
     <string name="settings_text_size_title">Veľkosť písma</string>
     <string name="settings_system_font_title">Použiť systémové písmo</string>
     <string name="settings_auto_emoji_title">Automatické emoji</string>

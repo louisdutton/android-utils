@@ -21,24 +21,18 @@ package dev.octoshrimpy.quik.model
 import android.content.ContentResolver
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import io.realm.RealmObject
-import io.realm.RealmResults
-import io.realm.annotations.Index
-import io.realm.annotations.LinkingObjects
-import io.realm.annotations.PrimaryKey
 import java.io.File
 
-open class MmsPart : RealmObject() {
+open class MmsPart : ModelObject() {
 
-    @PrimaryKey var id: Long = 0
-    @Index var messageId: Long = 0
+    var id: Long = 0
+    var messageId: Long = 0
     var type: String = ""
     var seq: Int = -1
     var name: String? = null
     var text: String? = null
 
-    @LinkingObjects("parts")
-    val messages: RealmResults<Message>? = null
+    val messages: List<Message>? = null
 
     fun getUri(): Uri = Uri
         .Builder()

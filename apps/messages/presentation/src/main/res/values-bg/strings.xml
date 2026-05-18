@@ -218,7 +218,6 @@
     <string name="settings_black_title">Чисто черен нощен режим</string>
     <string name="settings_night_start_title">Начален час</string>
     <string name="settings_night_end_title">Краен час</string>
-    <string name="settings_automatic_colors_title">Автоматични цветове на контактите</string>
     <string name="settings_text_size_title">Размер на шрифта</string>
     <string name="settings_system_font_title">Използване на системния шрифт</string>
     <string name="settings_system_show_stt_title">Бутон за превръщане на реч в текст</string>

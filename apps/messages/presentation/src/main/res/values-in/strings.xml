@@ -193,7 +193,6 @@
     <string name="settings_black_title">Mode malam hitam pekat</string>
     <string name="settings_night_start_title">Waktu mulai</string>
     <string name="settings_night_end_title">Waktu berakhir</string>
-    <string name="settings_automatic_colors_title">Warna kontak otomatis</string>
     <string name="settings_text_size_title">Ukuran fon</string>
     <string name="settings_system_font_title">Gunakan fon sistem</string>
     <string name="settings_auto_emoji_title">Emoji otomatis</string>

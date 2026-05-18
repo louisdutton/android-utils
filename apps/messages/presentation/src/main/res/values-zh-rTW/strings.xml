@@ -193,7 +193,6 @@
     <string name="settings_black_title">純黑色夜間模式</string>
     <string name="settings_night_start_title">開始時間</string>
     <string name="settings_night_end_title">結束時間</string>
-    <string name="settings_automatic_colors_title">聯絡人自動上色</string>
     <string name="settings_text_size_title">字型大小</string>
     <string name="settings_system_font_title">使用系統字型</string>
     <string name="settings_auto_emoji_title">自動表情符號</string>

@@ -22,6 +22,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -43,16 +44,13 @@ import dev.octoshrimpy.quik.manager.ChangelogManager
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.repository.SyncRepository
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmResults
+import java.util.Locale
 import javax.inject.Inject
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -86,10 +84,8 @@ class MainActivity : QkThemedActivity(), MainView {
 
     private val selectedConversationIds = mutableStateListOf<Long>()
     private var visibleConversationIds: List<Long> = emptyList()
-    private var observedConversationData: RealmResults<Conversation>? = null
-    private var observedConversationDisposable: Disposable? = null
     private var uiState by mutableStateOf(MainState())
-    private var listVersion by mutableIntStateOf(0)
+    private var conversationRows by mutableStateOf<List<ConversationRowModel>>(emptyList())
     private var searchQuery by mutableStateOf("")
 
     override val onNewIntentIntent: Observable<Intent> = onNewIntentSubject
@@ -123,7 +119,7 @@ class MainActivity : QkThemedActivity(), MainView {
         setContent {
             MessagesMainScreen(
                 state = uiState,
-                listVersion = listVersion,
+                conversationRows = conversationRows,
                 query = searchQuery,
                 selectedConversationIds = selectedConversationIds.toSet(),
                 dateFormatter = dateFormatter,
@@ -172,12 +168,7 @@ class MainActivity : QkThemedActivity(), MainView {
         }
 
         uiState = state
-        visibleConversationIds = when (val page = state.page) {
-            is Inbox -> page.data?.map { it.id }.orEmpty()
-            is Archived -> page.data?.map { it.id }.orEmpty()
-            else -> emptyList()
-        }
-        observeConversationData(state.page)
+        refreshConversationRows(state.page)
     }
 
     override fun onResume() =
@@ -187,7 +178,6 @@ class MainActivity : QkThemedActivity(), MainView {
         super.onPause().also { activityResumedSubject.onNext(false) }
 
     override fun onDestroy() {
-        observedConversationDisposable?.dispose()
         super.onDestroy()
         disposables.dispose()
     }
@@ -225,7 +215,7 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun themeChanged() {
-        listVersion++
+        refreshConversationRows(uiState.page)
     }
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
@@ -283,20 +273,20 @@ class MainActivity : QkThemedActivity(), MainView {
         navigationSubject.onNext(NavItem.BACK)
     }
 
-    private fun openOrToggleConversation(conversation: Conversation) {
+    private fun openOrToggleConversation(conversationId: Long) {
         if (selectedConversationIds.isEmpty()) {
-            navigator.showConversation(conversation.id)
+            navigator.showConversation(conversationId)
         } else {
-            toggleConversationSelection(conversation)
+            toggleConversationSelection(conversationId)
         }
     }
 
-    private fun toggleConversationSelection(conversation: Conversation) {
+    private fun toggleConversationSelection(conversationId: Long) {
         val nextSelection = selectedConversationIds.toMutableList()
-        if (nextSelection.contains(conversation.id)) {
-            nextSelection -= conversation.id
+        if (nextSelection.contains(conversationId)) {
+            nextSelection -= conversationId
         } else {
-            nextSelection += conversation.id
+            nextSelection += conversationId
         }
         updateSelection(nextSelection)
     }
@@ -307,21 +297,60 @@ class MainActivity : QkThemedActivity(), MainView {
         conversationsSelectedSubject.onNext(selection)
     }
 
-    private fun observeConversationData(page: MainPage) {
-        val data = when (page) {
-            is Inbox -> page.data
-            is Archived -> page.data
-            else -> null
+    private fun refreshConversationRows(page: MainPage) {
+        val conversations = when (page) {
+            is Inbox -> page.data.orEmpty()
+            is Archived -> page.data.orEmpty()
+            else -> emptyList()
         }
 
-        if (observedConversationData === data) return
+        applyConversationRows(buildConversationRows(conversations))
+    }
 
-        observedConversationDisposable?.dispose()
-        observedConversationData = data
-        observedConversationDisposable = data
-            ?.asFlowable()
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.autoDispose(scope())
-            ?.subscribe { listVersion++ }
+    private fun buildConversationRows(conversations: List<Conversation>): List<ConversationRowModel> {
+        return conversations.map(::conversationRow)
+    }
+
+    private fun applyConversationRows(rows: List<ConversationRowModel>) {
+        conversationRows = rows
+        visibleConversationIds = rows.map { it.id }
+    }
+
+    private fun conversationRow(conversation: Conversation): ConversationRowModel {
+        val title = conversationTitle(conversation)
+        val snippet = when {
+            conversation.draft.isNotEmpty() -> getString(R.string.main_sender_draft, conversation.draft)
+            conversation.me -> getString(R.string.main_sender_you, conversation.snippet.orEmpty())
+            else -> conversation.snippet.orEmpty()
+        }
+
+        return ConversationRowModel(
+            id = conversation.id,
+            title = title,
+            avatarText = title.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
+            snippet = snippet,
+            timestamp = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp),
+            unread = conversation.unread,
+            pinned = conversation.pinned,
+        )
+    }
+
+    private fun conversationTitle(conversation: Conversation): String {
+        conversation.name.trim().takeIf { it.isNotEmpty() }?.let { return it }
+
+        conversation.recipients
+            .joinToString { recipient -> recipient.getDisplayName() }
+            .trim()
+            .takeIf { it.isNotEmpty() }
+            ?.let { return it }
+
+        conversation.lastMessage
+            ?.address
+            ?.takeIf { it.isNotBlank() }
+            ?.let { address ->
+                return PhoneNumberUtils.formatNumber(address, Locale.getDefault().country) ?: address
+            }
+
+        return getString(android.R.string.unknownName)
     }
 }

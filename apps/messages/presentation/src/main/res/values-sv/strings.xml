@@ -194,7 +194,6 @@
     <string name="settings_black_title">Svart nattläge</string>
     <string name="settings_night_start_title">Starttid</string>
     <string name="settings_night_end_title">Sluttid</string>
-    <string name="settings_automatic_colors_title">Automatiska kontaktfärger</string>
     <string name="settings_text_size_title">Storlek på typsnitt</string>
     <string name="settings_system_font_title">Använd systemteckensnitt</string>
     <string name="settings_auto_emoji_title">Automatisk uttryckssymbol</string>

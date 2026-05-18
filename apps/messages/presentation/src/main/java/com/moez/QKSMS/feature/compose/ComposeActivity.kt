@@ -44,12 +44,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
+import androidx.activity.enableEdgeToEdge
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import dev.octoshrimpy.quik.common.ViewModelFactory
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -69,6 +73,7 @@ import dev.octoshrimpy.quik.common.util.extensions.autoScrollToStart
 import dev.octoshrimpy.quik.common.util.extensions.dpToPx
 import dev.octoshrimpy.quik.common.util.extensions.hideKeyboard
 import dev.octoshrimpy.quik.common.util.extensions.makeToast
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.scrapViews
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
@@ -93,6 +98,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 
 class ComposeActivity : QkThemedActivity(), ComposeView {
@@ -175,11 +181,32 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         return SpeechRecognizer.isRecognitionAvailable(this)
     }
 
+    private fun applySystemBarInsets() {
+        val initialLeft = binding.contentView.paddingLeft
+        val initialTop = binding.contentView.paddingTop
+        val initialRight = binding.contentView.paddingRight
+        val initialBottom = binding.contentView.paddingBottom
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.contentView) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(
+                left = initialLeft + systemBars.left,
+                top = initialTop + systemBars.top,
+                right = initialRight + systemBars.right,
+                bottom = initialBottom + systemBars.bottom,
+            )
+            insets
+        }
+        ViewCompat.requestApplyInsets(binding.contentView)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ComposeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        applySystemBarInsets()
         showBackButton(true)
         viewModel.bindView(this)
 
@@ -202,39 +229,62 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             binding.message.supportsInputContent = true
 
             theme
-                .doOnNext {
-                    binding.loading.setTint(it.theme)
+                .doOnNext { legacyTheme ->
+                    val primary = resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+                    val onPrimaryContainer = resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
+                    val primaryContainer = resolveThemeColor(MaterialR.attr.colorPrimaryContainer)
+                    val onSurface = resolveThemeColor(MaterialR.attr.colorOnSurface)
+                    val surfaceContainerHigh = resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
 
-                    // entire attach menu
-                    binding.attach.setBackgroundTint(it.theme); binding.attach.setTint(it.textPrimary)
-                    binding.contact.setBackgroundTint(it.theme); binding.contact.setTint(it.textPrimary)
-                    binding.contactLabel.setBackgroundTint(it.theme); binding.contactLabel.setTint(it.textPrimary)
-                    binding.schedule.setBackgroundTint(it.theme); binding.schedule.setTint(it.textPrimary)
-                    binding.scheduleLabel.setBackgroundTint(it.theme); binding.scheduleLabel.setTint(it.textPrimary)
-                    binding.attachAFileIcon.setBackgroundTint(it.theme); binding.attachAFileIcon.setTint(it.textPrimary)
-                    binding.attachAFileLabel.setBackgroundTint(it.theme); binding.attachAFileLabel.setTint(it.textPrimary)
-                    binding.attachAnAudioMessageIcon.setBackgroundTint(it.theme); binding.attachAnAudioMessageIcon.setTint(it.textPrimary)
-                    binding.attachAnAudioMessageLabel.setBackgroundTint(it.theme); binding.attachAnAudioMessageLabel.setTint(it.textPrimary)
-                    binding.gallery.setBackgroundTint(it.theme); binding.gallery.setTint(it.textPrimary)
-                    binding.galleryLabel.setBackgroundTint(it.theme); binding.galleryLabel.setTint(it.textPrimary)
-                    binding.camera.setBackgroundTint(it.theme); binding.camera.setTint(it.textPrimary)
-                    binding.cameraLabel.setBackgroundTint(it.theme); binding.cameraLabel.setTint(it.textPrimary)
+                    binding.loading.setTint(primary)
+                    binding.messageBackground.setBackgroundTint(surfaceContainerHigh)
+                    binding.send.setTint(primary)
+                    binding.scheduledSend.setTint(primary)
+                    binding.recordAudioMsg.setTint(primary)
+                    binding.scheduledCancel.setTint(resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant))
 
-                    // speech to text floating button
-                    binding.speechToTextIconBorder.setBackgroundTint(it.theme)
-                    binding.speechToTextIcon.setBackgroundTint(it.textPrimary)
-                    binding.speechToTextIcon.setTint(it.theme)
-
-                    // audio message recording
-                    binding.audioMsgRecord.setColor(it.theme)
-                    binding.audioMsgPlayerPlayPause.setTint(it.theme)
-                    binding.audioMsgPlayerSeekBar.apply {
-                        thumbTintList = ColorStateList.valueOf(it.theme)
-                        progressBackgroundTintList = ColorStateList.valueOf(it.theme)
-                        progressTintList = ColorStateList.valueOf(it.theme)
+                    listOf(
+                        binding.attach,
+                        binding.contact,
+                        binding.schedule,
+                        binding.attachAFileIcon,
+                        binding.attachAnAudioMessageIcon,
+                        binding.gallery,
+                        binding.camera
+                    ).forEach { view ->
+                        view.setBackgroundTint(primaryContainer)
+                        view.setTint(onPrimaryContainer)
                     }
 
-                    messageAdapter.theme = it
+                    listOf(
+                        binding.contactLabel,
+                        binding.scheduleLabel,
+                        binding.attachAFileLabel,
+                        binding.attachAnAudioMessageLabel,
+                        binding.galleryLabel,
+                        binding.cameraLabel
+                    ).forEach { label ->
+                        label.setBackgroundTint(surfaceContainerHigh)
+                        label.setTextColor(onSurface)
+                    }
+
+                    // speech to text floating button
+                    binding.speechToTextIconBorder.setBackgroundTint(primaryContainer)
+                    binding.speechToTextIcon.setBackgroundTint(surfaceContainerHigh)
+                    binding.speechToTextIcon.setTint(primary)
+
+                    // audio message recording
+                    binding.audioMsgRecord.setColor(primary)
+                    binding.audioMsgPlayerBackground.setBackgroundTint(surfaceContainerHigh)
+                    binding.audioMsgControls.setBackgroundTint(surfaceContainerHigh)
+                    binding.audioMsgPlayerPlayPause.setTint(primary)
+                    binding.audioMsgPlayerSeekBar.apply {
+                        thumbTintList = ColorStateList.valueOf(primary)
+                        progressBackgroundTintList = ColorStateList.valueOf(primary)
+                        progressTintList = ColorStateList.valueOf(primary)
+                    }
+
+                    messageAdapter.theme = legacyTheme
                 }
                 .autoDispose(scope())
                 .subscribe()
@@ -683,7 +733,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun showQksmsPlusSnackbar(message: Int) {
         Snackbar.make(binding.contentView, message, Snackbar.LENGTH_LONG).run {
             setAction(R.string.button_more) { viewQksmsPlusIntent.onNext(Unit) }
-            setActionTextColor(colors.theme().theme)
+            setActionTextColor(resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme))
             show()
         }
     }

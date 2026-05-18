@@ -193,7 +193,6 @@
     <string name="settings_black_title">완전한 블랙 테마</string>
     <string name="settings_night_start_title">시작 시간</string>
     <string name="settings_night_end_title">끝나는 시간</string>
-    <string name="settings_automatic_colors_title">연락처 색 자동 설정</string>
     <string name="settings_text_size_title">글꼴 크기</string>
     <string name="settings_system_font_title">시스템 글꼴 사용</string>
     <string name="settings_auto_emoji_title">자동 이모티콘</string>

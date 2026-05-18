@@ -229,7 +229,6 @@
     <string name="settings_black_title">Mod pur negru de noapte</string>
     <string name="settings_night_start_title">Ora de începere</string>
     <string name="settings_night_end_title">Ora de încheiere</string>
-    <string name="settings_automatic_colors_title">Culori de contact automate</string>
     <string name="settings_text_size_title">Dimensiunea fontului</string>
     <string name="settings_system_font_title">Folosește fontul sistemului</string>
     <string name="settings_system_show_stt_title">Arată butonul vorbire-în-text</string>

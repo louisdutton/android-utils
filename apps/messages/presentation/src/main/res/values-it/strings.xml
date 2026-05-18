@@ -195,7 +195,6 @@
     <string name="settings_black_title">Modalità notte nero puro</string>
     <string name="settings_night_start_title">Ora di inizio</string>
     <string name="settings_night_end_title">Ora di fine</string>
-    <string name="settings_automatic_colors_title">Colori dei contatti automatici</string>
     <string name="settings_text_size_title">Dimensione carattere</string>
     <string name="settings_system_font_title">Usa il carattere di sistema</string>
     <string name="settings_auto_emoji_title">Emoji automatico</string>

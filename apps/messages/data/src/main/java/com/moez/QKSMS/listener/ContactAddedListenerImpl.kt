@@ -24,11 +24,11 @@ import android.net.Uri
 import android.os.Handler
 import android.provider.ContactsContract
 import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 /**
- * Listens for a contact being added, and then syncs it to Realm
+ * Listens for a contact being added, and then syncs it to the local database.
  */
 class ContactAddedListenerImpl @Inject constructor(
     private val context: Context
@@ -44,7 +44,7 @@ class ContactAddedListenerImpl @Inject constructor(
 
     private class ContactContentObserver(context: Context) : ContentObserver(Handler()) {
 
-        private val subject = BehaviorSubject.createDefault(Unit)
+        private val subject = PublishSubject.create<Unit>()
 
         val observable: Observable<Unit> = subject
                 .doOnSubscribe { context.contentResolver.registerContentObserver(URI, true, this) }

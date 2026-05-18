@@ -194,7 +194,6 @@
     <string name="settings_black_title">தூய கருப்பு இரவு பயன்முறை</string>
     <string name="settings_night_start_title">தொடக்க நேரம்</string>
     <string name="settings_night_end_title">முடிவு நேரம்</string>
-    <string name="settings_automatic_colors_title">தானியங்கு தொடர்பு நிறங்கள்</string>
     <string name="settings_text_size_title">எழுத்துரு அளவு</string>
     <string name="settings_system_font_title">இச்சாதன எழுத்துரு கொள்</string>
     <string name="settings_auto_emoji_title">தானியங்கு உருவடி</string>

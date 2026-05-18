@@ -47,6 +47,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 
 class AudioBinder @Inject constructor(colors: Colors, private val context: Context) :
@@ -194,24 +195,26 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
             audioState.viewHolder = null
 
         // tint colours
-        val secondaryColor =
-            if (!message.isMe())
-                theme.theme
-            else
-                holder.itemView.context.resolveThemeColor(R.attr.bubbleColor)
-        val primaryColor =
-            if (!message.isMe())
-                theme.textPrimary
-            else
-                holder.itemView.context.resolveThemeColor(android.R.attr.textColorPrimary)
+        val itemContext = holder.itemView.context
+        val bubbleColor = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorPrimaryContainer)
+        } else {
+            itemContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
+        }
+        val contentColor = if (message.isMe()) {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
+        } else {
+            itemContext.resolveThemeColor(MaterialR.attr.colorOnSurface)
+        }
+        val controlColor = itemContext.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
 
         // sound wave
-        binding.soundWave.setTint(primaryColor)
+        binding.soundWave.setTint(contentColor)
 
         // seek bar
         binding.seekBar.apply {
-            setTint(secondaryColor)
-            thumbTintList = ColorStateList.valueOf(secondaryColor)
+            setTint(controlColor)
+            thumbTintList = ColorStateList.valueOf(controlColor)
 
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(p0: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -235,8 +238,8 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
             else
                 uiToStopped(binding)
 
-            setTint(secondaryColor)
-            setBackgroundTint(primaryColor)
+            setTint(controlColor)
+            setBackgroundTint(bubbleColor)
         }
 
         MediaMetadataRetriever().apply {
@@ -252,8 +255,8 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                         visibility = View.GONE
                     else {
                         visibility = View.VISIBLE
-                        setTextColor(primaryColor)
-                        setBackgroundTint(secondaryColor.withAlpha(0xcc))    // hex value is alpha
+                        setTextColor(contentColor)
+                        setBackgroundTint(bubbleColor.withAlpha(0xcc))
                     }
                 }
 
@@ -275,7 +278,7 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                     val embeddedPicture = embeddedPicture
                     if (embeddedPicture == null) {
                         binding.frame.layoutParams.height = (binding.frame.layoutParams.width / 2)
-                        setTint(secondaryColor)
+                        setTint(bubbleColor)
                         setImageResource(R.drawable.rectangle)
                     } else {
                         binding.frame.layoutParams.height = binding.frame.layoutParams.width

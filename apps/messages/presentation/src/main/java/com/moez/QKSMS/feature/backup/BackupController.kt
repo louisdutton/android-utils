@@ -35,6 +35,7 @@ import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkController
 import dev.octoshrimpy.quik.common.util.QkActivityResultContracts
 import dev.octoshrimpy.quik.common.util.extensions.getLabel
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setNegativeButton
 import dev.octoshrimpy.quik.common.util.extensions.setPositiveButton
@@ -48,6 +49,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 class BackupController : QkController<BackupControllerBinding, BackupView, BackupState, BackupPresenter>(), BackupView {
 
@@ -138,13 +140,13 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     override fun onViewCreated() {
         super.onViewCreated()
 
-        themedActivity?.colors?.theme()?.let { theme ->
-            binding.progressBar.indeterminateTintList = ColorStateList.valueOf(theme.theme)
-            binding.progressBar.progressTintList = ColorStateList.valueOf(theme.theme)
-            binding.fab.setBackgroundTint(theme.theme)
-            binding.fabIcon.setTint(theme.textPrimary)
-            binding.fabLabel.setTextColor(theme.textPrimary)
-        }
+        val primary = binding.root.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+        val onPrimary = binding.root.context.resolveThemeColor(MaterialR.attr.colorOnPrimary)
+        binding.progressBar.indeterminateTintList = ColorStateList.valueOf(primary)
+        binding.progressBar.progressTintList = ColorStateList.valueOf(primary)
+        binding.fab.setBackgroundTint(primary)
+        binding.fabIcon.setTint(onPrimary)
+        binding.fabLabel.setTextColor(onPrimary)
 
         // Make the list titles bold
         binding.linearLayout.children

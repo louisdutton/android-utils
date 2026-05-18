@@ -238,7 +238,6 @@
     <string name="settings_black_title">Mode noir pur</string>
     <string name="settings_night_start_title">Heure de début</string>
     <string name="settings_night_end_title">Heure de fin</string>
-    <string name="settings_automatic_colors_title">Couleurs de contact automatiques</string>
     <string name="settings_text_size_title">Taille de la police</string>
     <string name="settings_system_font_title">Utiliser la police du système</string>
     <string name="settings_system_show_stt_title">Afficher le bouton de saisie vocale</string>

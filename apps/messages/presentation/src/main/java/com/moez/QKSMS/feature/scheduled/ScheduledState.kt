@@ -19,10 +19,9 @@
 package dev.octoshrimpy.quik.feature.scheduled
 
 import dev.octoshrimpy.quik.model.ScheduledMessage
-import io.realm.RealmResults
 
 data class ScheduledState(
-    val scheduledMessages: RealmResults<ScheduledMessage>? = null,
+    val scheduledMessages: List<ScheduledMessage>? = null,
     val upgraded: Boolean = true,
     val selectedMessages: Int = 0,
     val conversationId: Long? = null,

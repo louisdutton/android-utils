@@ -194,7 +194,6 @@
     <string name="settings_black_title">Pure zwarte nachtmodus</string>
     <string name="settings_night_start_title">Starttijd</string>
     <string name="settings_night_end_title">Eindtijd</string>
-    <string name="settings_automatic_colors_title">Automatische contactkleuren</string>
     <string name="settings_text_size_title">Tekst grootte</string>
     <string name="settings_system_font_title">Gebruik lettertype van systeem</string>
     <string name="settings_auto_emoji_title">Automatische emoji</string>

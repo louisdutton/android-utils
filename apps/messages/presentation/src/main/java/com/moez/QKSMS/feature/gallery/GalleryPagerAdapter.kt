@@ -29,7 +29,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.google.android.mms.ContentType
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
+import dev.octoshrimpy.quik.common.base.QkListAdapter
 import dev.octoshrimpy.quik.common.base.QkViewHolder
 import dev.octoshrimpy.quik.databinding.GalleryImagePageBinding
 import dev.octoshrimpy.quik.databinding.GalleryVideoPageBinding
@@ -42,7 +42,7 @@ import io.reactivex.subjects.Subject
 import java.util.*
 import javax.inject.Inject
 
-class GalleryPagerAdapter @Inject constructor(private val context: Context) : QkRealmAdapter<MmsPart, QkViewHolder>() {
+class GalleryPagerAdapter @Inject constructor(private val context: Context) : QkListAdapter<MmsPart, QkViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_INVALID = 0

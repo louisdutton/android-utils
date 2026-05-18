@@ -24,7 +24,6 @@ import dev.octoshrimpy.quik.model.Message
 import dev.octoshrimpy.quik.model.MmsPart
 import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.realm.RealmResults
 
 interface MessageRepository {
     sealed class DeduplicationProgress {
@@ -40,31 +39,35 @@ interface MessageRepository {
 
     val deduplicationProgress: Observable<DeduplicationProgress>
 
-    fun getMessages(threadId: Long, query: String = ""): RealmResults<Message>
+    fun observeMessages(threadId: Long, query: String = ""): Observable<List<Message>>
 
-    fun getMessagesSync(threadId: Long, query: String = ""): RealmResults<Message>
+    fun getMessagesSnapshot(threadId: Long, query: String = ""): List<Message>
+
+    fun getMessages(threadId: Long, query: String = ""): List<Message>
+
+    fun getMessagesSync(threadId: Long, query: String = ""): List<Message>
 
     fun getMessage(messageId: Long): Message?
 
     fun getUnmanagedMessage(messageId: Long): Message?
 
-    fun getMessages(messageIds: Collection<Long>): RealmResults<Message>
+    fun getMessages(messageIds: Collection<Long>): List<Message>
 
     fun getMessageForPart(id: Long): Message?
 
-    fun getLastIncomingMessage(threadId: Long): RealmResults<Message>
+    fun getLastIncomingMessage(threadId: Long): List<Message>
 
     fun getUnreadCount(): Long
 
     fun getPart(id: Long): MmsPart?
 
-    fun getPartsForConversation(threadId: Long): RealmResults<MmsPart>
+    fun getPartsForConversation(threadId: Long): List<MmsPart>
 
     fun savePart(id: Long): Uri?
 
-    fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message>
+    fun getUnreadUnseenMessages(threadId: Long): List<Message>
 
-    fun getUnreadMessages(threadId: Long): RealmResults<Message>
+    fun getUnreadMessages(threadId: Long): List<Message>
 
     fun markAllSeen(): Int
 

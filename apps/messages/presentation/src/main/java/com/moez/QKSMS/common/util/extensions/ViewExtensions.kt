@@ -32,6 +32,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 
@@ -85,6 +88,25 @@ fun View.setBackgroundTint(color: Int?) {
 
 fun View.setPadding(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null) {
     setPadding(left ?: paddingLeft, top ?: paddingTop, right ?: paddingRight, bottom ?: paddingBottom)
+}
+
+fun View.applySystemBarPadding() {
+    val initialLeft = paddingLeft
+    val initialTop = paddingTop
+    val initialRight = paddingRight
+    val initialBottom = paddingBottom
+
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updatePadding(
+            left = initialLeft + systemBars.left,
+            top = initialTop + systemBars.top,
+            right = initialRight + systemBars.right,
+            bottom = initialBottom + systemBars.bottom,
+        )
+        insets
+    }
+    ViewCompat.requestApplyInsets(this)
 }
 
 fun View.setVisible(visible: Boolean, invisible: Int = View.GONE) {

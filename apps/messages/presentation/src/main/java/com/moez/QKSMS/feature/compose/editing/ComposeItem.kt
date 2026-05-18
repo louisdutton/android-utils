@@ -22,7 +22,6 @@ import dev.octoshrimpy.quik.model.Contact
 import dev.octoshrimpy.quik.model.ContactGroup
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.model.PhoneNumber
-import io.realm.RealmList
 
 sealed class ComposeItem {
 
@@ -34,7 +33,7 @@ sealed class ComposeItem {
 
     data class Recent(val value: Conversation) : ComposeItem() {
         override fun getContacts(): List<Contact> = value.recipients.map { recipient ->
-            recipient.contact ?: Contact(numbers = RealmList(PhoneNumber(address = recipient.address)))
+            recipient.contact ?: Contact(numbers = mutableListOf(PhoneNumber(address = recipient.address)))
         }
     }
 

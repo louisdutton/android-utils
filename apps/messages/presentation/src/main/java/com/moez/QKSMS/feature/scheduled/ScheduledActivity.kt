@@ -29,12 +29,14 @@ import com.jakewharton.rxbinding2.view.clicks
 import dagger.android.AndroidInjection
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkThemedActivity
+import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.databinding.ScheduledActivityBinding
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import com.google.android.material.R as MaterialR
 
 
 class ScheduledActivity : QkThemedActivity(), ScheduledView {
@@ -69,15 +71,15 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
         scheduledMessageAdapter.emptyView = binding.empty
         binding.messages.adapter = scheduledMessageAdapter
 
-        colors.theme().let { theme ->
-            binding.sampleMessage.setBackgroundTint(theme.theme)
-            binding.sampleMessage.setTextColor(theme.textPrimary)
-            binding.compose.setTint(theme.textPrimary)
-            binding.compose.setBackgroundTint(theme.theme)
-            binding.upgrade.setBackgroundTint(theme.theme)
-            binding.upgradeIcon.setTint(theme.textPrimary)
-            binding.upgradeLabel.setTextColor(theme.textPrimary)
-        }
+        val primary = resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
+        val onPrimary = resolveThemeColor(MaterialR.attr.colorOnPrimary)
+        binding.sampleMessage.setBackgroundTint(primary)
+        binding.sampleMessage.setTextColor(onPrimary)
+        binding.compose.setTint(onPrimary)
+        binding.compose.setBackgroundTint(primary)
+        binding.upgrade.setBackgroundTint(primary)
+        binding.upgradeIcon.setTint(onPrimary)
+        binding.upgradeLabel.setTextColor(onPrimary)
     }
 
     override fun render(state: ScheduledState) {
