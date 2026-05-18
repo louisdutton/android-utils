@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.devtools.ksp'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
@@ -55,6 +56,7 @@ android {
 
     buildFeatures {
         buildConfig true
+        compose true
         resValues true
         viewBinding true
     }
@@ -68,6 +70,13 @@ dependencies {
     implementation "androidx.emoji2:emoji2-bundled:$androidx_emoji2_version"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.activity:activity-compose:1.13.0"
+    implementation platform("androidx.compose:compose-bom:$compose_bom_version")
+    implementation "androidx.compose.foundation:foundation"
+    implementation "androidx.compose.material:material-icons-extended"
+    implementation "androidx.compose.material3:material3"
+    implementation "androidx.compose.runtime:runtime"
+    implementation "androidx.compose.ui:ui"
     implementation "androidx.documentfile:documentfile:$androidx_documentfile_version"
     implementation "androidx.recyclerview:recyclerview:$androidx_recyclerview_version"
     implementation "androidx.viewpager2:viewpager2:$androidx_viewpager_version"
