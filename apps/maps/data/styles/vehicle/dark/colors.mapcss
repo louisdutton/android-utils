@@ -38,9 +38,9 @@
 /* 3.1 Main natural */
 
 @glacier: #181A1C;
-@water: #10181C;
-@water_bad: #11171A;
-@river: #172226;
+@water: #17313A;
+@water_bad: #18292F;
+@river: #1D3A43;
 @wetland: #14181A;
 @beach: #151617;
 @barerock: #171819;
@@ -149,8 +149,8 @@
 
 /* 6.2 Natural labels */
 
-@water_label: #6F8790;
-@water_light_label: #8297A0;
+@water_label: #8EA7B0;
+@water_light_label: #A0B6BE;
 @park_label: #7C8183;
 @halo_park_label: #040506;
 

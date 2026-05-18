@@ -41,8 +41,8 @@
 /* 3.1 Main natural */
 
 @glacier: #181A1C;
-@water: #10181C;
-@water_bad: #11171A;
+@water: #17313A;
+@water_bad: #18292F;
 @wetland_tidal: #14181A;
 @wetland_tidal_saltmarsh: #141819;
 @wetland_saltmarsh: #141818;
@@ -248,8 +248,8 @@
 @hotel_label: #88827C;
 @sport_label: #7F8784;
 @nature_label: #7D8481;
-@water_label: #6F8790;
-@water_light_label: #8297A0;
+@water_label: #8EA7B0;
+@water_light_label: #A0B6BE;
 @neutral_label: #7D8389;
 @healthcare_label: #967E7E;
 @public_transport_label: #7F96A8;
