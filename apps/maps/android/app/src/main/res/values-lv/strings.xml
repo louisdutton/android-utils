@@ -810,7 +810,6 @@
     <string name="list_description_empty">Jālabo saraksts, lai pievienotu aprakstu</string>
     <string name="delete_track_dialog_title">Izdzēst %s?</string>
     <string name="app_tip_04">Jāpiesit jebkur kartē, lai atlasītu jebko. Ilga piespiešana tiek izmantota, lai paslēptu un parādītu saskarni.</string>
-    <string name="pref_left_button_disable">Atspējot</string>
     <string name="error_enter_correct_level">Jāievada derīgs stāvu skaits</string>
     <string name="error_enter_correct_fediverse_page">Jāievada derīgs Mastodon lietotājvārds vai tīmekļa adrese</string>
     <string name="error_enter_correct_bluesky_page">Jāievada derīgs Bluesky lietotājvārds vai tīmekļa adrese</string>

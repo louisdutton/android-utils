@@ -905,8 +905,6 @@
     <string name="choose_color">Choose Color</string>
     <string name="edit_track">Edit Track</string>
     <string name="uri_open_location_failed">No app installed that can open the location</string>
-    <string name="pref_left_button_title">Left button setup</string>
-    <string name="pref_left_button_disable">Disable</string>
 
     <!-- Settings "Backup" category: "Backup" title -->
     <string name="pref_backup_title">Backup Favorites</string>

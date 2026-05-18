@@ -805,7 +805,6 @@
     <string name="dialog_report_error_with_logs">Send os en fejlrapport:\n - \"Aktivér logning\" i indstillingerne\n - genskab problemet\n - Tryk på knappen \"Rapporter en fejl\" i skærmbilledet \"Om og hjælp\" og send via e-mail eller chat.\n - deaktiver logning</string>
     <string name="editor_building_levels">Etager (inkl. stueetage, ekskl. tag)</string>
     <string name="error_enter_correct_level">Indtast et gyldigt etagenummer</string>
-    <string name="pref_left_button_title">Indstilling af venstre knap</string>
     <string name="pref_backup_title">Sikkerhedskopiér favoritter</string>
     <string name="pref_backup_now_title">Sikkerhedskopiér nu</string>
     <string name="pref_backup_now_summary">Opret en sikkerhedskopi straks</string>
@@ -819,7 +818,6 @@
     <string name="pref_backup_summary">Automatisk sikkerhedskopiering til en mappe på din enhed</string>
     <string name="pref_backup_now_summary_progress">Sikkerhedskopiering i gang…</string>
     <string name="pref_backup_location_title">Placering af sikkerhedskopi</string>
-    <string name="pref_left_button_disable">Deaktiver</string>
     <string name="app_site_url">https://comaps.app/</string>
     <string name="closed_now">Lukket nu</string>
     <string name="open_now">Åben nu</string>

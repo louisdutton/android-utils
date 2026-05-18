@@ -816,7 +816,6 @@
     <string name="avoid_steps">הימנעות ממדרגות</string>
     <string name="setting_value_system_default">ברירת המחדל של המערכת</string>
     <string name="change_app_locale">שפת היישום</string>
-    <string name="pref_left_button_disable">מושבת</string>
     <string name="pref_backup_title">גיבוי המועדפים</string>
     <string name="pref_backup_now_title">גיבוי כעת</string>
     <string name="pref_backup_now_summary_progress">מתבצע גיבוי…</string>

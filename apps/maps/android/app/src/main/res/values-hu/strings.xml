@@ -802,14 +802,12 @@
     <string name="osm_note_hint">Vagy írjon egy megjegyzést az OpenStreetMap közösségnek, hogy valaki más hozzáadhassa vagy kijavíthassa itt a helyet.</string>
     <string name="error_enter_correct_bluesky_page">Adjon meg egy érvényes Bluesky felhasználónevet vagy webcímet</string>
     <string name="osm_note_toast">A megjegyzés el lesz küldve az OpenStreetMap közösségnek</string>
-    <string name="pref_left_button_disable">Letiltás</string>
     <string name="pref_backup_now_summary_progress">Biztonsági mentés folyamatban…</string>
     <string name="pref_backup_now_summary">Készítsen biztonsági mentést most</string>
     <string name="pref_backup_now_summary_ok">A biztonsági mentés sikeresen befejeződött</string>
     <string name="pref_backup_now_summary_empty_lists">Nincsenek könyvjelzők és nyomvonalak a biztonsági mentéshez</string>
     <string name="pref_backup_now_title">Biztonsági mentés most</string>
     <string name="pref_backup_location_summary_initial">Válasszon ki egy mappát és adja meg az írási/olvasási engedélyt</string>
-    <string name="pref_left_button_title">Bal oldali gomb beállítása</string>
     <string name="pref_backup_title">Könyvjelzők és nyomvonalak biztonsági mentése</string>
     <string name="pref_backup_summary">Automatikus biztonsági mentés az eszközön lévő mappába</string>
     <string name="pref_backup_now_summary_folder_unavailable">Nem érhető el a biztonsági mentés mappája</string>

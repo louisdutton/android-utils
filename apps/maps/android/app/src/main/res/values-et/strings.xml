@@ -797,8 +797,6 @@
     <string name="error_enter_correct_fediverse_page">Sisesta korrektne Mastodoni kasutajanimi või veebiaadress</string>
     <string name="error_enter_correct_bluesky_page">Sisesta korrektne Bluesky kasutajanimi või veebiaadress</string>
     <string name="saved">Salvestatud</string>
-    <string name="pref_left_button_disable">Keela</string>
-    <string name="pref_left_button_title">Vasaku nupu seadistused</string>
     <string name="editor_building_levels">Korruseid (sh esimene korrus, kuid katusekorruseta)</string>
     <string name="editor_level">Korrus (0 on esimene korrus)</string>
     <string name="error_enter_correct_level">Palun sisesta korruse number</string>

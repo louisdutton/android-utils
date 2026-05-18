@@ -798,8 +798,6 @@
     <string name="error_enter_correct_fediverse_page">Zadejte platné uživatelské jméno nebo webovou adresu Mastodonu</string>
     <string name="error_enter_correct_bluesky_page">Zadejte platné uživatelské jméno nebo webovou adresu Bluesky</string>
     <string name="saved">Uloženo</string>
-    <string name="pref_left_button_disable">Zakázat</string>
-    <string name="pref_left_button_title">Nastavení levého tlačítka</string>
     <string name="error_enter_correct_level">Zadejte platné číslo podlaží</string>
     <string name="editor_building_levels">Patra (vč. přízemí, bez střechy)</string>
     <string name="editor_level">Podlaží (0 je přízemí)</string>

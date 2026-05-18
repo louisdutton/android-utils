@@ -23,12 +23,6 @@
       android:title="@string/measurement_units"
       app:icon="@drawable/ic_straighten"
       app:singleLineTitle="false" />
-    <ListPreference
-      android:key="@string/pref_left_button"
-      android:order="3"
-      android:persistent="true"
-      android:title="@string/pref_left_button_title"
-      app:singleLineTitle="false" />
     <SwitchPreferenceCompat
       android:key="@string/pref_3d_buildings"
       android:order="4"

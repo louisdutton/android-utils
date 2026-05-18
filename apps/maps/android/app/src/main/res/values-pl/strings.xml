@@ -808,7 +808,6 @@
     <string name="panoramax">Obraz Panoramax</string>
     <string name="saved">Zapisano</string>
     <string name="app_site_url">https://comaps.app/pl/</string>
-    <string name="pref_left_button_disable">Wyłącz</string>
     <string name="vehicle">Pojazd</string>
     <string name="bicycle">Rower</string>
     <string name="clear">Wyczyść</string>
@@ -826,7 +825,6 @@
     <string name="ruler">Linijka</string>
     <string name="error_enter_correct_fediverse_page">Wprowadź poprawną nazwę użytkownika Mastodon lub adres internetowy</string>
     <string name="error_enter_correct_bluesky_page">Wprowadź poprawną nazwę użytkownika Bluesky lub adres internetowy</string>
-    <string name="pref_left_button_title">Konfiguracja lewego przycisku</string>
     <string name="pref_backup_title">Kopia zapasowa ulubionych</string>
     <string name="pref_backup_summary">Automatycznie twórz kopię zapasową do folderu na urządzeniu</string>
     <string name="pref_backup_now_summary">Utwórz kopię zapasową natychmiast</string>

@@ -799,8 +799,6 @@
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="saved">Gordeta</string>
     <string name="app_site_url">https://comaps.app/eu/</string>
-    <string name="pref_left_button_disable">Desgaitu</string>
-    <string name="pref_left_button_title">Ezkerreko botoiaren ezarpena</string>
     <string name="about_help">Honi buruz eta Laguntza</string>
     <string name="bookmark_color">Laster-markaren kolorea</string>
     <string name="error_enter_correct_bluesky_page">Sartu baliozko Blueskyko erabiltzaile-izena edo web helbidea</string>

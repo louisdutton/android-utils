@@ -742,7 +742,6 @@
     <string name="elevation_profile_difficulty">Dificuldade</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Pt:Sobre_o_OpenStreetMap</string>
     <string name="editor_focus_map_on_location">Mova o mapa para colocar a cruz na localização da empresa ou do local.</string>
-    <string name="pref_left_button_disable">Desabilitar</string>
     <string name="saved">Salvo</string>
     <string name="privacy">Privacidade</string>
     <string name="pref_tts_speedcams_auto">Avisar se exceder limite de velocidade</string>
@@ -759,7 +758,6 @@
     <string name="clear_the_search">Limpar a pesquisa</string>
     <string name="zoom_out">Diminuir o zoom</string>
     <string name="volume">Volume</string>
-    <string name="pref_left_button_title">Configuração do botão esquerdo</string>
     <string name="error_enter_correct_facebook_page">Insira um endereço da web, conta ou nome de página válidos do Facebook</string>
     <string name="error_enter_correct_line_page">Insira um ID de LINE ou endereço da web válido</string>
     <string name="social_media">Redes sociais</string>

@@ -821,8 +821,6 @@
     <string name="change_app_locale">Bahasa aplikasi</string>
     <string name="pref_maplanguage_local">Bahasa Lokal</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="pref_left_button_title">Pengaturan tombol kiri</string>
-    <string name="pref_left_button_disable">Nonaktifkan</string>
     <string name="pref_backup_title">Cadangkan Favorit</string>
     <string name="pref_backup_summary">Cadangkan secara otomatis ke folder di perangkat Anda</string>
     <string name="pref_backup_now_title">Cadangkan sekarang</string>

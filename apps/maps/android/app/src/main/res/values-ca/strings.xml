@@ -810,11 +810,9 @@
     <string name="pref_backup_now_title">Crear una còpia de seguretat ara</string>
     <string name="pref_backup_now_summary_progress">Còpia de seguretat en progrés…</string>
     <string name="editor_building_levels">Pisos (incl. baixos, excl. teulada)</string>
-    <string name="pref_left_button_disable">Desactivar</string>
     <string name="editor_level">Pis (0 és la planta baixa)</string>
     <string name="error_enter_correct_bluesky_page">Introdueix un nom d\'usuari o una adreça web de Bluesky vàlids</string>
     <string name="pref_backup_title">Còpia de seguretat dels preferits</string>
-    <string name="pref_left_button_title">Configuració del botó esquerre</string>
     <string name="pref_backup_summary">Còpia de seguretat automàtica a un directori del teu dispositiu</string>
     <string name="pref_backup_now_summary_ok">Còpia de seguretat completada amb èxit</string>
     <string name="pref_backup_now_summary_empty_lists">No hi ha preferits per a fer una còpia de seguretat</string>

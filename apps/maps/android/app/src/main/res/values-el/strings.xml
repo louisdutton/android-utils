@@ -812,7 +812,6 @@
     <string name="editor_building_levels">Όροφοι (με το ισόγειο, χωρίς την ταράτσα)</string>
     <string name="about_headline">Ανοιχτό έργο με την υποστήριξη της κοινότητας</string>
     <string name="offline_explanation_text">Χρειάζεται να ληφθεί ένας χάρτης για να δείτε και να πλοηγηθείτε την περιοχή.\nΚατεβάστε χάρτες για τις περιοχές που θέλετε να ταξιδέψετε.</string>
-    <string name="pref_left_button_disable">Απενεργοποίηση</string>
     <string name="avoid_steps">Αποφυγή σκαλοπατιών</string>
     <string name="avoid_paved">Αποφυγή στρωμένων δρόμων</string>
     <string name="unknown_power_output">άγνωστο</string>
@@ -855,7 +854,6 @@
     <string name="navigation_start_tts_message">"Εκκίνηση Πλοήγησης, γλώσσα φωνητικών οδηγιών: "</string>
     <string name="navigation_start_tts_disabled_message">Φωνητικές οδηγίες απενεργοποιημένες: δεν υπάρχει διαθέσιμη μηχανή TTS</string>
     <string name="pref_tts_no_system_tts_short">Δεν βρέθηκε μηχανή κείμενο-σε-ομιλία, ελέγξτε τις ρυθμίσεις της εφαρμογής</string>
-    <string name="pref_left_button_title">Ρύθμιση αριστερού κουμπιού</string>
     <string name="editor_place_doesnt_exist_description">Περιγράψτε το πως μοιάζει το μέρος τώρα για να στείλετε μια σημείωση λάθους στην κοινότητα του OpenStreetMap</string>
     <string name="editor_submit">Υποβολή</string>
     <string name="editor_mark_business_vacant_description">Χρησιμοποιήστε αυτό αν η επιχείρηση έχει μετακομίσει και ο χώρος είναι άδειος και έτοιμος για νέο ενοικιαστή.</string>

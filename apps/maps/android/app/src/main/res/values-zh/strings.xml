@@ -804,8 +804,6 @@
     <string name="error_enter_correct_fediverse_page">请输入有效的 Mastodon 用户名或网址</string>
     <string name="error_enter_correct_bluesky_page">请输入有效的 Bluesky 用户名或网址</string>
     <string name="saved">已保存</string>
-    <string name="pref_left_button_disable">禁用</string>
-    <string name="pref_left_button_title">左侧按钮设置</string>
     <string name="editor_level">楼层（0 表示地面层）</string>
     <string name="error_enter_correct_level">请输入有效的楼层编号</string>
     <string name="editor_building_levels">楼层（含地面层，不含屋顶）</string>

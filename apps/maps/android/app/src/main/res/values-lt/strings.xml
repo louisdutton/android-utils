@@ -785,7 +785,6 @@
     <string name="panoramax">Panoramax vaizdas</string>
     <string name="saved">Įrašyta</string>
     <string name="ruler">Liniuotė</string>
-    <string name="pref_left_button_title">Kairiojo mygtuko funkcija</string>
     <string name="pref_backup_now_summary_empty_lists">Nėra pasižymėtų vietų ar trasų atsarginei kopijai sudaryti</string>
     <string name="pref_backup_interval_title">Automatinis atsarginis kopijavimas</string>
     <string name="dialog_report_error_missing_folder">Pasirinktas atsarginių kopijų aplankas nepasiekiamas, bent jau rašymui. Pasirinkite kitą aplanką.</string>
@@ -797,7 +796,6 @@
     <string name="error_enter_correct_level">Įveskite leistiną aukšto numerį</string>
     <string name="error_enter_correct_bluesky_page">Įveskite galiojantį „Bluesky“ paskyros vardą ar tinklalapio adresą</string>
     <string name="error_enter_correct_fediverse_page">Įveskite galiojantį „Mastodon“ paskyros vardą ar tinklalapio adresą</string>
-    <string name="pref_left_button_disable">Mygtuko nerodyti</string>
     <string name="pref_backup_summary">Automatinis atsarginių kopijų rašymas į pasirinktą aplanką</string>
     <string name="pref_backup_now_title">Įrašyti dabar</string>
     <string name="pref_backup_now_summary_progress">Atsarginė kopija įrašoma…</string>

@@ -800,8 +800,6 @@
     <string name="error_enter_correct_fediverse_page">有効なMastodonのユーザー名またはウェブアドレスを入力してください</string>
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="app_site_url">https://comaps.app/</string>
-    <string name="pref_left_button_title">左ボタンの設定</string>
-    <string name="pref_left_button_disable">無効にする</string>
     <string name="vehicle">車両</string>
     <string name="pedestrian">歩行者</string>
     <string name="bookmark_color">ブックマークの色</string>

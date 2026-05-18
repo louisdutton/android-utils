@@ -781,7 +781,6 @@
     <string name="saved">Guardado</string>
     <string name="disk_error">Não foi possível criar a pasta e mover os ficheiros no Armazenamento Interno do dispositivo ou no Cartão SD</string>
     <string name="enable_show_on_lock_screen_description">Quando ativado, a aplicação irá funcionar sobre o ecrã de bloqueio mesmo quando o dispositivo estiver bloqueado.</string>
-    <string name="pref_left_button_disable">Desativar</string>
     <string name="error_enter_correct_facebook_page">Introduza um endereço web válido para uma conta ou página de Facebook</string>
     <string name="error_enter_correct_instagram_page">Introduza um nome de utilizador ou endereço web de Instagram válido</string>
     <string name="error_enter_correct_twitter_page">Introduza um nome de utilizador ou endereço web do Twitter válido</string>
@@ -797,7 +796,6 @@
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="translated_om_site_url">https://comaps.app/pt/</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="pref_left_button_title">Configuração do botão esquerdo</string>
     <string name="error_enter_correct_line_page">Insira um ID de LINE ou endereço da web válido</string>
     <string name="about_help">Acerca &amp; Ajuda</string>
     <string name="panoramax">Imagem Panoramax</string>

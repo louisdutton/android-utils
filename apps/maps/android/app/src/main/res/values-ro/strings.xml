@@ -788,8 +788,6 @@
     <string name="panoramax">Imagine Panoramax</string>
     <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Salvat</string>
-    <string name="pref_left_button_disable">Dezactivează</string>
-    <string name="pref_left_button_title">Configurare buton stânga</string>
     <string name="about_headline">Proiect deschis, susținut de comunitate</string>
     <string name="editor_level">Etaj (0 reprezintă parterul)</string>
     <string name="error_enter_correct_level">Introduceți un număr de etaj valid</string>

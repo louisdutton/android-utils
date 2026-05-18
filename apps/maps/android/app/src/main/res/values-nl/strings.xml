@@ -799,7 +799,6 @@
     <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="app_site_url">https://comaps.app/nl/</string>
     <string name="saved">Opgeslagen</string>
-    <string name="pref_left_button_disable">Deactiveren</string>
     <string name="error_enter_correct_fediverse_page">Voer een geldige Mastodon-gebruikersnaam of -webadres in</string>
     <string name="editor_level">Verdieping (0 is begane grond)</string>
     <string name="editor_building_levels">Verdiepingen (incl. begane grond, excl. dak)</string>
@@ -832,7 +831,6 @@
     <string name="pref_backup_now_summary_folder_unavailable">De back-upmap is niet beschikbaar</string>
     <string name="panoramax">Panoramax-afbeelding</string>
     <string name="pref_backup_location_summary_initial">Selecteer eerst een map en geef toestemming</string>
-    <string name="pref_left_button_title">Instelling linkerknop</string>
     <string name="open_now">Nu open</string>
     <string name="closed_now">Nu gesloten</string>
     <string name="at">om %s</string>

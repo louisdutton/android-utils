@@ -811,7 +811,6 @@
     <string name="charge_socket_count">Кількість</string>
     <string name="unknown_count">невідомо</string>
     <string name="editor_submit">Надіслати</string>
-    <string name="pref_left_button_disable">Вимкнути</string>
     <string name="clear">Очистити</string>
     <string name="vehicle">Транспортний засіб</string>
     <string name="bicycle">Велосипед</string>
@@ -853,7 +852,6 @@
     <string name="avoid_steps">Уникати сходів</string>
     <string name="avoid_paved">Уникати асфальтованих доріг</string>
     <string name="pref_maplanguage_local">Місцева мова</string>
-    <string name="pref_left_button_title">Налаштування лівої кнопки</string>
     <string name="pref_backup_title">Резервне копіювання улюбленого</string>
     <string name="pref_backup_summary">Автоматично створювати резервну копію в теку на вашому пристрої</string>
     <string name="pref_backup_now_summary">Негайно створити резервну копію</string>

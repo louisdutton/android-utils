@@ -153,7 +153,6 @@
     <string name="volume">Sain</string>
     <string name="drive_through">Gyrru trwodd</string>
     <string name="self_service">Hunanwasanaeth</string>
-    <string name="pref_left_button_disable">Analluogi</string>
     <string name="backup_interval_every_day">Dyddiol</string>
     <string name="backup_interval_every_week">Wythnosol</string>
     <string name="editor_report_problem_send_button">Anfon</string>

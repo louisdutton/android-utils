@@ -562,11 +562,9 @@
     <string name="uri_open_location_failed">Ni nameščenega orodja, ki bi lahko odprlo zemljepisni položaj</string>
     <string name="zoom_in">Približaj</string>
     <string name="zoom_out">Oddalji</string>
-    <string name="pref_left_button_title">Nastavitev levega gumba</string>
     <string name="pref_backup_title">Varnostno kopiranje zaznamkov</string>
     <string name="pref_backup_summary">Samodejno varnostno kopira v mapo na vaši napravi</string>
     <string name="pref_backup_now_title">Ustvari varnostno kopijo zdaj</string>
-    <string name="pref_left_button_disable">Onemogoči</string>
     <string name="pref_backup_now_summary_progress">Varnostno kopiranje se izvaja …</string>
     <string name="pref_backup_now_summary">Nemudoma ustvari varnostno kopijo</string>
     <string name="pref_backup_now_summary_ok">Varnostno kopiranje uspešno izvedeno</string>

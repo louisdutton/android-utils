@@ -334,7 +334,6 @@
     <string name="start_track_recording">Rekordya Lergh</string>
     <string name="choose_color">Dewis Kolor</string>
     <string name="edit_track">Golegi Lergh</string>
-    <string name="pref_left_button_title">Boton kledh dewisyow</string>
     <string name="backup_interval_every_day">Dedhyek</string>
     <string name="backup_interval_every_week">Seythennyek</string>
     <string name="clear">Dilea</string>
@@ -620,7 +619,6 @@
     <string name="track_recording_toast_nothing_to_save">Lergh yw gwag - mann rag sawyans</string>
     <string name="error_no_file_manager_app">Anabel dhe diskwedhes fenester dewis restrenva dre reson app fytti vyth yw leys war gas devis. Mar pleg, lea unn dyghtyer restrennow hag assaya arta.</string>
     <string name="uri_open_location_failed">App leys vyth may gallos ygeri an tyller</string>
-    <string name="pref_left_button_disable">Ungallosegi</string>
     <string name="pref_backup_title">Backupya Drudhow</string>
     <string name="pref_backup_summary">Backupya yn awtomatek yn unn restrenva war gas devis</string>
     <string name="pref_backup_now_title">Gul y lemmyn</string>

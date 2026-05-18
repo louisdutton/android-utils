@@ -1,11 +1,8 @@
 package app.organicmaps.maplayer;
 
-import static app.organicmaps.leftbutton.LeftButtonsHolder.DISABLE_BUTTON_CODE;
-
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -25,8 +22,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import app.organicmaps.MwmActivity;
 import app.organicmaps.R;
-import app.organicmaps.leftbutton.LeftButton;
-import app.organicmaps.leftbutton.LeftToggleButton;
 import app.organicmaps.sdk.Framework;
 import app.organicmaps.sdk.downloader.MapManager;
 import app.organicmaps.sdk.downloader.UpdateInfo;
@@ -35,7 +30,6 @@ import app.organicmaps.sdk.maplayer.isolines.IsolinesManager;
 import app.organicmaps.sdk.maplayer.subway.SubwayManager;
 import app.organicmaps.sdk.maplayer.traffic.TrafficManager;
 import app.organicmaps.sdk.routing.RoutingController;
-import app.organicmaps.util.ThemeUtils;
 import app.organicmaps.util.UiUtils;
 import app.organicmaps.util.WindowInsetUtils;
 import app.organicmaps.widget.menu.MyPositionButton;
@@ -79,11 +73,8 @@ public class MapButtonsController extends Fragment
   {
     updateMenuBadge(enable);
     showButton(enable, MapButtons.trackRecordingStatus);
-    updateLeftButtonToggleState(enable);
   };
   private final Observer<Integer> mTopButtonMarginObserver = this::updateTopButtonsMargin;
-
-  private LeftButton mLeftButton;
 
   @Nullable
   @Override
@@ -148,9 +139,6 @@ public class MapButtonsController extends Fragment
 
   private void initBottomButtons()
   {
-    // universal button
-    applyLeftButton();
-
     // bookmarks button
     View bookmarksButton = mFrame.findViewById(R.id.btn_bookmarks);
     if (bookmarksButton != null)
@@ -183,29 +171,6 @@ public class MapButtonsController extends Fragment
         }
       });
       mButtonsMap.put(MapButtons.menu, menuButton);
-    }
-  }
-
-  private void applyLeftButton()
-  {
-    FloatingActionButton leftButtonView = mFrame.findViewById(R.id.left_button);
-    if (leftButtonView != null && mLeftButton != null && !mLeftButton.getCode().equals(DISABLE_BUTTON_CODE))
-    {
-      UiUtils.show(leftButtonView);
-
-      Context context = getContext();
-      if (context == null)
-        return;
-
-      leftButtonView.setImageTintList(ColorStateList.valueOf(ThemeUtils.getColor(context, R.attr.iconTint)));
-
-      mLeftButton.drawIcon(leftButtonView);
-      leftButtonView.setContentDescription(mLeftButton.getPrefsName());
-      leftButtonView.setOnClickListener((v) -> mLeftButton.onClick(leftButtonView));
-    }
-    else if (leftButtonView != null)
-    {
-      UiUtils.hide(leftButtonView);
     }
   }
 
@@ -460,27 +425,6 @@ public class MapButtonsController extends Fragment
   {
     if (searchOption == null)
       mSearchWheel.reset();
-  }
-
-  public void setLeftButton(LeftButton leftButton)
-  {
-    this.mLeftButton = leftButton;
-  }
-
-  public void reloadLeftButton(LeftButton leftButton)
-  {
-    setLeftButton(leftButton);
-    applyLeftButton();
-  }
-
-  private void updateLeftButtonToggleState(boolean isEnabled)
-  {
-    if (mLeftButton instanceof LeftToggleButton)
-    {
-      ((LeftToggleButton) mLeftButton).setChecked(isEnabled);
-
-      reloadLeftButton(mLeftButton);
-    }
   }
 
   public enum LayoutMode

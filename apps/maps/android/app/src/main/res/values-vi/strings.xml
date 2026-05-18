@@ -775,7 +775,6 @@
     <string name="empty_street_name_error">Vui lòng nhập tên một phố</string>
     <string name="editor_add_phone">Thêm Điện thoại</string>
     <string name="level_value_generic">Tầng: %s</string>
-    <string name="pref_left_button_disable">Tắt</string>
     <string name="clear">Xóa</string>
     <string name="vehicle">Phương tiện</string>
     <string name="pedestrian">Người đi bộ</string>
@@ -855,7 +854,6 @@
     <string name="disconnect_usb_cable_title">Ngắt kết nối dây USB</string>
     <string name="enable_show_on_lock_screen">Hiện trên màn hình khóa</string>
     <string name="enable_show_on_lock_screen_description">Khi được bật, ứng dụng sẽ hoạt động trên màn hình khóa ngay cả khi thiết bị bị khóa.</string>
-    <string name="pref_left_button_title">Thiết lập nút bên trái</string>
     <string name="pref_backup_summary">Tự động sao lưu đến một thư mục trên thiết bị của bạn</string>
     <string name="pref_backup_now_summary">Tạo ngay một bản sao lưu</string>
     <string name="pref_backup_now_summary_progress">Đang tạo bản sao lưu…</string>
