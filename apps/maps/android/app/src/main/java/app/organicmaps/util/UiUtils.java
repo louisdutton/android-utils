@@ -231,9 +231,8 @@ public final class UiUtils
       WindowInsetsControllerCompat wic = Objects.requireNonNull(WindowCompat.getInsetsController(window, decorView));
       if (fullscreen)
       {
-        // Keep Android's navigation gesture area visible and system-owned while the map is fullscreen.
-        wic.hide(WindowInsetsCompat.Type.statusBars());
-        wic.show(WindowInsetsCompat.Type.navigationBars());
+        wic.hide(WindowInsetsCompat.Type.systemBars());
+        wic.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
       }
       else
         wic.show(WindowInsetsCompat.Type.systemBars());
