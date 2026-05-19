@@ -22,8 +22,7 @@ import protect.card_locker.*;
 import protect.card_locker.async.TaskHandler;
 
 final class LoyaltyCardMainImageRenderer {
-    private static final float SCANNABLE_CODE_WIDTH_FRACTION = 0.88f;
-    private static final float RECTANGULAR_CODE_HEIGHT_FRACTION = 0.32f;
+    private static final float SCANNABLE_CODE_WIDTH_FRACTION = 0.82f;
 
     private final Context context;
     private final TaskHandler tasks = new TaskHandler();
@@ -140,7 +139,6 @@ final class LoyaltyCardMainImageRenderer {
     ) {
         int cardPadding = context.getResources().getDimensionPixelSize(R.dimen.scannable_code_padding);
         int textSpacing = context.getResources().getDimensionPixelSize(R.dimen.scannable_code_text_spacing);
-        int minRectangularCodeHeight = context.getResources().getDimensionPixelSize(R.dimen.scannable_barcode_height);
         int textHeightEstimate = Math.round(TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP,
                 28,
@@ -152,14 +150,9 @@ final class LoyaltyCardMainImageRenderer {
         int maxCodeWidth = Math.max(1, maxCardWidth - (cardPadding * 2));
         int maxCodeHeight = Math.max(1, maxCardHeight - (cardPadding * 2) - textSpacing - textHeightEstimate);
 
-        boolean squareCode = format != null && format.isSquare();
         int targetCodeWidth = Math.max(1, Math.round(maxCodeWidth * SCANNABLE_CODE_WIDTH_FRACTION));
-        int codeWidth = squareCode ? Math.min(targetCodeWidth, maxCodeHeight) : targetCodeWidth;
-        int rectangularCodeHeight = Math.max(
-                minRectangularCodeHeight,
-                Math.round(codeWidth * RECTANGULAR_CODE_HEIGHT_FRACTION)
-        );
-        int codeHeight = squareCode ? codeWidth : Math.min(rectangularCodeHeight, maxCodeHeight);
+        int codeWidth = Math.min(targetCodeWidth, maxCodeHeight);
+        int codeHeight = codeWidth;
         codeWidth = Math.max(1, codeWidth);
         codeHeight = Math.max(1, codeHeight);
 

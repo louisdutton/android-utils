@@ -6,11 +6,10 @@
     <dimen name="scannable_code_padding">8dp</dimen>
     <dimen name="scannable_code_text_spacing">8dp</dimen>
     <dimen name="scannable_code_text_size">14sp</dimen>
-    <dimen name="scannable_barcode_height">96dp</dimen>
     <dimen name="bundlePositionIndicatorHeight">32dp</dimen>
     <dimen name="bundlePositionIndicatorMinWidth">56dp</dimen>
     <dimen name="bundlePositionIndicatorHorizontalPadding">14dp</dimen>
-    <dimen name="bundlePositionIndicatorMarginTop">12dp</dimen>
+    <dimen name="bundlePositionIndicatorMarginBottom">24dp</dimen>
 
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_large">22sp</dimen>

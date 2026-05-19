@@ -261,10 +261,6 @@ public class LoyaltyCardViewActivity extends CatimaAppCompatActivity implements 
                 binding.bundlePositionIndicator,
                 com.google.android.material.R.attr.colorSurfaceVariant
         );
-        int strokeColor = MaterialColors.getColor(
-                binding.bundlePositionIndicator,
-                com.google.android.material.R.attr.colorOutline
-        );
         int textColor = MaterialColors.getColor(
                 binding.bundlePositionIndicator,
                 com.google.android.material.R.attr.colorOnSurfaceVariant
@@ -278,7 +274,6 @@ public class LoyaltyCardViewActivity extends CatimaAppCompatActivity implements 
                 16,
                 getResources().getDisplayMetrics()
         ));
-        background.setStroke(1, strokeColor);
         binding.bundlePositionIndicator.setBackground(background);
         binding.bundlePositionIndicator.setTextColor(textColor);
     }
@@ -766,24 +761,13 @@ public class LoyaltyCardViewActivity extends CatimaAppCompatActivity implements 
                     openImageInGallery(cardId, navigator.getCurrent());
                 }
             });
-            pageBinding.mainImage.setOnLongClickListener(view -> {
-                setPageImage(true, true);
-                return true;
-            });
-
             pageBinding.mainImageDescription.setOnClickListener(view -> {
                 if (isShowingCardIdDescription(navigator)) {
                     showCardIdDialog(card);
                 }
             });
-            pageBinding.mainImageDescription.setOnLongClickListener(view -> {
-                if (!isShowingCardIdDescription(navigator)) {
-                    return false;
-                }
-
-                copyCardIdToClipboard(card.cardId);
-                return true;
-            });
+            pageBinding.mainImageDescription.setHapticFeedbackEnabled(false);
+            pageBinding.mainImageDescription.setOnLongClickListener(view -> true);
 
             if (cardId == loyaltyCardId) {
                 syncSelectedPageState(cardId, card, navigator, frontImage, backImage);
@@ -828,8 +812,25 @@ public class LoyaltyCardViewActivity extends CatimaAppCompatActivity implements 
         }
 
         private void updatePageImageUiState() {
+            updatePageImageLongPressState();
             updatePageImagePreviousNextButtons();
             updatePageImageAccessibility();
+        }
+
+        private void updatePageImageLongPressState() {
+            LoyaltyCardImageType currentImageType = navigator.getCurrent();
+            if (currentImageType == LoyaltyCardImageType.BARCODE || currentImageType == LoyaltyCardImageType.NONE) {
+                pageBinding.mainImage.setHapticFeedbackEnabled(false);
+                pageBinding.mainImage.setOnLongClickListener(view -> true);
+                return;
+            }
+
+            pageBinding.mainImage.setHapticFeedbackEnabled(true);
+            pageBinding.mainImage.setOnLongClickListener(view -> {
+                setPageImage(true, true);
+                return true;
+            });
+            pageBinding.mainImage.setLongClickable(true);
         }
 
         private void updatePageImageAccessibility() {
@@ -849,6 +850,14 @@ public class LoyaltyCardViewActivity extends CatimaAppCompatActivity implements 
                     getString(accessibilityClickAction),
                     null
             );
+
+            if (currentImageType == LoyaltyCardImageType.BARCODE || currentImageType == LoyaltyCardImageType.NONE) {
+                ViewCompat.removeAccessibilityAction(
+                        pageBinding.mainImage,
+                        AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_LONG_CLICK.getId()
+                );
+                return;
+            }
 
             int accessibilityLongPressAction;
             LoyaltyCardImageType nextImageType = navigator.peekNext(true);
