@@ -449,15 +449,17 @@ class NotificationManagerImpl @Inject constructor(
     }
 
     private fun getReplyAction(threadId: Long): NotificationCompat.Action {
-        val replyIntent = Intent(context, RemoteMessagingReceiver::class.java).putExtra("threadId", threadId)
+        val replyIntent = Intent(context, RemoteMessagingReceiver::class.java)
+            .putExtra(RemoteMessagingReceiver.EXTRA_THREAD_ID, threadId)
         val replyPI = PendingIntent.getBroadcast(context, threadId.toInt(), replyIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
 
         val title = context.resources.getStringArray(R.array.notification_actions)[
                 Preferences.NOTIFICATION_ACTION_REPLY]
         val responseSet = context.resources.getStringArray(R.array.qk_responses)
-        val remoteInput = RemoteInput.Builder("body")
+        val remoteInput = RemoteInput.Builder(RemoteMessagingReceiver.REMOTE_INPUT_BODY)
                 .setLabel(title)
+                .setAllowFreeFormInput(true)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             remoteInput.setChoices(responseSet)
@@ -465,6 +467,8 @@ class NotificationManagerImpl @Inject constructor(
 
         return NotificationCompat.Action.Builder(R.drawable.ic_reply_white_24dp, title, replyPI)
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                .setAllowGeneratedReplies(true)
+                .setShowsUserInterface(false)
                 .addRemoteInput(remoteInput.build())
                 .build()
     }

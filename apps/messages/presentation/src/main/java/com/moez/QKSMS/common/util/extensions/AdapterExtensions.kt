@@ -43,6 +43,29 @@ fun RecyclerView.Adapter<*>.autoScrollToStart(recyclerView: RecyclerView) {
             }
         }
 
+        override fun onChanged() {
+            val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+
+            if (layoutManager.stackFromEnd) {
+                val lastItem = this@autoScrollToStart.itemCount - 1
+                if (lastItem < 0) return
+
+                val lastVisible = layoutManager.findLastVisibleItemPosition()
+                val shouldStayAtBottom = lastVisible == RecyclerView.NO_POSITION ||
+                    lastVisible >= lastItem - 2 ||
+                    !recyclerView.canScrollVertically(1)
+
+                if (shouldStayAtBottom) {
+                    recyclerView.post { recyclerView.scrollToPosition(lastItem) }
+                }
+            } else {
+                val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+                if (firstVisiblePosition == 0) {
+                    recyclerView.post { recyclerView.scrollToPosition(0) }
+                }
+            }
+        }
+
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
             val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
 

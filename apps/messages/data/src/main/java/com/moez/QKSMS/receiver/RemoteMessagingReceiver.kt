@@ -28,9 +28,17 @@ import dev.octoshrimpy.quik.interactor.MarkRead
 import dev.octoshrimpy.quik.interactor.SendNewMessage
 import dev.octoshrimpy.quik.repository.ConversationRepository
 import dev.octoshrimpy.quik.repository.MessageRepository
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class RemoteMessagingReceiver : BroadcastReceiver() {
+    companion object {
+        const val EXTRA_THREAD_ID = "threadId"
+        const val REMOTE_INPUT_BODY = "body"
+    }
+
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var messageRepo: MessageRepository
@@ -43,24 +51,31 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
         val remoteInput = RemoteInput.getResultsFromIntent(intent) ?: return
         val bundle = intent.extras ?: return
 
-        val threadId = bundle.getLong("threadId")
+        val threadId = bundle.getLong(EXTRA_THREAD_ID)
+        val body = remoteInput.getCharSequence(REMOTE_INPUT_BODY)?.toString().orEmpty()
+        if (threadId <= 0 || body.isBlank()) return
 
-        markRead.execute(listOf(threadId))
-
-        val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
-        val conversation = conversationRepo.getConversation(threadId)
-
-        val pendingRepository = goAsync()
-        sendNewMessage.execute(
+        val pendingResult = goAsync()
+        Single.fromCallable {
+            val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
+            val conversation = conversationRepo.getOrCreateConversation(threadId)
             SendNewMessage.Params(
                 subscriptionManager.activeSubscriptionInfoList
                     .firstOrNull { it.subscriptionId == lastMessage?.subId }
                     ?.subscriptionId ?: -1,
-                0,
-                conversation?.recipients?.map { it.address } ?: return,
-                remoteInput.getCharSequence("body").toString(),
-                conversation.sendAsGroup
+                threadId,
+                conversation?.recipients?.map { it.address }.orEmpty(),
+                body,
+                conversation?.sendAsGroup ?: true
             )
-        ) { pendingRepository.finish() }
+        }
+            .subscribeOn(Schedulers.io())
+            .flatMapPublisher { params ->
+                markRead.buildObservable(listOf(threadId))
+                    .ignoreElements()
+                    .andThen(sendNewMessage.buildObservable(params))
+            }
+            .doFinally { pendingResult.finish() }
+            .subscribe({}, { error -> Timber.w(error, "Remote notification reply failed") })
     }
 }
