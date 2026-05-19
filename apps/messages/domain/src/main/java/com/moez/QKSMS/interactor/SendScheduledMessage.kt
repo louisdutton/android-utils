@@ -54,7 +54,7 @@ class SendScheduledMessage @Inject constructor(
                 )
             }
             .flatMap(sendNewMessage::buildObservable)
-            .doOnNext { deleteScheduledMessagesInteractor.execute(listOf(params)) }
+            .flatMap { deleteScheduledMessagesInteractor.buildObservable(listOf(params)) }
     }
 
 }
