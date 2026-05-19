@@ -12,3 +12,5 @@ own APK with a distinct application id.
   integration reference while Maps moves to the CoMaps native/offline stack.
 - `messaging`: messaging app scaffold.
 - `calendar`: provider-backed calendar app with event management.
+- `nfc-reader`: minimal read-only NFC/RFID-compatible card reader for
+  educational inspection.
