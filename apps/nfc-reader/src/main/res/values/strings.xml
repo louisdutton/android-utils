@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">NFC Reader</string>
-    <string name="ndef_emulation_service">NDEF test tag emulation</string>
-    <string name="ndef_emulation_aid_group">NDEF test payload</string>
-</resources>
