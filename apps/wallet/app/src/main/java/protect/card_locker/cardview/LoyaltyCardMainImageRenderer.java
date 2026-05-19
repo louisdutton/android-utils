@@ -46,7 +46,9 @@ final class LoyaltyCardMainImageRenderer {
         if (imageType == LoyaltyCardImageType.NONE) {
             // With no renderable media left, show the raw card ID instead of an empty card area.
             barcodeRenderTarget.setVisibility(View.GONE);
-            mainCardView.setCardBackgroundColor(Color.TRANSPARENT);
+            if (mainCardView != null) {
+                mainCardView.setCardBackgroundColor(Color.TRANSPARENT);
+            }
             mainImageDescription.setTextColor(
                     MaterialColors.getColor(
                             mainImageDescription,
@@ -59,7 +61,9 @@ final class LoyaltyCardMainImageRenderer {
 
         if (imageType == LoyaltyCardImageType.BARCODE) {
             barcodeRenderTarget.setBackgroundColor(Color.WHITE);
-            mainCardView.setCardBackgroundColor(Color.WHITE);
+            if (mainCardView != null) {
+                mainCardView.setCardBackgroundColor(Color.WHITE);
+            }
             mainImageDescription.setTextColor(context.getResources().getColor(R.color.md_theme_light_onSurfaceVariant));
 
             if (waitForResize) {
@@ -91,7 +95,9 @@ final class LoyaltyCardMainImageRenderer {
         } else if (imageType == LoyaltyCardImageType.IMAGE_FRONT) {
             barcodeRenderTarget.setImageBitmap(frontImageBitmap);
             barcodeRenderTarget.setBackgroundColor(Color.TRANSPARENT);
-            mainCardView.setCardBackgroundColor(Color.TRANSPARENT);
+            if (mainCardView != null) {
+                mainCardView.setCardBackgroundColor(Color.TRANSPARENT);
+            }
             mainImageDescription.setTextColor(
                     MaterialColors.getColor(
                             mainImageDescription,
@@ -103,7 +109,9 @@ final class LoyaltyCardMainImageRenderer {
         } else if (imageType == LoyaltyCardImageType.IMAGE_BACK) {
             barcodeRenderTarget.setImageBitmap(backImageBitmap);
             barcodeRenderTarget.setBackgroundColor(Color.TRANSPARENT);
-            mainCardView.setCardBackgroundColor(Color.TRANSPARENT);
+            if (mainCardView != null) {
+                mainCardView.setCardBackgroundColor(Color.TRANSPARENT);
+            }
             mainImageDescription.setTextColor(
                     MaterialColors.getColor(
                             mainImageDescription,
@@ -129,6 +137,19 @@ final class LoyaltyCardMainImageRenderer {
             boolean isFullscreen
     ) {
         if (format == null) {
+            return;
+        }
+
+        if (barcodeRenderTarget.getWidth() > 0 && barcodeRenderTarget.getHeight() > 0) {
+            drawBarcode(
+                    barcodeRenderTarget,
+                    barcodeIdString,
+                    cardIdString,
+                    format,
+                    barcodeEncoding,
+                    addPadding,
+                    isFullscreen
+            );
             return;
         }
 

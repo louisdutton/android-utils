@@ -908,18 +908,6 @@ class MainActivity : CatimaAppCompatActivity(), CardAdapterListener {
                     action = ""
                     putExtras(Bundle().apply {
                         putInt(LoyaltyCardViewActivity.BUNDLE_ID, loyaltyCard.id)
-
-                        val cardList = ArrayList<Int?>()
-                        val bundledCards = DBHelper.getBundleCardIds(mDatabase, loyaltyCard.id)
-                        if (bundledCards.size > 1) {
-                            cardList.addAll(bundledCards)
-                        } else {
-                            for (i in 0..<mAdapter.itemCount) {
-                                cardList.add(mAdapter.getCard(i).id)
-                            }
-                        }
-
-                        putIntegerArrayList(LoyaltyCardViewActivity.BUNDLE_CARDLIST, cardList)
                     })
                 }
             )

@@ -115,6 +115,7 @@ dependencies {
     implementation(libs.androidx.exifinterface.exifinterface)
     implementation(libs.androidx.palette.palette)
     implementation(libs.androidx.preference.preference)
+    implementation(libs.androidx.viewpager2.viewpager2)
     implementation(libs.com.google.android.material.material)
     coreLibraryDesugaring(libs.com.android.tools.desugar.jdk.libs)
 

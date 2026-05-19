@@ -92,6 +92,7 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
         int bundleSize = DBHelper.getBundleSize(inputCursor);
         boolean isBundle = bundleSize > 1;
         String displayStore = getDisplayStore(loyaltyCard, isBundle);
+        inputHolder.setBundleBadge(bundleSize);
 
         if (!displayStore.isEmpty() && (isBundle || (mLoyaltyCardListDisplayOptions.showingNameBelowThumbnail() && icon != null))) {
             showDivider = true;
@@ -100,10 +101,7 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
             inputHolder.setStoreField(null);
         }
 
-        if (isBundle) {
-            showDivider = true;
-            inputHolder.setNoteField(mContext.getResources().getQuantityString(R.plurals.bundle_pass_count, bundleSize, bundleSize));
-        } else if (mLoyaltyCardListDisplayOptions.showingNote() && !loyaltyCard.note.isEmpty()) {
+        if (!isBundle && mLoyaltyCardListDisplayOptions.showingNote() && !loyaltyCard.note.isEmpty()) {
             showDivider = true;
             inputHolder.setNoteField(loyaltyCard.note);
         } else {
@@ -231,7 +229,7 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
 
     public class LoyaltyCardListItemViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mCardText, mStoreField, mNoteField, mBalanceField, mValidFromField, mExpiryField;
+        public TextView mCardText, mStoreField, mNoteField, mBalanceField, mValidFromField, mExpiryField, mBundleBadge;
         public ImageView mCardIcon, mTickIcon;
         public MaterialCardView mRow;
         public ConstraintLayout mStar, mArchived;
@@ -249,6 +247,7 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
             mExpiryField = loyaltyCardLayoutBinding.expiry;
             mCardIcon = loyaltyCardLayoutBinding.thumbnail;
             mCardText = loyaltyCardLayoutBinding.thumbnailText;
+            mBundleBadge = loyaltyCardLayoutBinding.bundleBadge;
             mStar = loyaltyCardLayoutBinding.star;
             mArchived = loyaltyCardLayoutBinding.archivedIcon;
             mTickIcon = loyaltyCardLayoutBinding.selectedThumbnail;
@@ -312,6 +311,24 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
             mNoteField.requestLayout();
         }
 
+        public void setBundleBadge(int bundleSize) {
+            if (bundleSize <= 1) {
+                mBundleBadge.setVisibility(View.GONE);
+                return;
+            }
+
+            mBundleBadge.setText(String.valueOf(bundleSize));
+            mBundleBadge.setContentDescription(mContext.getResources().getQuantityString(R.plurals.bundle_pass_count, bundleSize, bundleSize));
+            mBundleBadge.setVisibility(View.VISIBLE);
+        }
+
+        private void positionBundleBadge(boolean avoidStar) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) mBundleBadge.getLayoutParams();
+            layoutParams.topMargin = mContext.getResources().getDimensionPixelSize(avoidStar ? R.dimen.cardThumbnailSize : R.dimen.bundleBadgeMargin);
+            layoutParams.setMarginEnd(mContext.getResources().getDimensionPixelSize(R.dimen.bundleBadgeMargin));
+            mBundleBadge.setLayoutParams(layoutParams);
+        }
+
         public void toggleCardStateIcon(boolean enableStar, boolean enableArchive) {
             if (enableStar) {
                 mStar.setVisibility(View.VISIBLE);
@@ -324,6 +341,8 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
             } else{
                 mArchived.setVisibility(View.GONE);
             }
+
+            positionBundleBadge(enableStar);
         }
     }
 }
