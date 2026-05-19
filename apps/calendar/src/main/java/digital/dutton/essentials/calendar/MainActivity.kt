@@ -947,6 +947,45 @@ private fun DetailLine(
 }
 
 @Composable
+private fun RichNotesLine(
+    label: String,
+    value: String,
+) {
+    val textColor = MaterialTheme.colorScheme.onSurface.toArgb()
+    val labelColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val linkColor = MaterialTheme.colorScheme.primary.toArgb()
+    val bodySize = MaterialTheme.typography.bodyMedium.fontSize.value
+    val richText = remember(value) { value.toCalendarNoteText() }
+
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = labelColor,
+        )
+        AndroidView(
+            modifier = Modifier.fillMaxWidth(),
+            factory = { context ->
+                TextView(context).apply {
+                    setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                    includeFontPadding = false
+                    linksClickable = true
+                    movementMethod = LinkMovementMethod.getInstance()
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
+                }
+            },
+            update = { textView ->
+                textView.text = richText
+                textView.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                textView.setTextColor(textColor)
+                textView.setLinkTextColor(linkColor)
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, bodySize)
+            },
+        )
+    }
+}
+
+@Composable
 private fun EventEditorDialog(
     title: String,
     calendars: List<CalendarSource>,
@@ -1215,6 +1254,20 @@ private fun Int.calendarCountLabel(): String {
         1 -> "1 calendar"
         else -> "$this calendars"
     }
+}
+
+private fun String.toCalendarNoteText(): CharSequence {
+    val note = trim()
+    return HtmlCompat.fromHtml(note, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        .trimCalendarNote()
+}
+
+private fun CharSequence.trimCalendarNote(): CharSequence {
+    var start = 0
+    var end = length
+    while (start < end && this[start].isWhitespace()) start += 1
+    while (end > start && this[end - 1].isWhitespace()) end -= 1
+    return subSequence(start, end)
 }
 
 private fun List<CalendarSource>.defaultWritableCalendar(): CalendarSource? {
