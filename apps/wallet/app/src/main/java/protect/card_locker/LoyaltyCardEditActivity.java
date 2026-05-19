@@ -1657,13 +1657,13 @@ public class LoyaltyCardEditActivity extends CatimaAppCompatActivity implements 
                             barcodeImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                             Log.d(TAG, "ImageView size now known");
-                            BarcodeImageWriterTask barcodeWriter = new BarcodeImageWriterTask(getApplicationContext(), barcodeImage, cardIdString, barcodeFormat, barcodeEncoding, null, false, LoyaltyCardEditActivity.this, true, false);
+                            BarcodeImageWriterTask barcodeWriter = new BarcodeImageWriterTask(getApplicationContext(), barcodeImage, cardIdString, barcodeFormat, barcodeEncoding, null, false, LoyaltyCardEditActivity.this, true);
                             viewModel.getTaskHandler().executeTask(TaskHandler.TYPE.BARCODE, barcodeWriter);
                         }
                     });
         } else {
             Log.d(TAG, "ImageView size known known, creating barcode");
-            BarcodeImageWriterTask barcodeWriter = new BarcodeImageWriterTask(getApplicationContext(), barcodeImage, cardIdString, barcodeFormat, barcodeEncoding, null, false, this, true, false);
+            BarcodeImageWriterTask barcodeWriter = new BarcodeImageWriterTask(getApplicationContext(), barcodeImage, cardIdString, barcodeFormat, barcodeEncoding, null, false, this, true);
             viewModel.getTaskHandler().executeTask(TaskHandler.TYPE.BARCODE, barcodeWriter);
         }
     }

@@ -22,6 +22,21 @@
 
         <menu>
             <item
+                android:id="@+id/action_edit"
+                android:title="@string/edit"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/action_info"
+                android:title="@string/showMoreInfo"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/action_update_balance"
+                android:title="@string/updateBalance"
+                app:showAsAction="never" />
+
+            <item
                 android:id="@+id/action_archive"
                 android:title="@string/archive"
                 app:showAsAction="never"/>

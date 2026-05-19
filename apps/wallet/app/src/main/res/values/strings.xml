@@ -65,6 +65,8 @@
         <item quantity="one"><xliff:g id="count">%d</xliff:g> pass</item>
         <item quantity="other"><xliff:g id="count">%d</xliff:g> passes</item>
     </plurals>
+    <string name="bundle_position_indicator"><xliff:g id="position">%1$d</xliff:g> / <xliff:g id="total">%2$d</xliff:g></string>
+    <string name="bundle_position_indicator_description">Pass <xliff:g id="position">%1$d</xliff:g> of <xliff:g id="total">%2$d</xliff:g></string>
     <string name="importSuccessfulTitle">Imported</string>
     <string name="importFailedTitle">Import failed</string>
     <string name="importFailed">Could not perform import</string>

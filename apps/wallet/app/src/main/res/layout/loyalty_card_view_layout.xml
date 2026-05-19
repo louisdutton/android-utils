@@ -23,7 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="100dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp">
 
@@ -32,115 +31,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
-    </FrameLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fullscreen_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black"
-        android:visibility="gone">
-
-        <ImageView
-            android:importantForAccessibility="no"
-            android:id="@+id/fullscreen_image"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/fullscreen_barcode_height"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:background="@android:color/white"
-            android:scaleType="fitCenter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/fullscreen_button_minimize"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.45" />
 
         <TextView
-            android:id="@+id/fullscreen_image_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/bundle_position_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/bundlePositionIndicatorHeight"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="@dimen/bundlePositionIndicatorMarginTop"
+            android:gravity="center"
+            android:minWidth="@dimen/bundlePositionIndicatorMinWidth"
+            android:paddingStart="@dimen/bundlePositionIndicatorHorizontalPadding"
+            android:paddingEnd="@dimen/bundlePositionIndicatorHorizontalPadding"
+            android:textAppearance="?attr/textAppearanceLabelMedium"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/fullscreen_image" />
-
-        <ImageButton
-            android:id="@+id/fullscreen_button_minimize"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/ic_baseline_expand_more_24"
-            android:tooltipText="@string/moveDown"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="32dp"
-            android:background="@android:color/transparent"
-            app:tint="@android:color/white" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_app_bar"
-        style="@style/Widget.MaterialComponents.BottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetEnd="0dp"
-        app:fabAlignmentMode="center">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layoutDirection="ltr">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layoutDirection="locale">
-
-                <ImageButton
-                    android:id="@+id/bottom_app_bar_info_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_baseline_info_24"
-                    android:tooltipText="@string/showMoreInfo"
-                    android:visibility="gone" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <ImageButton
-                    android:id="@+id/bottom_app_bar_update_balance_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_baseline_shopping_cart_24"
-                    android:tooltipText="@string/updateBalance"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_mode_edit_white_24dp"
-        android:contentDescription="@string/edit"
-        app:layout_anchor="@id/bottom_app_bar" />
+            android:elevation="3dp"
+            tools:text="1 / 3"
+            tools:visibility="visible" />
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

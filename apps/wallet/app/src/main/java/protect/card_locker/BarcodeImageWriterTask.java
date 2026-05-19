@@ -43,7 +43,7 @@ public class BarcodeImageWriterTask implements CompatCallable<Bitmap> {
     // When drawn in a smaller window 1D barcodes for some reason end up
     // squished, whereas 2D barcodes look fine.
     private static final int MAX_WIDTH_1D = 1500;
-    private static final int MAX_WIDTH_2D = 500;
+    private static final int MAX_WIDTH_2D = 1200;
 
     private final WeakReference<ImageView> imageViewReference;
     private final WeakReference<TextView> textViewReference;
@@ -60,7 +60,7 @@ public class BarcodeImageWriterTask implements CompatCallable<Bitmap> {
     public BarcodeImageWriterTask(
             Context context, ImageView imageView, String cardIdString,
             CatimaBarcode barcodeFormat, @NonNull Charset barcodeEncoding, TextView textView,
-            boolean showFallback, BarcodeImageWriterResultCallback callback, boolean roundCornerPadding, boolean isFullscreen
+            boolean showFallback, BarcodeImageWriterResultCallback callback, boolean roundCornerPadding
     ) {
         mContext = context;
 
@@ -98,7 +98,7 @@ public class BarcodeImageWriterTask implements CompatCallable<Bitmap> {
 
         if (format.isSquare()) {
             imageHeight = imageWidth = Math.min(imageViewHeight, Math.min(MAX_WIDTH, imageViewWidth));
-        } else if (imageView.getWidth() < MAX_WIDTH && !isFullscreen) {
+        } else if (imageView.getWidth() < MAX_WIDTH) {
             imageHeight = imageViewHeight;
             imageWidth = imageViewWidth;
         } else {
@@ -204,6 +204,10 @@ public class BarcodeImageWriterTask implements CompatCallable<Bitmap> {
             encodeHints.put(EncodeHintType.CHARACTER_SET, encoding);
         } else {
             Log.d(TAG, "Not passing encoding as encoding hint");
+        }
+
+        if (format.isSquare()) {
+            encodeHints.put(EncodeHintType.MARGIN, 1);
         }
 
         BitMatrix bitMatrix;
