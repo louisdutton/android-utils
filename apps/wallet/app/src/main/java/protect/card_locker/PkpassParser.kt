@@ -316,18 +316,26 @@ class PkpassParser(context: Context, uri: Uri?) {
         // Append type-specific info to the pass
 
         // Find the relevant pass type and parse it
-        for (passType in listOf("boardingPass", "coupon", "eventTicket", "generic")) {
+        var eventTicketTitle: String? = null
+
+        for (passType in listOf("boardingPass", "coupon", "eventTicket", "storeCard", "generic")) {
             try {
-                var extraText = parsePassJSONPassFields(
-                    jsonObject.getJSONObject(passType),
-                    locale
-                )
+                val passFields = jsonObject.getJSONObject(passType)
+                val extraText = parsePassJSONPassFields(passFields, locale)
+
+                if (passType == "eventTicket") {
+                    eventTicketTitle = parsePassJSONEventTitle(passFields, locale)
+                }
 
                 noteText.append("\n\n")
                 noteText.append(extraText)
 
                 break
             } catch (ignored: JSONException) {}
+        }
+
+        if (!eventTicketTitle.isNullOrBlank()) {
+            store = eventTicketTitle
         }
 
         note = noteText.toString()
@@ -409,6 +417,26 @@ class PkpassParser(context: Context, uri: Uri?) {
         }
 
         return output.toString()
+    }
+
+    private fun parsePassJSONEventTitle(fieldsParent: JSONObject, locale: String?): String? {
+        for (fieldType in listOf("primaryFields", "headerFields", "secondaryFields")) {
+            try {
+                val fieldArray = fieldsParent.getJSONArray(fieldType)
+                for (i in 0 until fieldArray.length()) {
+                    val value = getTranslation(
+                        fieldArray.getJSONObject(i).getString("value"),
+                        locale
+                    ).trim()
+
+                    if (value.isNotEmpty()) {
+                        return value
+                    }
+                }
+            } catch (ignored: JSONException) {}
+        }
+
+        return null
     }
 
     private fun parsePassJSONPassField(field: JSONObject, locale: String?): String {

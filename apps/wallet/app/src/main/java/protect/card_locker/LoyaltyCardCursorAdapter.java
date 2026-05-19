@@ -26,7 +26,6 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.color.MaterialColors;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.util.ArrayList;
 
 import protect.card_locker.databinding.LoyaltyCardLayoutBinding;
@@ -90,15 +89,21 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
 
         LoyaltyCard loyaltyCard = LoyaltyCard.fromCursor(mContext, inputCursor);
         Bitmap icon = loyaltyCard.getImageThumbnail(mContext);
+        int bundleSize = DBHelper.getBundleSize(inputCursor);
+        boolean isBundle = bundleSize > 1;
+        String displayStore = getDisplayStore(loyaltyCard, isBundle);
 
-        if (mLoyaltyCardListDisplayOptions.showingNameBelowThumbnail() && icon != null) {
+        if (!displayStore.isEmpty() && (isBundle || (mLoyaltyCardListDisplayOptions.showingNameBelowThumbnail() && icon != null))) {
             showDivider = true;
-            inputHolder.setStoreField(loyaltyCard.store);
+            inputHolder.setStoreField(displayStore);
         } else {
             inputHolder.setStoreField(null);
         }
 
-        if (mLoyaltyCardListDisplayOptions.showingNote() && !loyaltyCard.note.isEmpty()) {
+        if (isBundle) {
+            showDivider = true;
+            inputHolder.setNoteField(mContext.getResources().getQuantityString(R.plurals.bundle_pass_count, bundleSize, bundleSize));
+        } else if (mLoyaltyCardListDisplayOptions.showingNote() && !loyaltyCard.note.isEmpty()) {
             showDivider = true;
             inputHolder.setNoteField(loyaltyCard.note);
         } else {
@@ -111,19 +116,18 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
             inputHolder.setExtraField(inputHolder.mBalanceField, null, null, false);
         }
 
-        if (mLoyaltyCardListDisplayOptions.showingValidity() && loyaltyCard.validFrom != null) {
-            inputHolder.setExtraField(inputHolder.mValidFromField, DateFormat.getDateInstance(DateFormat.MEDIUM).format(loyaltyCard.validFrom), Utils.isNotYetValid(loyaltyCard.validFrom) ? Color.RED : null, showDivider);
+        String validityRange = Utils.formatPassValidityRange(loyaltyCard.validFrom, loyaltyCard.expiry);
+        if (mLoyaltyCardListDisplayOptions.showingValidity() && !validityRange.isEmpty()) {
+            boolean invalidDate = (loyaltyCard.validFrom != null && Utils.isNotYetValid(loyaltyCard.validFrom))
+                    || (loyaltyCard.expiry != null && Utils.hasExpired(loyaltyCard.expiry));
+            inputHolder.setExtraField(inputHolder.mValidFromField, validityRange, invalidDate ? Color.RED : null, showDivider);
         } else {
             inputHolder.setExtraField(inputHolder.mValidFromField, null, null, false);
         }
 
-        if (mLoyaltyCardListDisplayOptions.showingValidity() && loyaltyCard.expiry != null) {
-            inputHolder.setExtraField(inputHolder.mExpiryField, DateFormat.getDateInstance(DateFormat.MEDIUM).format(loyaltyCard.expiry), Utils.hasExpired(loyaltyCard.expiry) ? Color.RED : null, showDivider);
-        } else {
-            inputHolder.setExtraField(inputHolder.mExpiryField, null, null, false);
-        }
+        inputHolder.setExtraField(inputHolder.mExpiryField, null, null, false);
 
-        inputHolder.mCardIcon.setContentDescription(loyaltyCard.store);
+        inputHolder.mCardIcon.setContentDescription(displayStore.isEmpty() ? loyaltyCard.store : displayStore);
         Utils.setIconOrTextWithBackground(mContext, loyaltyCard, icon, inputHolder.mCardIcon, inputHolder.mCardText, new Settings(mContext).getPreferredColumnCount());
 
         inputHolder.toggleCardStateIcon(loyaltyCard.starStatus != 0, loyaltyCard.archiveStatus != 0);
@@ -144,6 +148,22 @@ public class LoyaltyCardCursorAdapter extends BaseCursorAdapter<LoyaltyCardCurso
             inputView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             return true;
         });
+    }
+
+    private String getDisplayStore(LoyaltyCard loyaltyCard, boolean isBundle) {
+        String fallback = loyaltyCard.store;
+        if (!isBundle || loyaltyCard.note.isEmpty()) {
+            return fallback;
+        }
+
+        for (String line : loyaltyCard.note.split("\\r?\\n")) {
+            String title = line.trim();
+            if (!title.isEmpty()) {
+                return title.equals(fallback) ? fallback : title;
+            }
+        }
+
+        return fallback;
     }
 
     private boolean itemSelected(int inputPosition) {

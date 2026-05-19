@@ -16,19 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.ArrayList;
 
 import protect.card_locker.*;
 
@@ -76,22 +72,7 @@ final class LoyaltyCardViewDialogs {
             ));
         }
 
-        appendDateInfo(
-                context,
-                infoText,
-                loyaltyCard.validFrom,
-                Utils::isNotYetValid,
-                R.string.validFromSentence,
-                R.string.validFromSentence
-        );
-        appendDateInfo(
-                context,
-                infoText,
-                loyaltyCard.expiry,
-                Utils::hasExpired,
-                R.string.expiryStateSentenceExpired,
-                R.string.expiryStateSentence
-        );
+        appendValidityInfo(infoText, loyaltyCard);
 
         infoTextview.setText(infoText);
         infoDialog.setView(infoTextview);
@@ -220,27 +201,21 @@ final class LoyaltyCardViewDialogs {
         return spannableStringBuilder;
     }
 
-    private void appendDateInfo(
-            Context context,
-            SpannableStringBuilder infoText,
-            Date date,
-            Predicate<Date> dateCheck,
-            @StringRes int dateCheckTrueString,
-            @StringRes int dateCheckFalseString
-    ) {
-        if (date == null) {
+    private void appendValidityInfo(SpannableStringBuilder infoText, LoyaltyCard loyaltyCard) {
+        String validityRange = Utils.formatPassValidityRange(loyaltyCard.validFrom, loyaltyCard.expiry);
+        if (validityRange.isEmpty()) {
             return;
         }
 
-        String formattedDate = DateFormat.getDateInstance(DateFormat.LONG).format(date);
-
         padSpannableString(infoText);
-        if (dateCheck.test(date)) {
+        boolean invalidDate = (loyaltyCard.validFrom != null && Utils.isNotYetValid(loyaltyCard.validFrom))
+                || (loyaltyCard.expiry != null && Utils.hasExpired(loyaltyCard.expiry));
+        if (invalidDate) {
             int start = infoText.length();
-            infoText.append(context.getString(dateCheckTrueString, formattedDate));
+            infoText.append(validityRange);
             infoText.setSpan(new ForegroundColorSpan(Color.RED), start, infoText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            infoText.append(context.getString(dateCheckFalseString, formattedDate));
+            infoText.append(validityRange);
         }
     }
 }

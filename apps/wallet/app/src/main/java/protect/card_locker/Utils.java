@@ -80,6 +80,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -191,46 +192,31 @@ public class Utils {
             return new ArrayList<>();
         }
 
-        PkpassParser pkpassParser;
-        try {
-             pkpassParser = new PkpassParser(context, uri);
-        } catch (Exception e) {
-            Log.w(TAG, "Could not parse file as single pkpass, trying pkpasses bundle", e);
-            List<ParseResult> bundledPasses = tryRetrieveBarcodesFromPkPasses(context, uri);
-            if (!bundledPasses.isEmpty()) {
-                return bundledPasses;
-            }
-
+        List<ParseResult> parseResultList = retrieveCardsFromSinglePkPass(context, uri);
+        if (parseResultList.isEmpty()) {
             Toast.makeText(context, R.string.errorReadingFile, Toast.LENGTH_LONG).show();
-            return new ArrayList<>();
-        }
-
-        List<String> locales = pkpassParser.listLocales();
-        if (locales.isEmpty()) {
-            try {
-                return Collections.singletonList(new ParseResult(ParseResultType.FULL, pkpassParser.toLoyaltyCard(null)));
-            } catch (Exception e) {
-                Log.e(TAG, "Error calling toLoyaltyCard on pkpass file", e);
-                Toast.makeText(context, R.string.errorReadingFile, Toast.LENGTH_LONG).show();
-                return new ArrayList<>();
-            }
-        }
-
-        List<ParseResult> parseResultList = new ArrayList<>();
-        for (String locale : locales) {
-            ParseResult parseResult;
-            try {
-                 parseResult = new ParseResult(ParseResultType.FULL, pkpassParser.toLoyaltyCard(locale));
-            } catch (Exception e) {
-                Log.e(TAG, "Error calling toLoyaltyCard on pkpass file", e);
-                Toast.makeText(context, R.string.errorReadingFile, Toast.LENGTH_LONG).show();
-                return new ArrayList<>();
-            }
-            parseResult.setNote(locale);
-            parseResultList.add(parseResult);
         }
 
         return parseResultList;
+    }
+
+    static public List<ParseResult> retrieveCardsFromSinglePkPass(Context context, Uri uri) {
+        Log.i(TAG, "Received single pkpass file");
+        if (uri == null) {
+            Log.e(TAG, "Pkpass did not contain any data");
+            return new ArrayList<>();
+        }
+
+        try {
+            PkpassParser pkpassParser = new PkpassParser(context, uri);
+            return Collections.singletonList(
+                    new ParseResult(
+                            ParseResultType.FULL,
+                            pkpassParser.toLoyaltyCard(preferredPkPassLocale(context, pkpassParser.listLocales()))));
+        } catch (Exception e) {
+            Log.e(TAG, "Error reading single pkpass file", e);
+            return new ArrayList<>();
+        }
     }
 
     static public List<ParseResult> retrieveBarcodesFromPkPasses(Context context, Uri uri) {
@@ -249,6 +235,16 @@ public class Utils {
         return parseResultList;
     }
 
+    static public List<ParseResult> retrieveCardsFromPkPassBundle(Context context, Uri uri) {
+        Log.i(TAG, "Received possible pkpasses bundle");
+        if (uri == null) {
+            Log.e(TAG, "Pkpasses did not contain any data");
+            return new ArrayList<>();
+        }
+
+        return tryRetrieveBarcodesFromPkPasses(context, uri);
+    }
+
     static private List<ParseResult> tryRetrieveBarcodesFromPkPasses(Context context, Uri uri) {
         PkpassesParser pkpassesParser;
         try {
@@ -263,34 +259,49 @@ public class Utils {
         for (PkpassParser pkpassParser : pkpassesParser.getPkpassParsers()) {
             ParseResult parseResult;
             List<String> locales = pkpassParser.listLocales();
-            if (locales.isEmpty()) {
-                try {
-                    parseResult = new ParseResult(ParseResultType.FULL, pkpassParser.toLoyaltyCard(null));
-                } catch (Exception e) {
-                    Log.e(TAG, "Error calling toLoyaltyCard on pkpass file", e);
-                    Toast.makeText(context, R.string.errorReadingFile, Toast.LENGTH_LONG).show();
-                    return new ArrayList<>();
-                }
-                parseResult.setNote(String.format(context.getString(R.string.cardWithNumber), i+1));
-                parseResultList.add(parseResult);
-            } else {
-                for (String locale : locales) {
-                    try {
-                        parseResult = new ParseResult(ParseResultType.FULL, pkpassParser.toLoyaltyCard(locale));
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error calling toLoyaltyCard on pkpass file", e);
-                        Toast.makeText(context, R.string.errorReadingFile, Toast.LENGTH_LONG).show();
-                        return new ArrayList<>();
-                    }
-                    parseResult.setNote(String.format(context.getString(R.string.cardWithNumberAndLocale), i+1, locale));
-                    parseResultList.add(parseResult);
-                }
+            try {
+                parseResult = new ParseResult(ParseResultType.FULL, pkpassParser.toLoyaltyCard(preferredPkPassLocale(context, locales)));
+            } catch (Exception e) {
+                Log.e(TAG, "Error calling toLoyaltyCard on pkpass file", e);
+                return new ArrayList<>();
             }
+            parseResult.setNote(String.format(context.getString(R.string.cardWithNumber), i+1));
+            parseResultList.add(parseResult);
 
             i++;
         }
 
         return parseResultList;
+    }
+
+    static private String preferredPkPassLocale(Context context, List<String> locales) {
+        if (locales.isEmpty()) {
+            return null;
+        }
+
+        List<Locale> deviceLocales = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            android.os.LocaleList localeList = context.getResources().getConfiguration().getLocales();
+            for (int i = 0; i < localeList.size(); i++) {
+                deviceLocales.add(localeList.get(i));
+            }
+        } else {
+            deviceLocales.add(context.getResources().getConfiguration().locale);
+        }
+
+        for (Locale deviceLocale : deviceLocales) {
+            String languageTag = deviceLocale.toLanguageTag();
+            if (locales.contains(languageTag)) {
+                return languageTag;
+            }
+
+            String language = deviceLocale.getLanguage();
+            if (locales.contains(language)) {
+                return language;
+            }
+        }
+
+        return locales.get(0);
     }
 
     static public List<ParseResult> retrieveBarcodesFromPdf(Context context, Uri uri) {
@@ -541,6 +552,24 @@ public class Utils {
         // dates may exist in the DB in case the comparison changes in the future and the new one relies
         // on both dates being set at 12:00 AM.
         return expiryDate.before(getStartOfToday().getTime());
+    }
+
+    static public String formatPassValidityRange(@Nullable Date validFrom, @Nullable Date expiry) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ROOT);
+
+        if (validFrom != null && expiry != null) {
+            return dateFormat.format(validFrom) + " - " + dateFormat.format(expiry);
+        }
+
+        if (validFrom != null) {
+            return dateFormat.format(validFrom);
+        }
+
+        if (expiry != null) {
+            return dateFormat.format(expiry);
+        }
+
+        return "";
     }
 
     static private Calendar getStartOfToday() {

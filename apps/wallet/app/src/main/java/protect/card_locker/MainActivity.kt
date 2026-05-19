@@ -73,7 +73,9 @@ import protect.card_locker.databinding.SortingOptionBinding
 import protect.card_locker.compose.theme.CatimaTheme
 import protect.card_locker.preferences.Settings
 import protect.card_locker.preferences.SettingsActivity
+import java.io.FileNotFoundException
 import java.io.UnsupportedEncodingException
+import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
 import androidx.core.content.edit
 
@@ -281,9 +283,6 @@ class MainActivity : CatimaAppCompatActivity(), CardAdapterListener {
             }
         }.start()
 
-        // We should extract the share intent after we called the super.onCreate as it may need to spawn a dialog window and the app needs to be initialized to not crash
-        extractIntentFields(intent)
-
         mDatabase = DBHelper(this).writableDatabase
 
         mUpdateLoyaltyCardListRunnable = Runnable {
@@ -359,6 +358,9 @@ class MainActivity : CatimaAppCompatActivity(), CardAdapterListener {
                 )
             }
         }
+
+        // We should extract the share intent after the screen is initialized as it may need to spawn a dialog window.
+        extractIntentFields(intent)
     }
 
     override fun onResume() {
@@ -522,14 +524,23 @@ class MainActivity : CatimaAppCompatActivity(), CardAdapterListener {
                     "application/vnd-com.apple.pkpass"
                 ).contains(receivedType)
             ) {
-                parseResultList = Utils.retrieveBarcodesFromPkPass(this, data)
+                processPkPassImport(data, closeAppOnFailure = true)
+                return
             } else if (receivedType == "application/vnd.espass-espass") {
                 // FIXME: espass is not pkpass
                 // However, several users stated in https://github.com/CatimaLoyalty/Android/issues/2197 that the formats are extremely similar to the point they could rename an .espass file to .pkpass and have it imported
                 // So it makes sense to "unofficially" treat it as a PKPASS for now, even though not completely correct
-                parseResultList = Utils.retrieveBarcodesFromPkPass(this, data)
+                processSinglePassImport(data, closeAppOnFailure = true)
+                return
             } else if (receivedType == "application/vnd.apple.pkpasses") {
-                parseResultList = Utils.retrieveBarcodesFromPkPasses(this, data)
+                val bundledPasses = Utils.retrieveCardsFromPkPassBundle(this, data)
+                if (bundledPasses.isNotEmpty()) {
+                    processPassBundleImport(bundledPasses, closeAppOnCancel = true)
+                    return
+                }
+                Toast.makeText(this, R.string.errorReadingFile, Toast.LENGTH_LONG).show()
+                finish()
+                return
             } else {
                 Log.e(TAG, "Wrong mime-type")
                 return
@@ -543,6 +554,105 @@ class MainActivity : CatimaAppCompatActivity(), CardAdapterListener {
         }
 
         processParseResultList(parseResultList, null, true)
+    }
+
+    private fun processPkPassImport(data: Uri?, closeAppOnFailure: Boolean) {
+        val bundledPasses = Utils.retrieveCardsFromPkPassBundle(this, data)
+        if (bundledPasses.isNotEmpty()) {
+            processPassBundleImport(bundledPasses, closeAppOnCancel = closeAppOnFailure)
+            return
+        }
+
+        processSinglePassImport(data, closeAppOnFailure)
+    }
+
+    private fun processSinglePassImport(data: Uri?, closeAppOnFailure: Boolean) {
+        val pass = Utils.retrieveCardsFromSinglePkPass(this, data)
+        if (pass.isEmpty()) {
+            Toast.makeText(this, R.string.errorReadingFile, Toast.LENGTH_LONG).show()
+            if (closeAppOnFailure) {
+                finish()
+            }
+            return
+        }
+
+        importPassCards(pass)
+    }
+
+    private fun processPassBundleImport(
+        parseResultList: List<ParseResult>,
+        closeAppOnCancel: Boolean,
+    ) {
+        val importablePasses = parseResultList.filter { it.parseResultType == ParseResultType.FULL }
+        if (importablePasses.isEmpty()) {
+            Toast.makeText(this, R.string.errorReadingFile, Toast.LENGTH_LONG).show()
+            if (closeAppOnCancel) {
+                finish()
+            }
+            return
+        }
+
+        importPassCards(importablePasses)
+    }
+
+    private fun importPassCards(parseResults: List<ParseResult>) {
+        var imported = 0
+        val bundleId = if (parseResults.size > 1) {
+            "pkpass-${UUID.randomUUID()}"
+        } else {
+            null
+        }
+        val selectedGroup = selectedGroupName()?.let { groupName ->
+            DBHelper.getGroup(mDatabase, groupName)
+        }
+
+        for ((index, parseResult) in parseResults.withIndex()) {
+            val card = parseResult.loyaltyCard
+            val cardId = DBHelper.insertLoyaltyCard(
+                mDatabase,
+                card.store,
+                card.note,
+                card.validFrom,
+                card.expiry,
+                card.balance,
+                card.balanceType,
+                card.cardId,
+                card.barcodeId,
+                card.barcodeType,
+                card.barcodeEncoding,
+                card.headerColor,
+                card.starStatus,
+                null,
+                card.archiveStatus,
+            ).toInt()
+
+            if (bundleId != null) {
+                DBHelper.setLoyaltyCardBundle(mDatabase, cardId, bundleId, index, parseResults.size)
+            }
+
+            try {
+                Utils.saveCardImage(this, card.getImageFront(this), cardId, ImageLocationType.front)
+                Utils.saveCardImage(this, card.getImageBack(this), cardId, ImageLocationType.back)
+                Utils.saveCardImage(this, card.getImageThumbnail(this), cardId, ImageLocationType.icon)
+            } catch (exception: FileNotFoundException) {
+                Log.e(TAG, "Failed to save imported pass image", exception)
+            }
+
+            if (selectedGroup != null) {
+                DBHelper.setLoyaltyCardGroups(mDatabase, cardId, listOf(selectedGroup))
+            }
+
+            imported++
+        }
+
+        updateLoyaltyCardList(true)
+        ListWidget().updateAll(this)
+        ShortcutHelper.updateShortcuts(this)
+        Toast.makeText(
+            this,
+            resources.getQuantityString(R.plurals.passes_imported, imported, imported),
+            Toast.LENGTH_LONG,
+        ).show()
     }
 
     private fun extractIntentFields(intent: Intent) {
@@ -800,8 +910,13 @@ class MainActivity : CatimaAppCompatActivity(), CardAdapterListener {
                         putInt(LoyaltyCardViewActivity.BUNDLE_ID, loyaltyCard.id)
 
                         val cardList = ArrayList<Int?>()
-                        for (i in 0..<mAdapter.itemCount) {
-                            cardList.add(mAdapter.getCard(i).id)
+                        val bundledCards = DBHelper.getBundleCardIds(mDatabase, loyaltyCard.id)
+                        if (bundledCards.size > 1) {
+                            cardList.addAll(bundledCards)
+                        } else {
+                            for (i in 0..<mAdapter.itemCount) {
+                                cardList.add(mAdapter.getCard(i).id)
+                            }
                         }
 
                         putIntegerArrayList(LoyaltyCardViewActivity.BUNDLE_CARDLIST, cardList)

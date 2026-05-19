@@ -71,9 +71,7 @@ class SendNewMessage @Inject constructor(
             conversationRepo.updateConversations(threadIds)
             conversationRepo.markUnarchived(threadIds)
 
-            AndroidSchedulers.mainThread().scheduleDirect {
-                threadIds.forEach { shortcutManager.getOrCreateShortcut(it) }
-            }
+            threadIds.forEach { shortcutManager.getOrCreateShortcut(it) }
 
             // delete attachment local files, if any, because they're saved to mms db by now
             params.attachments.forEach { it.removeCacheFile() }

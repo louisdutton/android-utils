@@ -463,6 +463,11 @@ public class LoyaltyCardViewActivity extends CatimaAppCompatActivity implements 
             return;
         }
 
+        List<Integer> bundledCardIds = DBHelper.getBundleCardIds(database, loyaltyCardId);
+        if (bundledCardIds.size() > 1) {
+            cardList = new ArrayList<>(bundledCardIds);
+        }
+
         populateStateFromCurrentCard();
         showHideElementsForScreenSize();
         bindCardIdDescriptionInteractions();

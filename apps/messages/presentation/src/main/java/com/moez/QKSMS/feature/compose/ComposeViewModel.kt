@@ -170,17 +170,22 @@ class ComposeViewModel @Inject constructor(
             .map { recipients -> recipients.map { it.address } }
             .distinctUntilChanged()
             .doOnNext { newState { copy(loading = true) } }
-            .observeOn(Schedulers.io())  // background thread for possible long telephony running
-            .doOnNext { addresses -> conversationRepo.getOrCreateConversation(addresses) }
+            .observeOn(Schedulers.io())
+            .map { addresses -> conversationRepo.getOrCreateConversation(addresses) }
             .observeOn(AndroidSchedulers.mainThread())
-            .switchMap { addresses ->
-                // monitors convos and triggers when wanted convo is present
-                conversationRepo.observeConversations(false)
-                    .subscribeOn(Schedulers.io())
-                    .mapNotNull { conversationRepo.getConversation(addresses) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext { newState { copy(loading = false) } }
+            .doOnNext { selectedConversation ->
+                if (selectedConversation == null) {
+                    newState { copy(loading = false) }
+                }
             }
+            .mapNotNull { selectedConversation -> selectedConversation }
+            .switchMap { selectedConversation ->
+                conversationRepo.observeConversation(selectedConversation.id)
+                    .subscribeOn(Schedulers.io())
+                    .startWith(selectedConversation)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { newState { copy(loading = false) } }
             .doOnError { e ->
                 Timber.e(e, "Error while resolving conversation")
                 newState { copy(loading = false) }

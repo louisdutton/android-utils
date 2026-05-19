@@ -27,7 +27,7 @@ import java.util.Set;
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Catima.db";
     public static final int ORIGINAL_DATABASE_VERSION = 1;
-    public static final int DATABASE_VERSION = 20;
+    public static final int DATABASE_VERSION = 21;
 
     // NB: changing these values requires a migration
     public static final int DEFAULT_ZOOM_LEVEL = 100;
@@ -59,6 +59,9 @@ public class DBHelper extends SQLiteOpenHelper {
         public static final String ZOOM_LEVEL = "zoomlevel";
         public static final String ZOOM_LEVEL_WIDTH = "zoomlevelwidth";
         public static final String ARCHIVE_STATUS = "archive";
+        public static final String BUNDLE_ID = "bundleid";
+        public static final String BUNDLE_ORDER = "bundleorder";
+        public static final String BUNDLE_SIZE = "bundlesize";
     }
 
     public static class LoyaltyCardDbIdsGroups {
@@ -122,7 +125,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 LoyaltyCardDbIds.LAST_USED + " INTEGER DEFAULT '0', " +
                 LoyaltyCardDbIds.ZOOM_LEVEL + " INTEGER DEFAULT '" + DEFAULT_ZOOM_LEVEL + "', " +
                 LoyaltyCardDbIds.ZOOM_LEVEL_WIDTH + " INTEGER DEFAULT '" + DEFAULT_ZOOM_LEVEL_WIDTH + "', " +
-                LoyaltyCardDbIds.ARCHIVE_STATUS + " INTEGER DEFAULT '0' )");
+                LoyaltyCardDbIds.ARCHIVE_STATUS + " INTEGER DEFAULT '0', " +
+                LoyaltyCardDbIds.BUNDLE_ID + " TEXT, " +
+                LoyaltyCardDbIds.BUNDLE_ORDER + " INTEGER DEFAULT '0', " +
+                LoyaltyCardDbIds.BUNDLE_SIZE + " INTEGER DEFAULT '1' )");
 
         // create associative table for cards in groups
         db.execSQL("CREATE TABLE " + LoyaltyCardDbIdsGroups.TABLE + "(" +
@@ -495,6 +501,15 @@ public class DBHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
 
+        if (oldVersion < 21 && newVersion >= 21) {
+            db.execSQL("ALTER TABLE " + LoyaltyCardDbIds.TABLE
+                    + " ADD COLUMN " + LoyaltyCardDbIds.BUNDLE_ID + " TEXT");
+            db.execSQL("ALTER TABLE " + LoyaltyCardDbIds.TABLE
+                    + " ADD COLUMN " + LoyaltyCardDbIds.BUNDLE_ORDER + " INTEGER DEFAULT '0'");
+            db.execSQL("ALTER TABLE " + LoyaltyCardDbIds.TABLE
+                    + " ADD COLUMN " + LoyaltyCardDbIds.BUNDLE_SIZE + " INTEGER DEFAULT '1'");
+        }
+
     }
 
     public static Set<String> imageFiles(Context context, final SQLiteDatabase database) {
@@ -586,6 +601,19 @@ public class DBHelper extends SQLiteOpenHelper {
         database.endTransaction();
 
         return id;
+    }
+
+    public static void setLoyaltyCardBundle(
+            final SQLiteDatabase database,
+            final int id,
+            @Nullable final String bundleId,
+            final int bundleOrder,
+            final int bundleSize) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(LoyaltyCardDbIds.BUNDLE_ID, bundleId);
+        contentValues.put(LoyaltyCardDbIds.BUNDLE_ORDER, bundleOrder);
+        contentValues.put(LoyaltyCardDbIds.BUNDLE_SIZE, bundleSize);
+        database.update(LoyaltyCardDbIds.TABLE, contentValues, whereAttrs(LoyaltyCardDbIds.ID), withArgs(id));
     }
 
     public static long insertLoyaltyCard(
@@ -767,6 +795,19 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public static boolean deleteLoyaltyCard(SQLiteDatabase database, Context context, final int id) {
+        List<Integer> bundledCardIds = getBundleCardIds(database, id);
+        if (bundledCardIds.size() > 1) {
+            boolean success = true;
+            for (Integer bundledCardId : bundledCardIds) {
+                success = deleteSingleLoyaltyCard(database, context, bundledCardId) && success;
+            }
+            return success;
+        }
+
+        return deleteSingleLoyaltyCard(database, context, id);
+    }
+
+    private static boolean deleteSingleLoyaltyCard(SQLiteDatabase database, Context context, final int id) {
         // Delete card
         int rowsDeleted = database.delete(LoyaltyCardDbIds.TABLE,
                 whereAttrs(LoyaltyCardDbIds.ID),
@@ -883,6 +924,8 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         String orderField = getFieldForOrder(order);
+        String visibleBundleRootFilter = " AND (" + LoyaltyCardDbIds.TABLE + "." + LoyaltyCardDbIds.BUNDLE_ID + " IS NULL OR " +
+                LoyaltyCardDbIds.TABLE + "." + LoyaltyCardDbIds.BUNDLE_ORDER + " = 0)";
 
         return database.rawQuery("SELECT " + LoyaltyCardDbIds.TABLE + ".* FROM " + LoyaltyCardDbIds.TABLE +
                 " JOIN " + LoyaltyCardDbFTS.TABLE +
@@ -890,6 +933,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 (filter.trim().isEmpty() ? " " : " AND " + LoyaltyCardDbFTS.TABLE + " MATCH ? ") +
                 groupFilter.toString() +
                 archiveFilterString +
+                visibleBundleRootFilter +
                 " ORDER BY " + LoyaltyCardDbIds.TABLE + "." + LoyaltyCardDbIds.ARCHIVE_STATUS + " ASC, " +
                 LoyaltyCardDbIds.TABLE + "." + LoyaltyCardDbIds.STAR_STATUS + " DESC, " +
                 " (CASE WHEN " + LoyaltyCardDbIds.TABLE + "." + orderField + " IS NULL THEN 1 ELSE 0 END), " +
@@ -904,7 +948,70 @@ public class DBHelper extends SQLiteOpenHelper {
      * @return Integer
      */
     public static int getLoyaltyCardCount(SQLiteDatabase database) {
-        return (int) DatabaseUtils.queryNumEntries(database, LoyaltyCardDbIds.TABLE);
+        return (int) DatabaseUtils.queryNumEntries(
+                database,
+                LoyaltyCardDbIds.TABLE,
+                LoyaltyCardDbIds.BUNDLE_ID + " IS NULL OR " + LoyaltyCardDbIds.BUNDLE_ORDER + " = 0");
+    }
+
+    public static int getBundleSize(Cursor cursor) {
+        int bundleSizeColumn = cursor.getColumnIndex(LoyaltyCardDbIds.BUNDLE_SIZE);
+        if (bundleSizeColumn < 0 || cursor.isNull(bundleSizeColumn)) {
+            return 1;
+        }
+
+        return Math.max(1, cursor.getInt(bundleSizeColumn));
+    }
+
+    public static int getBundleSize(SQLiteDatabase database, final int cardId) {
+        Cursor data = database.query(LoyaltyCardDbIds.TABLE, withArgs(LoyaltyCardDbIds.BUNDLE_SIZE),
+                whereAttrs(LoyaltyCardDbIds.ID), withArgs(cardId), null, null, null);
+        try {
+            if (data.moveToFirst() && !data.isNull(0)) {
+                return Math.max(1, data.getInt(0));
+            }
+            return 1;
+        } finally {
+            data.close();
+        }
+    }
+
+    public static List<Integer> getBundleCardIds(SQLiteDatabase database, final int cardId) {
+        Cursor source = database.query(LoyaltyCardDbIds.TABLE, withArgs(LoyaltyCardDbIds.BUNDLE_ID),
+                whereAttrs(LoyaltyCardDbIds.ID), withArgs(cardId), null, null, null);
+
+        String bundleId = null;
+        try {
+            if (source.moveToFirst() && !source.isNull(0)) {
+                bundleId = source.getString(0);
+            }
+        } finally {
+            source.close();
+        }
+
+        List<Integer> cardIds = new ArrayList<>();
+        if (bundleId == null) {
+            cardIds.add(cardId);
+            return cardIds;
+        }
+
+        Cursor data = database.query(
+                LoyaltyCardDbIds.TABLE,
+                withArgs(LoyaltyCardDbIds.ID),
+                LoyaltyCardDbIds.BUNDLE_ID + " = ?",
+                withArgs(bundleId),
+                null,
+                null,
+                LoyaltyCardDbIds.BUNDLE_ORDER + " ASC, " + LoyaltyCardDbIds.ID + " ASC");
+        try {
+            while (data.moveToNext()) {
+                cardIds.add(data.getInt(0));
+            }
+        } finally {
+            data.close();
+        }
+
+        return cardIds.isEmpty() ? Arrays.asList(cardId) : cardIds;
     }
 
     /**
