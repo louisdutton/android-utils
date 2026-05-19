@@ -12,6 +12,12 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,8 +26,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,7 +38,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
@@ -59,7 +67,6 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.MoreVert
@@ -70,11 +77,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -282,9 +291,32 @@ private fun CalendarScreen(
 ) {
     val context = LocalContext.current
     var isMonthExpanded by rememberSaveable { mutableStateOf(true) }
+    var selectedDateText by rememberSaveable { mutableStateOf(LocalDate.now().toString()) }
     var eventDialog by remember { mutableStateOf<EventDialogState?>(null) }
     val currentMonth = YearMonth.now()
     val defaultCalendar = state.calendars.defaultWritableCalendar()
+    val selectedDate = remember(selectedDateText) { LocalDate.parse(selectedDateText) }
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+    val sections = state.events.agendaSections()
+
+    fun scrollToAgendaDate(date: LocalDate) {
+        if (sections.isEmpty()) return
+
+        val sectionIndex = sections.indexOfFirst { section -> section.date >= date }
+            .takeUnless { it == -1 }
+            ?: sections.lastIndex
+        val sectionItemIndex = 1 + (if (state.error == null) 0 else 1) + sectionIndex
+
+        coroutineScope.launch {
+            listState.animateScrollToItem(sectionItemIndex)
+        }
+    }
+
+    fun selectDate(date: LocalDate) {
+        selectedDateText = date.toString()
+        scrollToAgendaDate(date)
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -294,7 +326,12 @@ private fun CalendarScreen(
                 month = currentMonth,
                 isMonthExpanded = isMonthExpanded,
                 onToggleMonth = { isMonthExpanded = !isMonthExpanded },
-                onToday = onRefresh,
+                onToday = {
+                    val today = LocalDate.now()
+                    selectedDateText = today.toString()
+                    onRefresh()
+                    scrollToAgendaDate(today)
+                },
             )
         },
         floatingActionButton = {
@@ -313,6 +350,7 @@ private fun CalendarScreen(
         },
     ) { padding ->
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
@@ -326,11 +364,17 @@ private fun CalendarScreen(
                 return@LazyColumn
             }
 
-            if (isMonthExpanded) {
-                item {
+            item(key = "month-overview") {
+                AnimatedVisibility(
+                    visible = isMonthExpanded,
+                    enter = expandVertically() + fadeIn(),
+                    exit = shrinkVertically() + fadeOut(),
+                ) {
                     MonthOverview(
                         month = currentMonth,
                         events = state.events,
+                        selectedDate = selectedDate,
+                        onDateSelected = ::selectDate,
                     )
                 }
             }
@@ -344,7 +388,6 @@ private fun CalendarScreen(
                 }
             }
 
-            val sections = state.events.agendaSections()
             if (sections.isEmpty() && !state.isLoading) {
                 item {
                     EmptyAgenda()
@@ -419,6 +462,11 @@ private fun AgendaTopBar(
     onToggleMonth: () -> Unit,
     onToday: () -> Unit,
 ) {
+    val toggleRotation by animateFloatAsState(
+        targetValue = if (isMonthExpanded) 180f else 0f,
+        label = "Month toggle rotation",
+    )
+
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = {}) {
@@ -443,17 +491,15 @@ private fun AgendaTopBar(
                     fontWeight = FontWeight.SemiBold,
                 )
                 Icon(
-                    imageVector = if (isMonthExpanded) {
-                        Icons.Rounded.KeyboardArrowUp
-                    } else {
-                        Icons.Rounded.KeyboardArrowDown
-                    },
+                    imageVector = Icons.Rounded.KeyboardArrowDown,
                     contentDescription = if (isMonthExpanded) {
                         "Collapse month"
                     } else {
                         "Expand month"
                     },
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier
+                        .size(20.dp)
+                        .rotate(toggleRotation),
                 )
             }
         },
@@ -539,6 +585,8 @@ private fun CompactStatus(
 private fun MonthOverview(
     month: YearMonth,
     events: List<CalendarEvent>,
+    selectedDate: LocalDate,
+    onDateSelected: (LocalDate) -> Unit,
 ) {
     val today = LocalDate.now()
     val zone = ZoneId.systemDefault()
@@ -571,8 +619,10 @@ private fun MonthOverview(
                     MonthDayCell(
                         modifier = Modifier.weight(1f),
                         date = date,
-                        selected = date == today,
+                        selected = date == selectedDate,
+                        isToday = date == today,
                         hasEvents = date in eventDates,
+                        onClick = onDateSelected,
                     )
                 }
             }
@@ -585,18 +635,25 @@ private fun MonthDayCell(
     modifier: Modifier = Modifier,
     date: LocalDate?,
     selected: Boolean,
+    isToday: Boolean,
     hasEvents: Boolean,
+    onClick: (LocalDate) -> Unit,
 ) {
     Box(
-        modifier = modifier.height(34.dp),
+        modifier = modifier
+            .height(38.dp)
+            .clip(RoundedCornerShape(19.dp))
+            .clickable(enabled = date != null) {
+                date?.let(onClick)
+            },
         contentAlignment = Alignment.Center,
     ) {
         if (date == null) return@Box
 
-        val contentColor = if (selected) {
-            MaterialTheme.colorScheme.onPrimary
-        } else {
-            MaterialTheme.colorScheme.onSurface
+        val contentColor = when {
+            selected -> MaterialTheme.colorScheme.onPrimary
+            isToday -> MaterialTheme.colorScheme.primary
+            else -> MaterialTheme.colorScheme.onSurface
         }
 
         Column(
@@ -619,7 +676,7 @@ private fun MonthDayCell(
                 Text(
                     text = date.dayOfMonth.toString(),
                     style = MaterialTheme.typography.labelMedium,
-                    fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                    fontWeight = if (selected || isToday) FontWeight.SemiBold else FontWeight.Medium,
                     color = contentColor,
                 )
             }
@@ -709,16 +766,22 @@ private fun AgendaEventBlock(
         contentColor = MaterialTheme.colorScheme.onSurface,
         shape = RoundedCornerShape(4.dp),
     ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+        ) {
             Box(
                 modifier = Modifier
                     .width(4.dp)
-                    .heightIn(min = 58.dp)
+                    .fillMaxHeight()
                     .background(event.accentColor()),
             )
 
             Column(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 9.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 12.dp, vertical = 9.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 Text(

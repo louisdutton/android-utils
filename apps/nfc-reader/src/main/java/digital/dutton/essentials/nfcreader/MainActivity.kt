@@ -575,7 +575,10 @@ private fun WaitingPanel() {
 }
 
 @Composable
-private fun TagHeader(reading: TagReading) {
+private fun TagHeader(
+    reading: TagReading,
+    onSave: () -> Unit,
+) {
     OutlinedCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
@@ -605,6 +608,153 @@ private fun TagHeader(reading: TagReading) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
             )
+            Button(onClick = onSave) {
+                Text("Save scan")
+            }
+        }
+    }
+}
+
+@Composable
+private fun SaveReadingDialog(
+    reading: TagReading,
+    onDismiss: () -> Unit,
+    onSave: (String) -> Unit,
+) {
+    var name by rememberSaveable {
+        mutableStateOf("Card ${reading.discoveredAt}")
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Save scan") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    singleLine = true,
+                    label = { Text("Name") },
+                )
+                Text(
+                    text = "Saved scans store the displayed metadata and any standard NDEF message bytes. They do not store keys or protected sectors.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        },
+        confirmButton = {
+            Button(onClick = { onSave(name.trim()) }) {
+                Text("Save")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+    )
+}
+
+@Composable
+private fun SavedCardsPanel(
+    savedCards: List<SavedCard>,
+    activeEmulationCardId: String?,
+    onOpenSavedCard: (SavedCard) -> Unit,
+    onDeleteSavedCard: (String) -> Unit,
+    onSetActiveEmulation: (String?) -> Unit,
+) {
+    OutlinedCard(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                text = "Saved cards",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = "NDEF emulation is for saved test payloads only; it does not spoof card IDs or relay another card.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            savedCards.forEachIndexed { index, card ->
+                SavedCardRow(
+                    card = card,
+                    isActive = card.id == activeEmulationCardId,
+                    onOpen = { onOpenSavedCard(card) },
+                    onDelete = { onDeleteSavedCard(card.id) },
+                    onSetActiveEmulation = onSetActiveEmulation,
+                )
+                if (index != savedCards.lastIndex) {
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SavedCardRow(
+    card: SavedCard,
+    isActive: Boolean,
+    onOpen: () -> Unit,
+    onDelete: () -> Unit,
+    onSetActiveEmulation: (String?) -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(
+                text = card.name,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = "${card.savedAt} · ${card.reading.technologies.joinToString(", ")}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = "ID ${card.reading.idHex.ifBlank { "not exposed" }}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TextButton(onClick = onOpen) {
+                Text("Open")
+            }
+            TextButton(onClick = onDelete) {
+                Text("Delete")
+            }
+            if (card.reading.ndefMessageHex != null) {
+                TextButton(
+                    onClick = {
+                        onSetActiveEmulation(if (isActive) null else card.id)
+                    },
+                ) {
+                    Text(if (isActive) "Stop NDEF" else "Emulate NDEF")
+                }
+            } else {
+                Text(
+                    text = "No NDEF",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }
@@ -713,13 +863,14 @@ private fun Tag.toReading(): TagReading {
         addTechnologySections(this@toReading)
     }
 
-    val (ndefSection, records) = readNdef()
+    val (ndefSection, records, ndefMessageHex) = readNdef()
     return TagReading(
         idHex = tagId.toHex(),
         discoveredAt = LocalTime.now().format(ScanTimeFormatter),
         technologies = techNames,
         sections = sections + ndefSection,
         ndefRecords = records,
+        ndefMessageHex = ndefMessageHex,
     )
 }
 
@@ -821,7 +972,7 @@ private fun MutableList<InfoSection>.addTechnologySections(tag: Tag) {
     }
 }
 
-private fun Tag.readNdef(): Pair<InfoSection, List<NdefRecordInfo>> {
+private fun Tag.readNdef(): Triple<InfoSection, List<NdefRecordInfo>, String?> {
     val ndef = Ndef.get(this)
     if (ndef == null) {
         val status = if (NdefFormatable.get(this) != null) {
@@ -829,10 +980,14 @@ private fun Tag.readNdef(): Pair<InfoSection, List<NdefRecordInfo>> {
         } else {
             "Not exposed"
         }
-        return InfoSection(
-            title = "NDEF",
-            rows = listOf(InfoRow("Status", status)),
-        ) to emptyList()
+        return Triple(
+            InfoSection(
+                title = "NDEF",
+                rows = listOf(InfoRow("Status", status)),
+            ),
+            emptyList(),
+            null,
+        )
     }
 
     var readError: String? = null
@@ -860,13 +1015,18 @@ private fun Tag.readNdef(): Pair<InfoSection, List<NdefRecordInfo>> {
         add(InfoRow("Writable", if (ndef.isWritable) "Yes" else "No"))
         add(InfoRow("Can make read-only", if (ndef.canMakeReadOnly()) "Yes" else "No"))
         add(InfoRow("Records", records.size.toString()))
+        message?.toByteArray()?.size?.let { add(InfoRow("Message size", "$it bytes")) }
         readError?.let { add(InfoRow("Read warning", it)) }
     }
 
-    return InfoSection(
-        title = "NDEF",
-        rows = rows,
-    ) to records
+    return Triple(
+        InfoSection(
+            title = "NDEF",
+            rows = rows,
+        ),
+        records,
+        message?.toByteArray()?.toCompactHex(),
+    )
 }
 
 private fun NdefRecord.toInfo(index: Int): NdefRecordInfo {
@@ -1004,6 +1164,279 @@ private fun Short.toHexByte(): String =
 
 private fun Int.toHexByte(): String =
     "0x" + toString(16).uppercase().padStart(2, '0')
+
+private fun ByteArray.toCompactHex(): String =
+    joinToString("") { byte -> (byte.toInt() and 0xFF).toString(16).uppercase().padStart(2, '0') }
+
+private fun String.hexToBytes(): ByteArray? {
+    val clean = filterNot { it.isWhitespace() }
+    if (clean.length % 2 != 0) return null
+    return runCatching {
+        ByteArray(clean.length / 2) { index ->
+            clean.substring(index * 2, index * 2 + 2).toInt(16).toByte()
+        }
+    }.getOrNull()
+}
+
+private fun Context.savedCardsFile(): File =
+    File(filesDir, SavedCardsFileName)
+
+private fun Context.loadSavedCards(): List<SavedCard> {
+    val file = savedCardsFile()
+    if (!file.exists()) return emptyList()
+
+    return runCatching {
+        val array = JSONArray(file.readText())
+        (0 until array.length()).mapNotNull { index ->
+            array.optJSONObject(index)?.toSavedCard()
+        }
+    }.getOrDefault(emptyList())
+}
+
+private fun Context.writeSavedCards(cards: List<SavedCard>) {
+    val array = JSONArray()
+    cards.forEach { card -> array.put(card.toJson()) }
+    savedCardsFile().writeText(array.toString(2))
+}
+
+private fun Context.getActiveEmulationCardId(): String? =
+    getSharedPreferences(ReaderPreferences, Context.MODE_PRIVATE)
+        .getString(ActiveEmulationCardKey, null)
+
+private fun Context.setActiveEmulationCardId(cardId: String?) {
+    getSharedPreferences(ReaderPreferences, Context.MODE_PRIVATE)
+        .edit()
+        .apply {
+            if (cardId == null) {
+                remove(ActiveEmulationCardKey)
+            } else {
+                putString(ActiveEmulationCardKey, cardId)
+            }
+        }
+        .apply()
+}
+
+private fun Context.clearActiveEmulationCardId() {
+    setActiveEmulationCardId(null)
+}
+
+private fun SavedCard.toJson(): JSONObject =
+    JSONObject()
+        .put("id", id)
+        .put("name", name)
+        .put("savedAt", savedAt)
+        .put("reading", reading.toJson())
+
+private fun JSONObject.toSavedCard(): SavedCard? =
+    runCatching {
+        SavedCard(
+            id = getString("id"),
+            name = getString("name"),
+            savedAt = getString("savedAt"),
+            reading = getJSONObject("reading").toTagReading(),
+        )
+    }.getOrNull()
+
+private fun TagReading.toJson(): JSONObject =
+    JSONObject()
+        .put("idHex", idHex)
+        .put("discoveredAt", discoveredAt)
+        .put("technologies", JSONArray().also { array ->
+            technologies.forEach { array.put(it) }
+        })
+        .put("sections", JSONArray().also { array ->
+            sections.forEach { array.put(it.toJson()) }
+        })
+        .put("ndefRecords", JSONArray().also { array ->
+            ndefRecords.forEach { array.put(it.toJson()) }
+        })
+        .put("ndefMessageHex", ndefMessageHex)
+
+private fun JSONObject.toTagReading(): TagReading =
+    TagReading(
+        idHex = getString("idHex"),
+        discoveredAt = getString("discoveredAt"),
+        technologies = getJSONArray("technologies").toStringList(),
+        sections = getJSONArray("sections").toObjectList { it.toInfoSection() },
+        ndefRecords = getJSONArray("ndefRecords").toObjectList { it.toNdefRecordInfo() },
+        ndefMessageHex = optStringOrNull("ndefMessageHex"),
+    )
+
+private fun InfoSection.toJson(): JSONObject =
+    JSONObject()
+        .put("title", title)
+        .put("rows", JSONArray().also { array ->
+            rows.forEach { array.put(it.toJson()) }
+        })
+
+private fun JSONObject.toInfoSection(): InfoSection =
+    InfoSection(
+        title = getString("title"),
+        rows = getJSONArray("rows").toObjectList { it.toInfoRow() },
+    )
+
+private fun InfoRow.toJson(): JSONObject =
+    JSONObject()
+        .put("label", label)
+        .put("value", value)
+
+private fun JSONObject.toInfoRow(): InfoRow =
+    InfoRow(
+        label = getString("label"),
+        value = getString("value"),
+    )
+
+private fun NdefRecordInfo.toJson(): JSONObject =
+    JSONObject()
+        .put("title", title)
+        .put("rows", JSONArray().also { array ->
+            rows.forEach { array.put(it.toJson()) }
+        })
+        .put("preview", preview)
+
+private fun JSONObject.toNdefRecordInfo(): NdefRecordInfo =
+    NdefRecordInfo(
+        title = getString("title"),
+        rows = getJSONArray("rows").toObjectList { it.toInfoRow() },
+        preview = optStringOrNull("preview"),
+    )
+
+private fun JSONArray.toStringList(): List<String> =
+    (0 until length()).map { index -> getString(index) }
+
+private fun <T> JSONArray.toObjectList(transform: (JSONObject) -> T): List<T> =
+    (0 until length()).map { index -> transform(getJSONObject(index)) }
+
+private fun JSONObject.optStringOrNull(name: String): String? =
+    if (has(name) && !isNull(name)) getString(name) else null
+
+class NdefEmulationService : HostApduService() {
+    private var selectedFile: EmulatedFile? = null
+
+    override fun processCommandApdu(
+        commandApdu: ByteArray?,
+        extras: Bundle?,
+    ): ByteArray {
+        val command = commandApdu ?: return StatusWrongLength
+
+        return when {
+            command.isSelectNdefApplication() -> {
+                selectedFile = null
+                StatusSuccess
+            }
+            command.isSelectFile(CapabilityContainerFileId) -> {
+                selectedFile = EmulatedFile.CapabilityContainer
+                StatusSuccess
+            }
+            command.isSelectFile(NdefFileId) -> {
+                selectedFile = EmulatedFile.Ndef
+                StatusSuccess
+            }
+            command.isReadBinary() -> readSelectedFile(command)
+            else -> StatusInstructionNotSupported
+        }
+    }
+
+    override fun onDeactivated(reason: Int) {
+        selectedFile = null
+    }
+
+    private fun readSelectedFile(command: ByteArray): ByteArray {
+        val file = selectedFile ?: return StatusFileNotFound
+        val fileBytes = when (file) {
+            EmulatedFile.CapabilityContainer -> CapabilityContainerFile
+            EmulatedFile.Ndef -> activeNdefFile() ?: return StatusFileNotFound
+        }
+
+        val offset = ((command[2].toInt() and 0x7F) shl 8) or (command[3].toInt() and 0xFF)
+        if (offset > fileBytes.size) return StatusWrongParameters
+
+        val requestedLength = command[4].toInt() and 0xFF
+        val length = if (requestedLength == 0) 256 else requestedLength
+        return fileBytes.copyOfRange(offset, minOf(offset + length, fileBytes.size)) + StatusSuccess
+    }
+
+    private fun activeNdefFile(): ByteArray? {
+        val activeId = getActiveEmulationCardId() ?: return null
+        val message = loadSavedCards()
+            .firstOrNull { it.id == activeId }
+            ?.reading
+            ?.ndefMessageHex
+            ?.hexToBytes()
+            ?: return null
+        if (message.size > MaxNdefMessageSize) return null
+
+        return byteArrayOf(
+            ((message.size ushr 8) and 0xFF).toByte(),
+            (message.size and 0xFF).toByte(),
+        ) + message
+    }
+}
+
+private enum class EmulatedFile {
+    CapabilityContainer,
+    Ndef,
+}
+
+private fun ByteArray.isSelectNdefApplication(): Boolean =
+    size >= 12 &&
+        this[0] == 0x00.toByte() &&
+        this[1] == 0xA4.toByte() &&
+        this[2] == 0x04.toByte() &&
+        this[3] == 0x00.toByte() &&
+        this[4] == NdefApplicationAid.size.toByte() &&
+        copyOfRange(5, 5 + NdefApplicationAid.size).contentEquals(NdefApplicationAid)
+
+private fun ByteArray.isSelectFile(fileId: ByteArray): Boolean =
+    size >= 7 &&
+        this[0] == 0x00.toByte() &&
+        this[1] == 0xA4.toByte() &&
+        this[2] == 0x00.toByte() &&
+        this[4] == 0x02.toByte() &&
+        copyOfRange(5, 7).contentEquals(fileId)
+
+private fun ByteArray.isReadBinary(): Boolean =
+    size >= 5 &&
+        this[0] == 0x00.toByte() &&
+        this[1] == 0xB0.toByte()
+
+private val NdefApplicationAid = byteArrayOf(
+    0xD2.toByte(),
+    0x76.toByte(),
+    0x00.toByte(),
+    0x00.toByte(),
+    0x85.toByte(),
+    0x01.toByte(),
+    0x01.toByte(),
+)
+
+private val CapabilityContainerFileId = byteArrayOf(0xE1.toByte(), 0x03.toByte())
+private val NdefFileId = byteArrayOf(0xE1.toByte(), 0x04.toByte())
+private const val MaxNdefMessageSize = 0x7FFF
+
+private val CapabilityContainerFile = byteArrayOf(
+    0x00.toByte(),
+    0x0F.toByte(),
+    0x20.toByte(),
+    0x00.toByte(),
+    0xFF.toByte(),
+    0x00.toByte(),
+    0xFF.toByte(),
+    0x04.toByte(),
+    0x06.toByte(),
+    0xE1.toByte(),
+    0x04.toByte(),
+    0x7F.toByte(),
+    0xFF.toByte(),
+    0x00.toByte(),
+    0xFF.toByte(),
+)
+
+private val StatusSuccess = byteArrayOf(0x90.toByte(), 0x00.toByte())
+private val StatusFileNotFound = byteArrayOf(0x6A.toByte(), 0x82.toByte())
+private val StatusWrongLength = byteArrayOf(0x67.toByte(), 0x00.toByte())
+private val StatusWrongParameters = byteArrayOf(0x6B.toByte(), 0x00.toByte())
+private val StatusInstructionNotSupported = byteArrayOf(0x6D.toByte(), 0x00.toByte())
 
 private val UriPrefixes = mapOf(
     0x00 to "",
