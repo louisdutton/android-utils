@@ -25,6 +25,7 @@
         buildToolsVersion = "36.0.0";
         comapsCompatBuildToolsVersion = "35.0.0";
         ndkVersion = "28.2.13676358";
+        keepassdxNdkVersion = "25.2.9519653";
         cmakeVersion = "3.22.1";
         buildToolsVersions = pkgs.lib.unique [
           buildToolsVersion
@@ -135,7 +136,10 @@
           includeSystemImages = true;
           includeCmake = true;
           includeNDK = true;
-          ndkVersions = [ndkVersion];
+          ndkVersions = pkgs.lib.unique [
+            ndkVersion
+            keepassdxNdkVersion
+          ];
           includeSources = false;
           includeEmulator = true;
         };
