@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feedback">Обратна връзка</string>
     <string name="encryption_algorithm">Алгоритъм за шифроване</string>
     <string name="encryption">Шифроване</string>
     <string name="security">Сигурност</string>
@@ -30,10 +29,8 @@
     <string name="entry_cancel">Отказ</string>
     <string name="custom_data">Потребителски данни</string>
     <string name="tags">Етикети</string>
-    <string name="clipboard_explanation_summary">Копиране на полета за въвеждане посредством междинната памет на устройството</string>
     <string name="otp_type">Вид на OTP</string>
     <string name="entry_url">Адрес в интернет</string>
-    <string name="contribution">Участие</string>
     <string name="entry_UUID">Идентификатор</string>
     <string name="entry_history">История</string>
     <string name="copy_field">Копирано: %1$s</string>
@@ -63,7 +60,6 @@
     <string name="entry_modified">Променен</string>
     <string name="select_to_copy">Изберете, за да копирате %1$s в клипборда</string>
     <string name="otp_secret">Таен ключ</string>
-    <string name="homepage">Уебсайт</string>
     <string name="loading_database">Зареждане на хранилището…</string>
     <string name="password">Парола</string>
     <string name="remember_hardware_key_title">Запомняне на хардуерните ключове</string>
@@ -127,7 +123,6 @@
     <string name="sort_title">Заглавие</string>
     <string name="discard_changes">Отхвърляне на промените?</string>
     <string name="menu_reload_database">Презареждане на данните</string>
-    <string name="contribute">Допринасяне</string>
     <string name="error_load_database_KDF_memory">Ключът не може да бъде зареден. Пробвайте да намалите използваната памет от функцията за извличане на ключове.</string>
     <string name="content_description_passphrase_word_count">Брой думи във фраза за достъп</string>
     <string name="search_filters">Филтри за търсене</string>
@@ -159,14 +154,11 @@
     <string name="saving_database">Запазване на хранилището…</string>
     <string name="command_execution">Изпълнение на команда…</string>
     <string name="content_description_keyboard_close_fields">Затваряне на полета</string>
-    <string name="content_description_otp_information">Информация за еднократна парола</string>
     <string name="content_description_repeat_toggle_password_visibility">Превключвател на видимостта на парола на поле за повтаряне на парола</string>
     <string name="content_description_entry_icon">Пиктограма на запис</string>
     <string name="inherited">Наследено</string>
     <string name="menu_empty_recycle_bin">Изпразване на кошчето</string>
-    <string name="html_about_privacy">&lt;strong&gt;Не се събират никакви потребителски данни&lt;/strong&gt;, приложението не се свързва с никакви сървъри, работи изцяло локално и напълно уважава поверителността на потребителите.</string>
     <string name="searchable">Достъпно за търсене</string>
-    <string name="menu_external_icon">Външна пиктограма</string>
     <string name="autofill_select_entry">Избиране на запис…</string>
     <string name="enable_education_screens_title">Обучителни подсказки</string>
     <string name="entropy_calculate">Ентропия: изчисляване…</string>
@@ -186,7 +178,6 @@
     <string name="menu_change_key_settings">Промяна на главната парола</string>
     <string name="menu_device_unlock_settings">Отключване на устройството</string>
     <string name="menu_security_settings">Настройки за сигурност</string>
-    <string name="menu_donate">Даряване</string>
     <string name="menu_edit">Променяне</string>
     <string name="menu_copy">Копиране</string>
     <string name="menu_file_selection_read_only">Само за четене</string>
@@ -199,7 +190,6 @@
     <string name="content_description_node_children">Дъщерен възел</string>
     <string name="content_description_add_node">Нов възел</string>
     <string name="content_description_file_information">Информация за файл</string>
-    <string name="content_description_credentials_information">Информация за самоличност</string>
     <string name="content_description_add_item">Нов елемент</string>
     <string name="content_description_password_checkbox">Отметка на поле за парола</string>
     <string name="content_description_entry_foreground_color">Цвят на шрифта на запис</string>
@@ -232,7 +222,6 @@
     <string name="menu_appearance_settings_summary">Теми, цветове, икони, шрифтове, атрибути</string>
     <string name="download_initialization">Подготвяне…</string>
     <string name="content_description_entry_background_color">Цвят на фона на запис</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft е приложение с &lt;strong&gt;отворен код&lt;/strong&gt; и &lt;strong&gt;без реклами&lt;/strong&gt;. \nРазпространява се под лиценза &lt;strong&gt;GPLv3&lt;/strong&gt; без каквато и да е гаранция.</string>
     <string name="menu_device_unlock_settings_summary">Биометрия, отключване на устройството</string>
     <string name="menu_security_settings_summary">Шифроване, функция за извличане на ключ</string>
     <string name="menu_master_key_settings">Настройки на главната парола</string>
@@ -252,7 +241,6 @@
     <string name="education_entry_new_field_summary">Създайте допълнително поле, добавете стойност и при необходимост я защитете.</string>
     <string name="education_unlock_title">Отключете хранилището</string>
     <string name="education_sort_title">Сортиране на записи</string>
-    <string name="education_donation_summary">Допринесете за повишаване на стабилността, сигурността и добавянето на нови възможности.</string>
     <string name="show_entry_colors_summary">Шрифта и фона на записите да е цветен</string>
     <string name="backspace">Backspace</string>
     <string name="keyboard_previous_database_credentials_title">Екран за въвеждане на главната парола</string>
@@ -372,7 +360,6 @@
     <string name="education_lock_title">Заключете хранилището</string>
     <string name="education_lock_summary">Бързо заключете хранилището. Настройте приложението да се заключва след определено време или при изгасяне на екрана.</string>
     <string name="education_sort_summary">Изберете признак за подредбата на записи и групи.</string>
-    <string name="education_donation_title">Участвайте</string>
     <string name="download_attachment">Изтегляне %1$s</string>
     <string name="upload_attachment">Изпращане %1$s</string>
     <string name="download_canceled">Отказано!</string>
@@ -392,9 +379,7 @@
 \n
 \nИзползвайте групите (подобно на папки), за да групирате записите в хранилището.</string>
     <string name="education_search_summary">Търсете по заглавие, потребител или съдържание на други полета, за да намерите своите пароли.</string>
-    <string name="html_about_contribution">За &lt;strong&gt;запазване на нашата независимост&lt;/strong&gt;, &lt;strong&gt;отстраняване на дефекти&lt;/strong&gt;, &lt;strong&gt;добавяне на нови възможности&lt;/strong&gt; и &lt;strong&gt;поддържане на активна разработка&lt;/strong&gt;, разчитаме на вашата &lt;strong&gt;поддръжка&lt;/strong&gt;.</string>
     <string name="lock_database_show_button_title">Бутон за заключване</string>
-    <string name="autofill_explanation_summary">Настройки на услугата за попълване на формуляри в други приложения</string>
     <string name="properties">Свойства</string>
     <string name="education_validate_entry_summary">Не забравяйте да потвърдите записа и да го запазите в хранилището.
 \n
@@ -412,10 +397,6 @@
     <string name="export_app_properties_summary">Създава резервно копие на настройките</string>
     <string name="root">Корен</string>
     <string name="show_uuid_title">Идентификатор</string>
-    <string name="html_text_dev_feature_buy_pro">Купувайки версията &lt;strong&gt;Pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;Участвайки в проекта&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature">Тази възможност е &lt;strong&gt;в разработка&lt;/strong&gt; и изисква вашето &lt;strong&gt;участие&lt;/strong&gt;, за да бъде достъпна скоро.</string>
-    <string name="html_text_feature_generosity">Тази &lt;strong&gt;тема&lt;/strong&gt; е достъпна, благодарение на вашата щедрост.</string>
     <string name="invalid_db_sig">Форматът на хранилището не може да бъде определен.</string>
     <string name="list_entries_show_username_summary">Показват се потребителските имена в списъка със записите</string>
     <string name="list_entries_show_username_title">Потребители</string>
@@ -428,8 +409,6 @@
     <string name="colorize_password_summary">Оцветяване на паролите според вида на знаците</string>
     <string name="export_app_properties_title">Изнасяне на настройки</string>
     <string name="enable_screenshot_mode_summary">Разрешава на други приложения да записват и правят снимки на екрана</string>
-    <string name="html_text_dev_feature_thanks">Много благодарим за поддръжката.</string>
-    <string name="html_text_dev_feature_work_hard">Работим усърдно, за да добавим бързо тази възможност.</string>
     <string name="hint_generated_password">Създадена парола</string>
     <string name="hint_length">Дължина</string>
     <string name="invalid_credentials">Неправилна главна парола или файл с ключ.</string>
@@ -445,11 +424,6 @@
     <string name="enable_keep_screen_on_title">Екранът винаги включен</string>
     <string name="enable_keep_screen_on_summary">Поддържа екрана включен при преглед или промяна на запис</string>
     <string name="enable_auto_save_database_summary">Запазва хранилището при важни действия (в режим „четене и запис“)</string>
-    <string name="html_text_ad_free">За разлика от много други приложения за управление на пароли това е &lt;strong&gt;без реклами&lt;/strong&gt;, &lt;strong&gt;свободно от лицензи&lt;/strong&gt; и не събира лични данни на сървърите си без значение каква версия използвате.</string>
-    <string name="html_text_dev_feature_upgrade">Не забравяйте да обновявате приложението.</string>
-    <string name="html_text_dev_feature_encourage">вие поощрявате разработчиците да добавят &lt;strong&gt;нови възможности&lt;/strong&gt; и да &lt;strong&gt;отстраняват дефекти&lt;/strong&gt; според вашите отзиви.</string>
-    <string name="html_text_buy_pro">Купувайки версията Pro ще имате достъп до тази &lt;strong&gt;тема&lt;/strong&gt; и особено ще помогнете за &lt;strong&gt;изпълнението на проекти на общността&lt;/strong&gt;.</string>
-    <string name="html_text_donation">Като &lt;strong&gt;допринасяте&lt;/strong&gt; за проекта &lt;i&gt;(финансово, с код или преводи)&lt;/i&gt; му помагате да живее и процъвтява, а също получавате процедурата за отключване на &lt;strong&gt;темите&lt;/strong&gt;.</string>
     <string name="hint_keyfile">Файл с ключ</string>
     <string name="invalid_algorithm">Грешен алгоритъм.</string>
     <string name="description_app_properties">Свойства за управление на настройките на KeePassDX</string>
@@ -533,7 +507,6 @@
     <string name="password_size_summary">Подразбирана дължина на създаваните пароли</string>
     <string name="device_unlock_tap_delete">Докоснете, за да премахнете ключовете за отключване на устройството</string>
     <string name="temp_device_unlock_enable_title">Временно отключване на устройството</string>
-    <string name="device_unlock_explanation_summary">За по-лесно отключване на хранилището използвайте отключване на устройството</string>
     <string name="recycle_bin_group_title">Група „Кошче“</string>
     <string name="templates_group_uuid_title">Група „Шаблони“</string>
     <string name="device_unlock_prompt_extract_credential_message">Отключване на хранилището при отключване на устройството</string>
@@ -548,7 +521,6 @@
     <string name="max_history_items_summary">Ограничаване на броя на елементите от историята на запис</string>
     <string name="max_history_size_title">Максимален размер</string>
     <string name="monospace_font_fields_enable_summary">Полетата използват различен шрифт за по-добра четимост на знаците</string>
-    <string name="magic_keyboard_explanation_summary">Включете потребителска клавиатура, която да попълва пароли и полета за удостоверяване</string>
     <string name="max_history_size_summary">Ограничаване на размера на историята на всеки запис</string>
     <string name="keyboard_notification_entry_summary">Показване на известие, когато има достъпен запис</string>
     <string name="monospace_font_fields_enable_title">Отделен шрифт за полетата</string>
@@ -678,7 +650,6 @@
     <string name="warning_overwrite_data_description">Чрез това действие ще бъде презаоисана информация на записа. Може да намерите старите данни ако историята е включена.</string>
     <string name="credential_provider">Доставчик на регистрации</string>
     <string name="passkeys">Ключове за достъп</string>
-    <string name="passkeys_explanation_summary">Настройки на ключове за достъп за бърз и сигурен вход без парола</string>
     <string name="passkeys_preference_title">Настройки на ключове за достъп</string>
     <string name="passkeys_close_database_title">Затваряне на хранилище</string>
     <string name="passkeys_close_database_summary">Затваряне на хранилището след избор на ключ за достъп</string>
@@ -728,7 +699,6 @@
     <string name="password_creation_description">Запазване на паролата в нов запис</string>
     <string name="password_selection_description">Избиране на съществуваща парола</string>
     <string name="error_password_result">Грешка при връщане на парола</string>
-    <string name="content_description_user_verification_information">Информация за проверка на потребител</string>
     <string name="user_verification_required_title">Проверка на потребител</string>
     <string name="user_verification_required_description">За достъп до тези сведения е необходимо установяване на самоличността.</string>
     <string name="user_verification_database_credential">Въведете първите четири знака от паролата на хранилището</string>

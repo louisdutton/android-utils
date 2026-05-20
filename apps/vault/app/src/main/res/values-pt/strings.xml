@@ -17,21 +17,7 @@
     <string name="icon_pack_choose_title">Pacote de ícones</string>
     <string name="style_choose_summary">Tema usado na aplicação</string>
     <string name="style_choose_title">Tema da aplicação</string>
-    <string name="contribute">Contribuir</string>
     <string name="download">Descarregar</string>
-    <string name="html_text_dev_feature_upgrade">Lembre-se de manter a sua aplicação atualizada, instalando novas versões.</string>
-    <string name="html_text_dev_feature_work_hard">Estamos a trabalhar para lançar esta funcionalidade o mais rápido possível.</string>
-    <string name="html_text_dev_feature_thanks">Obrigado pela sua contribuição.</string>
-    <string name="html_text_dev_feature_encourage">está a incentivar os programadores a adicionar &lt;strong&gt;novas funcionalidades&lt;/strong&gt; e a &lt;strong&gt;corrigir erros&lt;/strong&gt; reportados pelos utilizadores.</string>
-    <string name="html_text_dev_feature_contibute">Ao &lt;strong&gt;contribuir&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_buy_pro">Ao comprar a versão &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature">Esta funcionalidade está &lt;strong&gt;em desenvolvimento&lt;/strong&gt; e necessita da sua &lt;strong&gt;contribuição&lt;/strong&gt; para que esteja disponível brevemente.</string>
-    <string name="html_text_donation">Ao &lt;strong&gt;contribuir&lt;/strong&gt; para o projeto &lt;i&gt;(monetariamente, código, tradução)&lt;/i&gt;, você o ajudará a continuar a viver e prosperar, e também será elegível para o &lt;strong&gt;tema &lt;/strong&gt; procedimento de desbloqueio.</string>
-    <string name="html_text_feature_generosity">Este &lt;strong&gt;estilo visual&lt;/strong&gt; está disponível graças à sua generosidade.</string>
-    <string name="html_text_buy_pro">Ao comprar a versão pro, terá acesso a este &lt;strong&gt;estilo visual&lt;/strong&gt; e ajudará especialmente a &lt;strong&gt;realizar projetos comunitários.&lt;/strong&gt;</string>
-    <string name="html_text_ad_free">Ao contrário de muitas aplicações de gestão de palavras-passe, esta aplicação &lt;strong&gt;não tem anúncios&lt;/strong&gt;, é &lt;strong&gt;um programa de código-fonte livre&lt;/strong&gt; e não recolhe dados pessoais para os servidores dela, seja qual for a versão que utiliza.</string>
-    <string name="education_donation_summary">Ajude a aumentar a estabilidade, segurança e novas funcionalidades.</string>
-    <string name="education_donation_title">Participar</string>
     <string name="education_sort_summary">Escolha como são ordenadas as entradas e os grupos.</string>
     <string name="education_sort_title">Ordenação de itens</string>
     <string name="education_lock_summary">Bloqueie a sua base de dados rapidamente. Pode configurar a aplicação para bloqueá-la após um tempo e quando o ecrã se desliga.</string>
@@ -142,7 +128,6 @@
     <string name="menu_open">Abrir</string>
     <string name="menu_lock">Bloquear base de dados</string>
     <string name="menu_edit">Editar</string>
-    <string name="menu_donate">Donativos</string>
     <string name="menu_delete">Eliminar</string>
     <string name="menu_form_filling_settings">Preenchimento de formulário</string>
     <string name="menu_app_settings">Configurações da aplicação</string>
@@ -203,10 +188,7 @@
     <string name="remember_database_locations_title">Lembrar locais das bases de dados</string>
     <string name="menu_device_unlock_settings">Desbloqueio de dispositivos</string>
     <string name="error_invalid_db">Não foi possível ler a base de dados.</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft tem o &lt;strong&gt;código-fonte aberto&lt;/strong&gt; e &lt;strong&gt;sem publicidade&lt;/strong&gt;.
-\nÉ fornecido como está, sob a &lt;strong&gt;licença GPLv3&lt;/strong&gt;, sem qualquer garantia.</string>
     <string name="content_description_file_information">Informações do ficheiro</string>
-    <string name="content_description_credentials_information">Informações das credenciais</string>
     <string name="keyboard_previous_fill_in_summary">Mudar automaticamente para o teclado anterior depois de executar a \"tecla automática\"</string>
     <string name="keyboard_previous_fill_in_title">Voltar atrás</string>
     <string name="keyboard_previous_database_credentials_summary">Voltar automaticamente para o teclado anterior no ecrã de credenciais da base de dados</string>
@@ -243,10 +225,6 @@
     <string name="auto_focus_search_summary">Solicitar uma pesquisa quando abrir a base de dados</string>
     <string name="auto_focus_search_title">Pesquisa rápida</string>
     <string name="about">Sobre</string>
-    <string name="html_about_contribution">Para &lt;strong&gt;manter a liberdade&lt;/strong&gt;, &lt;strong&gt;corrigir erros&lt;/strong&gt;, &lt;strong&gt;adicionar funcionalidades&lt;/strong&gt; e &lt;strong&gt;para sermos sempre ativos&lt;/strong&gt;, contamos com sua &lt;strong&gt;contribuição&lt;/strong&gt;.</string>
-    <string name="homepage">Página inicial</string>
-    <string name="feedback">Comentários</string>
-    <string name="contribution">Contribuição</string>
     <string name="contact">Contacto</string>
     <string name="hide_expired_entries_title">Ocultar entradas expiradas</string>
     <string name="download_finalization">A finalizar…</string>
@@ -269,7 +247,6 @@
     <string name="error_save_database">Não foi possível guardar a base de dados.</string>
     <string name="education_device_unlock_summary">Ligue a sua palavra-passe às suas credenciais biométricas ou do dispositivo para desbloquear rapidamente a sua base de dados.</string>
     <string name="device_keyboard_setting_title">Configurações do teclado do dispositivo</string>
-    <string name="magic_keyboard_explanation_summary">Ative um teclado personalizado para as suas palavras-passe e todos os campos de identidade</string>
     <string name="compression_gzip">Gzip</string>
     <string name="compression_none">Nenhuma</string>
     <string name="compression">Compressão</string>
@@ -286,10 +263,7 @@
     <string name="max_history_items_summary">Limitar a quantidade de itens no histórico por entrada</string>
     <string name="max_history_items_title">Número máximo</string>
     <string name="database_data_compression_title">Compressão de dados</string>
-    <string name="device_unlock_explanation_summary">Utilizar o desbloqueio do dispositivo para abrir uma base de dados mais facilmente</string>
-    <string name="clipboard_explanation_summary">Copiar campos de entrada usando a área de transferência do seu dispositivo</string>
     <string name="database_opened">Base de dados aberta</string>
-    <string name="autofill_explanation_summary">Ative o serviço de preencher automático para preencher formulários noutras aplicações</string>
     <string name="database_history">Histórico</string>
     <string name="contains_duplicate_uuid_procedure">Resolver o problema gerando novas UUIDs para os duplicados para continuar\?</string>
     <string name="contains_duplicate_uuid">A base de dados contém UUIDs duplicados.</string>
@@ -520,7 +494,6 @@
     <string name="description_app_properties">Propriedades do KeePassDX para gerir as configurações da aplicação</string>
     <string name="export_app_properties_summary">Criar um ficheiro para exportar as definições da aplicação</string>
     <string name="import_app_properties_title">Importar definições da aplicação</string>
-    <string name="menu_external_icon">Ícone externo</string>
     <string name="error_start_database_action">Ocorreu um erro ao tentar executar uma ação na base de dados.</string>
     <string name="error_remove_file">Ocorreu um erro ao tentar remover o ficheiro de dados.</string>
     <string name="error_duplicate_file">O ficheiro de dados já existe.</string>
@@ -554,7 +527,6 @@
     <string name="holder">Titular</string>
     <string name="debit_credit_card">Cartão de crédito / débito</string>
     <string name="template_group_name">Modelos</string>
-    <string name="content_description_otp_information">Informação de palavra-passe de uso único</string>
     <string name="hint_icon_name">Nome do ícone</string>
     <string name="permission">Permissão</string>
     <string name="warning_exact_alarm">Não permitiu que a aplicação usasse um alarme exato. Como resultado, as funcionalidades que requerem um temporizador não serão feitas com um tempo exato.</string>
@@ -630,7 +602,6 @@
     <string name="enable_screenshot_mode_title">Modo de captura de ecrã</string>
     <string name="enable_screenshot_mode_summary">Permitir que aplicações de terceiros registem ou fotografem os ecrãs da aplicação</string>
     <string name="screenshot_mode_banner_text">Modo de captura de ecrã</string>
-    <string name="html_about_privacy">&lt;strong&gt;Nenhum dado de utilizador é recuperado&lt;/strong&gt;, esta aplicação não se liga a nenhum servidor, funciona apenas localmente e respeita plenamente a privacidade dos utilizadores.</string>
     <string name="auto_type">Preenchimento automático</string>
     <string name="merge_success">Fusão concluída com sucesso</string>
     <string name="info">Informação</string>

@@ -19,6 +19,93 @@
 -->
 <resources>
 
+    <!-- Vault runtime theme: follows Android system light/dark and Material dynamic color. -->
+    <style name="KeepassDXStyle.System" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+
+        <item name="android:imageButtonStyle">@style/KeepassDXStyle.ImageButton</item>
+        <item name="imageButtonStyle">@style/KeepassDXStyle.ImageButton</item>
+
+        <item name="android:checkboxStyle">@style/KeepassDXStyle.CheckBox</item>
+
+        <item name="android:textAppearance">@style/KeepassDXStyle.Text</item>
+        <item name="android:textAppearanceMedium">@style/KeepassDXStyle.Text</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:editTextColor">?attr/colorOnSurface</item>
+        <item name="android:textViewStyle">@style/KeepassDXStyle.TextView</item>
+
+        <item name="android:alertDialogTheme">@style/KeepassDXStyle.System.Dialog</item>
+        <item name="alertDialogTheme">@style/KeepassDXStyle.System.Dialog</item>
+        <item name="dialogBackgroundColor">?attr/colorSurfaceContainerHigh</item>
+
+        <item name="materialCardViewStyle">@style/KeepassDXStyle.Cardview</item>
+        <item name="cardViewStyle">@style/KeepassDXStyle.Cardview</item>
+
+        <item name="collapsingToolbarLayoutStyle">@style/KeepassDXStyle.CollapsingLayout</item>
+        <item name="toolbarStyle">@style/KeepassDXStyle.Toolbar</item>
+        <item name="toolbarSpecialStyle">@style/KeepassDXStyle.Toolbar.Special</item>
+        <item name="toolbarActionStyle">@style/KeepassDXStyle.Toolbar.Action</item>
+        <item name="expandedTitleTextAppearance">@style/KeepassDXStyle.Title.Large.OnSurface</item>
+        <item name="collapsedTitleTextAppearance">@style/KeepassDXStyle.Title.OnSurface</item>
+
+        <item name="tabStyle">@style/KeepassDXStyle.TabLayout</item>
+
+        <item name="preferenceStyle">@style/KeepassDXStyle.Preference.Style</item>
+        <item name="dialogPreferenceStyle">@style/KeepassDXStyle.Preference.Dialog.Style</item>
+        <item name="preferenceCategoryStyle">@style/KeepassDXStyle.Preference.Category.Style</item>
+
+        <item name="android:switchPreferenceStyle">@style/KeepassDXStyle.SwitchPreference</item>
+        <item name="switchPreferenceStyle">@style/KeepassDXStyle.SwitchPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/KeepassDXStyle.SwitchPreference</item>
+
+        <item name="textInputStyle">@style/KeepassDXStyle.TextInputLayout</item>
+        <item name="snackbarStyle">@style/KeepassDXStyle.SnackBar</item>
+    </style>
+
+    <style name="KeepassDXStyle.System.Dialog" parent="ThemeOverlay.Material3.Dialog.Alert">
+        <item name="android:colorBackground">?attr/dialogBackgroundColor</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="dialogCornerRadius">@dimen/dialog_radius</item>
+    </style>
+
+    <style name="KeepassDXStyle.Oled" parent="KeepassDXStyle.System">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="colorSurface">@android:color/black</item>
+        <item name="colorSurfaceDim">@android:color/black</item>
+        <item name="colorSurfaceBright">@android:color/black</item>
+        <item name="colorSurfaceVariant">@android:color/black</item>
+        <item name="colorSurfaceContainerLowest">@android:color/black</item>
+        <item name="colorSurfaceContainerLow">@android:color/black</item>
+        <item name="colorSurfaceContainer">@android:color/black</item>
+        <item name="colorSurfaceContainerHigh">@android:color/black</item>
+        <item name="colorSurfaceContainerHighest">@android:color/black</item>
+        <item name="dialogBackgroundColor">@android:color/black</item>
+    </style>
+
+    <style name="KeepassDXStyleOledOverlay">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="colorSurface">@android:color/black</item>
+        <item name="colorSurfaceDim">@android:color/black</item>
+        <item name="colorSurfaceBright">@android:color/black</item>
+        <item name="colorSurfaceVariant">@android:color/black</item>
+        <item name="colorSurfaceContainerLowest">@android:color/black</item>
+        <item name="colorSurfaceContainerLow">@android:color/black</item>
+        <item name="colorSurfaceContainer">@android:color/black</item>
+        <item name="colorSurfaceContainerHigh">@android:color/black</item>
+        <item name="colorSurfaceContainerHighest">@android:color/black</item>
+        <item name="dialogBackgroundColor">@android:color/black</item>
+    </style>
+
     <!-- Light WhiteBar Style -->
     <style name="KeepassDXStyle.Light" parent="KeepassDXStyle.Light.v27" />
     <style name="KeepassDXStyle.Light.v27" parent="KeepassDXStyle.Light.v23" />
@@ -528,7 +615,7 @@
     </style>
 
     <!-- Item Style -->
-    <style name="KeepassDXStyle.Selectable.Item" parent="KeepassDXStyle.Light">
+    <style name="KeepassDXStyle.Selectable.Item" parent="@android:style/Widget">
         <item name="android:background">@drawable/background_item_selection</item>
         <item name="background">@drawable/background_item_selection</item>
     </style>
@@ -587,7 +674,7 @@
     </style>
 
     <!-- Transparent -->
-    <style name="Theme.Transparent" parent="KeepassDXStyle.Night">
+    <style name="Theme.Transparent" parent="KeepassDXStyle.System">
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

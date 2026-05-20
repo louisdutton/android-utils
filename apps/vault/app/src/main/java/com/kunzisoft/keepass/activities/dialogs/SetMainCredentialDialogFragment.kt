@@ -42,7 +42,6 @@ import com.kunzisoft.keepass.database.element.MasterCredential
 import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.password.PasswordEntropy
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
-import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.clear
 import com.kunzisoft.keepass.view.HardwareKeySelectionView
 import com.kunzisoft.keepass.view.KeyFileSelectionView
@@ -144,10 +143,6 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
                     // Add action buttons
                     .setPositiveButton(android.R.string.ok) { _, _ -> }
                     .setNegativeButton(android.R.string.cancel) { _, _ -> }
-
-            rootView.findViewById<View>(R.id.credentials_information)?.setOnClickListener {
-                activity.openUrl(R.string.credentials_explanation_url)
-            }
 
             passwordCheckBox = rootView.findViewById(R.id.password_checkbox)
             passwordEditView = rootView.findViewById(R.id.password_view)

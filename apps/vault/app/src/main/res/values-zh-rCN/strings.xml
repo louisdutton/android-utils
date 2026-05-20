@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">反馈</string>
-    <string name="homepage">主页</string>
     <string name="about_description">Android 平台 KeePass 密码管理器实现。</string>
     <string name="accept">接受</string>
     <string name="add_entry">添加条目</string>
@@ -39,7 +37,6 @@
     <string name="decrypting_db">正在解密数据库内容…</string>
     <string name="default_checkbox">设为默认数据库</string>
     <string name="digits">数字</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft 是一个&lt;strong&gt;不含广告&lt;/strong&gt;的&lt;strong&gt;开源软件&lt;/strong&gt;。\n它是以 &lt;strong&gt;GPLv3&lt;/strong&gt; 许可证依原样提供，不含任何形式的担保。</string>
     <string name="select_database_file">打开现有密码库</string>
     <string name="entry_accessed">访问时间</string>
     <string name="entry_cancel">取消</string>
@@ -87,7 +84,6 @@
     <string name="settings">设置</string>
     <string name="menu_database_settings">数据库设置</string>
     <string name="menu_delete">删除</string>
-    <string name="menu_donate">捐赠</string>
     <string name="menu_edit">编辑</string>
     <string name="menu_lock">锁定数据库</string>
     <string name="menu_open">打开</string>
@@ -186,7 +182,6 @@
     <string name="keyboard">键盘</string>
     <string name="magic_keyboard_title">魔法键盘</string>
     <string name="download">下载</string>
-    <string name="contribute">贡献</string>
     <string name="style_choose_summary">应用中使用的主题</string>
     <string name="error_string_key">每个字符串必须有字段名。</string>
     <string name="field_name">字段名</string>
@@ -202,7 +197,6 @@
     <string name="encrypted_value_stored">加密密码已保存</string>
     <string name="unavailable">不可用</string>
     <string name="set_credential_provider_service_title">凭据提供程序服务</string>
-    <string name="autofill_explanation_summary">配置自动填充功能以快速填写其他应用中的表单</string>
     <string name="password_size_title">密码生成长度</string>
     <string name="password_size_summary">设置生成密码的默认长度</string>
     <string name="list_password_generator_options_title">密码字符集</string>
@@ -224,7 +218,6 @@
     <string name="monospace_font_fields_enable_summary">更改字段字体，可以使字符更清楚</string>
     <string name="allow_copy_password_summary">允许将条目密码和受保护字段复制到剪贴板</string>
     <string name="allow_copy_password_warning">警告：剪贴板被所有应用共享。如果复制了敏感数据，其他软件可能访问或恢复这些数据。</string>
-    <string name="magic_keyboard_explanation_summary">激活自定义键盘以填写密码和所有身份字段</string>
     <string name="allow_copy_password_title">剪贴板信任设置</string>
     <string name="keyboard_name">魔法键盘</string>
     <string name="keyboard_label">魔法键盘（KeePassDX）</string>
@@ -280,19 +273,6 @@
     <string name="education_lock_summary">可以设置在无操作和屏幕关闭的时候，锁定数据库。</string>
     <string name="education_sort_title">条目排序</string>
     <string name="education_sort_summary">选择条目和分组的排序依据。</string>
-    <string name="education_donation_title">参与开发</string>
-    <string name="education_donation_summary">帮助增加稳定性，安全性并添加更多的功能。</string>
-    <string name="html_text_ad_free">不同于许多密码管理应用，免费和付费版本的 KeePassDX 均&lt;strong&gt;没有广告&lt;/strong&gt;，&lt;strong&gt;基于 copylefted 版权协议&lt;/strong&gt;，不在服务器上收集个人信息。</string>
-    <string name="html_text_buy_pro">通过购买高级版本，您将解锁全部&lt;strong&gt;主题样式&lt;/strong&gt;，重要的是，您会为&lt;strong&gt;社区项目的进行&lt;/strong&gt;提供帮助</string>
-    <string name="html_text_feature_generosity">此&lt;strong&gt;主题样式&lt;/strong&gt;已可用，感谢您的慷慨相助。</string>
-    <string name="html_text_donation">通过多方面向本项目&lt;strong&gt;作贡献&lt;/strong&gt;，可以是&lt;i&gt;（金钱、代码、翻译等）&lt;/i&gt;，你将帮助本项目继续走下去并茁壮成长，并获得&lt;strong&gt;主题&lt;/strong&gt;解锁步骤资格。</string>
-    <string name="html_text_dev_feature">此功能目前&lt;strong&gt;仍在开发中&lt;/strong&gt;，&lt;strong&gt;捐助&lt;/strong&gt;将使该功能很快变得可用。</string>
-    <string name="html_text_dev_feature_buy_pro">通过购买&lt;strong&gt;专业&lt;/strong&gt;版，</string>
-    <string name="html_text_dev_feature_contibute">通过&lt;strong&gt;做贡献&lt;/strong&gt;，</string>
-    <string name="html_text_dev_feature_encourage">您的留言，是对开发人员添加&lt;strong&gt;新功能&lt;/strong&gt;及&lt;strong&gt;修复 bugs&lt;/strong&gt; 的鼓励。</string>
-    <string name="html_text_dev_feature_thanks">非常感谢您的捐助和贡献。</string>
-    <string name="html_text_dev_feature_work_hard">我们正在努力的研发并尽快发布新特性。</string>
-    <string name="html_text_dev_feature_upgrade">别忘了通过安装新版本来保持你的应用是最新的。</string>
     <string name="selection_mode">选择模式</string>
     <string name="do_not_kill_app">不要终止应用…</string>
     <string name="lock_database_back_root_title">按“返回”锁定</string>
@@ -356,8 +336,6 @@
     <string name="contains_duplicate_uuid">该数据库包含重复的 UUID。</string>
     <string name="contains_duplicate_uuid_procedure">是否通过为重复项生成新的 UUID 以解决问题？</string>
     <string name="database_opened">数据库已打开</string>
-    <string name="clipboard_explanation_summary">使用设备的剪贴板来复制输入字段</string>
-    <string name="device_unlock_explanation_summary">使用设备解锁以便更轻松地打开数据库</string>
     <string name="database_data_compression_title">数据压缩</string>
     <string name="database_data_compression_summary">数据压缩减少了数据库的大小</string>
     <string name="max_history_items_title">最大数量</string>
@@ -398,8 +376,6 @@
     <string name="hide_expired_entries_title">隐藏过期条目</string>
     <string name="hide_expired_entries_summary">过期条目将被隐藏</string>
     <string name="contact">联系我们</string>
-    <string name="contribution">贡献</string>
-    <string name="html_about_contribution">为了&lt;strong&gt;维持我们的自由&lt;/strong&gt;、&lt;strong&gt;修复 bugs&lt;/strong&gt;、&lt;strong&gt;添加更多功能&lt;/strong&gt;以及&lt;strong&gt;始终保持项目活跃&lt;/strong&gt;，我们期待您的&lt;strong&gt;贡献&lt;/strong&gt;。</string>
     <string name="auto_focus_search_title">快速搜索</string>
     <string name="auto_focus_search_summary">打开数据库时询问是否进行搜索</string>
     <string name="remember_database_locations_title">记住数据库位置</string>
@@ -445,7 +421,6 @@
     <string name="warning_file_too_big">KeePass 数据库应该只包含小的实用程序文件（例如 PGP 密钥文件）。
 \n
 \n上传大文件会使增大数据库体积并降低性能。</string>
-    <string name="content_description_credentials_information">凭据信息</string>
     <string name="warning_remove_unlinked_attachment">删除未链接的数据可能会减少数据库的大小，但也可能会删除用于 KeePass 插件的数据。</string>
     <string name="warning_sure_remove_data">无论如何要删除这些数据\?</string>
     <string name="warning_empty_keyfile">不推荐添加一个空的密钥文件。</string>
@@ -522,7 +497,6 @@
     <string name="style_brightness_title">主题亮度</string>
     <string name="error_upload_file">上传文件数据时发生错误。</string>
     <string name="error_file_to_big">你尝试上传的文件太大。</string>
-    <string name="content_description_otp_information">一次性密码信息</string>
     <string name="error_remove_file">删除文件数据时发生了一个错误。</string>
     <string name="error_duplicate_file">文件数据已存在。</string>
     <string name="properties">属性</string>
@@ -574,7 +548,6 @@
     <string name="template_group_name">模板</string>
     <string name="show_otp_token_summary">在条目列表中显示 OTP 令牌</string>
     <string name="show_otp_token_title">显示 OTP 令牌</string>
-    <string name="menu_external_icon">外部图标</string>
     <string name="autofill_manual_selection_summary">显示让用户选择数据库条目的选项</string>
     <string name="autofill_manual_selection_title">手动选择</string>
     <string name="autofill_select_entry">选择条目…</string>
@@ -652,7 +625,6 @@
     <string name="enable_screenshot_mode_title">截屏模式</string>
     <string name="enable_screenshot_mode_summary">允许第三方应用对 KeePassDX 屏幕进行录制或截图</string>
     <string name="screenshot_mode_banner_text">截屏模式</string>
-    <string name="html_about_privacy">&lt;strong&gt;不获取用户数据&lt;/strong&gt;，此应用不连接任何服务器，仅在本地运行，并充分尊重用户的隐私。</string>
     <string name="merge_success">合并成功完成</string>
     <string name="menu_app_settings_summary">搜索、锁定、历史记录、属性</string>
     <string name="menu_form_filling_settings_summary">键盘、自动填充、剪贴板</string>
@@ -700,7 +672,6 @@
     <string name="warning_overwrite_data_title">覆盖现有数据？</string>
     <string name="warning_overwrite_data_description">此操作将替换条目中的现有数据，如果启用了历史记录，您可以检索旧数据。</string>
     <string name="passkeys">通行密钥</string>
-    <string name="passkeys_explanation_summary">配置通行密钥以实现快速安全的无密码登录</string>
     <string name="passkeys_preference_title">通行密钥设置</string>
     <string name="passkeys_close_database_title">关闭数据库</string>
     <string name="passkeys_close_database_summary">在选择通行密钥后关闭数据库</string>
@@ -750,7 +721,6 @@
     <string name="password_creation_description">在新条目中保存密码</string>
     <string name="password_selection_description">选择现有密码</string>
     <string name="error_password_result">无法返回密码</string>
-    <string name="content_description_user_verification_information">用户验证信息</string>
     <string name="user_verification_required_title">用户验证</string>
     <string name="user_verification_required_description">访问此数据需要验证您的身份。</string>
     <string name="user_verification_database_credential">请输入数据库密码的前四个字符</string>

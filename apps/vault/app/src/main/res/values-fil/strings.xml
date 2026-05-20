@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="info">Impormasyon</string>
-    <string name="feedback">Pagpuna</string>
-    <string name="homepage">Homepage</string>
     <string name="accept">Tanggapin</string>
     <string name="add_group">Magdagdag ng grupo</string>
     <string name="master_key">Master key</string>
@@ -18,7 +16,6 @@
     <string name="content_description_background">Background</string>
     <string name="content_description_add_entry">Magdagdag ng entry</string>
     <string name="content_description_add_item">Magdagdag ng item</string>
-    <string name="content_description_credentials_information">Info ng kredensyal</string>
     <string name="content_description_password_checkbox">Checkbox ng password</string>
     <string name="content_description_database_color">Kulay ng database</string>
     <string name="content_description_entry_foreground_color">Kulay ng foreground ng entry</string>
@@ -40,7 +37,6 @@
     <string name="entry_modified">Binago</string>
     <string name="searchable">Nahahanap</string>
     <string name="contact">I-contact</string>
-    <string name="contribution">Kontribusyon</string>
     <string name="about_description">Android na implementasyon ng KeePass password manager</string>
     <string name="add_entry">Magdagdag ng entry</string>
     <string name="edit_entry">I-edit ang entry</string>
@@ -53,7 +49,6 @@
     <string name="clipboard_timeout">Timeout ng clipboard</string>
     <string name="clipboard_timeout_summary">Oras ng storage sa clipboard (kapag sinusuportahan ng iyong device)</string>
     <string name="content_description_open_file">Magbukas ng file</string>
-    <string name="content_description_otp_information">Info ng one-time password</string>
     <string name="content_description_node_children">Children ng node</string>
     <string name="content_description_add_node">Magdagdag ng node</string>
     <string name="content_description_add_group">Magdagdag ng grupo</string>
@@ -75,9 +70,6 @@
     <string name="content_description_update_from_list">I-update</string>
     <string name="content_description_keyboard_close_fields">Isara ang mga field</string>
     <string name="select_to_copy">Piliin para kopyahin ang %1$s sa clipboard</string>
-    <string name="html_about_licence">Ang KeePassDX © Kunzisoft ay open source at walang kasamang patalastas.\nIbinibigay ito nang buo sa ilalim ng lisensiyang GPLv3, nang walang anumang garantiya.</string>
-    <string name="html_about_privacy">&lt;strong&gt;Walang user data ay kinukuha&lt;/strong&gt;, ang aplikasyon na ito ay hindi kumokonekta sa anumang server, gumanagana ng lokal at ganap na ginagalang ang pagkapribado ng mga gumagamit.</string>
-    <string name="html_about_contribution">Para &lt;strong&gt;panatilihin ang aming kalayaan&lt;/strong&gt;, &lt;strong&gt;ayusin ang mga bug&lt;/strong&gt;, &lt;strong&gt;magdagdag ng mga feature&lt;/strong&gt; at &lt;strong&gt;maging palaging aktibo&lt;/strong&gt;, umaasa kami sa iyong &lt;strong&gt;kontribusyon&lt;/strong&gt;.</string>
     <string name="entry_accessed">Na-access</string>
     <string name="hardware_key">Hardware key</string>
     <string name="entry_cancel">Kanselahin</string>
@@ -249,7 +241,6 @@
     <string name="menu_security_settings_summary">Encryption, function ng key derivation</string>
     <string name="menu_master_key_settings">Mga setting ng master key</string>
     <string name="master_key_settings_summary">Palitan, pag-renew</string>
-    <string name="menu_donate">Mag-donate</string>
     <string name="menu_edit">I-edit</string>
     <string name="menu_copy">Kopyahin</string>
     <string name="menu_move">Ilipat</string>
@@ -269,7 +260,6 @@
     <string name="menu_url">Pumunta sa URL</string>
     <string name="menu_file_selection_read_only">Naka-write protect</string>
     <string name="menu_open_file_read_and_write">Nababago</string>
-    <string name="menu_external_icon">External na icon</string>
     <string name="no_results">Walang mga resulta ng paghahanap</string>
     <string name="no_url_handler">Mag-install ng web browser para buksan ang URL na ito.</string>
     <string name="select_database_file">Magbukas ng umiiral na vault</string>

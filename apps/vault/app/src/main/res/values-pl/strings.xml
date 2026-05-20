@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Zgłoś błąd lub sugestię</string>
-    <string name="homepage">Strona główna</string>
     <string name="about_description">Implementacja menedżera haseł KeePass w systemie Android.</string>
     <string name="accept">Akceptuj</string>
     <string name="add_entry">Dodaj wpis</string>
@@ -86,7 +84,6 @@
     <string name="settings">Ustawienia</string>
     <string name="menu_database_settings">Ustawienia bazy danych</string>
     <string name="menu_delete">Usuń</string>
-    <string name="menu_donate">Wspomóż</string>
     <string name="menu_edit">Edytuj</string>
     <string name="menu_lock">Zablokuj bazę danych</string>
     <string name="menu_open">Otwórz</string>
@@ -127,7 +124,6 @@
     <string name="clipboard_error_title">Błąd schowka</string>
     <string name="clipboard_error">Niektóre urządzenia nie pozwalają aplikacjom korzystać ze schowka.</string>
     <string name="clipboard_error_clear">Nie udało się wyczyścić schowka</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft jest &lt;strong&gt;open source&lt;/strong&gt; i &lt;strong&gt;bez reklam&lt;/strong&gt;. \nJest on dostarczany w stanie, zgodnie z licencją &lt;strong&gt;GPLv3&lt;/strong&gt; bez żadnych gwarancji.</string>
     <string name="entry_not_found">Nie znaleziono danych wejściowych.</string>
     <string name="error_load_database">Nie można załadować bazy danych.</string>
     <string name="error_load_database_KDF_memory">Nie można załadować klucza. Spróbuj zmniejszyć „Użycie pamięci” KDF.</string>
@@ -179,7 +175,6 @@
     <string name="autofill">Wypełnij automatycznie</string>
     <string name="autofill_sign_in_prompt">Zaloguj się za pomocą KeePassDX</string>
     <string name="set_credential_provider_service_title">Ustaw domyślną usługę autouzupełniania</string>
-    <string name="autofill_explanation_summary">Skonfiguruj funkcję automatycznego wypełniania, aby szybko wypełniać formularze w innych aplikacjach</string>
     <string name="password_size_title">Wygenerowany rozmiar hasła</string>
     <string name="password_size_summary">Ustawia domyślny rozmiar wygenerowanych haseł</string>
     <string name="list_password_generator_options_title">Znaki hasła</string>
@@ -216,7 +211,6 @@
     <string name="other">Inne</string>
     <string name="keyboard">Klawiatura</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Aktywuj niestandardową klawiaturę wypełniającą hasła i wszystkie pola tożsamości</string>
     <string name="allow_no_password_title">Zezwalaj na brak klucza głównego</string>
     <string name="allow_no_password_summary">Umożliwia naciśnięcie przycisku „Otwórz”, jeśli nie wybrano żadnych poświadczeń</string>
     <string name="enable_education_screens_title">Wskazówki edukacyjne</string>
@@ -251,21 +245,7 @@
     <string name="education_lock_summary">Szybko zablokuj bazę danych, możesz skonfigurować aplikację tak, aby blokowała ją po pewnym czasie i po wyłączeniu ekranu.</string>
     <string name="education_sort_title">Sortowanie elementów</string>
     <string name="education_sort_summary">Wybierz sposób sortowania wpisów i grup.</string>
-    <string name="education_donation_title">Weź udział</string>
-    <string name="education_donation_summary">Pomóż zwiększyć stabilność, bezpieczeństwo i dodawanie kolejnych funkcji.</string>
-    <string name="html_text_ad_free">W przeciwieństwie do wielu aplikacji do zarządzania hasłami, ta jest wolna od &lt;strong&gt;reklam&lt;/strong&gt;, &lt;strong&gt;jest wolnym oprogramowaniem objętym klauzulą copyleft&lt;/strong&gt; i nie zbiera danych osobowych na swoich serwerach, bez względu na to, jakiej wersji używasz.</string>
-    <string name="html_text_buy_pro">Kupując wersję pro, będziesz mieć dostęp do &lt;strong&gt;stylu wizualnego&lt;/strong&gt; a szczególnie pomożesz &lt;strong&gt; zrealizować projekty społecznościowe.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Ten &lt;strong&gt;styl wizualny&lt;/strong&gt; jest dostępny dzięki Twojej hojności.</string>
-    <string name="html_text_donation">Poprzez &lt;strong&gt;wsparcie&lt;/strong&gt; projektu &lt;i&gt;(pieniężne, kodowanie, tłumaczenie)&lt;/i&gt; pomożesz mu istnieć i rozwijać się, a także uzyskasz dostęp do procedury odblokowywania &lt;strong&gt;motywów&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Ta funkcja jest &lt;strong&gt;rozwojowa&lt;/strong&gt; i wymaga Twojego &lt;strong&gt;wkładu&lt;/strong&gt;, aby być wkrótce dostępną.</string>
-    <string name="html_text_dev_feature_buy_pro">Kupując wersję &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">Przez &lt;strong&gt;przyczynianie się&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">zachęcasz programistów do tworzenia &lt;strong&gt;nowych funkcji&lt;/strong&gt; i &lt;strong&gt;naprawy błędów&lt;/strong&gt; zgodnie z Twoimi uwagami.</string>
-    <string name="html_text_dev_feature_thanks">Wielkie dzięki za Twój wkład.</string>
-    <string name="html_text_dev_feature_work_hard">Ciężko pracujemy, aby szybko udostępnić tę funkcję.</string>
-    <string name="html_text_dev_feature_upgrade">Pamiętaj, aby aktualizować swoją aplikację, instalując nowe wersje.</string>
     <string name="download">Pobieranie</string>
-    <string name="contribute">Wspomóż projekt</string>
     <string name="style_choose_title">Motyw aplikacji</string>
     <string name="style_choose_summary">Motyw używany w aplikacji</string>
     <string name="icon_pack_choose_title">Pakiet ikon</string>
@@ -363,8 +343,6 @@
     <string name="error_otp_digits">Token musi zawierać cyfry od %1$d do %2$d.</string>
     <string name="invalid_db_same_uuid">%1$s o tym samym identyfikatorze UUID %2$s już istnieje.</string>
     <string name="contains_duplicate_uuid_procedure">Rozwiązać problem, generując nowe identyfikatory UUID dla duplikatów, aby kontynuować\?</string>
-    <string name="clipboard_explanation_summary">Skopiuj pola wprowadzania danych za pomocą schowka urządzenia</string>
-    <string name="device_unlock_explanation_summary">Użyj odblokowywania urządzenia, aby łatwiej otwierać bazę danych</string>
     <string name="database_data_compression_summary">Kompresja danych zmniejsza rozmiar bazy danych</string>
     <string name="max_history_items_title">Maksymalna liczba</string>
     <string name="max_history_size_summary">Ogranicz rozmiar historii każdego wpisu</string>
@@ -393,7 +371,6 @@
     <string name="hide_expired_entries_title">Ukryj wygasłe wpisy</string>
     <string name="hide_expired_entries_summary">Wygasłe wpisy nie są wyświetlane</string>
     <string name="contact">Kontakt</string>
-    <string name="html_about_contribution">Aby &lt;strong&gt;zachować naszą wolność&lt;/strong&gt;, &lt;strong&gt;naprawiać błędy&lt;/strong&gt;, &lt;strong&gt;dodawać funkcje&lt;/strong&gt; i &lt;strong&gt; być zawsze aktywnym&lt;/strong&gt;, liczymy na Twój &lt;strong&gt;wkład&lt;/strong&gt;.</string>
     <string name="auto_focus_search_title">Szybkie wyszukiwanie</string>
     <string name="auto_focus_search_summary">Wyszukiwanie po otwarciu bazy danych</string>
     <string name="remember_database_locations_title">Zapamiętaj lokalizacje baz danych</string>
@@ -405,7 +382,6 @@
     <string name="hide_broken_locations_title">Ukryj uszkodzone łącza do bazy danych</string>
     <string name="hide_broken_locations_summary">Ukryj uszkodzone łącza na liście najnowszych baz danych</string>
     <string name="warning_database_read_only">Przyznaj dostęp do zapisu pliku, aby zapisać zmiany w bazie danych</string>
-    <string name="contribution">Wsparcie finansowe</string>
     <string name="education_setup_OTP_summary">Skonfiguruj zarządzanie hasłem jednorazowym (HOTP / TOTP), aby wygenerować token wymagany do uwierzytelniania dwuskładnikowego (2FA).</string>
     <string name="education_setup_OTP_title">Konfiguracja OTP</string>
     <string name="error_create_database">Nie można utworzyć pliku bazy danych.</string>
@@ -447,7 +423,6 @@
     <string name="warning_empty_keyfile">Nie zaleca się dodawania pustego pliku klucza.</string>
     <string name="warning_sure_remove_data">Czy mimo to usunąć te dane\?</string>
     <string name="warning_remove_unlinked_attachment">Usunięcie niepowiązanych danych może zmniejszyć rozmiar bazy danych, ale może również spowodować usunięcie danych używanych przez wtyczki KeePass.</string>
-    <string name="content_description_credentials_information">Informacje o poświadczeniach</string>
     <string name="show_uuid_summary">Wyświetla identyfikator UUID powiązany z wpisem lub grupą</string>
     <string name="show_uuid_title">Pokaż UUID</string>
     <string name="error_save_read_only">Zapisywanie danych nie jest dozwolone dla bazy danych otwartej tylko do odczytu.</string>
@@ -517,7 +492,6 @@
     <string name="style_brightness_title">Jasność motywu</string>
     <string name="error_upload_file">Wystąpił błąd podczas przesyłania danych pliku.</string>
     <string name="error_file_to_big">Plik, który próbujesz przesłać, jest za duży.</string>
-    <string name="content_description_otp_information">Informacje o hasłach jednorazowych</string>
     <string name="error_remove_file">Wystąpił błąd podczas usuwania danych z pliku.</string>
     <string name="error_duplicate_file">Dane pliku już istnieją.</string>
     <string name="properties">Właściwości</string>
@@ -569,7 +543,6 @@
     <string name="template_group_name">Szablony</string>
     <string name="show_otp_token_summary">Pokaż tokeny OTP na liście wpisów</string>
     <string name="show_otp_token_title">Pokaż token OTP</string>
-    <string name="menu_external_icon">Ikona zewnętrzna</string>
     <string name="autofill_manual_selection_summary">Wyświetl opcję pozwalającą użytkownikowi wybrać wpis bazy danych</string>
     <string name="autofill_manual_selection_title">Wybór ręczny</string>
     <string name="autofill_select_entry">Wybierz wpis…</string>
@@ -643,7 +616,6 @@
     <string name="error_no_hardware_key">Wybierz klucz sprzętowy.</string>
     <string name="error_XML_malformed">Zniekształcony XML.</string>
     <string name="screenshot_mode_banner_text">Tryb zrzutu ekranu</string>
-    <string name="html_about_privacy">&lt;strong&gt;Żadne dane użytkownika nie są pobierane&lt;/strong&gt;, ta aplikacja nie łączy się z żadnym serwerem, działa tylko lokalnie i w pełni szanuje prywatność użytkowników.</string>
     <string name="merge_success">Scalanie zostało pomyślnie zakończone</string>
     <string name="info">Informacje</string>
     <string name="menu_app_settings_summary">Wyszukiwanie, blokada, historia, właściwości</string>
@@ -691,7 +663,6 @@
     <string name="warning_overwrite_data_description">Ta czynność spowoduje zastąpienie istniejących danych we wpisie. Możesz odzyskać stare dane, jeśli historia jest włączona.</string>
     <string name="credential_provider">Dostawca poświadczeń</string>
     <string name="passkeys">Klucze dostępu</string>
-    <string name="passkeys_explanation_summary">Skonfiguruj klucze dostępu, aby zapewnić szybkie i bezpieczne logowanie bez hasła</string>
     <string name="passkeys_preference_title">Ustawienia kluczy dostępu</string>
     <string name="passkeys_close_database_title">Zamknij bazę danych</string>
     <string name="passkeys_close_database_summary">Zamknij bazę danych po wybraniu klucza dostępu</string>
@@ -741,7 +712,6 @@
     <string name="password_creation_description">Zapisz hasło w nowym wpisie</string>
     <string name="password_selection_description">Wybierz istniejące hasło</string>
     <string name="error_password_result">Nie można zwrócić hasła</string>
-    <string name="content_description_user_verification_information">Informacje o weryfikacji użytkownika</string>
     <string name="user_verification_required_title">Weryfikacja użytkownika</string>
     <string name="user_verification_required_description">Dostęp do tych danych wymaga weryfikacji, że to rzeczywiście Ty.</string>
     <string name="user_verification_database_credential">Wpisz pierwsze cztery znaki hasła do bazy danych</string>

@@ -18,9 +18,6 @@
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
     <string name="contact">連絡先</string>
-    <string name="contribution">貢献</string>
-    <string name="feedback">フィードバック</string>
-    <string name="homepage">ホームページ</string>
     <string name="about_description">KeePassパスワードマネージャーのAndroid実装版。</string>
     <string name="accept">承認</string>
     <string name="add_entry">エントリーを追加</string>
@@ -52,7 +49,6 @@
     <string name="content_description_add_group">グループを追加</string>
     <string name="content_description_add_item">項目を追加</string>
     <string name="content_description_file_information">ファイルについて</string>
-    <string name="content_description_credentials_information">認証情報について</string>
     <string name="content_description_password_checkbox">パスワードのチェックボックス</string>
     <string name="content_description_keyfile_checkbox">キーファイルのチェックボックス</string>
     <string name="content_description_repeat_toggle_password_visibility">パスワードの可視性を再び切り替える</string>
@@ -74,8 +70,6 @@
     <string name="decrypting_db">データベースの内容を復号しています…</string>
     <string name="default_checkbox">デフォルトのデータベースとして使用</string>
     <string name="digits">数字</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft は&lt;strong&gt;オープンソース&lt;/strong&gt;で&lt;strong&gt;広告はありません&lt;/strong&gt;。\n本ソフトウェアは&lt;strong&gt;GPLv3&lt;/strong&gt;ライセンスの下で提供されており、いかなる保証もありません。</string>
-    <string name="html_about_contribution">&lt;strong&gt;自由を維持し&lt;/strong&gt;、&lt;strong&gt;バグを修正し&lt;/strong&gt;、&lt;strong&gt;機能を追加し&lt;/strong&gt;、そして&lt;strong&gt;活発に開発し続ける&lt;/strong&gt;ために、私たちはあなたの&lt;strong&gt;貢献&lt;/strong&gt;に期待しています。</string>
     <string name="entry_accessed">最終アクセス</string>
     <string name="entry_cancel">キャンセル</string>
     <string name="entry_notes">メモ</string>
@@ -169,7 +163,6 @@
     <string name="menu_database_settings">データベースの設定</string>
     <string name="menu_security_settings">セキュリティの設定</string>
     <string name="menu_master_key_settings">マスターキーの設定</string>
-    <string name="menu_donate">寄付</string>
     <string name="menu_edit">編集</string>
     <string name="menu_copy">コピー</string>
     <string name="menu_move">移動</string>
@@ -270,7 +263,6 @@
     <string name="general">全般</string>
     <string name="autofill">自動入力</string>
     <string name="autofill_sign_in_prompt">KeePassDX でログイン</string>
-    <string name="autofill_explanation_summary">自動入力を設定し、他のアプリ内のフォームにすばやく入力します</string>
     <string name="set_credential_provider_service_title">デフォルトの自動入力サービスに設定</string>
     <string name="autofill_preference_title">自動入力の設定</string>
     <string name="password_size_title">生成されるパスワードの長さ</string>
@@ -279,7 +271,6 @@
     <string name="list_password_generator_options_summary">パスワードの生成に使う文字種を設定します</string>
     <string name="database_opened">データベースが開かれています</string>
     <string name="clipboard">クリップボード</string>
-    <string name="clipboard_explanation_summary">デバイスのクリップボードを使用して、エントリーのフィールドをコピーします</string>
     <string name="clipboard_warning">クリップボードの自動削除に失敗した場合は、手動でその履歴を削除してください。</string>
     <string name="lock">ロック</string>
     <string name="lock_database_screen_off_title">画面ロック</string>
@@ -289,7 +280,6 @@
     <string name="lock_database_show_button_title">ロックボタンを表示</string>
     <string name="lock_database_show_button_summary">ユーザー インターフェースにロックボタンを表示します</string>
     <string name="device_unlock">デバイスのロック解除</string>
-    <string name="device_unlock_explanation_summary">デバイスのロック解除を使用してデータベースをより簡単に開きます</string>
     <string name="biometric_unlock_enable_title">生体認証によるロック解除</string>
     <string name="biometric_unlock_enable_summary">生体情報をスキャンしてデータベースを開くことができるようにします</string>
     <string name="biometric_auto_open_prompt_title">プロンプトを自動で開く</string>
@@ -342,7 +332,6 @@
     <string name="recycle_bin">ゴミ箱</string>
     <string name="keyboard">キーボード</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">パスワードとすべての id フィールドを格納するカスタム キーボードを有効にします</string>
     <string name="device_keyboard_setting_title">デバイス キーボードの設定</string>
     <string name="keyboard_name">Magikeyboard</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
@@ -428,21 +417,7 @@
     <string name="education_lock_summary">データベースをすばやくロックします。時間が経ったり画面がオフになったときにロックするよう、アプリを設定することもできます。</string>
     <string name="education_sort_title">項目の並べ替え</string>
     <string name="education_sort_summary">エントリーとグループの並べ替え方法を選択します。</string>
-    <string name="education_donation_title">参加</string>
-    <string name="education_donation_summary">安定性やセキュリティを向上させ、機能を追加することを支援します。</string>
-    <string name="html_text_ad_free">多くのパスワード管理アプリとは異なり、このアプリは&lt;strong&gt;広告なし&lt;/strong&gt;かつ&lt;strong&gt;コピーレフトの自由ソフトウェア&lt;/strong&gt;です。どのバージョンを使っても、サーバー上で個人情報が収集されることはありません。</string>
-    <string name="html_text_buy_pro">Pro バージョンを購入すると、この&lt;strong&gt;ビジュアル スタイル&lt;/strong&gt;にアクセスできるようになり、また&lt;strong&gt;コミュニティ プロジェクトの実現&lt;/strong&gt;を特に支援できます。</string>
-    <string name="html_text_feature_generosity">この&lt;strong&gt;ビジュアル スタイル&lt;/strong&gt;はあなたの厚意により利用可能となります。</string>
-    <string name="html_text_donation">&lt;strong&gt;プロジェクトに貢献&lt;/strong&gt;することによって &lt;i&gt;（お金、コード、翻訳など）&lt;/i&gt;、プロジェクトは継続して成長することができ、さらに&lt;strong&gt;テーマ&lt;/strong&gt;のアンロック手続きにも参加できるようになります。</string>
-    <string name="html_text_dev_feature">この機能は&lt;strong&gt;開発中&lt;/strong&gt;であり、早期に提供するにはあなたの&lt;strong&gt;貢献&lt;/strong&gt;が必要です。</string>
-    <string name="html_text_dev_feature_buy_pro">&lt;strong&gt;pro&lt;/strong&gt; バージョンを購入することによる、</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;貢献&lt;/strong&gt;による、</string>
-    <string name="html_text_dev_feature_encourage">あなたの意見によって、デベロッパーは&lt;strong&gt;新機能&lt;/strong&gt;の開発や&lt;strong&gt;バグの修正&lt;/strong&gt;を速く進めることができます。</string>
-    <string name="html_text_dev_feature_thanks">あなたの貢献に感謝します。</string>
-    <string name="html_text_dev_feature_work_hard">この機能をすばやくリリースするために開発に勤しんでいます。</string>
-    <string name="html_text_dev_feature_upgrade">新しいバージョンをインストールして、アプリを最新の状態に保つことを忘れないでください。</string>
     <string name="download">ダウンロード</string>
-    <string name="contribute">貢献</string>
     <string name="download_attachment">%1$s をダウンロード</string>
     <string name="upload_attachment">%1$s をアップロード</string>
     <string name="download_initialization">初期化しています…</string>
@@ -517,7 +492,6 @@
     <string name="error_duplicate_file">ファイルデータはすでに存在します。</string>
     <string name="error_upload_file">ファイルデータのアップロード中にエラーが発生しました。</string>
     <string name="error_file_to_big">アップロードしようとしているファイルが大きすぎます。</string>
-    <string name="content_description_otp_information">ワンタイムパスワードについて</string>
     <string name="import_app_properties_summary">アプリ設定をインポートするファイルを選択</string>
     <string name="import_app_properties_title">アプリ設定をインポート</string>
     <string name="properties">プロパティ</string>
@@ -568,7 +542,6 @@
     <string name="autofill_manual_selection_title">手動選択</string>
     <string name="autofill_manual_selection_summary">ユーザーがデータベースのエントリーを選択できるようにオプションを表示します</string>
     <string name="templates_group_uuid_title">テンプレート グループ</string>
-    <string name="menu_external_icon">外部アイコン</string>
     <string name="template">テンプレート</string>
     <string name="hint_icon_name">アイコン名</string>
     <string name="tags">タグ</string>
@@ -624,7 +597,6 @@
     <string name="title_case">語頭を大文字</string>
     <string name="enable_screenshot_mode_summary">サードパーティのアプリでこのアプリのスクリーンショットを撮れるようにします</string>
     <string name="enable_screenshot_mode_title">スクリーンショット モード</string>
-    <string name="html_about_privacy">&lt;strong&gt;ユーザーからデータを取得しません&lt;/strong&gt;。このアプリケーションは特定のサーバーに接続せず、ローカルでのみ動作し、ユーザーのプライバシーを完全に尊重します。</string>
     <string name="hardware_key">ハードウェアキー</string>
     <string name="error_no_hardware_key">ハードウェアキーを選択してください。</string>
     <string name="error_XML_malformed">XMLの形式が正しくありません。</string>
@@ -692,7 +664,6 @@
     <string name="warning_overwrite_data_description">この操作でエントリの既存データが上書きされ、履歴機能が有効ならば古いデータから復元できます。</string>
     <string name="credential_provider">認証プロバイダ</string>
     <string name="passkeys">パスキー</string>
-    <string name="passkeys_explanation_summary">パスキーを設定し、迅速・安全なパスワード不要ログインを実現</string>
     <string name="passkeys_preference_title">パスキーの設定</string>
     <string name="passkeys_close_database_title">データベースを選択</string>
     <string name="passkeys_close_database_summary">パスキー選択後にデータベースを閉じる</string>
@@ -742,7 +713,6 @@
     <string name="password_creation_description">パスワードを新規エントリとして保存</string>
     <string name="password_selection_description">既存のパスワードを選択</string>
     <string name="error_password_result">パスワードを返せませんでした</string>
-    <string name="content_description_user_verification_information">ユーザー認証情報</string>
     <string name="user_verification_required_title">ユーザー認証</string>
     <string name="user_verification_required_description">このデータへのアクセスには本人確認が必要です。</string>
     <string name="user_verification_database_credential">データベースパスワードの先頭４文字を入力</string>

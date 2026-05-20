@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="contact">যোগাযোগ</string>
-    <string name="contribution">অবদান</string>
-    <string name="feedback">প্রতিক্রিয়া</string>
-    <string name="homepage">মূলপাতা</string>
     <string name="about_description">কিপাস পাসওয়ার্ড ম্যানেজারের অ্যান্ড্রয়েড বাস্তবায়ন</string>
     <string name="accept">গ্রহণ</string>
     <string name="add_entry">এন্টরি যোগ করুন</string>
@@ -47,7 +44,6 @@
     <string name="entry_title">শিরোনাম</string>
     <string name="otp_secret">গোপন</string>
     <string name="hint_keyfile">চাবিনথি(কি ফাইল)</string>
-    <string name="menu_donate">দান করো</string>
     <string name="menu_edit">সম্পাদনা</string>
     <string name="database_history">ইতিহাস</string>
     <string name="menu_appearance_settings">চেহারা</string>
@@ -100,8 +96,6 @@
     <string name="content_description_add_group">গ্রুপ যোগ করুন</string>
     <string name="content_description_add_item">আইটেম যোগ করুন</string>
     <string name="content_description_file_information">ফাইল তথ্য</string>
-    <string name="content_description_credentials_information">শংসাপত্রের তথ্য</string>
-    <string name="content_description_otp_information">এককালীন পাসওয়ার্ড তথ্য</string>
     <string name="content_description_password_checkbox">পাসওয়ার্ড চেকবক্স</string>
     <string name="content_description_keyfile_checkbox">কীফাইল চেকবক্স</string>
     <string name="content_description_repeat_toggle_password_visibility">টগল পাসওয়ার্ড দৃশ্যমানতা পুনরাবৃত্তি করুন</string>
@@ -192,7 +186,6 @@
     <string name="menu_security_settings">নিরাপত্তা বিন্যাস</string>
     <string name="menu_master_key_settings">মাস্টার কী সেটিংস</string>
     <string name="menu_delete_entry_history">ইতিহাস মুছুন</string>
-    <string name="menu_external_icon">বাহ্যিক আইকন</string>
     <string name="no_results">কোন অনুসন্ধান ফলাফল নেই</string>
     <string name="no_url_handler">এই URL খুলতে একটি ওয়েব ব্রাউজার ইনস্টল করুন.</string>
     <string name="create_keepass_file">নতুন ডাটাবেস তৈরি করুন</string>
@@ -243,7 +236,6 @@
     <string name="configure_biometric">কোনো বায়োমেট্রিক বা ডিভাইস শংসাপত্র নথিভুক্ত করা হয় না.</string>
     <string name="content_description_nav_header">নেভিগেশন হেডার</string>
     <string name="encryption_explanation">ডেটাবেস এনক্রিপশন অ্যালগরিদম সমস্ত ডেটার জন্য ব্যবহৃত হয়</string>
-    <string name="html_about_privacy">&lt;strong&gt;কোন ব্যবহারকারীর ডেটা পুনরুদ্ধার করা হয় না&lt;/strong&gt;, এই অ্যাপ্লিকেশনটি কোনো সার্ভারের সাথে সংযোগ করে না, শুধুমাত্র স্থানীয়ভাবে কাজ করে এবং ব্যবহারকারীদের গোপনীয়তাকে সম্পূর্ণভাবে সম্মান করে।</string>
     <string name="cryptocurrency">ক্রিপ্টোকারেন্সি ওয়ালেট</string>
     <string name="international_bank_account_number">IBAN</string>
     <string name="secure_note">সুরক্ষিত নোট</string>
@@ -298,9 +290,6 @@
     <string name="expired">মেয়াদোত্তীর্ণ</string>
     <string name="select_to_copy">ক্লিপবোর্ডে %1$s অনুলিপি করতে নির্বাচন করুন</string>
     <string name="entry_setup_otp">এককালীন পাসওয়ার্ড সেট আপ করুন</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft হল &lt;strong&gt;ওপেন সোর্স&lt;/strong&gt; এবং &lt;strong&gt;বিজ্ঞাপন ছাড়াই&lt;/strong&gt;।
-\nএটি &lt;strong&gt;GPLv3&lt;/strong&gt; লাইসেন্সের অধীনে, কোনো ওয়ারেন্টি ছাড়াই প্রদান করা হয়।</string>
-    <string name="html_about_contribution">&lt;strong&gt;আমাদের স্বাধীনতা বজায় রাখতে&lt;/strong&gt;, &lt;strong&gt;বাগগুলি ঠিক করতে&lt;/strong&gt;, &lt;strong&gt;বৈশিষ্ট্য যোগ করুন&lt;/strong&gt; এবং &lt;strong&gt;সর্বদা সক্রিয় থাকার জন্য&lt;/strong&gt;, আমরা আপনার উপর নির্ভর করি &lt;strong&gt;অবদান&lt;/strong&gt;।</string>
     <string name="hardware_key">হার্ডওয়্যার কী</string>
     <string name="id_card">পরিচয় পত্র</string>
     <string name="error_out_of_memory">আপনার সম্পূর্ণ ডাটাবেস লোড করার জন্য কোন মেমরি নেই।</string>

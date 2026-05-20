@@ -28,13 +28,5 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/file_manager_install_description"
-		android:gravity="center"
-		android:layout_marginBottom="12dp" />
-	<Button
-		android:id="@+id/file_manager_button"
-		android:layout_margin="@dimen/button_margin"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/file_browser"
-		style="@style/Widget.AppCompat.Button.Small"/>
+		android:gravity="center" />
 </LinearLayout>

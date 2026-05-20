@@ -121,7 +121,6 @@
     <string name="menu_database_settings">Postavke baze podataka</string>
     <string name="menu_security_settings">Postavke sigurnosti</string>
     <string name="menu_master_key_settings">Postavke glavnog ključa</string>
-    <string name="menu_donate">Doniraj</string>
     <string name="menu_edit">Izmjeni</string>
     <string name="menu_copy">Kopiraj</string>
     <string name="menu_paste">Umetni</string>
@@ -184,7 +183,6 @@
     <string name="lock_database_screen_off_summary">Zaključaj bazu podataka nakon par sekundi kad se ekran ugasi</string>
     <string name="lock_database_back_root_title">Pritisni \'Natrag\' za zaključavanje</string>
     <string name="device_unlock">Otključaj uređaj</string>
-    <string name="device_unlock_explanation_summary">Koristi otključavanje uređaja za jednostavnije otvaranje baze podataka</string>
     <string name="biometric_unlock_enable_title">Biometrijsko otključavanje</string>
     <string name="biometric_unlock_enable_summary">Otvaranje baze podataka skeniranjem biometrike</string>
     <string name="biometric_delete_all_key_title">Izbriši ključeve šifriranja</string>
@@ -263,10 +261,8 @@
     <string name="unavailable">Nedostupno</string>
     <string name="biometric">Biometrija</string>
     <string name="autofill_sign_in_prompt">Prijavi se s KeePassDX</string>
-    <string name="autofill_explanation_summary">Aktiviraj automatsko ispunjavanje za brzo ispunjavanje obrazaca u drugim aplikacijama</string>
     <string name="password_size_title">Duljina generirane lozinke</string>
     <string name="password_size_summary">Postavlja standardnu duljinu generiranih lozinki</string>
-    <string name="clipboard_explanation_summary">Kopiraj polja unosa koristeći međuspremnik tvog uređaja</string>
     <string name="lock">Zaključavanje</string>
     <string name="lock_database_screen_off_title">Zaključavanje ekrana</string>
     <string name="recycle_bin_title">Koristi koš za smeće</string>
@@ -279,7 +275,6 @@
     <string name="allow_copy_password_warning">Upozorenje: Međuspremnik dijele sve aplikacije. Ako se kopiraju osjetljivi podaci, druga aplikacija ih može vidjeti.</string>
     <string name="keyboard">Tipkovnica</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Aktiviraj prilagođenu tipkovnicu za popunjavanje lozinki i identifikacijskih polja</string>
     <string name="device_keyboard_setting_title">Postavke tipkovnice uređaja</string>
     <string name="keyboard_name">Magikeyboard</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
@@ -316,17 +311,13 @@
     <string name="auto_focus_search_title">Brza pretraga</string>
     <string name="error_create_database">Nije moguće stvoriti datoteku baze podataka.</string>
     <string name="error_rounds_too_large">Previše „transformacijskih prolaza”. Postavlja se na 2147483648.</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft je softver &lt;strong&gt;otvorenog koda&lt;/strong&gt; i &lt;strong&gt;ne sadrži oglase&lt;/strong&gt;.
-\nNudi se kakav je, pod &lt;strong&gt;GPLv3&lt;/strong&gt; licencom, bez jamstva.</string>
     <string name="entry_add_attachment">Dodaj privitak</string>
     <string name="discard">Odbaci</string>
     <string name="discard_changes">Odbaciti promjene\?</string>
     <string name="contact">Kontakt</string>
-    <string name="homepage">Početna stranica</string>
     <string name="remember_keyfile_locations_title">Zapamti mjesto datoteke ključa</string>
     <string name="unavailable_feature_version">Uređaj koristi Android verziju %1$s, ali potrebna je verzija %2$s ili novija.</string>
     <string name="hide_broken_locations_summary">Sakrij pokvarene poveznice u popisu nedavnih baza podataka</string>
-    <string name="html_text_dev_feature">Ova se funkcija nalazi &lt;strong&gt;u razvoju&lt;/strong&gt; i treba tvoj &lt;strong&gt;doprinos&lt;/strong&gt; kako bi uskoro bila dostupna.</string>
     <string name="education_generate_password_title">Stvori sigurnu lozinku</string>
     <string name="education_entry_new_field_summary">Registriraj dodatno polje, dodaj vrijednost i po želji ga zaštiti.</string>
     <string name="lock_database_show_button_title">Prikaži gumb za zaključavanje</string>
@@ -334,12 +325,8 @@
     <string name="autofill_application_id_blocklist_title">Popis blokiranja aplikacija</string>
     <string name="validate">Provjeri valjanost</string>
     <string name="education_entry_edit_title">Uredi unos</string>
-    <string name="html_text_dev_feature_work_hard">Trudimo se brzo izdati ovu funkciju.</string>
-    <string name="html_text_dev_feature_encourage">potičeš programere da stvore &lt;strong&gt;nove funkcije&lt;/strong&gt; i &lt;strong&gt;isprave greške&lt;/strong&gt; na osnovi tvojih napomena.</string>
     <string name="keyboard_auto_go_action_summary">Radnja tipke „Idi” nakon pritiskanja tipke „Polje”</string>
-    <string name="html_about_contribution">Kako bismo &lt;strong&gt;zadržali našu slobodu&lt;/strong&gt;, &lt;strong&gt;ispravljali greške&lt;/strong&gt;, &lt;strong&gt;dodavali funkcije&lt;/strong&gt; i &lt;strong&gt;uvijek bili aktivni&lt;/strong&gt;, računamo na tvoj &lt;strong&gt;doprinos&lt;/strong&gt;.</string>
     <string name="autofill_web_domain_blocklist_summary">Popis blokiranja koja sprečavaju automatsko ispunjavanje web domena</string>
-    <string name="feedback">Povratne informacije</string>
     <string name="autofill_preference_title">Postavke automatskog ispunjavanja</string>
     <string name="education_generate_password_summary">Stvori snažnu lozinku za tvoj unosu, jednostavno je definiraj prema kriterijima obrasca i ne zaboravi sigurnu lozinku.</string>
     <string name="style_choose_title">Tema aplikacije</string>
@@ -347,7 +334,6 @@
     <string name="keyboard_entry_timeout_summary">Istek vremena za brisanje unosa tipkovnicom</string>
     <string name="education_read_only_title">Zaštiti bazu podataka od pisanja</string>
     <string name="autofill_web_domain_blocklist_title">Popis blokiranja web domena</string>
-    <string name="contribution">Doprinos</string>
     <string name="error_label_exists">Ova oznaka već postoji.</string>
     <string name="warning_database_read_only">Za spremanje promjena u bazi podataka, datoteci dozvoli pisanje</string>
     <string name="app_timeout">Istek vremena</string>
@@ -355,7 +341,6 @@
     <string name="warning_password_encoding">Izbjegni u lozinkama koristiti znakove koji su izvan formata kodiranja teksta u datoteci baze podataka (neprepoznati znakovi pretvaraju se u isto slovo).</string>
     <string name="rounds_explanation">Dodatni prolazi šifriranja pružaju veću zaštitu od brutalnih napada, ali stvarno mogu usporiti učitavanje i spremanje.</string>
     <string name="subdomain_search_summary">Traži web domene s ograničenjima poddomena</string>
-    <string name="html_text_dev_feature_upgrade">Redovito aktualiziraj aplikaciju instaliranjem najnovijih verzija.</string>
     <string name="autofill_block_restart">Za aktiviranje blokiranja, ponovo pokreni aplikaciju koja sadrži obrazac.</string>
     <string name="education_sort_summary">Odaberi način razvrstavanja unosa i grupa.</string>
     <string name="warning_database_link_revoked">Pristup datoteci opozvan od upravljača datoteka</string>
@@ -369,12 +354,10 @@
 \nKoristi preferirani način ispunjavanja obrazaca.</string>
     <string name="filter">Filtar</string>
     <string name="show_recent_files_title">Prikaži nedavne datoteke</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;Doprinosom&lt;/strong&gt;,</string>
     <string name="education_entry_new_field_title">Dodaj prilagođena polja</string>
     <string name="education_lock_summary">Zaključaj bazu podataka brzo, aplikaciju možeš postaviti tako da bazu nakon nekog vremena zaključa i kad se ekran isključi.</string>
     <string name="show_recent_files_summary">Prikaži mjesto nedavnih baza podataka</string>
     <string name="education_device_unlock_summary">Za brzo otključavanje baze podataka, poveži lozinku sa skeniranom biometrijom ili podacima za prijavu uređaja.</string>
-    <string name="html_text_donation">&lt;strong&gt;Doprinosom&lt;/strong&gt; projektu &lt;i&gt;(novčano, kodom, prijevodom)&lt;/i&gt; pomažeš mu da živi i napreduje, a također stječeš pravo na postupak otključavanja &lt;strong&gt;tema&lt;/strong&gt;.</string>
     <string name="kdf_explanation">Za stvaranje ključa za algoritam šifriranja, glavni ključ se transformira pomoću funkcije za generiranje ključeva koja sadrži slučajnu komponentu.</string>
     <string name="lock_database_back_root_summary">Zaključaj bazu podataka kad korisnik pritisne gumb za natrag na glavnom ekranu</string>
     <string name="hide_broken_locations_title">Sakrij pokvarene poveznice baze podataka</string>
@@ -391,16 +374,11 @@
     <string name="education_search_title">Pretraži unose</string>
     <string name="education_field_copy_title">Kopiraj jedno polje</string>
     <string name="icon_pack_choose_title">Paket ikona</string>
-    <string name="contribute">Doprinesi</string>
-    <string name="html_text_dev_feature_thanks">Zahvaljujemo na doprinosu.</string>
     <string name="education_setup_OTP_title">Postavi jednokratnu lozinku</string>
     <string name="content_description_add_item">Dodaj element</string>
-    <string name="html_text_dev_feature_buy_pro">Kupnjom &lt;strong&gt;pro&lt;/strong&gt; verzije,</string>
     <string name="keyboard_selection_entry_summary">Prilikom prikaza unosa u KeePassDX-u, popuni Magikeyboard s tim unosom</string>
     <string name="education_new_node_title">Dodaj elemente u bazu podataka</string>
-    <string name="education_donation_summary">Pomogni povećati stabilnost i sigurnost dodavanjem dodatnih funkcija.</string>
     <string name="error_string_type">Ovaj se tekst ne poklapa sa zatraženim elementom.</string>
-    <string name="html_text_buy_pro">Kupnjom pro verzije imat ćaš pristup ovom &lt;strong&gt;vizualnom stilu&lt;/strong&gt; i k tome ćeš pomoći &lt;strong&gt;u realizaciji projekata zajednice.&lt;/strong&gt;</string>
     <string name="keyboard_auto_go_action_title">Automatska radnja tipke</string>
     <string name="education_sort_title">Razvrstavanje elemenata</string>
     <string name="autofill_application_id_blocklist_summary">Popis blokiranja koja sprečavaju automatsko ispunjavanje aplikacija</string>
@@ -409,7 +387,6 @@
 \n„Zaštićeno od pisanja” sprečava nenamjerne promjene u bazi podataka.
 \n„Promjenjivo” omogućuje dodavanje, brisanje ili mijenjanje svih elemenata.</string>
     <string name="education_search_summary">Upiši naslov, korisničko ime ili sadržaj drugih polja za pronalaženje lozinki.</string>
-    <string name="html_text_feature_generosity">Ovaj &lt;strong&gt;visualni stil&lt;/strong&gt; dostupan je zahvaljujući tvojoj darežljivosti.</string>
     <string name="education_unlock_summary">Upiši lozinku i/ili datoteku ključa za otključavanje baze podataka.
 \n
 \nSpremi sigurnosnu kopiju datoteke baze podataka na sigurno mjesto nakon svake promjene.</string>
@@ -420,10 +397,8 @@
     <string name="download">Preuzimanje</string>
     <string name="lock_database_show_button_summary">Prikazuje gumb za zaključavanje u korisničkom sučelju</string>
     <string name="remember_keyfile_locations_summary">Pamti mjesto spremanja datoteka ključeva</string>
-    <string name="html_text_ad_free">Za razliku od mnogih aplikacija za upravljanje lozinkama, ova je &lt;strong&gt;bez oglasa&lt;/strong&gt;, &lt;strong&gt;copylefted slobodan softver&lt;/strong&gt; i ne prikuplja osobne podatke na svojim poslužiteljima, bez obzira na korištenu verziju.</string>
     <string name="rounds">Transformacijski prolazi</string>
     <string name="download_initialization">Inicijaliziranje …</string>
-    <string name="education_donation_title">Sudjeluj</string>
     <string name="education_new_node_summary">Unosi pomažu u upravljanju digitalnim identitetom.
 \n
 \nGrupe (~mape) organiziraju unose u bazi podataka.</string>
@@ -449,7 +424,6 @@
     <string name="database_data_remove_unlinked_attachments_title">Ukloni nepovezane podatke</string>
     <string name="data">Podaci</string>
     <string name="warning_sure_remove_data">Svejedno ukloniti ove podatke\?</string>
-    <string name="content_description_credentials_information">Podaci za prijavu</string>
     <string name="autofill_save_search_info_summary">Pokušaj spremiti podatke prilikom odabira ručnog unosa za jednostavniju buduću upotrebu</string>
     <string name="notification">Obavijest</string>
     <string name="error_registration_read_only">Nije dopušteno spremati novi element u zaštićenoj bazi podataka.</string>
@@ -518,7 +492,6 @@
     <string name="style_brightness_title">Svjetlina teme</string>
     <string name="error_upload_file">Tijekom prijenosa podataka datoteke došlo je do greške.</string>
     <string name="error_file_to_big">Datoteka koju pokušavaš prenijeti je prevelika.</string>
-    <string name="content_description_otp_information">Podaci jednokratne lozinke</string>
     <string name="error_remove_file">Tijekom uklanjanja podataka datoteke došlo je do greške.</string>
     <string name="error_duplicate_file">Podaci datoteke već postoje.</string>
     <string name="properties">Svojstva</string>
@@ -572,7 +545,6 @@
     <string name="show_otp_token_title">Prikaži OTP token</string>
     <string name="autofill_manual_selection_title">Ručni odabir</string>
     <string name="autofill_select_entry">Odaberi unos …</string>
-    <string name="menu_external_icon">Vanjska ikona</string>
     <string name="seed">Tajna fraza</string>
     <string name="hint_icon_name">Ime ikone</string>
     <string name="warning_exact_alarm">Nisi dopustio/la aplikaciji da koristi točan alarm. Zbog toga funkije koje zahtijevaju tajmer neće biti obavljene s točnim vremenom.</string>
@@ -641,7 +613,6 @@
     <string name="content_description_hardware_key_checkbox">Potvrdni okvir hardverskog ključa</string>
     <string name="remember_hardware_key_title">Zapamti hardverske ključeve</string>
     <string name="enable_screenshot_mode_summary">Dopusti stranim aplikacijama snimanje ili slikanje ekrana aplikacije</string>
-    <string name="html_about_privacy">&lt;strong&gt;Korisnički podaci se ne dohvaćaju&lt;/strong&gt;, ova aplikacija se ne povezuje ni s jednim poslužiteljem, radi samo lokalno i u potpunosti poštuje privatnost korisnika.</string>
     <string name="error_no_response_from_challenge">Nije moguće dobiti odgovor na izazov.</string>
     <string name="content_description_nav_header">Zaglavlje navigacije</string>
     <string name="waiting_challenge_response">Čeka se odgovor za izazov …</string>

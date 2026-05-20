@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Keyboard actions -->
+  <string name="action_theme_switcher_title">غيّر المظهر</string>
+  <string name="action_select_all_title">اختر الكل</string>
+  <string name="action_cut_title">قص إلى الحافظة</string>
+  <string name="action_copy_title">انسخ إلى الحافظة</string>
+  <string name="action_paste_title">لصق من الحافظة</string>
+  <string name="action_undo_title">تراجع</string>
+  <string name="action_redo_title">إعادة</string>
+  <string name="action_text_editor_title">محرر النصوص</string>
+  <string name="action_debug_title">معلومات الأخطاء</string>
+  <string name="action_more_actions_title">كل الإجراءات</string>
+  <string name="action_bug_viewer_title">مستعرض الأخطاء</string>
+  <!-- These move the text cursor up, down, left, right -->
+  <string name="action_cursor_up_title">السهم لأعلى</string>
+  <string name="action_cursor_down_title">السهم لأسفل</string>
+  <string name="action_cursor_left_title">السهم لليسار</string>
+  <string name="action_cursor_right_title">السهم لليمين</string>
+  <!-- For emoji menu action -->
+  <string name="action_emoji_title">الرموز التعبيرية</string>
+  <!-- Refers to the most recently used emojis -->
+  <string name="action_emoji_category_most_recently_used">الأخير</string>
+  <string name="action_emoji_category_smileys_emotion">الرموز التعبيرية والوجوه</string>
+  <string name="action_emoji_category_people_body">الأشخاص والجسم</string>
+  <string name="action_emoji_category_animals_nature">حيوانات وطبيعة</string>
+  <string name="action_emoji_category_food_drink">أغذية ومشروبات</string>
+  <string name="action_emoji_category_travel_places">سفر وأماكن</string>
+  <string name="action_emoji_category_activities">الأنشطة</string>
+  <string name="action_emoji_category_objects">كائنات</string>
+  <string name="action_emoji_category_symbols">رموز</string>
+  <string name="action_emoji_category_flags">أعلام</string>
+  <string name="action_emoji_category_ascii">رموز ASCII</string>
+  <string name="action_emoji_search_no_results_found">لا نتائج</string>
+  <string name="action_emoji_jump_to_category">&lt;string name="action_emoji_jump_to_category"&gt;انتقل إلى &lt;xliff:g name="category" example="Flags"&gt;%s&lt;/xliff:g&gt;&lt;/string&gt;</string>
+  <!-- Refers to clearing the most recently used emoji list -->
+  <string name="action_emoji_clear_recent_emojis_question">مسح الرموز التعبيرية الأخيرة؟</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_clear_recent_emojis_cancel">إلغاء</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_clear_recent_emojis_clear">مسح</string>
+  <string name="action_emoji_clear_recent_emojis_content_description">مسح الرموز التعبيرية الأخيرة</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_search_for_emojis">بحث</string>
+  <!-- For voice input action -->
+  <string name="action_voice_input_title">الإدخال الصوتي</string>
+  <!-- Same as the one above but it uses the device's default system voice input instead of the built-in -->
+  <string name="action_system_voice_input_title">الإدخال الصوتي (النظام)</string>
+  <string name="action_voice_input_no_model_for_language_x_installed">&lt;string name="action_voice_input_no_model_for_language_x_installed"&gt;لا يوجد نموذج إدخال صوتي مثبت للغة &lt;xliff:g name="language" example="español"&gt;%s&lt;/xliff:g&gt;، اضغط للتحقق من الخيارات؟&lt;/string&gt;</string>
+  <string name="action_voice_input_open_settings_button_to_grant_microphone_permission">يرجى الانتقال إلى الأذونات وتفعيل إذن الميكروفون لاستخدام الصوتي</string>
+  <!-- For clipboard manager action -->
+  <string name="action_clipboard_manager_title">مدير الحافظة</string>
+  <string name="action_clipboard_manager_unpin_item">إلغاء تثبيت العنصر</string>
+  <string name="action_clipboard_manager_pin_item">تثبيت العنصر</string>
+  <string name="action_clipboard_manager_remove_item">حذف العنصر</string>
+  <string name="action_clipboard_manager_remove_item_confirm_dialog">تأكيد الحذف:\n%s</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_cancel_action_button">إلغاء</string>
+  <string name="action_clipboard_manager_disable_text">لا عناصر للمسح. هل تريد إيقاف سجل الحافظة؟</string>
+  <!-- Must be fairly short, refers to disabling clipboard history -->
+  <string name="action_clipboard_manager_disable_button">تعطيل</string>
+  <string name="action_clipboard_manager_unpin_all_items_text">لا عناصر مثبتة. هل تريد إزالة تثبيت الكل؟</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_unpin_all_items_button">إلغاء التثبيت</string>
+</resources>

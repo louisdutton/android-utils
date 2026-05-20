@@ -19,9 +19,6 @@
 --><resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="contact">Contact</string>
     <string name="info">Info</string>
-    <string name="contribution">Contribution</string>
-    <string name="feedback">Feedback</string>
-    <string name="homepage">Homepage</string>
     <string name="about_description">Android implementation of the KeePass password manager.</string>
     <string name="accept">Accept</string>
     <string name="add_entry">Add entry</string>
@@ -55,8 +52,6 @@
     <string name="content_description_add_group">Add group</string>
     <string name="content_description_add_item">Add item</string>
     <string name="content_description_file_information">File info</string>
-    <string name="content_description_credentials_information">Credentials info</string>
-    <string name="content_description_otp_information">One-time password info</string>
     <string name="content_description_password_checkbox">Password checkbox</string>
     <string name="content_description_keyfile_checkbox">Keyfile checkbox</string>
     <string name="content_description_hardware_key_checkbox">Hardware key checkbox</string>
@@ -90,10 +85,6 @@
     <string name="decrypting_db">Decrypting database content…</string>
     <string name="default_checkbox">Use as default database</string>
     <string name="digits">Digits</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft is &lt;strong&gt;open source&lt;/strong&gt; and &lt;strong&gt;without advertising&lt;/strong&gt;.
-\nIt is provided as is, under &lt;strong&gt;GPLv3&lt;/strong&gt; license, without any warranty.</string>
-    <string name="html_about_privacy">&lt;strong&gt;No user data is retrieved&lt;/strong&gt;, this application does not connect to any server, works only locally and fully respects the privacy of users.</string>
-    <string name="html_about_contribution">In order to &lt;strong&gt;keep our freedom&lt;/strong&gt;, &lt;strong&gt;fix bugs&lt;/strong&gt;, &lt;strong&gt;add features&lt;/strong&gt; and &lt;strong&gt;to be always active&lt;/strong&gt;, we count on your &lt;strong&gt;contribution&lt;/strong&gt;.</string>
     <string name="entry_accessed">Accessed</string>
     <string name="entry_cancel">Cancel</string>
     <string name="entry_notes">Notes</string>
@@ -273,7 +264,6 @@
     <string name="menu_security_settings_summary">Encryption, key derivation function</string>
     <string name="menu_master_key_settings">Master key settings</string>
     <string name="master_key_settings_summary">Change, renewal</string>
-    <string name="menu_donate">Donate</string>
     <string name="menu_edit">Edit</string>
     <string name="menu_copy">Copy</string>
     <string name="menu_move">Move</string>
@@ -296,7 +286,6 @@
     <string name="menu_empty_recycle_bin">Empty the recycle bin</string>
     <string name="menu_restore_entry_history">Restore history</string>
     <string name="menu_delete_entry_history">Delete history</string>
-    <string name="menu_external_icon">External icon</string>
     <string name="minus">Minus</string>
     <string name="never">Never</string>
     <string name="no_results">No search results</string>
@@ -424,7 +413,6 @@
     <string name="credential_provider">Credential provider</string>
     <string name="set_credential_provider_service_title">Credential provider service</string>
     <string name="passkeys">Passkeys</string>
-    <string name="passkeys_explanation_summary">Configure Passkeys for fast and secure passwordless login</string>
     <string name="passkeys_preference_title">Passkeys settings</string>
     <string name="passkeys_close_database_title">Close database</string>
     <string name="passkeys_close_database_summary">Close the database after a passkey selection</string>
@@ -446,7 +434,6 @@
     <string name="autofill">Autofill</string>
     <string name="credential_provider_service_subtitle">Passkeys, Autofill credential provider</string>
     <string name="autofill_sign_in_prompt">Sign in with KeePassDX</string>
-    <string name="autofill_explanation_summary">Configure autofilling to quickly fill out forms in other apps</string>
     <string name="autofill_select_entry">Select entry…</string>
     <string name="autofill_preference_title">Autofill settings</string>
     <string name="user_verification">User Verification</string>
@@ -462,7 +449,6 @@
     <string name="list_password_generator_options_summary">Set allowed password generator characters</string>
     <string name="database_opened">Database opened</string>
     <string name="clipboard">Clipboard</string>
-    <string name="clipboard_explanation_summary">Copy entry fields using the clipboard of your device</string>
     <string name="clipboard_warning">If automatic deletion of clipboard fails, delete its history manually.</string>
     <string name="lock">Lock</string>
     <string name="lock_database_screen_off_title">Screen lock</string>
@@ -475,7 +461,6 @@
     <string name="unlock">Unlock</string>
     <string name="device_unlock">Device unlock</string>
     <string name="device_unlock_tap_delete">Tap to delete device unlocking keys</string>
-    <string name="device_unlock_explanation_summary">Use device unlocking to open a database more easily</string>
     <string name="biometric_unlock_enable_title">Biometric unlocking</string>
     <string name="biometric_unlock_enable_summary">Lets you scan your biometric to open the database</string>
     <string name="device_credential_unlock_enable_title">Device credential unlocking</string>
@@ -543,7 +528,6 @@
     <string name="templates">Templates</string>
     <string name="keyboard">Keyboard</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Activate a custom keyboard populating your passwords and all identity fields</string>
     <string name="device_keyboard_setting_title">Device keyboard settings</string>
     <string name="keyboard_name">Magikeyboard</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
@@ -660,21 +644,7 @@
     <string name="education_lock_summary">Lock your database quickly, you can set up the app to lock it after a while, and when the screen turns off.</string>
     <string name="education_sort_title">Item sorting</string>
     <string name="education_sort_summary">Choose how entries and groups are sorted.</string>
-    <string name="education_donation_title">Participate</string>
-    <string name="education_donation_summary">Help increase the stability, security and in adding more features.</string>
-    <string name="html_text_ad_free">Unlike many password management apps, this one is &lt;strong&gt;ad-free&lt;/strong&gt;, &lt;strong&gt;copylefted libre software&lt;/strong&gt; and does not collect personal data on its servers, no matter what version you use.</string>
-    <string name="html_text_buy_pro">By buying the pro version, you will have access to this &lt;strong&gt;visual style&lt;/strong&gt; and you will especially help &lt;strong&gt;the realization of community projects.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">This &lt;strong&gt;visual style&lt;/strong&gt; is available thanks to your generosity.</string>
-    <string name="html_text_donation">By &lt;strong&gt;contributing&lt;/strong&gt; to the project &lt;i&gt;(monetarily, code, translation)&lt;/i&gt;, you will help it to continue to live and thrive, and you will also be eligible for the &lt;strong&gt;theme&lt;/strong&gt; unlocking procedure.</string>
-    <string name="html_text_dev_feature">This feature is &lt;strong&gt;under development&lt;/strong&gt; and requires your &lt;strong&gt;contribution&lt;/strong&gt; to be available soon.</string>
-    <string name="html_text_dev_feature_buy_pro">By buying the &lt;strong&gt;pro&lt;/strong&gt; version,</string>
-    <string name="html_text_dev_feature_contibute">By &lt;strong&gt;contributing&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">you are encouraging developers to create &lt;strong&gt;new features&lt;/strong&gt; and to &lt;strong&gt;fix bugs&lt;/strong&gt; according to your remarks.</string>
-    <string name="html_text_dev_feature_thanks">Thanks a lot for your contribution.</string>
-    <string name="html_text_dev_feature_work_hard">We are working hard to release this feature quickly.</string>
-    <string name="html_text_dev_feature_upgrade">Remember to keep your app up to date by installing new versions.</string>
     <string name="download">Download</string>
-    <string name="contribute">Contribute</string>
     <string name="download_attachment">Download %1$s</string>
     <string name="upload_attachment">Upload %1$s</string>
     <string name="download_initialization">Initializing…</string>
@@ -769,6 +739,8 @@
     <string name="icon_section_custom">Custom</string>
     <string name="icon_pack_choose_title">Icon pack</string>
     <string name="icon_pack_choose_summary">Icon pack used in the app</string>
+    <string name="pure_black_oled_title">Pure black for OLED</string>
+    <string name="pure_black_oled_summary">Use black surfaces when the system is in dark mode</string>
     <string name="show_entry_colors_title">Entry colors</string>
     <string name="show_entry_colors_summary">Displays foreground and background colors for an entry</string>
     <string name="hide_expired_entries_title">Hide expired entries</string>
@@ -795,7 +767,6 @@
     <string name="password_creation_description">Save password in new entry</string>
     <string name="password_selection_description">Select an existing password</string>
     <string name="error_password_result">Unable to return the password</string>
-    <string name="content_description_user_verification_information">User verification info</string>
     <string name="user_verification_required_title">User Verification</string>
     <string name="user_verification_required_description">Access to this data requires verification that it is indeed you.</string>
     <string name="user_verification_required_description_precise">%1$s requires verification that it is indeed you.</string>

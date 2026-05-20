@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="feedback">Comentários</string>
-    <string name="homepage">Página inicial</string>
     <string name="about_description">Implementação Android do gestor de palavras-passe KeePass.</string>
     <string name="accept">Aceitar</string>
     <string name="add_entry">Adicionar entrada</string>
@@ -42,8 +40,6 @@
     <string name="decrypting_db">A desencriptar o conteúdo da base de dados…</string>
     <string name="default_checkbox">Utilizar como base de dados predefinida</string>
     <string name="digits">Dígitos</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft tem o &lt;strong&gt;código-fonte aberto&lt;/strong&gt; e &lt;strong&gt;sem publicidade&lt;/strong&gt;.
-\nÉ fornecido como está, sob a &lt;strong&gt;licença GPLv3&lt;/strong&gt;, sem qualquer garantia.</string>
     <string name="select_database_file">Abrir o cofre existente</string>
     <string name="entry_accessed">Acedido</string>
     <string name="entry_cancel">Cancelar</string>
@@ -98,7 +94,6 @@
     <string name="settings">Configurações</string>
     <string name="menu_database_settings">Configurações da base de dados</string>
     <string name="menu_delete">Eliminar</string>
-    <string name="menu_donate">Donativos</string>
     <string name="menu_edit">Editar</string>
     <string name="menu_lock">Bloquear base de dados</string>
     <string name="menu_open">Abrir</string>
@@ -176,7 +171,6 @@
     <string name="autofill">Preenchimento automático</string>
     <string name="autofill_sign_in_prompt">Iniciar sessão com KeePassDX</string>
     <string name="set_credential_provider_service_title">Definir como serviço de preenchimento automático predefinido</string>
-    <string name="autofill_explanation_summary">Configure o serviço para rapidamente preencher formulários noutras apps</string>
     <string name="password_size_title">Tamanho da palavra-passe gerada</string>
     <string name="edit_entry">Editar entrada</string>
     <string name="encryption">Encriptação</string>
@@ -209,7 +203,6 @@
     <string name="other">Outros</string>
     <string name="keyboard">Teclado</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Ative um teclado personalizado para as suas palavras-passe e todos os campos de identidade</string>
     <string name="reset_education_screens_title">Reiniciar as dicas</string>
     <string name="reset_education_screens_summary">Mostrar todas as dicas novamente</string>
     <string name="reset_education_screens_text">Dicas repostas</string>
@@ -238,21 +231,7 @@
     <string name="education_lock_summary">Bloqueie a sua base de dados rapidamente. Pode configurar a aplicação para bloqueá-la após um tempo e quando o ecrã se desliga.</string>
     <string name="education_sort_title">Ordenação de itens</string>
     <string name="education_sort_summary">Escolha como são ordenadas as entradas e os grupos.</string>
-    <string name="education_donation_title">Participar</string>
-    <string name="education_donation_summary">Ajude a aumentar a estabilidade, segurança e novas funcionalidades.</string>
-    <string name="html_text_ad_free">Ao contrário de muitas aplicações de gestão de palavras-passe, esta aplicação &lt;strong&gt;não tem anúncios&lt;/strong&gt;, é &lt;strong&gt;um programa de código-fonte livre&lt;/strong&gt; e não recolhe dados pessoais para os servidores dela, seja qual for a versão que utiliza.</string>
-    <string name="html_text_buy_pro">Ao comprar a versão pro, terá acesso a este &lt;strong&gt;estilo visual&lt;/strong&gt; e ajudará especialmente a &lt;strong&gt;realizar projetos comunitários.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Este &lt;strong&gt;estilo visual&lt;/strong&gt; está disponível graças à sua generosidade.</string>
-    <string name="html_text_donation">Ao &lt;strong&gt;contribuir&lt;/strong&gt; para o projeto &lt;i&gt;(monetariamente, código, tradução)&lt;/i&gt;, ajudá-lo-á a continuar a viver e prosperar, e também será elegível para o &lt;strong&gt;tema&lt;/strong&gt; procedimento de desbloqueio.</string>
-    <string name="html_text_dev_feature">Esta funcionalidade está &lt;strong&gt;em desenvolvimento&lt;/strong&gt; e necessita da sua &lt;strong&gt;contribuição&lt;/strong&gt; para que esteja disponível brevemente.</string>
-    <string name="html_text_dev_feature_buy_pro">Ao comprar a versão &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">Ao &lt;strong&gt;contribuir&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">está a incentivar os programadores a adicionar &lt;strong&gt;novas funcionalidades&lt;/strong&gt; e a &lt;strong&gt;corrigir erros&lt;/strong&gt; reportados pelos utilizadores.</string>
-    <string name="html_text_dev_feature_thanks">Obrigado pela sua contribuição.</string>
-    <string name="html_text_dev_feature_work_hard">Estamos a trabalhar para lançar esta funcionalidade o mais rápido possível.</string>
-    <string name="html_text_dev_feature_upgrade">Lembre-se de manter a sua aplicação atualizada, instalando novas versões.</string>
     <string name="download">Descarregar</string>
-    <string name="contribute">Contribuir</string>
     <string name="style_choose_title">Tema da aplicação</string>
     <string name="style_choose_summary">Tema usado na aplicação</string>
     <string name="icon_pack_choose_title">Pacote de ícones</string>
@@ -318,7 +297,6 @@
     <string name="database_custom_color_title">Cor personalizada da base de dados</string>
     <string name="database_data_compression_summary">A compressão de dados reduz o tamanho da base de dados</string>
     <string name="biometric_unlock_enable_summary">Permite que leia os seus dados biométricos para abrir a base de dados</string>
-    <string name="device_unlock_explanation_summary">Utilizar o desbloqueio do dispositivo para abrir uma base de dados mais facilmente</string>
     <string name="database_opened">Base de dados aberta</string>
     <string name="contains_duplicate_uuid">A base de dados contém UUIDs duplicados.</string>
     <string name="menu_save_database">Guardar dados</string>
@@ -369,7 +347,6 @@
     <string name="error_otp_secret_key">A chave secreta tem de ser no formato Base32.</string>
     <string name="enable">Ativar</string>
     <string name="database_data_compression_title">Compressão de dados</string>
-    <string name="html_about_contribution">Para &lt;strong&gt;manter a liberdade&lt;/strong&gt;, &lt;strong&gt;corrigir erros&lt;/strong&gt;, &lt;strong&gt;adicionar funcionalidades&lt;/strong&gt; e &lt;strong&gt;para sermos sempre ativos&lt;/strong&gt;, contamos com sua &lt;strong&gt;contribuição&lt;/strong&gt;.</string>
     <string name="biometric_unlock_enable_title">Desbloqueio biométrico</string>
     <string name="entry_attachments">Anexos</string>
     <string name="compression_gzip">Gzip</string>
@@ -382,11 +359,9 @@
     <string name="max_history_items_summary">Limitar a quantidade de itens no histórico por entrada</string>
     <string name="download_complete">Completo!</string>
     <string name="content_description_update_from_list">Atualizar</string>
-    <string name="contribution">Contribuição</string>
     <string name="hide_broken_locations_summary">Ocultar ligações quebradas na lista de bases de dados recentes</string>
     <string name="download_attachment">Descarregar %1$s</string>
     <string name="warning_database_read_only">Conceda o acesso de gravação de ficheiros para guardar as alterações na base de dados</string>
-    <string name="clipboard_explanation_summary">Copiar campos de entrada usando a área de transferência do seu dispositivo</string>
     <string name="otp_digits">Dígitos</string>
     <string name="discard_changes">Descartar alterações\?</string>
     <string name="keystore_not_accessible">O armazém de chaves não foi propriamente inicializado.</string>
@@ -453,7 +428,6 @@
     <string name="warning_file_too_big">Uma base de dados KeePass deve conter apenas pequenos ficheiros utilitários (tais como ficheiros-chave PGP).
 \n
 \nA sua base de dados pode-se tornar muito grande e reduzir o desempenho com este envio.</string>
-    <string name="content_description_credentials_information">Informações sobre credenciais</string>
     <string name="device_credential">Credencial do dispositivo</string>
     <string name="credential_before_click_device_unlock_button">Digite a palavra-passe e depois clique neste botão.</string>
     <string name="device_unlock_prompt_not_initialized">Não foi possível inicializar a solicitação de desbloqueio do dispositivo.</string>
@@ -477,7 +451,6 @@
     <string name="error_database_uri_null">Não foi possível recuperar o URI da base de dados.</string>
     <string name="error_field_name_already_exists">O nome do campo já existe.</string>
     <string name="error_registration_read_only">Não é permitido guardar um novo item numa base de dados só de leitura.</string>
-    <string name="content_description_otp_information">Informação de palavra-passe de uso único</string>
     <string name="show_otp_token_summary">Mostra os tokens OTP na lista de entradas</string>
     <string name="show_otp_token_title">Mostrar token OTP</string>
     <string name="show_uuid_summary">Mostra o UUID ligado a uma entrada ou grupo</string>
@@ -527,7 +500,6 @@
     <string name="export_app_properties_title">Exportar definições da aplicação</string>
     <string name="import_app_properties_summary">Selecionar um ficheiro para importar as definições da aplicação</string>
     <string name="import_app_properties_title">Importar definições da aplicação</string>
-    <string name="menu_external_icon">Ícone externo</string>
     <string name="error_start_database_action">Ocorreu um erro ao tentar executar uma ação na base de dados.</string>
     <string name="error_remove_file">Ocorreu um erro ao tentar remover o ficheiro de dados.</string>
     <string name="error_duplicate_file">O ficheiro de dados já existe.</string>
@@ -586,7 +558,6 @@
     <string name="content_description_passphrase_word_count">Número de palavras da frase-chave</string>
     <string name="waiting_challenge_request">À espera do pedido de desafio…</string>
     <string name="waiting_challenge_response">À espera da resposta ao desafio…</string>
-    <string name="html_about_privacy">&lt;strong&gt;Nenhum dado de utilizador é recuperado&lt;/strong&gt;, esta aplicação não se liga a nenhum servidor, funciona apenas localmente e respeita plenamente a privacidade dos utilizadores.</string>
     <string name="tags">Etiquetas</string>
     <string name="search_filters">Filtros de pesquisa</string>
     <string name="wireless">Wi-Fi</string>
@@ -703,7 +674,6 @@
     <string name="warning_overwrite_data_description">Esta acção substituirá os dados existentes. Pode recuperar os dados antigos se o histórico estiver activado.</string>
     <string name="credential_provider">Fornecedor de credenciais</string>
     <string name="passkeys">Chaves de acesso</string>
-    <string name="passkeys_explanation_summary">Configure chaves de acesso para um login rápido e seguro sem senha</string>
     <string name="passkeys_preference_title">Configurações das chaves de acesso</string>
     <string name="passkeys_close_database_title">Fechar base de dados</string>
     <string name="passkeys_close_database_summary">Feche a base de dados após a selecção da chave de acesso</string>
@@ -757,7 +727,6 @@
     <string name="password_creation_description">Gravar palavra-passe na entrada nova</string>
     <string name="password_selection_description">Selecionar uma palavra-passe existente</string>
     <string name="error_password_result">Não foi possível retornar a palavra-passe</string>
-    <string name="content_description_user_verification_information">Informação de verificação de utilizador</string>
     <string name="user_verification_required_title">Verificação de Utilizador</string>
     <string name="user_verification_required_description">O acesso a estes dados requer a verificação de que é realmente você.</string>
     <string name="user_verification_required_description_precise">%1$s requer verificação de que é realmente você.</string>

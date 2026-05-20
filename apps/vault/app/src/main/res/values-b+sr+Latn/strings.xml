@@ -10,9 +10,6 @@
     <string name="encryption">Šifrovanje</string>
     <string name="security">Sigurnost</string>
     <string name="master_key">Glavni ključ</string>
-    <string name="homepage">Početna strana</string>
-    <string name="feedback">Povratne informacije</string>
-    <string name="contribution">Doprinos</string>
     <string name="add_group">Dodaj grupu</string>
     <string name="accept">Prihvati</string>
     <string name="about_description">Android implementacija KeePass menadžera lozinki</string>
@@ -35,7 +32,6 @@
     <string name="menu_move">Premesti</string>
     <string name="menu_copy">Kopiraj</string>
     <string name="menu_edit">Izmeni</string>
-    <string name="menu_donate">Doniraj</string>
     <string name="menu_master_key_settings">Postavke glavnog ključa</string>
     <string name="menu_security_settings">Bezbednosne postavke</string>
     <string name="menu_database_settings">Postavke baze podataka</string>
@@ -137,7 +133,6 @@
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
     <string name="keyboard_name">Magikeyboard</string>
     <string name="device_keyboard_setting_title">Postavke tastature uređaja</string>
-    <string name="magic_keyboard_explanation_summary">Aktivirajte tastaturu koja će ispunjavati polja formi za unos sa Vašim lozinkama i podacima o identitetu</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
     <string name="keyboard">Tastatura</string>
     <string name="recycle_bin">Korpa za otpatke</string>
@@ -190,7 +185,6 @@
     <string name="biometric_auto_open_prompt_title">Automatski otvori biometrijski upit</string>
     <string name="biometric_unlock_enable_summary">Omogućava Vam da skenirate svoju biometriju da biste otvorili bazu podataka</string>
     <string name="biometric_unlock_enable_title">Biometrijsko otključavanje</string>
-    <string name="device_unlock_explanation_summary">Koristite napredno otključavanje kako bi ste lakše otvorili bazu podataka</string>
     <string name="device_unlock">Napredno otključavanje</string>
     <string name="education_unlock_summary">Unesite lozinku i/ili datoteku ključa da bi ste otključali bazu podataka.
 \n
@@ -215,9 +209,6 @@
     <string name="entry_notes">Napomene</string>
     <string name="entry_cancel">Otkaži</string>
     <string name="entry_accessed">Pristupljeno</string>
-    <string name="html_about_contribution">Kako bismo &lt;strong&gt;zadržali našu slobodu&lt;/strong&gt;, &lt;strong&gt;ispravljali greške&lt;/strong&gt;, &lt;strong&gt;dodavali nove opcije&lt;/strong&gt; i &lt;strong&gt;uvek bili aktivni&lt;/strong&gt;, računamo na Vaš &lt;strong&gt;doprinos&lt;/strong&gt;.</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft je &lt;strong&gt;otvorenog koda&lt;/strong&gt; i &lt;strong&gt;ne sadrži reklame&lt;/strong&gt;.
-\nPonuđen je onakav kakav jeste, pod &lt;strong&gt;GPLv3&lt;/strong&gt; licencom, bez ikakvih garancija.</string>
     <string name="digits">Znamenke</string>
     <string name="default_checkbox">Koristi kao podrazumevanu bazu podataka</string>
     <string name="decrypting_db">Dešifrovanje sadržaja baze podataka…</string>
@@ -238,7 +229,6 @@
     <string name="content_description_entry_icon">Ikonica unosa</string>
     <string name="content_description_repeat_toggle_password_visibility">Ponovi promenu vidljivosti lozinke</string>
     <string name="content_description_password_checkbox">Polje za potvrdu lozinke</string>
-    <string name="content_description_credentials_information">Informacije o podacima prijave</string>
     <string name="content_description_file_information">Informacije o datoteci</string>
     <string name="content_description_add_item">Dodaj stavku</string>
     <string name="content_description_add_entry">Dodaj unos</string>
@@ -292,14 +282,12 @@
     <string name="select_database_file">Otvorite postojeći trezor</string>
     <string name="remember_database_locations_summary">Prati gde se čuvaju baze podataka</string>
     <string name="hide_broken_locations_summary">Sakrijte pokvarene veze na listi nedavnih baza podataka</string>
-    <string name="content_description_otp_information">Informacije o jednokratnoj lozinci</string>
     <string name="error_upload_file">Došlo je do greške pri otpremanju podataka datoteke.</string>
     <string name="hint_icon_name">Ime ikone</string>
     <string name="no_results">Nema rezultata pretrage</string>
     <string name="memory_usage">Korišćenje memorije</string>
     <string name="show_recent_files_title">Prikaži nedavne datoteke</string>
     <string name="show_uuid_title">Prikaži UUID</string>
-    <string name="html_about_privacy">&lt;strong&gt;Ne preuzimaju se nikakvi korisnički podaci&lt;/strong&gt;, ova aplikacija se ne povezuje ni na jedan server, radi samo lokalno i u potpunosti poštuje privatnost korisnika.</string>
     <string name="expired">Isteklo</string>
     <string name="hardware_key">Hardverski ključ</string>
     <string name="bank">Banka</string>
@@ -392,7 +380,6 @@
     <string name="menu_security_settings_summary">Šifrovanje, funkcija izvođenja ključa</string>
     <string name="master_key_settings_summary">Promena, obnova</string>
     <string name="menu_save_copy_to">Sačuvajte kopiju u…</string>
-    <string name="menu_external_icon">Vanjska ikona</string>
     <string name="create_keepass_file">Napravite novi trezor</string>
     <string name="auto_focus_search_summary">Zatražite pretragu prilikom otvaranja baze podataka</string>
     <string name="subdomain_search_title">Pretraga poddomena</string>

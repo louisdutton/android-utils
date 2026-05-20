@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">피드백</string>
-    <string name="homepage">홈페이지</string>
     <string name="about_description">KeePass 암호 관리자의 Android 구현체.</string>
     <string name="accept">확인</string>
     <string name="add_entry">항목 추가</string>
@@ -46,7 +44,6 @@
     <string name="decrypting_db">데이터베이스 컨텐츠 암호 해독 중…</string>
     <string name="default_checkbox">기본 데이터베이스로 사용</string>
     <string name="digits">단위</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft는 보증이 적용되지 않습니다; 이것은 &lt;strong&gt;자유 소프트웨어&lt;/strong&gt;이며, &lt;strong&gt;광고가 없습니다&lt;/strong&gt;. \n이 것은 보증 없이 있는 그대로, &lt;strong&gt;GPL 버전 3&lt;/strong&gt; 라이선스로 제공됩니다.</string>
     <string name="entry_accessed">접근됨</string>
     <string name="entry_cancel">취소</string>
     <string name="entry_notes">노트</string>
@@ -107,7 +104,6 @@
     <string name="menu_app_settings">앱 설정</string>
     <string name="menu_form_filling_settings">폼 채우기</string>
     <string name="menu_database_settings">데이터베이스 설정</string>
-    <string name="menu_donate">기부</string>
     <string name="menu_edit">수정</string>
     <string name="menu_copy">복사</string>
     <string name="menu_move">이동</string>
@@ -156,9 +152,7 @@
     <string name="content_description_remove_field">필드 제거</string>
     <string name="error_move_entry_here">항목을 여기로 옮길 수 없습니다.</string>
     <string name="error_copy_entry_here">항목을 여기로 복사할 수 없습니다.</string>
-    <string name="content_description_credentials_information">인증서</string>
     <string name="master_key">마스터키</string>
-    <string name="contribution">기여</string>
     <string name="entry_add_attachment">첨부파일 추가</string>
     <string name="content_description_passphrase_word_count">비밀구절 단어 수</string>
     <string name="expired">만료됨</string>
@@ -182,14 +176,12 @@
     <string name="date_of_issue">발행일자</string>
     <string name="error_move_group_here">그룹을 여기로 옮길 수 없습니다.</string>
     <string name="error_copy_group_here">그룹을 여기로 복사할 수 없습니다.</string>
-    <string name="content_description_otp_information">일회용 암호 정보</string>
     <string name="security">보안</string>
     <string name="content_description_entry_icon">항목 아이콘</string>
     <string name="content_description_add_item">아이템 추가</string>
     <string name="contact">문의</string>
     <string name="content_description_update_from_list">갱신</string>
     <string name="validate">검증</string>
-    <string name="html_about_contribution">&lt;strong&gt;우리의 자유를 지키고&lt;/strong&gt;, &lt;strong&gt;버그를 고치고&lt;/strong&gt;, &lt;strong&gt;기능을 추가&lt;/strong&gt;하고, &lt;strong&gt;언제나 활성화&lt;/strong&gt;되기 위해 우리는 당신의 &lt;strong&gt;기여&lt;/strong&gt;를 믿습니다.</string>
     <string name="entry_setup_otp">일회용 비밀번호 설정</string>
     <string name="otp_type">OTP 유형</string>
     <string name="otp_period">주기 (초)</string>
@@ -313,7 +305,6 @@
     <string name="menu_master_key_settings">마스터 키 설정</string>
     <string name="show_otp_token_title">OTP 토큰을 표시</string>
     <string name="list_groups_show_number_entries_summary">그룹에 속한 항목수를 표시</string>
-    <string name="menu_external_icon">외부 아이콘</string>
     <string name="menu_device_unlock_settings">고급 잠금 해제</string>
     <string name="search_mode">검색 모드</string>
     <string name="rounds_explanation">추가적인 암호화 차수를 설정함으로써 무차별 대입 공격(brute force attack)에 대한 방어를 강화할 수 있습니다. 대신 읽기/저장시 느려질 수 있습니다.</string>
@@ -325,7 +316,6 @@
     <string name="error_export_app_properties">앱 속성을 내보내던 중 오류 발생.</string>
     <string name="rounds">변환 차수</string>
     <string name="parallelism_explanation">키 파생 함수에 사용되는 병렬 처리 수준(즉, 스레드의 갯수).</string>
-    <string name="html_about_privacy">&lt;strong&gt;사용자 데이터를 받아오지 않습니다.&lt;/strong&gt; 어떤 서버에도 연결하지 않고 로컬로만 동작하며 사용자의 사생활(프라이버시)를 최우선시합니다.</string>
     <string name="error_rebuild_list">목록 재구축을 알맞게 할 수 없습니다.</string>
     <string name="error_file_to_big">업로드하려는 파일이 너무 큽니다.</string>
     <string name="error_no_response_from_challenge">요청한 시도로부터 응답을 받을 수 없습니다.</string>
@@ -381,7 +371,6 @@
     <string name="autofill_preference_title">자동 완성 설정</string>
     <string name="set_credential_provider_service_title">기본 자동완성 서비스 설정</string>
     <string name="lock_database_screen_off_title">화면 꺼짐 시 잠금</string>
-    <string name="device_unlock_explanation_summary">기기 잠금 방식을 사용하여 데이터베이스를 더 쉽게 여세요</string>
     <string name="biometric_unlock_enable_title">생체 인식 잠금 해제</string>
     <string name="biometric_unlock_enable_summary">생체 인식을 사용하여 데이터베이스를 열수 있습니다</string>
     <string name="biometric_delete_all_key_title">암호화 키 삭제</string>

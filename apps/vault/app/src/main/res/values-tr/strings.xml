@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Geri bildirim</string>
-    <string name="homepage">Ana Sayfa</string>
     <string name="about_description">KeePass Parola Yöneticisi\'nin Android uygulama uyarlaması.</string>
     <string name="accept">Kabul et</string>
     <string name="add_entry">Girdi ekle</string>
@@ -62,8 +60,6 @@
     <string name="decrypting_db">Veri tabanı içeriğinin şifresi çözülüyor…</string>
     <string name="default_checkbox">Varsayılan veri tabanı olarak kullan</string>
     <string name="digits">Rakamlar</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft &lt;strong&gt;açık kaynaklıdır&lt;/strong&gt; ve &lt;strong&gt;reklam içermez&lt;/strong&gt;.
-\n&lt;strong&gt;GPLv3&lt;/strong&gt; lisansı altında sağlanmaktadır, herhangi bir garanti vermez.</string>
     <string name="entry_expires">Süre sonu</string>
     <string name="entry_keyfile">Anahtar dosya</string>
     <string name="error_arc4">Arcfour akış şifresi desteklenmiyor.</string>
@@ -108,7 +104,6 @@
     <string name="menu_app_settings">Uygulama ayarları</string>
     <string name="menu_form_filling_settings">Form doldurma</string>
     <string name="menu_database_settings">Veri tabanı ayarları</string>
-    <string name="menu_donate">Bağış Yap</string>
     <string name="menu_edit">Düzenle</string>
     <string name="menu_copy">Kopyala</string>
     <string name="menu_move">Taşı</string>
@@ -173,7 +168,6 @@
     <string name="autofill">Otomatik Doldurma</string>
     <string name="autofill_sign_in_prompt">KeePassDX ile oturum aç</string>
     <string name="set_credential_provider_service_title">Öntanımlı otomatik doldurma hizmetini ayarla</string>
-    <string name="autofill_explanation_summary">Diğer uygulamalardaki formları hızlı doldurmak için otomatik doldurmayı yapılandırın</string>
     <string name="password_size_title">Oluşturulan parola boyutu</string>
     <string name="password_size_summary">Oluşturulan parolaların öntanımlı boyutunu ayarlar</string>
     <string name="list_password_generator_options_title">Parola karakterleri</string>
@@ -209,7 +203,6 @@
     <string name="other">Diğer</string>
     <string name="keyboard">Klavye</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Parolalarınızı ve tüm kimlik alanlarınızı içeren özel bir klavye etkinleştirin</string>
     <string name="keyboard_name">Magikeyboard</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
     <string name="keyboard_setting_label">Magikeyboard ayarları</string>
@@ -267,21 +260,7 @@
     <string name="education_lock_summary">Veri tabanınızı hızlıca kilitleyin, belirli bir süre sonra ve ekran kapandığında kilitlenmesi için uygulamayı ayarlayabilirsiniz.</string>
     <string name="education_sort_title">Ögeleri sıralayın</string>
     <string name="education_sort_summary">Girdilerin ve grupların nasıl sıralandığını seçin.</string>
-    <string name="education_donation_title">Katılın</string>
-    <string name="education_donation_summary">Daha fazla özellik ekleyerek istikrarı, güvenliği artırmaya yardımcı olun.</string>
-    <string name="html_text_ad_free">Birçok parola yönetimi uygulamasının aksine, bu uygulama &lt;strong&gt;reklam içermez&lt;/strong&gt;, &lt;strong&gt; copyleft lisanslı özgür yazılımdır&lt;/strong&gt; ve hangi sürümü kullanırsanız kullanın, sunucularında kişisel veri toplamaz.</string>
-    <string name="html_text_buy_pro">Pro sürümü satın alarak, bu &lt;strong&gt;görsel stile&lt;/strong&gt; erişebilecek ve özellikle &lt;strong&gt;topluluk projelerinin gerçekleştirilmesine yardımcı olacaksınız.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Bu &lt;strong&gt;görsel stil&lt;/strong&gt;, cömertliğiniz sayesinde kullanılabilir.</string>
-    <string name="html_text_donation">Projeye &lt;i&gt;(parasal, kod, çeviri)&lt;/i&gt; &lt;strong&gt;katkıda bulunarak&lt;/strong&gt;, projenin yaşamaya ve gelişmeye devam etmesine yardımcı olacaksınız ve ayrıca &lt;strong&gt;tema&lt;/strong&gt; kilidini açmaya da hak kazanacaksınız.</string>
-    <string name="html_text_dev_feature">Bu özellik &lt;strong&gt;geliştirme aşamasındadır&lt;/strong&gt; ve &lt;strong&gt;katkılarınızın&lt;/strong&gt; yakında kullanıma sunulmasını gerektirir.</string>
-    <string name="html_text_dev_feature_buy_pro">&lt;strong&gt;Pro&lt;/strong&gt; sürümü satın alarak,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;Katkıda&lt;/strong&gt; bulunarak,</string>
-    <string name="html_text_dev_feature_encourage">geliştiricilerin &lt;strong&gt;yeni özellikler&lt;/strong&gt; oluşturmasını ve söz konusu hatalara göre &lt;strong&gt;hataları düzeltmesini&lt;/strong&gt; teşvik ediyorsunuz.</string>
-    <string name="html_text_dev_feature_thanks">Katkıda bulunduğunuz için çok teşekkür ederim.</string>
-    <string name="html_text_dev_feature_work_hard">Bu özelliği çabucak yayınlamak için çok çalışıyoruz.</string>
-    <string name="html_text_dev_feature_upgrade">Yeni sürümleri yükleyerek uygulamanızı güncel tutmayı unutmayın.</string>
     <string name="download">İndir</string>
-    <string name="contribute">Katkıda bulun</string>
     <string name="style_choose_title">Uygulama teması</string>
     <string name="style_choose_summary">Uygulamada kullanılan tema</string>
     <string name="icon_pack_choose_title">Simge paketi</string>
@@ -349,8 +328,6 @@
     <string name="contains_duplicate_uuid">Veri tabanı tekrarlanan UUID\'ler içeriyor.</string>
     <string name="contains_duplicate_uuid_procedure">Tekrarlananlar için yeni UUID\'ler oluşturarak sorunu çöz ve devam et\?</string>
     <string name="database_opened">Veri tabanı açıldı</string>
-    <string name="clipboard_explanation_summary">Aygıtınızın panosunu kullanarak girdi alanlarını kopyalayın</string>
-    <string name="device_unlock_explanation_summary">Bir veri tabanını daha kolay açmak için aygıt kilidini açmayı kullanın</string>
     <string name="database_data_compression_title">Veri sıkıştırma</string>
     <string name="database_data_compression_summary">Veri sıkıştırma veri tabanı boyutunu azaltır</string>
     <string name="max_history_items_title">Azami sayı</string>
@@ -401,12 +378,10 @@
     <string name="remember_database_locations_title">Veri tabanları konumlarını hatırla</string>
     <string name="auto_focus_search_summary">Veri tabanını açarken arama iste</string>
     <string name="auto_focus_search_title">Hızlı arama</string>
-    <string name="contribution">Katkı</string>
     <string name="contact">İletişim</string>
     <string name="education_setup_OTP_summary">İki ögeli kimlik doğrulaması (2FA) için istenen bir belirteç oluşturmak için bir kerelik parola yönetimini (HOTP / TOTP) ayarlayın.</string>
     <string name="education_setup_OTP_title">Bir kerelik parola (OTP) ayarlayın</string>
     <string name="error_create_database">Veri tabanı dosyası oluşturulamıyor.</string>
-    <string name="html_about_contribution">&lt;strong&gt;Özgürlüğümüzü korumak&lt;/strong&gt;, &lt;strong&gt;hataları düzeltmek&lt;/strong&gt;, &lt;strong&gt;özellikler eklemek&lt;/strong&gt; ve &lt;strong&gt;her zaman etkin olmak&lt;/strong&gt; için, &lt;strong&gt;desteğinize&lt;/strong&gt; güveniyoruz.</string>
     <string name="entry_add_attachment">Ek ekle</string>
     <string name="discard">Vazgeç</string>
     <string name="discard_changes">Değişikliklerden vazgeç\?</string>
@@ -440,7 +415,6 @@
     <string name="warning_file_too_big">Bir KeePass veri tabanının sadece küçük yardımcı dosyaları (PGP anahtar dosyaları gibi) içermesi beklenmektedir.
 \n
 \nVeri tabanınız bu yüklemeyle çok büyük hale gelebilir ve performansı düşürebilir.</string>
-    <string name="content_description_credentials_information">Kimlik bilgileri</string>
     <string name="warning_remove_unlinked_attachment">Bağlantısız verileri kaldırmak veri tabanınızın boyutunu azaltabilir, ancak KeePass eklentileri için kullanılan verileri de silebilir.</string>
     <string name="warning_sure_remove_data">Bu veriler yine de kaldırılsın mı\?</string>
     <string name="warning_empty_keyfile">Boş bir anahtar dosyası eklemeniz önerilmez.</string>
@@ -518,7 +492,6 @@
     <string name="style_brightness_title">Tema parlaklığı</string>
     <string name="error_upload_file">Dosya verileri karşıya yüklenirken bir hata oluştu.</string>
     <string name="error_file_to_big">Karşıya yüklemeye çalıştığınız dosya çok büyük.</string>
-    <string name="content_description_otp_information">Tek seferlik parola bilgileri</string>
     <string name="error_remove_file">Dosya verilerini kaldırırken bir hata oluştu.</string>
     <string name="error_duplicate_file">Dosya verileri zaten var.</string>
     <string name="properties">Özellikler</string>
@@ -570,7 +543,6 @@
     <string name="template_group_name">Şablonlar</string>
     <string name="show_otp_token_summary">Girdiler listesinde OTP belirteçlerini görüntüler</string>
     <string name="show_otp_token_title">OTP Belirtecini Göster</string>
-    <string name="menu_external_icon">Harici simge</string>
     <string name="autofill_manual_selection_summary">Kullanıcının veri tabanı girdisini seçmesine izin veren seçeneği göster</string>
     <string name="autofill_manual_selection_title">Elle seçim</string>
     <string name="autofill_select_entry">Girdi seç…</string>
@@ -626,7 +598,6 @@
     <string name="word_separator">Ayırıcı</string>
     <string name="upper_case">BÜYÜK HARF</string>
     <string name="title_case">İlk Harfleri Büyük</string>
-    <string name="html_about_privacy">&lt;strong&gt;Hiçbir kullanıcı verisi alınmaz&lt;/strong&gt;, bu uygulama herhangi bir sunucuya bağlanmaz, yalnızca yerel olarak çalışır ve kullanıcıların gizliliğine tamamen saygı duyar.</string>
     <string name="error_empty_key">Anahtar boş olamaz.</string>
     <string name="remember_hardware_key_title">Donanım anahtarlarını hatırla</string>
     <string name="error_unable_merge_database_kdb">kdb veri tabanı dosyasıyla birleştirme yapılamıyor.</string>
@@ -706,7 +677,6 @@
     <string name="credential_provider_database_username">KeePassDX Veri Tabanı</string>
     <string name="credential_provider_locked_database_description">Kilidini açmak için seçin</string>
     <string name="passkeys">Geçiş anahtarları</string>
-    <string name="passkeys_explanation_summary">Hızlı ve güvenli parolasız oturum açma için geçiş anahtarlarını yapılandırın</string>
     <string name="passkeys_preference_title">Geçiş anahtarı ayarları</string>
     <string name="passkeys_close_database_summary">Geçiş anahtarı seçildikten sonra veri tabanını kapatın</string>
     <string name="passkeys_privileged_apps_ask_message">%1$s, geçiş anahtarı eylemi gerçekleştirmeye çalışıyor.\n\nAyrıcalıklı uygulamalar listesine eklemek ister misiniz?</string>
@@ -747,7 +717,6 @@
     <string name="password_creation_description">Şifreyi yeni bir girdiye kaydet</string>
     <string name="password_selection_description">Varolan bir şifre seç</string>
     <string name="error_password_result">Şifre getirilemedi</string>
-    <string name="content_description_user_verification_information">Kullanıcı doğrulama bilgisi</string>
     <string name="user_verification_required_title">Kullanıcı Doğrulaması</string>
     <string name="user_verification_required_description">Bu verilere erişim, gerçekten siz olduğunuzun doğrulanmasını gerektirir.</string>
     <string name="user_verification_required_description_precise">%1$s, gerçekten siz olduğunuzun doğrulanmasını gerektirir.</string>

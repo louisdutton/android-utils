@@ -20,10 +20,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:title="@string/general">
-        <Preference
-            android:key="@string/device_unlock_explanation_key"
-            android:icon="@drawable/prefs_info_24dp"
-            android:summary="@string/device_unlock_explanation_summary"/>
         <SwitchPreferenceCompat
             android:key="@string/biometric_unlock_enable_key"
             android:title="@string/biometric_unlock_enable_title"

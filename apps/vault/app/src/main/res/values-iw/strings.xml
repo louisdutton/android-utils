@@ -18,8 +18,6 @@
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
     translated by Arthur Zamarin<arthurzam@gmail.com>
 --><resources>
-    <string name="feedback">משוב</string>
-    <string name="homepage">דף הבית</string>
     <string name="about_description">מימוש אנדרואיד של מנהל הסיסמאות KeePass.</string>
     <string name="accept">קבל</string>
     <string name="add_entry">הוסף ערך</string>
@@ -95,7 +93,6 @@
     <string name="settings">העדפות</string>
     <string name="menu_database_settings">הגדרות מסד נתונים</string>
     <string name="menu_delete">מחק</string>
-    <string name="menu_donate">תרום</string>
     <string name="menu_edit">ערוך</string>
     <string name="menu_lock">נעל מסד נתונים</string>
     <string name="menu_open">פתח</string>
@@ -167,10 +164,8 @@
     <string name="error_label_exists">תווית זו כבר קיימת.</string>
     <string name="error_remove_file">אירעה שגיאה בעת הסרת נתוני הקובץ.</string>
     <string name="error_file_to_big">הקובץ שאתה מנסה להעלות גדול מדי.</string>
-    <string name="content_description_otp_information">פרטי סיסמה חד-פעמית</string>
     <string name="error_otp_type">סוג הסיסמה החד-פעמית (OTP) הקיים אינו מזוהה על ידי טופס זה, ייתכן שהאימות שלו לא ייצור עוד את האסימון כראוי.</string>
     <string name="hint_icon_name">שם סמל</string>
-    <string name="html_about_privacy">&lt;strong&gt;אין אחזור של נתוני משתמש&lt;/strong&gt;, יישום זה אינו מתחבר לשום שרת, פועל באופן מקומי בלבד ומכבד באופן מלא את פרטיות המשתמשים.</string>
     <string name="hardware_key">מפתח חומרה</string>
     <string name="custom_data">נתונים מותאמים אישית</string>
     <string name="otp_type">סוג סיסמה חד-פעמית</string>
@@ -213,7 +208,6 @@
     <string name="content_description_entry_icon">סמל רשומה</string>
     <string name="content_description_keyfile_checkbox">תיבת סימון קובץ מפתח</string>
     <string name="content_description_password_checkbox">תיבת סימון סיסמה</string>
-    <string name="content_description_credentials_information">פרטי האישורים</string>
     <string name="content_description_file_information">פרטי הקובץ</string>
     <string name="content_description_add_item">הוסף פריט</string>
     <string name="content_description_add_group">הוסף קבוצה</string>
@@ -223,15 +217,11 @@
     <string name="content_description_node_children">ילדי צומת</string>
     <string name="content_description_background">רקע</string>
     <string name="contact">איש קשר</string>
-    <string name="contribution">השתתפות</string>
     <string name="master_key">מפתח ראשי</string>
     <string name="key_derivation_function">פונקציית גזירת מפתח</string>
     <string name="content_description_nav_header">כותרת ניווט</string>
     <string name="navigation_drawer_open">פתיחת מגירת ניווט</string>
     <string name="navigation_drawer_close">סגירת מגירת ניווט</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft הוא יישום &lt;strong&gt;קוד פתוח&lt;/strong&gt; ו&lt;strong&gt;בלי פרסום&lt;/strong&gt;.
-\nהוא ניתן כפי שהוא, תחת רישיון &lt;strong&gt;GPLv3&lt;/strong&gt;, ללא כל אחריות.</string>
-    <string name="html_about_contribution">בכדי &lt;strong&gt;לשמור על החופש שלנו&lt;/strong&gt;, &lt;strong&gt;לתקן באגים&lt;/strong&gt;, &lt;strong&gt;להוסיף תכונות&lt;/strong&gt; &lt;strong&gt;ולהיות תמיד פעילים&lt;/strong&gt;, אנו סומכים על &lt;strong&gt;תרומתך&lt;/strong&gt;.</string>
     <string name="searchable">ניתן לחיפוש</string>
     <string name="inherited">ירושה</string>
     <string name="auto_type_sequence">רצף הקלדה אוטומטית</string>
@@ -281,7 +271,6 @@
     <string name="show_uuid_title">הצג UUID</string>
     <string name="show_otp_token_summary">מציג אסימוני סיסמה חד-פעמית (OTP) ברשימת הרשומות</string>
     <string name="list_groups_show_number_entries_summary">מציג את מספר הרשומות בקבוצה</string>
-    <string name="menu_external_icon">סמל חיצוני</string>
     <string name="auto_focus_search_title">חיפוש מהיר</string>
     <string name="auto_focus_search_summary">בקש חיפוש בעת פתיחת מסד נתונים</string>
     <string name="colorize_password_title">צבע סיסמאות</string>
@@ -338,9 +327,6 @@
     <string name="reset_education_screens_title">אפס רמזים לימודיים</string>
     <string name="education_entry_edit_title">ערוך את הרשומה</string>
     <string name="education_generate_password_title">צור סיסמה חזקה</string>
-    <string name="html_text_dev_feature_thanks">תודה רבה על תרומתך.</string>
-    <string name="html_text_dev_feature_upgrade">זכור לשמור על היישום מעודכן על ידי התקנת גרסאות חדשות.</string>
-    <string name="html_text_dev_feature_work_hard">אנו עובדים קשה כדי לשחרר את התכונה הזאת במהירות.</string>
     <string name="download_initialization">מאתחל…</string>
     <string name="remember_database_locations_summary">עוקב אחר המיקום שבו מאוחסנים מסדי הנתונים</string>
     <string name="remember_keyfile_locations_title">זכור מיקומי קובץ מפתח</string>
@@ -360,7 +346,6 @@
     <string name="contains_duplicate_uuid">מסד הנתונים מכיל מזהים ייחודיים אוניברסליים (UUIDs) כפולים.</string>
     <string name="lock">נעילה</string>
     <string name="database_name_title">שם מסד הנתונים</string>
-    <string name="contribute">תרומה</string>
     <string name="memory_usage_explanation">כמות הזיכרון שיש להשתמש בו על ידי פונקציית גזירת המפתח.</string>
     <string name="education_create_database_title">צור את קובץ מסד הנתונים שלך</string>
     <string name="menu_device_unlock_settings_summary">ביומטרי, אישור מכשיר</string>
@@ -378,7 +363,6 @@
     <string name="other">אחר</string>
     <string name="education_sort_title">מיון פריטים</string>
     <string name="education_sort_summary">בחר כיצד רשומות וקבוצות ממוינות.</string>
-    <string name="html_text_ad_free">שלא כמו יישומי ניהול סיסמאות רבים, היישום הזה הוא &lt;strong&gt;נטול פרסומות&lt;/strong&gt;, &lt;strong&gt;תוכנה חופשית עם רישיון לא מגביל&lt;/strong&gt; ואינו אוסף מידע פרטי בשרתים שלו, לא משנה באיזו גרסה אתה משתמש.</string>
     <string name="enable">הפעל</string>
     <string name="compression_gzip">Gzip</string>
     <string name="enable_auto_save_database_title">שמירה אוטומטית של מסד הנתונים</string>
@@ -403,7 +387,6 @@
     <string name="autofill">מילוי אוטומטי</string>
     <string name="autofill_sign_in_prompt">התחבר עם KeePassDX</string>
     <string name="general">כללי</string>
-    <string name="autofill_explanation_summary">הגדר מילוי אוטומטי כדי למלא במהירות טפסים ביישומים אחרים</string>
     <string name="set_credential_provider_service_title">הגדר שירות מילוי אוטומטי ברירת מחדל</string>
     <string name="password_size_title">גודל סיסמה שנוצרה</string>
     <string name="password_size_summary">מגדיר גודל ברירת המחדל של הסיסמאות שנוצרו</string>
@@ -415,7 +398,6 @@
     <string name="lock_database_back_root_summary">הקש על כפתור החזרה במסך הראשי בכדי לנעול את מסד הנתונים</string>
     <string name="biometric_unlock_enable_title">ביטול נעילה ביומטרית</string>
     <string name="biometric_unlock_enable_summary">מאפשר לך לסרוק את האמצעי הביומטרי שלך כדי לפתוח את מסד הנתונים</string>
-    <string name="device_unlock_explanation_summary">השתמש בביטול נעילת המכשיר כדי לפתוח את מסד הנתונים ביתר קלות</string>
     <string name="biometric_delete_all_key_title">מחק מפתחות הצפנה</string>
     <string name="biometric_delete_all_key_summary">מחק את כל מפתחות ההצפנה הקשורים לזיהוי ביטול נעילת המכשיר</string>
     <string name="unavailable_feature_text">לא היה ניתן להתחיל תכונה זו.</string>
@@ -471,8 +453,6 @@
     <string name="education_field_copy_title">העתק שדה</string>
     <string name="education_field_copy_summary">שדות מועתקים יכולים להיות מודבקים בכל מקום.\n\nהשתמש בשיטת מילוי הטפסים המועדפת עליך.</string>
     <string name="education_lock_summary">נעל את מסד הנתונים שלך במהירות, ניתן להגדיר את היישום כך שינעל אותו לאחר זמן מה, וכאשר המסך נכבה.</string>
-    <string name="education_donation_title">השתתף</string>
-    <string name="education_donation_summary">עזור להגביר את היציבות, האבטחה ובהוספת תכונות חדשות.</string>
     <string name="download_progression">בתהליך: %1$d%%</string>
     <string name="download_finalization">משלים…</string>
     <string name="icon_pack_choose_title">חבילת סמלים</string>
@@ -627,12 +607,8 @@
     <string name="export_app_properties_title">ייצוא הגדרות יישום</string>
     <string name="export_app_properties_summary">צור קובץ כדי לייצא הגדרות יישום</string>
     <string name="error_export_app_properties">שגיאה במהלך ייצוא הגדרות יישום.</string>
-    <string name="html_text_feature_generosity">&lt;strong&gt;הסגנון החזותי&lt;/strong&gt; הזה זמין הודות לנדיבות שלך.</string>
-    <string name="html_text_dev_feature_contibute">על ידי &lt;strong&gt;תרומה&lt;/strong&gt;,</string>
     <string name="hide_templates_title">הסתר תבניות</string>
-    <string name="html_text_dev_feature_encourage">אתה מעודד מפתחים ליצור &lt;strong&gt;תכונות חדשות&lt;/strong&gt; ול&lt;strong&gt;תקן באגים&lt;/strong&gt; לפי דבריך.</string>
     <string name="hide_templates_summary">תבניות אינן מוצגות</string>
-    <string name="html_text_dev_feature">תכונה זו נמצאת &lt;strong&gt;בפיתוח&lt;/strong&gt; ודורשת את &lt;strong&gt;התרומה&lt;/strong&gt; שלך כדי להיות זמינה בקרוב.</string>
     <string name="style_choose_title">ערכת הנושא של היישום</string>
     <string name="style_choose_summary">ערכת נושא בשימוש ביישום</string>
     <string name="generate_keyfile">צור קובץ מפתח</string>
@@ -641,7 +617,6 @@
     <string name="recursive_number_entries_summary">מחשב באופן רקורסיבי את מספר הרשומות בקבוצה</string>
     <string name="autofill_manual_selection_summary">הצג אפשרות לאפשר למשתמש לבחור ערך מסד נתונים</string>
     <string name="education_read_only_title">הגן על מסד הנתונים שלך מפני כתיבה</string>
-    <string name="html_text_donation">על ידי &lt;strong&gt;תרומה&lt;/strong&gt; לפרויקט &lt;i&gt;(כספית, קוד, תרגום)&lt;/i&gt;, אתה תעזור לו להמשיך לחיות ולשגשג, ואתה גם תהיה זכאי להליך פתיחת &lt;strong&gt;ערכת נושא&lt;/strong&gt;.</string>
     <string name="warning_empty_password">להמשיך ללא הגנת ביטול נעילה באמצעות סיסמה?</string>
     <string name="warning_file_too_big">מסד נתונים של KeePass אמור להכיל רק קבצי שירות קטנים (כגון קבצי מפתח PGP).\n\nמסד הנתונים שלך עשוי להפוך לגדול מאד ולהפחית ביצועים עם העלאה זו.</string>
     <string name="warning_exact_alarm">לא אפשרת ליישום להשתמש בהתראה מדויקת. כתוצאה מכך, התכונות שדורשות קוצב זמן לא יתבצעו עם זמן מדויק.</string>
@@ -664,7 +639,6 @@
     <string name="temp_device_unlock_timeout_title">תפוגת ביטול נעילת מכשיר</string>
     <string name="temp_device_unlock_timeout_summary">משך השימוש בביטול נעילת מכשיר לפני מחיקת התוכן שלו</string>
     <string name="device_unlock_keystore_warning">תכונה זו תאחסן נתוני אישור מוצפנים במאגר המפתחות של המכשיר שלך.\n\nבהתאם ליישום ה-API המקורי של מערכת ההפעלה, זה עשוי להיות לא פונקציונלי לחלוטין.\n\nבדוק את התאימות והאבטחה של מאגר המפתחות עם היצרן של המכשיר שלך והיוצר של ה-ROM בו אתה משתמש.</string>
-    <string name="magic_keyboard_explanation_summary">הפעל מקלדת מותאמת אישית המאכלסת את הסיסמאות שלך ואת כל שדות הזהות</string>
     <string name="keyboard_auto_go_action_summary">פעולת מקש \"עבור\" לאחר לחיצה על מקש \"שדה\"</string>
     <string name="autofill_save_search_info_summary">נסה לשמור מידע חיפוש כשעושים בחירת ערך ידנית בשביל שימושים עתידיים קלים יותר</string>
     <string name="education_device_unlock_title">ביטול נעילת מסד נתונים בעזרת מכשיר</string>
@@ -674,14 +648,11 @@
     <string name="education_validate_entry_summary">זכור לאמת את הרשומה שלך ולשמור את מסד הנתונים שלך.\n\nאם נעילה אוטומטית מופעלת ואתה שוכח שעשית שינוי, אתה מסתכן באיבוד הנתונים שלך.</string>
     <string name="education_entry_new_field_summary">רשום שדה נוסף, הוסף ערך והגן עליו באופן אופציונלי.</string>
     <string name="education_setup_OTP_summary">הגדר ניהול סיסמה חד-פעמית (HOTP / TOTP) כדי לייצר אסימון המבוקש עבור אימות דו-גורמי (2FA).</string>
-    <string name="html_text_buy_pro">על ידי קניית גרסת הפרו, תהיה לך גישה ל&lt;strong&gt;סגנון החזותי&lt;/strong&gt; הזה ותעזור במיוחד עם &lt;strong&gt;ההגשמה של פרויקטים קהילתיים.&lt;/strong&gt;</string>
-    <string name="html_text_dev_feature_buy_pro">על ידי קניית גרסת ה&lt;strong&gt;פרו&lt;/strong&gt;,</string>
     <string name="error_otp_secret_length">מפתח סודי חייב להיות לפחות %1$d תווים.</string>
     <string name="entry_application_id">מזהה אפליקציה</string>
     <string name="warning_overwrite_data_title">להחליף נתונים קיימים?</string>
     <string name="warning_overwrite_data_description">פעולה זו תחליף את הנתונים הקיימים בערך, ניתן לאחזר את הנתונים הישנים אם ההיסטוריה מופעלת.</string>
     <string name="passkeys">מפתחות גישה</string>
-    <string name="passkeys_explanation_summary">הגדר מפתחות גישה בשביל התחברות ללא סיסמה מהירה ובטוחה</string>
     <string name="passkeys_preference_title">הגדרות מפתחות גישה</string>
     <string name="passkeys_close_database_title">סגור מסד נתונים</string>
     <string name="passkeys_close_database_summary">סגור את מסד הנתונים לאחר בחירת מפתח גישה</string>
@@ -722,7 +693,6 @@
     <string name="user_verification_device_credential_summary">השתמש באישורי המכשיר כאימות משתמש אם זמינים</string>
     <string name="user_verification_preferred_title">אימות משתמש מועדף</string>
     <string name="user_verification_preferred_summary">בצע אימות משתמש כאשר הצד המסתמך מבקש \"מועדף\"</string>
-    <string name="clipboard_explanation_summary">העתק שדות רשומה בעזרת לוח ההעתקה של המכשיר שלך</string>
     <string name="keyboard_auto_switch_title">מתג אוטומטי של Magikeyboard</string>
     <string name="keyboard_auto_switch_summary">נסה לעבור אוטומטית ללוח המקשים Magikeyboard כאשר הערכים מאוכלסים</string>
     <string name="autofill_share_magikeyboard_title">שתף ב-Magikeyboard</string>
@@ -730,7 +700,6 @@
     <string name="password_creation_description">שמור סיסמה ברשומה חדשה</string>
     <string name="password_selection_description">בחר סיסמה קיימת</string>
     <string name="error_password_result">לא ניתן להחזיר את הסיסמה</string>
-    <string name="content_description_user_verification_information">מידע על אימות משתמש</string>
     <string name="user_verification_required_title">אימות משתמש</string>
     <string name="user_verification_required_description">גישה לנתונים אלה דורשת אימות כדי להבטיח שזה אכן אתה.</string>
     <string name="user_verification_database_credential">הזן את ארבעת התווים הראשונים של סיסמת מסד הנתונים שלך</string>

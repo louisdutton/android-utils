@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_select_all_title">Seleccionar todo</string>
+  <string name="action_undo_title">Deshacer</string>
+  <string name="action_redo_title">Rehacer</string>
+  <string name="action_text_editor_title">Editor de texto</string>
+  <string name="action_more_actions_title">Todas las acciones</string>
+  <!-- For emoji menu action -->
+  <string name="action_emoji_title">Emojis</string>
+  <!-- Refers to the most recently used emojis -->
+  <string name="action_emoji_category_most_recently_used">Reciente</string>
+  <string name="action_emoji_category_activities">Actividades</string>
+  <string name="action_emoji_category_objects">Objetos</string>
+  <string name="action_emoji_category_symbols">Símbolos</string>
+  <string name="action_emoji_category_flags">Banderas</string>
+  <string name="action_emoji_category_ascii">ASCII</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_clear_recent_emojis_cancel">Cancelar</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_clear_recent_emojis_clear">Limpiar</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_search_for_emojis">Buscar</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_cancel_action_button">Cancelar</string>
+  <!-- For keyboard modes action -->
+  <string name="action_keyboard_modes_title">Modos de teclado</string>
+  <string name="action_keyboard_modes_resize_keyboard">Redimensionar teclado</string>
+  <!-- This string must be super short (below 10 chars if possible). The title for standard QWERTYUIOP keyboard mode, filling full screen width. -->
+  <string name="action_keyboard_modes_standard">Estándar</string>
+  <!-- This string must be super short (below 10 chars if possible). The title for one-handed QWERTYUIOP keyboard mode, filling 2/3 screen width on one side -->
+  <string name="action_keyboard_modes_one_handed">Una mano</string>
+  <!-- This string must be super short (below 10 chars if possible) -->
+  <string name="action_keyboard_modes_resizing_apply_new_size">Aplicar</string>
+  <string name="theme_emerald">Esmeralda</string>
+  <string name="theme_rainbow">Arcoíris</string>
+  <string name="autoupdater_update_available_title">Actualización disponible</string>
+  <!-- Must be fairly short -->
+  <string name="keyboard_suggest_disable_emojis">Deshabilitar la sugerencia de emojis</string>
+  <string name="keyboard_switch_keyboard">Alternar teclado</string>
+  <string name="keyboard_language_settings">Ajustes</string>
+  <!-- Dismisses/closes an important notice (usually the update check notice) -->
+  <string name="keyboard_actionbar_dismiss_important_notice_talkback">Cerrar</string>
+  <!--
+    When an action window is opened, but it's not docked above keyboard, a back button is shown
+    to close the window and return to the keyboard, this is the talkback description for it
+  -->
+  <string name="keyboard_actionbar_return_from_action_window_talkback">Atrás</string>
+  <!--
+    When an action window is opened, but it's not docked above keyboard, this button allows the
+    user to dock it above the keyboard, showing the keyboard below the action window
+  -->
+  <string name="keyboard_actionbar_dock_action_window_above_keyboard_talkback">Mostrar teclado</string>
+  <!--
+    When an action window is opened and docked, an X button is shown to close the action window
+    This is the talkback description for it
+  -->
+  <string name="keyboard_actionbar_close_docked_action_window_talkback">Cerrar</string>
+  <!-- Payment screen -->
+  <string name="payment_screen_short_title">Pagos</string>
+  <string name="payment_screen_title">Pagar por el Teclado FUTO</string>
+  <string name="payment_screen_already_paid_confirmation_cancel">Cancelar</string>
+  <string name="payment_screen_set_reminder_setter_7_days">en 7 días</string>
+  <string name="payment_screen_set_reminder_setter_1_month">en 1 mes</string>
+  <string name="payment_screen_set_reminder_setter_6_months">en 6 meses</string>
+  <string name="payment_screen_set_reminder_setter_next_century">el próximo siglo</string>
+  <string name="payment_screen_set_reminder_setter_confirm">Confirmar recordatorio</string>
+  <string name="payment_screen_other_options">Otras opciones</string>
+  <string name="payment_screen_need_help_title">Ayuda</string>
+  <string name="payment_screen_need_help_subtitle">¿Necesitas ayuda? Visita nuestro sitio web</string>
+  <string name="payment_screen_more_options">Más opciones</string>
+  <string name="payment_screen_payment_complete_title">Pago completado</string>
+  <string name="payment_screen_aftersales_title">Gracias</string>
+  <string name="payment_screen_payment_failed_title">Error en el pago</string>
+  <string name="payment_screen_continue_button">Continuar</string>
+  <string name="payment_unpaid_version_title">Teclado FUTO no pagado</string>
+  <string name="payment_unpaid_version_indicator">No pagado</string>
+  <string name="manual_update_notice_visit_site_button">Visitar</string>
+  <!-- can be translated as "understood", etc -->
+  <string name="manual_update_notice_dismiss_notice_button">Descartar</string>
+  <string name="settings_unknown_error_title">Error desconocido</string>
+  <string name="settings_try_typing_here">Prueba a escribir aquí…</string>
+  <string name="settings_update_available">Actualización disponible</string>
+  <string name="settings_search_enter_your_search">Introduce un término de búsqueda…</string>
+  <string name="misc_settings_title">Otros</string>
+  <!-- When adding a new language -->
+  <string name="language_settings_title">Idiomas y modelos</string>
+  <string name="language_settings_select_layout">Selecciona una distribución a agregar</string>
+  <string name="language_settings_layouts_of_this_language">Distribuciones de teclado</string>
+  <string name="language_settings_add_layout_for_this_language">Agregar distribución de teclado</string>
+  <string name="language_settings_remove_this_language">Eliminar idioma</string>
+  <string name="language_settings_manage_languages_title">Gestionar idiomas y distribuciones</string>
+  <string name="language_settings_resource_replace_button">Reemplazar</string>
+  <string name="language_settings_resource_import_file_button">Importar</string>
+  <string name="language_settings_resource_explore_online_button">Explorar</string>
+  <string name="language_settings_remove_language_cancel_button">Cancelar</string>
+  <string name="language_settings_other_options">Otras opciones</string>
+  <string name="resource_importer_cancel_button">Cancelar</string>
+  <string name="resource_importer_import_button">Importar</string>
+  <!-- Action settings -->
+  <string name="action_settings_title">Acciones</string>
+  <!-- Keyboard's size settings -->
+  <string name="size_settings_title">Redimensionar teclado</string>
+  <string name="size_settings_subtitle2">Cambia el tamaño del teclado, modo a una mano, flotante, dividido</string>
+  <!-- Types of morekeys that can be configured, and examples of them -->
+  <string name="morekey_settings_kind_numbers">Números</string>
+  <string name="morekey_settings_kind_symbols">Símbolos</string>
+  <string name="typing_settings_suggest_emojis">Sugerencias de emojis</string>
+  <string name="typing_settings_suggest_emojis_subtitle">Sugerir emojis mientras escribes</string>
+  <string name="typing_settings_vibration_strength">Vibración</string>
+  <string name="typing_settings_vibration_strength_default">Por defecto</string>
+  <string name="typing_settings_revert_correction_on_backspace">Deshacer autocorrección al retroceder</string>
+  <!-- Misc keyboard settings -->
+  <string name="keyboard_settings_title">Teclado</string>
+  <string name="keyboard_settings_extra_layouts">Distribuciones adicionales</string>
+  <!-- misc titles -->
+  <string name="settings_keyboard_typing_title">Teclado y escritura</string>
+  <!-- Theme, as in visual style -->
+  <string name="theme_settings_title">Tema</string>
+  <string name="voice_input_settings_change_models">Modelos</string>
+  <!-- Prediction menu -->
+  <string name="prediction_settings_title">Texto predictivo</string>
+  <!-- Help & feedback menu -->
+  <string name="help_menu_title">Ayuda y sugerencias</string>
+  <string name="help_menu_website">Sitio web de FUTO</string>
+  <!-- Credits menu -->
+  <string name="credits_menu_title">Créditos</string>
+  <string name="credits_menu_team_translators_title">Traductores</string>
+  <string name="credits_menu_team_keyboard_layouts_title">Colaboradores de distribuciones</string>
+  <string name="credits_menu_contribute_translations_button">Ayuda a traducir la aplicación</string>
+  <string name="credits_menu_contribute_keyboard_layouts_button">Aportar distribuciones</string>
+</resources>

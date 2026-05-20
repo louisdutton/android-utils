@@ -40,18 +40,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/otp_information"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/entry_setup_otp"
                 style="@style/KeepassDXStyle.Title"/>
-            <ImageView
-                android:id="@+id/otp_information"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/ic_info_white_24dp"
-                style="@style/KeepassDXStyle.ImageButton.Simple"
-                android:contentDescription="@string/content_description_otp_information"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

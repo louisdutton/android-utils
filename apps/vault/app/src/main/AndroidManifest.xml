@@ -44,7 +44,7 @@
         android:largeHeap="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
-        android:theme="@style/KeepassDXStyle.Night"
+        android:theme="@style/KeepassDXStyle.System"
         tools:targetApi="s"
         tools:ignore="CredentialDependency">
         <meta-data
@@ -152,11 +152,7 @@
         <activity
             android:name="com.kunzisoft.keepass.activities.EntryEditActivity"
             android:windowSoftInputMode="adjustResize" />
-        <!-- About and Settings -->
-        <activity
-            android:name="com.kunzisoft.keepass.activities.AboutActivity"
-            android:launchMode="singleTask"
-            android:label="@string/about" />
+        <!-- Settings -->
         <activity
             android:name="com.kunzisoft.keepass.settings.SettingsActivity" />
         <activity

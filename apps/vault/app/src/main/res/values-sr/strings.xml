@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="contact">Контакт</string>
-    <string name="feedback">Повратне информације</string>
     <string name="about_description">Андроид имплементација КееПасс менаджера лозинки</string>
     <string name="add_entry">Нов унос</string>
     <string name="edit_entry">Уређивање уноса</string>
@@ -53,7 +52,6 @@
     <string name="unit_kibibyte">KiB</string>
     <string name="hide_expired_entries_summary">Истекли уноси нису приказани</string>
     <string name="info">Информације</string>
-    <string name="homepage">Почетна страна</string>
     <string name="application">Апликација</string>
     <string name="bank">Банка</string>
     <string name="sort_title"/>
@@ -63,17 +61,14 @@
     <string name="unit_gibibyte">GiB</string>
     <string name="unit_mebibyte">MiB</string>
     <string name="unit_byte">B</string>
-    <string name="content_description_otp_information">Информације о једнократној лозинци</string>
     <string name="entry_expires">Истиче</string>
     <string name="public_key">Јавни кључ</string>
     <string name="membership">Чланство</string>
     <string name="content_description_add_item">Додај ставку</string>
-    <string name="content_description_credentials_information">Информације о подацима пријаве</string>
     <string name="content_description_keyfile_checkbox">Поље за потврду датотеке кључа</string>
     <string name="database">База података</string>
     <string name="entry_created">Креирано</string>
     <string name="default_checkbox">Користи као подразумевану базу података</string>
-    <string name="html_about_privacy">&lt;strong&gt;Не преузимају се никакви кориснички подаци&lt;/strong&gt;, ова апликација се не повезује ни на један сервер, ради само локално и у потпуности поштује приватност корисника.</string>
     <string name="entry_cancel">Откажи</string>
     <string name="entry_keyfile">Датотека кључа</string>
     <string name="entry_attachments">Прилози</string>
@@ -103,7 +98,6 @@
     <string name="menu_copy">Копирај</string>
     <string name="menu_paste">Налепи</string>
     <string name="menu_delete">Избриши</string>
-    <string name="menu_donate">Донирај</string>
     <string name="menu_edit">Измени</string>
     <string name="menu_security_settings">Безбедносне поставке</string>
     <string name="remember_hardware_key_title">Запамтите хардверске кључеве</string>
@@ -118,7 +112,6 @@
     <string name="memory_usage_explanation">Количина меморије коју ће користити функција извођења кључа.</string>
     <string name="do_not_kill_app">Не убијајте апликацију…</string>
     <string name="kdf_explanation">Да би се генерисао кључ за алгоритам шифровања, главни кључ се трансформише коришћењем насумично слане функције извођења кључа.</string>
-    <string name="contribution">Допринос</string>
     <string name="accept">Прихвати</string>
     <string name="encryption">Шифрованје</string>
     <string name="encryption_algorithm">Алгоритам шифрованја</string>
@@ -162,8 +155,6 @@
     <string name="waiting_challenge_response">Чека се одговор на изазов…</string>
     <string name="template_group_name">Предлошци</string>
     <string name="decrypting_db">Дешифровање садржаја базе података…</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft је &lt;strong&gt;отвореног кода&lt;/strong&gt; и&lt;strong&gt;не даржи рекламе&lt;/strong&gt;.\nПонуђен је онакав какав јесте, под &lt;strong&gt;GPLv3&lt;/strong&gt; лиценцом, без икаквих гаранција.</string>
-    <string name="html_about_contribution">Како бисмо&lt;strong&gt;задржали нашу слободу&lt;/strong&gt;, &lt;strong&gt;исправљали грешке&lt;/strong&gt;, &lt;strong&gt;додавали нове опције&lt;/strong&gt; и &lt;strong&gt;увек били активни&lt;/strong&gt;, рачунамо на Ваш&lt;strong&gt;допринос&lt;/strong&gt;.</string>
     <string name="entry_notes">Напомене</string>
     <string name="entry_confpassword">Потврди лозинку</string>
     <string name="expired">Истекло</string>
@@ -301,7 +292,6 @@
     <string name="menu_empty_recycle_bin">Испразни корпу за отпатке</string>
     <string name="menu_restore_entry_history">Врати историју у претходно стање</string>
     <string name="menu_delete_entry_history">Избриши историју</string>
-    <string name="menu_external_icon">Вањска икона</string>
     <string name="auto_focus_search_summary">Затражите претрагу приликом отварања базе података</string>
     <string name="minus">Минус</string>
     <string name="no_results">Нема резултата претраге</string>

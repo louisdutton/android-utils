@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Отзыв</string>
-    <string name="homepage">Сайт</string>
     <string name="about_description">Android–версия менеджера паролей KeePass.</string>
     <string name="accept">Принять</string>
     <string name="add_entry">Новая запись</string>
@@ -42,8 +40,6 @@
     <string name="decrypting_db">Расшифровка базы…</string>
     <string name="default_checkbox">База по умолчанию</string>
     <string name="digits">Цифры</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft — это программное обеспечение &lt;strong&gt;с открытым исходным кодом&lt;/strong&gt; и &lt;strong&gt;без рекламы&lt;/strong&gt;.
-\nРаспространяется под лицензией &lt;strong&gt;GPLv3&lt;/strong&gt; без каких-либо гарантий.</string>
     <string name="select_database_file">Открыть базу паролей</string>
     <string name="entry_accessed">Доступ</string>
     <string name="entry_cancel">Назад</string>
@@ -98,7 +94,6 @@
     <string name="settings">Настройки</string>
     <string name="menu_database_settings">Настройки базы</string>
     <string name="menu_delete">Удалить</string>
-    <string name="menu_donate">Помочь</string>
     <string name="menu_edit">Изменить</string>
     <string name="menu_lock">Заблокировать базу</string>
     <string name="menu_open">Открыть</string>
@@ -179,7 +174,6 @@
     <string name="general">Общие</string>
     <string name="autofill">Автозаполнение</string>
     <string name="autofill_sign_in_prompt">Войти с KeePassDX</string>
-    <string name="autofill_explanation_summary">Настройте службу для быстрого заполнения форм в других приложениях</string>
     <string name="set_credential_provider_service_title">Служба автозаполнения</string>
     <string name="password_size_title">Длина создаваемого пароля</string>
     <string name="password_size_summary">Настройка длины создаваемых паролей по умолчанию</string>
@@ -217,7 +211,6 @@
     <string name="other">Прочее</string>
     <string name="keyboard">Клавиатура</string>
     <string name="magic_keyboard_title">Настройки Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Активируйте пользовательскую клавиатуру для простого заполнения паролей и любых идентификаторов</string>
     <string name="allow_no_password_title">Разрешить без главного пароля</string>
     <string name="allow_no_password_summary">Разрешить нажимать кнопку \"Открыть\", если главный пароль не указан</string>
     <string name="enable_education_screens_title">Обучающие подсказки</string>
@@ -255,21 +248,7 @@
     <string name="education_lock_summary">Быстро блокируйте вашу базу. Вы можете настроить приложение так, чтобы заблокировать её через некоторое время и при выключении экрана.</string>
     <string name="education_sort_title">Сортировка записей</string>
     <string name="education_sort_summary">Выберите критерий сортировки записей и групп.</string>
-    <string name="education_donation_title">Участвуйте</string>
-    <string name="education_donation_summary">Примите участие в проекте для повышения стабильности, безопасности и добавления новых возможностей.</string>
-    <string name="html_text_ad_free">В отличие от многих других приложений управления паролями, здесь &lt;strong&gt;нет рекламы&lt;/strong&gt;, и оно &lt;strong&gt;свободно от лицензирования&lt;/strong&gt;. Приложение не собирает ваши личные данные на своих серверах независимо от версии, которую вы используете.</string>
-    <string name="html_text_buy_pro">Купите pro–версию и откройте доступ к этой &lt;strong&gt;теме&lt;/strong&gt;. Покупая pro-версию, вы помогаете &lt;strong&gt;разработчикам открытого ПО.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Эти &lt;strong&gt;визуальные стили&lt;/strong&gt; доступны благодаря вашей щедрости.</string>
-    <string name="html_text_donation">Произведя &lt;strong&gt;вклад&lt;/strong&gt; в проект &lt;i&gt;(в денежном выражении, программным кодом или переводом)&lt;/i&gt;, вы поможете ему жить и процветать, а также получите право на разблокировку &lt;strong&gt;тем оформления&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Эта функция находится &lt;strong&gt;в разработке&lt;/strong&gt; и требует вашего &lt;strong&gt;участия&lt;/strong&gt;, чтобы стать доступной в ближайшее время.</string>
-    <string name="html_text_dev_feature_buy_pro">Покупая &lt;strong&gt;pro&lt;/strong&gt;–версию,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;Участвуя в проекте&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">вы поощряете разработчиков добавлять &lt;strong&gt;новые возможности&lt;/strong&gt; и &lt;strong&gt;исправлять ошибки&lt;/strong&gt; в соответствии с вашими замечаниями.</string>
-    <string name="html_text_dev_feature_thanks">Большое спасибо за поддержку.</string>
-    <string name="html_text_dev_feature_work_hard">Мы прилагаем все усилия, чтобы быстро выпустить эту функцию.</string>
-    <string name="html_text_dev_feature_upgrade">Не забывайте обновлять приложение.</string>
     <string name="download">Скачать</string>
-    <string name="contribute">Помочь проекту</string>
     <string name="style_choose_title">Тема приложения</string>
     <string name="style_choose_summary">Тема, используемая в приложении</string>
     <string name="icon_pack_choose_title">Набор значков</string>
@@ -355,8 +334,6 @@
     <string name="contains_duplicate_uuid">База содержит повторяющиеся UUID.</string>
     <string name="contains_duplicate_uuid_procedure">Исправить проблему путём создания новых UUID для дубликатов и продолжить работу\?</string>
     <string name="database_opened">База открыта</string>
-    <string name="clipboard_explanation_summary">Копирование полей ввода с помощью буфера обмена устройства</string>
-    <string name="device_unlock_explanation_summary">Используйте разблокировку устройства для более лёгкого открытия базы</string>
     <string name="database_data_compression_title">Сжатие данных</string>
     <string name="database_data_compression_summary">Сжатие данных уменьшает размер базы</string>
     <string name="max_history_items_title">Максимум записей</string>
@@ -397,8 +374,6 @@
     <string name="hide_expired_entries_title">Скрывать устаревшие записи</string>
     <string name="hide_expired_entries_summary">Не показывать записи с истёкшим сроком действия</string>
     <string name="contact">Контактная информация</string>
-    <string name="contribution">Помощь проекту</string>
-    <string name="html_about_contribution">Для &lt;strong&gt;сохранения нашей независимости&lt;/strong&gt;, &lt;strong&gt;исправления ошибок&lt;/strong&gt;, &lt;strong&gt;добавления новых функций&lt;/strong&gt; и &lt;strong&gt;поддержания разработки в активном состоянии&lt;/strong&gt;, мы рассчитываем на вашу &lt;strong&gt;поддержку&lt;/strong&gt;.</string>
     <string name="auto_focus_search_title">Быстрый поиск</string>
     <string name="auto_focus_search_summary">Открывать поисковый запрос при открытии базы</string>
     <string name="remember_database_locations_title">Помнить расположение баз</string>
@@ -453,7 +428,6 @@
     <string name="warning_empty_keyfile">Не рекомендуется добавлять пустой ключевой файл.</string>
     <string name="warning_sure_remove_data">Всё равно удалить эти данные\?</string>
     <string name="warning_remove_unlinked_attachment">Удаление несвязанных данных может уменьшить размер базы, но также может удалить данные, используемые для плагинов KeePass.</string>
-    <string name="content_description_credentials_information">Информация об учётных данных</string>
     <string name="configure_biometric">Отсутствует зарегистрированный биометрический ключ или учётные данные устройства.</string>
     <string name="autofill_save_search_info_summary">Сохранять поисковую информацию при ручном выборе записи для дальнейшего использования</string>
     <string name="autofill_save_search_info_title">Сохранять данные поиска</string>
@@ -523,7 +497,6 @@
     <string name="style_brightness_title">Яркость темы</string>
     <string name="error_upload_file">Ошибка при загрузке данных файла.</string>
     <string name="error_file_to_big">Файл слишком большой для загрузки.</string>
-    <string name="content_description_otp_information">Информация об одноразовом пароле</string>
     <string name="error_duplicate_file">Данные файла уже существует.</string>
     <string name="error_remove_file">Ошибка при удалении данных файла.</string>
     <string name="properties">Свойства</string>
@@ -575,7 +548,6 @@
     <string name="template_group_name">Шаблоны</string>
     <string name="show_otp_token_title">Показывать OTP</string>
     <string name="show_otp_token_summary">Показывать токены OTP в списке записей</string>
-    <string name="menu_external_icon">Внешний значок</string>
     <string name="autofill_select_entry">Выбор записи…</string>
     <string name="autofill_manual_selection_summary">Показывать элемент управления для ручного выбора пользователем записи из базы</string>
     <string name="autofill_manual_selection_title">Ручной выбор</string>
@@ -652,7 +624,6 @@
     <string name="enable_screenshot_mode_summary">Разрешать сторонним приложениям делать снимки или запись экрана приложения</string>
     <string name="waiting_challenge_request">Ожидание запроса на вызов…</string>
     <string name="waiting_challenge_response">Ожидание ответа на вызов…</string>
-    <string name="html_about_privacy">&lt;strong&gt;Никакие пользовательские данные не собираются&lt;/strong&gt;, это приложение не подключается ни к одному серверу, работает исключительно локально и полностью соблюдает конфиденциальность пользователей.</string>
     <string name="auto_type">Автонабор</string>
     <string name="merge_success">Объединение выполнено</string>
     <string name="later">Позже</string>
@@ -700,7 +671,6 @@
     <string name="warning_overwrite_data_title">Перезаписать существующие данные?</string>
     <string name="warning_overwrite_data_description">Будут заменены существующие данные в записи. Если включена история, там могут оказаться старые данные.</string>
     <string name="credential_provider">Поставщик учётных данных</string>
-    <string name="passkeys_explanation_summary">Настройте ключи доступа для быстрого и безопасного входа без ввода пароля</string>
     <string name="passkeys">Ключи доступа</string>
     <string name="passkeys_preference_title">Настройки ключей доступа</string>
     <string name="passkeys_close_database_title">Закрывать базу</string>
@@ -751,7 +721,6 @@
     <string name="password_creation_description">Сохранить пароль в новой записи</string>
     <string name="password_selection_description">Выбрать существующий пароль</string>
     <string name="error_password_result">Невозможно вернуть пароль</string>
-    <string name="content_description_user_verification_information">Информация о проверке пользователя</string>
     <string name="user_verification_required_title">Проверка пользователя</string>
     <string name="user_verification_required_description">Для доступа к этим данным требуется подтверждение вашей личности</string>
     <string name="user_verification_database_credential">Введите первые 4 символа пароля базы</string>

@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Σχόλια</string>
-    <string name="homepage">Αρχική Σελίδα</string>
     <string name="about_description">Υλοποίηση του διαχειριστή κωδικών πρόσβασης KeePass για Android.</string>
     <string name="accept">Αποδοχή</string>
     <string name="add_entry">Προσθήκη καταχώρησης</string>
@@ -42,8 +40,6 @@
     <string name="decrypting_db">Αποκρυπτογράφηση περιεχομένου βάσης δεδομένων …</string>
     <string name="default_checkbox">Χρήση ως προεπιλεγμένης βάσης δεδομένων</string>
     <string name="digits">Ψηφία</string>
-    <string name="html_about_licence">Το KeePassDX © %1$d Kunzisoft είναι &lt;strong&gt;ανοιχτού κώδικα&lt;/strong&gt; και &lt;strong&gt;χωρίς διαφημίσεις&lt;/strong&gt;.
-\nΠαρέχεται ως έχει, με άδεια &lt;strong&gt;GPLv3&lt;/strong&gt;, χωρίς καμία εγγύηση.</string>
     <string name="select_database_file">Ανοίξτε την υπάρχον κρύπτη</string>
     <string name="entry_accessed">Πρόσβαση</string>
     <string name="entry_cancel">Άκυρο</string>
@@ -97,7 +93,6 @@
     <string name="settings">Ρυθμίσεις</string>
     <string name="menu_database_settings">Ρυθμίσεις βάσης δεδομένων</string>
     <string name="menu_delete">Διαγραφή</string>
-    <string name="menu_donate">Δωρεά</string>
     <string name="menu_edit">Επεξεργασία</string>
     <string name="menu_lock">Κλείδωμα βάσης δεδομένων</string>
     <string name="menu_open">Άνοιγμα</string>
@@ -222,21 +217,7 @@
     <string name="education_lock_summary">Κλείδώστε γρήγορα τη βάση δεδομένων σας, μπορείτε να ρυθμίσετε την εφαρμογή να την κλειδώνει μετά από λίγο και όταν η οθόνη σβήσει.</string>
     <string name="education_sort_title">Ταξινόμηση Στοιχείων</string>
     <string name="education_sort_summary">Επιλέξτε τον τρόπο ταξινόμησης καταχωρήσεων και ομάδων.</string>
-    <string name="education_donation_title">Συμμετοχή</string>
-    <string name="education_donation_summary">Βοηθήστε να αυξήσετε τη σταθερότητα, την ασφάλεια και την προσθήκη περισσότερων λειτουργιών.</string>
-    <string name="html_text_ad_free">Σε αντίθεση με πολλές άλλες εφαρμογές διαχείρισης κωδικών πρόσβασης, αυτή είναι &lt;strong&gt;χωρίς διαφημίσεις&lt;/strong&gt;, &lt;strong&gt;copylefted libre λογισμικό&lt;/strong&gt; και δεν συλλέγει προσωπικά δεδομένα στους διακομιστές της, ανεξάρτητα από την έκδοση που χρησιμοποιείτε.</string>
-    <string name="html_text_buy_pro">Με την αγορά της επαγγελματικής έκδοσης, θα έχετε πρόσβαση σε αυτό το &lt;strong&gt;οπτικό στοιχείο&lt;/strong&gt; και θα βοηθήσετε ιδιαίτερα την &lt;strong&gt;υλοποίηση ιδεών της κοινότητας.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Αυτό το &lt;strong&gt;οπτικό στυλ&lt;/strong&gt; είναι διαθέσιμο χάρη στη γενναιοδωρία σας.</string>
-    <string name="html_text_donation">Με τη &lt;strong&gt;συνεισφορά σας&lt;/strong&gt; στο έργο &lt;i&gt;(χρηματικά, κώδικα, μετάφραση)&lt;/i&gt;, θα το βοηθήσετε να συνεχίσει να ζει και να ευδοκιμεί και θα είστε επίσης επιλέξιμοι για τη διαδικασία ξεκλειδώματος &lt;strong&gt;θεμάτων &lt;/strong&gt; .</string>
-    <string name="html_text_dev_feature">Αυτή η λειτουργία είναι &lt;strong&gt;υπό ανάπτυξη&lt;/strong&gt; και απαιτεί την &lt;strong&gt;συνεισφοράς&lt;/strong&gt; σας για να είναι σύντομα διαθέσιμη.</string>
-    <string name="html_text_dev_feature_buy_pro">Με την αγορά της έκδοσης &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">Με την &lt;strong&gt;συνεισφορά&lt;/strong&gt; σας,</string>
-    <string name="html_text_dev_feature_encourage">ενθαρρύνετε τους προγραμματιστές να δημιουργούν &lt;strong&gt;νέες λειτουργίες&lt;/strong&gt; και να &lt;strong&gt;διορθώνουν σφάλματα&lt;/strong&gt; σύμφωνα με τις παρατηρήσεις σας.</string>
-    <string name="html_text_dev_feature_thanks">Ευχαριστούμε πολύ για τη συνεισφορά σας.</string>
-    <string name="html_text_dev_feature_work_hard">Εργαζόμαστε σκληρά για να διαθέσουμε αυτό το χαρακτηριστικό γρήγορα.</string>
-    <string name="html_text_dev_feature_upgrade">Θυμηθείτε να ενημερώνετε την εφαρμογή σας, εγκαθιστώντας νέες εκδόσεις.</string>
     <string name="download">Λήψη</string>
-    <string name="contribute">Συνεισφορά</string>
     <string name="style_choose_title">Θέμα Εφαρμογής</string>
     <string name="style_choose_summary">Θέμα που χρησιμοποιείται στην εφαρμογή</string>
     <string name="icon_pack_choose_title">Πακέτο Εικονιδίων</string>
@@ -352,10 +333,7 @@
     <string name="contains_duplicate_uuid">Η βάση δεδομένων περιέχει διπλά UUIDs.</string>
     <string name="contains_duplicate_uuid_procedure">Επίλυση προβλήματος δημιουργώντας νέα UUIDs για να συνεχιστούν τα διπλότυπα;</string>
     <string name="database_history">Ιστορικό</string>
-    <string name="autofill_explanation_summary">Ενεργοποιήστε την αυτόματη συμπλήρωση για να συμπληρώσετε γρήγορα φόρμες σε άλλες εφαρμογές</string>
     <string name="database_opened">Η Βάση Δεδομένων άνοιξε</string>
-    <string name="clipboard_explanation_summary">Αντιγράψτε τα πεδία εισαγωγής χρησιμοποιώντας το πρόχειρο της συσκευής σας</string>
-    <string name="device_unlock_explanation_summary">Χρησιμοποιήστε το ξεκλείδωμα συσκευής για να ανοίξετε μια βάση δεδομένων πιο εύκολα</string>
     <string name="database_data_compression_title">Συμπίεση Δεδομένων</string>
     <string name="database_data_compression_summary">Η συμπίεση δεδομένων μειώνει το μέγεθος της βάσης δεδομένων</string>
     <string name="max_history_items_title">Μέγιστος αριθμός</string>
@@ -373,7 +351,6 @@
     <string name="compression">Συμπίεση</string>
     <string name="compression_none">Καμιά</string>
     <string name="compression_gzip">Gzip</string>
-    <string name="magic_keyboard_explanation_summary">Ενεργοποιώντας ένα προσαρμοσμένο πληκτρολόγιο συγκεντρώνει τους κωδικούς πρόσβασής σας και όλα τα πεδία ταυτότητας</string>
     <string name="device_keyboard_setting_title">Ρυθμίσεις πληκτρολογίου συσκευής</string>
     <string name="error_save_database">Δεν ήταν δυνατή η αποθήκευση της βάσης δεδομένων.</string>
     <string name="menu_save_database">Αποθήκευση δεδομένων</string>
@@ -399,7 +376,6 @@
     <string name="show_recent_files_title">Εμφάνιση πρόσφατων αρχείων</string>
     <string name="auto_focus_search_title">Γρήγορη αναζήτηση</string>
     <string name="entry_add_attachment">Προσθήκη συνημμένου</string>
-    <string name="contribution">Συνεισφορά</string>
     <string name="education_setup_OTP_summary">Ρύθμιση διαχείρισης μίας-χρήσης κωδικού πρόσβασης (HOTP / TOTP) για δημιουργία token που ζητήθηκε για έλεγχο ταυτότητας δύο παραγόντων (2FA).</string>
     <string name="education_setup_OTP_title">Ρύθμιση OTP</string>
     <string name="lock_database_show_button_summary">Εμφανίζει το κουμπί κλειδώματος στη διεπαφή χρήστη</string>
@@ -417,7 +393,6 @@
     <string name="auto_focus_search_summary">Ζητήστε αναζήτηση κατά το άνοιγμα μιας βάσης δεδομένων</string>
     <string name="error_create_database">Δεν είναι δυνατή η δημιουργία αρχείου βάσης δεδομένων.</string>
     <string name="error_label_exists">Αυτή η ετικέτα υπάρχει ήδη.</string>
-    <string name="html_about_contribution">Προκειμένου να &lt;strong&gt;διατηρήσουμε την ελευθερία μας&lt;/strong&gt;, &lt;strong&gt;να διορθώσουμε σφάλματα&lt;/strong&gt;, &lt;strong&gt;να προσθέσουμε λειτουργίες&lt;/strong&gt; και &lt;strong&gt;να είμαστε πάντα ενεργοί&lt;/strong&gt;, βασιζόμαστε στη &lt;strong&gt;συνεισφορά &lt;/strong&gt;.</string>
     <string name="discard">Απόρριψη</string>
     <string name="discard_changes">Απόρριψη αλλαγών;</string>
     <string name="validate">Επικυρώστε</string>
@@ -452,7 +427,6 @@
     <string name="subdomain_search_summary">Αναζήτηση τομέων ιστού με περιορισμούς υποτομέων</string>
     <string name="subdomain_search_title">Αναζήτηση Υποτομέων</string>
     <string name="error_string_type">Αυτό το κείμενο δεν ταιριάζει με το ζητούμενο στοιχείο.</string>
-    <string name="content_description_credentials_information">Πληροφορίες Διαπιστευτηρίων</string>
     <string name="content_description_add_item">Προσθήκη είδους</string>
     <string name="show_uuid_summary">Εμφανίζει το UUID που είναι συνδεδεμένο σε μια καταχώρηση ή σε μια ομάδα</string>
     <string name="show_uuid_title">Εμφάνιση UUID</string>
@@ -523,7 +497,6 @@
     <string name="style_brightness_title">Φωτεινότητα θέματος</string>
     <string name="error_upload_file">Παρουσιάστηκε σφάλμα κατά τη μεταφόρτωση των δεδομένων αρχείου.</string>
     <string name="error_file_to_big">Το αρχείο που προσπαθείτε να ανεβάσετε είναι πολύ μεγάλο.</string>
-    <string name="content_description_otp_information">Πληροφορίες One-time κωδικού πρόσβασης</string>
     <string name="error_remove_file">Παρουσιάστηκε σφάλμα κατά την κατάργηση των δεδομένων αρχείου.</string>
     <string name="error_duplicate_file">Τα δεδομένα αρχείου υπάρχουν ήδη.</string>
     <string name="properties">Ιδιότητες</string>
@@ -575,7 +548,6 @@
     <string name="template_group_name">Πρότυπα</string>
     <string name="show_otp_token_summary">Εμφανίζει OTP tokens στη λίστα καταχωρήσεων</string>
     <string name="show_otp_token_title">Εμφάνιση OTP Token</string>
-    <string name="menu_external_icon">Εξωτερικό εικονίδιο</string>
     <string name="autofill_manual_selection_summary">Εμφάνισης επιλογής για να επιτρέψει στον χρήστη να επιλέξει την καταχώρηση βάσης δεδομένων</string>
     <string name="autofill_manual_selection_title">Χειροκίνητη επιλογή</string>
     <string name="autofill_select_entry">Επιλογή καταχώρησης…</string>
@@ -652,7 +624,6 @@
     <string name="error_unable_merge_database_kdb">Δεν είναι δυνατή η συγχώνευση με μια βάση δεδομένων kdb.</string>
     <string name="error_empty_key">Το κλειδί δεν μπορεί να είναι κενό.</string>
     <string name="corrupted_file">Κατεστραμμένο αρχείο.</string>
-    <string name="html_about_privacy">&lt;strong&gt;Δεν ανακτώνται δεδομένα χρήστη&lt;/strong&gt;, αυτή η εφαρμογή δεν συνδέεται με κανένα διακομιστή, λειτουργεί μόνο τοπικά και σέβεται πλήρως το απόρρητο των χρηστών.</string>
     <string name="auto_type">Αυτόματη-Πληκτρολόγηση</string>
     <string name="merge_success">Η συγχώνευση ολοκληρώθηκε με επιτυχία</string>
     <string name="info">Πληροφορίες</string>

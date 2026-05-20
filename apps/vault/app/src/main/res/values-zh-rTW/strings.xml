@@ -21,7 +21,6 @@
     <string name="add_group">新增群組</string>
     <string name="device_unlock">裝置解鎖</string>
     <string name="device_unlock_delete_all_key_warning">要刪除所有與裝置解鎖相關的加密密鑰嗎？</string>
-    <string name="device_unlock_explanation_summary">使用裝置解鎖以便快速解鎖資料庫</string>
     <string name="device_unlock_invalid_key">無法讀取裝置解鎖密鑰。請刪除它，並重複解鎖步驟。</string>
     <string name="device_unlock_not_recognized">無法辨識裝置解鎖印記</string>
     <string name="device_unlock_prompt_extract_credential_message">使用設備憑證打開資料庫</string>
@@ -53,7 +52,6 @@
     <string name="autofill_block_restart">重新啟動包含該表單的應用程式以啟用攔截。</string>
     <string name="autofill_close_database_summary">自動填充寫入後，關閉資料庫</string>
     <string name="autofill_close_database_title">關閉資料庫</string>
-    <string name="autofill_explanation_summary">配置自動填入功能以快速填寫其他應用程式中的用戶名和密碼</string>
     <string name="autofill_inline_suggestions_keyboard">已添加自動填充建議。</string>
     <string name="autofill_inline_suggestions_summary">嘗試直接從相容的鍵盤顯示自動填充建議</string>
     <string name="autofill_inline_suggestions_title">內聯建議</string>
@@ -88,7 +86,6 @@
     <string name="clipboard_error">部份裝置不容許應用程式使用剪貼簿。</string>
     <string name="clipboard_error_clear">無法清除剪貼簿</string>
     <string name="clipboard_error_title">剪貼簿錯誤</string>
-    <string name="clipboard_explanation_summary">使用裝置的剪貼簿複製項目欄位</string>
     <string name="clipboard_timeout">剪貼簿超時</string>
     <string name="clipboard_timeout_summary">剪貼簿的留存時間（如果裝置支援）</string>
     <string name="clipboard_warning">如自動清空剪貼簿失敗，則請手動清空。</string>
@@ -106,22 +103,18 @@
     <string name="content_description_add_item">新增項目</string>
     <string name="content_description_add_node">新增節點</string>
     <string name="content_description_background">背景</string>
-    <string name="content_description_credentials_information">憑證資訊</string>
     <string name="content_description_entry_icon">項目圖示</string>
     <string name="content_description_file_information">檔案資訊</string>
     <string name="content_description_keyboard_close_fields">關閉欄位</string>
     <string name="content_description_keyfile_checkbox">密鑰檔案核取方塊</string>
     <string name="content_description_node_children">子節點</string>
     <string name="content_description_open_file">開啟檔案</string>
-    <string name="content_description_otp_information">一次性密碼訊息</string>
     <string name="content_description_password_checkbox">密碼核取方塊</string>
     <string name="content_description_password_length">密碼長度</string>
     <string name="content_description_remove_field">刪除欄位</string>
     <string name="content_description_remove_from_list">移除</string>
     <string name="content_description_repeat_toggle_password_visibility">重複切換密碼可見性</string>
     <string name="content_description_update_from_list">更新</string>
-    <string name="contribute">貢獻</string>
-    <string name="contribution">貢獻</string>
     <string name="copy_field">複製%1$s</string>
     <string name="create_keepass_file">創建新資料庫</string>
     <string name="creating_database">正在創建資料庫…</string>
@@ -171,8 +164,6 @@
     <string name="education_device_unlock_title">裝置資料庫解鎖</string>
     <string name="education_create_database_summary">新建第一個密碼管理資料庫。</string>
     <string name="education_create_database_title">建立你的資料庫檔案</string>
-    <string name="education_donation_summary">幫助增加穩定性、安全性並添加更多的功能。</string>
-    <string name="education_donation_title">參與開發</string>
     <string name="education_entry_edit_summary">使用自定義欄位編輯條。自定義欄位可以在不同的條目間引用。</string>
     <string name="education_entry_edit_title">編輯此條目</string>
     <string name="education_entry_new_field_summary">添加一個新的欄位並添加為其添加一個值，此時可以選擇是否保護該欄位及其值。</string>
@@ -277,7 +268,6 @@
     <string name="export_app_properties_summary">建立檔案以匯出應用程式設定</string>
     <string name="export_app_properties_title">導出應用程式設定</string>
     <string name="extended_ASCII">延伸 ASCII</string>
-    <string name="feedback">意見反映</string>
     <string name="field_name">欄位名</string>
     <string name="field_value">欄位值</string>
     <string name="file_browser">檔案管理器</string>
@@ -298,21 +288,6 @@
     <string name="hint_length">長度</string>
     <string name="hint_pass">密碼</string>
     <string name="holder">持卡人</string>
-    <string name="homepage">首頁</string>
-    <string name="html_about_contribution">為程式能夠&lt;strong&gt;保持自主&lt;/strong&gt;、&lt;strong&gt;修復漏洞&lt;/strong&gt;、&lt;strong&gt;新增功能&lt;/strong&gt;和&lt;strong&gt;保持持續開發&lt;/strong&gt;，有賴你的&lt;strong&gt;貢獻&lt;/strong&gt;。</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft；這是&lt;strong&gt;無推廣&lt;/strong&gt;的&lt;strong&gt;開源&lt;/strong&gt;軟體。
-\n你可在遵循&lt;strong&gt;GPL 3&lt;/strong&gt;或者更高版本的情況下重新發佈，而Kunzisoft對此不帶有任何擔保。</string>
-    <string name="html_text_ad_free">不同於大多數的密碼管理應用，無論你是使用免費版本還是付費版本的 KeePassDX，這都是一款&lt;strong&gt;沒有廣告&lt;/strong&gt;，&lt;strong&gt;基於 copylefted 版權協議的自由軟體&lt;/strong&gt;。同時，本軟體的任何版本都不會收集你的任何個人資訊。</string>
-    <string name="html_text_buy_pro">通過購買高級版本，你將解鎖全部&lt;strong&gt;主題樣式&lt;/strong&gt;，重要的是，你會為&lt;strong&gt;社區項目的進行&lt;/strong&gt;提供幫助</string>
-    <string name="html_text_dev_feature">此功能目前&lt;strong&gt;仍在開發中&lt;/strong&gt;，&lt;strong&gt;捐助&lt;/strong&gt;將使該功能很快變得可用。</string>
-    <string name="html_text_dev_feature_buy_pro">通過購買&lt;strong&gt;專業&lt;/strong&gt;版，</string>
-    <string name="html_text_dev_feature_contibute">通過&lt;strong&gt;貢獻&lt;/strong&gt;，</string>
-    <string name="html_text_dev_feature_encourage">你的留言，是對開發人員添加&lt;strong&gt;新功能&lt;/strong&gt;及&lt;strong&gt;修復 bugs&lt;/strong&gt; 的鼓勵。</string>
-    <string name="html_text_dev_feature_thanks">非常感謝你的捐助與貢獻。</string>
-    <string name="html_text_dev_feature_upgrade">記得安裝最新版本來確保應用程式是最新的。</string>
-    <string name="html_text_dev_feature_work_hard">我們正在努力的開發並盡快地發佈新功能。</string>
-    <string name="html_text_donation">透過為專案&lt;strong&gt;作出貢獻&lt;/strong&gt;&lt;i&gt;（財政、代碼、翻譯）&lt;/i&gt;，你將幫助其繼續發展，並且你也將有資格獲得&lt;strong&gt;主題&lt;/strong&gt;解鎖步驟。</string>
-    <string name="html_text_feature_generosity">此&lt;strong&gt;主題樣式&lt;/strong&gt;已可用，感謝你的慷慨相助。</string>
     <string name="icon_pack_choose_summary">應用程式使用的圖示包</string>
     <string name="icon_pack_choose_title">圖示包</string>
     <string name="icon_section_custom">自定義</string>
@@ -383,7 +358,6 @@
     <string name="lock_database_show_button_summary">在介面中顯示鎖定資料庫按紐</string>
     <string name="lock_database_show_button_title">顯示鎖定資料庫按鈕</string>
     <string name="lowercase">小寫</string>
-    <string name="magic_keyboard_explanation_summary">啟用用作輸入密碼和其他欄位的自訂鍵盤</string>
     <string name="magic_keyboard_title">魔法鍵盤</string>
     <string name="master_key">主密鑰</string>
     <string name="max_history_items_summary">限制每個項目的歷史紀錄條數</string>
@@ -402,10 +376,8 @@
     <string name="menu_database_settings">資料庫設定</string>
     <string name="menu_delete">刪除</string>
     <string name="menu_delete_entry_history">刪除編輯歷史</string>
-    <string name="menu_donate">贊助</string>
     <string name="menu_edit">編輯</string>
     <string name="menu_empty_recycle_bin">清理回收桶</string>
-    <string name="menu_external_icon">外部圖示</string>
     <string name="menu_file_selection_read_only">唯讀</string>
     <string name="menu_form_filling_settings">表格填入</string>
     <string name="menu_keystore_remove_key">刪除裝置解鎖密鑰</string>
@@ -623,7 +595,6 @@
     <string name="screenshot_mode_banner_text">螢幕截圖模式</string>
     <string name="auto_type">自動填入</string>
     <string name="info">資訊</string>
-    <string name="html_about_privacy">&lt;strong&gt;不收集用戶資料。&lt;/strong&gt;，此應用程式不連接任何伺服器，僅在裝置上運作，而且完全尊重用戶私穩。</string>
     <string name="waiting_challenge_request">正等待質疑請求…</string>
     <string name="waiting_challenge_response">正等待Challenge回應……</string>
     <string name="error_XML_malformed">XML格式錯誤。</string>
@@ -682,7 +653,6 @@
     <string name="warning_overwrite_data_description">此操作將取代條目中的現有數據，如果啟用了歷史記錄，則可以檢索舊數據。</string>
     <string name="credential_provider">憑證提供者</string>
     <string name="passkeys">通行密鑰</string>
-    <string name="passkeys_explanation_summary">設定 Passkey，實現快速安全的無密碼登入</string>
     <string name="passkeys_preference_title">Passkey 設定</string>
     <string name="passkeys_close_database_title">關閉資料庫</string>
     <string name="passkeys_close_database_summary">選擇密碼後關閉資料庫</string>
@@ -737,7 +707,6 @@
     <string name="password_creation_description">在新條目中保存密碼</string>
     <string name="password_selection_description">選擇現有密碼</string>
     <string name="error_password_result">無法返回密碼</string>
-    <string name="content_description_user_verification_information">用戶驗證信息</string>
     <string name="user_verification_required_title">用戶驗證</string>
     <string name="user_verification_required_description">訪問此數據需要驗證您的身份。</string>
     <string name="user_verification_required_description_precise">%1$s 需要驗證您的身份。</string>

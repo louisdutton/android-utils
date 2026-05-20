@@ -430,9 +430,7 @@ private fun CalendarScreen(
             onDismiss = { eventDialog = null },
             onEdit = { eventDialog = EventDialogState.Edit(dialog.event) },
             onDelete = { eventDialog = EventDialogState.Delete(dialog.event) },
-            onOpenLocation = {
-                context.openEventLocationInMaps(dialog.event.locationLink())
-            },
+            onOpenLocation = context::openEventLocation,
         )
 
         is EventDialogState.Edit -> EventEditorDialog(
@@ -797,18 +795,10 @@ private fun AgendaEventBlock(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = event.timeRangeLabel(),
+                    text = event.agendaMeta(),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                val meta = event.agendaMeta()
-                if (meta.isNotEmpty()) {
-                    Text(
-                        text = meta,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
             }
         }
     }
@@ -820,9 +810,9 @@ private fun EventDetailsDialog(
     onDismiss: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
-    onOpenLocation: () -> Unit,
+    onOpenLocation: (EventLocationAction) -> Unit,
 ) {
-    val locationLink = event.locationLink()
+    val locationAction = event.locationAction()
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -843,8 +833,16 @@ private fun EventDetailsDialog(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    Box(
+                        modifier = Modifier
+                            .size(12.dp)
+                            .clip(CircleShape)
+                            .background(event.accentColor()),
+                    )
                     Text(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 12.dp),
                         text = event.title,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
@@ -865,11 +863,12 @@ private fun EventDetailsDialog(
                         label = "Time",
                         value = event.detailDateTimeLabel(),
                     )
-                    event.calendarName?.takeIf { it.isNotBlank() }?.let { calendar ->
-                        DetailLine(label = "Calendar", value = calendar)
-                    }
-                    locationLink?.let { link ->
-                        DetailLine(label = "Location", value = link.location.displayAddress)
+                    locationAction?.let { action ->
+                        ActionDetailLine(
+                            label = "Location",
+                            value = action.displayLabel,
+                            onClick = { onOpenLocation(action) },
+                        )
                     }
                     event.description?.takeIf { it.isNotBlank() }?.let { description ->
                         RichNotesLine(label = "Notes", value = description)
@@ -901,17 +900,6 @@ private fun EventDetailsDialog(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        if (locationLink != null) {
-                            TextButton(onClick = onOpenLocation) {
-                                Icon(
-                                    imageVector = Icons.Rounded.LocationOn,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                                Text("Map")
-                            }
-                        }
-
                         Button(onClick = onEdit) {
                             Icon(
                                 imageVector = Icons.Rounded.Edit,
@@ -943,6 +931,44 @@ private fun DetailLine(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
         )
+    }
+}
+
+@Composable
+private fun ActionDetailLine(
+    label: String,
+    value: String,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick)
+            .padding(vertical = 2.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp),
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.LocationOn,
+                contentDescription = null,
+                modifier = Modifier.size(18.dp),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = value,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }
 
@@ -1225,6 +1251,27 @@ private const val LocationIntentExtraCalendarEventId = "digital.dutton.essential
 private const val LocationIntentExtraRawProviderLocation =
     "digital.dutton.essentials.locations.extra.RAW_PROVIDER_LOCATION"
 private const val LocationIntentSourceCalendar = "calendar"
+private val OnlineMeetingUrlPattern = Regex("https?://[^\\s\"'<>]+", RegexOption.IGNORE_CASE)
+
+private sealed interface EventLocationAction {
+    val displayLabel: String
+}
+
+private data class OnlineMeetingAction(
+    override val displayLabel: String,
+    val uri: Uri,
+) : EventLocationAction
+
+private data class MapLocationAction(
+    val link: EventLocationLink,
+) : EventLocationAction {
+    override val displayLabel: String = link.location.displayAddress
+}
+
+private data class OnlineMeetingLink(
+    val providerLabel: String,
+    val uri: Uri,
+)
 
 private fun YearMonth.calendarCells(): List<LocalDate?> {
     val leadingEmptyCells = atDay(1).dayOfWeek.value % 7
@@ -1410,13 +1457,80 @@ private fun CalendarEvent.accentColor(): Color {
 
 private fun CalendarEvent.agendaMeta(): String {
     return listOfNotNull(
-        calendarName?.takeIf { it.isNotBlank() },
-        locationLink()?.location?.displayAddress,
+        timeRangeLabel(),
+        locationAction()?.displayLabel,
     ).joinToString(" - ")
 }
 
-private fun Context.openEventLocationInMaps(link: EventLocationLink?) {
-    val providerLocation = link?.rawProviderLocation?.takeIf { it.isNotBlank() } ?: return
+private fun CalendarEvent.locationAction(): EventLocationAction? {
+    val providerLocation = location?.trim()?.takeIf { it.isNotBlank() }
+    val onlineMeeting = onlineMeetingLink()
+    val mapLocation = locationLink()?.let(::MapLocationAction)
+
+    if (onlineMeeting != null && (mapLocation == null || providerLocation.isOnlineMeetingLocationLabel())) {
+        val label = providerLocation?.takeUnless { it.isUrlOnly() } ?: onlineMeeting.providerLabel
+        return OnlineMeetingAction(label, onlineMeeting.uri)
+    }
+
+    return mapLocation ?: onlineMeeting?.let {
+        OnlineMeetingAction(it.providerLabel, it.uri)
+    }
+}
+
+private fun CalendarEvent.onlineMeetingLink(): OnlineMeetingLink? {
+    return listOfNotNull(location, description)
+        .asSequence()
+        .flatMap { text -> OnlineMeetingUrlPattern.findAll(text) }
+        .mapNotNull { match -> match.value.toOnlineMeetingLink() }
+        .firstOrNull()
+}
+
+private fun String.toOnlineMeetingLink(): OnlineMeetingLink? {
+    val url = replace("&amp;", "&")
+        .trimEnd('.', ',', ';', ':', ')', ']', '}')
+    val uri = Uri.parse(url)
+    val host = uri.host?.lowercase() ?: return null
+
+    return when {
+        host == "teams.microsoft.com" || host.endsWith(".teams.microsoft.com") || host == "teams.live.com" -> {
+            OnlineMeetingLink("Microsoft Teams Meeting", uri)
+        }
+        host == "meet.google.com" -> {
+            OnlineMeetingLink("Google Meet", uri)
+        }
+        else -> null
+    }
+}
+
+private fun String?.isOnlineMeetingLocationLabel(): Boolean {
+    val location = this?.lowercase() ?: return true
+    return location.contains("teams") ||
+        location.contains("google meet") ||
+        location.contains("meet.google") ||
+        location.contains("hangouts meet") ||
+        location.contains("online meeting") ||
+        location.isUrlOnly()
+}
+
+private fun String.isUrlOnly(): Boolean {
+    return startsWith("http://", ignoreCase = true) || startsWith("https://", ignoreCase = true)
+}
+
+private fun Context.openEventLocation(action: EventLocationAction) {
+    when (action) {
+        is OnlineMeetingAction -> openOnlineMeeting(action.uri)
+        is MapLocationAction -> openEventLocationInMaps(action.link)
+    }
+}
+
+private fun Context.openOnlineMeeting(uri: Uri) {
+    runCatching {
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
+    }
+}
+
+private fun Context.openEventLocationInMaps(link: EventLocationLink) {
+    val providerLocation = link.rawProviderLocation.takeIf { it.isNotBlank() } ?: return
     val geoUri = Uri.parse("geo:0,0?q=${Uri.encode(providerLocation)}")
     val mapsIntent = Intent(Intent.ACTION_VIEW, geoUri)
         .setPackage(MapsPackageName)

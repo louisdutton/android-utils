@@ -19,9 +19,6 @@
 --><resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="contact">Liên hệ</string>
     <string name="info">Thông tin</string>
-    <string name="contribution">Đóng góp</string>
-    <string name="feedback">Phản hồi</string>
-    <string name="homepage">Trang chủ</string>
     <string name="about_description">Phiên bản Android của trình quản lý mật khẩu KeePass.</string>
     <string name="accept">Chấp nhận</string>
     <string name="add_entry">Thêm đề mục</string>
@@ -53,8 +50,6 @@
     <string name="content_description_add_group">Thêm nhóm</string>
     <string name="content_description_add_item">Thêm mục</string>
     <string name="content_description_file_information">Thông tin tệp</string>
-    <string name="content_description_credentials_information">Thông tin đăng nhập</string>
-    <string name="content_description_otp_information">Thông tin mật khẩu ­dùng một lần</string>
     <string name="content_description_password_checkbox">Hộp kiểm mật khẩu</string>
     <string name="content_description_keyfile_checkbox">Hộp kiểm tệp khóa</string>
     <string name="content_description_hardware_key_checkbox">Hộp kiểm khóa phần cứng</string>
@@ -87,9 +82,6 @@
     <string name="decrypting_db">Đang giải mã nội dung dữ liệu…</string>
     <string name="default_checkbox">Đặt làm dữ liệu mặc định</string>
     <string name="digits">Chữ số</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft là &lt;strong&gt;phần mềm mã nguồn mở&lt;/strong&gt; và &lt;strong&gt;không có quảng cáo&lt;/strong&gt;.\nNó được cung cấp nguyên trạng theo giấy phép &lt;strong&gt;GPLv3&lt;/strong&gt;, không có bất kỳ sự bảo đảm nào.</string>
-    <string name="html_about_privacy">&lt;strong&gt;Không có dữ liệu người dùng nào được truy xuất&lt;/strong&gt;, ứng dụng này không kết nối với bất kỳ máy chủ nào, chỉ hoạt động cục bộ và hoàn toàn tôn trọng quyền riêng tư của người dùng.</string>
-    <string name="html_about_contribution">Để &lt;strong&gt;giữ quyền tự do của chúng ta&lt;/strong&gt;, &lt;strong&gt;sửa lỗi&lt;/strong&gt;, &lt;strong&gt;thêm tính năng&lt;/strong&gt; và &lt;strong&gt;để luôn hoạt động&lt;/strong&gt;, chúng tôi tin tưởng vào &lt;strong&gt;đóng góp của bạn&lt;/strong&gt;.</string>
     <string name="entry_accessed">Đã truy cập</string>
     <string name="entry_cancel">Hủy</string>
     <string name="entry_notes">Ghi chú</string>
@@ -261,7 +253,6 @@
     <string name="menu_security_settings_summary">Mã hóa, hàm dẫn xuất khóa</string>
     <string name="menu_master_key_settings">Thiết lập khóa chính</string>
     <string name="master_key_settings_summary">Thay đổi, gia hạn</string>
-    <string name="menu_donate">Quyên góp</string>
     <string name="menu_edit">Chỉnh sửa</string>
     <string name="menu_copy">Sao chép</string>
     <string name="menu_move">Di chuyển</string>
@@ -284,7 +275,6 @@
     <string name="menu_empty_recycle_bin">Dọn sạch thùng rác</string>
     <string name="menu_restore_entry_history">Khôi phục lịch sử</string>
     <string name="menu_delete_entry_history">Xóa lịch sử</string>
-    <string name="menu_external_icon">Biểu tượng bên ngoài</string>
     <string name="minus">Dấu trừ</string>
     <string name="never">Không bao giờ</string>
     <string name="no_results">Không có kết quả tìm kiếm</string>
@@ -407,7 +397,6 @@
     <string name="general">Tổng quan</string>
     <string name="autofill">Tự động điền</string>
     <string name="autofill_sign_in_prompt">Đăng nhập bằng KeePassDX</string>
-    <string name="autofill_explanation_summary">Tùy chỉnh tự động điền để nhanh chóng điền vào biểu mẫu trong các ứng dụng khác</string>
     <string name="autofill_select_entry">Chọn mục…</string>
     <string name="set_credential_provider_service_title">Đặt dịch vụ tự động điền mặc định</string>
     <string name="autofill_preference_title">Thiết lập tự động điền</string>
@@ -417,7 +406,6 @@
     <string name="list_password_generator_options_summary">Đặt các ký tự tạo mật khẩu được phép</string>
     <string name="database_opened">Đã mở dữ liệu</string>
     <string name="clipboard">Bảng nhớ tạm</string>
-    <string name="clipboard_explanation_summary">Sao chép các vùng của đề mục bằng bảng ghi tạm của thiết bị</string>
     <string name="clipboard_warning">Nếu việc xóa tự động bảng nhớ tạm không thành công, hãy xóa lịch sử của nó theo cách thủ công.</string>
     <string name="lock">Khóa</string>
     <string name="lock_database_screen_off_title">Khóa màn hình</string>
@@ -430,7 +418,6 @@
     <string name="unlock">Mở khóa</string>
     <string name="device_unlock">Mở khóa thiết bị</string>
     <string name="device_unlock_tap_delete">Nhấn để xóa phím mở khóa thiết bị</string>
-    <string name="device_unlock_explanation_summary">Sử dụng khóa thiết bị để mở dữ liệu dễ dàng hơn</string>
     <string name="biometric_unlock_enable_title">Mở khóa sinh trắc học</string>
     <string name="biometric_unlock_enable_summary">Cho phép bạn quét sinh trắc học của mình để mở dữ liệu</string>
     <string name="device_credential_unlock_enable_title">Mở khóa thông tin xác thực thiết bị</string>
@@ -496,7 +483,6 @@
     <string name="templates">Mẫu</string>
     <string name="keyboard">Bàn phím</string>
     <string name="magic_keyboard_title">Bàn phím Magi</string>
-    <string name="magic_keyboard_explanation_summary">Kích hoạt bàn phím tùy chỉnh để điền mật khẩu và tất cả các vùng được nhận dạng</string>
     <string name="device_keyboard_setting_title">Thiết lập bàn phím thiết bị</string>
     <string name="keyboard_name">Bàn phím Magi</string>
     <string name="keyboard_label">Bàn phím Magi (KeePassDX)</string>
@@ -600,21 +586,7 @@
     <string name="education_lock_summary">Khóa dữ liệu của bạn một cách nhanh chóng, bạn có thể thiết lập ứng dụng để khóa nó sau một thời gian và khi màn hình tắt.</string>
     <string name="education_sort_title">Sắp xếp mục</string>
     <string name="education_sort_summary">Chọn cách sắp xếp các mục và nhóm.</string>
-    <string name="education_donation_title">Tham gia</string>
-    <string name="education_donation_summary">Giúp tăng tính ổn định, bảo mật và bổ sung thêm nhiều tính năng hơn.</string>
-    <string name="html_text_ad_free">Không giống như nhiều ứng dụng quản lý mật khẩu, ứng dụng này &lt;strong&gt;không có quảng cáo&lt;/strong&gt;, &lt;strong&gt;phần mềm tự do được sao chép&lt;/strong&gt; và không thu thập dữ liệu cá nhân trên máy chủ của nó, bất kể bạn sử dụng phiên bản nào.</string>
-    <string name="html_text_buy_pro">Bằng cách mua phiên bản chuyên nghiệp, bạn sẽ có quyền truy cập vào &lt;strong&gt;phong cách trực quan&lt;/strong&gt; và bạn sẽ đặc biệt giúp &lt;strong&gt;thực hiện các dự án cộng đồng.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">&lt;strong&gt;phong cách trực quan&lt;/strong&gt; có sẵn nhờ vào sự hào phóng của bạn.</string>
-    <string name="html_text_donation">Để &lt;strong&gt;đóng góp&lt;/strong&gt; cho dự án &lt;i&gt;( về mặt tài chính, mã nguồn, phiên dịch)&lt;/i&gt;, bạn sẽ giúp nó tiếp tục phát triển lớn mạnh, và bạn cũng sẽ được tiếp cận quy trình mở khóa &lt;strong&gt;các giao diện&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Tính năng này &lt;strong&gt;đang được phát triển&lt;/strong&gt; và yêu cầu &lt;strong&gt;sự đóng góp của bạn&lt;/strong&gt; để sớm được khả dụng.</string>
-    <string name="html_text_dev_feature_buy_pro">Bằng cách mua phiên bản &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">Bằng cách &lt;strong&gt;đóng góp&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">bạn đang khuyến khích các nhà phát triển tạo &lt;strong&gt;các tính năng mới&lt;/strong&gt; và &lt;strong&gt;sửa lỗi&lt;/strong&gt; theo nhận xét của bạn.</string>
-    <string name="html_text_dev_feature_thanks">Cảm ơn rất nhiều vì sự đóng góp của bạn.</string>
-    <string name="html_text_dev_feature_work_hard">Chúng tôi đang nỗ lực để phát hành tính năng này một cách nhanh chóng.</string>
-    <string name="html_text_dev_feature_upgrade">Hãy nhớ cập nhật ứng dụng của bạn bằng cách cài đặt các phiên bản mới.</string>
     <string name="download">Tải xuống</string>
-    <string name="contribute">Đóng góp</string>
     <string name="download_attachment">Tải xuống %1$s</string>
     <string name="upload_attachment">Tải lên %1$s</string>
     <string name="download_initialization">Đang khởi tạo…</string>
@@ -742,7 +714,6 @@
     <string name="warning_overwrite_data_title">Ghi đè dữ liệu có sẵn?</string>
     <string name="credential_provider">Nhà cung cấp thông tin</string>
     <string name="passkeys">Khóa truy cập</string>
-    <string name="passkeys_explanation_summary">Thiết lập khóa truy cập để đăng nhập nhanh và bảo mật</string>
     <string name="passkeys_privileged_apps_title">Ứng dụng có quyền hạn cao</string>
     <string name="passkeys_privileged_apps_summary">Quản lý trình duyệt trong danh sách các ứng dụng có quyền hạn cao</string>
     <string name="passkeys_privileged_apps_explanation">CẢNH BÁO: Một ứng dụng có quyền hạn cao đóng vai trò như một vật thể có thể ghi chép nguồn gốc của một bộ xác thực. Hãy đảm bảo rằng chúng đáng tin để tránh các rủi ro bảo mật.</string>

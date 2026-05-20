@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  /*
+  **
+  ** Copyright 2008, The Android Open Source Project
+  **
+  ** Licensed under the Apache License, Version 2.0 (the "License");
+  ** you may not use this file except in compliance with the License.
+  ** You may obtain a copy of the License at
+  **
+  **     http://www.apache.org/licenses/LICENSE-2.0
+  **
+  ** Unless required by applicable law or agreed to in writing, software
+  ** distributed under the License is distributed on an "AS IS" BASIS,
+  ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ** See the License for the specific language governing permissions and
+  ** limitations under the License.
+  */
+-->
+
+<resources>
+  <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
+  <string name="english_ime_input_options">Opciones de entrada</string>
+  <!-- Option to provide vibrate/haptic feedback on keypress -->
+  <string name="vibrate_on_keypress">Vibrar al pulsar</string>
+  <!-- Option to play back sound on keypress in soft keyboard -->
+  <string name="sound_on_keypress">Sonar al pulsar</string>
+  <!-- Option to enable auto capitalization of sentences -->
+  <string name="auto_cap">Mayúsculas automáticas</string>
+  <!-- Option to edit personal dictionary. [CHAR_LIMIT=30] -->
+  <string name="edit_personal_dictionary">Diccionario personal</string>
+  <!-- Option to block potentially offensive words to be shown [CHAR_LIMIT=30] -->
+  <string name="prefs_block_potentially_offensive_title">Bloquear palabras ofensivas</string>
+  <!-- Summary for option to block potentially offensive words to be shown [CHAR_LIMIT=80 (two lines) or 40 (fits on one line, preferable)] -->
+  <string name="prefs_block_potentially_offensive_summary">No sugerir palabras potencialmente ofensivas</string>
+  <!-- Title for input language selection screen -->
+  <string name="language_selection_title">Idiomas</string>
+  <!-- Preference for input language selection -->
+  <string name="select_language">Idiomas</string>
+  <!-- Standard message to dismiss a dialog box -->
+  <string name="cancel">Cancelar</string>
+  <!-- Title of the button in a dialog box. The button takes the user to the keyboard settings. [CHAR LIMIT=15] -->
+  <string name="go_to_settings">Ajustes</string>
+  <!-- Action to download and install a dictionary [CHAR_LIMIT=15] -->
+  <string name="install_dict">Instalar</string>
+  <!-- Action to cancel the ongoing download of a dictionary file [CHAR_LIMIT=25] -->
+  <string name="cancel_download_dict">Cancelar</string>
+  <!--
+    User dictionary settings. The title of the menu item to add a new word to the user dictionary.
+
+    This resource is corresponding to  msgid="4056762757149923551"
+  -->
+  <string name="user_dict_settings_add_menu_title">Agregar</string>
+  <!--
+    User dictionary settings. The title of the dialog to add a new word to the user dictionary. [CHAR LIMIT=25]
+
+    This resource is corresponding to msgid="4702613990174126482"
+  -->
+  <string name="user_dict_settings_add_dialog_title">Agregar al diccionario</string>
+  <!--
+    User dictionary settings. Text on the dialog button to pop more options for adding a word. [CHAR LIMIT=16]
+
+    This resource is corresponding to msgid="8848798370746019825"
+  -->
+  <string name="user_dict_settings_add_dialog_more_options">Más opciones</string>
+  <!--
+    User dictionary settings. Text on the dialog button mask advanced options. [CHAR LIMIT=15]
+
+    This resource is corresponding to msgid="2441785268726036101"
+  -->
+  <string name="user_dict_settings_add_dialog_less_options">Menos opciones</string>
+  <!--
+    User dictionary settings. Label to put before the language field. [CHAR LIMIT=20]
+
+    This resource is corresponding to msgid="5696358317061318532"
+  -->
+  <string name="user_dict_settings_add_locale_option_name">Idioma:</string>
+  <!--
+    User dictionary settings. Hint for the text field to type the word to add to the user dictionary. [CHAR LIMIT=35]
+
+    This resource is corresponding to msgid="5725254076556821247"
+  -->
+  <string name="user_dict_settings_add_word_hint">Escribe una palabra</string>
+  <!--
+    User dictionary settings. The title of the dialog to edit an existing word in the user dictionary.
+
+    This resource is corresponding to msgid="8967476444840548674"
+  -->
+  <string name="user_dict_settings_edit_dialog_title">Editar palabra</string>
+  <!--
+    User dictionary settings. The title of the context menu item to edit the current word
+
+    This resource is corresponding to msgid="2210564879320004837"
+  -->
+  <string name="user_dict_settings_context_menu_edit_title">Editar</string>
+  <!--
+    User dictionary settings. The title of the context menu item to delete the current word
+
+    This resource is corresponding to msgid="9140703913776549054"
+  -->
+  <string name="user_dict_settings_context_menu_delete_title">Eliminar</string>
+  <!--
+    User dictionary settings. The list item to choose to insert a word into the user dictionary for all languages
+
+    This resource is corresponding to msgid="6742000040975959247"
+  -->
+  <string name="user_dict_settings_all_languages">Para todos los idiomas</string>
+  <!--
+    User dictionary settings. The text to show for the option that shows the entire list of supported locales to choose one [CHAR LIMIT=30]
+
+    This resource is corresponding to msgid="7316375944684977910"
+  -->
+  <string name="user_dict_settings_more_languages">Más idiomas…</string>
+  <!--
+    User dictionary settings. Label to delete an entry in the user dictionary [CHAR LIMIT=30]
+    This resource is copied from packages/apps/Settings/res/values/strings.xml
+
+    This resource is corresponding to msgid="4219243412325163003"
+  -->
+  <string name="user_dict_settings_delete">Eliminar</string>
+</resources>

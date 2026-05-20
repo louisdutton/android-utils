@@ -89,7 +89,7 @@ abstract class DatabaseActivity : StylishActivity(), DatabaseRetrieval {
     ) : ActivityResultLauncher<Intent>() {
 
         override fun launch(
-            input: Intent?,
+            input: Intent,
             options: ActivityOptionsCompat?
         ) {
             credentialResultLaunched = true
@@ -100,9 +100,8 @@ abstract class DatabaseActivity : StylishActivity(), DatabaseRetrieval {
             builder.unregister()
         }
 
-        override fun getContract(): ActivityResultContract<Intent?, *> {
-            return builder.getContract()
-        }
+        override val contract: ActivityResultContract<Intent, *>
+            get() = builder.contract
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -246,7 +245,12 @@ abstract class DatabaseActivity : StylishActivity(), DatabaseRetrieval {
                         // Save the temp parameters to ask the permission
                         tempServiceParameters.add(Pair(bundle, actionTask))
                         requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                    }.create().show()
+                    }
+                    .setOnCancelListener {
+                        startDatabaseService(bundle, actionTask)
+                    }
+                    .create()
+                    .show()
             }
         } else {
             startDatabaseService(bundle, actionTask)

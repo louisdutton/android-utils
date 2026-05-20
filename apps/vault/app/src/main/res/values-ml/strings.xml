@@ -55,7 +55,6 @@
     <string name="menu_delete">ഇല്ലാതാക്കുക</string>
     <string name="menu_move">നീക്കുക</string>
     <string name="menu_copy">പകർത്തുക</string>
-    <string name="menu_donate">സംഭാവനചെയ്യുക</string>
     <string name="menu_edit">തിരുത്തുക</string>
     <string name="menu_app_settings">അപ്ലിക്കേഷൻ ക്രമീകരണങ്ങൾ</string>
     <string name="settings">ക്രമീകരണങ്ങൾ</string>
@@ -114,14 +113,10 @@
     <string name="application">ആപ്</string>
     <string name="security">സുരക്ഷ</string>
     <string name="master_key">മാസ്റ്റർ കീ</string>
-    <string name="homepage">ഹോം പേജ്</string>
-    <string name="feedback">അഭിപ്രായം</string>
-    <string name="contribution">സംഭാവന</string>
     <string name="accept">അംഗീകരിക്കുക</string>
     <string name="error_wrong_length">\"ദൈർഘ്യം\" ഫീൽഡിൽ ഒരു പോസിറ്റീവ് നമ്പർ നൽകുക.</string>
     <string name="error_pass_gen_type">ഒരു പാസ്‌വേഡ് ജനറേഷൻ തരമെങ്കിലും തിരഞ്ഞെടുക്കണം.</string>
     <string name="otp_counter">കൌണ്ടർ</string>
-    <string name="html_about_contribution">ഞങ്ങളുടെ &lt;strong&gt;സ്വാതന്ത്ര്യം നിലനിർത്തുന്നതിനും&lt;/strong&gt;, &lt;strong&gt; ബഗുകൾ പരിഹരിക്കുന്നതിനും&lt;/strong&gt;, &lt;strong&gt;സവിശേഷതകൾ ചേർക്കുന്നതിനും &lt;/strong&gt;, എല്ലായ്പ്പോഴും&lt;strong&gt;സജീവമായിരിക്കുന്നതിനും&lt;/strong&gt;, നിങ്ങളുടെ &lt;strong&gt;സംഭാവന&lt;/strong&gt; ഞങ്ങൾ കണക്കാക്കുന്നു.</string>
     <string name="error_create_database_file">ഈ പാസ്‌വേഡും കീഫയലും ഉപയോഗിച്ച് ഡാറ്റാബേസ് സൃഷ്ടിക്കാൻ കഴിയില്ല.</string>
     <string name="error_copy_group_here">നിങ്ങൾക്ക് ഇവിടെ ഒരു ഗ്രൂപ്പ് പകർത്താൻ കഴിയില്ല.</string>
     <string name="error_copy_entry_here">നിങ്ങൾക്ക് ഇവിടെ ഒരു എൻ‌ട്രി പകർ‌ത്താൻ‌ കഴിയില്ല.</string>
@@ -169,8 +164,6 @@
     <string name="content_description_file_information">ഫയലിനെക്കുറിച്ചുള്ള വിവരം</string>
     <string name="content_description_background">ബാക്ക്ഗ്രൗണ്ട്</string>
     <string name="brackets">ബ്രാക്കറ്റുകൾ</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft is &lt;strong&gt;ഓപ്പൺ സോഴ്‌സും&lt;/strong&gt; and &lt;strong&gt;പരസ്യം ഇല്ലാത്ത&lt;/strong&gt;.
-\nIt is provided as is, under &lt;strong&gt;GPLv3&lt;/strong&gt; license, without any warranty.</string>
     <string name="warning_empty_password">പാസ്‌വേഡ് അൺലോക്കുചെയ്യൽ പരിരക്ഷയില്ലാതെ തുടരുക\?</string>
     <string name="icon_pack_choose_title">ഐക്കൺ സമാഹാരം</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
@@ -184,7 +177,6 @@
     <string name="icon_pack_choose_summary">ആപ്പിൽ ഉപയോഗിച്ചിരിക്കുന്ന ഐക്കൺ പാക്ക്</string>
     <string name="style_choose_title">അപ്പ്ലിക്കേഷന്റെ തീം</string>
     <string name="download_finalization">അന്തിമമാക്കുന്നു. . .</string>
-    <string name="html_text_dev_feature_thanks">നിങ്ങളുടെ സംഭാവനയ്ക്ക് ഒരുപാട് നന്ദി.</string>
     <string name="education_unlock_title">ഡാറ്റാബേസ് തുറക്കുക</string>
     <string name="education_setup_OTP_title">OTP സജ്ജമാക്കുക</string>
     <string name="education_entry_new_field_title">ഇഷ്‌ടാനുസൃത ഫീൽഡുകൾ ചേർക്കുക</string>
@@ -227,7 +219,6 @@
     <string name="filter">ഫിൽട്ടർ</string>
     <string name="enable">പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="default_checkbox">സ്ഥിരസ്ഥിതി ഡാറ്റാബേസായി ഉപയോഗിക്കുക</string>
-    <string name="education_donation_title">പങ്കെടുക്കുക</string>
     <string name="uppercase">വലിയക്ഷരം</string>
     <string name="text_appearance">വാചകം</string>
     <string name="device_unlock">വിപുലമായ അൺലോക്ക്</string>
@@ -305,16 +296,8 @@
     <string name="keyboard_previous_database_credentials_title">ഡാറ്റാബേസ് ക്രെഡൻഷ്യലുകൾ സ്ക്രീൻ</string>
     <string name="autofill_application_id_blocklist_title">അപ്ലിക്കേഷൻ ബ്ലോക്ക്ലിസ്റ്റ്</string>
     <string name="autofill_web_domain_blocklist_title">വെബ് ഡൊമെയ്ൻ ബ്ലോക്ക്ലിസ്റ്റ്</string>
-    <string name="education_donation_summary">സ്ഥിരത, സുരക്ഷ എന്നിവ വർദ്ധിപ്പിക്കുന്നതിനും കൂടുതൽ സവിശേഷതകൾ ചേർക്കുന്നതിനും സഹായിക്കുക.</string>
-    <string name="html_text_feature_generosity">ഞങ്ങളുടെ സ്വാതന്ത്ര്യം നിലനിർത്തുന്നതിനും എല്ലായ്പ്പോഴും സജീവമായിരിക്കുന്നതിനും, നിങ്ങളുടെ&lt;strong&gt;സംഭാവനയെ ഞങ്ങൾ ആശ്രയിക്കുന്നു&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">ഈ സവിശേഷത&lt;strong&gt;വികസിച്ചുകൊണ്ടിരിക്കുന്നു&lt;/strong&gt;കൂടാതെ നിങ്ങളുടെ&lt;strong&gt;സംഭാവന&lt;/strong&gt;ഉടൻ ലഭ്യമാകേണ്ടതുണ്ട്.</string>
-    <string name="html_text_dev_feature_buy_pro">&lt;strong&gt;പ്രോ&lt;/strong&gt;വേർഷൻ വാങ്ങുന്നതിലൂടെ,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;സംഭാവന ചെയ്യുന്നതിലൂടെ&lt;/strong&gt;,</string>
     <string name="upload_attachment">%1$s അപ്‌ലോഡുചെയ്യുക</string>
     <string name="hide_expired_entries_title">കാലഹരണപ്പെട്ട എൻ‌ട്രികൾ‌ മറയ്‌ക്കുക</string>
-    <string name="contribute">സംഭാവന ചെയ്യുക</string>
-    <string name="html_text_dev_feature_upgrade">പുതിയ പതിപ്പ് ഇൻസ്റ്റാളുചെയ്യുന്നതിലൂടെ നിങ്ങളുടെ അപ്ലിക്കേഷൻ നിലനിർത്താൻ മറക്കരുത്.</string>
-    <string name="html_text_dev_feature_work_hard">ഈ സവിശേഷത വേഗത്തിൽ പുറത്തിറക്കാൻ ഞങ്ങൾ കഠിനമായി പരിശ്രമിക്കുന്നു.</string>
     <string name="education_add_attachment_title">അറ്റാച്ചുമെന്റ് ചേർക്കുക</string>
     <string name="education_search_title">എൻ‌ട്രികളിലൂടെ തിരയുക</string>
     <string name="reset_education_screens_title">വിദ്യാഭ്യാസ സൂചനകൾ പുനഃസജ്ജമാക്കുക</string>
@@ -328,13 +311,10 @@
     <string name="database_data_compression_title">ഡാറ്റ കംപ്രഷൻ</string>
     <string name="unavailable_feature_hardware">അനുബന്ധ ഹാർഡ്‌വെയർ കണ്ടെത്താൻ കഴിഞ്ഞില്ല.</string>
     <string name="biometric_unlock_enable_title">ബയോമെട്രിക് അൺലോക്കിംഗ്</string>
-    <string name="device_unlock_explanation_summary">ഒരു ഡാറ്റാബേസ് കൂടുതൽ എളുപ്പത്തിൽ തുറക്കാൻ വിപുലമായ അൺലോക്കിംഗ് ഉപയോഗിക്കുക</string>
     <string name="lock_database_show_button_summary">ഉപയോക്തൃ ഇന്റർഫേസിൽ ലോക്ക് ബട്ടൺ പ്രദർശിപ്പിക്കുക</string>
-    <string name="clipboard_explanation_summary">നിങ്ങളുടെ ഉപകരണത്തിന്റെ ക്ലിപ്പ്ബോർഡ് ഉപയോഗിച്ച് എൻട്രി ഫീൽഡുകൾ പകർത്തുക</string>
     <string name="list_password_generator_options_title">പാസ്‌വേഡ് പ്രതീകങ്ങൾ</string>
     <string name="password_size_summary">സൃഷ്ടിച്ച പാസ്‌വേഡുകളുടെ സ്ഥിരസ്ഥിതി വലുപ്പം സജ്ജമാക്കുക</string>
     <string name="set_credential_provider_service_title">സ്ഥിരസ്ഥിതി ഓട്ടോഫിൽ സേവനം സജ്ജമാക്കുക</string>
-    <string name="autofill_explanation_summary">മറ്റ് അപ്ലിക്കേഷനുകളിൽ ഫോമുകൾ വേഗത്തിൽ പൂരിപ്പിക്കുന്നതിന് ഓട്ടോഫില്ലിംഗ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="keystore_not_accessible">കീസ്റ്റോർ ശരിയായി സമാരംഭിച്ചിട്ടില്ല.</string>
     <string name="sort_recycle_bin_bottom">റീസൈക്കിൾ ബിൻ ചുവടെയുണ്ട്</string>
     <string name="root">റൂട്ട്</string>
@@ -357,7 +337,6 @@
     <string name="biometric_auto_open_prompt_title">ബിയോമെട്രിക് പ്രോംപ്റ്റ് സ്വയം തുറക്കുക</string>
     <string name="biometric_unlock_enable_summary">ഡാറ്റാബേസ് തുറക്കുന്നതിന് നിങ്ങളുടെ ബയോമെട്രിക്സ് സ്കാൻ ചെയ്യാം</string>
     <string name="warning_sure_remove_data">എന്തായാലും ഈ ഡാറ്റ നീക്കംചെയ്യണോ\?</string>
-    <string name="content_description_credentials_information">ക്രെഡൻഷ്യലുകളുടെ വിവരം</string>
     <string name="configure_biometric">ബയോമെട്രിക് അല്ലെങ്കിൽ ഉപകരണ ക്രെഡൻഷ്യലുകളൊന്നും എൻറോൾ ചെയ്തിട്ടില്ല.</string>
     <string name="show_uuid_title">UUID കാണിക്കുക</string>
     <string name="reset_education_screens_summary">എല്ലാ വിദ്യാഭ്യാസ വിവരങ്ങളും വീണ്ടും കാണിക്കുക</string>

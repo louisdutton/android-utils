@@ -49,8 +49,6 @@ import com.kunzisoft.keepass.otp.OtpElement.Companion.MIN_TOTP_PERIOD
 import com.kunzisoft.keepass.otp.OtpTokenType
 import com.kunzisoft.keepass.otp.OtpType
 import com.kunzisoft.keepass.otp.TokenCalculator
-import com.kunzisoft.keepass.utils.AppUtil.isContributingUser
-import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import java.util.Locale
 
@@ -215,9 +213,8 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                     android.R.layout.simple_spinner_item, mHotpTokenTypeArray!!).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
-            // Proprietary only on full version
             mTotpTokenTypeArray = OtpTokenType.getTotpTokenTypeValues(
-                activity.isContributingUser()
+                true
             )
             totpTokenTypeAdapter = ArrayAdapter(activity,
                     android.R.layout.simple_spinner_item, mTotpTokenTypeArray!!).apply {
@@ -253,10 +250,6 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                         .setNegativeButton(android.R.string.cancel) { _, _ ->
                             resetAppTimeout()
                         }
-            }
-
-            root?.findViewById<View>(R.id.otp_information)?.setOnClickListener {
-                activity.openUrl(R.string.otp_explanation_url)
             }
 
             return builder.create()

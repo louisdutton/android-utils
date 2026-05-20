@@ -213,15 +213,15 @@ class DeviceUnlockFragment: Fragment() {
                 } else if (cryptoPrompt.isDeviceCredentialOperation) {
                     context?.let { context ->
                         @Suppress("DEPRECATION")
-                        mDeviceCredentialResultLauncher?.launch(
-                            ContextCompat.getSystemService(
-                                context,
-                                KeyguardManager::class.java
-                            )?.createConfirmDeviceCredentialIntent(
-                                promptTitle,
-                                promptDescription
-                            )
-                        )
+                        ContextCompat.getSystemService(
+                            context,
+                            KeyguardManager::class.java
+                        )?.createConfirmDeviceCredentialIntent(
+                            promptTitle,
+                            promptDescription
+                        )?.let { intent ->
+                            mDeviceCredentialResultLauncher?.launch(intent)
+                        }
                     }
                 }
             } catch (e: Exception) {

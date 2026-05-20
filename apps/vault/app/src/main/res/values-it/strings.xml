@@ -19,8 +19,6 @@
     Italian translation by Diego Pierotto
     Italian translation by anthologist
 --><resources>
-    <string name="feedback">Commenti</string>
-    <string name="homepage">Pagina web</string>
     <string name="about_description">Implementazione Android del gestore password KeePass.</string>
     <string name="accept">Accetto</string>
     <string name="add_entry">Aggiungi elemento</string>
@@ -44,8 +42,6 @@
     <string name="decrypting_db">Decodifica contenuto database…</string>
     <string name="default_checkbox">Usa come database predefinito</string>
     <string name="digits">Numeri</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft è un programma &lt;strong&gt;open-source&lt;/strong&gt; e &lt;strong&gt;senza pubblicità&lt;/strong&gt;.
-\nViene distribuito sotto le condizioni della licenza &lt;strong&gt;GPL versione 3&lt;/strong&gt; o successiva, senza alcuna garanzia.</string>
     <string name="entry_notes">Note</string>
     <string name="select_database_file">Apri una cassaforte esistente</string>
     <string name="entry_accessed">Ultimo accesso</string>
@@ -99,7 +95,6 @@
     <string name="settings">Impostazioni</string>
     <string name="menu_database_settings">Impostazioni database</string>
     <string name="menu_delete">Elimina</string>
-    <string name="menu_donate">Dona</string>
     <string name="menu_edit">Modifica</string>
     <string name="menu_lock">Blocca database</string>
     <string name="menu_open">Apri</string>
@@ -177,7 +172,6 @@
     <string name="autofill">Autocompletamento</string>
     <string name="autofill_sign_in_prompt">Accedi con KeePassDX</string>
     <string name="set_credential_provider_service_title">Servizio predefinito di autocompletamento</string>
-    <string name="autofill_explanation_summary">Configura l\'autocompletamento per riempire velocemente i campi in altre app</string>
     <string name="password_size_title">Dimensione password generata</string>
     <string name="password_size_summary">Imposta la dimensione predefinita delle password generate</string>
     <string name="list_password_generator_options_title">Caratteri password</string>
@@ -213,7 +207,6 @@
     <string name="other">Altro</string>
     <string name="keyboard">Tastiera</string>
     <string name="magic_keyboard_title">Magitastiera</string>
-    <string name="magic_keyboard_explanation_summary">Attiva una tastiera personale che inserisce le tue password e i campi di identità</string>
     <string name="allow_no_password_title">Non consentire chiavi principali</string>
     <string name="allow_no_password_summary">Permetti di toccare il pulsante \"Apri\" se non sono selezionate credenziali</string>
     <string name="enable_education_screens_title">Suggerimenti educativi</string>
@@ -251,22 +244,7 @@
     <string name="education_lock_summary">Blocca velocemente il database, puoi impostare l\'applicazione per bloccarsi dopo un certo periodo e quando lo schermo si spegne.</string>
     <string name="education_sort_title">Ordine elementi</string>
     <string name="education_sort_summary">Scegli l\'ordine di elementi e gruppi.</string>
-    <string name="education_donation_title">Partecipa</string>
-    <string name="education_donation_summary">Aiuta a migliorare la stabilità, la sicurezza e ad aggiungere nuove funzioni.</string>
-    <string name="html_text_ad_free">Diversamente da molte app di gestione password, questa è &lt;strong&gt;senza pubblicità&lt;/strong&gt;, &lt;strong&gt;software libero (copyleft)&lt;/strong&gt; e non raccoglie dati personali nei suoi server, non importa quale versione usi.</string>
-    <string name="html_text_buy_pro">Acquistando la versione pro, avrai accesso a questo &lt;strong&gt;stile visivo&lt;/strong&gt; e soprattutto aiuterai nella &lt;strong&gt;realizzazione dei progetti della comunità.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Questo &lt;strong&gt;stile visivo&lt;/strong&gt; è disponibile grazie alla tua generosità.</string>
-    <string name="html_text_donation">Se &lt;strong&gt;contribuirai&lt;/strong&gt;al progretto &lt;i&gt;(tramite una donazione, del codice, una traduzione)&lt;/i&gt;, lo aiuterai a vivere e a prosperare, e avrai a disposizione anche la procedura di sblocco del &lt;strong&gt;tema&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Questa funzione è &lt;strong&gt;in sviluppo&lt;/strong&gt; e richiede il tuo &lt;strong&gt;contributo&lt;/strong&gt; per essere disponibile a breve.</string>
-    <string name="html_text_dev_feature_buy_pro">Acquistando la versione &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">
-        &lt;strong&gt;Contribuendo&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">stai incoraggiando gli sviluppatori a creare &lt;strong&gt;nuove funzionalità&lt;/strong&gt; e a &lt;strong&gt;correggere errori&lt;/strong&gt; in base alle tue osservazioni.</string>
-    <string name="html_text_dev_feature_thanks">Grazie mille per il tuo contributo.</string>
-    <string name="html_text_dev_feature_work_hard">Stiamo lavorando sodo per rilasciare questa funzione a breve.</string>
-    <string name="html_text_dev_feature_upgrade">Ricorda di tenere aggiornata l\'app installando le nuove versioni.</string>
     <string name="download">Scarica</string>
-    <string name="contribute">Contribuisci</string>
     <string name="style_choose_title">Tema dell\'app</string>
     <string name="style_choose_summary">Tema usato nell\'app</string>
     <string name="icon_pack_choose_title">Pacchetto di icone</string>
@@ -359,12 +337,10 @@
     <string name="auto_focus_search_title">Ricerca rapida</string>
     <string name="menu_delete_entry_history">Cancella cronologia</string>
     <string name="menu_restore_entry_history">Ripristina cronologia</string>
-    <string name="html_about_contribution">Per poter &lt;strong&gt;mantenere la nostra libertà&lt;/strong&gt;, &lt;strong&gt;correggere errori&lt;/strong&gt;, &lt;strong&gt;aggiungere funzionalità&lt;/strong&gt; ed &lt;strong&gt;essere sempre attivi&lt;/strong&gt;, facciamo affidamento sul tuo &lt;strong&gt;contributo&lt;/strong&gt;.</string>
     <string name="contact">Contatto</string>
     <string name="keystore_not_accessible">Il keystore non è inizializzato correttamente.</string>
     <string name="menu_master_key_settings">Impostazioni della chiave principale</string>
     <string name="master_key">Chiave principale</string>
-    <string name="contribution">Contributi</string>
     <string name="warning_database_read_only">Concedi il permesso di scrittura per salvare i cambiamenti del database</string>
     <string name="hide_broken_locations_summary">Nascondi collegamenti corrotti nella lista dei database recenti</string>
     <string name="hide_broken_locations_title">Nascondi link a database corrotti</string>
@@ -388,8 +364,6 @@
     <string name="database_data_compression_summary">La compressione dei dati riduce le dimensioni del database</string>
     <string name="database_data_compression_title">Compressione dati</string>
     <string name="biometric_auto_open_prompt_summary">Richiedi automaticamente lo sblocco con dispositivo se il database è impostato per usarlo</string>
-    <string name="device_unlock_explanation_summary">Utilizza lo sblocco con dispositivo per aprire un database più facilmente</string>
-    <string name="clipboard_explanation_summary">Copia i campi di immissione utilizzando gli appunti del tuo dispositivo</string>
     <string name="database_opened">Database aperto</string>
     <string name="biometric">Biometrico</string>
     <string name="settings_database_force_changing_master_key_title">Forza rinnovo</string>
@@ -456,7 +430,6 @@
     <string name="warning_file_too_big">Un database KeePass dovrebbe contenere solo piccoli file di utilità (come i file di chiavi PGP).
 \n
 \nIl tuo database può diventare molto grande e ridurre le prestazioni con questo caricamento.</string>
-    <string name="content_description_credentials_information">Info credenziali</string>
     <string name="show_uuid_summary">Visualizza l\'UUID collegato a una voce o a un gruppo</string>
     <string name="show_uuid_title">Mostra UUID</string>
     <string name="error_save_read_only">Il salvataggio dei dati non è consentito per un database aperto in sola lettura.</string>
@@ -520,7 +493,6 @@
     <string name="unit_mebibyte">MiB</string>
     <string name="unit_kibibyte">KiB</string>
     <string name="unit_byte">B</string>
-    <string name="content_description_otp_information">Info password usa e getta</string>
     <string name="icon_section_custom">Personalizzato</string>
     <string name="icon_section_standard">Standard</string>
     <string name="style_brightness_summary">Scegli un tema scuro o chiaro</string>
@@ -576,7 +548,6 @@
     <string name="holder">Titolare</string>
     <string name="debit_credit_card">Carta di debito / credito</string>
     <string name="template_group_name">Modelli</string>
-    <string name="menu_external_icon">Icona esterna</string>
     <string name="show_otp_token_summary">Mostra i token OTP nella lista delle voci</string>
     <string name="show_otp_token_title">Mostra token OTP</string>
     <string name="autofill_manual_selection_summary">Mostra l\'opzione che permette all\'utente di scegliere la voce nel database</string>
@@ -655,7 +626,6 @@
     <string name="error_empty_key">La chiave non può essere vuota.</string>
     <string name="enable_screenshot_mode_title">Modalità di cattura schermo</string>
     <string name="screenshot_mode_banner_text">Modalità di cattura schermo</string>
-    <string name="html_about_privacy">&lt;strong&gt;Nessun dato dell\'utente viene prelevato&lt;/strong&gt;, questa applicazione non si connette ad alcun server, funziona solo in locale e rispetta pienamente la privacy degli utenti.</string>
     <string name="auto_type">Auto-digita</string>
     <string name="merge_success">Unione completata correttamente</string>
     <string name="info">Info</string>
@@ -704,7 +674,6 @@
     <string name="warning_overwrite_data_description">Questa azione sostituirà i dati esistenti nella voce, puoi recuperare i vecchi dati se la cronologia è attiva.</string>
     <string name="credential_provider">Fornitore di credenziali</string>
     <string name="passkeys">Passkey</string>
-    <string name="passkeys_explanation_summary">Configura una passkey per un accesso veloce e sicuro senza password</string>
     <string name="passkeys_preference_title">Impostazioni passkey</string>
     <string name="passkeys_close_database_title">Chiudi database</string>
     <string name="passkeys_close_database_summary">Chiudi il database dopo la selezione di una passkey</string>
@@ -754,7 +723,6 @@
     <string name="password_creation_description">Salva la password in una nuova voce</string>
     <string name="password_selection_description">Seleziona una password esistente</string>
     <string name="error_password_result">Impossibile restituire la password</string>
-    <string name="content_description_user_verification_information">Info di verifica utente</string>
     <string name="user_verification_required_title">Verifica utente</string>
     <string name="user_verification_required_description">L\'accesso a questi dati richiede di verificare che sei effettivamente tu.</string>
     <string name="user_verification_database_credential">Inserisci i primi quattro caratteri della password del tuo database</string>

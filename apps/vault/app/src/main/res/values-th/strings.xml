@@ -2,8 +2,6 @@
 <resources>
     <string name="encryption_algorithm">อัลกอริทึมของการเข้ารหัส</string>
     <string name="encryption">การเข้ารหัส</string>
-    <string name="contribution">ร่วมพัฒนา</string>
-    <string name="feedback">ข้อเสนอแนะ</string>
     <string name="about_description">แอปจัดการรหัสผ่านแบบ คียพาส ในรุ่น เเอนดรอย.</string>
     <string name="accept">ยอมรับ</string>
     <string name="add_group">เพิ่มกลุ่ม</string>
@@ -18,7 +16,6 @@
     <string name="entry_setup_otp">ตั้งค่ารหัสแบบใช้ครั้งเดียว</string>
     <string name="error_pass_match">รหัสผ่านไม่ตรงกัน</string>
     <string name="menu_app_settings">การตั้งค่าแอป</string>
-    <string name="homepage">หน้าหลัก</string>
     <string name="security">ความปลอดภัย</string>
     <string name="app_timeout_summary">ระยะเวลาที่ไม่ได้ใช้งานก่อนที่จะทำการล็อกฐานข้อมูล</string>
     <string name="settings">การตั้งค่า</string>
@@ -61,8 +58,6 @@
     <string name="content_description_add_group">เพิ่มกลุ่ม</string>
     <string name="content_description_add_item">เพิ่มรายการ</string>
     <string name="content_description_file_information">ข้อมูลไฟล์</string>
-    <string name="content_description_credentials_information">ข้อมูลประจำตัว</string>
-    <string name="content_description_otp_information">ข้อมูลรหัสแบบใช้ครั้งเดียว</string>
     <string name="content_description_password_checkbox">ช่องทำเครื่องหมายรหัสผ่าน</string>
     <string name="content_description_hardware_key_checkbox">ช่องทำเครื่องหมายกุญแจฮาร์ดแวร์</string>
     <string name="content_description_entry_icon">ไอคอนรายการ</string>
@@ -91,7 +86,6 @@
     <string name="loading_database">กำลังเปิดฐานข้อมูล…</string>
     <string name="device_unlock_prompt_extract_credential_title">เปิดฐานข้อมูลด้วยการปลดล็อกด้วยอุปกรณ์</string>
     <string name="waiting_challenge_response">กำลังรอการตอบกลับจากกุญแจฮาร์ดแวร์…</string>
-    <string name="html_about_licence">แอป คียพาสดีเอ็กซ์ © %1$d คุนซีซอฟต์ เป็นแอป &lt;strong&gt;โอเพนซอร์ซ&lt;/strong&gt; และ &lt;strong&gt;ไม่มีโฆษณา&lt;/strong&gt;.  \nจัดให้ตามสภาพที่เป็นอยู่ ภายใต้เงื่อนไข&lt;strong&gt;จีพีเอลรุ่น3&lt;/strong&gt; ลิขสิทธิ์, ปราศจากการรับประกันใดๆ.</string>
     <string name="ssid">SSID</string>
     <string name="account">บัญชี</string>
     <string name="bank">ธนาคาร</string>
@@ -129,7 +123,6 @@
     <string name="menu_form_filling_settings">การกรอกแบบฟอร์ม</string>
     <string name="menu_database_settings">การตั้งค่าฐานข้อมูล</string>
     <string name="menu_security_settings">การตั้งค่าความปลอดภัย</string>
-    <string name="menu_donate">บริจาค</string>
     <string name="menu_edit">แก้ไข</string>
     <string name="menu_copy">คัดลอก</string>
     <string name="menu_paste">วาง</string>
@@ -155,7 +148,6 @@
     <string name="list_password_generator_options_summary">ตั้งชนิดอักขระรหัสผ่านที่อนุญาต</string>
     <string name="database_opened">เปิดฐานข้อมูลแล้ว</string>
     <string name="clipboard">คลิปบอร์ด</string>
-    <string name="clipboard_explanation_summary">คัดลอกเขตข้อมูลโดยใช้คลิปบอร์ดบนอุปกรณ์ของคุณ</string>
     <string name="clipboard_warning">หากการลบข้อมูลในคลิปบอร์ดล้มเหลว โปรดลบข้อมูลออกจากประวัติด้วยตนเอง</string>
     <string name="lock_database_back_root_title">กด \'กลับ\' เพื่อล็อก</string>
     <string name="lock_database_show_button_summary">แสดงปุ่มล็อกในส่วนติดต่อของผู้ใช้</string>
@@ -190,13 +182,7 @@
     <string name="education_lock_summary">ล็อกฐานข้อมูลอย่างรวดเร็ว คุณสามารถตั้งค่าการล็อกมันหลังจากผ่านไปสักพัก และเมื่อปิดหน้าจอ</string>
     <string name="education_sort_title">จัดเรียงรายการ</string>
     <string name="education_sort_summary">เลือกรายการและกลุ่มที่จะถูกจัดเรียง</string>
-    <string name="html_text_donation">การ&lt;strong&gt;สนับสนุน&lt;/strong&gt;โครงการ &lt;i&gt;(ทางการเงิน รหัสโปรเเกรม หรือการแปล)&lt;/i&gt; จะช่วยให้โครงการนี้ดำเนินต่อไปและเติบโตได้ และคุณยังมีสิทธิ์เข้าร่วมขั้นตอนการปลดล็อก&lt;strong&gt;ลักษณะ&lt;/strong&gt;อีกด้วย</string>
-    <string name="html_text_dev_feature_encourage">คุณกำลังสนับสนุนให้นักพัฒนาสร้าง&lt;strong&gt;ฟีเจอร์ใหม่&lt;/strong&gt;และ&lt;strong&gt;แก้ไขข้อบกพร่อง&lt;/strong&gt;ตามที่คุณกล่าวไว้</string>
-    <string name="html_text_dev_feature_thanks">ขอขอบคุณสำหรับการร่วมแก้ไขของคุณเป็นอย่างมาก</string>
-    <string name="html_text_dev_feature_work_hard">เรากำลังทำงานหนักเพื่อปล่อยให้ใด้ใช้งานฟีเจอร์นี้โดยเร็วที่สุด</string>
-    <string name="html_text_dev_feature_upgrade">อย่าลืมปรับปรุงแอปให้ทันสมัยล่าสุดอยู่เสมอด้วยการติดตั้งรุ่นใหม่</string>
     <string name="download">ดาวน์โหลด</string>
-    <string name="contribute">ร่วมพัฒนา</string>
     <string name="download_attachment">ดาวน์โหลด %1$s</string>
     <string name="upload_attachment">อัปโหลด %1$s</string>
     <string name="download_initialization">กำลังเริ่ม…</string>
@@ -274,7 +260,6 @@
     <string name="no_results">ไม่มีผลการค้นหา</string>
     <string name="menu_restore_entry_history">กู้คืนประวัติ</string>
     <string name="menu_delete_entry_history">ลบประวัติ</string>
-    <string name="menu_external_icon">ไอคอนภายนอก</string>
     <string name="never">ไม่เลย</string>
     <string name="no_url_handler">ติดตั้งเว็บเบราว์เซอร์เพื่อเปิด URL นี้</string>
     <string name="auto_focus_search_summary">ขอการค้นหาเมื่อเปิดฐานข้อมูล</string>
@@ -400,7 +385,6 @@
     <string name="autofill_block">บล็อกการกรอกอัตโนมัติ</string>
     <string name="reset_education_screens_title">ล้างคำแนะนำการใช้งาน</string>
     <string name="reset_education_screens_summary">แสดงคำแนะนำการใช้งานอีกครั้ง</string>
-    <string name="html_text_dev_feature_contibute">โดยการ&lt;strong&gt;ร่วมแก้ไข&lt;/strong&gt;</string>
     <string name="education_setup_OTP_title">ตั้งค่า รหัสเบบใช้ครั้งเดียว</string>
     <string name="show_entry_colors_title">สีของรายการ</string>
     <string name="icon_pack_choose_summary">ชุดไอคอนที่ใช้ในแอป</string>
@@ -408,10 +392,8 @@
     <string name="style_choose_summary">ลักษณะที่ใช้ในแอป</string>
     <string name="style_choose_title">ลักษณะของแอป</string>
     <string name="education_read_only_title">ปกป้องฐานข้อมูลของคุณ</string>
-    <string name="education_donation_title">มีส่วนร่วม</string>
     <string name="warning_database_info_reloaded">การเปิดฐานข้อมูลซ้ำจะลบข้อมูลที่ถูกแก้ไขภายในเครื่อง</string>
     <string name="default_checkbox">ใช้เป็นฐานข้อมูลค่าเริ่มต้น</string>
-    <string name="html_about_privacy">&lt;strong&gt;ไม่มีการรวบรวมข้อมูลผู้ใช้งาน&lt;/strong&gt;, แอปพลิเคชั่นนี้ไม่ได้ติดต่อกับเซิร์ฟเวอร์ใดๆ ทำงานจำเพาะในอุปกรณ์เท่านั้น และเคารพความเป็นส่วนตัวของผู้ใช้งานอย่างเต็มที่</string>
     <string name="entry_created">ถูกสร้างแล้ว</string>
     <string name="date_of_issue">วันที่ออก</string>
     <string name="entry_notes">โน้ต</string>
@@ -485,7 +467,6 @@
     <string name="error_otp_period">ระยะเวลาต้องอยู่ระหว่าง %1$d และ %2$d วินาที</string>
     <string name="sort_title">หัวข้อ</string>
     <string name="warning_empty_keyfile">ไม่แนะนำให้เพิ่ม คีย์ไฟล์ ว่างเปล่า</string>
-    <string name="html_about_contribution">เพื่อที่จะ &lt;strong&gt;คงความเป็นอิสระ&lt;/strong&gt;, &lt;strong&gt;แก้ไขข้อผิดพลาด&lt;/strong&gt;, &lt;strong&gt;เพิ่มฟีเจอร์&lt;/strong&gt; และ &lt;strong&gt;ทำให้ยังพัฒนาอยู่เสมอ&lt;/strong&gt;, เรารอคุณมา&lt;strong&gt;ร่วมแก้ไข&lt;/strong&gt;อยู่</string>
     <string name="field_value">ค่าเขตข้อมูล</string>
     <string name="warning_database_info_changed">ข้อมูลที่อยู่ในไฟล์ฐานข้อมูลของคุณถูกแก้ไขจากภายนอกแอป</string>
     <string name="description_app_properties">คุณสมบัติของ คียพาสดีเอ็กซ์ เพื่อจัดการการตั้งค่าแอป</string>
@@ -516,14 +497,12 @@
     <string name="device_credential">ข้อมูลยืนยันตัวตนของอุปกรณ์</string>
     <string name="general">ทั่วไป</string>
     <string name="autofill">การกรอกอัตโนมัติ</string>
-    <string name="autofill_explanation_summary">เปิดการกรอกข้อมูลอัตโนมัติเพื่อกรอกข้อมูลในแอปอื่นได้อย่างรวดเร็ว</string>
     <string name="password_size_summary">ตั้งขนาดรหัสผ่านที่สร้างเริ่มต้น</string>
     <string name="lock_database_screen_off_title">หน้าจอล็อก</string>
     <string name="unavailable_feature_version">อุปกรณ์นี้เป็น เเอนดรอย %1$s, แต่ต้องการ %2$s ขึ้นไป</string>
     <string name="lock_database_screen_off_summary">ล็อกฐานข้อมูลหลังจากปิดหน้าจอในไม่กี่วินาที</string>
     <string name="lock_database_back_root_summary">ล็อกฐานข้อมูลเมื่อผู้ใช้กดปุ่ม\'กลับ\'บนหน้ารายการหน้าหลักฐานข้อมูล</string>
     <string name="device_unlock_tap_delete">แตะเพื่อลบกุญแจการปลดล็อกด้วยอุปกรณ์</string>
-    <string name="device_unlock_explanation_summary">ใช้การปลดล็อกด้วยอุปกรณ์เพื่อปลดล็อกฐานข้อมูลได้ง่ายขึ้น</string>
     <string name="biometric_unlock_enable_title">การปลดล็อกด้วยไบโอเมตริก</string>
     <string name="biometric_auto_open_prompt_title">เปิดหน้ายืนยันอัตโนมัติ</string>
     <string name="biometric_auto_open_prompt_summary">เปิดการร้องขอการปลดล็อกด้วยอุปกรณ์หากได้ตั้งค่าฐานข้อมูลไว้แล้ว</string>
@@ -558,7 +537,6 @@
     <string name="monospace_font_fields_enable_summary">เปลี่ยนแบบอักษรที่ใช้ในช่องเขตข้อมูลเพื่อให้มองเห็นตัวอักษรง่ายขึ้น</string>
     <string name="allow_copy_password_title">ไว้ใจคลิปบอร์ด</string>
     <string name="database_name_title">ชื่อฐานข้อมูล</string>
-    <string name="magic_keyboard_explanation_summary">เปิดใช้งานแป้นพิมพ์แบบพิเศษที่จะสำรวจช่องกรอกรหัสผ่านและข้อมูลอื่นๆ</string>
     <string name="allow_copy_password_summary">อนุญาตให้คัดลอกรหัสผ่านและเขตข้อมูลที่ป้องกันไว้เก็บในคลิปบอร์ด</string>
     <string name="allow_copy_password_warning">คำเตือน: คลิปบอร์ดถูกใช้ร่วมกันในทุกแอป หากข้อมูลละเอียดอ่อนถูกคัดลอกไป ซอฟท์แวร์อื่นอาจกู้มันกลับมาได้</string>
     <string name="database_default_username_title">ชื่อผู้ใช้เริ่มต้น</string>
@@ -610,12 +588,6 @@
     <string name="education_add_attachment_summary">อัปโหลดไฟล์แนบไปยังรายการของคุณเพื่อบันทึกข้อมูลภายนอกเพิ่มเติม</string>
     <string name="education_setup_OTP_summary">ตั้งค่ารหัสผ่านแบบใช้ครั้งเดียว (HOTP/TOTP) เพื่อสร้างโทเค็นสำหรับการตรวจสอบสิทธิ์สองปัจจัย (2FA)</string>
     <string name="education_field_copy_title">คัดลอกเขตข้อมูล</string>
-    <string name="education_donation_summary">ช่วยเพิ่มความเสถียร ความปลอดภัย และใส่ฟีเจอร์เข้าไปเพิ่มเติม</string>
-    <string name="html_text_ad_free">ไม่เหมือนแอปจัดการรหัสผ่านอื่นๆ แอปนี้&lt;strong&gt;เป็นซอฟท์แวร์แบบเสรี&lt;/strong&gt;, &lt;strong&gt;ปลอดโฆษณา&lt;/strong&gt; และไม่เก็บข้อมูลผู้ใช้ไว้บนเซิฟเวอร์ ไม่ว่าจะใช้เวอร์ชั่นอะไรก็ตาม</string>
-    <string name="html_text_buy_pro">โดยการซื้อรุ่นโปร คุณจะได้เข้าถึง &lt;strong&gt;ลักษณะของแอปที่มากขึ้น&lt;/strong&gt; และยังมีส่วนช่วย &lt;strong&gt;พัฒนาโครงการโดยชุมชนนี้ต่อไป&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">&lt;strong&gt;ลักษณะของแอป&lt;/strong&gt; นี้ใช้งานได้ ขอขอบคุณการสนับสนุนของคุณ</string>
-    <string name="html_text_dev_feature">ฟีเจอร์นี้ &lt;strong&gt;อยู่ในระหว่างการพัฒนา&lt;/strong&gt; และต้องการ &lt;strong&gt;ร่วมแก้ไข&lt;/strong&gt;ของคุณ และเปิดให้ใช้งานเร็วๆนี้</string>
-    <string name="html_text_dev_feature_buy_pro">โดยการซื้อรุ่น&lt;strong&gt;โปร&lt;/strong&gt;</string>
     <string name="merge_success">การควบรวมเสร็จสมบูรณ์</string>
     <string name="warning_database_notification_permission">การอนุญาตสิทธิ์แจ้งเตือนจะทำให้คุณเห็นสถานะของฐานข้อมูลและล็อกมันด้วยปุ่มที่เข้าถืงง่าย \n \nหากคุณไม่อนุญาตสิทธิ์นี้ ฐานข้อมูลที่เปิดในพื้นหลังจะไม่สามารถมองเห็นได้หากมีอีกแอปพลิเคชั่นอยู่ในพื้นหน้า</string>
     <string name="unlock_and_link_biometric">เชื่อมโยงการปลดล็อกของอุปกรณ์</string>
@@ -650,7 +622,6 @@
     <string name="hide_templates_summary">ไม่แสดงเเม่เเบบ</string>
     <string name="credential_provider">ผู้ให้บริการข้อมูลประจำตัว</string>
     <string name="credential_provider_service_subtitle">ผู้ให้บริการพาสคีย์และการป้อนข้อมูลประจำตัวอัตโนมัติ</string>
-    <string name="passkeys_explanation_summary">ตั้งค่าพาสคีย์เพื่อการเข้าสู่ระบบที่รวดเร็วและปลอดภัยยิ่งขึ้นโดยไม่ต้องกรอกรหัสผ่าน</string>
     <string name="passkeys_preference_title">การตั้งค่าพาสคีย์</string>
     <string name="passkeys_close_database_title">ปิดฐานข้อมูล</string>
     <string name="passkeys_close_database_summary">ปิดฐานข้อมูลหลังจากการเลือกพาสคีย์เรียบร้อยแล้ว</string>
@@ -709,7 +680,6 @@
     <string name="password_creation_description">บันทึกรหัสผ่านในรายการใหม่</string>
     <string name="password_selection_description">เลือกรหัสผ่านที่มีอยู่</string>
     <string name="error_password_result">ไม่สามารถส่งคืนรหัสผ่าน</string>
-    <string name="content_description_user_verification_information">ข้อมูลการยืนยันผู้ใช้</string>
     <string name="user_verification_required_title">การยืนยันผู้ใช้</string>
     <string name="user_verification_required_description">การเข้าถึงข้อมูลนี้จำเป็นต้องมีการตรวจสอบยืนยันว่าเป็นคุณจริง</string>
     <string name="user_verification_required_description_precise">%1$s จำเป็นต้องมีการตรวจสอบยืนยันว่าเป็นคุณจริง</string>

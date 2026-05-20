@@ -67,7 +67,7 @@ abstract class AuthenticationLauncherActivity: DatabaseLockActivity() {
 
     override fun onUnknownDatabaseRetrieved(database: ContextualDatabase?) {
         super.onUnknownDatabaseRetrieved(database)
-        // To manage https://github.com/Kunzisoft/KeePassDX/issues/2283
+        // Some credential-provider flows require verification even when the database default differs.
         val userVerificationForcedWhenPreferred = isUserVerificationForcedWhenPreferred(this)
         val userVerificationRequirement = intent.retrieveUserVerificationRequirement()
         val userVerificationNeeded = (userVerificationRequirement == UserVerificationRequirement.REQUIRED

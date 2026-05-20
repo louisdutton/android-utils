@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="homepage">Meie veebisait</string>
     <string name="about_description">KeePassi salasõnahalduri variant Androidile.</string>
     <string name="contact">Meie kontaktid</string>
     <string name="info">Teave</string>
@@ -13,8 +12,6 @@
     <string name="key_derivation_function">Võtmetuletusfunktsioon</string>
     <string name="app_timeout_summary">Ooteaeg enne andmebaasi lukustamist</string>
     <string name="application">Rakendus</string>
-    <string name="feedback">Tagasiside</string>
-    <string name="contribution">Toeta meid</string>
     <string name="add_entry">Lisa kirje</string>
     <string name="edit_entry">Muuda kirjet</string>
     <string name="app_timeout">Aegumine</string>
@@ -25,7 +22,6 @@
     <string name="content_description_open_file">Ava fail</string>
     <string name="content_description_add_entry">Lisa kirje</string>
     <string name="content_description_add_group">Lisa grupp</string>
-    <string name="content_description_otp_information">Ühekordse salasõna teave</string>
     <string name="content_description_entry_icon">Kirje ikoon</string>
     <string name="content_description_database_color">Andmebaasi värv</string>
     <string name="validate">Valideeri</string>
@@ -82,7 +78,6 @@
     <string name="content_description_password_checkbox">Salasõna märkeruut</string>
     <string name="content_description_keyfile_checkbox">Võtmefaili märekruut</string>
     <string name="content_description_hardware_key_checkbox">Füüsilise võtme märkruut</string>
-    <string name="content_description_credentials_information">Mandaatide info</string>
     <string name="content_description_nav_header">Navigatsiooni päis</string>
     <string name="retrieving_db_key">Laadin andmebaasi võtit…</string>
     <string name="content_description_passphrase_word_count">Sõnu salafraasis</string>
@@ -180,9 +175,6 @@
     <string name="file_manager_install_description">Andmebaasifailide loomiseks, avamiseks ja salvestamiseks on vajalik failihalduri olemasolu, mis oskaks kasutada ACTION_CREATE_DOCUMENT ja ACTION_OPEN_DOCUMENT päringuid.</string>
     <string name="navigation_drawer_open">Menüü on avatud</string>
     <string name="navigation_drawer_close">Menüü on suletud</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft on &lt;strong&gt;avatud lähtekoodiga&lt;/strong&gt; ja &lt;strong&gt;reklaamivaba&lt;/strong&gt;. \nSeda programmi levitatakse ilma igasuguse garantiita ning ta on litsentseeritud &lt;strong&gt;GPLv3&lt;/strong&gt; alusel.</string>
-    <string name="html_about_privacy">&lt;strong&gt;See rakendus ei laadi kasutajate andmeid&lt;/strong&gt;, ei loo ühendust ühegi serveriga, töötab nutiseadmes ainult kohalikus režiimis ja täies mahus austab kasutajate privaatsust.</string>
-    <string name="html_about_contribution">&lt;strong&gt;Meie vabaduse säilitamiseks&lt;/strong&gt;, &lt;strong&gt;vigade parandamiseks&lt;/strong&gt;, &lt;strong&gt;uue funktsionaalsuse lisamiseks&lt;/strong&gt; ning &lt;strong&gt;et olla alati tänapäevane&lt;/strong&gt;, me tõsiselt arvestame sinu &lt;strong&gt;kaastöö ja osalemisega&lt;/strong&gt;.</string>
     <string name="inherited">Päri</string>
     <string name="error_arc4">Arcfouri jadašiffer pole toetatud.</string>
     <string name="error_wrong_length">Väljale „Pikkus“ sisesta positiivne täisarv.</string>
@@ -236,7 +228,6 @@
     <string name="menu_empty_recycle_bin">Tühjenda prügikast</string>
     <string name="menu_restore_entry_history">Taasta ajalugu</string>
     <string name="menu_delete_entry_history">Kustuta ajalugu</string>
-    <string name="menu_external_icon">Väline ikoon</string>
     <string name="minus">Miinus</string>
     <string name="export_app_properties_summary">Rakenduse seadistuste importimiseks loo fail</string>
     <string name="list_size_title">Loendite suurus</string>
@@ -259,7 +250,6 @@
     <string name="menu_security_settings">Turvalisuse seadistused</string>
     <string name="menu_security_settings_summary">Krüptimine, võtmetuletuse funktsioon</string>
     <string name="master_key_settings_summary">Muutmine, uuendamine</string>
-    <string name="menu_donate">Toeta meid rahaliselt</string>
     <string name="menu_url">Ava võrguaadress</string>
     <string name="menu_file_selection_read_only">Kirjutuskaitstud</string>
     <string name="menu_open_file_read_and_write">Muudetav</string>
@@ -358,7 +348,6 @@
     <string name="filter">Filter</string>
     <string name="sort_menu">Järjesta</string>
     <string name="sort_db">Loomulikus järjekorras</string>
-    <string name="contribute">Osale</string>
     <string name="download_attachment">Laadi %1$s alla</string>
     <string name="upload_attachment">Laadi %1$s üles</string>
     <string name="download_initialization">Alustan allalaadimist…</string>
@@ -401,7 +390,6 @@
     <string name="properties">Omadused</string>
     <string name="menu_appearance_settings">Välimus</string>
     <string name="menu_appearance_settings_summary">Välimus, värvid, ikoonid, kirjatüübid, omadused</string>
-    <string name="html_text_dev_feature_upgrade">Ära unusta paigaldada viimaseid versioone ja tagada, et rakendus on alati uuendatud.</string>
     <string name="at_least_one_char">Vähemalt üks tähemärk igast</string>
     <string name="exclude_ambiguous_chars">Välista mitmetähenduslikud tähemärgid</string>
     <string name="consider_chars_filter">Arvesta tähemärkidega</string>
@@ -455,25 +443,21 @@
     <string name="education_unlock_title">Eemalda oma andmebaasi lukustus</string>
     <string name="education_unlock_summary">Oma andmebaasi lukustuse eemaldamiseks sisesta oma salasõna ja/või lukufail.\n\nPeale iga muudatust tee andmebaasifailist varukoopia mõnda turvalisse kohta.</string>
     <string name="education_read_only_title">Lisa oma andmebaasile kirjutuskaitse</string>
-    <string name="html_text_dev_feature_thanks">Suur tänu kaastöö eest.</string>
     <string name="permission">Õigused</string>
     <string name="configure_biometric">Ühtegi biomeetrilist ega seadmekohast autentimist pole kasutusel.</string>
     <string name="warning_database_info_changed_options">Sa võid kas andmed mestida, kirjutada välised muudatused üle või laadida viimased välised muudatused.</string>
     <string name="unlock_and_link_biometric">Seadme lukustuse eemaldamise link</string>
     <string name="later">Hiljem</string>
     <string name="credential_before_click_device_unlock_button">Sisesta salasõna ja siis klõpsi seda nuppu.</string>
-    <string name="html_text_dev_feature_work_hard">Me näeme hoolega vaeva, et see funktsionaalsus leiduks üsna pea mõnes rakenduse järgmises versioonis.</string>
     <string name="list_password_generator_options_title">Tähemärgid salasõnas</string>
     <string name="allow_copy_password_warning">Hoiatus: süsteemiülene lõikelaud on kõikide rakenduste kasutuses. Kui sa kopeerid sinna delikaatseid andmeid, siis muu tarkvara võib seda seal näha. Kui sa kasutad KDE Connecti või muud lõikelaua jagamise teenust, siis sõltuvalt seadistustest võivad need delikaatsed andmed olla nähtavad ka muudes seadmetes.</string>
     <string name="warning_database_revoked">Failihaldur on blokeerinud ligipääsu failile. Sulge andmebaas ja ava ta uuesti oma asukohast.</string>
     <string name="autofill_sign_in_prompt">Logi sisse KeePassDX abil</string>
-    <string name="autofill_explanation_summary">Täitmaks andmevorme teistes rakenduses, seadista automaattäite teenus</string>
     <string name="autofill_select_entry">Vali kirje…</string>
     <string name="set_credential_provider_service_title">Vali vaikimisi kasutatav automaattäite teenus</string>
     <string name="autofill_preference_title">Automaattäite teenuse seadistused</string>
     <string name="database_opened">Andmebaas on avatud</string>
     <string name="clipboard">Lõikelaud</string>
-    <string name="clipboard_explanation_summary">Kopeeri kirjeid kasutades oma nutiseadme lõikelauda</string>
     <string name="lock">Lukk</string>
     <string name="clipboard_warning">Kui lõikelaua automaatne kustutamine ei toimi, siis palun kustuta tema sisu käsitsi.</string>
     <string name="lock_database_show_button_summary">Liideses kuvame luku ikooni</string>
@@ -555,7 +539,6 @@
     <string name="device_unlock_prompt_store_credential_title">Link seadme lukustuse eemaldamisele</string>
     <string name="unlock">Ava lukustus</string>
     <string name="device_unlock_tap_delete">Seadme lukustuse eemaldamise võtmete kustutamiseks klõpsi</string>
-    <string name="device_unlock_explanation_summary">Andmebaasi mugavamaks avamiseks kasuta nutiseadme lukustuse eemaldamise võimalusi</string>
     <string name="device_credential_unlock_enable_title">Lukustuse eemaldamine nutiseadme autentimisega</string>
     <string name="biometric_unlock_enable_title">Biomeetriline lukustuse eemaldamine</string>
     <string name="biometric_unlock_enable_summary">Saad andmebaasi avamiseks kasutada nutiseadme biomeetrilise autentimise võimalusi</string>
@@ -575,8 +558,6 @@
     <string name="education_add_attachment_title">Manuste lisamine</string>
     <string name="education_add_attachment_summary">Kui soovid kirjesse kaasata väliseid olulisi andmeid, siis saad seda teha manuse lisamise abil.</string>
     <string name="education_sort_summary">Vali kirjete ja gruppide järjestamise viis.</string>
-    <string name="education_donation_title">Osale</string>
-    <string name="education_donation_summary">Aita parandada rakenduse töökindlust ja turvalisust ning lisada uusi funktsionaalsuseid.</string>
     <string name="temp_device_unlock_enable_title">Seadme lukustuse ajutine eemaldamine</string>
     <string name="biometric_auto_open_prompt_summary">Kui andmebaas on seadistatud kasutama nutiseadme-põhist lukustuse eemaldamist, siis ava autentimisvaade automaatselt</string>
     <string name="education_field_copy_title">Välja kopeerimine</string>
@@ -599,7 +580,6 @@
     <string name="device_keyboard_setting_title">Nutiseadme klahvistiku seadistused</string>
     <string name="keyboard_entry_category">Sisestus</string>
     <string name="keyboard_selection_entry_title">Sisestuse valik</string>
-    <string name="magic_keyboard_explanation_summary">Lülita sisse kohandatud klahvistik, mis eeltäidab sinu saalsõnad ja muud olulised väljad</string>
     <string name="keyboard_label">Maagiklahvistik (KeePassDX)</string>
     <string name="keyboard_name">Maagiklahvistik (Magikeyboard)</string>
     <string name="keyboard_setting_label">Maagiklahvistiku seadistused</string>
@@ -638,18 +618,10 @@
     <string name="education_validate_entry_title">Kirje kontrollimine ja salvestamine</string>
     <string name="education_entry_new_field_title">Omaloodud väljade lisamine</string>
     <string name="education_entry_new_field_summary">Registreeri täiendav väli, lisa sinna sisu ning soovi korral ka kaitse seda.</string>
-    <string name="html_text_buy_pro">Kui ostaksid, Pro-versiooni, siis saad võimaluse kasutada seda &lt;strong&gt;välimust&lt;/strong&gt; ja aitad oluliselt määral &lt;strong&gt;kogukonna projekte realiseerida.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">See &lt;strong&gt;välimus &lt;/strong&gt; on saadaval tänu sinu heldusele.</string>
-    <string name="html_text_dev_feature">Hetkel on see funktsionaalsus &lt;strong&gt;veel arendusjärgus&lt;/strong&gt; ja vajab lähiajal saadaval olemiseks sinu &lt;strong&gt;panust&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature_buy_pro">Ostes &lt;strong&gt;Pro-versiooni&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">või &lt;strong&gt;tehes kaastööd&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">julgustad sa arendajaid lisama &lt;strong&gt;uusi funktsionaalsusi&lt;/strong&gt; ja &lt;strong&gt;parandama vigu&lt;/strong&gt; vastavalt sinu vihjetele.</string>
     <string name="backspace">Tagasisammuklahv (Backspace)</string>
     <string name="education_setup_OTP_title">Seadista ühekordne salasõna</string>
     <string name="enter">Sisestusklahv (Enter)</string>
     <string name="education_validate_entry_summary">Ära unusta kirje sisu kontrollida ja salvestada.\n\nKui automaatne lukustus käivitub ja sa unustad, et muutmine oli pooleli, siis võid kaotada oma muudatused.</string>
-    <string name="html_text_ad_free">Erinevalt paljudest teistest salasõnahalduritest, on meie oma &lt;strong&gt;reklaamivaba&lt;/strong&gt; ja &lt;strong&gt;avatud lähtekoodiga vaba tarkvara&lt;/strong&gt;, mis ei kogu kasutajate isiklikke andmeid oma serveritesse ja seda kõikide versioonide puhul.</string>
-    <string name="html_text_donation">&lt;strong&gt;Aidates kaasa&lt;/strong&gt; selle projekti tegevusele &lt;i&gt;(rahaliselt, koodi kirjutades või tõlkides)&lt;/i&gt;, aitad kogu ettevõtmisel areneda ning soovi korral võid kasutada ka &lt;strong&gt;seda kujundust&lt;/strong&gt;.</string>
     <string name="device_unlock_keystore_warning">See funktsionaalsus salvestab krüptitud salasõnad ja kasutajanimed sinu nutiseadme turvalises võtmehoidlas.\n\nSõltuvalt sinu nutiseadme operatsioonisüstemi konkreetsest implementatsioonist, ei pruugi see lahendus siiski täismahus toimida.\n\nPalun kontrolli oma seadme võtmehoidla (KeyStore) ühilduvust ja turvalisust tootjalt ja/või tarkvara loojalt.</string>
     <string name="keyboard_previous_fill_in_summary">Peale tegevust „Automaatne võtmetoiming“ lülita automaatselt tagasi eelmisele klahvistikule</string>
     <string name="education_read_only_summary">Saad juhtida sessioonil kasutatavat avamisviisi.\n\n„Kirjutuskaitstud“ tagab, et juhuslike muudatustega ei läheks andmeid kaotsi.\n„Muudetav“ võimaldab sul lisada, kustutada või muuta kõiki andmebaasi kirjeid.</string>
@@ -661,7 +633,6 @@
     <string name="warning_overwrite_data_description">Selle toiminguga asendad kirje olemasolevad andmed, aga kui ajaloo logimine on kasutusel, siis saad vanu kirjeid ka hiljem näha.</string>
     <string name="credential_provider">kasutajanime/salasõna automaattäite teenus</string>
     <string name="passkeys">WebAuthn pääsuvõtmed</string>
-    <string name="passkeys_explanation_summary">Seadista WebAuthn pääsuvõtmed, mis võimaldavad kiiret ja turvalist salasõnadeta ligipääsu</string>
     <string name="passkeys_preference_title">Pääsuvõtmete seadistused</string>
     <string name="passkeys_close_database_summary">Peale pääsuvõtme valimist sulge andmebaas</string>
     <string name="passkeys_privileged_apps_title">Eesõigustega rakendused</string>
@@ -706,7 +677,6 @@
     <string name="first_chars">Esimesed tähemärgid</string>
     <string name="user_verification_required_title">Kasutaja verifitseerimine</string>
     <string name="user_verification_required_description">Ligipääs nendele andmetele eeldab tuvastamist, et tõesti on tegemist sinuga.</string>
-    <string name="content_description_user_verification_information">Kasutaja verifitseerimise teave</string>
     <string name="password_selection_description">Vali olemasolev salasõna</string>
     <string name="password_creation_description">Salvesta salasõna uues kirjes</string>
     <string name="error_password_result">Ei õnnestu salasõna juurde tagasi pööduda</string>

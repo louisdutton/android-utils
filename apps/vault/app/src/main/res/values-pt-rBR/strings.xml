@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Comentários</string>
-    <string name="homepage">Página inicial</string>
     <string name="about_description">Implementação do gerenciador de senhas KeePass no Android.</string>
     <string name="accept">Aceitar</string>
     <string name="add_entry">Adicionar entrada</string>
@@ -39,8 +37,6 @@
     <string name="decrypting_db">Descriptografando conteúdo do banco de dados…</string>
     <string name="default_checkbox">Usar como banco de dados padrão</string>
     <string name="digits">Dígitos</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft é de &lt;strong&gt;código aberto&lt;/strong&gt; e &lt;strong&gt;sem propagandas&lt;/strong&gt;.
-\nÉ fornecido no estado em que se encontra, sob licença &lt;strong&gt;GPLv3&lt;/strong&gt;, sem qualquer garantia.</string>
     <string name="select_database_file">Abrir cofre existente</string>
     <string name="entry_accessed">Acessado</string>
     <string name="entry_cancel">Cancelar</string>
@@ -88,7 +84,6 @@
     <string name="settings">Configurações</string>
     <string name="menu_database_settings">Configurações do banco de dados</string>
     <string name="menu_delete">Deletar</string>
-    <string name="menu_donate">Doar</string>
     <string name="menu_edit">Editar</string>
     <string name="menu_lock">Bloquear banco de dados</string>
     <string name="menu_open">Abrir</string>
@@ -177,7 +172,6 @@
     <string name="autofill">Preenchimento automático</string>
     <string name="autofill_sign_in_prompt">Entre com o KeePassDX</string>
     <string name="set_credential_provider_service_title">Definir serviço padrão de preenchimento automático</string>
-    <string name="autofill_explanation_summary">Configure o serviço para rapidamente preencher formulários em outros aplicativos</string>
     <string name="password_size_title">Comprimento da senha gerada</string>
     <string name="password_size_summary">Define o tamanho padrão para senhas geradas</string>
     <string name="list_password_generator_options_title">Caracteres da senha</string>
@@ -213,7 +207,6 @@
     <string name="other">Outros</string>
     <string name="keyboard">Teclado</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Ative um teclado customizado, populando suas senhas e todos os campos de identidade</string>
     <string name="allow_no_password_title">Permitir chave-mestra vazia</string>
     <string name="allow_no_password_summary">Permite tocar no botão \"Abrir\" mesmo se nenhuma credencial for selecionada</string>
     <string name="enable_education_screens_title">Dicas educacionais</string>
@@ -251,21 +244,7 @@
     <string name="education_lock_summary">Bloqueie seu banco de dados rapidamente, você pode parametrizar o aplicativo para bloqueá-lo depois de um tempo, e quando a tela se apaga.</string>
     <string name="education_sort_title">Ordenação de itens</string>
     <string name="education_sort_summary">Escolha como entradas e grupos são ordenados.</string>
-    <string name="education_donation_title">Participar</string>
-    <string name="education_donation_summary">Ajude a aumentar a estabilidade, segurança e na adição de mais recursos.</string>
-    <string name="html_text_ad_free">Ao contrário de muitos aplicativos de gerenciamento de senhas, este aplicativo é &lt;strong&gt;livre de anúncios&lt;/strong&gt;, &lt;strong&gt;livre de direitos autorais&lt;/strong&gt; e não coleta dados pessoais em seus servidores, mesmo em sua versão gratuita.</string>
-    <string name="html_text_buy_pro">Ao comprar a versão Pro, você terá acesso a este &lt;strong&gt;recurso visual&lt;/strong&gt; e ajudará especialmente a &lt;strong&gt;realização de projetos comunitários.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Este &lt;strong&gt;recurso visual&lt;/strong&gt; está disponível graças à sua generosidade.</string>
-    <string name="html_text_donation">Ao &lt;strong&gt;contribuir&lt;/strong&gt; com o projeto &lt;i&gt;(monetariamente, código, tradução)&lt;/i&gt;, você o ajudará a continuar vivo e a prosperar, e também estará qualificado para o procedimento de desbloqueio do &lt;strong&gt;tema&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Esse recurso está &lt;strong&gt;em desenvolvimento&lt;/strong&gt; e exige que sua &lt;strong&gt;contribuição&lt;/strong&gt; para que esteja disponível em breve.</string>
-    <string name="html_text_dev_feature_buy_pro">Ao comprar a versão &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;Contribuindo &lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">Você está incentivando os desenvolvedores a criar &lt;strong&gt;novos recursos&lt;/strong&gt; e a &lt;strong&gt;corrigir erros &lt;/strong&gt; de acordo com suas observações.</string>
-    <string name="html_text_dev_feature_thanks">Obrigado por sua contribuição.</string>
-    <string name="html_text_dev_feature_work_hard">Estamos trabalhando duro para lançar esse recurso o mais rápido possível.</string>
-    <string name="html_text_dev_feature_upgrade">Não se esqueça de instalar as novas versões para manter seu aplicativo atualizado.</string>
     <string name="download">Baixar</string>
-    <string name="contribute">Contribuir</string>
     <string name="style_choose_title">Tema do aplicativo</string>
     <string name="style_choose_summary">Tema usado no aplicativo</string>
     <string name="icon_pack_choose_title">Pacote de ícones</string>
@@ -357,8 +336,6 @@
     <string name="contains_duplicate_uuid">O banco de dados contém UUIDs duplicados.</string>
     <string name="contains_duplicate_uuid_procedure">Consertar o problema gerando nova UUIDs para duplicatas para continuar\?</string>
     <string name="database_opened">Banco de dados aberto</string>
-    <string name="clipboard_explanation_summary">Copie campos de entrada usando a área de transferência do seu dispositivo</string>
-    <string name="device_unlock_explanation_summary">Use o desbloqueio do dispositivo para abrir um banco de dados com mais facilidade</string>
     <string name="database_data_compression_title">Compressão dos dados</string>
     <string name="database_data_compression_summary">Compressão dos dados reduz o tamanho do banco de dados</string>
     <string name="max_history_items_title">Número máximo</string>
@@ -417,11 +394,9 @@
     <string name="error_create_database">Não foi possível criar o arquivo do banco de dados.</string>
     <string name="error_label_exists">Este rótulo já existe.</string>
     <string name="entry_attachments">Anexos</string>
-    <string name="html_about_contribution">Para &lt;strong&gt;manter nossa liberdade&lt;/strong&gt;, &lt;strong&gt;consertar erros&lt;/strong&gt;, &lt;strong&gt;adicionar recursos&lt;/strong&gt; e &lt;strong&gt;para estar sempre ativo&lt;/strong&gt;, contamos com sua &lt;strong&gt;contribuição&lt;/strong&gt;.</string>
     <string name="entry_add_attachment">Adicionar anexo</string>
     <string name="discard_changes">Descartar mudanças\?</string>
     <string name="validate">Validar</string>
-    <string name="contribution">Contribuição</string>
     <string name="upload_attachment">Upload %1$s</string>
     <string name="keyboard_previous_fill_in_summary">Retornar automaticamente para o teclado anterior após executar a \"ação de tecla automática\"</string>
     <string name="keyboard_previous_fill_in_title">Mudar de volta</string>
@@ -451,7 +426,6 @@
     <string name="subdomain_search_summary">Buscar por domínios na web com restrições de subdomínios</string>
     <string name="subdomain_search_title">Busca de subdomínio</string>
     <string name="error_string_type">Esse texto não coincide com o item requerido.</string>
-    <string name="content_description_credentials_information">Informações de credenciais</string>
     <string name="content_description_add_item">Adicionar item</string>
     <string name="autofill_block_restart">Reinicie o aplicativo que contém o formulário para ativar o bloqueio.</string>
     <string name="menu_keystore_remove_key">Excluir chave de desbloqueio do dispositivo</string>
@@ -496,7 +470,6 @@
     <string name="holder">Titular</string>
     <string name="debit_credit_card">Cartão de débito / crédito</string>
     <string name="template_group_name">Modelos</string>
-    <string name="content_description_otp_information">Informação de senha de uso único</string>
     <string name="device_credential">Credencial do dispositivo</string>
     <string name="properties">Propriedades</string>
     <string name="credential_before_click_device_unlock_button">Digite a senha e clique neste botão.</string>
@@ -524,7 +497,6 @@
     <string name="import_app_properties_title">Importar as configurações do aplicativo</string>
     <string name="save_mode">Modo salvar</string>
     <string name="search_mode">Modo busca</string>
-    <string name="menu_external_icon">Ícone externo</string>
     <string name="show_otp_token_summary">Exibe tokens OTP na lista de entradas</string>
     <string name="show_otp_token_title">Mostrar token OTP</string>
     <string name="show_uuid_summary">Exibe o UUID vinculado a uma entrada ou grupo</string>
@@ -638,7 +610,6 @@
     <string name="error_unable_merge_database_kdb">Não é possível mesclar a partir de um arquivo de banco de dados kbd.</string>
     <string name="error_location_unknown">Localização do banco de dados desconhecida, a ação do banco de dados não pode ser executada.</string>
     <string name="error_empty_key">A chave não pode estar vazia.</string>
-    <string name="html_about_privacy">&lt;strong&gt;Nenhum dado do usuário é coletado&lt;/strong&gt;, este aplicativo não se conecta a nenhum servidor, funciona apenas localmente e respeita totalmente a privacidade dos usuários.</string>
     <string name="hardware_key">Chave física</string>
     <string name="error_no_hardware_key">Selecione uma chave física.</string>
     <string name="error_XML_malformed">XML malformado.</string>
@@ -716,7 +687,6 @@
     <string name="passkey">Chave de acesso</string>
     <string name="credential_provider_service_name">Provedor de Credenciais KeePassDX</string>
     <string name="passkeys">Chaves de acesso</string>
-    <string name="passkeys_explanation_summary">Configure Chaves de Acesso para um login rápido e seguro sem senha</string>
     <string name="passkeys_preference_title">Configurações de chaves de acesso</string>
     <string name="passkeys_close_database_title">Fechar banco de dados</string>
     <string name="passkeys_close_database_summary">Fechar o banco de dados após selecionar uma chave de acesso</string>
@@ -755,7 +725,6 @@
     <string name="password_creation_description">Salvar senha em nova entrada</string>
     <string name="password_selection_description">Selecionar uma senha existente</string>
     <string name="error_password_result">Não foi possível retornar a senha</string>
-    <string name="content_description_user_verification_information">Informação de verificação de usuário</string>
     <string name="user_verification_required_title">Verificação de Usuário</string>
     <string name="education_user_verification_summary">Alterar o modo de verificação do usuário para a sessão.\n\n\"Verificação do Usuário Ativada\" verifica ações em campos protegidos e nas configurações do banco de dados.\n\"Verificação do Usuário Desativada\" permite alterar qualquer dado no seu banco de dados sem verificação.</string>
     <string name="user_verification_required_description">O acesso a esses dados requer a verificação de que é realmente você.</string>

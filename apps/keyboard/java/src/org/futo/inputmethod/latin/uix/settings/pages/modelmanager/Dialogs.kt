@@ -1,0 +1,60 @@
+package org.futo.inputmethod.latin.uix.settings.pages.modelmanager
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.runBlocking
+import org.futo.inputmethod.latin.R
+import org.futo.inputmethod.latin.xlm.ModelPaths
+import java.io.File
+
+
+@Preview
+@Composable
+fun ModelDeleteConfirmScreen(path: File = File("/example"), navController: NavHostController = rememberNavController()) {
+    AlertDialog(
+        icon = {
+            Icon(Icons.Filled.Warning, contentDescription = "Error")
+        },
+        title = {
+            Text(text = "Delete model \"${path.nameWithoutExtension}\"")
+        },
+        text = {
+            Text(text = "Are you sure you want to delete this model? You will not be able to recover it. If this model was finetuned, everything it learned will be lost.")
+        },
+        onDismissRequest = {
+            navController.navigateUp()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    path.delete()
+                    runBlocking {
+                        ModelPaths.signalReloadModels()
+                    }
+                    navController.navigateUp()
+                    navController.navigateUp()
+                }
+            ) {
+                Text(stringResource(R.string.spoken_description_delete))
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    navController.navigateUp()
+                }
+            ) {
+                Text(stringResource(R.string.cancel))
+            }
+        }
+    )
+}

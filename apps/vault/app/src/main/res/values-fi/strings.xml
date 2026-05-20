@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Palaute</string>
-    <string name="homepage">Kotisivu</string>
     <string name="about_description">KeePass-salasanahallintaohjelman Android-toteutus.</string>
     <string name="accept">Hyväksy</string>
     <string name="add_entry">Lisää uusi salasanatietue</string>
@@ -42,8 +40,6 @@
     <string name="decrypting_db">Puretaan tietokannan sisältöä…</string>
     <string name="default_checkbox">Käytä tätä oletustietokantana</string>
     <string name="digits">Numerot</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft on &lt;strong&gt;avointa lähdekoodia&lt;/strong&gt; ja &lt;strong&gt;mainokseton&lt;/strong&gt;.
-\nSe tarjotaan sellaisenaan &lt;strong&gt;GPLv3&lt;/strong&gt; lisenssillä ja ilman takuuta.</string>
     <string name="select_database_file">Avaa olemassaoleva holvi</string>
     <string name="entry_accessed">Käytetty</string>
     <string name="entry_cancel">Peruuta</string>
@@ -97,7 +93,6 @@
     <string name="settings">Asetukset</string>
     <string name="menu_database_settings">Tietokannan asetukset</string>
     <string name="menu_delete">Poista</string>
-    <string name="menu_donate">Lahjoita</string>
     <string name="menu_edit">Muokkaa</string>
     <string name="menu_lock">Lukitse tietokanta</string>
     <string name="menu_open">Avaa</string>
@@ -134,7 +129,6 @@
     <string name="extended_ASCII">Laajennettu ASCII</string>
     <string name="key_derivation_function">Avaimen derivointifunktio</string>
     <string name="master_key">Pääavain</string>
-    <string name="contribution">Avustus</string>
     <string name="contact">Ota yhteyttä</string>
     <string name="content_description_open_file">Avaa tiedosto</string>
     <string name="encryption">Salaus</string>
@@ -155,7 +149,6 @@
     <string name="entry_attachments">Liitetiedostot</string>
     <string name="entry_history">Historia</string>
     <string name="entry_UUID">UUID</string>
-    <string name="html_about_contribution">Pitääksemme &lt;strong&gt;vapautemme&lt;/strong&gt;, &lt;strong&gt;korjataksemme bugeja&lt;/strong&gt;, &lt;strong&gt;lisätäksemme ominaisuuksia&lt;/strong&gt; ja &lt;strong&gt;ollaksemme aina ajantasalla&lt;/strong&gt;, luotamme teidän &lt;strong&gt;apuunne&lt;/strong&gt;.</string>
     <string name="content_description_keyboard_close_fields">Sulje kenttä</string>
     <string name="content_description_update_from_list">Päivitä</string>
     <string name="entry_add_field">Lisää kenttä</string>
@@ -181,11 +174,9 @@
     <string name="lock_database_back_root_summary">Paina \'Takaisin\' lukitaksesi tietokanta jos tarkastelet sen juurilistaa</string>
     <string name="lock_database_back_root_title">Paina \'Takaisin\' lukitaksesi</string>
     <string name="clipboard_warning">Jos automaattinen leikepöydän poistaminen epäonnistuu, poista sen historia manuaalisesti.</string>
-    <string name="clipboard_explanation_summary">Kopioi kentät käyttäen laitteesi leikepöytää</string>
     <string name="clipboard">Leikepöytä</string>
     <string name="database_opened">Tietokanta avattu</string>
     <string name="autofill_preference_title">Automaattisen täytön asetukset</string>
-    <string name="autofill_explanation_summary">Konfiguroi automaattinen täyttö täyttääksesi lomakkeita nopeasti muissa sovelluksissa</string>
     <string name="menu_appearance_settings">Ulkonäkö</string>
     <string name="database_history">Historia</string>
     <string name="biometric">Biometrinen</string>
@@ -303,7 +294,6 @@
     <string name="info">Tietoja</string>
     <string name="content_description_passphrase_word_count">Salalauseen sanamäärä</string>
     <string name="content_description_database_color">Tietokannan väri</string>
-    <string name="html_about_privacy">&lt;strong&gt;Käyttäjätietoja ei haeta&lt;/strong&gt;, tämä sovellus ei muodosta yhteyttä mihinkään palvelimeen, toimii vain paikallisesti ja kunnioittaa täysin käyttäjien yksityisyyttä.</string>
     <string name="regex">Säännöllinen lauseke</string>
     <string name="template_group_name">Mallit</string>
     <string name="navigation_drawer_open">Navigointivedin auki</string>
@@ -324,8 +314,6 @@
     <string name="custom_data">Mukautettu tieto</string>
     <string name="current_group">Nykyinen ryhmä</string>
     <string name="warning_database_notification_permission">Ilmoituslupa antaa sinun näyttää tietokannan tilan ja lukita sen helposti saatavilla olevalla painikkeella.\n\nJos et aktivoi tätä lupaa, taustalla oleva avoin tietokanta ei ole näkyvissä, jos etualalla on toinen sovellus.</string>
-    <string name="content_description_otp_information">Kertakäyttösalasanan tiedot</string>
-    <string name="content_description_credentials_information">Tunnustiedot</string>
     <string name="error_driver_required">Kohteelle %1$s tarvitaan ajuri.</string>
     <string name="content_description_entry_foreground_color">Merkinnän etualan väri</string>
     <string name="case_sensitive">Merkkikokoriippuvainen</string>
@@ -396,7 +384,6 @@
     <string name="bank_name">Pankin nimi</string>
     <string name="warning_permanently_delete_nodes">Poista pysyvästi valitut solmut?</string>
     <string name="warning_database_info_changed">Tietokantatiedoston sisältämää tietoa on muutettu sovelluksen ulkopuolella.</string>
-    <string name="menu_external_icon">Ulkoinen kuvake</string>
     <string name="search_mode">Hakutila</string>
     <string name="menu_reload_database">Lataa tiedot uudelleen</string>
     <string name="menu_merge_from">Yhdistä kohteesta …</string>
@@ -464,7 +451,6 @@
     <string name="configure_biometric">Biometrisiä tunnistetietoja tai laitteen lukitusta ei ole otettu käyttöön.</string>
     <string name="credential_provider">Tunnistetietojen tarjoaja</string>
     <string name="passkeys">Pääsyavaimet</string>
-    <string name="passkeys_explanation_summary">Ota pääsyavaimet käyttöön nopeaan ja turvalliseen salasanattomaan kirjautumiseen</string>
     <string name="passkeys_preference_title">Pääsyavainten asetukset</string>
     <string name="passkeys_close_database_title">Sulje tietokanta</string>
     <string name="passkeys_close_database_summary">Sulje tietokanta pääsyavaimen valitsemisen jälkeen</string>

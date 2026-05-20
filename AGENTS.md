@@ -11,6 +11,9 @@
 - `apps/wallet` is the hard-forked Catima-derived production Wallet app,
   imported as normal source with its own Gradle project. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-wallet-android.sh`
+- `apps/keyboard` is the hard-forked FUTO Keyboard-derived production Keyboard
+  app, imported as normal source with its own Gradle project. Build it with:
+  `nix develop --no-write-lock-file --command ./scripts/build-keyboard-android.sh`
 - `apps/vault` is the hard-forked KeePassDX-derived production Vault app,
   imported as normal source with its own Gradle project. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-vault-android.sh`

@@ -18,8 +18,6 @@
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
     Basque translation by David García-Abad
 --><resources>
-    <string name="feedback">Atzeraelikadura</string>
-    <string name="homepage">Hasiera orria</string>
     <string name="about_description">KeePass pasahitz kudeatzailearen Androiderako inplementazioa</string>
     <string name="accept">Onartu</string>
     <string name="add_entry">Sarrera gehitu</string>
@@ -43,8 +41,6 @@
     <string name="decrypting_db">Datu-basearen edukia deszifratzen…</string>
     <string name="default_checkbox">Erabili lehenetsitako datu-base gisa</string>
     <string name="digits">Digituak</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft &lt;strong&gt;kode irekiko&lt;/strong&gt; eta &lt;strong&gt;iragarki gabekoa da&lt;/strong&gt;.
-\n&lt;strong&gt;GPLv3&lt;/strong&gt; lizentziapean banatu da, hori dela eta ez dakar inolako bermerik.</string>
     <string name="select_database_file">Ireki aurrez sortutako kutxa gotorra</string>
     <string name="entry_accessed">Atzituta</string>
     <string name="entry_cancel">Utzi</string>
@@ -98,7 +94,6 @@
     <string name="settings">Ezarpenak</string>
     <string name="menu_database_settings">Datubasearen ezarpenak</string>
     <string name="menu_delete">Ezabatu</string>
-    <string name="menu_donate">Dirua eman</string>
     <string name="menu_edit">Editatu</string>
     <string name="menu_lock">Datu-basea blokeatu</string>
     <string name="menu_open">Ireki</string>
@@ -135,7 +130,6 @@
     </string-array>
     <string name="security">Segurtasuna</string>
     <string name="contact">Harremanetarako</string>
-    <string name="contribution">Diru-laguntza</string>
     <string name="master_key">Gako nagusia</string>
     <string name="edit_entry">Sarrera editatu</string>
     <string name="key_derivation_function">Gakoaren eratorpen funtzioa</string>
@@ -143,8 +137,6 @@
     <string name="content_description_file_information">Fitxategiaren informazioa</string>
     <string name="content_description_add_item">Txertatu elementua</string>
     <string name="extended_ASCII">ASCII hedatua</string>
-    <string name="content_description_credentials_information">Kredentzial informazioa</string>
-    <string name="html_about_privacy">&lt;strong&gt;Erabiltzailearen daturik ez da bilduko&lt;/strong&gt;, aplikazio hau ez da inongo zerbitzarira konektatzen, soilik lokalean funtzionatzen du eta erabiltzailearen pribatutasuna errespetatzen du.</string>
     <string name="content_description_password_checkbox">Pasahitz-lauki</string>
     <string name="content_description_add_group">Taldea gehitu</string>
     <string name="content_description_add_entry">Gehitu sarrera</string>
@@ -153,7 +145,6 @@
     <string name="allow">Baimendu</string>
     <string name="content_description_background">Atzeko planoa</string>
     <string name="content_description_open_file">Ireki fitxategia</string>
-    <string name="content_description_otp_information">Erabilpen bakarreko pasahitzaren (OTP) informazioa</string>
     <string name="content_description_database_color">Datu-basearen kolorea</string>
     <string name="content_description_entry_foreground_color">Lehen planoaren sarrera kolorea</string>
     <string name="content_description_repeat_toggle_password_visibility">Errepikatu pasahitzaren kommutazio ikusgarritasuna</string>
@@ -242,7 +233,6 @@
     <string name="error_registration_read_only">Ezin da elementu bat gehitu irakurketa soileko datu-basean.</string>
     <string name="error_otp_counter">Kontagailuak %1$d eta %2$d artean egon behar du.</string>
     <string name="error_load_database">Ezin izan da datu-basea kargatu.</string>
-    <string name="html_about_contribution">&lt;strong&gt; Gure askatasuna mantentzeko &lt;/strong&gt;, &lt;strong&gt;bugak konpontzeko &lt;/strong&gt;, &lt;strong&gt; ezaugarriak konpontzeko &lt;/strong&gt; eta &lt;strong&gt; beti aktibo egoteko&lt;/strong&gt;, zure &lt;strong&gt; ekarpenen&lt;/strong&gt; zain gaude.</string>
     <string name="cryptocurrency">Kriptotxanpon-zorroa</string>
     <string name="public_key">Gako publikoa</string>
     <string name="type">Mota</string>
@@ -303,7 +293,6 @@
     <string name="templates">Txantiloiak</string>
     <string name="device_keyboard_setting_title">Gailuaren teklatuaren ezarpenak</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
-    <string name="magic_keyboard_explanation_summary">Aktibatu zure pasahitzak eta identitate eremuak errez beteko dituen pertsonalizatutako teklatua</string>
     <string name="enter">Sartu</string>
     <string name="autofill_close_database_title">Itxi datu-basea</string>
     <string name="show_otp_token_summary">Erakutsi OTP tokenak sarrera zerrendetan</string>
@@ -423,7 +412,6 @@
     <string name="sort_ascending">Baxuena lehenbizi↓</string>
     <string name="compression_none">Bat ere ez</string>
     <string name="keyboard_change">Aldatu teklatua</string>
-    <string name="menu_external_icon">Kanpoko ikonoa</string>
     <string name="templates_group_enable_title">Txantiloien erabilpena</string>
     <string name="templates_group_enable_summary">Erabili txantiloi dinamikoak sarrera eremuak betetzeko</string>
     <string name="templates_group_uuid_title">Txantiloi taldea</string>
@@ -482,7 +470,6 @@
     <string name="unavailable">Datu-base honek ez du biltegiratuta kredentzialik.</string>
     <string name="menu_appearance_settings">Itxura</string>
     <string name="autofill_sign_in_prompt">KeePassDXekin erregistratu</string>
-    <string name="autofill_explanation_summary">Gaitu betetze automatikoa beste aplikazioetako formularioak errez betetzeko</string>
     <string name="device_unlock">Gailua desblokeatu</string>
     <string name="device_unlock_delete_all_key_warning">Ezabatu ezagutze desblokeo aurreratuaren zifraketa gako guztiak\?</string>
     <string name="path">Bidea</string>
@@ -527,9 +514,6 @@
 \n
 \n\"Idazketaren aurka babestuta\" datu-basean nahi ez diren aldaketak saihesten ditu.
 \n\"Editagarri\" datuak nahi dituzun moduan gehitu, ezabatu edo aldatzen uzten du.</string>
-    <string name="education_donation_summary">Parte hartu egonkortasuna, segurtasuna eta ezaugarri gehiago gehitzeko.</string>
-    <string name="html_text_ad_free">Pasahitzak kudeatzeko aplikazio asko ez bezala, hau &lt;strong&gt; iragarkirik gabekoa&lt;/strong&gt; eta &lt;strong&gt; copyleft software libreako&lt;/strong&gt; da eta ez du datu pertsonalik biltzen zerbitzarietan, aplikazioaren edozein bertsiotan.</string>
-    <string name="html_text_dev_feature">Ezaugarri hau &lt;strong&gt;garapen prozesuan &lt;/strong&gt; dago eta zure &lt;strong&gt; ekarpena&lt;/strong&gt; behar du ahalik eta lehen eskuragarri egoteko.</string>
     <string name="credential_before_click_device_unlock_button">Idatzi pasahitza eta klikatu botoi hau.</string>
     <string name="properties">Propietateak</string>
     <string name="temp_device_unlock_timeout_summary">Desblokeatze aurreratua erabiltzeko denbora bere edukia ezabatu aurretik</string>
@@ -547,14 +531,12 @@
     <string name="temp_device_unlock_timeout_title">Gailu desblokeatzearen iraungitzea</string>
     <string name="device_unlock_timeout">Gailu desblokeatzea erabiltzeko denbora muga</string>
     <string name="lock">Blokeatu</string>
-    <string name="html_text_donation">Gure askatasuna mantentzeko eta beti aktibo egoteko, aintzat dugu zure &lt;strong&gt;ekarpena.&lt;/strong&gt;</string>
     <string name="education_read_only_title">Babestu zure datu-basea idazketen aurka</string>
     <string name="education_generate_password_title">Sortu pasahitz segurua</string>
     <string name="database_data_compression_title">Datuen konpresioa</string>
     <string name="biometric_auto_open_prompt_title">Automatikoki irekitzeko eskaera</string>
     <string name="lock_database_screen_off_summary">Blokeatu datu-basea pantaila itzali eta segundo batzuetara</string>
     <string name="lock_database_back_root_title">Zapaldu \'Atzera\' blokeatzeko</string>
-    <string name="clipboard_explanation_summary">Kopiatu sarrerako eremuak zure gailuko arbela erabiliz</string>
     <string name="database_opened">Datu-basea irekita</string>
     <string name="warning_empty_keyfile">Ez da gomendagarria fitxategi-gako huts bat gehitzea.</string>
     <string name="warning_sure_remove_data">Ezabatu datu hauek edonola ere\?</string>
@@ -582,7 +564,6 @@
     <string name="lock_database_back_root_summary">Blokeatu datu-basea erabiltzaileak atzera botoia sakatzen duenean hasierako pantailan</string>
     <string name="lock_database_show_button_title">Erakutsi blokeatzeko botoia</string>
     <string name="lock_database_show_button_summary">Blokeatzeko botoia erakusten du interfazean</string>
-    <string name="device_unlock_explanation_summary">Erabili gailu desblokeatzea datu-base bat errazago irekitzeko</string>
     <string name="biometric_unlock_enable_title">Desblokeo biometrikoa</string>
     <string name="biometric_unlock_enable_summary">Zure datu biometrikoak eskaneatzen uzten dizu datu-basea irekitzeko</string>
     <string name="device_credential_unlock_enable_summary">Zure gailuaren kredentzialak datu-basea irekitzeko erabiltzen uzten dizu</string>
@@ -621,18 +602,12 @@
     <string name="education_lock_summary">Blokeatu zure datu-basea modu azkarrean, aplikazioa prestatu datu-basea denbora pasa ondoren edo pantaila itzaltzen denean blokeatzeko.</string>
     <string name="education_sort_title">Ordenatu elementuak</string>
     <string name="education_sort_summary">Aukeratu sarrerak eta taldeak nola ordenatu.</string>
-    <string name="education_donation_title">Parte hartu</string>
-    <string name="html_text_buy_pro">Pro bertsioa erostean, &lt;strong&gt;estilo bisual&lt;/strong&gt; hau erabili ahalko duzu eta zure laguntza eskeniko duzu &lt;strong&gt;proiektu komunitarioak garatzeko.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">&lt;strong&gt;Estilo bisual&lt;/strong&gt; hau zure eskuzabaltasunari esker dago eskuragarri.</string>
-    <string name="html_text_dev_feature_buy_pro">&lt;strong&gt;Pro&lt;/strong&gt; bertsioa erostean,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;kontribuituz&lt;/strong&gt;,</string>
     <string name="download_attachment">Deskargatu %1$s</string>
     <string name="upload_attachment">Kargatu %1$s</string>
     <string name="download_initialization">Hasten…</string>
     <string name="title_case">Titulu mota</string>
     <string name="lower_case">minuskulak</string>
     <string name="upper_case">MAIUSKULAK</string>
-    <string name="html_text_dev_feature_thanks">Milesker zure ekarpenarengatik.</string>
     <string name="unit_kibibyte">KiB</string>
     <string name="unit_byte">B</string>
     <string name="word_separator">Bereizlea</string>
@@ -640,15 +615,11 @@
     <string name="consider_chars_filter">Aintzat hatu karaktereak</string>
     <string name="unit_mebibyte">MiB</string>
     <string name="entropy_calculate">Entropia: kalkulatu…</string>
-    <string name="html_text_dev_feature_encourage">Zure iruzkinekin garatzaileak &lt;strong&gt;funtzio berriak&lt;/strong&gt; garatu eta &lt;strong&gt;bugak konpontzera&lt;/strong&gt; animatzen dituzu.</string>
-    <string name="contribute">Egin ekarpena</string>
     <string name="unit_gibibyte">GiB</string>
     <string name="entropy">Entropia:%1$s bit</string>
     <string name="entropy_high">Entropia: Altua</string>
     <string name="at_least_one_char">Gutxienez karaktere bat bakoitzeko</string>
     <string name="exclude_ambiguous_chars">Karaktere anbiguoak kanporatu</string>
-    <string name="html_text_dev_feature_work_hard">Gogor ari gara lanean ezaugarri hau ahalik eta lehen publikatzeko.</string>
-    <string name="html_text_dev_feature_upgrade">Gogoratu zure aplikazioa eguneratuta mantentzeaz bertsio berriak instalatuz.</string>
     <string name="download">Deskargatu</string>
     <string name="download_finalization">Amaitzen…</string>
     <string name="download_complete">Amaituta!</string>

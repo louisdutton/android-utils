@@ -24,7 +24,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.util.Log
-import androidx.preference.PreferenceManager
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetView
 import com.kunzisoft.keepass.R
@@ -177,9 +176,7 @@ open class Education(val activity: Activity) {
          * Define if educations screens are enabled
          */
         fun isEducationScreensEnabled(context: Context): Boolean {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            return sharedPreferences.getBoolean(context.getString(R.string.enable_education_screens_key),
-                    context.resources.getBoolean(R.bool.enable_education_screens_default))
+            return false
         }
 
         /**

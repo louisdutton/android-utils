@@ -18,8 +18,6 @@
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
     Swedish translation by Niclas Burgren (burgren@gmail.com)
 --><resources>
-    <string name="feedback">Synpunkter</string>
-    <string name="homepage">Hemsida</string>
     <string name="about_description">Android-implementation av KeePass password manager.</string>
     <string name="accept">OK</string>
     <string name="add_entry">Ny post</string>
@@ -43,8 +41,6 @@
     <string name="decrypting_db">Dekrypterar databasinnehåll…</string>
     <string name="default_checkbox">Använd som standarddatabas</string>
     <string name="digits">Siffror</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft är &lt;strong&gt;öppen källkod&lt;/strong&gt; och &lt;strong&gt;utan reklam&lt;/strong&gt;.
-\nDen tillhandahålls i befintligt skick, under &lt;strong&gt;GPLv3-licens&lt;/strong&gt;, utan någon garanti.</string>
     <string name="select_database_file">Öppna befintligt valv</string>
     <string name="entry_accessed">Åtkomst</string>
     <string name="entry_cancel">Avbryt</string>
@@ -97,7 +93,6 @@
     <string name="settings">Inställningar</string>
     <string name="menu_database_settings">Databasinställningar</string>
     <string name="menu_delete">Radera</string>
-    <string name="menu_donate">Donera</string>
     <string name="menu_edit">Redigera</string>
     <string name="menu_lock">Lås databas</string>
     <string name="menu_open">Öppna</string>
@@ -242,21 +237,7 @@
     <string name="education_lock_summary">Lås databasen snabbt, du kan ställa in att appen låser den efter en stund och när skärmen släcks.</string>
     <string name="education_sort_title">Objektsortering</string>
     <string name="education_sort_summary">Välj hur poster och grupper sorteras.</string>
-    <string name="education_donation_title">Delta</string>
-    <string name="education_donation_summary">Hjälp till att öka stabilitet, säkerhet och med att lägga till fler funktioner.</string>
-    <string name="html_text_ad_free">Till skillnad från många andra lösenordshanterare är den här &lt;strong&gt;reklamfri&lt;/strong&gt;, &lt;strong&gt;copyleftad fri mjukvara&lt;/strong&gt; och samlar inte in någon personlig data på servrar, oavsett vilken version du använder.</string>
-    <string name="html_text_buy_pro">Genom att köpa proffsversionen får du tillgång till den här &lt;strong&gt;visuella funktionen&lt;/strong&gt; och du hjälper särskilt till med &lt;strong&gt;genomförandet av community-projekt.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Den här &lt;strong&gt;visuella funktionen&lt;/strong&gt; är tillgänglig tack vare din generositet.</string>
-    <string name="html_text_donation">För att behålla vår frihet och alltid vara aktiva räknar vi med ditt &lt;strong&gt;bidrag.&lt;/strong&gt;</string>
-    <string name="html_text_dev_feature">Den här funktionen är under &lt;strong&gt;utveckling&lt;/strong&gt; och kräver ditt &lt;strong&gt;bidrag&lt;/strong&gt; för att vara tillgänglig snart.</string>
-    <string name="html_text_dev_feature_buy_pro">Genom att köpa &lt;strong&gt;pro&lt;/strong&gt;-versionen,</string>
-    <string name="html_text_dev_feature_contibute">Genom att &lt;strong&gt;bidra&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">så uppmuntrar du utvecklare att skapa &lt;strong&gt;nya funktioner&lt;/strong&gt; och att &lt;strong&gt;fixa buggar&lt;/strong&gt; efter dina anmärkningar.</string>
-    <string name="html_text_dev_feature_thanks">Stort tack för ditt bidrag.</string>
-    <string name="html_text_dev_feature_work_hard">Vi jobbar hårt med att introducera den här funktionen snart.</string>
-    <string name="html_text_dev_feature_upgrade">Glöm inte att hålla appen uppdaterad genom att installera nya versioner.</string>
     <string name="download">Ladda ner</string>
-    <string name="contribute">Bidra</string>
     <string name="style_choose_title">Apptema</string>
     <string name="style_choose_summary">Tema som används i appen</string>
     <string name="icon_pack_choose_title">Ikonpaket</string>
@@ -353,10 +334,7 @@
     <string name="contains_duplicate_uuid">Databasen innehåller dubbla UUID:er.</string>
     <string name="contains_duplicate_uuid_procedure">Generera nya UUID-er för dubbletter för att fortsätta?</string>
     <string name="database_history">Historik</string>
-    <string name="autofill_explanation_summary">Aktivera autofyll för att snabbt kunna fylla i formulär i andra appar</string>
     <string name="database_opened">Databas öppnad</string>
-    <string name="clipboard_explanation_summary">Kopiera post-fält med hjälp av enhetens urklipp</string>
-    <string name="device_unlock_explanation_summary">Använd avancerad upplåsning för att öppna en databas enklare</string>
     <string name="database_data_compression_title">Datakomprimering</string>
     <string name="database_data_compression_summary">Datakomprimering reducerar databasens storlek</string>
     <string name="max_history_items_title">Max. historikobjekt</string>
@@ -374,7 +352,6 @@
     <string name="compression">Komprimering</string>
     <string name="compression_none">Ingen</string>
     <string name="compression_gzip">Gzip</string>
-    <string name="magic_keyboard_explanation_summary">Aktivera ett anpassat tangentbord som innehåller dina lösenord och alla identitetsfält</string>
     <string name="device_keyboard_setting_title">Enhetens tangentbordsinställningar</string>
     <string name="error_save_database">Kunde inte spara databasen.</string>
     <string name="menu_save_database">Spara data</string>
@@ -418,11 +395,9 @@
     <string name="remember_database_locations_title">Spara platsen för databaser</string>
     <string name="error_label_exists">Den här etiketten finns redan.</string>
     <string name="entry_attachments">Bifogat</string>
-    <string name="html_about_contribution">För att &lt;strong&gt;behålla vår frihet&lt;/strong&gt;, &lt;strong&gt;fixa buggfixar&lt;/strong&gt;, &lt;strong&gt;lägga till funktioner&lt;/strong&gt; och &lt;strong&gt; alltid vara aktiv&lt;/strong&gt;, så räknar vi med ditt &lt;strong&gt;bidrag&lt;/strong&gt;.</string>
     <string name="entry_add_attachment">Bifoga fil</string>
     <string name="discard_changes">Ignorera ändringar\?</string>
     <string name="validate">Bekräfta</string>
-    <string name="contribution">Bidrag</string>
     <string name="expired">Utgånget</string>
     <string name="date_of_issue">Utgivningsdatum</string>
     <string name="debit_credit_card">Debit / Kreditkort</string>
@@ -445,8 +420,6 @@
     <string name="account">Konto</string>
     <string name="membership">Medlemskap</string>
     <string name="error_move_group_here">Du kan inte flytta en grupp hit.</string>
-    <string name="content_description_otp_information">Engångslösenordsinformation</string>
-    <string name="html_about_privacy">&lt;strong&gt;Ingen användardata samlas in&lt;/strong&gt;, denna app ansluter inte till någon server och fungerar endast lokalt och respekterar fullt ut användarnas integritet.</string>
     <string name="cryptocurrency">Kryptovalutaplånbok</string>
     <string name="version">Version</string>
     <string name="tags">Taggar</string>
@@ -459,7 +432,6 @@
     <string name="searchable">Sökbar</string>
     <string name="error_no_hardware_key">Välj hårdvarunyckel.</string>
     <string name="content_description_add_item">Lägg till ny</string>
-    <string name="content_description_credentials_information">Inloggningsuppgifter</string>
     <string name="info">Information</string>
     <string name="type">Typ</string>
     <string name="content_description_passphrase_word_count">Antal ord i Lösenordsfras</string>
@@ -523,7 +495,6 @@
     <string name="menu_merge_from">Sammanfoga från…</string>
     <string name="menu_save_copy_to">Spara en kopia till…</string>
     <string name="menu_keystore_remove_key">Radera enhetens upplåsningsnyckel</string>
-    <string name="menu_external_icon">Extern ikon</string>
     <string name="subdomain_search_title">Subdomänsök</string>
     <string name="subdomain_search_summary">Sök webbdomän med subdomänbegränsning</string>
     <string name="search_mode">Sökläge</string>

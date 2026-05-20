@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="essentials_ime_name" translatable="false">Keyboard</string>
+    <string name="essentials_spell_checker_service_name" translatable="false">Keyboard Spell Checker</string>
+    <string name="essentials_ime_settings" translatable="false">Keyboard Settings</string>
+    <string name="essentials_android_spell_checker_settings" translatable="false">Keyboard Spell Checker Settings</string>
+
+    <!-- Application name for the keyboard. -->
+    <string name="english_ime_name">Keyboard</string>
+
+    <!-- Name of Android spell checker service. -->
+    <string name="spell_checker_service_name">Keyboard Spell Checker</string>
+
+    <!-- Title for Android Keyboard settings screen. -->
+    <string name="english_ime_settings">Keyboard Settings</string>
+
+    <!-- Title for the spell checking service settings screen. -->
+    <string name="android_spell_checker_settings">Keyboard Spell Checker Settings</string>
+</resources>

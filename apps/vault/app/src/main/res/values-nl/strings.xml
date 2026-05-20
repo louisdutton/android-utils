@@ -19,8 +19,6 @@
 
     Dutch translation by Erik Devriendt, corrected by Erik Jan Meijer
 --><resources>
-    <string name="feedback">Feedback</string>
-    <string name="homepage">Startpagina</string>
     <string name="about_description">Android-implementatie van de KeePass-wachtwoordmanager.</string>
     <string name="accept">Accepteren</string>
     <string name="add_entry">Item toevoegen</string>
@@ -41,8 +39,6 @@
     <string name="decrypting_db">Database-inhoud decoderen …</string>
     <string name="default_checkbox">Als standaarddatabase gebruiken</string>
     <string name="digits">Cijfers</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft is &lt;strong&gt;open source&lt;/strong&gt; en &lt;strong&gt;zonder reclame&lt;/strong&gt;.
-\nHet wordt geleverd zoals het is, onder &lt;strong&gt;GPLv3&lt;/strong&gt; -licentie, zonder enige garantie.</string>
     <string name="select_database_file">Bestaande kluis openen</string>
     <string name="entry_accessed">Laatst geopend</string>
     <string name="entry_cancel">Annuleren</string>
@@ -90,7 +86,6 @@
     <string name="settings">Instellingen</string>
     <string name="menu_database_settings">Database-instellingen</string>
     <string name="menu_delete">Verwijderen</string>
-    <string name="menu_donate">Doneren</string>
     <string name="menu_edit">Bewerken</string>
     <string name="menu_lock">Database vergrendelen</string>
     <string name="menu_open">Openen</string>
@@ -184,7 +179,6 @@
     <string name="autofill">Automatisch aanvullen</string>
     <string name="autofill_sign_in_prompt">Inloggen met KeePassDX</string>
     <string name="set_credential_provider_service_title">Dienst Automatisch aanvullen</string>
-    <string name="autofill_explanation_summary">Dienst Automatisch aanvullen configureren om formulieren in andere apps in te vullen</string>
     <string name="password_size_title">Gegenereerde wachtwoordlengte</string>
     <string name="password_size_summary">Stel de standaardlengte van gegenereerde wachtwoorden in</string>
     <string name="list_password_generator_options_title">Wachtwoordtekens</string>
@@ -221,7 +215,6 @@
     <string name="other">Overig</string>
     <string name="keyboard">Toetsenbord</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Activeer een aangepast toetsenbord dat je wachtwoorden en identiteitsvelden vult</string>
     <string name="allow_no_password_title">Geen hoofdwachtwoord toestaan</string>
     <string name="allow_no_password_summary">Schakel de knop \"Openen\" in als er geen referenties zijn geselecteerd</string>
     <string name="enable_education_screens_title">Informatieve tips</string>
@@ -259,21 +252,7 @@
     <string name="education_lock_summary">Database snel vergrendelen. Je kunt de app zo instellen dat deze na een tijdje wordt vergrendeld en wanneer het scherm wordt uitgeschakeld.</string>
     <string name="education_sort_title">Items sorteren</string>
     <string name="education_sort_summary">Kies hoe items en groepen worden gesorteerd.</string>
-    <string name="education_donation_title">Bijdragen</string>
-    <string name="education_donation_summary">Draag bij om de stabiliteit en veiligheid te vergroten en door meer functies toe te voegen.</string>
-    <string name="html_text_ad_free">In tegenstelling tot veel apps voor wachtwoordbeheer, is deze &lt;strong&gt; reclamevrij&lt;/strong&gt;, &lt;strong&gt; vrije software &lt;/strong&gt; en verzamelt het geen persoonlijke gegevens op haar servers, ongeacht de versie die je gebruikt.</string>
-    <string name="html_text_buy_pro">Door de pro-versie te kopen krijg je toegang tot dit &lt;strong&gt;visuele thema&lt;/strong&gt; en draag je bij aan het &lt;strong&gt;realiseren van gemeenschapsprojecten.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Dit &lt;strong&gt;visuele thema&lt;/strong&gt; is beschikbaar gemaakt dankzij jouw vrijgevigheid.</string>
-    <string name="html_text_donation">Door &lt;strong&gt;bij te dragen&lt;/strong&gt; aan het project &lt;i&gt;(financieel, code, vertaling)&lt;/i&gt;, help je het om te blijven leven en bloeien en kom je bovendien in aanmerking voor het &lt;strong&gt;thema&lt;/strong&gt; ontgrendelingsprocedure.</string>
-    <string name="html_text_dev_feature">Deze functie &lt;strong&gt;wordt momenteel ontwikkeld&lt;/strong&gt; en kan alleen beschikbaar komen middels jouw &lt;strong&gt;bijdrage&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature_buy_pro">Door de &lt;strong&gt;pro&lt;/strong&gt;-versie te kopen,</string>
-    <string name="html_text_dev_feature_contibute">Door &lt;strong&gt;bij te dragen&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">motiveer je ontwikkelaars om &lt;strong&gt;nieuwe functies&lt;/strong&gt; te creëren en &lt;strong&gt;problemen op te lossen&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature_thanks">Hartelijk bedankt voor je bijdrage.</string>
-    <string name="html_text_dev_feature_work_hard">We zijn druk bezig om deze functie snel beschikbaar te stellen.</string>
-    <string name="html_text_dev_feature_upgrade">Vergeet niet je app up-to-date te houden door nieuwe versies te installeren.</string>
     <string name="download">Downloaden</string>
-    <string name="contribute">Bijdragen</string>
     <string name="style_choose_title">App-thema</string>
     <string name="style_choose_summary">Thema gebruikt in de app</string>
     <string name="icon_pack_choose_title">Pictogrammenpakket</string>
@@ -359,8 +338,6 @@
     <string name="contains_duplicate_uuid">De database bevat dubbele UUID\'s.</string>
     <string name="contains_duplicate_uuid_procedure">Probleem oplossen door nieuwe UUID\'s te genereren voor de duplicaten\?</string>
     <string name="database_opened">Database geopend</string>
-    <string name="clipboard_explanation_summary">Kopieer velden met behulp van het klembord van dit apparaat</string>
-    <string name="device_unlock_explanation_summary">Apparaatontgrendeling gebruiken om een database eenvoudiger te openen</string>
     <string name="database_data_compression_title">Gegevenscompressie</string>
     <string name="database_data_compression_summary">Gegevenscompressie verkleint de omvang van de database</string>
     <string name="max_history_items_title">Maximum aantal</string>
@@ -415,12 +392,10 @@
     <string name="error_create_database">Databasebestand is niet aangemaakt.</string>
     <string name="error_label_exists">Dit label bestaat al.</string>
     <string name="entry_attachments">Bijlagen</string>
-    <string name="html_about_contribution">Om &lt;strong&gt;onze vrijheid te behouden&lt;/strong&gt;, &lt;strong&gt;fouten te verhelpen&lt;/strong&gt;, &lt;strong&gt;functies toe te voegen&lt;/strong&gt; en &lt;strong&gt;altijd actief te blijven&lt;/strong&gt;, rekenen wij op jouw &lt;strong&gt;bijdrage&lt;/strong&gt;.</string>
     <string name="entry_add_attachment">Bijlage toevoegen</string>
     <string name="discard">Weggooien</string>
     <string name="discard_changes">Wijzigingen weggooien\?</string>
     <string name="validate">Valideren</string>
-    <string name="contribution">Bijdrage</string>
     <string name="contact">Contact</string>
     <string name="autofill_block_restart">Start de app met het formulier opnieuw op om de blokkering te activeren.</string>
     <string name="autofill_block">Blokkering van automatisch invullen</string>
@@ -448,7 +423,6 @@
 \n
 \nMet deze upload kan de database erg groot worden en kunnen de prestaties verminderen.</string>
     <string name="warning_replace_file">De upload van dit bestand zal het bestaande bestand vervangen.</string>
-    <string name="content_description_credentials_information">Inloggegevens</string>
     <string name="warning_remove_unlinked_attachment">Het verwijderen van niet-gekoppelde gegevens kan de omvang van uw database verkleinen, maar kan ook gegevens verwijderen die voor KeePass-plug-ins worden gebruikt.</string>
     <string name="warning_sure_remove_data">Deze gegevens toch verwijderen\?</string>
     <string name="warning_empty_keyfile">Het is niet raadzaam om een leeg sleutelbestand toe te voegen.</string>
@@ -527,7 +501,6 @@
     <string name="error_duplicate_file">De bestandsgegevens bestaan al.</string>
     <string name="error_upload_file">Er is een fout opgetreden bij het uploaden van de bestandsgegevens.</string>
     <string name="error_file_to_big">Het te uploaden bestand is te groot.</string>
-    <string name="content_description_otp_information">Eenmalig wachtwoord-informatie</string>
     <string name="properties">Eigenschappen</string>
     <string name="error_export_app_properties">Fout bij het exporteren van app-instellingen.</string>
     <string name="success_export_app_properties">App-instellingen geëxporteerd</string>
@@ -553,7 +526,6 @@
     <string name="templates_group_enable_summary">Gebruik dynamische sjablonen om de velden van een item in te vullen</string>
     <string name="templates_group_enable_title">Sjabloongebruik</string>
     <string name="autofill_select_entry">Selecteer item…</string>
-    <string name="menu_external_icon">Extern pictogram</string>
     <string name="version">Versie</string>
     <string name="template">Sjabloon</string>
     <string name="standard">Standaard</string>
@@ -650,7 +622,6 @@
     <string name="error_unable_merge_database_kdb">Het is niet mogelijk je database samen te voegen met een kdb database.</string>
     <string name="error_no_hardware_key">Kies een fysieke sleutel.</string>
     <string name="remember_hardware_key_summary">Houdt de gebruikte fysieke sleutels bij</string>
-    <string name="html_about_privacy">&lt;strong&gt;Er worden geen gebruikersgegevens opgehaald&lt;/strong&gt;, deze applicatie maakt geen verbinding met een server, werkt alleen lokaal en respecteert volledig de privacy van gebruikers.</string>
     <string name="error_location_unknown">Locatie van database is onbekend, actie kan niet worden uitgevoerd.</string>
     <string name="content_description_hardware_key_checkbox">Fysieke sleutel-selectievak</string>
     <string name="waiting_challenge_request">In afwachting van de reactietest-vraag…</string>
@@ -705,7 +676,6 @@
     <string name="credential_provider_service_subtitle">Passkeys, Dienst Automatisch aanvullen</string>
     <string name="credential_provider_service_name">KeePassDX Dienst Automatisch aanvullen</string>
     <string name="passkeys">Passkeys</string>
-    <string name="passkeys_explanation_summary">Configureer Passkeys voor snelle en veilige wachtwoordloze login</string>
     <string name="passkeys_preference_title">Instellingen voor passkeys</string>
     <string name="passkeys_close_database_title">Database sluiten</string>
     <string name="passkeys_close_database_summary">Database sluiten na selectie van passkey</string>
@@ -753,7 +723,6 @@
     <string name="password_creation_description">Wachtwoord opslaan in nieuw item</string>
     <string name="password_selection_description">Kies een bestaand wachtwoord</string>
     <string name="error_password_result">Kan het wachtwoord niet retourneren</string>
-    <string name="content_description_user_verification_information">Gebruikersverificatieinfo</string>
     <string name="user_verification_required_title">Gebruikersverificatie</string>
     <string name="user_verification_required_description">Toegang tot deze gegevens vereist verificatie dat jij het inderdaad bent.</string>
     <string name="user_verification_database_credential">Voer de eerste vier tekens van het databasewachtwoord in</string>

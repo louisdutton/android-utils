@@ -452,7 +452,7 @@ class MainCredentialActivity : DatabaseModeActivity() {
         mainCredentialView?.populateHardwareKeyView(hardwareKey)
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         getUriFromIntent(intent)
     }
@@ -668,7 +668,7 @@ class MainCredentialActivity : DatabaseModeActivity() {
         }
 
         if (mSpecialMode == SpecialMode.DEFAULT) {
-            MenuUtil.defaultMenuInflater(this, inflater, menu)
+            MenuUtil.defaultMenuInflater(inflater, menu)
         }
 
         super.onCreateOptionsMenu(menu)

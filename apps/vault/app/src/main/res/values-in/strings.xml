@@ -20,7 +20,6 @@
     <string name="menu_move">Pindah</string>
     <string name="menu_copy">Salin</string>
     <string name="menu_edit">Ubah</string>
-    <string name="menu_donate">Donasi</string>
     <string name="menu_master_key_settings">Pengaturan Kunci Utama</string>
     <string name="menu_security_settings">Pengaturan Keamanan</string>
     <string name="menu_app_settings">Pengaturan Aplikasi</string>
@@ -123,9 +122,6 @@
     <string name="entry_notes">Catatan</string>
     <string name="entry_cancel">Batalkan</string>
     <string name="entry_accessed">Diakses</string>
-    <string name="html_about_contribution">Untuk &lt;strong&gt;menjaga kebebasan kami&lt;/strong&gt;, &lt;strong&gt;memperbaiki bug&lt;/strong&gt;, &lt;strong&gt; menambah fitur&lt;/strong&gt; dan &lt;strong&gt;agar selalu aktif&lt;/strong&gt;, kami mengandalkan &lt;strong&gt; kontribusi&lt;/strong&gt;.</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft &lt;strong&gt;open source&lt;/strong&gt; dan &lt;strong&gt;tanpa iklan&lt;/strong&gt;.
-\nTersedia apa adanya, di bawah lisensi &lt;strong&gt;GPLv3&lt;/strong&gt;, tanpa jaminan apa pun.</string>
     <string name="default_checkbox">Gunakan sebagai basis data standar</string>
     <string name="decrypting_db">Mendekripsi konten basis data…</string>
     <string name="database">Basis Data</string>
@@ -168,9 +164,6 @@
     <string name="add_entry">Tambahkan Entri</string>
     <string name="accept">Terima</string>
     <string name="about_description">Implementasi Android dari pengelola kata sandi KeePass.</string>
-    <string name="homepage">Beranda</string>
-    <string name="feedback">Umpan Balik</string>
-    <string name="contribution">Kontribusi</string>
     <string name="contact">Kontak</string>
     <string name="auto_focus_search_summary">Minta pencarian saat membuka basis data</string>
     <string name="auto_focus_search_title">Pencarian cepat</string>
@@ -256,7 +249,6 @@
     <string name="lock_database_screen_off_title">Kunci layar</string>
     <string name="lock">Kunci</string>
     <string name="clipboard_warning">Jika penghapusan otomatis papan klip gagal, hapus riwayatnya secara manual.</string>
-    <string name="clipboard_explanation_summary">Salin kolom entri menggunakan papan klip perangkat Anda</string>
     <string name="clipboard">Papan klip</string>
     <string name="database_opened">Basis data dibuka</string>
     <string name="list_password_generator_options_summary">Atur karakter pembuat kata sandi yang diperbolehkan</string>
@@ -309,7 +301,6 @@
     <string name="error_field_name_already_exists">Nama bidang sudah ada.</string>
     <string name="error_registration_read_only">Menyimpan item baru tidak diperbolehkan dalam basis data hanya-baca.</string>
     <string name="error_otp_type">Jenis OTP yang ada tidak dikenali oleh formulir ini, dan validasinya mungkin tidak lagi menghasilkan token dengan benar.</string>
-    <string name="content_description_credentials_information">Info kredensial</string>
     <string name="autofill_inline_suggestions_keyboard">Saran pengisian otomatis ditambahkan.</string>
     <string name="autofill_block_restart">Mulai ulang aplikasi yang berisi formulir untuk mengaktifkan pemblokiran.</string>
     <string name="autofill_block">Blokir pengisian otomatis</string>
@@ -355,20 +346,16 @@
     <string name="keyboard_name">Magikeyboard</string>
     <string name="device_keyboard_setting_title">Pengaturan papan tik perangkat</string>
     <string name="education_add_attachment_title">Tambah lampiran</string>
-    <string name="html_text_dev_feature_work_hard">Kami bekerja keras untuk merilis fitur ini segera.</string>
     <string name="icon_section_custom">Kustom</string>
     <string name="icon_section_standard">Standar</string>
     <string name="style_brightness_summary">Pilih tema terang atau gelap</string>
     <string name="style_brightness_title">Kecerahan tema</string>
     <string name="download_attachment">Unduh %1$s</string>
-    <string name="contribute">Kontribusi</string>
     <string name="download">Unduh</string>
-    <string name="html_text_dev_feature_upgrade">Ingatlah untuk selalu memperbarui aplikasi Anda.</string>
     <string name="error_remove_file">Timbul galat saat menghapus data berkas.</string>
     <string name="error_duplicate_file">Data berkas sudah ada.</string>
     <string name="error_upload_file">Timbul galat saat mengunggah data berkas.</string>
     <string name="error_file_to_big">File yang Anda unggah terlalu besar.</string>
-    <string name="content_description_otp_information">Info sandi satu kali</string>
     <string name="education_select_database_title">Buka basis data yang sudah ada</string>
     <string name="enable_auto_save_database_title">Simpan otomatis basis data</string>
     <string name="education_new_node_title">Tambah item ke basis data Anda</string>
@@ -376,13 +363,10 @@
     <string name="education_create_database_title">Buat berkas basis data Anda</string>
     <string name="delete_entered_password_title">Hapus kata sandi</string>
     <string name="education_sort_title">Pengurutan item</string>
-    <string name="html_text_dev_feature_thanks">Terima kasih banyak atas kontribusinya.</string>
-    <string name="html_text_dev_feature_contibute">Dengan &lt;strong&gt;berkontribusi&lt;/strong&gt;,</string>
     <string name="education_lock_title">Kunci basis data</string>
     <string name="education_unlock_title">Buka basis data Anda</string>
     <string name="education_field_copy_title">Salin bidang</string>
     <string name="education_setup_OTP_title">Atur OTP</string>
-    <string name="education_donation_title">Partisipasi</string>
     <string name="device_unlock_prompt_extract_credential_title">Pembukaan kunci perangkat</string>
     <string name="device_unlock_prompt_store_credential_message">PERINGATAN: Anda tetap perlu mengingat kredensial utama brankas Anda</string>
     <string name="warning_database_revoked">Akses ke berkas dicabut oleh pengelola berkas, tutup basis data dan buka kembali dari lokasi tempatnya.</string>
@@ -407,7 +391,6 @@
     <string name="device_credential_unlock_enable_title">Membuka kredensial perangkat</string>
     <string name="biometric_unlock_enable_summary">Memperbolehkan Anda memindai biometrik Anda untuk membuka basis data</string>
     <string name="biometric_unlock_enable_title">Membuka kunci biometrik</string>
-    <string name="device_unlock_explanation_summary">Gunakan buka kunci perangkat untuk membuka basis data dengan lebih mudah</string>
     <string name="unavailable">Tidak tersedia</string>
     <string name="device_unlock_not_recognized">Tidak dapat mengenali cetakan buka kunci perangkat</string>
     <string name="device_unlock_invalid_key">Tidak dapat membaca kunci pembuka perangkat. Harap hapus dan ulangi prosedur pengenalan buka kunci.</string>
@@ -416,7 +399,6 @@
     <string name="credential_before_click_device_unlock_button">Ketik kata sandi, lalu klik tombol ini.</string>
     <string name="autofill_preference_title">Pengaturan isi otomatis</string>
     <string name="set_credential_provider_service_title">Setel layanan isi otomatis secara default</string>
-    <string name="autofill_explanation_summary">Konfigurasikan autofill untuk mengisi formulir di aplikasi lain dengan cepat</string>
     <string name="autofill_sign_in_prompt">Masuk dengan KeePassDX</string>
     <string name="autofill">Isi otomatis</string>
     <string name="general">Umum</string>
@@ -450,7 +432,6 @@
     <string name="seed">Bibit</string>
     <string name="bank_identifier_code">SWIFT / BIC</string>
     <string name="secure_note">Catatan Aman</string>
-    <string name="menu_external_icon">Ikon eksternal</string>
     <string name="holder">Penyangga</string>
     <string name="autofill_select_entry">Pilih entri…</string>
     <string name="biometric_auto_open_prompt_summary">Secara otomatis meminta buka kunci perangkat jika basis data diatur menggunakan itu</string>
@@ -479,7 +460,6 @@
 \n\"Terlindungi-tulis\" mencegah perubahan tak diinginkan ke basis data.
 \n\"Bisa dimodifikasi\" memungkinkan Anda untuk menambah, menghapus, atau menyunting semua elemen yang Anda inginkan.</string>
     <string name="show_otp_token_summary">Tampilkan token OTP dalam daftar entri</string>
-    <string name="html_text_buy_pro">Dengan membeli versi pro, Anda akan mendapatkan akses ke &lt;strong&gt;gaya visual &lt;/strong&gt; ini dan Anda akan terutama membantu &lt;strong&gt;realisasi proyek komunitas.&lt;/strong&gt;</string>
     <string name="allow_copy_password_warning">Peringatan: Papan klip dipakai oleh semua aplikasi. Jika data sensitif disalin, perangkat lunak lain mungkin dapat mendapatkannya.</string>
     <string name="education_lock_summary">Kunci basis data Anda dengan cepat, Anda bisa mengatur aplikasi untuk mengunci sendiri setelah beberapa saat dan ketika layar berubah mati.</string>
     <string name="education_sort_summary">Pilih bagaimana entri dan grup diurut.</string>
@@ -502,18 +482,11 @@
     <string name="education_field_copy_summary">Daerah yang disalin bisa ditempel di mana saja.
 \n
 \nGunakan metode pengisian formulir yang Anda sukai.</string>
-    <string name="education_donation_summary">Bantu meningkatkan stabilitas, keamanan, dan menambahkan lebih banyak fitur.</string>
-    <string name="html_text_ad_free">Tidak seperti banyak aplikasi pengelola kata sandi, ini &lt;strong&gt;bebas iklan&lt;/strong&gt;, &lt;strong&gt;perangkat lunak libre copyleft&lt;/strong&gt;, dan tidak mengumpulkan data pribadi di peladennya, tidak peduli versi apa yang Anda gunakan.</string>
-    <string name="html_text_feature_generosity">&lt;strong&gt;Gaya visual&lt;/strong&gt; ini tersedia berkat kemurahan hati Anda.</string>
-    <string name="html_text_donation">Dengan &lt;strong&gt;berkontribusi&lt;/strong&gt; kepada proyek &lt;i&gt;(dalam bentuk uang, kode, penerjemahan)&lt;/i&gt;, Anda akan membantu proyek tersebut supaya terus hidup dan berkembang, dan Anda juga akan memenuhi syarat untuk prosedur pembukaan kunci &lt;strong&gt;tema&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Fitur ini &lt;strong&gt;sedang dalam pengembangan&lt;/strong&gt; dan memerlukan &lt;strong&gt;kontribusi&lt;/strong&gt; Anda untuk bisa tersedia segera.</string>
     <string name="show_otp_token_title">Tampilkan Token OTP</string>
     <string name="text_appearance">Teks</string>
     <string name="database_custom_color_title">Warna basis data kustom</string>
     <string name="settings_database_force_changing_master_key_next_time_title">Pembaruan paksa lain kali</string>
     <string name="settings_database_force_changing_master_key_title">Pembaruan paksa</string>
-    <string name="html_text_dev_feature_encourage">Anda menyemangati pengembang untuk membuat &lt;strong&gt;fitur baru&lt;/strong&gt; dan untuk &lt;strong&gt;memperbaiki kutu&lt;/strong&gt; sesuai dengan komentar Anda.</string>
-    <string name="html_text_dev_feature_buy_pro">Dengan membeli versi &lt;strong&gt;pro&lt;/strong&gt;,</string>
     <string name="content_description_database_color">Warna basis data</string>
     <string name="menu_merge_database">Gabung data</string>
     <string name="warning_database_info_reloaded">Memuat ulang basis data akan menghapus data yang diubah secara lokal.</string>
@@ -523,7 +496,6 @@
     <string name="wireless">Wi-Fi</string>
     <string name="tags">Label</string>
     <string name="warning_permanently_delete_nodes">Hapus permanen node yang dipilih\?</string>
-    <string name="magic_keyboard_explanation_summary">Aktifkan keyboard kustom yang mengisi kata sandi Anda dan semua bidang identitas</string>
     <string name="autofill_manual_selection_title">Pemilihan manual</string>
     <string name="expired">Kadaluwarsa</string>
     <string name="education_add_attachment_summary">Unggah lampiran ke entri Anda untuk menyimpan data eksternal penting.</string>
@@ -629,7 +601,6 @@
     <string name="enable_screenshot_mode_title">Mode tangkapan layar</string>
     <string name="remember_hardware_key_summary">Mengingat kunci perangkat keras yang telah digunakan</string>
     <string name="enable_screenshot_mode_summary">Perbolehkan aplikasi pihak ketiga untuk merekam atau mengambil tangkapan layar aplikasi</string>
-    <string name="html_about_privacy">&lt;strong&gt;Tidak ada data pengguna yang didapatkan&lt;/strong&gt;, aplikasi ini tidak menghubungkan ke server apa pun, bekerja secara lokal dan menghargai privasi pengguna.</string>
     <string name="content_description_nav_header">Tajuk navigasi</string>
     <string name="auto_type">Ketik Otomatis</string>
     <string name="merge_success">Penggabungan berhasil dilakukan</string>
@@ -681,7 +652,6 @@
     <string name="warning_overwrite_data_description">Tindakan ini akan mengganti data yang ada pada entri; Anda dapat memulihkan data lama jika riwayat diaktifkan.</string>
     <string name="credential_provider">Penyedia kredensial</string>
     <string name="passkeys">Passkey</string>
-    <string name="passkeys_explanation_summary">Konfigurasikan passkey untuk login tanpa kata sandi yang cepat dan aman</string>
     <string name="passkeys_preference_title">Pengaturan passkey</string>
     <string name="passkeys_close_database_title">Tutup basis data</string>
     <string name="passkeys_close_database_summary">Tutup basis data setelah pemilihan passkey</string>
@@ -734,7 +704,6 @@
     <string name="password_creation_description">Simpan kata sandi di entri baru</string>
     <string name="password_selection_description">Pilih kata sandi yang sudah ada</string>
     <string name="error_password_result">Tidak dapat mengembalikan kata sandi</string>
-    <string name="content_description_user_verification_information">Info verifikasi pengguna</string>
     <string name="user_verification_required_title">Verifikasi pengguna</string>
     <string name="user_verification_required_description">Akses ke data ini memerlukan verifikasi bahwa ini benar-benar Anda.</string>
     <string name="user_verification_required_description_precise">%1$s memerlukan verifikasi bahwa ini benar-benar Anda.</string>

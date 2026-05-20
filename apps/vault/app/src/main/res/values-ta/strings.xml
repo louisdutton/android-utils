@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="contribution">பங்களிப்பு</string>
     <string name="encryption_algorithm">குறியாக்க வழிமுறை</string>
     <string name="encryption">மறையாக்கம்</string>
     <string name="security">பாதுகாப்பு</string>
@@ -10,9 +9,7 @@
     <string name="add_entry">பதிவைச் சேர்க்கவும்</string>
     <string name="accept">ஏற்றுக்கொள்</string>
     <string name="about_description">கீபாச் கடவுச்சொல் நிர்வாகியின் ஆண்ட்ராய்டு செயல்படுத்தல்.</string>
-    <string name="homepage">வலைமனை</string>
     <string name="contact">தொடர்பு கொள்ளுங்கள்</string>
-    <string name="feedback">பின்னூட்டம்</string>
     <string name="save">சேமி</string>
     <string name="content_description_passphrase_word_count">கடவுச்சொல் சொல் எண்ணிக்கை</string>
     <string name="error_string_key">ஒவ்வொரு சரத்திற்கும் புலத்தின் பெயர் இருக்க வேண்டும்.</string>
@@ -48,7 +45,6 @@
     <string name="settings">அமைப்புகள்</string>
     <string name="menu_security_settings">பாதுகாப்பு அமைப்புகள்</string>
     <string name="menu_database_settings">தரவுத்தள அமைப்புகள்</string>
-    <string name="menu_donate">நன்கொடை</string>
     <string name="menu_move">நகர்த்தவும்</string>
     <string name="contains_duplicate_uuid">தரவுத்தளத்தில் நகல் UUIDS உள்ளது.</string>
     <string name="remember_database_locations_title">தரவுத்தள இடங்களை நினைவில் கொள்ளுங்கள்</string>
@@ -86,9 +82,6 @@
     <string name="autofill_close_database_summary">ஆட்டோஃபில் தேர்வுக்குப் பிறகு தரவுத்தளத்தை மூடு</string>
     <string name="autofill_web_domain_blocklist_title">வலை டொமைன் பிளாக்லிச்ட்</string>
     <string name="education_create_database_summary">உங்கள் முதல் கடவுச்சொல் மேலாண்மை கோப்பை உருவாக்கவும்.</string>
-    <string name="html_text_dev_feature_buy_pro">&lt;strong&gt; புரோ &lt;/strong&gt; பதிப்பை வாங்குவதன் மூலம்,</string>
-    <string name="html_text_dev_feature">இந்த நற்பொருத்தம் &lt;strong&gt; வளர்ச்சியின் கீழ் &lt;/strong&gt; மற்றும் உங்கள் &lt;strong&gt; பங்களிப்பு &lt;/strong&gt; விரைவில் கிடைக்கும்.</string>
-    <string name="html_text_dev_feature_encourage">உங்கள் கருத்துக்களின்படி &lt;strong&gt; புதிய நற்பொருத்தங்கள் &lt;/strong&gt; மற்றும் &lt;strong&gt; பிழைகள் &lt;/strong&gt; ஐ உருவாக்க டெவலப்பர்களை ஊக்குவிக்கிறீர்கள்.</string>
     <string name="error_move_group_here">நீங்கள் இங்கே ஒரு குழுவை நகர்த்த முடியாது.</string>
     <string name="keyboard_previous_lock_title">பூட்டு தரவுத்தளம்</string>
     <string name="autofill_inline_suggestions_summary">இணக்கமான விசைப்பலகையிலிருந்து நேரடியாக ஆட்டோஃபில் பரிந்துரைகளைக் காண்பிக்கும் முயற்சி</string>
@@ -105,10 +98,6 @@
     <string name="education_field_copy_title">ஒரு புலத்தை நகலெடுக்கவும்</string>
     <string name="education_field_copy_summary">நகலெடுக்கப்பட்ட புலங்களை எங்கும் ஒட்டலாம்.\n\n நீங்கள் விரும்பும் படிவ நிரப்புதல் முறையைப் பயன்படுத்தவும்.</string>
     <string name="education_sort_summary">உள்ளீடுகள் மற்றும் குழுக்கள் எவ்வாறு வரிசைப்படுத்தப்படுகின்றன என்பதைத் தேர்வுசெய்க.</string>
-    <string name="html_text_buy_pro">புரோ பதிப்பை வாங்குவதன் மூலம், இந்த &lt;strong&gt; விசுவல் பாணி &lt;/strong&gt; க்கான அணுகலை நீங்கள் பெறுவீர்கள், மேலும் நீங்கள் குறிப்பாக &lt;strong&gt; சமூக திட்டங்களை உணர உதவுவீர்கள்.&lt;/strong&gt;</string>
-    <string name="html_text_dev_feature_thanks">உங்கள் பங்களிப்புக்கு மிக்க நன்றி.</string>
-    <string name="html_text_dev_feature_work_hard">இந்த அம்சத்தை விரைவாக வெளியிட நாங்கள் கடுமையாக உழைத்து வருகிறோம்.</string>
-    <string name="html_text_dev_feature_upgrade">புதிய பதிப்புகளை நிறுவுவதன் மூலம் உங்கள் பயன்பாட்டை புதுப்பித்த நிலையில் வைத்திருக்க நினைவில் கொள்ளுங்கள்.</string>
     <string name="download_attachment">பதிவிறக்கம் %1$s</string>
     <string name="download_canceled">ரத்து செய்யப்பட்டது!</string>
     <string name="entropy_calculate">என்ட்ரோபி: கணக்கிடுங்கள்…</string>
@@ -181,7 +170,6 @@
     <string name="settings_database_recommend_changing_master_key_title">புதுப்பித்தலை பரிந்துரைக்கவும்</string>
     <string name="monospace_font_fields_enable_title">புலம் தட்டச்சு</string>
     <string name="education_device_unlock_summary">உங்கள் தரவுத்தளத்தை விரைவாக திறக்க உங்கள் கடவுச்சொல்லை உங்கள் ச்கேன் செய்யப்பட்ட பயோமெட்ரிக் அல்லது சாதன நற்சான்றிதழுடன் இணைக்கவும்.</string>
-    <string name="education_donation_title">பங்கேற்க</string>
     <string name="entry_add_field">புலத்தைச் சேர்க்கவும்</string>
     <string name="entry_add_attachment">இணைப்பைச் சேர்க்கவும்</string>
     <string name="content_description_remove_field">புலத்தை அகற்று</string>
@@ -325,7 +313,6 @@
     <string name="style_name_kunzite">குன்சைட்</string>
     <string name="biometric_auto_open_prompt_summary">அதைப் பயன்படுத்த தரவுத்தளம் அமைக்கப்பட்டால் சாதனத் திறத்தல் தானாகவே கோருங்கள்</string>
     <string name="menu_url">முகவரி க்குச் செல்லுங்கள்</string>
-    <string name="content_description_credentials_information">நற்சான்றிதழ் செய்தி</string>
     <string name="content_description_background">பின்னணி</string>
     <string name="clipboard_timeout">இடைநிலைப்பலகை நேரம் முடிந்தது</string>
     <string name="clipboard_error_title">இடைநிலைப்பலகை பிழை</string>
@@ -354,14 +341,12 @@
     <string name="menu_device_unlock_settings">சாதனம் திறத்தல்</string>
     <string name="menu_delete">நீக்கு</string>
     <string name="menu_cancel">ரத்துசெய்</string>
-    <string name="menu_external_icon">வெளிப்புற படவுரு</string>
     <string name="minus">கழித்தல்</string>
     <string name="never">ஒருபோதும்</string>
     <string name="show_recent_files_title">அண்மைக் கால கோப்புகளைக் காட்டு</string>
     <string name="saving_database">தரவுத்தளத்தை சேமித்தல்…</string>
     <string name="sort_menu">வரிசைப்படுத்து</string>
     <string name="sort_last_access_time">அணுகல்</string>
-    <string name="device_unlock_explanation_summary">ஒரு தரவுத்தளத்தை எளிதாக திறக்க சாதன திறப்பைப் பயன்படுத்தவும்</string>
     <string name="unavailable_feature_text">இந்த அம்சத்தைத் தொடங்க முடியவில்லை.</string>
     <string name="unavailable_feature_version">சாதனம் ஆண்ட்ராய்டு %1$s ஐ இயக்குகிறது, ஆனால் %2$s அல்லது அதற்குப் பிறகு தேவை.</string>
     <string name="data">தகவல்கள்</string>
@@ -373,8 +358,6 @@
     <string name="autofill_block_restart">தடுப்பதை செயல்படுத்த படிவம் கொண்ட பயன்பாட்டை மறுதொடக்கம் செய்யுங்கள்.</string>
     <string name="education_lock_title">தரவுத்தளத்தை பூட்டவும்</string>
     <string name="education_lock_summary">உங்கள் தரவுத்தளத்தை விரைவாக பூட்டவும், சிறிது நேரத்திற்குப் பிறகு அதைப் பூட்ட பயன்பாட்டை அமைக்கலாம், மேலும் திரை அணைக்கப்படும் போது.</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt; பங்களிப்பு &lt;/strong&gt; மூலம்,</string>
-    <string name="contribute">பங்களிப்பு</string>
     <string name="unit_byte">பி</string>
     <string name="unit_kibibyte">வினோதமாக</string>
     <string name="generate_keyfile">கீஃபைலை உருவாக்குங்கள்</string>
@@ -418,7 +401,6 @@
     <string name="device_credential">சாதன நுழைவுச்சான்றிதழ்</string>
     <string name="database_data_compression_title">தரவு சுருக்க</string>
     <string name="info">தகவல்</string>
-    <string name="content_description_otp_information">ஒரு முறை கடவுச்சொல் செய்தி</string>
     <string name="content_description_hardware_key_checkbox">வன்பொருள் விசை தேர்வுப்பெட்டி</string>
     <string name="content_description_repeat_toggle_password_visibility">கடவுச்சொல் தெரிவுநிலையை மாற்றவும்</string>
     <string name="waiting_challenge_request">அறைகூவல் கோரிக்கைக்காக காத்திருக்கிறது…</string>
@@ -549,9 +531,6 @@
     <string name="content_description_keyboard_close_fields">நெருங்கிய புலங்கள்</string>
     <string name="select_to_copy">இடைநிலைப்பலகைக்கு %1$s ஐ நகலெடுக்கத் தேர்ந்தெடுக்கவும்</string>
     <string name="retrieving_db_key">தரவுத்தள விசையை மீட்டெடுப்பது…</string>
-    <string name="html_about_licence">கீப்ஆச் டிஎக்ச் © %1$d குன்சிசாஃப்ட் &lt;strong&gt; திறந்த மூல &lt;/strong&gt; மற்றும் &lt;strong&gt; விளம்பரம் இல்லாமல் &lt;/strong&gt;.\n இது &lt;strong&gt; gplv3 &lt;/strong&gt; உரிமத்தின் கீழ், எந்த உத்தரவாதமும் இல்லாமல் வழங்கப்படுகிறது.</string>
-    <string name="html_about_privacy">&lt;strong&gt; பயனர் தரவு எதுவும் மீட்டெடுக்கப்படவில்லை &lt;/strong&gt;, இந்த பயன்பாடு எந்த சேவையகத்துடனும் இணைக்கப்படாது, உள்நாட்டில் மட்டுமே வேலை செய்கிறது மற்றும் பயனர்களின் தனியுரிமையை முழுமையாக மதிக்கிறது.</string>
-    <string name="html_about_contribution">&lt;strong&gt; எங்கள் சுதந்திரத்தை வைத்திருங்கள் &lt;/strong&gt;, &lt;strong&gt; பிழைகள் &lt;/strong&gt;, &lt;strong&gt; அம்சங்களைச் சேர் &lt;/strong&gt; மற்றும் &lt;strong&gt; எப்போதும் செயலில் இருக்க &lt;/strong&gt; &lt;strong&gt; பங்களிப்பு &lt;/strong&gt;.</string>
     <string name="rounds_explanation">கூடுதல் குறியாக்க சுற்றுகள் முரட்டுத்தனமான தாக்குதல்களுக்கு எதிராக அதிக பாதுகாப்பை அளிக்கின்றன, ஆனால் ஏற்றுதல் மற்றும் சேமிப்பை குறைக்கும்.</string>
     <string name="space">இடைவெளி</string>
     <string name="filter">வடிப்பி</string>
@@ -585,12 +564,10 @@
     <string name="device_unlock_not_recognized">சாதன திறத்தல் அச்சிடலை அடையாளம் காண முடியவில்லை</string>
     <string name="unavailable">கிடைக்கவில்லை</string>
     <string name="autofill">ஆட்டோஃபில்</string>
-    <string name="autofill_explanation_summary">பிற பயன்பாடுகளில் படிவங்களை விரைவாக நிரப்ப தன்னியக்க நிரப்புதலை உள்ளமைக்கவும்</string>
     <string name="autofill_select_entry">உள்ளீட்டைத் தேர்ந்தெடுக்கவும்…</string>
     <string name="password_size_summary">உருவாக்கப்பட்ட கடவுச்சொற்களின் இயல்புநிலை அளவை அமைக்கிறது</string>
     <string name="list_password_generator_options_summary">அனுமதிக்கப்பட்ட கடவுச்சொல் செனரேட்டர் எழுத்துக்களை அமைக்கவும்</string>
     <string name="clipboard">இடைநிலைப் பலகை</string>
-    <string name="clipboard_explanation_summary">உங்கள் சாதனத்தின் கிளிப்போர்டைப் பயன்படுத்தி நுழைவு புலங்களை நகலெடுக்கவும்</string>
     <string name="clipboard_warning">கிளிப்போர்டை தானாக நீக்குவது தோல்வியுற்றால், அதன் வரலாற்றை கைமுறையாக நீக்கவும்.</string>
     <string name="lock">பூட்டு</string>
     <string name="device_credential_unlock_enable_title">சாதன நற்சான்றிதழ் திறத்தல்</string>
@@ -610,7 +587,6 @@
     <string name="database_version_title">தரவுத்தள பதிப்பு</string>
     <string name="text_appearance">உரை</string>
     <string name="keyboard">விசைப்பலகை</string>
-    <string name="magic_keyboard_explanation_summary">உங்கள் கடவுச்சொற்கள் மற்றும் அனைத்து அடையாள புலங்களையும் விரிவுபடுத்தும் தனிப்பயன் விசைப்பலகை செயல்படுத்தவும்</string>
     <string name="device_keyboard_setting_title">சாதன விசைப்பலகை அமைப்புகள்</string>
     <string name="keyboard_selection_entry_summary">கீப்அச்ட்எக்சில் ஒரு நுழைவைப் பார்க்கும்போது, அந்த நுழைவுடன் மாகிகிபோர்டை விரிவுபடுத்துங்கள்</string>
     <string name="keyboard_notification_entry_summary">நுழைவு கிடைக்கும்போது அறிவிப்பைக் காட்டுங்கள்</string>
@@ -646,10 +622,6 @@
     <string name="education_unlock_summary">உங்கள் தரவுத்தளத்தைத் திறக்க கடவுச்சொல் மற்றும்/அல்லது கீஃபைலை உள்ளிடவும்.\n\n ஒவ்வொரு மாற்றத்திற்கும் பிறகு உங்கள் தரவுத்தள கோப்பை பாதுகாப்பான இடத்தில் காப்புப் பிரதி எடுக்கவும்.</string>
     <string name="education_read_only_title">உங்கள் தரவுத்தளத்தைப் பாதுகாக்கவும்</string>
     <string name="education_read_only_summary">அமர்வுக்கான தொடக்க பயன்முறையை மாற்றவும்.\n\n \"எழுதுதல் பாதுகாக்கப்பட்ட\" தரவுத்தளத்தில் திட்டமிடப்படாத மாற்றங்களைத் தடுக்கிறது.\n \"மாற்றியமைக்கக்கூடியது\" நீங்கள் விரும்பியபடி அனைத்து கூறுகளையும் சேர்க்க, நீக்க அல்லது மாற்ற உங்களை அனுமதிக்கிறது.</string>
-    <string name="education_donation_summary">ச்திரத்தன்மை, பாதுகாப்பு மற்றும் கூடுதல் அம்சங்களைச் சேர்ப்பதில் அதிகரிக்க உதவுங்கள்.</string>
-    <string name="html_text_ad_free">பல கடவுச்சொல் மேலாண்மை பயன்பாடுகளைப் போலன்றி, இது &lt;strong&gt; விளம்பர-இலவச &lt;/strong&gt;, &lt;strong&gt; நகலெடுக்கப்பட்ட லிப்ரே மென்பொருள் &lt;/strong&gt; மற்றும் நீங்கள் எந்த பதிப்பைப் பயன்படுத்தினாலும் அதன் சேவையகங்களில் தனிப்பட்ட தரவை சேகரிக்காது.</string>
-    <string name="html_text_feature_generosity">இந்த &lt;strong&gt; விசுவல் பாணி &lt;/strong&gt; உங்கள் தாராள மனப்பான்மைக்கு நன்றி.</string>
-    <string name="html_text_donation">திட்டத்திற்கு &lt;strong&gt;பங்களிப்பு&lt;/strong&gt; மூலம் &lt;i&gt;(பண ரீதியாக, குறியீடு, மொழிபெயர்ப்பு)&lt;/i&gt;, நீங்கள் தொடர்ந்து வாழவும் வளரவும் உதவுவீர்கள், மேலும் நீங்கள் &lt;strong&gt;கருப்பொருளுக்கும்&lt;/strong&gt; தகுதி பெறுவீர்கள்திறத்தல் செயல்முறை.</string>
     <string name="upload_attachment">%1$s ஐ பதிவேற்றவும்</string>
     <string name="download_initialization">தொடங்குதல்…</string>
     <string name="download_progression">செயலில்:%1$d %%</string>
@@ -657,7 +629,6 @@
     <string name="warning_overwrite_data_description">இந்த செயல் உள்ளீட்டில் இருக்கும் தரவை மாற்றிவிடும், இதன் வரலாறு இயக்கத்தில் இருந்தால் அந்தப் பழைய தரவை மீட்க முடியும்</string>
     <string name="credential_provider">அறிமுகச்சான்று வழங்குபவர்</string>
     <string name="passkeys">கடவுத்திறவுகோல்கள்</string>
-    <string name="passkeys_explanation_summary">கடவுச்சொற்கள் அல்லாத உள்நுழைவிற்கு கடவுத்திறவுகோல்களை உள்ளமைக்கவும்</string>
     <string name="passkeys_preference_title">கடவுத்திறவுகோல்களின் அமைப்புகள்</string>
     <string name="passkeys_close_database_title">தரவுத்தளத்தை மூடு</string>
     <string name="passkeys_close_database_summary">கடவுத்திறவுகோலை தேர்ந்தெடுத்த பின்பு தரவுத்தளத்தை மூடவும்</string>
@@ -714,7 +685,6 @@
     <string name="password_creation_description">புதிய பதிவில் கடவுச்சொல்லை சேமிக்கவும்</string>
     <string name="password_selection_description">ஏற்கனவே உள்ள கடவுச்சொல்லைத் தேர்ந்தெடுக்கவும்</string>
     <string name="error_password_result">கடவுச்சொல்லை திருப்பி அனுப்ப முடியவில்லை</string>
-    <string name="content_description_user_verification_information">பயனர் சரிபார்ப்பு செய்தி</string>
     <string name="user_verification_required_title">பயனர் சரிபார்ப்பு</string>
     <string name="user_verification_required_description">இந்தத் தரவை அணுக, அது நீங்கள்தான் என்பதைச் சரிபார்க்க வேண்டும்.</string>
     <string name="user_verification_required_description_precise">%1$s க்கு அது நீங்கள்தானா என்பதைச் சரிபார்க்க வேண்டும்.</string>

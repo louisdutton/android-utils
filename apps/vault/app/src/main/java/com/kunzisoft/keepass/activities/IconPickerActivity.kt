@@ -46,7 +46,6 @@ import com.kunzisoft.keepass.database.element.icon.IconImageCustom
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.BinaryDatabaseManager
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
-import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.asError
@@ -248,9 +247,6 @@ class IconPickerActivity : DatabaseLockActivity() {
                 mIconsSelected.forEach { iconToRemove ->
                     removeCustomIcon(iconToRemove)
                 }
-            }
-            R.id.menu_external_icon -> {
-                this.openUrl(R.string.external_icon_url)
             }
         }
 

@@ -22,24 +22,11 @@
     <PreferenceCategory
         android:title="@string/application_appearance">
 
-        <ListPreference
-            android:key="@string/setting_style_key"
-            android:title="@string/style_choose_title"
-            android:summary="@string/style_choose_summary"
-            android:defaultValue="@string/list_style_name_light"
-            android:entries="@array/list_style_names"
-            android:entryValues="@array/list_style_values_light" />
-        <ListPreference
-            android:key="@string/setting_style_brightness_key"
-            android:title="@string/style_brightness_title"
-            android:summary="@string/style_brightness_summary"
-            android:defaultValue="@string/list_style_brightness_follow_system"
-            android:entries="@array/list_style_brightness_names"
-            android:entryValues="@array/list_style_brightness_values" />
-        <com.kunzisoft.keepass.settings.preference.IconPackListPreference
-            android:key="@string/setting_icon_pack_choose_key"
-            android:title="@string/icon_pack_choose_title"
-            android:summary="@string/icon_pack_choose_summary" />
+        <SwitchPreferenceCompat
+            android:key="@string/pure_black_oled_key"
+            android:title="@string/pure_black_oled_title"
+            android:summary="@string/pure_black_oled_summary"
+            android:defaultValue="@bool/pure_black_oled_default"/>
         <SwitchPreferenceCompat
             android:key="@string/show_entry_colors_key"
             android:title="@string/show_entry_colors_title"
@@ -116,21 +103,6 @@
             android:title="@string/monospace_font_fields_enable_title"
             android:summary="@string/monospace_font_fields_enable_summary"
             android:defaultValue="@bool/monospace_font_fields_enable_default"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/other">
-
-        <SwitchPreferenceCompat
-            android:key="@string/enable_education_screens_key"
-            android:title="@string/enable_education_screens_title"
-            android:summary="@string/enable_education_screens_summary"
-            android:defaultValue="@bool/enable_education_screens_default"/>
-        <Preference
-            android:key="@string/reset_education_screens_key"
-            android:title="@string/reset_education_screens_title"
-            android:summary="@string/reset_education_screens_summary"/>
 
     </PreferenceCategory>
 

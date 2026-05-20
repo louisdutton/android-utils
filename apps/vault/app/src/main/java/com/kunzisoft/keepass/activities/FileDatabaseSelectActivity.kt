@@ -34,7 +34,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -57,13 +56,13 @@ import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_CREATE_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_LOAD_TASK
+import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.DATABASE_URI_KEY
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.ActionRunnable
-import com.kunzisoft.keepass.utils.AppUtil.isContributingUser
 import com.kunzisoft.keepass.utils.DexUtil
 import com.kunzisoft.keepass.utils.MagikeyboardUtil
 import com.kunzisoft.keepass.utils.MenuUtil
-import com.kunzisoft.keepass.utils.UriUtil.openUrl
+import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.view.asError
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
@@ -75,7 +74,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
 
     // Views
     private lateinit var coordinatorLayout: CoordinatorLayout
-    private var specialTitle: View? = null
     private var createDatabaseButtonView: View? = null
     private var openDatabaseButtonView: View? = null
 
@@ -85,8 +83,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
 
     // Adapter to manage database history list
     private var mAdapterDatabaseHistory: FileDatabaseHistoryAdapter? = null
-
-    private var mFileDatabaseHistoryAction: FileDatabaseHistoryAction? = null
 
     private var mDatabaseFileUri: Uri? = null
 
@@ -103,17 +99,12 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         // user would need to enter and exit DeX mode once to reenable the service.
         MagikeyboardUtil.setEnabled(this, !DexUtil.isDexMode(resources.configuration))
 
-        mFileDatabaseHistoryAction = FileDatabaseHistoryAction.getInstance(applicationContext)
-
         setContentView(R.layout.activity_file_selection)
         coordinatorLayout = findViewById(R.id.activity_file_selection_coordinator_layout)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.title = ""
         setSupportActionBar(toolbar)
-
-        // Special title
-        specialTitle = findViewById(R.id.file_selection_title_part_3)
 
         // Create database button
         createDatabaseButtonView = findViewById(R.id.create_database_button)
@@ -147,9 +138,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         (fileDatabaseHistoryRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         // Construct adapter with listeners
         mAdapterDatabaseHistory = FileDatabaseHistoryAdapter(this)
-        mAdapterDatabaseHistory?.setOnDefaultDatabaseListener { databaseFile ->
-            databaseFilesViewModel.setDefaultDatabase(databaseFile)
-        }
         mAdapterDatabaseHistory?.setOnFileDatabaseHistoryOpenListener { fileDatabaseHistoryEntityToOpen ->
             fileDatabaseHistoryEntityToOpen.databaseUri?.let { databaseFileUri ->
                 launchMainCredentialActivity(
@@ -159,20 +147,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
                 )
             }
         }
-        mAdapterDatabaseHistory?.setOnFileDatabaseHistoryDeleteListener { fileDatabaseHistoryToDelete ->
-            databaseFilesViewModel.deleteDatabaseFile(fileDatabaseHistoryToDelete)
-            true
-        }
-        mAdapterDatabaseHistory?.setOnSaveAliasListener { fileDatabaseHistoryWithNewAlias ->
-            // Update in app database
-            databaseFilesViewModel.updateDatabaseFile(fileDatabaseHistoryWithNewAlias)
-        }
         fileDatabaseHistoryRecyclerView.adapter = mAdapterDatabaseHistory
-
-        // Load default database the first time
-        databaseFilesViewModel.doForDefaultDatabase { databaseFileUri ->
-            launchMainCredentialActivityWithPath(databaseFileUri)
-        }
 
         // Retrieve the database URI provided by file manager after an orientation change
         if (savedInstanceState != null
@@ -209,12 +184,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
             }
         }
 
-        // Observe default database
-        databaseFilesViewModel.defaultDatabase.observe(this) {
-            // Retrieve settings for default database
-            mAdapterDatabaseHistory?.setDefaultDatabase(it)
-        }
-
         // Remove all the remember locations if needed
         if (PreferencesUtil.rememberDatabaseLocations(applicationContext).not()) {
             FileDatabaseHistoryAction.getInstance(applicationContext)
@@ -231,21 +200,42 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         actionTask: String,
         result: ActionRunnable.Result
     ) {
-        if (result.isSuccess) {
-            // Launch activity
-            when (actionTask) {
-                ACTION_DATABASE_CREATE_TASK -> {
-                    GroupActivity.launch(
-                        this@FileDatabaseSelectActivity,
-                        database,
-                        false
-                    )
-                    coordinatorLayout.showActionErrorIfNeeded(result)
-                }
-                ACTION_DATABASE_LOAD_TASK -> {
-                    launchGroupActivityIfLoaded(database)
+        if (!result.isSuccess) {
+            if (actionTask == ACTION_DATABASE_CREATE_TASK) {
+                deleteEmptyCreatedDatabase(result)
+            }
+            coordinatorLayout.showActionErrorIfNeeded(result)
+            return
+        }
+
+        // Launch activity
+        when (actionTask) {
+            ACTION_DATABASE_CREATE_TASK -> {
+                GroupActivity.launch(
+                    this@FileDatabaseSelectActivity,
+                    database,
+                    false
+                )
+            }
+            ACTION_DATABASE_LOAD_TASK -> {
+                launchGroupActivityIfLoaded(database)
+            }
+        }
+    }
+
+    private fun deleteEmptyCreatedDatabase(result: ActionRunnable.Result) {
+        val databaseUri = result.data?.getParcelableCompat<Uri>(DATABASE_URI_KEY)
+            ?: mDatabaseFileUri
+            ?: return
+        try {
+            val documentFile = databaseUri.getDocumentFile(this) ?: return
+            if (documentFile.exists() && documentFile.length() == 0L) {
+                if (documentFile.delete() && mDatabaseFileUri == databaseUri) {
+                    mDatabaseFileUri = null
                 }
             }
+        } catch (e: Exception) {
+            Log.w(TAG, "Unable to remove empty database after failed create", e)
         }
     }
 
@@ -341,9 +331,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
     override fun onResume() {
         super.onResume()
 
-        // Define special title
-        specialTitle?.isVisible = this.isContributingUser()
-
         // Show open and create button or special mode
         when (mSpecialMode) {
             SpecialMode.DEFAULT -> {
@@ -388,7 +375,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         super.onCreateOptionsMenu(menu)
 
         if (mSpecialMode == SpecialMode.DEFAULT) {
-            MenuUtil.defaultMenuInflater(this, menuInflater, menu)
+            MenuUtil.defaultMenuInflater(menuInflater, menu)
         }
 
         Handler(Looper.getMainLooper()).post {
@@ -429,9 +416,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> this.openUrl(R.string.file_manager_explanation_url)
-        }
         MenuUtil.onDefaultMenuOptionsItemSelected(this, item)
         return super.onOptionsItemSelected(item)
     }

@@ -18,8 +18,6 @@
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
     Catalan translation by Oriol Garrote
 --><resources>
-    <string name="feedback">Comentaris</string>
-    <string name="homepage">Lloc web</string>
     <string name="about_description">Implementació per a l’Android del gestor de contrasenyes KeePass</string>
     <string name="accept">Accepta</string>
     <string name="add_entry">Afegeix entrada</string>
@@ -40,8 +38,6 @@
     <string name="decrypting_db">Desxifrant la base de dades…</string>
     <string name="default_checkbox">Utilitza com a base de dades per defecte</string>
     <string name="digits">Dígits</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft és &lt;strong&gt; programari lliure &lt;/strong&gt; i &lt;strong&gt;sense anuncis&lt;/strong&gt;.
-\nEs proporciona tal com està, sota una llicència &lt;strong&gt;GPLv3&lt;/strong&gt;, sense cap garantia.</string>
     <string name="select_database_file">Obre una caixa forta existent</string>
     <string name="entry_accessed">Accedida</string>
     <string name="entry_cancel">Cancel·la</string>
@@ -89,7 +85,6 @@
     <string name="settings">Paràmetres</string>
     <string name="menu_database_settings">Paràmetres de la base de dades</string>
     <string name="menu_delete">Esborra</string>
-    <string name="menu_donate">Donar</string>
     <string name="menu_edit">Editar</string>
     <string name="menu_lock">Bloca la base de dades</string>
     <string name="menu_open">Obre</string>
@@ -127,7 +122,6 @@
     <string name="security">Seguretat</string>
     <string name="master_key">Clau mestra</string>
     <string name="edit_entry">Edita l\'entrada</string>
-    <string name="contribution">Contribució</string>
     <string name="contact">Contacte</string>
     <string name="extended_ASCII">ASCII estès</string>
     <string name="sort_username">Nom d’usuari</string>
@@ -167,7 +161,6 @@
     <string name="password_size_summary">Estableix la mida per defecte de les contrasenyes generades</string>
     <string name="password_size_title">Mida de la contrasenya generada</string>
     <string name="autofill_preference_title">Paràmetres d\'autocompleció</string>
-    <string name="autofill_explanation_summary">Activa l\'autocompleció per a omplir ràpidament formularis en altres aplicacions</string>
     <string name="autofill_sign_in_prompt">Inicia sessió amb KeePassDX</string>
     <string name="autofill">Autocompleta</string>
     <string name="general">General</string>
@@ -253,7 +246,6 @@
     <string name="entry_attachments">Adjunts</string>
     <string name="entry_history">Història</string>
     <string name="entry_UUID">UUID</string>
-    <string name="html_about_contribution">Per tal de &lt;strong&gt;mantenir la nostra llibertat&lt;/strong&gt;, &lt;strong&gt;corregir errors&lt;/strong&gt;, &lt;strong&gt;afegir característiques&lt;/strong&gt; i &lt;strong&gt;estar sempre actius&lt;/strong&gt;, comptem amb la vostra &lt;strong&gt;contribució&lt;/strong&gt;.</string>
     <string name="content_description_keyboard_close_fields">Tanca camps</string>
     <string name="content_description_update_from_list">Actualitza</string>
     <string name="content_description_remove_field">Suprimeix camp</string>
@@ -294,23 +286,14 @@
     <string name="error_word_reserved">Aquesta paraula està reservada i no es pot usar.</string>
     <string name="error_invalid_OTP">El secret OTP no és vàlid.</string>
     <string name="education_read_only_title">Protecció contra escriptura de la base de dades</string>
-    <string name="education_donation_summary">Ajudeu a augmentar l’estabilitat i la seguretat i a crear més funcionalitats.</string>
-    <string name="education_donation_title">Participació</string>
-    <string name="html_text_dev_feature_buy_pro">En comprar la versió &lt;strong&gt;professional&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">En &lt;strong&gt;col·laborar-hi&lt;/strong&gt;,</string>
     <string name="content_description_keyfile_checkbox">Casella del fitxer de la clau</string>
     <string name="content_description_password_checkbox">Casella de la contrasenya</string>
-    <string name="content_description_otp_information">Informació de contrasenya d\'únic ús</string>
-    <string name="content_description_credentials_information">Informació de credencials</string>
     <string name="content_description_add_item">Afegeix un element</string>
     <string name="education_lock_title">Bloca la base de dades</string>
-    <string name="html_text_feature_generosity">Aquest &lt;strong&gt;estil visual&lt;/strong&gt; és disponible gràcies a la vostra generositat.</string>
-    <string name="html_text_dev_feature_upgrade">No us oblideu de mantenir l’aplicació actualitzada instal·lant les versions noves.</string>
     <string name="icon_section_standard">Estàndard</string>
     <string name="show_uuid_title">Mostra l\'UUID</string>
     <string name="hide_expired_entries_summary">No es mostren les entrades expirades</string>
     <string name="hide_expired_entries_title">Amaga les entrades expirades</string>
-    <string name="contribute">Contribuïu-hi</string>
     <string name="download">Baixa</string>
     <string name="unit_kibibyte">KiB</string>
     <string name="unit_byte">B</string>
@@ -345,14 +328,12 @@
     <string name="ignore_chars_filter">Ignora caràcters</string>
     <string name="ask">Pregunta</string>
     <string name="searchable">Cercable</string>
-    <string name="html_text_dev_feature_thanks">Moltes gràcies per la teva contribució.</string>
     <string name="menu_form_filling_settings_summary">Teclat, autoemplena, porta-retalls</string>
     <string name="export_app_properties_title">Exporta la configuració de l\'aplicació</string>
     <string name="email">Email</string>
     <string name="content_description_nav_header">Títol de navegació</string>
     <string name="navigation_drawer_close">Tancar calaix de navegació</string>
     <string name="properties">Propietats</string>
-    <string name="html_about_privacy">&lt;strong&gt;No s\'agafa cap dada d\'usuari&lt;/strong&gt;, aquesta aplicació no connecta a cap servidor, només treballa localment i respecta la privacitat dels usuaris en la seva totalitat.</string>
     <string name="notification">Notificació</string>
     <string name="content_description_entry_foreground_color">Color de primer pla d\'entrada</string>
     <string name="device_unlock">Desbloqueja dispositiu</string>
@@ -369,7 +350,6 @@
     <string name="lower_case">minúscula</string>
     <string name="import_app_properties_summary">Selecciona un fitxer per importar la configuració de l\'aplicació</string>
     <string name="monospace_font_fields_enable_summary">Canvia la font usada en els camps per una millor visibilitat dels caràcters</string>
-    <string name="html_text_dev_feature_work_hard">Estem treballant de valent per implementar aquesta característica ràpidament.</string>
     <string name="autofill_close_database_summary">Tanca la base de dades després d\'auto-completar</string>
     <string name="screenshot_mode_banner_text">Mode captura de pantalla</string>
     <string name="application_appearance">Interfície</string>
@@ -496,7 +476,6 @@
     <string name="warning_database_already_opened">Ja hi ha oberta una base de dades, tanqueu-la primer abans d\'obrir-ne una de nova</string>
     <string name="build_label">Construeix 2%1$s</string>
     <string name="device_unlock_prompt_extract_credential_title">Reconeixement de desbloqueig del dispositiu</string>
-    <string name="clipboard_explanation_summary">Copia els camps d\'entrada utilitzant el porta-retalls del dispositiu</string>
     <string name="temp_device_unlock_enable_title">Desbloqueig temporal del dispositiu</string>
     <string name="temp_device_unlock_enable_summary">No emmagatzemeu cap contingut xifrat per utilitzar el desbloqueig del dispositiu</string>
     <string name="database_data_remove_unlinked_attachments_summary">Elimina els adjunts continguts a la base de dades però no vinculats a una entrada</string>
@@ -564,7 +543,6 @@
     <string name="filter">Filtra</string>
     <string name="keyboard_auto_go_action_title">Acció de la tecla automàtica</string>
     <string name="configure_biometric">No hi ha cap credencial biomètrica ni de dispositiu inscrita.</string>
-    <string name="device_unlock_explanation_summary">Utilitza el desbloqueig del dispositiu per obrir una base de dades més fàcilment</string>
     <string name="device_credential_unlock_enable_summary">Us permet utilitzar la credencial del dispositiu per obrir la base de dades</string>
     <string name="biometric_auto_open_prompt_summary">Sol·licita automàticament el desbloqueig del dispositiu si la base de dades està configurada per utilitzar-lo</string>
     <string name="device_unlock_delete_all_key_warning">Voleu suprimir totes les claus de xifratge relacionades amb el reconeixement de desbloqueig del dispositiu?</string>
@@ -578,7 +556,6 @@
     <string name="keyboard_notification_entry_content_title">%1$s disponbile al Magikeyboard</string>
     <string name="warning_empty_keyfile_explanation">El contingut del fitxer clau no s\'ha de canviar mai, i en el millor dels casos, ha de contenir dades generades aleatòriament.</string>
     <string name="invalid_db_same_uuid">%1$s amb el mateix UUID %2$s ja existeix.</string>
-    <string name="menu_external_icon">Icona externa</string>
     <string name="remember_keyfile_locations_summary">Fa un seguiment d\'on s\'emmagatzemen els fitxers de claus</string>
     <string name="hide_broken_locations_title">Amaga els enllaços trencats de la base de dades</string>
     <string name="autofill_manual_selection_summary">Mostra l\'opció de permetre que l\'usuari seleccioni l\'entrada de la base de dades</string>
@@ -617,7 +594,6 @@
     <string name="max_history_items_summary">Limita el nombre d\'elements de l\'historial per entrada</string>
     <string name="recycle_bin">Paperera de reciclatge</string>
     <string name="templates">Plantilles</string>
-    <string name="magic_keyboard_explanation_summary">Activeu un teclat personalitzat que empleni les contrasenyes i tots els camps d\'identitat</string>
     <string name="device_keyboard_setting_title">Configuració del teclat del dispositiu</string>
     <string name="keyboard_name">Magikeyboard</string>
     <string name="keyboard_setting_label">Configuració del Magikeyboard</string>
@@ -647,13 +623,11 @@
     <string name="education_unlock_title">Desbloqueja la base de dades</string>
     <string name="education_setup_OTP_summary">Configureu la gestió de contrasenyes d\'un sol ús (HOTP / TOTP) per generar un testimoni sol·licitat per a l\'autenticació de dos factors (2FA).</string>
     <string name="education_field_copy_title">Copia un camp</string>
-    <string name="html_text_donation">Al &lt;strong&gt;contribuir&lt;/strong&gt; al projecte &lt;i&gt;(monetàriament, codi, traducció)&lt;/i&gt;, l\'ajudareu a continuar vivint i prosperant, i també podreu optar al procediment de desbloqueig del &lt;strong&gt;tema&lt;/strong&gt;.</string>
     <string name="upload_attachment">Puja %1$s</string>
     <string name="download_finalization">S\'està finalitzant…</string>
     <string name="entropy">Entropia: %1$s bit</string>
     <string name="warning_exact_alarm">No heu permès que l\'aplicació utilitzi una alarma exacta. Com a resultat, les característiques que requereixen un temporitzador no es faran amb un temps exacte.</string>
     <string name="warning_keyfile_integrity">El hash del fitxer no està garantit perquè Android pot canviar les seves dades al moment. Canvia l\'extensió del fitxer a .bin per a una integritat correcta.</string>
-    <string name="html_text_ad_free">A diferència de moltes aplicacions de gestió de contrasenyes, aquest un és un &lt;strong&gt;programari sense anuncis&lt;/strong&gt;, &lt;strong&gt; copyleft i lliure&lt;/strong&gt; i no recull dades personals en els seus servidors, no importa quina versió utilitzeu.</string>
     <string name="education_field_copy_summary">Els camps copiats es poden enganxar en qualsevol lloc.\n\nUtilitza el mètode d\'emplenament de formularis que prefereixis.</string>
     <string name="generate_keyfile">Genera un fitxer de claus</string>
     <string name="nodes">Nodes</string>
@@ -667,8 +641,6 @@
     <string name="education_read_only_summary">Canvieu el mode inaugural per a la sessió. \n \n\"Escriu-emparat\" impedeix canvis involuntaris a la base de dades. \n\"Modificable\" us permet afegir, eliminar o modificar tots els elements com vulgueu.</string>
     <string name="warning_database_info_changed_options_read_only">Torna a carregar la base de dades amb els darrers canvis.</string>
     <string name="warning_database_notification_permission">El permís de notificació permet mostrar l\'estat de la base de dades i bloquejar-la amb un botó de fàcil accés.\n\nSi no activeu aquest permís, la base de dades oberta en segon pla no serà visible si hi ha una altra aplicació en primer pla.</string>
-    <string name="html_text_buy_pro">En comprar la versió pro, tindreu accés a aquest &lt;strong&gt; estil visual&lt;/strong&gt; i sereu ajundant especialment &lt;strong&gt; a la realització de projectes comunitaris.&lt;/strong&gt;</string>
-    <string name="html_text_dev_feature">Aquesta característica és &lt;strong&gt;en desenvolupament&lt;/strong&gt; i requereix que la vostra &lt;strong&gt;contribució&lt;/strong&gt; estigui disponible aviat.</string>
     <string name="style_name_forest">Bosc</string>
     <string name="style_name_divine">Divina</string>
     <string name="style_name_classic">Clàssic</string>
@@ -677,7 +649,6 @@
     <string name="style_name_follow_system">Seguiu el sistema</string>
     <string name="hide_templates_title">Amaga les plantilles</string>
     <string name="hide_templates_summary">Les plantilles no són mostrades</string>
-    <string name="html_text_dev_feature_encourage">esteu animant a qui desenvolupa a crear &lt;strong&gt;noves funcions&lt;/strong&gt; i a &lt;strong&gt;corregir errors&lt;/strong&gt; segons les vostres observacions.</string>
     <string name="style_name_simple">Simple</string>
     <string name="style_name_moon">Lluna</string>
     <string name="style_name_sun">Sol</string>
@@ -691,7 +662,6 @@
     <string name="warning_overwrite_data_description">Aquesta acció substituirà les dades actuals de l\'entrada, pots recuperar les dades antigues si tens activat l\'historial.</string>
     <string name="credential_provider">Proveïdora de credencials</string>
     <string name="passkeys">Passkeys</string>
-    <string name="passkeys_explanation_summary">Configura Passkeys per iniciar sessions de forma ràpida i segura</string>
     <string name="passkeys_preference_title">Configuració de Passkeys</string>
     <string name="passkeys_close_database_title">Tanca la base de dades</string>
     <string name="passkeys_close_database_summary">Tanca la base de dades després de triar una passkey</string>

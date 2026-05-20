@@ -23,14 +23,12 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.MasterCredential
-import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.viewmodels.UserVerificationViewModel
 
 
@@ -64,9 +62,6 @@ class CheckDatabaseCredentialDialogFragment : DatabaseDialogFragment() {
                         userVerificationViewModel.onUserVerificationFailed()
                         dismiss()
                     }
-            rootView.findViewById<View>(R.id.user_verification_information)?.setOnClickListener {
-                activity.openUrl(R.string.user_verification_explanation_url)
-            }
             return builder.create()
         }
 

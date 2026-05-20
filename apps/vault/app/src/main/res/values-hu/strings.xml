@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Visszajelzés</string>
-    <string name="homepage">Weboldal</string>
     <string name="about_description">A KeePass jelszókezelő androidos megvalósítása.</string>
     <string name="accept">Elfogadás</string>
     <string name="add_entry">Bejegyzés hozzáadása</string>
@@ -42,8 +40,6 @@
     <string name="decrypting_db">Adatbázis-tartalom titkosításának feloldása…</string>
     <string name="default_checkbox">Használat alapértelmezett adatbázisként</string>
     <string name="digits">Számok</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft. A program &lt;strong&gt;nyílt forráskódú&lt;/strong&gt; és &lt;strong&gt;reklámmentes&lt;/strong&gt;.
-\nA program jelen állapotában kerül közreadásra, &lt;strong&gt;GPLv3&lt;/strong&gt; licenc alatt, bármilyen garancia nélkül.</string>
     <string name="select_database_file">Létező széf megnyitása</string>
     <string name="entry_accessed">Utolsó hozzáférés</string>
     <string name="entry_cancel">Mégse</string>
@@ -97,7 +93,6 @@
     <string name="settings">Beállítások</string>
     <string name="menu_database_settings">Adatbázis-beállítások</string>
     <string name="menu_delete">Törlés</string>
-    <string name="menu_donate">Támogatás</string>
     <string name="menu_edit">Szerkesztés</string>
     <string name="menu_lock">Adatbázis zárolása</string>
     <string name="menu_open">Megnyitás</string>
@@ -180,7 +175,6 @@
     <string name="autofill">Automatikus kitöltés</string>
     <string name="autofill_sign_in_prompt">Bejelentkezés a KeePassDX-szel</string>
     <string name="set_credential_provider_service_title">Hitelesítő adatkezelő szolgáltatás</string>
-    <string name="autofill_explanation_summary">Automatikus kitöltés az űrlapok gyors kitöltéséhez más alkalmazásokban</string>
     <string name="password_size_title">Előállított jelszó mérete</string>
     <string name="password_size_summary">Beállítja az előállított jelszavak alapértelmezett méretét</string>
     <string name="list_password_generator_options_title">Jelszó karakterek</string>
@@ -216,7 +210,6 @@
     <string name="other">Egyéb</string>
     <string name="keyboard">Billentyűzet</string>
     <string name="magic_keyboard_title">Mágikus billentyűzet</string>
-    <string name="magic_keyboard_explanation_summary">Egyéni billentyűzet aktiválása, amely kitölti a jelszavakat és az összes azonosító mezőt</string>
     <string name="keyboard_name">Mágikus billentyűzet</string>
     <string name="keyboard_label">Mágikus billentyűzet (KeePassDX)</string>
     <string name="keyboard_setting_label">Mágikus billentyűzet beállításai</string>
@@ -270,22 +263,8 @@
     <string name="education_lock_summary">Zárolja gyorsan az adatbázist, beállíthatja hogy az alkalmazás lezárja egy idő után, valamint ha a képernyőt kikapcsolja.</string>
     <string name="education_sort_title">Elemek rendezése</string>
     <string name="education_sort_summary">Válasszon, hogy az elemek és csoportok hogyan legyenek rendezve.</string>
-    <string name="education_donation_title">Részvétel</string>
     <string name="education_entry_edit_summary">Szerkessze a bejegyzése egyéni mezőit. Az adatok hivatkozhatóak a különböző mezők között.</string>
-    <string name="education_donation_summary">Segítsen a stabilitás és a biztonság növelésében, és az új funkciók hozzáadásában.</string>
-    <string name="html_text_ad_free">Számos más jelszókezelő alkalmazással ellentétben, ez egy &lt;strong&gt;reklámmentes&lt;/strong&gt;, &lt;strong&gt;copyleft licencelésű szabad szoftver&lt;/strong&gt;, amely nem gyűjt személyes adatokat a kiszolgálókon, bármelyik verziót is használja.</string>
-    <string name="html_text_buy_pro">A pro verzió megvásárlásával hozzáférést kap ehhez a &lt;strong&gt;vizuális stílushoz&lt;/strong&gt;, és segít a &lt;strong&gt;közösségi projektek megvalósulásában.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Ez a &lt;strong&gt;vizuális stílus&lt;/strong&gt; az Ön nagylelkűségének köszönhetően érhető el.</string>
-    <string name="html_text_donation">Azzal, hogy &lt;strong&gt;hozzájárul&lt;/strong&gt; a projekthez &lt;i&gt;(pénzzel, kóddal, fordítással)&lt;/i&gt;, segít abban, hogy a projekt tovább éljen és gyarapodjon, továbbá Ön jogosulttá válik a &lt;strong&gt;téma&lt;/strong&gt;feloldásának lehetősége.</string>
-    <string name="html_text_dev_feature">Ez a funkció &lt;strong&gt;fejlesztés alatt áll&lt;/strong&gt;, és az Ön &lt;strong&gt;közreműködésére&lt;/strong&gt; van szükség, hogy hamarosan elérhető legyen.</string>
-    <string name="html_text_dev_feature_buy_pro">A &lt;strong&gt;pro&lt;/strong&gt; verzió megvásárlásával,</string>
-    <string name="html_text_dev_feature_contibute">A &lt;strong&gt;közreműködésével&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">arra ösztönzi a fejlesztőket, hogy &lt;strong&gt;új funkciókat&lt;/strong&gt; hozzanak létre, és &lt;strong&gt;hibákat javítsanak&lt;/strong&gt; az észrevételei alapján.</string>
-    <string name="html_text_dev_feature_thanks">Köszönjük a közreműködését.</string>
-    <string name="html_text_dev_feature_work_hard">Keményen dolgozunk, hogy gyorsan kiadjuk ezt a funkciót.</string>
-    <string name="html_text_dev_feature_upgrade">Ne felejtse naprakészen tartani az alkalmazást az új verziók telepítésével.</string>
     <string name="download">Letöltés</string>
-    <string name="contribute">Közreműködés</string>
     <string name="style_choose_title">Alkalmazástéma</string>
     <string name="style_choose_summary">Az alkalmazásban használt téma</string>
     <string name="icon_pack_choose_title">Ikoncsomag</string>
@@ -320,7 +299,6 @@
     <string name="auto_focus_search_summary">Keresés kérése az adatbázis megnyitásakor</string>
     <string name="error_create_database">Az adatbázisfájl létrehozása sikertelen.</string>
     <string name="error_label_exists">Ez a címke már létezik.</string>
-    <string name="html_about_contribution">A &lt;strong&gt;szabadságunk megtartása&lt;/strong&gt;, a &lt;strong&gt;hibák javítása&lt;/strong&gt;, a &lt;strong&gt;funkciók hozzáadása&lt;/strong&gt; és az &lt;strong&gt;állandó aktivitás&lt;/strong&gt; érdekében számítunk a &lt;strong&gt;közreműködésére&lt;/strong&gt;.</string>
     <string name="entry_add_attachment">Melléklet hozzáadása</string>
     <string name="entry_add_field">Mező hozzáadása</string>
     <string name="entry_password_generator">Jelszógenerátor</string>
@@ -328,7 +306,6 @@
     <string name="discard_changes">Elveti a változtatásokat?</string>
     <string name="validate">Érvényesítés</string>
     <string name="auto_focus_search_title">Gyors keresés</string>
-    <string name="contribution">Közreműködés</string>
     <string name="contact">Kapcsolat</string>
     <string name="hide_expired_entries_summary">A lejárt bejegyzések nem jelennek meg</string>
     <string name="hide_expired_entries_title">Lejárt bejegyzések elrejtése</string>
@@ -369,8 +346,6 @@
     <string name="max_history_items_title">Maximális szám</string>
     <string name="database_data_compression_summary">Az adattömörítés csökkenti az adatbázis méretét</string>
     <string name="database_data_compression_title">Adattömörítés</string>
-    <string name="device_unlock_explanation_summary">Eszközfeloldás használata az adatbázis könnyebb megnyitásához</string>
-    <string name="clipboard_explanation_summary">A bejegyzésmezők másolása az eszköz vágólapjának használatával</string>
     <string name="database_opened">Adatbázis megnyitva</string>
     <string name="contains_duplicate_uuid_procedure">Megoldja a problémát azzal, hogy új UUID-t állít elő az ismétlődések számára\?</string>
     <string name="contains_duplicate_uuid">Az adatbázis ismertelt UUID-t tartalmaz.</string>
@@ -446,13 +421,11 @@
     <string name="subdomain_search_title">Aldomain keresés</string>
     <string name="error_registration_read_only">Új elemek mentése nem engedélyezett írásvédett adatbázisokban.</string>
     <string name="error_string_type">A szöveg nem egyezik a kért elemmel.</string>
-    <string name="content_description_credentials_information">Hitelesítési adatok információi</string>
     <string name="content_description_add_item">Elem hozzáadása</string>
     <string name="export_app_properties_summary">Fájl létrehozása az alkalmazásbeállítások exportálásához</string>
     <string name="export_app_properties_title">Alkalmazásbeállítások exportálása</string>
     <string name="import_app_properties_summary">Válasszon fájlt az alkalmazásbeállítások importálásához</string>
     <string name="import_app_properties_title">Alkalmazásbeállítások importálása</string>
-    <string name="menu_external_icon">Külső ikon</string>
     <string name="menu_keystore_remove_key">Eszközfeloldási kulcs törlése</string>
     <string name="menu_reload_database">Adatok újratöltése</string>
     <string name="error_start_database_action">Hiba történt az adatbázison végzett művelet során.</string>
@@ -494,7 +467,6 @@
     <string name="number">Szám</string>
     <string name="holder">Tulajdonos</string>
     <string name="template_group_name">Sablonok</string>
-    <string name="content_description_otp_information">Egyszer használatos jelszó információ</string>
     <string name="content_description_entry_background_color">Bejegyzés háttérszíne</string>
     <string name="content_description_entry_foreground_color">Bejegyzés előtérszíne</string>
     <string name="success_import_app_properties">Alkalmazásbeállítások importálva</string>
@@ -613,7 +585,6 @@
     <string name="configure">Beállítás</string>
     <string name="content_description_nav_header">Navigációs fejléc</string>
     <string name="navigation_drawer_close">A navigációs tálca bezárása</string>
-    <string name="html_about_privacy">&lt;strong&gt;Nincsenek felhasználói adatok lekérve&lt;/strong&gt;, az alkalmazás nem kapcsolódik semmilyen külső kiszolgálóhoz, csak helyben működik, és teljes mértékben tiszteletben tartja a felhasználók adatvédelmét.</string>
     <string name="enable_keep_screen_on_summary">Képernyő bekapcsolva tartása egy bejegyzés megtekintésekor vagy szerkesztésekor</string>
     <string name="title_case">Nagy kezdőbetűs</string>
     <string name="navigation_drawer_open">A navigációs tálca kinyitása</string>
@@ -695,7 +666,6 @@
     <string name="warning_overwrite_data_description">Ez a művelet felülírja a bejegyzésben található meglévő adatokat. Ha a előzmények funkció engedélyezve van, akkor a régi adatokat vissza lehet állítani.</string>
     <string name="credential_provider">Hitelesítési adatok szolgáltatója</string>
     <string name="passkeys">Hozzáférési kulcsok</string>
-    <string name="passkeys_explanation_summary">Hozzáférési kulcsok beállítása a gyors és biztonságos jelszó nélküli bejelentkezéshez</string>
     <string name="passkeys_preference_title">Hozzáférési kulcsok beállításai</string>
     <string name="passkeys_close_database_title">Adatbázis bezárása</string>
     <string name="passkeys_close_database_summary">Adatbázis bezárása a hozzáférési kulcs kiválasztása után</string>
@@ -745,7 +715,6 @@
     <string name="password_creation_description">Jelszó mentése új bejegyzésben</string>
     <string name="password_selection_description">Kiválaszt egy meglévő jelszót</string>
     <string name="error_password_result">Nem lehetséges visszaadni a jelszót</string>
-    <string name="content_description_user_verification_information">Felhasználó-ellenőrzési információk</string>
     <string name="user_verification_required_title">Felhasználó-ellenőrzés</string>
     <string name="user_verification_required_description">Az adatokhoz való hozzáféréshez meg kell győződni arról, hogy valóban Ön az.</string>
     <string name="user_verification_database_credential">Írja be az adatbázis jelszavának első négy karakterét</string>

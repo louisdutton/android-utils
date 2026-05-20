@@ -89,18 +89,19 @@ abstract class StylishActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         customStyle = applyCustomStyle()
         if (customStyle) {
-            // Preconfigured themes
             this.themeId = Stylish.getThemeId(this)
             setTheme(themeId)
             if (Stylish.isDynamic(this)) {
-                // Material You theme
                 DynamicColors.applyToActivityIfAvailable(this)
             }
+            if (Stylish.isPureBlackOledActive(this)) {
+                theme.applyStyle(R.style.KeepassDXStyleOledOverlay, true)
+            }
         }
+
+        super.onCreate(savedInstanceState)
 
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(onScreenshotModePrefListener)

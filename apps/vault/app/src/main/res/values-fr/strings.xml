@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="feedback">Commentaires</string>
-    <string name="homepage">Page d’accueil</string>
     <string name="about_description">Implémentation Android du gestionnaire de mots de passe KeePass.</string>
     <string name="accept">Accepter</string>
     <string name="add_entry">Ajouter une entrée</string>
@@ -47,8 +45,6 @@
     <string name="decrypting_db">Déchiffrement du contenu de la base de données…</string>
     <string name="default_checkbox">Utiliser comme base de données par défaut</string>
     <string name="digits">Chiffres</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft est &lt;strong&gt;open source&lt;/strong&gt; et &lt;strong&gt;sans publicité&lt;/strong&gt;.
-\nIl est fourni tel quel, sous licence &lt;strong&gt;GPLv3&lt;/strong&gt;, sans aucune garantie.</string>
     <string name="entry_accessed">Dernier accès</string>
     <string name="entry_cancel">Annuler</string>
     <string name="entry_notes">Notes</string>
@@ -104,7 +100,6 @@
     <string name="settings">Paramètres</string>
     <string name="menu_database_settings">Paramètres de la base de données</string>
     <string name="menu_delete">Supprimer</string>
-    <string name="menu_donate">Faire un don</string>
     <string name="menu_edit">Modifier</string>
     <string name="menu_lock">Verrouiller la base de données</string>
     <string name="menu_open">Ouvrir</string>
@@ -162,7 +157,6 @@
     <string name="autofill">Remplissage automatique</string>
     <string name="autofill_sign_in_prompt">Se connecter avec KeePassDX</string>
     <string name="set_credential_provider_service_title">Définir le service de remplissage automatique par défaut</string>
-    <string name="autofill_explanation_summary">Configurer le remplissage automatique pour remplir rapidement des formulaires dans d’autres applications</string>
     <string name="autofill_select_entry">Sélectionner une entrée…</string>
     <string name="password_size_title">Taille du mot de passe généré</string>
     <string name="password_size_summary">Défini la taille par défaut des mots de passe générés</string>
@@ -200,7 +194,6 @@
     <string name="other">Autres</string>
     <string name="keyboard">Clavier</string>
     <string name="magic_keyboard_title">Magiclavier</string>
-    <string name="magic_keyboard_explanation_summary">Activer un clavier personnalisé pour remplir vos mots de passe et tous les champs d’identité</string>
     <string name="enable_education_screens_title">Conseils pédagogiques</string>
     <string name="enable_education_screens_summary">Met en surbrillance les éléments pour apprendre le fonctionnement de l’application</string>
     <string name="reset_education_screens_title">Réinitialiser les conseils pédagogiques</string>
@@ -234,21 +227,7 @@
     <string name="education_lock_summary">Verrouillez votre base de données rapidement. Vous pouvez configurer l’application pour qu’elle la verrouille après un délai et lorsque l’écran s’éteint.</string>
     <string name="education_sort_title">Tri des éléments</string>
     <string name="education_sort_summary">Choisissez comment les entrées et les groupes sont triés.</string>
-    <string name="education_donation_title">Participez</string>
-    <string name="education_donation_summary">Aidez à améliorer la stabilité, la sécurité et à ajouter des fonctionnalités.</string>
-    <string name="html_text_ad_free">Contrairement à beaucoup d’applications de gestion de mots de passe, cette application est &lt;strong&gt;sans publicité&lt;/strong&gt;, &lt;strong&gt;libre sous licence copyleft&lt;/strong&gt; et ne collecte pas de données personnelles sur ses serveurs, peu importe la version que vous utilisez.</string>
-    <string name="html_text_buy_pro">En achetant la version pro, vous aurez accès à ce &lt;strong&gt;style visuelle&lt;/strong&gt; et vous aiderez notamment &lt;strong&gt;la réalisation de projets communautaires.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Ce &lt;strong&gt;style visuel&lt;/strong&gt; est disponible grâce à votre générosité.</string>
-    <string name="html_text_donation">En &lt;strong&gt;contribuant&lt;/strong&gt; au projet &lt;i&gt;(financièrement, code, traduction)&lt;/i&gt;, vous l\'aiderez à continuer à vivre et à prospérer, et vous serez également éligible à la procédure de déblocage du &lt;strong&gt;theme&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Cette fonctionnalité est &lt;strong&gt;en cours de développement&lt;/strong&gt; et nécessite votre &lt;strong&gt;contribution&lt;/strong&gt; pour être bientôt disponible.</string>
-    <string name="html_text_dev_feature_buy_pro">En achetant la version &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">En &lt;strong&gt;contribuant&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">vous encouragez les développeurs à créer de &lt;strong&gt;nouvelles fonctionnalités&lt;/strong&gt; et à &lt;strong&gt;corriger des bogues&lt;/strong&gt; en fonction de vos remarques.</string>
-    <string name="html_text_dev_feature_thanks">Merci beaucoup pour votre contribution.</string>
-    <string name="html_text_dev_feature_work_hard">Nous travaillons dur pour livrer cette fonctionnalité rapidement.</string>
-    <string name="html_text_dev_feature_upgrade">N’oubliez pas de garder votre application à jour en installant les nouvelles versions.</string>
     <string name="download">Télécharger</string>
-    <string name="contribute">Contribuer</string>
     <string-array name="list_size_options">
         <item>Petit</item>
         <item>Moyen</item>
@@ -377,8 +356,6 @@
     <string name="contains_duplicate_uuid">La base de données contient des doublons d’UUID.</string>
     <string name="contains_duplicate_uuid_procedure">Résoudre le problème en générant de nouveaux UUID pour les doublons et continuer \?</string>
     <string name="database_opened">Base de données ouverte</string>
-    <string name="clipboard_explanation_summary">Copier les champs d’une entrée à l’aide du presse-papier de votre appareil</string>
-    <string name="device_unlock_explanation_summary">Utiliser le déverrouillage de l\'appareil pour ouvrir plus facilement une base de données</string>
     <string name="database_data_compression_title">Compression de données</string>
     <string name="database_data_compression_summary">La compression des données réduit la taille de la base de données</string>
     <string name="max_history_items_title">Nombre maximum</string>
@@ -419,8 +396,6 @@
     <string name="hide_expired_entries_title">Masquer les entrées expirées</string>
     <string name="hide_expired_entries_summary">Les entrées expirées ne sont pas affichées</string>
     <string name="contact">Contact</string>
-    <string name="contribution">Contribution</string>
-    <string name="html_about_contribution">Afin de &lt;strong&gt;garder notre liberté&lt;/strong&gt;, &lt;strong&gt;corriger les bugs&lt;/strong&gt;, &lt;strong&gt;ajouter des fonctionnalités&lt;/strong&gt; et &lt;strong&gt;être toujours actif&lt;/strong&gt;, nous comptons sur votre &lt;strong&gt;contribution&lt;/strong&gt;.</string>
     <string name="auto_focus_search_title">Recherche rapide</string>
     <string name="auto_focus_search_summary">Demande une recherche lors de l’ouverture d’une base de données</string>
     <string name="remember_database_locations_title">Mémoriser l’emplacement des bases de données</string>
@@ -463,7 +438,6 @@
     <string name="warning_file_too_big">Une base de données KeePass est seulement censée contenir de petits fichiers utilitaires (tels que les fichiers clé PGP).
 \n
 \nVotre base de données peut vraiment devenir grosse et réduire les performances avec ce téléversement.</string>
-    <string name="content_description_credentials_information">Informations des identifiants</string>
     <string name="warning_remove_unlinked_attachment">Supprimer les données non-liées peut réduire la taille de votre base de données mais peut également supprimer des données utilisées par des extensions KeePass.</string>
     <string name="warning_sure_remove_data">Supprimer ces données quand même ?</string>
     <string name="warning_empty_keyfile">Il n’est pas recommandé d’ajouter un fichier clé vide.</string>
@@ -541,7 +515,6 @@
     <string name="error_duplicate_file">Les données du fichier existent déjà.</string>
     <string name="error_upload_file">Une erreur est survenue lors du téléversement des données du fichier.</string>
     <string name="error_file_to_big">Le fichier que vous essayez de téléverser est trop volumineux.</string>
-    <string name="content_description_otp_information">Information sur le mot de passe à usage unique</string>
     <string name="properties">Propriétés</string>
     <string name="error_export_app_properties">Erreur lors de l\'exportation des paramètres de l\'application.</string>
     <string name="success_export_app_properties">Paramètres exportés de l\'application</string>
@@ -586,7 +559,6 @@
     <string name="secure_note">Note sécurisée</string>
     <string name="show_otp_token_summary">Affiche les jetons OTP dans la liste des entrées</string>
     <string name="show_otp_token_title">Afficher le jeton OTP</string>
-    <string name="menu_external_icon">Icône externe</string>
     <string name="autofill_manual_selection_summary">Afficher l\'option permettant à l\'utilisateur de sélectionner l\'entrée de la base de données</string>
     <string name="autofill_manual_selection_title">Sélection manuelle</string>
     <string name="hint_icon_name">Nom de l\'icône</string>
@@ -649,7 +621,6 @@
     <string name="auto_type">Auto-Type</string>
     <string name="error_empty_key">La clé ne peut pas être vide.</string>
     <string name="remember_hardware_key_title">Mémoriser les clés matérielles</string>
-    <string name="html_about_privacy">&lt;strong&gt;Aucune donnée utilisateur n\'est récupérée&lt;/strong&gt;, cette application ne se connecte à aucun serveur, ne fonctionne que localement et respecte totalement la vie privée des utilisateurs.</string>
     <string name="screenshot_mode_banner_text">Mode capture d\'écran</string>
     <string name="hardware_key">Clé matérielle</string>
     <string name="error_location_unknown">L\'emplacement de la base de données est inconnu, l\'action sur la base de données ne peut pas être exécutée.</string>
@@ -698,7 +669,6 @@
     <string name="warning_overwrite_data_title">Écraser les données existantes ?</string>
     <string name="warning_overwrite_data_description">Cette action va remplacer la donnée existante de cette entrée, vous pourrez récupérer l\'ancienne donnée si l\'historique est activé.</string>
     <string name="passkeys">Clé d\'accès</string>
-    <string name="passkeys_explanation_summary">Configurer des clés d\'accès pour une connexion rapide et sécurisée, sans mot de passe</string>
     <string name="passkeys_preference_title">Paramètres des clés d\'accès</string>
     <string name="passkeys_close_database_title">Fermer la base de données</string>
     <string name="credential_provider">Fournisseur d\'authentification</string>
@@ -749,7 +719,6 @@
     <string name="password_creation_description">Enregistre le mot de passe dans la nouvelle entrée</string>
     <string name="password_selection_description">Sélectionne un mot de passe existant</string>
     <string name="error_password_result">Impossible de retourner le mot de passe</string>
-    <string name="content_description_user_verification_information">Info de Vérification Utilisateur</string>
     <string name="user_verification_required_title">Vérification Utilisateur</string>
     <string name="user_verification_required_description">L\'accès à cette donnée nécessite de vérifier qu\'il s\'agit bien de vous.</string>
     <string name="user_verification_database_credential">Entrez les quatre premiers caractères de votre mot de passe de base de données</string>

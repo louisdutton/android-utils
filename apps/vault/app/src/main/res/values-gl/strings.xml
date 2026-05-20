@@ -17,8 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string name="feedback">Comentarios</string>
-    <string name="homepage">Páxina inicial</string>
     <string name="about_description">KeePassDX é unha implementación para Android do xestor de contrasinais KeePass</string>
     <string name="accept">Aceptar</string>
     <string name="add_entry">Engadir entrada</string>
@@ -86,7 +84,6 @@
     <string name="number">Número</string>
     <string name="email">Email</string>
     <string name="error_load_database_KDF_memory">Non foi posíbel carregar a clave. Tente diminuír o \"Uso de memoria\" do KDF.</string>
-    <string name="content_description_otp_information">Información de contrasinal de uso único</string>
     <string name="content_description_update_from_list">Actualizar</string>
     <string name="content_description_remove_from_list">Remover</string>
     <string name="content_description_keyboard_close_fields">Pechar campos</string>
@@ -100,12 +97,10 @@
     <string name="content_description_entry_icon">Icono da entrada</string>
     <string name="content_description_repeat_toggle_password_visibility">Repetir alternar a visibilidade do contrasinal</string>
     <string name="content_description_keyfile_checkbox">Caixa de selección do ficheiro-clave</string>
-    <string name="content_description_credentials_information">Información sobre credenciais</string>
     <string name="content_description_password_checkbox">Caixa de selección do contrasinal</string>
     <string name="content_description_file_information">Información sobre o ficheiro</string>
     <string name="content_description_open_file">Abrir ficheiro</string>
     <string name="clipboard_error">Algúns dispositivos non permiten que as aplicacións usen o portapapeis.</string>
-    <string name="contribution">Contribución</string>
     <string name="contact">Contacto</string>
     <string name="validate">Validar</string>
     <string name="discard">Descartar</string>
@@ -116,8 +111,6 @@
     <string name="decrypting_db">A descifrar o contido da base de datos…</string>
     <string name="content_description_remove_field">Remover campo</string>
     <string name="template_group_name">Modelos</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft ten o &lt;strong&gt;código fonte aberto&lt;/strong&gt; e &lt;strong&gt;sen publicidade&lt;/strong&gt;.
-\nÉ provisto como está, baixo a &lt;strong&gt;licenza GPLv3&lt;/strong&gt;, sen ningunha garantía.</string>
     <string name="entry_UUID">UUID</string>
     <string name="entry_keyfile">Ficheiro-clave</string>
     <string name="searchable">Procurábel</string>
@@ -153,7 +146,6 @@
     <string name="standard">Estándar</string>
     <string name="content_description_passphrase_word_count">Número de palabras do frase-sinal</string>
     <string name="custom_data">Datos personalizados</string>
-    <string name="html_about_contribution">Para &lt;strong&gt;manter a liberdade&lt;/strong&gt;, &lt;strong&gt;corrixir erros&lt;/strong&gt;, &lt;strong&gt;engadir funcionalidades&lt;/strong&gt; e &lt;strong&gt;para estar sempre activos&lt;/strong&gt;, contamos coa súa &lt;strong&gt;contribución&lt;/strong&gt;.</string>
     <string name="otp_secret">Segredo</string>
     <string name="cryptocurrency">Carteira de criptomoedas</string>
     <string name="token">Token</string>
@@ -200,7 +192,6 @@
     <string name="menu_empty_recycle_bin">Baleirar a papeleira de reciclaxe</string>
     <string name="menu_delete_entry_history">Borrar historial</string>
     <string name="menu_url">Ir ao URL</string>
-    <string name="menu_external_icon">Icono externo</string>
     <string name="minus">Menos</string>
     <string name="error_wrong_length">Introduza un número enteiro positivo no campo \"Lonxitude\".</string>
     <string name="error_remove_file">Un erro ocorreu mentres os datos do ficheiro eran borrados.</string>
@@ -228,7 +219,6 @@
     <string name="show_otp_token_title">Mostrar token OTP</string>
     <string name="list_groups_show_number_entries_title">Mostrar número de entradas</string>
     <string name="show_otp_token_summary">Mostra os tokens OTP na lista de entradas</string>
-    <string name="html_about_privacy">&lt;strong&gt;Datos do usuario non recuperados &lt;/strong&gt;, esta aplicación non se conecta a ningún servidor, só opera localmente e respecta totalmente a privacidade dos usuarios.</string>
     <string name="error_create_database_file">Non foi posíbel crear a base de datos con ese contrasinal e ficheiro clave.</string>
     <string name="error_save_database">Non foi posíbel gardar a base de datos.</string>
     <string name="error_rebuild_list">Non é posíbel reconstruír a lista adecuadamente.</string>
@@ -251,7 +241,6 @@
     <string name="show_uuid_summary">Mostrar o UUID ligado a unha entrada do grupo</string>
     <string name="list_groups_show_number_entries_summary">Mostra o número de entradas dun grupo</string>
     <string name="list_size_title">Tamaño da lista de elementos</string>
-    <string name="menu_donate">Doar</string>
     <string name="menu_cancel">Cancelar</string>
     <string name="menu_merge_database">Combinar datos</string>
     <string name="menu_open">Abrir</string>
@@ -367,7 +356,6 @@
     <string name="biometric_security_update_required">É necesaria unha actualización da seguranza biométrica.</string>
     <string name="device_unlock_prompt_extract_credential_title">Abrir a base de datos co recoñecemento de desbloqueo avanzado</string>
     <string name="biometric">Biométrico</string>
-    <string name="autofill_explanation_summary">Habilite o servizo para autocompletar rapidamente os formularios de outras aplicacións</string>
     <string name="set_credential_provider_service_title">Estabelecer o servizo de autocompletado predefinido</string>
     <string name="lock_database_back_root_summary">Bloquear a base de datos cando o usuario faga click no botón de volver á pantalla principal</string>
     <string name="lock_database_show_button_title">Mostrar botón de bloqueo</string>
@@ -398,7 +386,6 @@
     <string name="device_credential">Credenciais do dispositivo</string>
     <string name="general">Xeral</string>
     <string name="autofill">Autocompletado</string>
-    <string name="device_unlock_explanation_summary">Usar o desbloqueo avanzado para abrir a base de datos dun xeito máis sinxelo</string>
     <string name="autofill_sign_in_prompt">Inciar sesión con KeePassDX</string>
     <string name="autofill_select_entry">Seleccione entrada…</string>
     <string name="password_size_title">Tamaño do contrasinal xerado</string>
@@ -407,7 +394,6 @@
     <string name="list_password_generator_options_summary">Estabelecer os caracteres permitidos no xerador de contrasinais</string>
     <string name="database_opened">Base de datos aberta</string>
     <string name="clipboard">Portapapeis</string>
-    <string name="clipboard_explanation_summary">Copiar campos de entrada usando o portapapeis do seu dispositivo</string>
     <string name="clipboard_warning">Se a limpeza do portapapeis fallar, borre o historial manualmente.</string>
     <string name="lock">Bloquear</string>
     <string name="lock_database_screen_off_title">Bloqueo de pantalla</string>
@@ -458,7 +444,6 @@
     <string name="autofill_close_database_title">Fechar base de datos</string>
     <string name="autofill_manual_selection_title">Selección manual</string>
     <string name="device_keyboard_setting_title">Configuración do teclado do dispositivo</string>
-    <string name="magic_keyboard_explanation_summary">Active un teclado personalizado para os seus contrasinais e todos os campos de identidade</string>
     <string name="keyboard_previous_database_credentials_title">Pantalla de credencias da base de datos</string>
     <string name="autofill_block_restart">Reiniciar a aplicación que contén o formulario para activar o bloqueo.</string>
     <string name="keyboard_notification_entry_content_title_text">Entrada</string>
@@ -590,8 +575,6 @@
     <string name="enable_auto_save_database_summary">Gardar a base de datos após unha acción importante (en modo \"Modificábel\")</string>
     <string name="enable_keep_screen_on_summary">Manter a pantalla acesa ao ver unha entrada</string>
     <string name="enable_screenshot_mode_title">Modo captura de pantalla</string>
-    <string name="html_text_buy_pro">Ao mercar a versión pro, terá acceso ao &lt;strong&gt;estilo visual&lt;/strong&gt; e axudará especialmente a &lt;strong&gt; realizar proxectos comunitarios.&lt;/strong&gt;</string>
-    <string name="html_text_dev_feature_contibute">Ao &lt;strong&gt;contribuír&lt;/strong&gt;,</string>
     <string name="unit_kibibyte">KiB</string>
     <string name="download_complete">Completado!</string>
     <string name="entropy">Entropía: %1$s bit</string>
@@ -600,7 +583,6 @@
     <string name="style_brightness_summary">Escolla temas claros ou escuros</string>
     <string name="icon_pack_choose_title">Paquete de iconos</string>
     <string name="show_entry_colors_summary">Mostrar cores de fondo e de primeiro plano nunha entrada</string>
-    <string name="html_text_dev_feature_work_hard">Estamos a traballar para lanzar esta nova funcionalidade o máis rápido posíbel.</string>
     <string name="download">Descarregar</string>
     <string name="upload_attachment">Subir %1$s</string>
     <string name="unit_byte">B</string>
@@ -609,10 +591,6 @@
     <string name="style_choose_summary">Tema usado na aplicación</string>
     <string name="style_brightness_title">Brillo do tema</string>
     <string name="hide_expired_entries_summary">Entradas expiradas non son mostradas</string>
-    <string name="education_donation_title">Participe</string>
-    <string name="education_donation_summary">Axude a aumentar a estabilidade, seguranza e número de funcionalidades.</string>
-    <string name="html_text_feature_generosity">Este &lt;strong&gt;estilo visual&lt;/strong&gt; está dispoñíbel grazas á súa xenerosidade.</string>
-    <string name="html_text_donation">Para manter a nosa liberdade e estarmos sempre activos, contamos coa súa &lt;strong&gt;contribución.&lt;/strong&gt;</string>
     <string name="download_attachment">Descarregar %1$s</string>
     <string name="download_initialization">A inicializar…</string>
     <string name="download_progression">En progreso: %1$d%%</string>
@@ -625,10 +603,6 @@
     <string name="education_lock_summary">Bloquee a súa base de datos rapidamente. Pode configurar a aplicación para bloqueala despois dun tempo ou cando a pantalla se apague.</string>
     <string name="education_sort_title">Ordenación de elementos</string>
     <string name="education_sort_summary">Escolla as entradas e grupos a ordenar.</string>
-    <string name="html_text_dev_feature">Esta funcionalidade está &lt;strong&gt;en desenvolvemento&lt;/strong&gt; e precisa da súa &lt;strong&gt;contribución&lt;/strong&gt; para a súa futura dispoñibilidade.</string>
-    <string name="html_text_dev_feature_thanks">Moitas grazas pola súa contribución.</string>
-    <string name="html_text_dev_feature_upgrade">Lembre manter a súa aplicación actualizada, instalando as novas versións.</string>
-    <string name="contribute">Contribuír</string>
     <string name="entropy_high">Entropía: Alta</string>
     <string name="at_least_one_char">Polo menos un carácter de cada un</string>
     <string name="exclude_ambiguous_chars">Excluír caracteres ambiguos</string>
@@ -641,12 +615,9 @@
     <string name="download_canceled">Cancelado!</string>
     <string name="education_generate_password_summary">Xere un contrasinal forte a asociar coa súa entrada, defínao facilmente segundo os criterios do formulario e non esqueza tornalo seguro.</string>
     <string name="education_add_attachment_summary">Suba un anexo á súa entrada para gardar datos externos importantes.</string>
-    <string name="html_text_ad_free">Ao contrario de moitas aplicacións de xestión de contrasinais, esta aplicación &lt;strong&gt;non ten anuncios&lt;/strong&gt;, é &lt;strong&gt;un programa de software libre \"copyleft\"&lt;/strong&gt; e non recolle datos persoais para os seus servidores, sen importar a versión a usar.</string>
     <string name="education_entry_edit_summary">Edite a entrada cos campos personalizados. Os conxuntos de datos poden ser referenciados en entradas diferentes.</string>
     <string name="consider_chars_filter">Considerar caracteres</string>
     <string name="icon_section_custom">Personalizado</string>
     <string name="icon_pack_choose_summary">Cambiar o paquete de iconos da aplicación</string>
-    <string name="html_text_dev_feature_buy_pro">Ao comprar a versión &lt;strong&gt;pro&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">está a incentivar os programadores a crear &lt;strong&gt;novas funcionalidades&lt;/strong&gt; e a &lt;strong&gt;corrixir erros&lt;/strong&gt; reportados.</string>
     <string name="merge_success">A fusión completouse correctamente</string>
 </resources>

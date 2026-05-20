@@ -22,9 +22,6 @@
     Translations from David Ramiro
 --><resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="contact">Kontakt</string>
-    <string name="contribution">Beitrag</string>
-    <string name="feedback">Feedback</string>
-    <string name="homepage">Webseite</string>
     <string name="about_description">Android-Implementierung des Passwortmanagers KeePass.</string>
     <string name="accept">Akzeptieren</string>
     <string name="add_entry">Eintrag hinzufügen</string>
@@ -48,8 +45,6 @@
     <string name="decrypting_db">Datenbankinhalt wird entschlüsselt …</string>
     <string name="default_checkbox">Als Standarddatenbank verwenden</string>
     <string name="digits">Stellen</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft ist &lt;strong&gt;quelloffen&lt;/strong&gt; und &lt;strong&gt;ohne Werbung&lt;/strong&gt;. \nDie Nutzung der Software erfolgt auf eigene Verantwortung und ohne jegliche Garantie. Die Applikation wird unter den Bedingungen der &lt;strong&gt;GPLv3&lt;/strong&gt; lizenziert.</string>
-    <string name="html_about_contribution">Damit wir &lt;strong&gt;unsere Unabhängigkeit erhalten&lt;/strong&gt;, &lt;strong&gt;Fehler beheben&lt;/strong&gt;, &lt;strong&gt;Funktionen hinzufügen&lt;/strong&gt; und &lt;strong&gt;weiterhin aktiv bleiben&lt;/strong&gt; können, zählen wir auf deinen &lt;strong&gt;Beitrag&lt;/strong&gt;.</string>
     <string name="select_database_file">Vorhandene Datenbank öffnen</string>
     <string name="entry_accessed">Letzter Zugriff</string>
     <string name="entry_cancel">Abbrechen</string>
@@ -104,7 +99,6 @@
     <string name="settings">Einstellungen</string>
     <string name="menu_database_settings">Datenbankeinstellungen</string>
     <string name="menu_delete">Löschen</string>
-    <string name="menu_donate">Spenden</string>
     <string name="menu_edit">Bearbeiten</string>
     <string name="menu_lock">Datenbank sperren</string>
     <string name="menu_open">Öffnen</string>
@@ -192,7 +186,6 @@
     <string name="autofill">Automatisches Ausfüllen</string>
     <string name="autofill_sign_in_prompt">Mit KeePassDX anmelden</string>
     <string name="set_credential_provider_service_title">Anbieterdienst für Anmeldeinformationen</string>
-    <string name="autofill_explanation_summary">Automatisches Ausfüllen konfigurieren, um Formulare in anderen Apps schnell auszufüllen</string>
     <string name="autofill_select_entry">Eintrag auswählen …</string>
     <string name="clipboard">Zwischenablage</string>
     <string name="biometric_delete_all_key_title">Verschlüsselungsschlüssel löschen</string>
@@ -213,7 +206,6 @@
     <string name="other">Sonstiges</string>
     <string name="keyboard">Tastatur</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Tastatur zum Ausfüllen aller Passwort- und Identitätsfelder aktivieren</string>
     <string name="reset_education_screens_title">Hilfeanzeige wiederholen</string>
     <string name="reset_education_screens_summary">Alle Hilfsinfos nochmal anzeigen</string>
     <string name="reset_education_screens_text">Hilfeanzeige zurückgesetzt</string>
@@ -240,21 +232,7 @@
     <string name="education_lock_summary">Die Datenbank schnell sperren. Die App lässt sich so einstellen, dass sie nach einer gewissen Zeit und beim Ausschalten des Bildschirms gesperrt wird.</string>
     <string name="education_sort_title">Einträge sortieren</string>
     <string name="education_sort_summary">Wählen, wie Einträge und Gruppen sortiert werden.</string>
-    <string name="education_donation_title">Mitmachen</string>
-    <string name="education_donation_summary">Mithelfen, um Stabilität und Sicherheit zu verbessern sowie weitere Funktionen zu ermöglichen.</string>
-    <string name="html_text_ad_free">Anders als viele Passwortmanager ist dieser &lt;strong&gt;werbefrei&lt;/strong&gt;, &lt;strong&gt;quelloffen&lt;/strong&gt;, &lt;strong&gt;freie Copyleft-Software&lt;/strong&gt; und keine persönlichen Daten werden auf Servern gesammelt, egal welche Version man verwendet.</string>
-    <string name="html_text_buy_pro">Mit dem Kauf der Pro-Version erhältst du Zugriff auf diesen &lt;strong&gt;visuellen Stil&lt;/strong&gt; und unterstützt insbesondere &lt;strong&gt;die Umsetzung gemeinschaftlicher Projekte.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Dieser &lt;strong&gt;visuelle Stil&lt;/strong&gt; ist dank deiner Großzügigkeit verfügbar.</string>
-    <string name="html_text_donation">Mit &lt;strong&gt;Beitragen&lt;/strong&gt; zum Projekt &lt;i&gt;(finanziell, Code, Übersetzung)&lt;/i&gt; wird sichergestellt, dass es weiterlebt und gedeiht, und außerdem berechtigt das für den Vorgang der &lt;strong&gt;Design&lt;/strong&gt;-Freischaltung.</string>
-    <string name="html_text_dev_feature">Diese Funktion ist &lt;strong&gt;in Entwicklung&lt;/strong&gt; und erfordert &lt;strong&gt;deinen Beitrag&lt;/strong&gt;, um bald verfügbar zu sein.</string>
-    <string name="html_text_dev_feature_buy_pro">Durch den Kauf der &lt;strong&gt;Pro-Version&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">Durch deinen &lt;strong&gt;Beitrag&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">ermutigst du die Entwickler, &lt;strong&gt;neue Funktionen&lt;/strong&gt; einzuführen und gemäß deinen Anmerkungen &lt;strong&gt;Fehler zu beheben&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature_thanks">Vielen Dank für die Unterstützung.</string>
-    <string name="html_text_dev_feature_work_hard">Wir bemühen uns, diese Funktion bald zu veröffentlichen.</string>
-    <string name="html_text_dev_feature_upgrade">Denke daran, die App durch die Installation neuer Versionen auf dem aktuellsten Stand zu halten.</string>
     <string name="download">Download</string>
-    <string name="contribute">Unterstützen</string>
     <string name="icon_pack_choose_title">Symbolpaket</string>
     <string name="icon_pack_choose_summary">In der App verwendete Symbole</string>
     <string name="menu_copy">Kopieren</string>
@@ -368,8 +346,6 @@
     <string name="contains_duplicate_uuid">Die Datenbank enthält doppelte UUIDs.</string>
     <string name="contains_duplicate_uuid_procedure">Problem lösen, indem neue UUIDs für Duplikate generiert werden, um fortzufahren?</string>
     <string name="database_opened">Datenbank geöffnet</string>
-    <string name="clipboard_explanation_summary">Eintragsfelder mit der Zwischenablage des Geräts kopieren</string>
-    <string name="device_unlock_explanation_summary">Geräteentsperrung verwenden, um eine Datenbank einfacher zu öffnen</string>
     <string name="database_data_compression_title">Datenkomprimierung</string>
     <string name="database_data_compression_summary">Datenkomprimierung reduziert die Datenbankgröße</string>
     <string name="max_history_items_title">Maximale Anzahl</string>
@@ -452,7 +428,6 @@
     <string name="keyboard_previous_fill_in_summary">Nach dem Ausführen der automatischen Tastenaktion automatisch zur vorherigen Tastatur wechseln</string>
     <string name="keyboard_previous_database_credentials_summary">Auf dem Datenbank-Anmeldebildschirm automatisch zur vorherigen Tastatur wechseln</string>
     <string name="education_add_attachment_summary">Dem Eintrag einen Anhang hinzufügen, um wichtige externe Daten zu speichern.</string>
-    <string name="content_description_credentials_information">Anmeldeinformationen</string>
     <string name="data">Daten</string>
     <string name="database_data_remove_unlinked_attachments_title">Unverknüpfte Daten entfernen</string>
     <string name="warning_empty_keyfile">Es wird nicht empfohlen, eine leere Schlüsseldatei hinzuzufügen.</string>
@@ -527,7 +502,6 @@
     <string name="import_app_properties_title">App-Einstellungen importieren</string>
     <string name="error_start_database_action">Beim Ausführen einer Aktion in der Datenbank ist ein Fehler aufgetreten.</string>
     <string name="error_otp_type">Der vorhandene OTP-Typ wird von diesem Formular nicht erkannt und seine Validierung kann Token möglicherweise nicht mehr korrekt erzeugen.</string>
-    <string name="content_description_otp_information">Informationen zu Einmalpasswörtern</string>
     <string name="warning_database_revoked">Auf die Datei kann nicht zugegriffen werden. Bitte die Datenbank schließen und von ihrem Speicherort aus erneut öffnen.</string>
     <string name="error_export_app_properties">Fehler beim Exportieren der App-Einstellungen.</string>
     <string name="success_export_app_properties">App-Einstellungen exportiert</string>
@@ -583,7 +557,6 @@
     <string name="wireless">WLAN</string>
     <string name="email_address">E-Mail-Adresse</string>
     <string name="email">E-Mail</string>
-    <string name="menu_external_icon">Externes Symbol</string>
     <string name="show_otp_token_summary">OTP-Tokens in Liste anzeigen</string>
     <string name="show_otp_token_title">OTP-Token anzeigen</string>
     <string name="hint_icon_name">Symbolname</string>
@@ -660,7 +633,6 @@
     <string name="remember_hardware_key_title">Hardwareschlüssel merken</string>
     <string name="remember_hardware_key_summary">Verfolgt die verwendeten Hardwareschlüssel</string>
     <string name="auto_type">Automatische Eingabe</string>
-    <string name="html_about_privacy">&lt;strong&gt;Es werden keine Benutzerdaten ausgelesen&lt;/strong&gt;, diese Anwendung stellt keine Verbindung zu einem Server her, arbeitet nur lokal und respektiert vollständig die Privatsphäre der Benutzer.</string>
     <string name="merge_success">Zusammenführung erfolgreich abgeschlossen</string>
     <string name="menu_form_filling_settings_summary">Tastatur, automatisches Ausfüllen, Zwischenablage</string>
     <string name="menu_device_unlock_settings_summary">Biometrie, Geräteanmeldedaten</string>
@@ -717,7 +689,6 @@
     <string name="passkey_backup_eligibility">Passkey-Backup-Erlaubnis</string>
     <string name="passkeys_close_database_summary">Datenbank nach der Passkey-Auswahl schließen</string>
     <string name="credential_provider">Anmeldeinformationsanbieter</string>
-    <string name="passkeys_explanation_summary">Passkeys für eine schnelle und sichere Anmeldung ohne Passwort konfigurieren</string>
     <string name="passkeys_privileged_apps_summary">Browser in der benutzerdefinierten Liste privilegierter Apps verwalten</string>
     <string name="passkeys_privileged_apps_explanation">WARNUNG: Eine privilegierte App fungiert als Gateway, um die Herkunft einer Authentifizierung abzurufen. Zur Vermeidung von Sicherheitsproblemen ist ihre Legitimität sicherzustellen.</string>
     <string name="passkeys_privileged_apps_ask_message">%1$s versucht, eine Passkey-Aktion auszuführen.\n\nZur Liste der privilegierten Apps hinzufügen?</string>
@@ -759,7 +730,6 @@
     <string name="education_user_verification_title">Überprüfung für sensible Aktionen</string>
     <string name="education_user_verification_summary">Den Benutzerüberprüfungsmodus für die Sitzung ändern.\n \n„Benutzerüberprüfung aktiviert“ überprüft Aktionen in geschützten Feldern und Datenbankeinstellungen.\n„Benutzerüberprüfung deaktiviert“ ermöglicht ohne Überprüfung beliebige Datenänderungen in der Datenbank.</string>
     <string name="user_verification_device_credential_title">Benutzerüberprüfungsdaten</string>
-    <string name="content_description_user_verification_information">Informationen zur Benutzerüberprüfung</string>
     <string name="error_passkey_credential_id">Kein Passkey für Vertrauensstelle %1$s und Anmeldeinformationen %2$s gefunden</string>
     <string name="content_description_share_url">URL teilen</string>
     <string name="show_tags_summary">Tags in der Liste der Einträge anzeigen</string>

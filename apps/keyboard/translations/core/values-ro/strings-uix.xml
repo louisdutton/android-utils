@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Keyboard actions -->
+  <string name="action_theme_switcher_title">Schimbă tema</string>
+  <string name="action_select_all_title">Selectează tot</string>
+  <string name="action_cut_title">Taie în clipboard</string>
+  <string name="action_copy_title">Copiază în clipboard</string>
+  <string name="action_paste_title">Lipeşte din clipboard</string>
+  <string name="action_undo_title">Anulează</string>
+  <string name="action_redo_title">Refă</string>
+  <string name="action_text_editor_title">Editor text</string>
+  <string name="action_debug_title">Informații debug</string>
+  <string name="action_more_actions_title">Toate acțiunile</string>
+  <string name="action_bug_viewer_title">Vizualizator erori</string>
+  <!-- These move the text cursor up, down, left, right -->
+  <string name="action_cursor_up_title">Săgeată sus</string>
+  <string name="action_cursor_down_title">Săgeată jos</string>
+  <string name="action_cursor_left_title">Săgeată stânga</string>
+  <string name="action_cursor_right_title">Săgeată dreapta</string>
+  <!-- For emoji menu action -->
+  <string name="action_emoji_title">Emoji</string>
+  <!-- Refers to the most recently used emojis -->
+  <string name="action_emoji_category_most_recently_used">Recente</string>
+  <string name="action_emoji_category_smileys_emotion">Smiley &amp; Emoție </string>
+  <string name="action_emoji_category_people_body">Persoane &amp; Corp</string>
+  <string name="action_emoji_category_animals_nature">Animale &amp; natură</string>
+  <string name="action_emoji_category_food_drink">Mâncare și băutură</string>
+  <string name="action_emoji_category_travel_places">Călătorii și locații</string>
+  <string name="action_emoji_category_activities">Activități</string>
+  <string name="action_emoji_category_objects">Obiecte</string>
+  <string name="action_emoji_category_symbols">Simboluri</string>
+  <string name="action_emoji_category_flags">Steaguri</string>
+  <string name="action_emoji_category_ascii">ASCII</string>
+  <string name="action_emoji_search_no_results_found">Niciun rezultat</string>
+  <string name="action_emoji_jump_to_category">&lt;string name="action_emoji_jump_to_category"&gt;Sări la &lt;xliff:g name="category" example="Flags"&gt;%s&lt;/xliff:g&gt;&lt;/string&gt;</string>
+  <!-- Refers to clearing the most recently used emoji list -->
+  <string name="action_emoji_clear_recent_emojis_question">Ștergi emoji recente?</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_clear_recent_emojis_cancel">Anulează</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_clear_recent_emojis_clear">Șterge</string>
+  <string name="action_emoji_clear_recent_emojis_content_description">Ștergi emoji recente</string>
+  <!-- Must be fairly short -->
+  <string name="action_emoji_search_for_emojis">Caută</string>
+  <!-- For voice input action -->
+  <string name="action_voice_input_title">Intrare vocală</string>
+  <!-- Same as the one above but it uses the device's default system voice input instead of the built-in -->
+  <string name="action_system_voice_input_title">Intrare vocală (sistem)</string>
+  <string name="action_voice_input_no_model_for_language_x_installed">&lt;string name="action_voice_input_no_model_for_language_x_installed"&gt;Nu este instalat modelul de intrare vocală pentru &lt;xliff:g name="language" example="español"&gt;%s&lt;/xliff:g&gt;, apasă pentru a verifica opțiunile?&lt;/string&gt;</string>
+  <string name="action_voice_input_open_settings_button_to_grant_microphone_permission">Mergi la Permisiuni și activează permisiunea pentru Microfon ca să poți folosi intrarea vocală</string>
+  <!-- For clipboard manager action -->
+  <string name="action_clipboard_manager_title">Manager clipboard</string>
+  <string name="action_clipboard_manager_unpin_item">Dezancorează elementul</string>
+  <string name="action_clipboard_manager_pin_item">Ancorează elementul</string>
+  <string name="action_clipboard_manager_remove_item">Șterge elementul</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_cancel_action_button">Anulează</string>
+  <string name="action_clipboard_manager_disable_text">Nu sunt elemente de șters. Dezactivez istoricul clipboard-ului?</string>
+  <!-- Must be fairly short, refers to disabling clipboard history -->
+  <string name="action_clipboard_manager_disable_button">Dezactivează</string>
+  <string name="action_clipboard_manager_unpin_all_items_text">Nu există elemente ancorate pentru a fi șterse. Dorești să dezancorezi toate elementele?</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_unpin_all_items_button">Dezancorează</string>
+  <string name="action_clipboard_manager_clear_unpinned_items_text">Șterge toate elementele neancorate?</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_clear_unpinned_items_button">Șterge</string>
+  <string name="action_clipboard_manager_clear_clipboard">Șterge clipboard</string>
+  <string name="action_clipboard_manager_error_device_locked_title">Dispozitiv blocat</string>
+  <string name="action_clipboard_manager_error_device_locked_text">Te rog deblochează dispozitivul pentru a accesa istoricul clipboard-ului</string>
+  <string name="action_clipboard_manager_error_general_title">Eroare clipboard</string>
+  <string name="action_clipboard_manager_error_general_text">Istoricul clipboard-ului nu a putut fi salvat sau încărcat. S-ar putea să fie corupt. Poți încerca să-l ștergi sau să repornești tastatura. Te rugăm să raportezi acest bug. Motiv: %1$s</string>
+  <string name="action_clipboard_manager_delete_corrupted_clipboard_text">Șterge clipboard-ul? TOATE elementele vor fi pierdute.</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_retry_saving_loading">Încearcă din nou</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_inspect_error_via_bugs_action">Inspectează eroarea în Bug Viewer</string>
+  <!-- Must be fairly short -->
+  <string name="action_clipboard_manager_delete_corrupted_clipboard_button">Șterge</string>
+  <string name="action_clipboard_manager_error_clipboard_history_disabled_title">Istoric clipboard inactiv</string>
+  <string name="action_clipboard_manager_error_clipboard_history_disabled_text_v2">&lt;string name="action_clipboard_manager_error_clipboard_history_disabled_text_v2"&gt;Pentru a salva elementele din clipboard, poți activa istoricul clipboard-ului. Acesta va păstra până la &lt;xliff:g id="numItems" example="25"&gt;%1$s&lt;/xliff:g&gt; elemente timp de  &lt;xliff:g id="numDays" example="3"&gt;%2$s&lt;/xliff:g&gt; zile (elementele ancorate nu sunt incluse). Poți configura această opțiune în setări.&lt;/string&gt;</string>
+  <string name="action_clipboard_manager_enable_clipboard_history_button">Activează istoric clipboard</string>
+  <!-- This message is shown when we're typing in a text field does not support image insertion ("app" refers to the external app that is providing the text field) -->
+  <string name="action_clipboard_manager_error_app_image_insertion_unsupported">Aplicația nu suportă inserarea de imagini</string>
+  <string name="action_clipboard_manager_settings_title">Setări manager clipboard</string>
+  <string name="action_clipboard_manager_settings_hours_to_keep_clips">Câte ore se păstrează fragmentele nefixate</string>
+  <string name="action_clipboard_manager_settings_maximum_clips">Numărul de fragmente nefixate de păstrat</string>
+  <string name="action_clipboard_manager_settings_save_sensitive_clips">Salvează texte sensibile</string>
+  <string name="action_clipboard_manager_settings_save_sensitive_clips_subtitle">Dacă este activat, va salva elemente din manager-ul de parole, ferestre incognito etc.</string>
+  <string name="action_clipboard_manager_settings_list_layout">Folosește listă verticală în loc de grilă</string>
+  <string name="action_clipboard_manager_settings_show_pinned_above_others">Păstrează sus fragmentele fixate</string>
+  <!-- For keyboard modes action -->
+  <string name="action_keyboard_modes_title">Moduri tastatură</string>
+  <string name="action_keyboard_modes_go_back">Înapoi</string>
+  <string name="action_keyboard_modes_resize_keyboard">Redimensionează tastatura</string>
+  <!-- This string must be super short (below 10 chars if possible). The title for standard QWERTYUIOP keyboard mode, filling full screen width. -->
+  <string name="action_keyboard_modes_standard">Standard</string>
+  <!-- This string must be super short (below 10 chars if possible). The title for one-handed QWERTYUIOP keyboard mode, filling 2/3 screen width on one side -->
+  <string name="action_keyboard_modes_one_handed">O mână</string>
+  <!-- This string must be super short (below 10 chars if possible). The title for split QWERT - - YUIOP keyboard mode, with gap in middle -->
+  <string name="action_keyboard_modes_split">Împărțit</string>
+  <!-- This string must be super short (below 10 chars if possible). The title for free-form draggable and resizable QWERTYUIOP keyboard mode. -->
+  <string name="action_keyboard_modes_floating">Flotant</string>
+  <!-- This string must be super short (below 10 chars if possible) -->
+  <string name="action_keyboard_modes_resizing_reset_size">Resetează</string>
+  <!-- This string must be super short (below 10 chars if possible) -->
+  <string name="action_keyboard_modes_resizing_apply_new_size">Aplică</string>
+  <!-- For Font Typer action -->
+  <string name="action_fonttyper_title">WordStyles</string>
+  <!-- Keyboard action kinds -->
+  <string name="action_kind_action_key">Tastă de acțiune</string>
+</resources>

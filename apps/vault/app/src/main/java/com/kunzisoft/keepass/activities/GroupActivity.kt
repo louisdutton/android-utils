@@ -108,7 +108,6 @@ import com.kunzisoft.keepass.timeout.TimeoutHelper
 import com.kunzisoft.keepass.utils.BACK_PREVIOUS_KEYBOARD_ACTION
 import com.kunzisoft.keepass.utils.KeyboardUtil.showKeyboard
 import com.kunzisoft.keepass.utils.TimeUtil.datePickerToDataDate
-import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.getParcelableList
@@ -359,7 +358,6 @@ class GroupActivity : DatabaseLockActivity(),
         databaseNavView?.apply {
             inflateMenu(R.menu.settings)
             inflateMenu(R.menu.database_extra)
-            inflateMenu(R.menu.about)
             setNavigationItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.menu_app_settings -> {
@@ -401,12 +399,6 @@ class GroupActivity : DatabaseLockActivity(),
                     }
                     R.id.menu_lock_all -> {
                         lockAndExit()
-                    }
-                    R.id.menu_contribute -> {
-                        this@GroupActivity.openUrl(R.string.contribution_url)
-                    }
-                    R.id.menu_about -> {
-                        startActivity(Intent(this@GroupActivity, AboutActivity::class.java))
                     }
                 }
                 false
@@ -846,7 +838,7 @@ class GroupActivity : DatabaseLockActivity(),
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         Log.d(TAG, "setNewIntent: $intent")
         setIntent(intent)
@@ -1292,8 +1284,6 @@ class GroupActivity : DatabaseLockActivity(),
             menu.findItem(R.id.menu_app_settings)?.isVisible = modeCondition
             menu.findItem(R.id.menu_merge_from)?.isVisible = mMergeDataAllowed && modeCondition
             menu.findItem(R.id.menu_save_copy_to)?.isVisible = modeCondition
-            menu.findItem(R.id.menu_about)?.isVisible = modeCondition
-            menu.findItem(R.id.menu_contribute)?.isVisible = modeCondition
         }
     }
 

@@ -11,7 +11,6 @@
     <string name="download_progression">ਜਾਰੀ ਹੈ: %1$d%%</string>
     <string name="download_initialization">…ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="download_attachment">%1$s ਡਾਊਨਲੋਡ ਕਰੋ</string>
-    <string name="contribute">ਯੋਗਦਾਨ</string>
     <string name="download">ਡਾਊਨਲੋਡ ਕਰੋ</string>
     <string name="education_setup_OTP_title">OTP ਸੈਟਅੱਪ ਕਰੋ</string>
     <string name="education_create_database_title">ਆਪਣੀ ਡਾਟਾਬੇਸ ਫ਼ਾਇਲ ਬਣਾਓ</string>
@@ -92,7 +91,6 @@
     <string name="menu_move">ਭੇਜੋ</string>
     <string name="menu_copy">ਕਾਪੀ ਕਰੋ</string>
     <string name="menu_edit">ਸੋਧੋ</string>
-    <string name="menu_donate">ਦਾਨ ਦਿਓ</string>
     <string name="menu_master_key_settings">ਮਾਸਟਰ ਕੁੰਜੀ ਸੈਟਿੰਗਾਂ</string>
     <string name="menu_security_settings">ਸੁਰੱਖਿਆ ਸੈਟਿੰਗਾਂ</string>
     <string name="menu_database_settings">ਡਾਟਾਬੇਸ ਸੈਟਿੰਗਾਂ</string>
@@ -175,9 +173,6 @@
     <string name="entry_notes">ਨੋਟਿਸ</string>
     <string name="entry_cancel">ਰੱਦ ਕਰੋ</string>
     <string name="entry_accessed">ਅਸੈਸ ਕੀਤਾ</string>
-    <string name="html_about_contribution">&lt;strong&gt;ਸਾਡੀ ਆਜ਼ਾਦੀ ਬਣਾਈ ਰੱਖਣ&lt;/strong&gt;, &lt;strong&gt;ਬੱਗ ਠੀਕ ਕਰਨ&lt;/strong&gt;, &lt;strong&gt;ਹੋਰ ਫ਼ੀਚਰ ਜੋੜਨ&lt;/strong&gt; ਅਤੇ &lt;strong&gt;ਹਮੇਸ਼ਾਂ ਸਰਗਰਮ ਰਹਿਣ&lt;/strong&gt; ਵਾਸਤੇ ਅਸੀਂ ਤੁਹਾਡੇ &lt;strong&gt;ਯੋਗਦਾਨ&lt;/strong&gt; ਉੱਤੇ ਨਿਰਭਰ ਕਰਦੇ ਹਾਂ।</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft &lt;strong&gt;ਆਜ਼ਾਦ ਸਰੋਤ&lt;/strong&gt; ਅਤੇ &lt;strong&gt;ਬਿਨਾਂ ਇਸ਼ਤਿਹਾਰਾਂ&lt;/strong&gt; ਤੋਂ ਹੈ।
-\nਇਸ ਨੂੰ &lt;strong&gt;GPLv3&lt;/strong&gt; ਲਸੰਸ ਦੇ ਅਧੀਨ ਬਿਨਾਂ ਕਿਸੇ ਵਾਰੰਟੀ ਦੇ ਦਿੱਤਾ ਜਾ ਰਿਹਾ ਹੈ।</string>
     <string name="digits">ਅੰਕ</string>
     <string name="default_checkbox">ਮੂਲ ਡਾਟਾਬੇਸ ਵਜੋਂ ਵਰਤੋਂ</string>
     <string name="decrypting_db">…ਡਾਟਾਬੇਸ ਸਮੱਗਰੀ ਡਿਕ੍ਰਿਪਟ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
@@ -229,9 +224,6 @@
     <string name="add_entry">ਐਂਟਰੀ ਜੋੜੋ</string>
     <string name="accept">ਮਨਜ਼ੂਰ</string>
     <string name="about_description">ਐਂਡਰਾਇਡ ਲਈ ਬਣਾਇਆ KeePass ਪਾਸਵਰਡ ਮੈਨੇਜਰ</string>
-    <string name="homepage">ਮੁੱਖ-ਸਫ਼ਾ</string>
-    <string name="feedback">ਸੁਝਾਅ</string>
-    <string name="contribution">ਯੋਗਦਾਨ</string>
     <string name="contact">ਸੰਪਰਕ</string>
     <string name="keyfile_is_empty">ਕੁੰਜੀ ਫਾਇਲ ਖਾਲੀ ਹੈ।</string>
     <string name="error_create_database">ਡਾਟਾਬੇਸ ਫਾਈਲ ਬਣਾਉਣ ਲਈ ਅਸਮਰੱਥ।</string>
@@ -270,7 +262,6 @@
     <string name="do_not_kill_app">ਐਪ ਨੂੰ ਬੰਦ ਹੋਣ ਲਈ ਮਜ਼ਬੂਰ ਨਾ ਕਰੋ…</string>
     <string name="command_execution">...ਕਮਾਂਡ ਚਲਾਈ ਜਾ ਰਹੀ ਹੈ</string>
     <string name="error_autofill_enable_service">ਆਪੇ-ਭਰਨ ਸੇਵਾ ਨੂੰ ਸਮਰੱਥ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।</string>
-    <string name="content_description_credentials_information">ਸਨਦ ਜਾਣਕਾਰੀ</string>
     <string name="autofill_block">ਆਪੇ-ਭਰਨ ਤੋਂ ਰੋਕ</string>
     <string name="autofill_web_domain_blocklist_summary">ਪਾਬੰਦੀ-ਸੂਚੀ, ਜੋ ਕਿ ਵੈੱਬ ਡੋਮੇਨ ਲਈ ਆਪੇ ਭਰੇ ਜਾਣ ਤੋਂ ਰੋਕਦੀ ਹੈ</string>
     <string name="autofill_web_domain_blocklist_title">ਵੈੱਬ ਡੋਮੇਨ ਪਾਬੰਦੀ-ਸੂਚੀ</string>
@@ -296,7 +287,6 @@
     <string name="sort_db">ਕੁਦਰਤੀ ਕ੍ਰਮ</string>
     <string name="rounds">ਟਰਾਂਸਫਰਮੇਸ਼ਨ ਰਾਊਂਡ</string>
     <string name="biometric_unlock_enable_summary">ਡਾਟਾਬੇਸ ਖੋਲ੍ਹਣ ਲਈ ਤੁਹਾਨੂੰ ਬਾਇਓਮੈਟਰਿਕ ਸਕੈਨ ਕਰਨ ਦਿੰਦਾ ਹੈ</string>
-    <string name="device_unlock_explanation_summary">ਡਾਟਾਬੇਸ ਨੂੰ ਵੱਧ ਸੌਖੇ ਢੰਗ ਨਾਲ ਖੋਲ੍ਹਣ ਲਈ ਤਕਨੀਕੀ ਅਣ-ਲਾਕ ਢੰਗ ਨੂੰ ਵਰਤੋਂ</string>
     <string name="allow_copy_password_summary">ਐੰਟਰੀ ਪਾਸਵਰਡ ਅਤੇ ਸੁਰੱਖਿਅਤ ਖੇਤਰਾਂ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ</string>
     <string name="allow_copy_password_title">ਕਲਿੱਪਬੋਰਡ ਟਰੱਸਟ</string>
     <string name="monospace_font_fields_enable_title">ਖੇਤਰ ਦੇ ਫ਼ੋਂਟ</string>
@@ -333,9 +323,5 @@
 \nਹਰ ਵਾਰ ਬਦਲਾਅ ਕਰਨ ਦੇ ਆਪਣੀ ਡਾਟਾਬੇਸ ਫ਼ਾਇਲ ਨੂੰ ਸੁਰੱਖਿਅਤ ਥਾਂ ਉੱਤੇ ਬੈਕਅਪ ਲਵੋ।</string>
     <string name="education_read_only_title">ਆਪਣੇ ਡਾਟਾਬੇਸ ਨੂੰ ਲਿਖਣ ਤੋਂ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
     <string name="education_sort_title">ਚੀਜ਼ਾਂ ਲੜੀਬੱਧ ਕਰੋ</string>
-    <string name="education_donation_title">ਹਿੱਸਾ ਪਾਓ</string>
-    <string name="html_text_dev_feature_buy_pro">&lt;strong&gt;ਪ੍ਰੋ&lt;/strong&gt; ਵਰਜ਼ਨ ਖਰੀਦ ਕੇ,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;ਹਿੱਸਾ ਪਾ ਕੇ&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_thanks">ਤੁਹਾਡੇ ਹਿੱਸਾ ਪਾਉਣ ਲਈ ਬਹੁਤ ਧੰਨਵਾਦ ਹੈ।</string>
     <string name="show_uuid_title">UUID ਵੇਖਾਓ</string>
 </resources>

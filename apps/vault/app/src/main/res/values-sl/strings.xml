@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="contribution">Prispevek</string>
-    <string name="feedback">Povratne informacije</string>
-    <string name="homepage">Domača stran</string>
     <string name="accept">Sprejmi</string>
     <string name="add_entry">Dodaj vnos</string>
     <string name="edit_entry">Uredi vnos</string>
@@ -24,8 +21,6 @@
     <string name="content_description_add_group">Dodaj skupino</string>
     <string name="content_description_add_item">Dodaj element</string>
     <string name="content_description_file_information">Informacije o datoteki</string>
-    <string name="content_description_credentials_information">Informacije o poverilnicah</string>
-    <string name="content_description_otp_information">Informacije o enkratnem geslu</string>
     <string name="content_description_password_checkbox">Potrditveno polje za geslo</string>
     <string name="content_description_keyfile_checkbox">Potrditveno polje »datoteke ključa«</string>
     <string name="content_description_entry_icon">Ikona vnosa</string>
@@ -65,5 +60,4 @@
     <string name="menu_delete">Izbriši</string>
     <string name="sort_last_access_time">Zadnji dostop</string>
     <string name="menu_copy">Kopiraj</string>
-    <string name="menu_donate">Doniraj</string>
 </resources>

@@ -89,6 +89,7 @@ class ExternalFileHelper {
                             onFileCreated: (fileCreated: Uri?)->Unit) {
 
         val resultCallback = ActivityResultCallback<Uri?> { result ->
+            activity?.contentResolver?.takeUriPermission(result)
             onFileCreated.invoke(result)
         }
 
@@ -176,9 +177,16 @@ class ExternalFileHelper {
     }
 
     class CreateDocument(typeString: String) : ActivityResultContracts.CreateDocument(typeString) {
+        @SuppressLint("InlinedApi")
         override fun createIntent(context: Context, input: String): Intent {
             return super.createIntent(context, input).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
+                addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    addFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
+                }
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             }
         }
     }

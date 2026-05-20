@@ -2,9 +2,6 @@
 <resources>
     <string name="contact">Кантакт</string>
     <string name="info">Iнфа</string>
-    <string name="contribution">Унёсак</string>
-    <string name="feedback">Зваротная сувязь</string>
-    <string name="homepage">Хатняя старонка</string>
     <string name="about_description">Android рэалізацыя мэнэджара пароляў KeePass.</string>
     <string name="accept">Прыняць</string>
     <string name="add_entry">Дадаць запіс</string>
@@ -33,8 +30,6 @@
     <string name="content_description_add_group">Дадаць групу</string>
     <string name="content_description_add_item">Дадаць элемент</string>
     <string name="content_description_file_information">Інфармацыя пра файл</string>
-    <string name="content_description_credentials_information">Інфармацыя пра ўліковыя дадзеныя</string>
-    <string name="content_description_otp_information">Інфармацыя пра аднаразовы пароль</string>
     <string name="brackets">Дужкі</string>
     <string name="content_description_background">Фон</string>
     <string name="content_description_node_children">Даччыныя вузлы</string>
@@ -70,9 +65,6 @@
     <string name="decrypting_db">Расшыфроўка змесціва базы дадзеных…</string>
     <string name="default_checkbox">Выкарыстоўваць як базу дадзеных па змаўчанні</string>
     <string name="digits">Лічбы</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft з\'яўляецца &lt;strong&gt;праграмай з адкрытым зыходным кодам&lt;/strong&gt; і &lt;strong&gt;без рэкламы&lt;/strong&gt;. \nПрадастаўляецца «як ёсць», па ліцэнзіі &lt;strong&gt;GPLv3&lt;/strong&gt;, без якіх-небудзь гарантый.</string>
-    <string name="html_about_privacy">&lt;strong&gt;Карыстальніцкія дадзеныя не атрымліваюцца&lt;/strong&gt;, гэтая праграма не падключаецца да сервераў, працуе толькі лакальна і цалкам паважае прыватнасць карыстальнікаў.</string>
-    <string name="html_about_contribution">Каб &lt;strong&gt;захаваць нашу свабоду&lt;/strong&gt;, &lt;strong&gt;выпраўляць памылкі&lt;/strong&gt;, &lt;strong&gt;дадаваць функцыі&lt;/strong&gt; і &lt;strong&gt;заўсёды быць актыўнымі&lt;/strong&gt;, мы разлічваем на ваш &lt;strong&gt;уклад&lt;/strong&gt;.</string>
     <string name="entry_accessed">Доступ</string>
     <string name="entry_cancel">Адмена</string>
     <string name="entry_notes">Заўвагі</string>
@@ -249,7 +241,6 @@
     <string name="menu_security_settings_summary">Шыфраванне, функцыя вывядзення ключа</string>
     <string name="menu_master_key_settings">Налады галоўнага ключа</string>
     <string name="master_key_settings_summary">Змена, аднаўленне</string>
-    <string name="menu_donate">Ахвяраваць</string>
     <string name="menu_edit">Рэдагаваць</string>
     <string name="menu_copy">Капіяваць</string>
     <string name="menu_move">Перамясціць</string>
@@ -272,7 +263,6 @@
     <string name="menu_empty_recycle_bin">Ачысціць смеццевую скрыню</string>
     <string name="menu_restore_entry_history">Аднавіць гісторыю</string>
     <string name="menu_delete_entry_history">Выдаліць гісторыю</string>
-    <string name="menu_external_icon">Знешні значок</string>
     <string name="minus">Мінус</string>
     <string name="never">Ніколі</string>
     <string name="no_results">Няма вынікаў пошуку</string>
@@ -397,7 +387,6 @@
     <string name="general">Агульнае</string>
     <string name="autofill">Аўтазапаўненне</string>
     <string name="autofill_sign_in_prompt">Увайсці з дапамогай KeePassDX</string>
-    <string name="autofill_explanation_summary">Наладзьце аўтазапаўненне, каб хутка запаўняць формы ў іншых праграмах</string>
     <string name="autofill_select_entry">Выбраць запіс…</string>
     <string name="autofill_preference_title">Налады аўтазапаўнення</string>
     <string name="password_size_title">Памер згенераванага пароля</string>
@@ -406,7 +395,6 @@
     <string name="list_password_generator_options_summary">Усталяваць дазволеныя сімвалы генератара пароляў</string>
     <string name="database_opened">База дадзеных адкрыта</string>
     <string name="clipboard">Буфер абмену</string>
-    <string name="clipboard_explanation_summary">Капіюйце палі запісу, выкарыстоўваючы буфер абмену вашай прылады</string>
     <string name="clipboard_warning">Калі аўтаматычнае выдаленне з буфера абмену не ўдаецца, выдаліце яго гісторыю ўручную.</string>
     <string name="lock">Блакаванне</string>
     <string name="lock_database_screen_off_title">Блакаванне экрана</string>
@@ -419,7 +407,6 @@
     <string name="unlock">Разблакіраваць</string>
     <string name="device_unlock">Разблакіроўка прылады</string>
     <string name="device_unlock_tap_delete">Націсніце, каб выдаліць ключы разблакіроўкі прылады</string>
-    <string name="device_unlock_explanation_summary">Выкарыстоўвайце разблакіроўку прылады, каб лягчэй адкрываць базу дадзеных</string>
     <string name="biometric_unlock_enable_title">Біяметрычная разблакіроўка</string>
     <string name="biometric_unlock_enable_summary">Дазваляе сканаваць біяметрыю для адкрыцця базы дадзеных</string>
     <string name="device_credential_unlock_enable_title">Разблакіроўка з дапамогай уліковых дадзеных прылады</string>
@@ -485,7 +472,6 @@
     <string name="templates">Шаблоны</string>
     <string name="keyboard">Клавіятура</string>
     <string name="magic_keyboard_title">Магічная клавіятура</string>
-    <string name="magic_keyboard_explanation_summary">Актываваць карыстальніцкую клавіятуру, якая запаўняе вашыя паролі і ўсе палі ідэнтычнасці</string>
     <string name="device_keyboard_setting_title">Налады клавіятуры прылады</string>
     <string name="keyboard_name">Магічная клавіятура</string>
     <string name="keyboard_label">Магічная клавіятура (KeePassDX)</string>
@@ -589,21 +575,7 @@
     <string name="education_lock_summary">Хутка заблакаваць базу дадзеных, вы можаце наладзіць праграму, каб яна блакавалася праз некаторы час і калі экран выключаецца.</string>
     <string name="education_sort_title">Сартаванне элементаў</string>
     <string name="education_sort_summary">Выберыце, як сартаваць запісы і групы.</string>
-    <string name="education_donation_title">Удзельнічаць</string>
-    <string name="education_donation_summary">Дапамажыце павысіць стабільнасць, бяспеку і дадаць больш функцый.</string>
-    <string name="html_text_ad_free">У адрозненне ад многіх праграм для кіравання паролямі, гэтая &lt;strong&gt;без рэкламы&lt;/strong&gt;, &lt;strong&gt;копілефтнае свабоднае праграмнае забеспячэнне&lt;/strong&gt; і не збірае персанальныя дадзеныя на сваіх серверах, незалежна ад версіі, якой вы карыстаецеся.</string>
-    <string name="html_text_buy_pro">Купляючы pro-версію, вы атрымаеце доступ да гэтага &lt;strong&gt;візуальнага стылю&lt;/strong&gt; і асабліва дапаможаце &lt;strong&gt;рэалізацыі грамадскіх праектаў.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Гэты &lt;strong&gt;візуальны стыль&lt;/strong&gt; даступны дзякуючы вашай шчодрасці.</string>
-    <string name="html_text_donation">&lt;strong&gt;Унёсшы ўклад&lt;/strong&gt; у праект &lt;i&gt;(матэрыяльна, кодам, перакладам)&lt;/i&gt;, вы дапаможаце яму працягваць жыць і развівацца, а таксама будзеце мець права на працэдуру разблакіроўкі &lt;strong&gt;тэмы&lt;/strong&gt;.</string>
-    <string name="html_text_dev_feature">Гэтая функцыя &lt;strong&gt;знаходзіцца ў стадыі распрацоўкі&lt;/strong&gt; і патрабуе вашага &lt;strong&gt;ўкладу&lt;/strong&gt;, каб неўзабаве стаць даступнай.</string>
-    <string name="html_text_dev_feature_buy_pro">Купляючы &lt;strong&gt;pro-версію&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;Унёсшы ўклад&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">вы заахвочваеце распрацоўшчыкаў ствараць &lt;strong&gt;новыя функцыі&lt;/strong&gt; і &lt;strong&gt;выпраўляць памылкі&lt;/strong&gt; ў адпаведнасці з вашымі заўвагамі.</string>
-    <string name="html_text_dev_feature_thanks">Вялікі дзякуй за ваш уклад.</string>
-    <string name="html_text_dev_feature_work_hard">Мы прыкладаем усе намаганні, каб хутка выпусціць гэтую функцыю.</string>
-    <string name="html_text_dev_feature_upgrade">Не забудзьцеся абнаўляць праграму, усталёўваючы новыя версіі.</string>
     <string name="download">Спампаваць</string>
-    <string name="contribute">Унесці ўклад</string>
     <string name="download_attachment">Спампаваць %1$s</string>
     <string name="upload_attachment">Загрузіць %1$s</string>
     <string name="download_initialization">Ініцыялізацыя…</string>
@@ -661,7 +633,6 @@
     <string name="credential_provider">Пастаўшчык даных для ўваходу</string>
     <string name="set_credential_provider_service_title">Сэрвіс пастаўшчыка даных для ўваходу</string>
     <string name="passkeys">Ключы доступу</string>
-    <string name="passkeys_explanation_summary">Наладзьце ключы доступу для хуткага і бяспечнага ўваходу без пароля</string>
     <string name="passkeys_preference_title">Налады ключоў доступу</string>
     <string name="passkeys_close_database_title">Закрыць базу даных</string>
     <string name="passkeys_close_database_summary">Закрыць базу даных пасля абрання ключа доступу</string>
@@ -711,7 +682,6 @@
     <string name="password_creation_description">Захаваць пароль у новым запісе</string>
     <string name="password_selection_description">Абраць наяўны пароль</string>
     <string name="error_password_result">Немагчыма вярнуць пароль</string>
-    <string name="content_description_user_verification_information">Інфармацыя пра праверку карыстальніка</string>
     <string name="user_verification_required_title">Праверка карыстальніка</string>
     <string name="user_verification_required_description">Доступ да гэтых даных патрабуе праверкі, што гэта сапраўды вы.</string>
     <string name="user_verification_required_description_precise">%1$s патрабуе праверкі, што гэта сапраўды вы.</string>

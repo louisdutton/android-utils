@@ -20,8 +20,6 @@
     <string name="about_description">KeePassDX slaptažodžių tvarkyklės realizacija Android platformai</string>
     <string name="clipboard_cleared">Iškarpinė išvalyta</string>
     <string name="invalid_credentials">Nepavyko perskaityti prisijungimo duomenų.</string>
-    <string name="feedback">Atsiliepimai</string>
-    <string name="homepage">Pagrindinis puslapis</string>
     <string name="accept">Priimti</string>
     <string name="add_entry">Pridėti įrašą</string>
     <string name="add_group">Pridėti grupę</string>
@@ -60,7 +58,6 @@
     <string name="settings">Nustatymai</string>
     <string name="menu_database_settings">Duomenų bazės nustatymai</string>
     <string name="menu_delete">Ištrinti</string>
-    <string name="menu_donate">Aukoti</string>
     <string name="menu_edit">Keisti</string>
     <string name="menu_open">Atidaryti</string>
     <string name="menu_search">Ieškoti</string>
@@ -109,7 +106,6 @@
     <string name="encryption">Šifravimas</string>
     <string name="security">Saugumas</string>
     <string name="master_key">Pagrindinis raktas</string>
-    <string name="contribution">Įnašai</string>
     <string name="contact">Kontaktai</string>
     <string name="edit_entry">Redaguoti įrašą</string>
     <string name="entry_add_attachment">Pridėti priedą (failą)</string>
@@ -122,7 +118,6 @@
     <string name="content_description_update_from_list">Atnaujinti</string>
     <string name="content_description_password_checkbox">Slaptažodžio žymimasis langelis</string>
     <string name="content_description_keyfile_checkbox">Rakto failo žymimasis langelis</string>
-    <string name="content_description_credentials_information">Prisijungimo duomenų informacija</string>
     <string name="content_description_add_group">Pridėti grupę</string>
     <string name="content_description_add_entry">Pridėti įrašą</string>
     <string name="content_description_add_node">Pridėti nodą</string>
@@ -216,8 +211,6 @@
     <string name="error_field_name_already_exists">Įrašo pavadinimas jau egzistuoja.</string>
     <string name="error_database_uri_null">Duomenų bazės URI nepavyko gauti.</string>
     <string name="key_derivation_function">Rakto išvedimo funkcija</string>
-    <string name="html_about_licence">KeePassDX © %1$d Kunzisoft yra &lt;strong&gt;atviro kodo&lt;/strong&gt; ir &lt;strong&gt;be reklamų&lt;/strong&gt;.
-\nJis teikiamas toks, koks yra, pagal &lt;strong&gt;GPLv3&lt;/strong&gt; licenciją, be jokių garantijų.</string>
     <string name="private_key">Privatus raktas</string>
     <string name="date_of_issue">Išdavimo data</string>
     <string name="email_address">El. pašto adresas</string>
@@ -231,10 +224,8 @@
     <string name="content_description_entry_foreground_color">Įrašo pirmojo plano spalva</string>
     <string name="content_description_entry_background_color">Įrašo fono spalva</string>
     <string name="error_string_type">Šis tekstas neatitinka prašomo elemento.</string>
-    <string name="content_description_otp_information">Vienkartinio slaptažodžio info</string>
     <string name="error_file_to_big">Failas, kurį bandote įkelti, yra per didelis.</string>
     <string name="error_otp_type">Ši forma neatpažįsta esamo OTP tipo, jos patvirtinimas gali nebegeneruoti teisingo žetono.</string>
-    <string name="html_about_privacy">&lt;strong&gt;Jokie naudotojo duomenys nerenkami&lt;/strong&gt;, ši programa neprisijungia prie jokio serverio, veikia tik vietoje ir visiškai nepažeidžia naudotojų privatumo.</string>
     <string name="debit_credit_card">Debeto / Kreditinė kortelė</string>
     <string name="holder">Savininkas</string>
     <string name="email">El. paštas</string>
@@ -334,7 +325,6 @@
     <string name="menu_restore_entry_history">Atkurti istoriją</string>
     <string name="menu_delete_entry_history">Ištrinti istoriją</string>
     <string name="sort_last_modify_time">Keitimas</string>
-    <string name="menu_external_icon">Išorinė piktograma</string>
     <string name="remember_database_locations_title">Prisiminti duomenų bazių vietas</string>
     <string name="remember_database_locations_summary">Seka, kur saugomos duomenų bazės</string>
     <string name="remember_keyfile_locations_title">Prisiminti raktų failų vietas</string>
@@ -363,7 +353,6 @@
     <string name="show_uuid_title">Rodyti UUID</string>
     <string name="menu_appearance_settings">Išvaizda</string>
     <string name="biometric">Biometriniai duomenys</string>
-    <string name="autofill_explanation_summary">Įgalinkite automatinį pildymą, kad galėtumėte greitai užpildyti formas kitose programose</string>
     <string name="lock_database_back_root_title">Paspauskite \"Atgal\", kad užrakintumėte</string>
     <string name="lock_database_show_button_summary">Naudotojo sąsajoje rodomas užrakto mygtukas</string>
     <string name="device_unlock">Įrenginio atrakinimas</string>
@@ -457,7 +446,6 @@
     <string name="device_credential">Prietaiso kredencialas</string>
     <string name="credential_provider">Kredencialo teikėjas</string>
     <string name="passkeys">Raktų sistemos</string>
-    <string name="passkeys_explanation_summary">Konfigūruoti raktų sistemas greitam ir saugiam prisijungimui be slaptažodžio</string>
     <string name="passkeys_preference_title">Raktų sistemų nustatymai</string>
     <string name="passkeys_close_database_title">Uždaryti duomenų bazę</string>
     <string name="passkeys_close_database_summary">Uždaryti duomenų bazę po raktų sistemos pasirinkimo</string>
@@ -478,11 +466,9 @@
     <string name="passkeys_backup_state_summary">Nurodyti, kad kredencialai yra atsarginėje kopijoje ir apsaugoti nuo vieno įrenginio praradimo</string>
     <string name="credential_provider_service_subtitle">Raktų sistemos, automatinio pildymo kredencialų teikėjas</string>
     <string name="clipboard">Iškarpinė</string>
-    <string name="clipboard_explanation_summary">Kopijuoti įrašų laukus naudojant jūsų prietaiso iškarpinę</string>
     <string name="clipboard_warning">Jei automatinis iškarpinės ištrynimas nepavyksta, ištrinkite jos istoriją rankiniu būdu.</string>
     <string name="lock_database_back_root_summary">Paspauskite \"Atgal\", kad užrakintumėte duomenų bazę, jei esate duomenų bazės šakniniame ekrane</string>
     <string name="device_unlock_tap_delete">Bakstelėkite, kad ištrintumėte įrenginio atrakinimo raktus</string>
-    <string name="device_unlock_explanation_summary">Naudokite įrenginio atrakinimą, kad lengviau atvertumėte duomenų bazę</string>
     <string name="device_credential_unlock_enable_title">Įrenginio kredencialo atrakinimas</string>
     <string name="device_credential_unlock_enable_summary">Leidžia naudoti jūsų įrenginio kredencialą duomenų bazei atverti</string>
     <string name="biometric_auto_open_prompt_title">Automatinis atidarymo raginimas</string>
@@ -535,7 +521,6 @@
     <string name="templates">Šablonai</string>
     <string name="keyboard">Klaviatūra</string>
     <string name="magic_keyboard_title">Magikeyboard</string>
-    <string name="magic_keyboard_explanation_summary">Aktyvuoti tinkintą klaviatūrą, užpildančią jūsų slaptažodžius ir visus tapatybės laukus</string>
     <string name="device_keyboard_setting_title">Įrenginio klaviatūros nustatymai</string>
     <string name="keyboard_name">Magikeyboard</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
@@ -636,13 +621,7 @@
     <string name="education_lock_summary">Greitai užrakinkite savo duomenų bazę, galite nustatyti programą, kad ji užsirakintų po kurio laiko ir kai ekranas išsijungia.</string>
     <string name="education_sort_title">Elementų rikiavimas</string>
     <string name="education_sort_summary">Pasirinkite kaip rikiuojami įrašai ir grupės.</string>
-    <string name="education_donation_title">Dalyvauti</string>
-    <string name="education_donation_summary">Padėkite padidinti stabilumą, saugumą ir pridėti daugiau funkcijų.</string>
-    <string name="html_text_dev_feature_thanks">Labai dėkojame už jūsų indėlį.</string>
-    <string name="html_text_dev_feature_work_hard">Mes sunkiai dirbame, kad greitai išleistume šią funkciją.</string>
-    <string name="html_text_dev_feature_upgrade">Prisiminkite laikyti savo programą atnaujintą įdiegiant naujas versijas.</string>
     <string name="download">Parsisiųsti</string>
-    <string name="contribute">Prisidėti</string>
     <string name="download_attachment">Parsisiųsti %1$s</string>
     <string name="upload_attachment">Įkelti %1$s</string>
     <string name="download_initialization">Inicijuojama…</string>
@@ -707,14 +686,5 @@
     <string name="passkey_backup_eligibility">Prieigos rakto atsarginės kopijos tinkamumas</string>
     <string name="passkey_backup_state">Prieigos rakto atsarginės kopijos būsena</string>
     <string name="error_passkey_result">Nepavyko grąžinti prieigos rakto</string>
-    <string name="html_about_contribution">Kad &lt;strong&gt;išlaikytume savo laisvę&lt;/strong&gt;, &lt;strong&gt;ištaisytume klaidas&lt;/strong&gt;, &lt;strong&gt;pridėtume funkcijų&lt;/strong&gt; ir &lt;strong&gt;būtume visada aktyvūs&lt;/strong&gt;, mes pasikliaujame jūsų &lt;strong&gt;indėliu&lt;/strong&gt;.</string>
     <string name="education_read_only_summary">Pakeiskite atidarymo režimą sesijai.\n\n\"Rašymo apsauga\" apsaugo duomenų bazę nuo atsitiktinių pakeitimų.\n\"Modifikuojamas\" leidžia pridėti, ištrinti arba modifikuoti visus elementus kaip norite.</string>
-    <string name="html_text_ad_free">Skirtingai nuo daugelio slaptažodžių valdymo programų, ši yra &lt;strong&gt;be reklamų&lt;/strong&gt;, &lt;strong&gt;copylefted libre programinė įranga&lt;/strong&gt; ir nerenka asmeninių duomenų savo serveriuose, nesvarbu kokią versiją naudojate.</string>
-    <string name="html_text_buy_pro">Perkant pro versiją, turėsite prieigą prie šio &lt;strong&gt;vizualinio stiliaus&lt;/strong&gt; ir ypač padėsite &lt;strong&gt;bendruomenės projektų realizacijai.&lt;/strong&gt;</string>
-    <string name="html_text_feature_generosity">Šis &lt;strong&gt;vizualinis stilius&lt;/strong&gt; yra prieinamas dėka jūsų dosnumo.</string>
-    <string name="html_text_donation">&lt;strong&gt;Prisidėdami&lt;/strong&gt; prie projekto &lt;i&gt;(pinigais, kodu, vertimu)&lt;/i&gt;, padėsite jam gyventi ir klestėti, ir taip pat turėsite teisę į &lt;strong&gt;temos&lt;/strong&gt; atrakinimo procedūrą.</string>
-    <string name="html_text_dev_feature">Ši funkcija yra &lt;strong&gt;kūrimo stadijoje&lt;/strong&gt; ir reikalauja jūsų &lt;strong&gt;indėlio&lt;/strong&gt;, kad būtų prieinama greitai.</string>
-    <string name="html_text_dev_feature_buy_pro">Perkant &lt;strong&gt;pro&lt;/strong&gt; versiją,</string>
-    <string name="html_text_dev_feature_contibute">&lt;strong&gt;Prisidėdami&lt;/strong&gt;,</string>
-    <string name="html_text_dev_feature_encourage">skatiname kūrėjus kurti &lt;strong&gt;naujas funkcijas&lt;/strong&gt; ir &lt;strong&gt;ištaisyti klaidas&lt;/strong&gt; pagal jūsų pastabas.</string>
 </resources>

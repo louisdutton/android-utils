@@ -37,7 +37,6 @@ import com.kunzisoft.keepass.education.Education
 import com.kunzisoft.keepass.password.PassphraseGenerator
 import com.kunzisoft.keepass.timeout.TimeoutHelper
 import com.kunzisoft.keepass.timeout.TimeoutHelper.NEVER
-import com.kunzisoft.keepass.utils.AppUtil.isContributingUser
 import com.kunzisoft.keepass.utils.KeyboardUtil.isKeyboardActivatedInSettings
 import java.util.Properties
 
@@ -177,33 +176,27 @@ object PreferencesUtil {
     }
 
     fun getStyle(context: Context): String {
-        val defaultStyleString = Stylish.defaultStyle(context)
-        val styleString = PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(context.getString(R.string.setting_style_key), defaultStyleString)
-            ?: defaultStyleString
-        // Return the system style
-        return Stylish.retrieveEquivalentSystemStyle(context, styleString)
+        return Stylish.retrieveEquivalentSystemStyle(context, Stylish.defaultStyle(context))
     }
 
     fun setStyle(context: Context, styleString: String) {
-        var tempThemeString = styleString
-        if (!context.isContributingUser()) {
-            if (tempThemeString in BuildConfig.STYLES_DISABLED) {
-                tempThemeString = Stylish.defaultStyle(context)
-            }
-        }
-        // Store light style to show selection in array list
-        tempThemeString = Stylish.retrieveEquivalentLightStyle(context, tempThemeString)
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putString(context.getString(R.string.setting_style_key), tempThemeString)
+            remove(context.getString(R.string.setting_style_key))
+            remove(context.getString(R.string.setting_style_brightness_key))
         }
         Stylish.load(context)
     }
 
     fun getStyleBrightness(context: Context): String? {
+        return context.getString(R.string.list_style_brightness_follow_system)
+    }
+
+    fun usePureBlackOled(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(context.getString(R.string.setting_style_brightness_key),
-            context.getString(R.string.list_style_brightness_follow_system))
+        return prefs.getBoolean(
+            context.getString(R.string.pure_black_oled_key),
+            context.resources.getBoolean(R.bool.pure_black_oled_default)
+        )
     }
 
     /**
@@ -609,10 +602,7 @@ object PreferencesUtil {
     }
 
     fun getIconPackSelectedId(context: Context): String? {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(
-            context.getString(R.string.setting_icon_pack_choose_key),
-            context.getString(R.string.setting_icon_pack_choose_default))
+        return context.getString(R.string.setting_icon_pack_choose_default)
     }
 
     fun emptyPasswordAllowed(context: Context): Boolean {
@@ -925,8 +915,9 @@ object PreferencesUtil {
                 context.getString(R.string.autofill_web_domain_blocklist_key) -> editor.putStringSet(name, getStringSetFromProperties(value))
 
                 context.getString(R.string.setting_style_key) -> setStyle(context, value)
-                context.getString(R.string.setting_style_brightness_key) -> editor.putString(name, value)
-                context.getString(R.string.setting_icon_pack_choose_key) -> editor.putString(name, value)
+                context.getString(R.string.setting_style_brightness_key) -> editor.remove(name)
+                context.getString(R.string.setting_icon_pack_choose_key) -> editor.remove(name)
+                context.getString(R.string.pure_black_oled_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.hide_expired_entries_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.hide_templates_key) -> editor.putBoolean(name, value.toBoolean())

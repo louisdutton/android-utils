@@ -14,7 +14,6 @@ import com.kunzisoft.encrypt.Signature.getAllFingerprints
 import com.kunzisoft.keepass.BuildConfig
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.credentialprovider.passkey.data.AndroidPrivilegedApp
-import com.kunzisoft.keepass.education.Education
 import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import java.security.SecureRandom
@@ -33,7 +32,6 @@ object AppUtil {
                 packageName,
                 PackageManager.GET_ACTIVITIES
             )
-            Education.setEducationScreenReclickedPerformed(this)
             return true
         } catch (e: Exception) {
             if (showError)
@@ -78,12 +76,6 @@ object AppUtil {
         }
     }
 
-    fun Context.isContributingUser(): Boolean {
-        return (Education.isEducationScreenReclickedPerformed(this)
-                || isExternalAppInstalled(this.getString(R.string.keepro_app_id), false)
-                )
-    }
-
     @RequiresApi(Build.VERSION_CODES.P)
     fun getInstalledBrowsersWithSignatures(
         context: Context,
@@ -94,7 +86,7 @@ object AppUtil {
 
         // Create a generic web intent
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = context.getString(R.string.homepage_url).toUri()
+        intent.data = "https://www.example.com".toUri()
 
         // Query for apps that can handle this intent
         val resolveInfoList: List<ResolveInfo> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

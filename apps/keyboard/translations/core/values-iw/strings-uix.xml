@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_select_all_title">בחר הכול</string>
+  <string name="action_cut_title">גזור</string>
+  <string name="action_copy_title">העתק</string>
+  <string name="action_paste_title">הדבק</string>
+  <string name="action_undo_title">בטל פעולה אחרונה</string>
+  <string name="action_redo_title">חזור על פעולה אחרונה</string>
+  <string name="action_text_editor_title">עורך טקסט</string>
+  <string name="action_debug_title">מידע לטיפול בשגיאות</string>
+  <string name="action_more_actions_title">כל הפעולות</string>
+  <!-- These move the text cursor up, down, left, right -->
+  <string name="action_cursor_up_title">חץ למעלה</string>
+  <string name="action_cursor_down_title">חץ למטה</string>
+  <string name="action_cursor_left_title">חץ שמאלה</string>
+  <string name="action_cursor_right_title">חץ ימינה</string>
+  <!-- For emoji menu action -->
+  <string name="action_emoji_title">אימוג\'ים</string>
+</resources>
