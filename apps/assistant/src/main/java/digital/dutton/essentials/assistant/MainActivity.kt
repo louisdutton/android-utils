@@ -5,6 +5,7 @@ import android.app.Application
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
@@ -70,6 +71,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val DEBUG_COMMAND_EXTRA = "digital.dutton.essentials.assistant.DEBUG_COMMAND"
+private const val DEBUG_PREVIEW_EXTRA = "digital.dutton.essentials.assistant.DEBUG_PREVIEW"
+
 data class AssistantUiState(
     val input: String = "",
     val history: List<AssistantResult> = emptyList(),
@@ -83,6 +87,12 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val _uiState = MutableStateFlow(AssistantUiState())
     val uiState: StateFlow<AssistantUiState> = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            runCatching { engine.warmLanguageModel() }
+        }
+    }
 
     fun updateInput(value: String) {
         _uiState.update { it.copy(input = value) }
@@ -110,6 +120,29 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
                     history = (it.history + result).takeLast(30),
                     isRunning = false,
                     status = if (result.error == null) "Ready" else "Action failed"
+                )
+            }
+        }
+    }
+
+    fun previewText(text: String) {
+        val request = text.trim()
+        if (request.isBlank() || _uiState.value.isRunning) return
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    input = "",
+                    isRunning = true,
+                    status = "Previewing"
+                )
+            }
+            val result = engine.preview(request)
+            _uiState.update {
+                it.copy(
+                    history = (it.history + result).takeLast(30),
+                    isRunning = false,
+                    status = "Ready"
                 )
             }
         }
@@ -177,6 +210,21 @@ class MainActivity : ComponentActivity() {
 
                 LaunchedEffect(Unit) {
                     assistantRoleHeld.value = isAssistantRoleHeld()
+                    val isDebuggable =
+                        (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+                    val debugCommand = if (isDebuggable) {
+                        intent.getStringExtra(DEBUG_COMMAND_EXTRA)?.trim()
+                    } else {
+                        null
+                    }
+                    if (!debugCommand.isNullOrBlank()) {
+                        if (intent.getBooleanExtra(DEBUG_PREVIEW_EXTRA, false)) {
+                            viewModel.previewText(debugCommand)
+                        } else {
+                            viewModel.submitText(debugCommand)
+                        }
+                        return@LaunchedEffect
+                    }
                     if (!initialListenRequested) {
                         initialListenRequested = true
                         startListening()

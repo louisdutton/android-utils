@@ -9,14 +9,18 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.SystemClock
 import android.provider.CalendarContract
 import android.provider.AlarmClock
 import android.provider.MediaStore
 import android.provider.Settings
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
+import android.util.Log
 import java.util.Locale
 import kotlin.math.max
+
+private const val ASSISTANT_ENGINE_TAG = "AssistantEngine"
 
 data class AssistantResult(
     val input: String,
@@ -51,7 +55,7 @@ data class LaunchableApp(
 class AssistantEngine(private val context: Context) {
     private val model = LocalIntentModel(context)
 
-    fun execute(input: String): AssistantResult {
+    suspend fun execute(input: String): AssistantResult {
         val action = model.resolve(input)
         val launchError = launch(action.intent, action.fallbackIntent)
         return AssistantResult(
@@ -64,7 +68,11 @@ class AssistantEngine(private val context: Context) {
         )
     }
 
-    fun preview(input: String): AssistantResult {
+    suspend fun warmLanguageModel() {
+        model.warmLanguageModel()
+    }
+
+    suspend fun preview(input: String): AssistantResult {
         val action = model.resolve(input)
         return AssistantResult(
             input = input,
@@ -103,7 +111,12 @@ private class LocalIntentModel(
     private val messagesPackage = "digital.dutton.essentials.messages"
     private val appResolver = AppResolver(context)
 
-    fun resolve(input: String): AssistantAction {
+    suspend fun warmLanguageModel() {
+        IntentLanguageModel.warm(context)
+    }
+
+    suspend fun resolve(input: String): AssistantAction {
+        val startedAt = SystemClock.elapsedRealtime()
         val original = input.trim()
         if (original.isBlank()) {
             return AssistantAction(
@@ -116,6 +129,32 @@ private class LocalIntentModel(
 
         val text = original.normalized()
 
+        resolveRules(text, original)?.let {
+            logResolution("rules", startedAt, original, it)
+            return it
+        }
+
+        IntentLanguageModel.classify(original)
+            ?.let { resolveIntentCategory(it, text, original) }
+            ?.let {
+                logResolution("llm", startedAt, original, it)
+                return it
+            }
+
+        return webSearch(original, confidence = 0.35f).also {
+            logResolution("fallback", startedAt, original, it)
+        }
+    }
+
+    private fun logResolution(path: String, startedAt: Long, original: String, action: AssistantAction) {
+        Log.i(
+            ASSISTANT_ENGINE_TAG,
+            "resolve path=$path elapsed=${SystemClock.elapsedRealtime() - startedAt}ms " +
+                "title=\"${action.title}\" input=\"${original.take(80)}\""
+        )
+    }
+
+    private fun resolveRules(text: String, original: String): AssistantAction? {
         resolveSettings(text)?.let { return it }
         resolveTimer(text)?.let { return it }
         resolveAlarm(text)?.let { return it }
@@ -127,8 +166,39 @@ private class LocalIntentModel(
         resolveUrl(original)?.let { return it }
         resolveWebSearch(text, original)?.let { return it }
         resolveApp(text)?.let { return it }
+        return null
+    }
 
-        return webSearch(original, confidence = 0.35f)
+    private fun resolveIntentCategory(
+        classification: IntentClassification,
+        text: String,
+        original: String
+    ): AssistantAction? {
+        val confidence = max(0.52f, classification.confidence)
+        return when (classification.category) {
+            IntentCategory.SendMessage -> resolveMessage(text, original, force = true)
+            IntentCategory.MakeCall -> resolveCall(text) ?: AssistantAction(
+                title = "Dial",
+                detail = "Phone dialer",
+                confidence = confidence,
+                intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:"))
+            )
+            IntentCategory.Navigate -> resolveNavigation(text, original, force = true)
+            IntentCategory.OpenApp -> resolveApp(text)
+            IntentCategory.OpenSettings -> resolveSettings(text) ?: AssistantAction(
+                title = "Open Settings",
+                detail = "System settings",
+                confidence = confidence,
+                intent = Intent(Settings.ACTION_SETTINGS)
+            )
+            IntentCategory.SetTimer -> resolveTimer(text)
+            IntentCategory.SetAlarm -> resolveAlarm(text)
+            IntentCategory.Calendar -> resolveCalendar(text, original)
+            IntentCategory.Camera -> resolveCamera(text)
+            IntentCategory.OpenUrl -> resolveUrl(original)
+            IntentCategory.WebSearch -> webSearch(original, confidence = confidence)
+            IntentCategory.Unknown -> null
+        }?.let { it.copy(confidence = max(it.confidence, confidence)) }
     }
 
     private fun resolveSettings(text: String): AssistantAction? {
@@ -223,12 +293,18 @@ private class LocalIntentModel(
         )
     }
 
-    private fun resolveMessage(text: String, original: String): AssistantAction? {
-        if (!text.containsWord("text") && !text.containsWord("message") && !text.containsWord("sms")) {
+    private fun resolveMessage(text: String, original: String, force: Boolean = false): AssistantAction? {
+        val selfNoteRequest = text.isSelfNoteRequest()
+        if (!force &&
+            !selfNoteRequest &&
+            !text.containsWord("text") &&
+            !text.containsWord("message") &&
+            !text.containsWord("sms")
+        ) {
             return null
         }
 
-        parseMessage(original)?.let { message ->
+        parseMessage(original, force || selfNoteRequest)?.let { message ->
             val ownNumber = if (message.isSelf) ownPhoneNumber() else null
             val number = message.number ?: ownNumber
             val primary = messageIntent(number, message.body, message.recipientQuery).apply {
@@ -264,14 +340,28 @@ private class LocalIntentModel(
         )
     }
 
-    private fun parseMessage(original: String): ParsedMessage? {
+    private fun parseMessage(original: String, force: Boolean): ParsedMessage? {
         val command = Regex(
             """\b(?:send\s+(?:a\s+)?)?(?:text|message|sms)(?:\s+message)?\b""",
             RegexOption.IGNORE_CASE
-        ).find(original) ?: return null
+        ).find(original)
 
-        val rawRemainder = original.substring(command.range.last + 1).trim()
+        val rawRemainder = if (command != null) {
+            original.substring(command.range.last + 1).trim()
+        } else if (force) {
+            original.trim()
+        } else {
+            return null
+        }
         val remainder = rawRemainder
+            .replace(
+                Regex(
+                    """^(?:send|shoot|write|make|create|save)\s+(?:a\s+)?(?:note|message|text|sms)?\s*""",
+                    RegexOption.IGNORE_CASE
+                ),
+                ""
+            )
+            .replace(Regex("""^(?:note|message|text|sms)\s+""", RegexOption.IGNORE_CASE), "")
             .replace(Regex("""^(?:to|for)\s+""", RegexOption.IGNORE_CASE), "")
             .trim()
 
@@ -377,7 +467,7 @@ private class LocalIntentModel(
         }.getOrNull()?.cleanPhoneNumber()
     }
 
-    private fun resolveNavigation(text: String, original: String): AssistantAction? {
+    private fun resolveNavigation(text: String, original: String, force: Boolean = false): AssistantAction? {
         val command = listOf(
             "navigate to ",
             "directions to ",
@@ -387,9 +477,17 @@ private class LocalIntentModel(
             "map "
         ).firstOrNull { text.startsWith(it) }
 
-        if (command == null && !text.containsWord("map") && !text.containsWord("maps")) return null
+        if (!force && command == null && !text.containsWord("map") && !text.containsWord("maps")) return null
 
         if (command == null) {
+            if (force) {
+                val destination = original
+                    .replace(Regex("""(?i)\b(navigate|directions|route|take me|go|get me|to)\b"""), " ")
+                    .replace(Regex("""\s+"""), " ")
+                    .trim()
+                if (destination.isBlank()) return null
+                return mapAction(destination)
+            }
             appResolver.launchKnownApp("maps")?.let {
                 return AssistantAction(
                     title = "Open Maps",
@@ -403,6 +501,10 @@ private class LocalIntentModel(
         val destination = command?.let { original.drop(it.length).trim() }.orEmpty()
         if (destination.isBlank()) return null
 
+        return mapAction(destination)
+    }
+
+    private fun mapAction(destination: String): AssistantAction {
         val fallback = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=${Uri.encode(destination)}"))
         val primary = Intent(fallback).apply {
             if (appResolver.isPackageInstalled("digital.dutton.essentials.maps")) {
@@ -667,6 +769,12 @@ private fun String.normalized(): String {
 private fun String.containsWord(word: String): Boolean {
     val escaped = Regex.escape(word.normalized())
     return Regex("""(^|\s)$escaped($|\s)""").containsMatchIn(normalized())
+}
+
+private fun String.isSelfNoteRequest(): Boolean {
+    return Regex(
+        """(^|\s)(?:(?:send|shoot|write|make|create|save)\s+(?:a\s+)?)?note\s+(?:to|for)\s+(?:me|myself|my\s+number|my\s+phone|self)(\s|$)"""
+    ).containsMatchIn(normalized())
 }
 
 private fun String.titleCase(): String {

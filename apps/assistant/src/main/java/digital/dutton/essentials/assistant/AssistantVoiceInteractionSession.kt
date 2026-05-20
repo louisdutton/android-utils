@@ -27,6 +27,10 @@ class AssistantVoiceInteractionSession(context: Context) : VoiceInteractionSessi
     private var result: TextView? = null
     private var status: TextView? = null
 
+    init {
+        scope.launch { runCatching { engine.warmLanguageModel() } }
+    }
+
     override fun onCreateContentView(): View {
         val root = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL

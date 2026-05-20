@@ -28,17 +28,25 @@ endif()
 
 set(KEYBOARD_JNI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../keyboard/native/jni)
 
+include(${KEYBOARD_JNI_DIR}/NativeFileList.cmake)
+
+foreach(source_list IN ITEMS LATIN_IME_CORE_SRC_FILES LATIN_IME_CORE_INCLUDE)
+    list(TRANSFORM ${source_list} REPLACE
+        "^${CMAKE_CURRENT_SOURCE_DIR}"
+        "${KEYBOARD_JNI_DIR}"
+    )
+endforeach()
+
+add_library(assistant_core STATIC ${LATIN_IME_CORE_SRC_FILES})
+target_include_directories(assistant_core PRIVATE ${LATIN_IME_CORE_INCLUDE})
+
 add_library(
     assistant_whisper
     SHARED
+    assistant_intent_model.cpp
     whisper_jni_common.cpp
     ${KEYBOARD_JNI_DIR}/src/jni_utils.cpp
     ${KEYBOARD_JNI_DIR}/org_futo_voiceinput_WhisperGGML.cpp
-    ${KEYBOARD_JNI_DIR}/src/ggml/ggml.c
-    ${KEYBOARD_JNI_DIR}/src/ggml/ggml-alloc.c
-    ${KEYBOARD_JNI_DIR}/src/ggml/ggml-backend.c
-    ${KEYBOARD_JNI_DIR}/src/ggml/ggml-quants.c
-    ${KEYBOARD_JNI_DIR}/src/ggml/whisper.cpp
 )
 
 target_include_directories(
@@ -49,4 +57,4 @@ target_include_directories(
     ${KEYBOARD_JNI_DIR}/src/ggml
 )
 
-target_link_libraries(assistant_whisper log dl)
+target_link_libraries(assistant_whisper assistant_core log dl)

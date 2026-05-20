@@ -5,6 +5,8 @@
 #include "jni_common.h"
 #include "org_futo_voiceinput_WhisperGGML.h"
 
+int registerAssistantIntentModel(JNIEnv *env);
+
 jint JNI_OnLoad(JavaVM *vm, void *) {
     JNIEnv *env = nullptr;
     if (vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) != JNI_OK) {
@@ -14,6 +16,11 @@ jint JNI_OnLoad(JavaVM *vm, void *) {
 
     if (!voiceinput::register_WhisperGGML(env)) {
         AKLOGE("WhisperGGML native registration failed");
+        return -1;
+    }
+
+    if (!registerAssistantIntentModel(env)) {
+        AKLOGE("Assistant intent model native registration failed");
         return -1;
     }
 
