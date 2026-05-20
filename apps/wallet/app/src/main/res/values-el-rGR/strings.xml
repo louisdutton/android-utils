@@ -35,7 +35,6 @@
     <string name="about">Σχετικά</string>
     <string name="app_license">Άδεια χρήσης υπό GPLv3+</string>
     <string name="about_title_fmt">Σχετικά με <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Έκδοση: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Επιλέξτε γραμμωτό κώδικα</string>
     <string name="thumbnailDescription">Μικρογραφία</string>
     <string name="settings">Ρυθμίσεις</string>
@@ -76,10 +75,8 @@
     <string name="reverse">...σε αντίστροφη σειρά</string>
     <string name="version_history">Ιστορικό έκδοσης</string>
     <string name="sort_by">Ταξινόμηση κατά</string>
-    <string name="credits">Πιστώσεις</string>
     <string name="help_translate_this_app">Βοηθήστε να μεταφραστεί η εφαρμογή</string>
     <string name="source_repository">Αποθήκη κώδικα</string>
-    <string name="on_github">στο GitHub</string>
     <string name="report_error">Αναφορά σφάλματος</string>
     <string name="starred">Αγαπημένα</string>
     <string name="translate_platform">στο Weblate</string>
@@ -106,7 +103,6 @@
     </plurals>
     <string name="errorReadingImage">Δεν ήταν δυνατή η ανάγνωση της εικόνας</string>
     <string name="currency">Νόμισμα</string>
-    <string name="privacy_policy">Πολιτική απορρήτου</string>
     <string name="chooseImportType">Εισαγωγή δεδομένων από</string>
     <string name="app_loyalty_card_keychain">Lοyalty Card Keychain</string>
     <plurals name="groupCardCountWithArchived">
@@ -127,13 +123,11 @@
     <string name="sort_by_most_recently_used">Πρόσφατα χρησιμοποιημένα</string>
     <string name="shortcutSelectCard">Επιλέξτε μία κάρτα</string>
     <string name="barcodeImageDescriptionWithType">Εικόνα <xliff:g>%s</xliff:g> γραμμωτού κώδικα</string>
-    <string name="app_libraries">Βιβλιοθήκες τρίτων: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="license">Άδεια</string>
     <string name="include_if_asking_support">Αν θέλετε να ζητήσετε υποστήριξη, συμπεριλάβετε τις ακόλουθες πληροφορίες:</string>
     <string name="importSuccessful">Δεδομένα εισήχθησαν</string>
     <string name="moveUp">Προχώρα πάνω</string>
     <string name="barcodeType">Τύπος γραμμωτού κώδικα</string>
-    <string name="app_resources">Πηγές τρίτων: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="selectColor">Επιλογή χρώματος</string>
     <string name="setIcon">Ορισμός εικονιδίου</string>
     <string name="sort_by_expiry">Λήξη</string>
@@ -153,9 +147,6 @@
         <item quantity="one">Διαγραφή της κάρτας <xliff:g>%d</xliff:g> μόνιμα;</item>
         <item quantity="other">Διαγραφή των καρτρών <xliff:g>%d</xliff:g> μόνιμα;</item>
     </plurals>
-    <string name="app_copyright_old">Βασισμένο στο Loyalty Card Keychain
-\nπνευματικά δικαιώματα © 2016-2020 Branden Archer</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Πνευματικά δικαιώματα © 2019-<xliff:g>%d</xliff:g> Sylvia van Os</string>
     <string name="intent_import_card_from_url_share_text">Θέλω να μοιραστώ μία κάρτα μαζί σου</string>
     <string name="enter_group_name">Εισάγετε όνομα ομάδας</string>
     <string name="groups">Ομάδες</string>
@@ -183,7 +174,6 @@
     <string name="settings_locale">Γλώσσα</string>
     <string name="settings_oled_dark">Απόλυτο μαύρο φόντο για το μαύρο θέμα</string>
     <string name="settings_system_locale">Σύστημα</string>
-    <string name="app_contributors">Δημιουργήθηκε από: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="showMoreInfo">Εμφάνιση πληροφοριών</string>
     <string name="sort_by_name">Όνομα</string>
     <string name="and_data_usage">και δεδομένα χρήσης</string>
@@ -210,7 +200,6 @@
     <string name="settings_display_barcode_max_brightness_summary">Απαραίτητο για να δουλέψει σε κάποιους σαρωτές</string>
     <string name="cameraPermissionRequired">Δικαίωμα πρόσβασης στην κάμερα απαραίτητο γι\' αυτή την ενέργεια…</string>
     <string name="settings_allow_content_provider_read_title">Να επιτρέπεται σε άλλες εφαρμογές να έχουν πρόσβαση στα δεδομένα μου</string>
-    <string name="app_copyright_short">Πνευματικά δικαιώματα © Sylvia van Os και συνεργάτες</string>
     <string name="height">Ύψος</string>
     <string name="switchToFrontImage">Μετάβαση στην εμπρόσθια εικόνα</string>
     <string name="switchToBackImage">Μετάβαση στην οπίσθια εικόνα</string>

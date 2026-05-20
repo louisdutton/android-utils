@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/Users/louis/projects/grapheneos-essentials/apps/assistant/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/louis/projects/grapheneos-essentials/apps/assistant/.cxx/Debug/621hv4g6/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/louis/projects/grapheneos-essentials/apps/assistant/.cxx/Debug/621hv4g6/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "assistant_whisper::@6890427a1f51a3e7e1df": {
+      "artifactName": "assistant_whisper",
+      "abi": "x86",
+      "output": "/Users/louis/projects/grapheneos-essentials/apps/assistant/build/intermediates/cxx/Debug/621hv4g6/obj/x86/libassistant_whisper.so",
+      "runtimeFiles": []
+    }
+  }
+}

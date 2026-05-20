@@ -16,10 +16,8 @@ with chdir(os.path.abspath(os.path.dirname(__file__))):
     setuptools.setup(
         name="omim-data-files",
         version=str(get_version()),
-        author="CoMaps",
-        author_email="info@comaps.app",
+        author="GrapheneOS Essentials",
         description="This package is a library for dealing with data files.",
-        url="https://codeberg.org/comaps",
         package_dir={"data_files": ""},
         packages=["data_files",],
         classifiers=["License :: OSI Approved :: Apache Software License",]

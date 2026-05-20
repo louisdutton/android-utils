@@ -35,7 +35,6 @@
     <string name="about">O aplikácii</string>
     <string name="app_license">Slobodný softvér s copyleft licenciou GPLv3+</string>
     <string name="about_title_fmt">O <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Verzia: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Vyberte čiarový kód</string>
     <string name="thumbnailDescription">Miniatúra</string>
     <string name="settings">Nastavenia</string>
@@ -114,8 +113,6 @@
     <string name="expiryStateSentenceExpired">Platnosť vypršala: <xliff:g>%s</xliff:g></string>
     <string name="balanceSentence">Zostatok: <xliff:g>%s</xliff:g></string>
     <string name="importCatima">Import z aplikácie Catima</string>
-    <string name="app_libraries">Knižnice tretích strán: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Zdroje tretích strán: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="importCatimaMessage">Vyberte svoj export z aplikácie Catima, ktorý chcete importovať. \nVytvorte ho z ponuky Import/export inej aplikácie Catima tak, že stlačíte tlačidlo Exportovať.</string>
     <string name="accept">Prijať</string>
     <string name="importLoyaltyCardKeychain">Import z aplikácie Loyalty Card Keychain</string>
@@ -124,7 +121,6 @@
     <string name="sort_by_name">Názov</string>
     <string name="sort_by_most_recently_used">Naposledy použité</string>
     <string name="reverse">…v obrátenom poradí</string>
-    <string name="on_github">na GitHube</string>
     <string name="sort_by_expiry">Koniec platnosti</string>
     <string name="sort_by">Zoradiť podľa</string>
     <string name="version_history">História verzií</string>
@@ -138,7 +134,6 @@
     <string name="sort">Zoradiť</string>
     <string name="help_translate_this_app">Pomôžte preložiť túto aplikáciu</string>
     <string name="license">Licencia</string>
-    <string name="credits">Poďakovanie</string>
     <string name="card">Karta</string>
     <string name="exportPassword">Nastavte heslo na ochranu exportu (voliteľné)</string>
     <string name="exportPasswordHint">Zadajte heslo</string>
@@ -146,11 +141,8 @@
     <string name="turn_flashlight_off">Vypnúť svetlo</string>
     <string name="settings_locale">Jazyk</string>
     <string name="settings_system_locale">Systém</string>
-    <string name="app_copyright_old">Na základe Loyalty Card Keychain
-\ncopyright © 2016–2020 Branden Archer</string>
     <string name="expiryDate">Platnosť</string>
     <string name="editBarcode">Upraviť čiarový kód</string>
-    <string name="privacy_policy">Zásady ochrany osobných údajov</string>
     <string name="importVoucherVault">Import z Voucher Vault</string>
     <string name="barcodeId">Hodnota čiarového kódu</string>
     <string name="sameAsCardId">Rovnaké ako ID</string>
@@ -214,7 +206,6 @@
     <string name="importFidmeMessage">Vyberte svoj export zo služby FidMe pre import a potom vyberte typy čiarových kódov ručne.\nVytvorte ho z profilu FidMe tak, že vyberiete položku Ochrana údajov a potom stlačíte tlačidlo Extrahovať moje údaje.</string>
     <string name="currentBalanceSentence">Aktuálny zostatok: <xliff:g>%s</xliff:g></string>
     <string name="intent_import_card_from_url_share_multiple_text">Chcem sa s vami zdielať karty</string>
-    <string name="app_contributors">Podporili: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="newBalanceSentence">Nový zostatok: <xliff:g>%s</xliff:g></string>
     <string name="failedLaunchingPhotoPicker">Nepodarilo sa nájsť podporovanú aplikáciu pre výber obrázkov</string>
     <string name="show_note">Zobraziť poznámku</string>
@@ -250,9 +241,7 @@
     <string name="enter_card_id">Zadajte číslo ID alebo text na karte</string>
     <string name="action_display_options">Možnosti zobrazenia</string>
     <string name="addWithoutBarcode">Pridať kartu bez čiarového kódu</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os a prispievatelia</string>
     <string name="field_must_not_be_empty">Pole nesmie byť prázdne</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os a prispievatelia</string>
     <string name="show_archived_cards">Zobraziť archivované karty</string>
     <string name="app_name">Wallet</string>
     <string name="continue_">Pokračovať</string>

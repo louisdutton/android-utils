@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import app.organicmaps.R;
 import app.organicmaps.sdk.Framework;
@@ -18,7 +17,6 @@ import app.organicmaps.sdk.util.Config;
 import app.organicmaps.sdk.util.StorageUtils;
 import app.organicmaps.sdk.util.concurrency.ThreadPool;
 import app.organicmaps.sdk.util.concurrency.UiThread;
-import app.organicmaps.util.SharingUtils;
 import app.organicmaps.util.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
@@ -32,7 +30,6 @@ public class StoragePathFragment extends BaseSettingsFragment
   private StoragePathAdapter mAdapter;
   private StoragePathManager mPathManager;
 
-  private ActivityResultLauncher<SharingUtils.SharingIntent> shareLauncher;
   @Override
   protected int getLayoutRes()
   {
@@ -50,8 +47,6 @@ public class StoragePathFragment extends BaseSettingsFragment
     final ListView list = root.findViewById(R.id.list);
     list.setOnItemClickListener((parent, view, position, id) -> changeStorage(position));
     list.setAdapter(mAdapter);
-
-    shareLauncher = SharingUtils.RegisterLauncher(this);
 
     return root;
   }
@@ -135,9 +130,7 @@ public class StoragePathFragment extends BaseSettingsFragment
         {
           new MaterialAlertDialogBuilder(requireActivity())
               .setTitle(R.string.move_maps_error)
-              .setPositiveButton(
-                  R.string.report_a_bug,
-                  (dlg, which) -> Utils.sendBugReport(shareLauncher, requireActivity(), "Error moving map files", ""))
+              .setPositiveButton(R.string.ok, null)
               .show();
         }
         Framework.nativeChangeWritableDir(newPath);

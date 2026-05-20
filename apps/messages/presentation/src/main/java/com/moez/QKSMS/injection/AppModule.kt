@@ -32,7 +32,6 @@ import dagger.Module
 import dagger.Provides
 import dev.octoshrimpy.quik.blocking.BlockingClient
 import dev.octoshrimpy.quik.blocking.BlockingManager
-import dev.octoshrimpy.quik.common.util.BillingManagerImpl
 import dev.octoshrimpy.quik.common.util.NotificationManagerImpl
 import dev.octoshrimpy.quik.common.util.ShortcutManagerImpl
 import dev.octoshrimpy.quik.database.BlockingDao
@@ -54,17 +53,11 @@ import dev.octoshrimpy.quik.manager.ActiveConversationManager
 import dev.octoshrimpy.quik.manager.ActiveConversationManagerImpl
 import dev.octoshrimpy.quik.manager.AlarmManager
 import dev.octoshrimpy.quik.manager.AlarmManagerImpl
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.manager.ChangelogManager
-import dev.octoshrimpy.quik.manager.ChangelogManagerImpl
 import dev.octoshrimpy.quik.manager.KeyManager
 import dev.octoshrimpy.quik.manager.KeyManagerImpl
 import dev.octoshrimpy.quik.manager.NotificationManager
 import dev.octoshrimpy.quik.manager.PermissionManager
 import dev.octoshrimpy.quik.manager.PermissionManagerImpl
-import dev.octoshrimpy.quik.manager.RatingManager
-import dev.octoshrimpy.quik.manager.ReferralManager
-import dev.octoshrimpy.quik.manager.ReferralManagerImpl
 import dev.octoshrimpy.quik.manager.ShortcutManager
 import dev.octoshrimpy.quik.manager.WidgetManager
 import dev.octoshrimpy.quik.manager.WidgetManagerImpl
@@ -82,7 +75,6 @@ import dev.octoshrimpy.quik.mapper.CursorToPart
 import dev.octoshrimpy.quik.mapper.CursorToPartImpl
 import dev.octoshrimpy.quik.mapper.CursorToRecipient
 import dev.octoshrimpy.quik.mapper.CursorToRecipientImpl
-import dev.octoshrimpy.quik.mapper.RatingManagerImpl
 import dev.octoshrimpy.quik.repository.BackupRepository
 import dev.octoshrimpy.quik.repository.BackupRepositoryImpl
 import dev.octoshrimpy.quik.repository.BlockingRepository
@@ -186,9 +178,6 @@ class AppModule(private var application: Application) {
     // Manager
 
     @Provides
-    fun provideBillingManager(manager: BillingManagerImpl): BillingManager = manager
-
-    @Provides
     fun provideActiveConversationManager(manager: ActiveConversationManagerImpl): ActiveConversationManager = manager
 
     @Provides
@@ -196,9 +185,6 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun blockingClient(manager: BlockingManager): BlockingClient = manager
-
-    @Provides
-    fun changelogManager(manager: ChangelogManagerImpl): ChangelogManager = manager
 
     @Provides
     fun provideKeyManager(manager: KeyManagerImpl): KeyManager = manager
@@ -210,13 +196,7 @@ class AppModule(private var application: Application) {
     fun providePermissionsManager(manager: PermissionManagerImpl): PermissionManager = manager
 
     @Provides
-    fun provideRatingManager(manager: RatingManagerImpl): RatingManager = manager
-
-    @Provides
     fun provideShortcutManager(manager: ShortcutManagerImpl): ShortcutManager = manager
-
-    @Provides
-    fun provideReferralManager(manager: ReferralManagerImpl): ReferralManager = manager
 
     @Provides
     fun provideWidgetManager(manager: WidgetManagerImpl): WidgetManager = manager

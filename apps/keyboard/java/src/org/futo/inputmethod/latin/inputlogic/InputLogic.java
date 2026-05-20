@@ -2449,14 +2449,14 @@ public final class InputLogic {
      */
     // TODO: replace these two parameters with an InputTransaction
     private void sendKeyCodePoint(final SettingsValues settingsValues, final int codePoint) {
-        // In some (rare?) cases KeyEvent will not work because the view isn't focused ( https://github.com/futo-org/android-keyboard/issues/938 )
+        // In some rare cases KeyEvent will not work because the view isn't focused.
         // In other cases commitText won't work (Spotify login code in Grayjay)
         // We try sending keyEvent first and fallback to commitText. This might cause double numeric
         // inputs in InputConnections that return false but commit text anyway
         if (codePoint >= '0' && codePoint <= '9') {
             // Send any pending changes, otherwise the order of input will be reversed. Notably,
             // the automatic space would be sent after the number, rather than before, as in:
-            // https://github.com/futo-org/android-keyboard/issues/1795
+            // This preserves the expected insertion order.
             mConnection.send();
             if(sendDownUpKeyEvent(codePoint - '0' + KeyEvent.KEYCODE_0, 0)) {
                 return;

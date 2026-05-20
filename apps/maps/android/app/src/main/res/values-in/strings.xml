@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">Unduhan gagal</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Coba Lagi</string>
-    <string name="about_menu_title">Tentang CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Mudah digunakan dan dipoles</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Berfokus pada privasi dan bebas iklan</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Luar jaringan (offline), cepat, dan ringkas</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Sepenuhnya sumber terbuka, nirlaba, pengambilan keputusan dan keuangan yang transparan.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Pengaturan Lokasi</string>
     <string name="close">Tutup</string>
     <string name="unsupported_phone">Aplikasi ini membutuhkan akselerasi perangkat keras OpenGL. Sayangnya, perangkat Anda tidak didukung.</string>
     <string name="download">Unduh</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Silakan cabut kabel USB atau masukkan kartu memori untuk menggunakan CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Silakan kosongkan ruang di kartu SD/penyimpanan USB terlebih dahulu untuk menggunakan aplikasi ini</string>
     <string name="download_resources">Sebelum mulai menggunakan aplikasi, silakan unduh peta tinjauan dunia ke perangkat Anda. \nIni akan menggunakan %s penyimpanan.</string>
@@ -141,8 +131,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Catatan</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Favorit CoMaps Saya</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Memuat Favorit</string>
     <!-- Kmz file successful loading -->
@@ -161,10 +149,6 @@
     <string name="cant_change_this_setting">Maaf, pengaturan Penyimpanan Peta saat ini dinonaktifkan</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Unduhan peta sedang berlangsung</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Lihat lokasi saya saat ini di CoMaps! %1$s atau %2$s Belum punya peta offline? Unduh di sini: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Hei, lihat lokasi saya saat ini di peta CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Bagikan</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -216,24 +200,9 @@
     <string name="search_show_on_map">Lihat di peta</string>
     <!-- Text in menu -->
     <string name="website">Situs Web</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Berita</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Umpan Balik</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Beri nilai aplikasi</string>
     <!-- Text in menu -->
-    <string name="help">Bantuan</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Pertanyaan Umum (FAQ)</string>
     <!-- Button in the main menu -->
-    <string name="donate">Donasi</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Menjadi sukarelawan dan perbaiki CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Hak Cipta</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Laporkan bug</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Tingkatkan arah panah dengan menggerakkan ponsel dalam gerakan angka delapan untuk mengkalibrasi kompas.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -378,7 +347,6 @@
     <string name="editor_time_advanced">Mode Lanjutan</string>
     <string name="editor_time_simple">Mode Sederhana</string>
     <string name="editor_hours_closed">Jam Non-Operasional</string>
-    <string name="editor_example_values">Contoh Nilai</string>
     <string name="editor_correct_mistake">Perbaiki kesalahan</string>
     <string name="editor_add_select_location">Pilih Lokasi</string>
     <string name="editor_report_problem_send_button">Kirim</string>
@@ -434,8 +402,6 @@
     <string name="message_invalid_feature_position">Tidak ada objek yang dapat ditempatkan di sini</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Data OpenStreetMap buatan komunitas per %s. Pelajari lebih lanjut tentang cara mengedit dan memperbarui peta di OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) adalah proyek komunitas untuk membangun peta yang gratis dan terbuka. Ini adalah sumber utama data peta di CoMaps dan bekerja mirip dengan Wikipedia. Anda dapat menambah atau mengedit tempat dan itu akan tersedia bagi jutaan pengguna di seluruh dunia. \nBergabunglah dengan komunitas dan bantu membuat peta yang lebih baik untuk semua orang!</string>
     <string name="login_to_make_edits_visible">Buat akun OpenStreetMap atau masuk untuk mempublikasikan pengeditan peta Anda ke dunia</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d dari %2$d</string>
@@ -448,8 +414,6 @@
     <string name="error_enter_correct_zip_code">Masukkan kode pos yang valid</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Catatan untuk sukarelawan OpenStreetMap (opsional)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Jelaskan kesalahan pada peta atau hal-hal yang tidak dapat diedit dengan CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Hasil edit Anda diunggah ke basis data publik <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a>. Harap jangan menambahkan informasi pribadi atau berhak cipta.</string>
     <string name="editor_more_about_osm">Lebih lanjut tentang OpenStreetMap</string>
@@ -459,7 +423,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operator: %s</string>
     <string name="editor_category_unsuitable_title">Tidak dapat menemukan kategori yang sesuai?</string>
-    <string name="editor_category_unsuitable_text">CoMaps hanya dapat menambahkan kategori titik sederhana, tidak dapat menambahkan kota, jalan, danau, garis bangunan, dll. Silakan tambahkan kategori tersebut langsung ke <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Periksa <a href="https://www.comaps.app/support/advanced-map-editing/">panduan</a> kami untuk instruksi langkah demi langkah yang terperinci.</string>
     <string name="downloader_no_downloaded_maps_title">Anda belum mengunduh peta apa pun</string>
     <string name="downloader_no_downloaded_maps_message">Unduh peta untuk mencari dan menavigasi secara offline</string>
     <string name="current_location_unknown_error_title">Lokasi saat ini tidak diketahui</string>
@@ -505,15 +468,11 @@
     <string name="mobile_data_option_ask">Selalu Tanya</string>
     <string name="traffic_update_maps_text">Untuk menampilkan data lalu lintas, peta harus diperbarui</string>
     <string name="big_font">Tingkatkan ukuran label peta</string>
-    <string name="traffic_update_app">Silakan perbarui CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Data lalu lintas tidak tersedia</string>
     <string name="enable_logging">Aktifkan pencatatan (logging)</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Umpan Balik Umum</string>
     <string name="prefs_languages_information">Kami menggunakan TTS sistem untuk instruksi suara. Banyak perangkat Android menggunakan Google TTS, Anda dapat mengunduh atau memperbaruinya dari Google Play Store (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Untuk beberapa bahasa, Anda perlu menginstal penyintesis ucapan atau paket bahasa tambahan dari toko aplikasi (Google Play, Galaxy Store, App Gallery, F-Droid). \nBuka pengaturan perangkat Anda → Bahasa dan masukan → Ucapan → Output text-to-speech. \nDi sini Anda dapat mengelola pengaturan untuk sintesis ucapan (misalnya, untuk mengunduh paket bahasa untuk penggunaan offline) dan memilih mesin text-to-speech yang berbeda.</string>
-    <string name="prefs_languages_information_off_link">Untuk informasi lebih lanjut, silakan periksa panduan ini</string>
     <string name="transliteration_title">Transliterasi ke alfabet Latin</string>
     <string name="learn_more">Pelajari selengkapnya</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -525,7 +484,6 @@
     <string name="placepage_remove_stop">Hapus Pemberhentian</string>
     <string name="placepage_add_stop">Tambah Pemberhentian</string>
     <string name="dialog_error_storage_title">Masalah akses penyimpanan</string>
-    <string name="dialog_error_storage_message">Penyimpanan eksternal tidak dapat diakses. Kartu SD mungkin telah dilepas, rusak, atau sistem file hanya-baca. Silakan periksa kartu SD Anda atau hubungi kami di support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Emulasi penyimpanan buruk</string>
     <string name="error_enter_correct_name">Silakan masukkan nama yang benar</string>
     <string name="bookmark_lists">Daftar Favorit</string>
@@ -558,8 +516,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Privasi</string>
-    <string name="privacy_policy">Kebijakan privasi</string>
-    <string name="terms_of_use">Ketentuan penggunaan</string>
     <string name="button_layer_traffic">Lalu Lintas</string>
     <string name="subway">Kereta Bawah Tanah</string>
     <string name="layers_title">Gaya Peta dan Lapisan</string>
@@ -584,7 +540,6 @@
     <string name="power_managment_setting_never">Jangan Pernah</string>
     <string name="power_managment_setting_auto">Saat baterai lemah</string>
     <string name="power_managment_setting_manual_max">Selalu</string>
-    <string name="enable_logging_warning_message">Aktifkan opsi ini untuk sementara untuk merekam dan mengirimkan log diagnostik terperinci tentang masalah Anda secara manual kepada kami menggunakan \"Laporkan bug\" di dialog Bantuan. Log mungkin menyertakan info lokasi.</string>
     <string name="driving_options_title">Opsi rute</string>
     <string name="avoid_tolls">Hindari jalan tol</string>
     <string name="avoid_unpaved">Hindari jalan tidak beraspal</string>
@@ -669,36 +624,20 @@
     <string name="enable_keep_screen_on_description">Jika diaktifkan, layar akan selalu menyala saat menampilkan peta.</string>
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Data peta dari OpenStreetMap</string>
-    <!-- Translated CoMaps site, add new translations here: https://translate.codeberg.org/projects/comaps/website -->
-    <string name="translated_om_site_url">https://comaps.app/</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Terima kasih telah menggunakan peta buatan komunitas kami!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Dengan donasi dan dukungan Anda, kami dapat membuat peta terbaik di Dunia!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Apakah Anda menyukai aplikasi kami? Silakan berdonasi untuk mendukung pengembangannya! Belum menyukainya? Beri tahu kami alasannya, dan kami akan memperbaikinya!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Jika Anda mengenal pengembang perangkat lunak, Anda dapat meminta mereka untuk mengimplementasikan fitur yang Anda butuhkan.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Ketuk di mana saja di peta untuk memilih apa pun. Ketukan lama digunakan untuk menyembunyikan dan menampilkan antarmuka.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Tahukah Anda bahwa lokasi Anda saat ini di peta dapat dipilih?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Anda dapat membantu menerjemahkan aplikasi kami ke dalam bahasa Anda.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Aplikasi kami dikembangkan oleh beberapa penggemar dan komunitas.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Anda dapat dengan mudah memperbaiki dan meningkatkan data peta.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Tujuan utama kami adalah membangun peta yang cepat, berfokus pada privasi, dan mudah digunakan yang akan Anda sukai.</string>
-    <string name="car_used_on_the_phone_screen">Anda sekarang menggunakan CoMaps di layar ponsel</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Ke layar mobil</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Luar Ruangan</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -746,16 +685,11 @@
     <string name="edit_track">Edit Trek</string>
     <string name="uri_open_location_failed">Tidak ada aplikasi terpasang yang dapat membuka lokasi</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="panoramax">Gambar Panoramax</string>
-    <string name="app_site_url">https://comaps.app/id/</string>
     <string name="saved">Tersimpan</string>
     <string name="offline_explanation_text">Peta perlu diunduh untuk melihat dan menavigasi area tersebut.\nUnduh peta untuk area yang ingin Anda kunjungi.</string>
     <string name="offline_explanation_title">Peta Offline</string>
-    <string name="about_headline">Proyek terbuka yang didukung oleh komunitas</string>
     <string name="maps_storage_free_size">%1$s bebas dari %2$s</string>
     <string name="move_maps_error">Kesalahan saat memindahkan file peta</string>
     <string name="prefs_group_general">Pengaturan umum</string>
@@ -765,7 +699,6 @@
     <string name="read_in_wikipedia">Wikipedia</string>
     <string name="opens_in">Buka dalam %s</string>
     <string name="closes_in">Tutup dalam %s</string>
-    <string name="share_bookmarks_email_body">Halo! \n \nTerlampir adalah Favorit saya; silakan buka di CoMaps. Jika Anda belum memasangnya, Anda dapat mengunduhnya di sini: https://www.comaps.app/download/ \n \nSelamat melakukan perjalanan dengan CoMaps!</string>
     <string name="bookmark_share_email_subject">Ikuti tautan ini %1$s atau tempel koordinat ini %2$s ke aplikasi peta Anda untuk melihat lokasi ini.</string>
     <string name="my_position_share_email">Ikuti tautan ini %1$s atau tempel koordinat ini %2$s ke aplikasi peta Anda untuk melihat lokasi saya.</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>
@@ -799,7 +732,6 @@
     <string name="error_enter_correct_bluesky_page">Masukkan nama pengguna atau alamat web Bluesky yang valid</string>
     <string name="place_page_map_too_old_title">Data peta sudah usang</string>
     <string name="place_page_map_too_old_description">Data peta Anda saat ini sangat lama, silakan perbarui peta.</string>
-    <string name="place_page_app_too_old_description">Data peta Anda saat ini sangat lama, silakan perbarui aplikasi CoMaps.</string>
     <string name="place_page_update_too_old_map">Perbarui wilayah peta</string>
     <string name="place_page_too_old_to_edit">Pengeditan OpenStreetMap dinonaktifkan karena data peta terlalu lama.</string>
     <string name="osm_note_hint">Atau, sebagai alternatif, tinggalkan catatan untuk komunitas OpenStreetMap agar orang lain dapat menambah atau memperbaiki tempat di sini.</string>
@@ -839,7 +771,6 @@
     <string name="backup_interval_every_week">Mingguan</string>
     <string name="backup_interval_manual_only">Mati (hanya manual)</string>
     <string name="dialog_report_error_missing_folder">Lokasi cadangan yang dipilih tidak tersedia atau tidak dapat ditulis. Silakan pilih lokasi yang berbeda.</string>
-    <string name="dialog_report_error_with_logs">Silakan kirim laporan kesalahan kepada kami:\n - \"Aktifkan pencatatan\" di pengaturan\n - ulangi masalahnya\n - di layar \"Tentang &amp; Bantuan\" tekan tombol \"Laporkan bug\" dan kirim melalui email atau obrolan\n - nonaktifkan pencatatan</string>
     <string name="clear">Bersihkan</string>
     <string name="route_type">Jenis rute</string>
     <string name="vehicle">Kendaraan</string>
@@ -847,7 +778,6 @@
     <string name="bicycle">Sepeda</string>
     <string name="ruler">Penggaris</string>
     <string name="bookmark_color">Warna untuk Favorit</string>
-    <string name="about_help">Tentang &amp; Bantuan</string>
     <string name="open_now">Buka sekarang</string>
     <string name="closed_now">Tutup sekarang</string>
     <string name="destination">Tujuan</string>
@@ -880,7 +810,6 @@
     <string name="list_description_empty">Edit daftar untuk menambah deskripsi</string>
     <string name="advanced">Lanjutan</string>
     <string name="download_resources_custom_url_title">Server Peta Kustom</string>
-    <string name="download_resources_custom_url_message">Ganti server unduhan peta default yang digunakan. Biarkan kosong untuk menggunakan server default CoMaps.</string>
     <string name="download_resources_custom_url_summary_none">Tidak diatur</string>
     <string name="download_resources_custom_url_error_scheme">Silakan masukkan URL yang dimulai dengan http:// atau https://</string>
     <string name="pref_alt_map_lang_handling">Bahasa Peta Alternatif</string>
@@ -900,5 +829,4 @@
     <string name="not_following_route">Tidak mengikuti rute</string>
     <string name="route_recalculating">Menghitung ulang rute…</string>
     <string name="pref_openexternallinks_title">Buka tautan pihak ketiga secara otomatis</string>
-    <string name="pref_openexternallinks_summary">Buka tautan pihak ketiga di CoMaps secara default</string>
 </resources>

@@ -16,10 +16,8 @@ with chdir(os.path.abspath(os.path.dirname(__file__))):
     setuptools.setup(
         name="omim-mwm",
         version=str(get_version()),
-        author="CoMaps",
-        author_email="info@comaps.app",
+        author="GrapheneOS Essentials",
         description="This package is a library that can work with mwm files.",
-        url="https://codeberg.org/comaps",
         package_dir={"mwm": ""},
         packages=["mwm"],
         classifiers=[

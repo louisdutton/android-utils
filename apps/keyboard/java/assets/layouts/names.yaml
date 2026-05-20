@@ -32,7 +32,7 @@ zgh_Latn:
 zz:
   en: No language (Alphabet)
 
-# Uralic languages ( https://github.com/futo-org/futo-keyboard-layouts/pull/172 )
+# Uralic languages
 koi:
   en: Komi-Permyak
   koi: перем коми
@@ -73,7 +73,7 @@ lud:
   en: Ludian
   lud: "lyydin kiel'"
 
-# North Caucasian languages ( https://github.com/futo-org/futo-keyboard-layouts/pull/174 )
+# North Caucasian languages
 abq:
   en: Abaza
   abq: абаза

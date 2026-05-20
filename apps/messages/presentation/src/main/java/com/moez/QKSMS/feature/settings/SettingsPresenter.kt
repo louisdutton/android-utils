@@ -26,9 +26,7 @@ import dev.octoshrimpy.quik.common.Navigator
 import dev.octoshrimpy.quik.common.base.QkPresenter
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.makeToast
 import dev.octoshrimpy.quik.interactor.SyncMessages
-import dev.octoshrimpy.quik.manager.BillingManager
 import dev.octoshrimpy.quik.repository.SyncRepository
 import dev.octoshrimpy.quik.util.NightModeManager
 import dev.octoshrimpy.quik.util.Preferences
@@ -42,7 +40,6 @@ class SettingsPresenter @Inject constructor(
     colors: Colors,
     syncRepo: SyncRepository,
     private val context: Context,
-    private val billingManager: BillingManager,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val nightModeManager: NightModeManager,
@@ -210,36 +207,13 @@ class SettingsPresenter @Inject constructor(
                         R.id.disableScreenshots -> prefs.disableScreenshots.set(!prefs.disableScreenshots.get())
 
                         R.id.sync -> syncMessages.execute(Unit)
-
-                        R.id.about -> view.showAbout()
                     }
                 }
 
-        view.aboutLongClicks()
-                .map { !prefs.logging.get() }
-                .doOnNext { enabled -> prefs.logging.set(enabled) }
-                .autoDispose(view.scope())
-                .subscribe { enabled ->
-                    context.makeToast(when (enabled) {
-                        true -> R.string.settings_logging_enabled
-                        false -> R.string.settings_logging_disabled
-                    })
-                }
-
         view.nightModeSelected()
-                .withLatestFrom(billingManager.upgradeStatus) { mode, upgraded ->
-//                    if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
-//                        view.showQksmsPlusSnackbar()
-//                    } else {
-                        nightModeManager.updateNightMode(mode)
-//                    }
-                }
+                .doOnNext(nightModeManager::updateNightMode)
                 .autoDispose(view.scope())
                 .subscribe()
-
-        view.viewQksmsPlusClicks()
-                .autoDispose(view.scope())
-                .subscribe { navigator.showQksmsPlusActivity("settings_night") }
 
         view.nightStartSelected()
                 .autoDispose(view.scope())
@@ -254,13 +228,7 @@ class SettingsPresenter @Inject constructor(
                 .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
-                .withLatestFrom(billingManager.upgradeStatus) { duration, upgraded ->
-//                    if (!upgraded && duration != 0) {
-//                        view.showQksmsPlusSnackbar()
-//                    } else {
-                        prefs.sendDelay.set(duration)
-//                    }
-                }
+                .doOnNext(prefs.sendDelay::set)
                 .autoDispose(view.scope())
                 .subscribe()
 

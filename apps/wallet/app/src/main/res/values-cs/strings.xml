@@ -32,7 +32,6 @@
     <string name="about">O aplikaci</string>
     <string name="app_license">Copyleftovaný svobodný software s licencí GPLv3+</string>
     <string name="about_title_fmt">O aplikaci <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Verze: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Vyberte čárový kód</string>
     <string name="deleteTitle">Smazat kartu</string>
     <string name="deleteConfirmation">Opravdu chcete smazat tuto kartu\?</string>
@@ -41,10 +40,6 @@
     <string name="never">Nikdy</string>
     <string name="expiryDate">Vypršení platnosti</string>
     <string name="editBarcode">Upravit čárový kód</string>
-    <string name="app_resources">Zdroje třetích stran: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Knihovny třetích stran: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_copyright_old">Založeno na Loyalty Card Keychain
-\ncopyright © 2016–2020 Branden Archer</string>
     <string name="exportOptionExplanation">Data budou zapsána na místo podle vašeho výběru</string>
     <string name="failedParsingImportUriError">Nepodařilo se zpracovat URI importu</string>
     <string name="noCardExistsError">Kartu se nepodařilo najít</string>
@@ -115,7 +110,6 @@
     <string name="importCatimaMessage">Vyberte soubor exportu z aplikace Catima, který chcete importovat.\nVytvořte jej z nabídky Import/export jiné aplikace Catima klepnutím na Export.</string>
     <string name="importCatima">Import z Catima</string>
     <string name="accept">Přijmout</string>
-    <string name="privacy_policy">Ochrana soukromí</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
     <string name="chooseImportType">Importovat data z</string>
     <string name="points">Body</string>
@@ -147,7 +141,6 @@
         <item quantity="few">Vybrány <xliff:g>%d</xliff:g> karty</item>
         <item quantity="other">Vybráno <xliff:g>%d</xliff:g> karet</item>
     </plurals>
-    <string name="app_contributors">Přispěli: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Tato skupina je prázdná</string>
     <string name="sort_by">Seřadit podle</string>
     <string name="reverse">…v obráceném pořadí</string>
@@ -158,8 +151,6 @@
     <string name="barcodeImageDescriptionWithType">Obrázek čárového kódu <xliff:g>%s</xliff:g></string>
     <string name="version_history">Historie verzí</string>
     <string name="and_data_usage">a využití dat</string>
-    <string name="credits">Zásluhy</string>
-    <string name="on_github">na GitHubu</string>
     <string name="source_repository">Zdrojový repozitář</string>
     <string name="license">Licence</string>
     <string name="help_translate_this_app">Pomozte s překladem této aplikace</string>
@@ -241,8 +232,6 @@
     <string name="settings_disable_lockscreen_while_viewing_card_summary">Při prohlížení karty zabránit zamčení obrazovky</string>
     <string name="settings_category_title_cards">Zobrazení karty</string>
     <string name="settings_category_title_general">Obecné</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os a přispěvatelé</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os a přispěvatelé</string>
     <string name="action_display_options">Možnosti zobrazení</string>
     <string name="show_archived_cards">Zobrazovat archivované karty</string>
     <string name="view_online">Zobrazovat online</string>

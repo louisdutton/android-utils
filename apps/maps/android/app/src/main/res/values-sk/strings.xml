@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">Sťahovanie zlyhalo</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Skúsiť znova</string>
-    <string name="about_menu_title">O aplikácii CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Žiadne reklamy, žiadne sledovanie, žiadny zber údajov</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Žiadne vybíjanie batérie, funguje v režime offline</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Offline, rýchle a kompaktné</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Aplikácia s otvoreným zdrojovým kódom vytvorená nadšencami a dobrovoľníkmi.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Nastavenia polohy</string>
     <string name="close">Zavrieť</string>
     <string name="unsupported_phone">Je vyžadovaná hardwarová akcelerácia OpenGL. Bohužial, vaše zariadenie nie je podporované.</string>
     <string name="download">Stiahnuť</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Prosím, odpojte USB kábel alebo vložte pamäťovú kartu pre použitie s CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Prosím, uvoľnite najprv miesto na SD karte/USB úložisku</string>
     <string name="download_resources">Skôr ako začnete, bude treba stiahnuť základnú mapu sveta. \nZaberie to %s.</string>
@@ -145,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Poznámky</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Zdielané záložky CoMaps</string>
-    <string name="share_bookmarks_email_body">Ahoj! \n \nV prílohe sú moje záložky z aplikácie CoMaps. Ak ju nemáš nainštalovanú, môžeš si ju stiahnuť tu: https://www.comaps.app/download/ \n \nPrajem šťastnú cestu s CoMaps!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Načítavanie záložiek</string>
     <!-- Kmz file successful loading -->
@@ -166,10 +153,6 @@
     <string name="cant_change_this_setting">Prepáčte, nastavenie uloženia máp je dočasne nedostupné.</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Práve prebieha sťahovanie krajiny.</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Pozri kde som. Otvor odkaz: %1$s alebo %2$s</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Pozrite si moju aktuálnu polohu na mape CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Zdieľať</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -225,24 +208,9 @@
     <string name="search_show_on_map">Zobraziť na mape</string>
     <!-- Text in menu -->
     <string name="website">Webové stránky</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Správy</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Spätná väzba</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Ohodnotiť aplikáciu</string>
     <!-- Text in menu -->
-    <string name="help">Nápoveda</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Otázky a odpovede</string>
     <!-- Button in the main menu -->
-    <string name="donate">Darovať</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Podporte projekt</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Autorské práva</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Nahlásiť chybu</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Zlepšite smer šípok pohybom telefónu v tvare osmičky, aby ste kalibrovali kompas.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -389,7 +357,6 @@
     <string name="editor_time_advanced">Rozšírený režim</string>
     <string name="editor_time_simple">Jednoduchý režim</string>
     <string name="editor_hours_closed">Hodiny zatvorenia</string>
-    <string name="editor_example_values">Príklady hodnôt</string>
     <string name="editor_correct_mistake">Opraviť chybu</string>
     <string name="editor_add_select_location">Vyberte miesto</string>
     <string name="editor_report_problem_send_button">Odoslať</string>
@@ -450,8 +417,6 @@
     <string name="message_invalid_feature_position">Objekt sa tu nedá umiestniť</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Údaje OpenStreetMap vytvorené komunitou od %s. Viac informácií o tom, ako upravovať a aktualizovať mapu, nájdete na stránke OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) je komunitný projekt na vytvorenie bezplatnej a otvorenej mapy. Je hlavným zdrojom mapových údajov v službe CoMaps a funguje podobne ako Wikipédia. Môžete pridávať alebo upravovať miesta a tie sa stanú dostupnými pre milióny používateľov na celom svete. \nPridajte sa ku komunite a pomôžte vytvoriť lepšiu mapu pre všetkých!</string>
     <string name="login_to_make_edits_visible">Vytvorte si účet OpenStreetMap alebo sa prihláste a zverejnite svoje úpravy mapy na celom svete.</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d z %2$d</string>
@@ -464,8 +429,6 @@
     <string name="error_enter_correct_zip_code">Zadajte správne PSČ</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Poznámka pre dobrovoľníkov OpenStreetMap (nepovinné)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Popíšte chyby na mape alebo veci, ktoré sa nedajú upraviť pomocou aplikácie CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Vaše úpravy sa nahrajú do verejnej databázy <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a>. Prosím, nepridávajte osobné informácie alebo informácie chránené autorskými právami.</string>
     <string name="editor_more_about_osm">Viac o OpenStreetMap</string>
@@ -475,7 +438,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Prevádzkovateľ: %s</string>
     <string name="editor_category_unsuitable_title">Nemôžete nájsť vhodnú kategóriu?</string>
-    <string name="editor_category_unsuitable_text">CoMaps umožňujú pridávať len jednoduché kategórie bodov, teda žiadne mestá, cesty, jazerá, obrysy budov atď. Takéto kategórie pridávajte priamo na <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Pozrite si náš <a href="https://www.comaps.app/support/advanced-map-editing/">príručku</a>, kde nájdete podrobné pokyny krok za krokom.</string>
     <string name="downloader_no_downloaded_maps_title">Neprevzali ste žiadne mapy</string>
     <string name="downloader_no_downloaded_maps_message">Prevziať mapy na nájdenie pozície a navigovanie off-line.</string>
     <string name="current_location_unknown_error_title">Súčasná pozícia je neznáma.</string>
@@ -527,15 +489,11 @@
     <string name="mobile_data_option_ask">Vždy sa opýtať</string>
     <string name="traffic_update_maps_text">Na zobrazenie dopravných informácií je potrebné aktualizovať mapy.</string>
     <string name="big_font">Zväčšiť veľkosť písma na mape</string>
-    <string name="traffic_update_app">Aktualizujte si aplikáciu CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Dopravné informácie nie sú k dispozícii</string>
     <string name="enable_logging">Zapnúť zaznamenávanie</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Všeobecné pripomienky</string>
     <string name="prefs_languages_information">Na hlasové pokyny používame systém TTS. Mnohé zariadenia s Adroidom používajú Google TTS, ktorý si môžete stiahnuť alebo aktualizovať z obchodu Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Pre niektoré jazyky bude potrebné nainštalovať syntetizátor reči alebo balík doplnkového jazyka z obchodu s aplikáciami (Google Play, Galaxy Store, App Gallery, FDroid). Otvorte nastavenia zariadenia → Jazyk a vstup → Reč → Prevod textu na reč. Tu môžete spravovať nastavenia pre syntézu reči (napríklad stiahnuť jazykový balík pre použitie v režime offline) a vybrať iný jazyk.</string>
-    <string name="prefs_languages_information_off_link">Viac informácií nájdete v tomto návode.</string>
     <string name="transliteration_title">Prepis do latinky</string>
     <string name="learn_more">Zistiť viac</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -547,7 +505,6 @@
     <string name="placepage_remove_stop">Odstrániť zastávku</string>
     <string name="placepage_add_stop">Pridať zastávku</string>
     <string name="dialog_error_storage_title">Problém s prístupom k úložisku</string>
-    <string name="dialog_error_storage_message">Externý úložný priestor nie je dostupný, pravdepodobne je vytiahnutá alebo poškodená SD karta alebo je systém súborov určený iba na čítanie. Skontrolujte to, prosím, a kontaktujte nás na support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Imitovať poškodené úložisko</string>
     <string name="error_enter_correct_name">Prosím, zadajte správne meno</string>
     <string name="bookmark_lists">Zoznamy</string>
@@ -586,8 +543,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Súkromie</string>
-    <string name="privacy_policy">Zásady ochrany osobných údajov</string>
-    <string name="terms_of_use">Podmienky používania</string>
     <string name="button_layer_traffic">Dopravné informácie</string>
     <string name="subway">Metro</string>
     <string name="layers_title">Štýly a vrstvy mapy</string>
@@ -612,7 +567,6 @@
     <string name="power_managment_setting_never">Nikdy</string>
     <string name="power_managment_setting_auto">Automaticky</string>
     <string name="power_managment_setting_manual_max">Maximálna úspora batérie</string>
-    <string name="enable_logging_warning_message">Týmto zapnete záznamenávanie diagnostických informácií, ktoré môžete poslať našej technickej podpore v prípade problémov s aplikáciou. Záznam môže obsahovať údaje o vašej polohe.</string>
     <string name="driving_options_title">Možnosti trasy</string>
     <string name="avoid_tolls">Vyhnúť sa spoplatneným cestám</string>
     <string name="avoid_unpaved">Vyhnúť sa nespevneným cestám</string>
@@ -711,33 +665,19 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Mapové údaje z OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Ďakujeme, že používate naše mapy vytvorené komunitou!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">S vašimi darmi a podporou môžeme vytvoriť tie najlepšie mapy na svete!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Páči sa vám naša aplikácia? Prosím, prispejte na podporu rozvoja! Ešte sa ti to nepáči? Dajte nám vedieť a my to napravíme!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Ak poznáte vývojára softvéru, môžete ho požiadať, aby implementoval funkciu, ktorú potrebujete.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Ťuknutím na ľubovoľné miesto na mape vyberte čokoľvek. Dlhým ťuknutím skryjete a zobrazíte späť rozhranie.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Viete, že si môžete vybrať svoju aktuálnu polohu na mape?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Môžete pomôcť preložiť našu aplikáciu do vášho jazyka.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Naša aplikácia je vyvinutá niekoľkými nadšencami a komunitou.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Mapové údaje môžete jednoducho opraviť a vylepšiť.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Naším hlavným cieľom je vytvárať rýchle, na súkromie, ľahko použiteľné mapy, ktoré si zamilujete.</string>
-    <string name="car_used_on_the_phone_screen">Na obrazovke telefónu teraz používate službu CoMaps</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Na obrazovku auta</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Turistika</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -785,12 +725,7 @@
     <string name="edit_track">Upraviť trasu</string>
     <string name="uri_open_location_failed">Nie je nainštalovaná žiadna aplikácia, ktorá by mohla otvoriť umiestnenie</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="panoramax">Obrázok Panoramax</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Uložené</string>
 </resources>

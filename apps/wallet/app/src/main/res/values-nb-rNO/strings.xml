@@ -37,7 +37,6 @@
     <string name="about">Om</string>
     <string name="app_license">Opphavsrettslig fri programvare, lisensiert GPLv3+</string>
     <string name="about_title_fmt">Om <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versjon: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Velg strekkode</string>
     <string name="thumbnailDescription">Miniatyrbilde</string>
     <string name="settings">Innstillinger</string>
@@ -49,8 +48,6 @@
     <string name="settings_light_theme">Lys</string>
     <string name="settings_system_theme">System</string>
     <string name="settings_theme">Tema</string>
-    <string name="app_copyright_old">Basert på Kundekortknippe
-\nopphavsrett 2016–2020 Branden Archer</string>
     <string name="failedParsingImportUriError">Kunne ikke tolke importerings-URI</string>
     <string name="share">Del</string>
     <string name="noMatchingGiftCards">Ingen resultater. Prøv å endre søket.</string>
@@ -92,7 +89,6 @@
     <string name="settings_disable_lockscreen_while_viewing_card">Forhindre skjermlås</string>
     <string name="settings_keep_screen_on">Behold skjerm påslått</string>
     <string name="accept">Godta</string>
-    <string name="privacy_policy">Personvernspraksis</string>
     <string name="importFidme">Importer fra FidMe</string>
     <string name="importCatima">Importer fra Catima</string>
     <string name="errorReadingImage">Kunne ikke lese bildet</string>
@@ -112,9 +108,6 @@
 \nOpprett den i din FidMe-profil ved å velge «Databeskyttelse», for så å trykke «Pakk ut dataen min» først.</string>
     <string name="wrongValueForBarcodeType">Verdien er ikke gyldig for valgt strekkodetype</string>
     <string name="intent_import_card_from_url_share_multiple_text">Jeg vil dele noen kort med deg</string>
-    <string name="app_resources">Frie tredjepartsressurser: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Frie tredjepartsbibliotek: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Opphavsrett © 2019–<xliff:g>%d</xliff:g> Sylvia van Os og bidragsytere</string>
     <string name="updateBarcodeQuestionText">Du har endret ID-en. Ønsker du å også oppdatere strekkoden til samme verdi\?</string>
     <string name="no">Nei</string>
     <string name="yes">Ja</string>
@@ -146,7 +139,6 @@
     </plurals>
     <string name="settings_system_locale">System</string>
     <string name="settings_locale">Språk</string>
-    <string name="app_contributors">Muliggjort av: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Denne gruppen er tom</string>
     <string name="barcodeImageDescriptionWithType">Bilde av <xliff:g>%s</xliff:g>-strekkode</string>
     <string name="sort_by">Sortering</string>
@@ -161,10 +153,8 @@
     <string name="importCatimaMessage">Velg din <i>catima.zip</i>-eksport fra Catima å importere.
 \nOpprett den fra «Importer/Eksporter»-menyen i en annen Catima-app ved å trykke på «Eksporter» der først.</string>
     <string name="source_repository">Kildekode</string>
-    <string name="on_github">på GitHub</string>
     <string name="and_data_usage">og bruk av data</string>
     <string name="report_error">Rapporter feil</string>
-    <string name="credits">Bidragsytere</string>
     <string name="exportPassword">Sett et passord for å beskytte eksporten din (valgfritt)</string>
     <string name="exportPasswordHint">Skriv inn passord</string>
     <string name="group_edit">Rediger gruppe</string>
@@ -243,7 +233,6 @@
     <string name="action_display_options">Visningsalternativer</string>
     <string name="show_archived_cards">Vis arkiverte kort</string>
     <string name="view_online">Vis på nett</string>
-    <string name="app_copyright_short">Opphavsrett © Sylvia van Os og bidragsytere</string>
     <string name="balanceParsingFailed">Ugyldig saldo</string>
     <string name="action_more_options">Flere alternativer</string>
     <string name="addWithoutBarcode">Legg til kort uten strekkode</string>

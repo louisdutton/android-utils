@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import androidx.activity.result.ActivityResultLauncher;
@@ -24,7 +23,6 @@ import app.organicmaps.sdk.util.Config;
 import app.organicmaps.sdk.util.LocationUtils;
 import app.organicmaps.sdk.util.concurrency.UiThread;
 import app.organicmaps.sdk.util.log.Logger;
-import app.organicmaps.util.SharingUtils;
 import app.organicmaps.util.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.IOException;
@@ -48,9 +46,6 @@ public class SplashActivity extends AppCompatActivity
   @NonNull
   private ActivityResultLauncher<String[]> mPermissionRequest;
   @NonNull
-  private ActivityResultLauncher<SharingUtils.SharingIntent> mShareLauncher;
-
-  @NonNull
   private final Runnable mInitCoreDelayedTask = this::init;
 
   @Override
@@ -66,8 +61,6 @@ public class SplashActivity extends AppCompatActivity
       setResult(result.getResultCode(), result.getData());
       finish();
     });
-    mShareLauncher = SharingUtils.RegisterLauncher(this);
-
   }
 
   @Override
@@ -111,9 +104,7 @@ public class SplashActivity extends AppCompatActivity
     new MaterialAlertDialogBuilder(this, R.style.MwmTheme_M3_AlertDialog)
         .setTitle(titleId)
         .setMessage(messageId)
-        .setPositiveButton(
-            R.string.report_a_bug,
-            (dialog, which) -> Utils.sendBugReport(mShareLauncher, this, "Fatal Error", Log.getStackTraceString(error)))
+        .setPositiveButton(R.string.ok, null)
         .setCancelable(false)
         .show();
   }

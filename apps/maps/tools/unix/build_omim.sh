@@ -185,10 +185,6 @@ build()
 
       VERSION=$($OMIM_PATH/tools/unix/version.sh qt_version);
       export OUTPUT="CoMaps-$ARCH_OUTPUT-$VERSION.appimage"
-      if [ -n "${TAG:-}" ]; then
-        export UPDATE_INFORMATION="zsync|https://codeberg.org/comaps/comaps/releases/download/$TAG/$OUTPUT"
-      fi
-
       # linuxdeploy plugin qt env vars
       # For wayland support; x11 supported by default
       export EXTRA_QT_MODULES="waylandcompositor"

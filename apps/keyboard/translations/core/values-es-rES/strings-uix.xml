@@ -33,7 +33,6 @@
   <string name="action_keyboard_modes_resizing_apply_new_size">Aplicar</string>
   <string name="theme_emerald">Esmeralda</string>
   <string name="theme_rainbow">Arcoíris</string>
-  <string name="autoupdater_update_available_title">Actualización disponible</string>
   <!-- Must be fairly short -->
   <string name="keyboard_suggest_disable_emojis">Deshabilitar la sugerencia de emojis</string>
   <string name="keyboard_switch_keyboard">Alternar teclado</string>
@@ -55,28 +54,7 @@
     This is the talkback description for it
   -->
   <string name="keyboard_actionbar_close_docked_action_window_talkback">Cerrar</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Pagos</string>
-  <string name="payment_screen_title">Pagar por el Teclado FUTO</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Cancelar</string>
-  <string name="payment_screen_set_reminder_setter_7_days">en 7 días</string>
-  <string name="payment_screen_set_reminder_setter_1_month">en 1 mes</string>
-  <string name="payment_screen_set_reminder_setter_6_months">en 6 meses</string>
-  <string name="payment_screen_set_reminder_setter_next_century">el próximo siglo</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Confirmar recordatorio</string>
-  <string name="payment_screen_other_options">Otras opciones</string>
-  <string name="payment_screen_need_help_title">Ayuda</string>
-  <string name="payment_screen_need_help_subtitle">¿Necesitas ayuda? Visita nuestro sitio web</string>
-  <string name="payment_screen_more_options">Más opciones</string>
-  <string name="payment_screen_payment_complete_title">Pago completado</string>
-  <string name="payment_screen_aftersales_title">Gracias</string>
-  <string name="payment_screen_payment_failed_title">Error en el pago</string>
-  <string name="payment_screen_continue_button">Continuar</string>
-  <string name="payment_unpaid_version_title">Teclado FUTO no pagado</string>
-  <string name="payment_unpaid_version_indicator">No pagado</string>
-  <string name="manual_update_notice_visit_site_button">Visitar</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Descartar</string>
   <string name="settings_unknown_error_title">Error desconocido</string>
   <string name="settings_try_typing_here">Prueba a escribir aquí…</string>
   <string name="settings_update_available">Actualización disponible</string>
@@ -91,7 +69,6 @@
   <string name="language_settings_manage_languages_title">Gestionar idiomas y distribuciones</string>
   <string name="language_settings_resource_replace_button">Reemplazar</string>
   <string name="language_settings_resource_import_file_button">Importar</string>
-  <string name="language_settings_resource_explore_online_button">Explorar</string>
   <string name="language_settings_remove_language_cancel_button">Cancelar</string>
   <string name="language_settings_other_options">Otras opciones</string>
   <string name="resource_importer_cancel_button">Cancelar</string>
@@ -119,13 +96,4 @@
   <string name="voice_input_settings_change_models">Modelos</string>
   <!-- Prediction menu -->
   <string name="prediction_settings_title">Texto predictivo</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Ayuda y sugerencias</string>
-  <string name="help_menu_website">Sitio web de FUTO</string>
-  <!-- Credits menu -->
-  <string name="credits_menu_title">Créditos</string>
-  <string name="credits_menu_team_translators_title">Traductores</string>
-  <string name="credits_menu_team_keyboard_layouts_title">Colaboradores de distribuciones</string>
-  <string name="credits_menu_contribute_translations_button">Ayuda a traducir la aplicación</string>
-  <string name="credits_menu_contribute_keyboard_layouts_button">Aportar distribuciones</string>
 </resources>

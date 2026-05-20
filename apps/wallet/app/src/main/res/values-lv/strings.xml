@@ -83,7 +83,6 @@
     <string name="barcodeLongPressMessage">Galerijas lietotnē var atvērt tikai attēlus</string>
     <string name="sort_by_expiry">Derīgums</string>
     <string name="reverse">...apgrieztā secībā</string>
-    <string name="credits">Pateicības</string>
     <string name="shortcutSelectCard">Atlasīt karti</string>
     <string name="duplicateCard">Pavairot</string>
     <string name="archive">Arhivēt</string>
@@ -110,11 +109,9 @@
     <string name="importLoyaltyCardKeychainMessage">Jāatlasa sava izguves datne no Loyalty Card Keychain, lai ievietotu. \nTo var izveidot Loyalty Card Keychain sadaļā \"Import/Export\" spiežot \"Export\".</string>
     <string name="removeImage">Noņemt attēlu</string>
     <string name="exportPasswordHint">Ievadīt paroli</string>
-    <string name="on_github">GitHub</string>
     <string name="settings_locale">Valoda</string>
     <string name="failedGeneratingShareURL">Nevarēja izveidot kopīgojamu URL</string>
     <string name="turn_flashlight_off">Izslēgt zibspuldzi</string>
-    <string name="app_contributors">To padarīja iespējamu: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="version_history">Versiju vēsture</string>
     <string name="sort_by">Kārtot pēc</string>
     <string name="help_translate_this_app">Palīdzi tulkot šo lietotni</string>
@@ -140,15 +137,8 @@
     <string name="settings_system_locale">Sistēmas</string>
     <string name="include_if_asking_support">Ja vēlies lūgt atbalstu, jāiekļauj sekojošā informācija:</string>
     <string name="barcodeImageDescriptionWithType"><xliff:g>%s</xliff:g> svītrkoda attēls</string>
-    <string name="privacy_policy">Privātuma politika</string>
     <string name="accept">Pieņemt</string>
     <string name="editGroup">Kopas labošana: <xliff:g>%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Autortiesības © 2019–<xliff:g>%d</xliff:g> Sylvia van Os un līdzdalībnieki</string>
-    <string name="app_copyright_old">Balstīta uz Loyalty Card Keychain
-\nautortiesības © 2016–2020 Branden Archer</string>
-    <string name="debug_version_fmt">Versija: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Trešo pušu bibliotēkas: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Trešo pušu avoti: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="enter_group_name">Ievadīt kopas nosaukumu</string>
     <string name="groups">Kopas</string>
     <string name="group_edit">Labot kopu</string>
@@ -247,7 +237,6 @@
         <item quantity="one">atlasīta <xliff:g>%d</xliff:g></item>
         <item quantity="other">atlasītas <xliff:g>%d</xliff:g></item>
     </plurals>
-    <string name="app_copyright_short">Autortiesības © Sylvia van Os un līdzdalībnieki</string>
     <string name="settings_category_title_cards">Kartes skats</string>
     <string name="settings_category_title_general">Vispārīgi</string>
     <string name="errorReadingFile">Nevarēja nolasīt datni</string>

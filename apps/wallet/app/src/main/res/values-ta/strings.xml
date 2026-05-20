@@ -98,8 +98,6 @@
     <string name="cameraPermissionDeniedTitle">கேமராவை இயக்க முடியவில்லை</string>
     <string name="noCameraPermissionDirectToSystemSetting">பார்கோடுகளை ஸ்கேன் செய்ய, கேட்டிமாவிற்கு உங்கள் கேமராவுக்கு அணுகல் தேவைப்படும். உங்கள் இசைவு அமைப்புகளை மாற்ற இங்கே தட்டவும்.</string>
     <string name="about">பற்றி</string>
-    <string name="app_copyright_short">பதிப்புரிமை © சில்வியா வான் ஓஎச் மற்றும் பங்களிப்பாளர்கள்</string>
-    <string name="app_copyright_old">விசுவாச அட்டை கீச்சின் அடிப்படையில்\n பதிப்புரிமை © 2016–2020 பிராண்டன் ஆர்ச்சர்</string>
     <string name="app_license">நகலெடுக்கப்பட்ட லிப்ரே மென்பொருள், உரிமம் பெற்ற GPLV3+</string>
     <string name="selectBarcodeTitle">பட்டைகோடு தேர்ந்தெடு</string>
     <string name="thumbnailDescription">சிறுபடம்</string>
@@ -133,7 +131,6 @@
     <string name="balanceParsingFailed">தவறான இருப்பு</string>
     <string name="chooseImportType">இருந்து தரவை இறக்குமதி செய்யுங்கள்</string>
     <string name="app_loyalty_card_keychain">விசுவாச அட்டை கீச்சின்</string>
-    <string name="privacy_policy">தனியுரிமைக் கொள்கை</string>
     <string name="accept">ஏற்றுக்கொள்</string>
     <string name="importCatima">கேட்டிமாவில் இருந்து இறக்குமதி செய்</string>
     <string name="importCatimaMessage">நீங்கள் பூனையம்மாவிலிருந்து ஏற்றுமதியை தேர்ந்துஎடுத்து இறக்குமதி செய்.\nமற்றொரு பூனையம்மா செயலியில் இறக்குமதி/ஏற்றுமதி பட்டியலிலிருந்து ஏற்றுமதியை தேர்ந்துஎடுத்து இக்கோப்பை உருவாக்கு.</string>
@@ -168,11 +165,9 @@
     <string name="sort_by">வரிசைப்படுத்தவும்</string>
     <string name="barcodeLongPressMessage">கேலரி பயன்பாட்டில் படங்களை மட்டுமே திறக்க முடியும்</string>
     <string name="version_history">பதிப்பு வரலாறு</string>
-    <string name="credits">வரவு</string>
     <string name="help_translate_this_app">இந்த பயன்பாட்டை மொழிபெயர்க்க உதவுங்கள்</string>
     <string name="license">உரிமம்</string>
     <string name="source_repository">மூல களஞ்சியம்</string>
-    <string name="on_github">கிட்அப்பில்</string>
     <string name="and_data_usage">மற்றும் தரவு பயன்பாடு</string>
     <string name="report_error">பிழையைப் புகாரளிக்கவும்</string>
     <string name="translate_platform">வெப்லேட்டில்</string>
@@ -252,7 +247,6 @@
         <item quantity="other">இந்த <xliff:g>%d</xliff:g> அட்டைகளை நிரந்தரமாக நீக்கவா?</item>
     </plurals>
     <string name="editGroup">திருத்துதல் குழு: <xliff:g>%s</xliff:g></string>
-    <string name="debug_version_fmt">பதிப்பு: <xliff:g id="version">%s</xliff:g></string>
     <plurals name="groupCardCount">
         <item quantity="one"><xliff:g>%d</xliff:g> அட்டை</item>
         <item quantity="other"><xliff:g>%d</xliff:g> அட்டைகள்</item>
@@ -267,18 +261,14 @@
     <string name="newBalanceSentence">புதிய இருப்பு: <xliff:g>%s</xliff:g></string>
     <string name="pageWithNumber">பக்கம் <xliff:g>%d</xliff:g></string>
     <string name="currentBalanceSentence">தற்போதைய இருப்பு: <xliff:g>%s</xliff:g></string>
-    <string name="app_contributors">வழங்கியவர்: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="about_title_fmt">படம் <xliff:g>%s</xliff:g> பட்டைகுறியீடு</string>
     <string name="barcodeImageDescriptionWithType">படம் <xliff:g>%s</xliff:g> பட்டை குறியீடு</string>
-    <string name="app_libraries">மூன்றாம் தரப்பு நூலகங்கள்: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="expiryStateSentence">காலாவதியாகிறது: <xliff:g>%s</xliff:g></string>
     <string name="balanceSentence">இருப்பு: <xliff:g>%s</xliff:g></string>
     <plurals name="groupCardCountWithArchived">
         <item quantity="one"><xliff:g>%1$d</xliff:g> அட்டை (<xliff:g id="archivedCount">%2$d</xliff:g> காப்பகப்படுத்தப்பட்டது)</item>
         <item quantity="other"><xliff:g>%1$d</xliff:g> அட்டைகள் (<xliff:g id="archivedCount">%2$d</xliff:g> காப்பகப்படுத்தப்பட்டது)</item>
     </plurals>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">பதிப்புரிமை © 2019–<xliff:g>%d</xliff:g> சில்வியா வான் ஓஎச் மற்றும் பங்களிப்பாளர்கள்</string>
-    <string name="app_resources">மூன்றாம் தரப்பு வளங்கள்: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="groupsList">குழுக்கள்: <xliff:g>%s</xliff:g></string>
     <string name="sort_by_valid_from">இருந்து செல்லுபடியாகும்</string>
     <string name="setBarcodeWidth">பார்கோடு அகலத்தை அமைக்கவும்</string>

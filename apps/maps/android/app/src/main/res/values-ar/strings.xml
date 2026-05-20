@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">فشلت عملية تنزيل</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">محاولة مرة أخرى</string>
-    <string name="about_menu_title">حول CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• سهل الاستخدام ومصقول</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• يركز على الخصوصية وخالي من الإعلانات</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• غير متصل بالإنترنت، سريع وصغير الحجم</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">مفتوح المصدر بالكامل، غير هادف للربح، ويتميز بالشفافية في اتخاذ القرارات والشؤون المالية.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">إعدادات الموقع</string>
     <string name="close">أغلِق</string>
     <string name="unsupported_phone">أنت بحاجة الى OpenGL بأجهزة تسريع. لسوء الحظ جهازك لا يدعم هذه الخاصية.</string>
     <string name="download">نزّل</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">الرجاء فصل كبل USB أو أدخل بطاقة ذاكرة من أجل استخدام CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">يُرجى إخلاء مساحة على بطاقة SD أو وحدة تخزين USB أولاً لتتمكن من استخدام التطبيق</string>
     <string name="download_resources">قبل أن تبدأ باستخدام التطبيق، سنقوم بتنزيل خريطة العالم العامة على جهازك. \nستحتاج إلى %s من المساحة.</string>
@@ -145,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">ملاحظات</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">مفضلاتي على CoMaps</string>
-    <string name="share_bookmarks_email_body">مرحبًا!\n\nالمرفقات هي مفضلاتي؛ يُرجى فتحها في CoMaps. إذا لم يكن لديكه مثبتًا، يمكنك تنزيله من هنا: https://www.comaps.app/download/\n\nاستمتع بالسفر مع CoMaps!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">يحمل المفضلات</string>
     <!-- Kmz file successful loading -->
@@ -166,10 +153,6 @@
     <string name="cant_change_this_setting">نأسف، اعدادات تخزين الخرائط مُعطَّلة حاليًا</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">جارٍ تنزيل الخريطة الآن</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">تفقد موقعي الحالي على CoMaps! %1$s أو %2$s. ليس لديك أي خرائط تعمل بدون الاتصال بالإنترنت مثبتة على جهازك؟ نزّلها من هنا: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">مرحبًا، تحقق من موقعي الحالي على خريطة CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">شارك</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -227,24 +210,9 @@
     <string name="menu">القائمة</string>
     <!-- Text in menu -->
     <string name="website">الموقع الإلكتروني</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">أخبار</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">تغذية راجعة</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">قيّم التطبيق</string>
     <!-- Text in menu -->
-    <string name="help">مساعدة</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">اسئلة مكررة</string>
     <!-- Button in the main menu -->
-    <string name="donate">تبرع</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">تطوع وساهم في تحسين CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">حقوق النشر</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">بلِّغ عن علة</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">حسّن اتجاه السهم عن طريق تحريك الهاتف في حركة على شكل ثمانية لمعايرة البوصلة.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -387,7 +355,6 @@
     <string name="editor_time_advanced">الوضع المتقدم</string>
     <string name="editor_time_simple">الوضع البسيط</string>
     <string name="editor_hours_closed">ساعات الراحة</string>
-    <string name="editor_example_values">أمثلة على القيم</string>
     <string name="editor_correct_mistake">تصحيح الخطأ</string>
     <string name="editor_add_select_location">حدّد الموقع</string>
     <string name="editor_report_problem_send_button">إرسال</string>
@@ -448,8 +415,6 @@
     <string name="message_invalid_feature_position">لا يمكن تحديد موقع الكائن هنا</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">بيانات OpenStreetMap التي أنشأها المجتمع اعتبارًا من %s. تعرف على المزيد حول كيفية تعديل الخريطة وتحديثها على OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) هو مشروع مجتمعي لبناء خريطة مجانية ومفتوحة. إنه المصدر الرئيسي لبيانات الخرائط في CoMaps ويعمل على غرار ويكيبيديا. يمكنك إضافة الأماكن أو تعديلها وتصبح متاحة لملايين المستخدمين في جميع أنحاء العالم.\nنضم إلى المجتمع وساعد في إنشاء خريطة أفضل للجميع!</string>
     <string name="login_to_make_edits_visible">أنشئ حسابًا على OpenStreetMap أو سجِّل الدخول لنشر تعديلاتك على الخريطة للعالم</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d من%2$d</string>
@@ -462,8 +427,6 @@
     <string name="error_enter_correct_zip_code">أدخل رمز بريدي صالح</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">ملاحظة لمتطوعي OpenStreetMap (اختياري)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">وصف الأخطاء على الخريطة أو الأشياء التي لا يمكن تحريرها باستخدام CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">تُرفع تعديلاتك على قاعدة البيانات العامة <a href="https://wiki.openstreetmap.org/wiki/Ar:About_OpenStreetMap">OpenStreetMap</a>. يُرجى عدم إضافة معلومات شخصية أو محمية بحقوق الطبع والنشر.</string>
     <string name="editor_more_about_osm">المزيد عن خريطة الشارع المفتوحة</string>
@@ -473,7 +436,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">المشغل: %s</string>
     <string name="editor_category_unsuitable_title">لا يمكن العثور على فئة مناسبة؟</string>
-    <string name="editor_category_unsuitable_text">يقتصر تطبيق CoMaps على إضافة فئات النقاط البسيطة فقط، ولا يمكنه إضافة المدن أو الطرق أو البحيرات أو مخططات المباني وما إلى ذلك. يُرجى إضافة هذه الفئات مباشرة إلى <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. راجع <a href="https://www.comaps.app/support/advanced-map-editing/">دليلنا</a> للحصول على تعليمات مفصلة خطوة بخطوة.</string>
     <string name="downloader_no_downloaded_maps_title">لم تُنزّل أي خرائط</string>
     <string name="downloader_no_downloaded_maps_message">نزِّل الخرائط للبحث والتنقل دون اتصال بالإنترنت</string>
     <string name="current_location_unknown_error_title">الموقع الحالي غير معروف</string>
@@ -526,15 +488,11 @@
     <string name="mobile_data_option_ask">السؤال دوماً</string>
     <string name="traffic_update_maps_text">لعرض البيانات المرورية، يجب تحديث الخرائط</string>
     <string name="big_font">زيادة حجم الخط على الخريطة</string>
-    <string name="traffic_update_app">الرجاء تحديث CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">البيانات المرورية غير متاحة</string>
     <string name="enable_logging">فعِّل التسجيل</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">تعقيب عام</string>
     <string name="prefs_languages_information">نحن نستخدم نظام تحويل النص إلى كلام (TTS) الخاص بالنظام للتعليمات الصوتية. تستخدم العديد من أجهزة أندرويد محرك Google TTS، ويمكنك تنزيله أو تحديثه من متجر Google Play عبر الرابط التالي: (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">بالنسبة لبعض اللغات، ستحتاج إلى تثبيت مُصنِّع صوت أو حزمة لغة إضافية من متجر التطبيقات (Google Play أو Galaxy Store أو App Gallery أو F-Droid).\nافتح إعدادات جهازك ← إمكانية الوصول ← الكلام ← إخراج تحويل النص إلى كلام.\nهنا يمكنك إدارة إعدادات توليد الكلام (على سبيل المثال، لتنزيل حزمة لغة للاستخدام دون اتصال بالإنترنت) واختيار محرك تحويل نص إلى كلام مختلف.</string>
-    <string name="prefs_languages_information_off_link">لمزيد من المعلومات، الرجاء مراجعة هذا الدليل</string>
     <string name="transliteration_title">ترجم حرفيًا إلى الأبجدية اللاتينية</string>
     <string name="learn_more">معرفة المزيد</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -546,7 +504,6 @@
     <string name="placepage_remove_stop">أزِل نقطة توقف</string>
     <string name="placepage_add_stop">أضف نقطة توقف</string>
     <string name="dialog_error_storage_title">مشكلة الوصول للتخزين</string>
-    <string name="dialog_error_storage_message">التخزين الخارجي غير متوفر، ربما تمت إزالة بطاقة SD، أو أنها تالفة أو نظام الملفات للقراءة فقط. افحصه أو راسلنا على support@comaps.app</string>
     <string name="setting_emulate_bad_storage">محاكاة التخزين السيء</string>
     <string name="error_enter_correct_name">الرجاء إدخال اسم صحيح</string>
     <string name="bookmark_lists">القوائم المفضلة</string>
@@ -594,8 +551,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">خصوصية</string>
-    <string name="privacy_policy">سياسة الخصوصية</string>
-    <string name="terms_of_use">شروط الاستخدام</string>
     <string name="button_layer_traffic">حركة مرور</string>
     <string name="subway">مترو الانفاق</string>
     <string name="layers_title">أنماط الخريطة وطبقاتها</string>
@@ -620,7 +575,6 @@
     <string name="power_managment_setting_never">أبدًا</string>
     <string name="power_managment_setting_auto">تلقائي</string>
     <string name="power_managment_setting_manual_max">توفير الطاقة الأقصى</string>
-    <string name="enable_logging_warning_message">فعِّل هذا الخيار مؤقتًا لتسجيل وإرسال سجلات تشخيصية مفصلة حول مشكلتك إلينا يدويًا باستخدام \"بلِّغ عن علة\" في مربع حوار المساعدة. قد تتضمن السجلات معلومات الموقع.</string>
     <string name="driving_options_title">خيارات رسم المسار</string>
     <string name="avoid_tolls">تجنب الطرق ذات الرسوم</string>
     <string name="avoid_unpaved">تجنب الطرق الغير معبدة</string>
@@ -723,33 +677,19 @@
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Ar:About_OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">شكرًا لك على استخدام الخرائط التي أنشأها مجتمعنا!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">بتبرعاتكم ودعمكم، يمكننا إنشاء أفضل الخرائط في العالم!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">هل أعجبك تطبيقنا؟ يُرجى التبرع لدعم عملية التطوير! أما إذا لم يعجبك بعد، فيُرجى إخبارنا بالسبب وسنقوم بإصلاحه!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">إذا كنت تعرف أحد مطوري البرامج، فيمكنك أن تطلب منه تنفيذ الميزة التي تحتاجها.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">اضغط على أي مكان على الخريطة لتحديد أي شيء. اضغط لفترة طويلة لإخفاء الواجهة وإظهارها مرة أخرى.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">هل تعلم أنه يمكنك تحديد موقعك الحالي على الخريطة؟</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">يمكنك المساعدة في ترجمة تطبيقنا إلى لغتك.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">طوِّر تطبيقنا من قِبل عدد قليل من المتحمسين والمجتمع.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">يمكنك بسهولة إصلاح وتحسين بيانات الخريطة.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">هدفنا الرئيسي هو بناء خرائط سريعة، تركز على الخصوصية وسهلة الاستخدام ستنال إعجابكم.</string>
-    <string name="car_used_on_the_phone_screen">أنت الآن تستخدم CoMaps على شاشة الهاتف</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">إلى شاشة السيارة</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">جولة على الأقدام</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -797,23 +737,15 @@
     <string name="edit_track">عدِّل المسار</string>
     <string name="uri_open_location_failed">لم تثبت أي تطبيق يمكنه فتح الموقع</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="translated_om_site_url">https://comaps.app/ar</string>
-    <string name="telegram_url">https://t.me/CoMapsApp</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app</string>
     <string name="wikimedia_commons">ويكيميديا كومنز</string>
     <string name="panoramax">صورة Panoramax</string>
-    <string name="app_site_url">https://comaps.app/ar</string>
     <string name="saved">حُفظ</string>
     <string name="delete_track_dialog_title">احذف %s؟</string>
-    <string name="about_help">عن و المساعدة</string>
-    <string name="dialog_report_error_with_logs">يًرجى إرسال تقرير خطأ إلينا:\n - \"فعِّل التسجيل\" في الإعدادات\n - أعد إنتاج المشكلة\n - في شاشة \"عن و المساعدة\" اضغط على زر \"بلِّغ عن علة\" وأرسل عبر البريد الإلكتروني أو الدردشة\n - تعطيل التسجيل</string>
     <string name="place_page_update_too_old_map">حدِّث منطقة الخريطة</string>
     <string name="list_description_empty">عدِّل القائمة لإضافة وصف</string>
     <string name="editor_socket">عدِّل المقبس</string>
     <string name="edit_socket_info_tooltip">أنشئ مقابس جديدة أو عدِّل المقابس الموجودة.</string>
     <string name="pref_backup_now_summary">أنشئ نُسخة احتياطية فورًا</string>
-    <string name="about_headline">مشروع مفتوح مدعوم من المجتمع</string>
     <string name="mb_downloaded">%1$d م.بايت / %2$d م.بايت</string>
     <string name="opens_at">يفتح في %s</string>
     <string name="closes_at">يغلق في %s</string>
@@ -842,7 +774,6 @@
     <string name="error_enter_correct_bluesky_page">أدخل اسم مستخدم Bluesky أو عنوان ويب صالحًا</string>
     <string name="place_page_map_too_old_title">بيانات الخريطة قديمة</string>
     <string name="place_page_map_too_old_description">بيانات الخرائط الحالية قديمة جدًا، يُرجى تحديث الخريطة.</string>
-    <string name="place_page_app_too_old_description">بيانات الخرائط الحالية قديمة جدًا، يُرجى تحديث تطبيق CoMaps.</string>
     <string name="place_page_too_old_to_edit">عُطِّل تعديل OpenStreetMap لأن بيانات الخريطة قديمة جدًا.</string>
     <string name="osm_note_hint">أو بدلاً من ذلك، اترك ملاحظة لمجتمع OpenStreetMap ليتمكن شخص آخر من إضافة أو إصلاح مكان هنا.</string>
     <string name="osm_note_toast">سيتم إرسال الملاحظة إلى OpenStreetMap</string>
@@ -892,7 +823,6 @@
     <string name="route_finished">انتهى المسار</string>
     <string name="not_following_route">لا يتبع المسار</string>
     <string name="pref_openexternallinks_title">فتح روابط الطرف الثالث تلقائيًا</string>
-    <string name="pref_openexternallinks_summary">افتح روابط الطرف الثالث في CoMaps مبدئيًا</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="pref_backup_title">نسخ المفضلات احتياطيًا</string>
     <string name="pref_backup_summary">نسخ احتياطي تلقائي إلى مجلد على جهازك</string>
@@ -914,7 +844,6 @@
     <string name="offline_explanation_text">يجب تنزيل خريطة لعرض المنطقة والتنقل فيها.\nنزِّل خرائط للمناطق التي ترغب في السفر إليها.</string>
     <string name="advanced">متقدم</string>
     <string name="download_resources_custom_url_title">خادم خرائط مخصَّص</string>
-    <string name="download_resources_custom_url_message">تجاوز خادم تنزيل الخرائط المبدئي المستخدم لتنزيل الخرائط. اتركه فارغًا لاستخدام خادم CoMaps المبدئي.</string>
     <string name="ruler">مسطرة</string>
     <string name="route_type">نوع المسار</string>
     <string name="vehicle">مركبة</string>

@@ -71,8 +71,6 @@
     <string name="importOptionFilesystemButton">A fájlrendszerből</string>
     <string name="app_license">Copyleft licencű szabad szoftver, GPLv3+ alatt közzétéve</string>
     <string name="about_title_fmt">A <xliff:g id="app_name">%s</xliff:g> névjegye</string>
-    <string name="debug_version_fmt">Verzió: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_resources">Szabad külső erőforrások: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Vonalkód kiválasztása</string>
     <string name="starImage">Kedvencek csillag</string>
     <string name="settings">Beállítások</string>
@@ -111,7 +109,6 @@
     <string name="currency">Pénznem</string>
     <string name="points">Pontok</string>
     <string name="app_loyalty_card_keychain">Hűségkártya-kulcstartó</string>
-    <string name="privacy_policy">Adatvédelmi irányelvek</string>
     <string name="accept">Elfogadás</string>
     <string name="importCatima">Importálás a Catimából</string>
     <string name="importFidme">Importálás a FidMeből</string>
@@ -139,16 +136,13 @@
     <string name="settings_system_locale">Rendszer</string>
     <string name="selectColor">Szín kiválasztása</string>
     <string name="setIcon">Miniatűr beállítása</string>
-    <string name="app_contributors">Lehetővé tették: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="showMoreInfo">Információk megjelenítése</string>
     <string name="reverse">…fordított sorrendben</string>
     <string name="sort_by">Rendezés:</string>
     <string name="version_history">Verziótörténet</string>
-    <string name="credits">Köszönet</string>
     <string name="help_translate_this_app">Segítsen lefordítani az alkalmazást</string>
     <string name="license">Licenc</string>
     <string name="source_repository">Forráskódtároló</string>
-    <string name="on_github">a GitHubon</string>
     <string name="report_error">Hiba jelentése</string>
     <string name="shortcutSelectCard">Válasszon egy kártyát</string>
     <string name="options">Beállítások</string>
@@ -165,9 +159,6 @@
     <string name="thumbnailDescription">Előkép</string>
     <string name="importOptionFilesystemExplanation">Válassza ki a kívánt fájlt a fájlrendszerből</string>
     <string name="about">Névjegy</string>
-    <string name="app_copyright_old">Készült a Loyalty Card Keychain alapján
-\nCopyright © 2016–2020 Branden Archer</string>
-    <string name="app_libraries">Szabad külső programkönyvtárak: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="settings_dark_theme">Sötét</string>
     <string name="deleteConfirmationGroup">Csoport törlése\?</string>
     <string name="noGroups">Koppintson a + gombra a csoportok kategorizálásához</string>
@@ -244,9 +235,7 @@
     <string name="enter_card_id">Adja meg a kártyán szereplő azonosító számát vagy szövegét</string>
     <string name="action_display_options">Megjelenítési beállítások</string>
     <string name="addWithoutBarcode">Vonalkód nélküli kártya hozzáadása</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os és közreműködők</string>
     <string name="field_must_not_be_empty">A mező nem lehet üres</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os és közreműködők</string>
     <string name="show_archived_cards">Archivált kártyák megjelenítése</string>
     <string name="app_name">Wallet</string>
     <string name="amountParsingFailed">Hibás érték</string>

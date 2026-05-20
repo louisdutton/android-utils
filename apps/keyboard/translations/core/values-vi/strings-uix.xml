@@ -158,11 +158,6 @@
   <string name="theme_dynamic_light">Màu động Sáng</string>
   <string name="theme_custom_named">Tùy chỉnh: %s</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Dịch vụ kiểm tra cập nhật</string>
-  <string name="autoupdater_update_available_title">Bản cập nhật có sẵn</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;Một bản cập nhật đang có sẵn (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). Bấm để tải xuống&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Bỏ qua</string>
-  <string name="autoupdater_perform_update">Cập nhật</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">&lt;string name="keyboard_suggest_blacklist_body"&gt;Đưa từ \&amp;quot;&lt;xliff:g name="wordToBlacklist" example="crane"&gt;%s&lt;/xliff:g&gt;\&amp;quot; vào danh sách đen để không gợi ý nữa?&lt;/string&gt;</string>
   <!-- Must be fairly short -->
@@ -173,7 +168,6 @@
   <string name="keyboard_version_status">Alpha</string>
   <string name="keyboard_switch_keyboard">Chuyển Bàn phím</string>
   <string name="keyboard_language_settings">Cài đặt</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">Vui lòng bấm để kiểm tra cập nhật, hoặc trong cài đặt</string>
   <!-- Should be fairly short (under 40 chars). Means there are no predictions for this language and a download is necessary by tapping on this notice. Appears in suggestion bar -->
   <string name="keyboard_actionbar_no_dictionary_installed_notice">Chưa cài đặt từ điển, bấm để tải xuống?</string>
   <!--
@@ -206,69 +200,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Thu gọn</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Thanh toán</string>
-  <string name="payment_screen_title">Thanh toán cho Bàn phím FUTO</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;Bạn đã thanh toán cho Bàn phím FUTO trong &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; ngày. Nếu bạn thấy ứng dụng này hữu ích, vui lòng cân nhắc trả phí để hỗ trợ phát triển phần mềm FUTO trong tương lai.&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">Cảm ơn bạn đã thử Bàn phím FUTO! Nếu bạn thấy ứng dụng này hữu ích, hãy cân nhắc trả phí để hỗ trợ phát triển phần mềm FUTO trong tương lai.</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO cam kết tạo ra phần mềm tốt, không gây hại cho bạn. Ứng dụng này sẽ không bao giờ hiển thị quảng cáo hoặc thu thập dữ liệu cá nhân của bạn.</string>
-  <string name="payment_screen_sales_point_development_title">Phát triển bền vững</string>
-  <string name="payment_screen_sales_point_development_body">Sứ mệnh của FUTO là biến phần mềm nguồn mở và các hoạt động kinh doanh phần mềm không độc hại trở thành nguồn thu nhập bền vững cho các dự án và nhà phát triển. Vì lý do này, chúng tôi ủng hộ việc người dùng thực sự trả phí cho phần mềm.</string>
-  <string name="payment_screen_sales_point_privacy_title">Cam kết về quyền riêng tư</string>
-  <string name="payment_screen_sales_point_privacy_body">Ứng dụng này sẽ không bao giờ hiển thị quảng cáo hoặc bán dữ liệu của bạn. Đó không phải là lĩnh vực kinh doanh của chúng tôi.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Thanh toán không được hỗ trợ trên phiên bản này</string>
-  <string name="payment_screen_already_paid_title">Đã thanh toán rồi?</string>
-  <string name="payment_screen_already_paid_body">Nếu bạn đã thanh toán cho Bàn phím FUTO hoặc Nhập bằng Giọng nói của FUTO, hãy nhấn bên dưới.</string>
-  <string name="payment_screen_already_paid_button">Tôi đã thanh toán</string>
-  <string name="payment_screen_already_paid_confirmation">Xác nhận lựa chọn của bạn</string>
-  <string name="payment_screen_already_paid_confirmation_body">Bạn có chắc là muốn xác nhận rằng bạn đã thanh toán? Một khi xác nhận, bạn sẽ không bị yêu cầu thanh toán nữa.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Tôi đã thanh toán</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Hủy</string>
-  <string name="payment_screen_set_reminder_title">Chưa sẵn sàng thanh toán?</string>
-  <string name="payment_screen_set_reminder_body">Điều này sẽ ẩn thông báo trên màn hình cài đặt trong khoảng thời gian đã nhập.</string>
-  <string name="payment_screen_set_reminder_setter">Bạn muốn được nhắc nhở vào lúc nào?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">trong 7 ngày</string>
-  <string name="payment_screen_set_reminder_setter_1_month">trong 1 tháng</string>
-  <string name="payment_screen_set_reminder_setter_6_months">trong 6 tháng</string>
-  <string name="payment_screen_set_reminder_setter_next_century">thế kỷ tiếp theo</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Xác nhận lời nhắc</string>
-  <string name="payment_screen_other_options">Tùy chọn khác</string>
-  <string name="payment_screen_need_help_title">Hỗ trợ</string>
-  <string name="payment_screen_need_help_subtitle">Cần hỗ trợ? Truy cập trang web của chúng tôi</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Thanh toán qua Google Play (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + thuế)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;Thanh toán (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + thuế)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay2">&lt;string name="payment_screen_pay_via_futopay2"&gt;Thanh toán qua FUTO Pay (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + thuế)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Thêm tùy chọn</string>
-  <string name="payment_screen_payment_complete_title">Thanh toán hoàn tất</string>
-  <string name="payment_screen_aftersales_title">Cảm ơn bạn</string>
-  <string name="payment_screen_aftersales_title_pending">Thanh toán đang chờ xử lý</string>
-  <string name="payment_screen_aftersales_paragraph_1">Cảm ơn bạn đã mua Bàn phím FUTO! </string>
-  <string name="payment_screen_aftersales_paragraph_2">Việc mua hàng của bạn sẽ giúp bàn phím FUTO và các dự án FUTO khác tiếp tục phát triển.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">Thanh toán của bạn vẫn đang xử lý, nhưng sẽ sớm xong thôi.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Nếu bạn vừa thanh toán, khoản thanh toán của bạn có thể vẫn đang được xử lý, bạn sẽ nhận được email cung cấp thêm thông tin.</string>
-  <string name="payment_screen_payment_failed_title">Lỗi thanh toán</string>
-  <string name="payment_screen_payment_failed_body">Rất tiếc, vì lý do nào đó, thanh toán của bạn không thành công. Vui lòng liên hệ với chúng tôi nếu bạn cần hỗ trợ. Bạn có thể liên hệ với chúng tôi qua email keyboard@futo.org, bằng nút bên dưới hoặc bằng cách sử dụng Gửi Phản Hồi trong mục Trợ Giúp. </string>
-  <string name="payment_screen_payment_failed_body_unconfident">Có thể đã xảy ra sự cố với khoản thanh toán của bạn. Nếu giao dịch thành công, bạn sẽ nhận được email chứa mã bản quyền. Vui lòng liên hệ với chúng tôi nếu bạn cần hỗ trợ. Bạn có thể liên hệ với chúng tôi qua email keyboard@futo.org, bằng nút bên dưới hoặc bằng cách sử dụng tính năng Chia sẻ Phản hồi trên màn hình chính.</string>
-  <string name="payment_screen_license_integrity_error">Không xác minh được giấy phép. Nếu bạn cho rằng đây là lỗi, vui lòng liên hệ với chúng tôi.</string>
-  <string name="payment_screen_continue_button">Tiếp tục</string>
-  <string name="payment_unpaid_version_title">Chưa thanh toán Bàn phím FUTO</string>
-  <string name="payment_unpaid_version_indicator">Chưa thanh toán</string>
-  <string name="payment_paid_version_indicator">Cảm ơn bạn đã sử dụng phiên bản trả phí của Bàn phím FUTO! </string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Thông báo cập nhật</string>
-  <string name="manual_update_notice_paragraph_1">Ứng dụng này không kết nối mạng và không thể kiểm tra cập nhật tự động. Tuy nhiên, bạn có thể kiểm tra cập nhật thủ công.</string>
-  <string name="manual_update_notice_paragraph_2">Vui lòng dùng F-Droid hoặc Obtainium để tự động cập nhật. Truy cập keyboard.futo.org để xem các tùy chọn tải xuống.</string>
-  <string name="manual_update_notice_dev_paragraph">Bạn đang sử dụng phiên bản phát triển của Bàn phím FUTO. Truy cập keyboard.futo.org nếu bạn muốn tải phiên bản ổn định.</string>
-  <string name="manual_update_notice_visit_site_button">Truy cập</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Bỏ qua</string>
   <!-- General settings strings -->
   <string name="settings_tip">Mẹo</string>
   <string name="settings_unknown_error_title">Lỗi không xác định</string>
   <string name="settings_unknown_error_subtitle">Đã xảy ra lỗi không xác định.</string>
   <string name="settings_try_typing_here">Thử nhập vào đây…</string>
   <string name="settings_external_model_name">Mô hình nhập bên ngoài</string>
-  <string name="settings_check_for_updates_manually">Kiểm tra cập nhật thủ công</string>
   <string name="settings_update_available">Cập nhật có sẵn</string>
   <!--
     May be translated as "Start", "All", etc. This is the starting menu where all settings live.
@@ -306,27 +244,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">Từ điển tích hợp sẵn</string>
   <string name="language_settings_resource_voice_input_selected">Bạn có muốn khôi phục mô hình nhập bằng giọng nói về mặc định hay thay thế bằng tệp khác không?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Không có mô hình nhập bằng giọng nói tích hợp nào dành cho ngôn ngữ này, vì vậy nếu bạn xóa, tính năng nhập bằng giọng nói sẽ ngừng hoạt động đối với ngôn ngữ này cho đến khi bạn nhập một mô hình khác! </string>
-  <string name="language_settings_resource_voice_input_selected_unset">Bạn chưa thiết lập mô hình nhập bằng giọng nói tùy chỉnh nào cho ngôn ngữ này. Bạn có thể khám phá các mục tải xuống trực tuyến hoặc nhập từ tệp.</string>
   <string name="language_settings_resource_transformer_selected">Bạn có muốn khôi phục mô hình transformer về mặc định hoặc thay thế bằng tệp khác không?</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">Không có mô hình transformer tích hợp nào dành cho ngôn ngữ này, vì vậy nếu bạn xóa nó, dự đoán từ dựa trên transformer sẽ ngừng hoạt động đối với ngôn ngữ này cho đến khi bạn nhập một mô hình khác! </string>
-  <string name="language_settings_resource_transformer_selected_unset">Bạn chưa thiết lập mô hình transformer tùy chỉnh cho ngôn ngữ này. Bạn có thể khám phá các bản tải xuống trực tuyến hoặc nhập từ tệp.</string>
   <string name="language_settings_resource_dictionary_selected">Bạn có muốn khôi phục từ điển về mặc định hay thay thế bằng tệp khác không?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Không có từ điển tích hợp sẵn nào dành cho ngôn ngữ này, vì vậy nếu bạn xóa từ điển này, tính năng tự động sửa và dự đoán từ sẽ ngừng hoạt động đối với ngôn ngữ này cho đến khi bạn nhập một từ điển khác! </string>
-  <string name="language_settings_resource_dictionary_selected_unset">Bạn chưa thiết lập từ điển tùy chỉnh cho ngôn ngữ này. Bạn có thể khám phá các bản tải xuống trực tuyến hoặc nhập từ tệp.</string>
   <string name="language_settings_resource_replace_button">Thay thế</string>
   <string name="language_settings_resource_import_file_button">Nhập</string>
   <string name="language_settings_resource_revert_to_default_button">Khôi phục về mặc định</string>
   <string name="language_settings_resource_remove_button">Xóa</string>
-  <string name="language_settings_resource_explore_online_button">Khám phá</string>
   <string name="language_settings_remove_language_title">Xóa %1$s?</string>
   <string name="language_settings_remove_language_body">Xóa %1$s, tất cả các bố cục liên quan và tài nguyên tùy chỉnh?</string>
   <string name="language_settings_remove_language_remove_button">Xóa</string>
   <string name="language_settings_remove_language_cancel_button">Hủy</string>
   <string name="language_settings_other_options">Tùy chọn khác</string>
   <string name="language_settings_import_resource_from_file">Nhập tệp tài nguyên</string>
-  <string name="language_settings_explore_voice_input_models_online">Khám phá mô hình nhập bằng giọng nói</string>
-  <string name="language_settings_explore_dictionaries_online">Khám phá từ điển</string>
-  <string name="language_settings_explore_transformers_online">Khám phá mô hình transformer</string>
   <string name="language_settings_import_dictionary_or_model">Nhập từ điển hoặc mô hình</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Mô hình Nhập bằng Giọng nói</string>
@@ -529,25 +460,6 @@
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_title">Xem và chỉnh sửa các từ bị cấm</string>
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_subtitle">Nhấp vào đây để xem danh sách các đề xuất bị đưa vào danh sách đen, thêm hoặc xóa các mục</string>
   <string name="prediction_settings_word_blacklist_remove_word_from_blacklist">Xóa từ</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Trợ giúp &amp; Phản hồi</string>
-  <string name="help_menu_version_name">Tên phiên bản: %1$s</string>
-  <string name="help_menu_version_code">Mã phiên bản: %1$s</string>
-  <string name="help_menu_version_tip">Chúng tôi muốn nghe ý kiến từ bạn! Nếu bạn đang báo cáo sự cố, phiên bản của bạn có thể liên quan: v%1$s</string>
-  <string name="help_menu_website">Trang web FUTO</string>
-  <string name="help_menu_website_subtitle">Tìm hiểu thêm về chúng tôi và triết lý của chúng tôi</string>
-  <string name="help_menu_website_tags">tải xuống, ứng dụng, nhập bằng giọng nói</string>
-  <string name="help_menu_documentation">Tài liệu</string>
-  <string name="help_menu_documentation_subtitle">Tìm hiểu thêm về các tính năng và khả năng của bàn phím</string>
-  <string name="help_menu_discord">Máy chủ Discord</string>
-  <string name="help_menu_discord_subtitle">Bạn muốn trò chuyện nhưng không thích Zulip? Trò chuyện tại đây</string>
-  <string name="help_menu_futo_chat">Trò chuyện FUTO (Zulip)</string>
-  <string name="help_menu_futo_chat_subtitle">Muốn trò chuyện nhưng không thích Discord? Trò chuyện tại đây</string>
-  <string name="help_menu_github">Công cụ theo dõi sự cố công khai (GitHub)</string>
-  <string name="help_menu_github_subtitle">Bạn gặp lỗi cụ thể hoặc có yêu cầu tính năng nào không? Hãy đăng tại đây</string>
-  <string name="help_menu_email">Gửi email keyboard@futo.org</string>
-  <string name="help_menu_email_subtitle">Muốn gửi phản hồi riêng, cần trợ giúp hoặc không sử dụng GitHub? Hãy gửi email cho chúng tôi</string>
-  <string name="help_menu_email_tags">gmail, hỗ trợ, liên hệ, trợ giúp, hỏng, lỗi, lỗi, sự cố, vấn đề, khiếu nại, yêu cầu hỗ trợ, thanh toán, hỗ trợ, lỗi, trục trặc, sửa, dịch vụ khách hàng, lỗi, câu hỏi, điều tra, hỗ trợ</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">Thiết lập - Bước 1</string>
   <string name="setup_step_2">Thiết lập - Bước 2</string>
@@ -557,18 +469,6 @@
   <string name="setup_warning_multiple_versions">Cảnh báo: Có vẻ như bạn đã cài đặt cả phiên bản Play Store và phiên bản độc lập, chúng tôi chỉ khuyến nghị cài đặt một trong hai</string>
   <string name="setup_active_input_method">Vui lòng chọn Bàn phím FUTO làm phương thức nhập liệu đang hoạt động.</string>
   <string name="setup_switch_input_methods">Chuyển phương thức nhập</string>
-  <!-- Credits menu -->
-  <string name="credits_menu_title">Ghi công</string>
-  <string name="credits_menu_header_text">Cảm ơn những người này đã giúp Bàn phím FUTO trở thành một ứng dụng tuyệt vời!</string>
-  <string name="credits_menu_team_translators_title">Người dịch</string>
-  <string name="credits_menu_team_keyboard_layouts_title">Người đóng góp bố cục</string>
-  <string name="credits_menu_team_code_title">Người đóng góp mã</string>
-  <string name="credits_menu_nonaffiliation_notice">Các tác giả được liệt kê ở trên không có liên hệ gì với chúng tôi và không nhất thiết phải ủng hộ hoặc quảng bá cho chúng tôi. Việc liệt kê không ngụ ý liên hệ hay ủng hộ.</string>
-  <string name="credits_menu_contribute_translations_button">Giúp dịch ứng dụng</string>
-  <string name="credits_menu_contribute_keyboard_layouts_button">Đóng góp bố cục</string>
-  <string name="credits_menu_contribute_code_button">Đóng góp mã</string>
-  <string name="credits_menu_project_information_title">Thông tin %s</string>
-  <string name="credits_menu_project_url_link">URL dự án</string>
   <!-- Settings category title -->
   <string name="language_specific_settings_title">Cài đặt dành riêng cho từng ngôn ngữ</string>
   <!-- Specific to Japanese input method -->

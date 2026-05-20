@@ -41,7 +41,6 @@
     <string name="about">О приложении</string>
     <string name="app_license">Авторское лево свободного программного обеспечения, лицензия GPLv3+</string>
     <string name="about_title_fmt">О приложении <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Версия: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Выбор штрих-кода</string>
     <string name="thumbnailDescription">Логотип</string>
     <string name="settings">Настройки</string>
@@ -58,8 +57,6 @@
     <string name="enter_group_name">Введите название группы</string>
     <string name="importSuccessful">Данные успешно импортированы</string>
     <string name="starImage">Звезда избранного</string>
-    <string name="app_copyright_old">На основе Loyalty Card Keychain
-\nавторские права © 2016–2020 Branden Archer</string>
     <string name="unstar">Удалить из избранного</string>
     <string name="star">Добавить в избранное</string>
     <string name="noBarcode">Нет штрих-кода</string>
@@ -72,7 +69,6 @@
     <string name="expiryStateSentence">Срок действия истекает: <xliff:g>%s</xliff:g></string>
     <string name="points">Баллы</string>
     <string name="addManually">Ручной ввод номера</string>
-    <string name="privacy_policy">Политика конфиденциальности</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
     <string name="chooseImportType">Откуда импортировать данные</string>
     <string name="balance">Баланс</string>
@@ -111,9 +107,6 @@
     <string name="barcodeId">Значение штрих-кода</string>
     <string name="unsupportedBarcodeType">В настоящее время данный тип штрих-кодов не отображается. Его поддержка может быть добавлена в следующих версиях приложения.</string>
     <string name="wrongValueForBarcodeType">Недопустимое значение для выбранного типа штрих-кода</string>
-    <string name="app_resources">Сторонние ресурсы: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Сторонние библиотеки: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Авторские права © 2019–<xliff:g>%d</xliff:g> Sylvia van Os и помощники</string>
     <string name="intent_import_card_from_url_share_multiple_text">Поделиться картами</string>
     <string name="updateBarcodeQuestionText">Вы изменили номер. Обновить также значение штрих-кода, чтобы использовалось одинаковое значение\?</string>
     <string name="no">Нет</string>
@@ -152,7 +145,6 @@
     </plurals>
     <string name="settings_system_locale">Системный</string>
     <string name="settings_locale">Язык</string>
-    <string name="app_contributors">Создано при поддержке: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Группа пуста</string>
     <string name="barcodeImageDescriptionWithType">Изображение штрих-кода <xliff:g>%s</xliff:g></string>
     <string name="sort_by_expiry">Срок действия</string>
@@ -161,9 +153,7 @@
     <string name="sort_by_most_recently_used">Частота использования</string>
     <string name="sort_by_name">Название</string>
     <string name="sort">Сортировка</string>
-    <string name="credits">Благодарности</string>
     <string name="version_history">История версий</string>
-    <string name="on_github">на GitHub</string>
     <string name="and_data_usage">и использование данных</string>
     <string name="report_error">Отчёт об ошибке</string>
     <string name="source_repository">Исходный код</string>
@@ -249,7 +239,6 @@
     <string name="settings_disable_lockscreen_while_viewing_card_summary">Отключение функции блокировки экрана при отображении карты</string>
     <string name="settings_oled_dark_summary">Снижение расхода заряда батареи на OLED-экранах</string>
     <string name="view_online">Просмотр в сети</string>
-    <string name="app_copyright_short">Авторское право © Sylvia van Os и помощники</string>
     <string name="action_display_options">Настройки отображения</string>
     <string name="show_archived_cards">Показывать архивные карты</string>
     <string name="card_id_must_not_be_empty">Номер карты не может быть пустым</string>

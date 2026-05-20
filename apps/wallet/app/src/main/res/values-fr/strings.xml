@@ -35,7 +35,6 @@
     <string name="about">À propos</string>
     <string name="app_license">Logiciel libre à copyleft, sous licence GPLv3+</string>
     <string name="about_title_fmt">À propos de <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Version : <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Choisissez le code-barres</string>
     <string name="thumbnailDescription">Miniature</string>
     <string name="settings">Paramètres</string>
@@ -47,8 +46,6 @@
     <string name="settings_light_theme">Clair</string>
     <string name="settings_system_theme">Système</string>
     <string name="settings_theme">Thème</string>
-    <string name="app_copyright_old">Basé sur Loyalty Card Keychain
-\ncopyright © 2016-2020 Branden Archer</string>
     <string name="exportOptionExplanation">Les données seront exportées vers l’emplacement de votre choix</string>
     <string name="failedParsingImportUriError">Impossible d’analyser l’URI d’importation</string>
     <string name="share">Partager</string>
@@ -77,7 +74,6 @@
     </plurals>
     <string name="groupsList">Groupes : <xliff:g>%s</xliff:g></string>
     <string name="accept">Accepter</string>
-    <string name="privacy_policy">Politique de confidentialité</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
     <string name="chooseImportType">Importer les données depuis</string>
     <string name="points">Points</string>
@@ -110,8 +106,6 @@
     <string name="barcodeId">Valeur du code-barres</string>
     <string name="unsupportedBarcodeType">Ce type de code-barres ne peut pas encore être affiché. Il sera peut-être pris en charge dans une version ultérieure de l’application.</string>
     <string name="wrongValueForBarcodeType">La valeur n’est pas valide pour le type de code-barres sélectionné</string>
-    <string name="app_resources">Ressources tierces : <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Bibliothèques tierces : <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="intent_import_card_from_url_share_multiple_text">Je veux partager des cartes avec vous</string>
     <string name="updateBarcodeQuestionText">Vous avez changé l’identifiant. Voulez-vous également mettre à jour le code-barres pour utiliser la même valeur \?</string>
     <string name="no">Non</string>
@@ -147,7 +141,6 @@
     </plurals>
     <string name="settings_system_locale">Système</string>
     <string name="settings_locale">Langue</string>
-    <string name="app_contributors">Rendu possible par : <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Ce groupe est vide</string>
     <string name="barcodeImageDescriptionWithType">Image <xliff:g>%s</xliff:g> code-barres</string>
     <string name="sort">Trier</string>
@@ -158,11 +151,9 @@
     <string name="sort_by_name">Nom</string>
     <string name="report_error">Signaler une erreur</string>
     <string name="and_data_usage">utilisation des données</string>
-    <string name="on_github">sur GitHub</string>
     <string name="source_repository">Dépôt source</string>
     <string name="license">Licence</string>
     <string name="help_translate_this_app">Aidez à traduire cette appli</string>
-    <string name="credits">Contributeurs</string>
     <string name="version_history">Historique des versions</string>
     <string name="exportPassword">Définissez un mot de passe pour protéger vos exportations (facultatif)</string>
     <string name="exportPasswordHint">Entrez le mot de passe</string>
@@ -241,8 +232,6 @@
     <string name="settings_category_title_general">Généraux</string>
     <string name="settings_category_title_privacy">Confidentialité</string>
     <string name="settings_disable_lockscreen_while_viewing_card_summary">Désactive le verrouillage de l\'écran pendant la visualisation d\'une carte</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os et contributeurs</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os et contributeurs</string>
     <string name="show_archived_cards">Afficher les cartes archivées</string>
     <string name="view_online">Voir en ligne</string>
     <string name="action_display_options">Options d’affichage</string>

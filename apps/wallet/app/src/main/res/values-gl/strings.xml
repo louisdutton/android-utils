@@ -49,14 +49,8 @@
     <string name="exportOptionExplanation">Os datos vanse escribir na localización que elixas</string>
     <string name="importOptionFilesystemTitle">Importar desde o sistema de ficheiros</string>
     <string name="about">Sobre</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os e colaboradoras</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os e colaboradoras</string>
-    <string name="app_copyright_old">Baseada en Loyalty Card Keychain\ncopyright © 2016–2020 Branden Archer</string>
     <string name="app_license">Software Libre con Copyleft, licenza GPLv3+</string>
     <string name="about_title_fmt">Sobre <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versión: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Bibliotecas alleas: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Recursos alleos: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Elixir código de barras</string>
     <string name="settings">Axustes</string>
     <string name="settings_theme">Decorado</string>
@@ -111,7 +105,6 @@
     <string name="balanceParsingFailed">Saldo non válido</string>
     <string name="chooseImportType">Importar datos desde</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
-    <string name="privacy_policy">Directiva de privacidade</string>
     <string name="accept">Aceptar</string>
     <string name="importCatima">Importar desde Catima</string>
     <string name="importCatimaMessage">Selecciona o ficheiro de exportación para importalo.\nCréao no menú Importar/Exportar noutra app Catima premendo en Exportar.</string>
@@ -145,7 +138,6 @@
     <string name="settings_oled_dark_summary">Diminúe o uso da batería nas pantallas OLED</string>
     <string name="settings_system_locale">Sistema</string>
     <string name="selectColor">Elixir cor</string>
-    <string name="app_contributors">Creada grazas a: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">Orde</string>
     <string name="showMoreInfo">Ver info</string>
     <string name="updateBalance">Actualizar saldo</string>
@@ -157,11 +149,9 @@
     <string name="reverse">…orde inversa</string>
     <string name="sort_by">Orde por</string>
     <string name="version_history">Historial das versións</string>
-    <string name="credits">Recoñecementos</string>
     <string name="help_translate_this_app">Axuda a traducir a app</string>
     <string name="license">Licenza</string>
     <string name="source_repository">Repositorio do código</string>
-    <string name="on_github">en GitHub</string>
     <string name="and_data_usage">e uso de datos</string>
     <string name="report_error">Informar de fallo</string>
     <string name="translate_platform">en Weblate</string>

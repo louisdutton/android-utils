@@ -3,7 +3,6 @@ androidGradlePlugin = "8.13.2"
 
 [libraries]
 android-tools = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
-huawei-publish = { module = "ru.cian:huawei-publish-gradle-plugin", version = "1.4.2" }
 android-tools-desugar = { module = "com.android.tools:desugar_jdk_libs", version = "2.1.5" }
 androidx-core = { module = "androidx.core:core", version = "1.17.0" }
 jetbrains-kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version = "2.2.21" }

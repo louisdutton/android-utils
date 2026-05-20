@@ -34,20 +34,10 @@
     <string name="country_status_download_failed">Aflaai het misluk</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Probeer weer</string>
-    <string name="about_menu_title">Oor CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Geen advertensies, geen nasporing, geen dataversameling</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Geen battery dreineer, werk vanlyn</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Vanlyn, vinnig en kompak</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Oopbrontoepassing geskep deur entoesiaste en vrywilligers.</string>
     <string name="close">Sluit</string>
     <string name="unsupported_phone">’n Apparatuurversnelde OpenGL is nodig vir die toep. U toestel word ongelukkig nie gesteun nie.</string>
     <string name="download">Laai af</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Ontkoppel die USB-kabel of gebruik ’n geheuekaart om CoMaps te gebruik</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Maak asb. eers spasie op die SD-kaart/USB-berging beskikbaar om die kaart te kan gebruik</string>
     <string name="download_resources">Voordat u die toep begin gebruik, moet u asb. die algemene wêreldkaart na u toestel aflaai. \nDit sal %s se spasie opneem.</string>
@@ -141,9 +131,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Notas</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">CoMaps-boekmerke is met u gedeel</string>
-    <string name="share_bookmarks_email_body">Hallo! \n \nMy boekmerke is aangeheg; open dit asb. in CoMaps. Indien dit nie geïnstalleer is nie, kan u dit hier aflaai: https://www.comaps.app/download/ \n \nGeniet dit om met CoMaps te reis!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Laai tans boekmerke</string>
     <!-- Kmz file successful loading -->
@@ -162,10 +149,6 @@
     <string name="cant_change_this_setting">Jammer, Kaartbergingsinstellings is tans gedeaktiveer.</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Die kaart word tans afgelaai.</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Kyk my huidige posisie in CoMaps! %1$s of %2$s Het u nie vanlyn kaarte nie? Laai hier af: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Hallo, sien my huidige ligging op die CoMaps-toep!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Deel</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -213,24 +196,9 @@
     <string name="menu">Kieslys</string>
     <!-- Text in menu -->
     <string name="website">Webwerf</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Nuus</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Terugvoer</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Gradeer die toep</string>
     <!-- Text in menu -->
-    <string name="help">Help</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Gereelde vrae</string>
     <!-- Button in the main menu -->
-    <string name="donate">Skenk</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Ondersteun die projek</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Kopiereg</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Rapporteer ’n fout</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Verbeter die pylrigting deur die selfoon in ’n agtbeweging te beweeg om die kompas te kalibreer.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -373,7 +341,6 @@
     <string name="editor_time_advanced">Gevorderde modus</string>
     <string name="editor_time_simple">Eenvoudige modus</string>
     <string name="editor_hours_closed">Nie-besigheidsure</string>
-    <string name="editor_example_values">Voorbeeldwaardes</string>
     <string name="editor_correct_mistake">Stel fout reg</string>
     <string name="editor_add_select_location">Kies Ligging</string>
     <string name="editor_report_problem_send_button">Stuur</string>
@@ -434,8 +401,6 @@
     <string name="message_invalid_feature_position">Geen voorwerp kan hier geplaas word nie</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Gemeenskap-geskepte OpenStreetMap-data vanaf %s. Kom meer te wete oor hoe om die kaart te redigeer en op te dateer by OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) is \'n gemeenskapsprojek om \'n gratis en oop kaart te bou. Dit is die hoofbron van kaartdata in CoMaps en werk soortgelyk aan Wikipedia. Jy kan plekke byvoeg of wysig en hulle word beskikbaar vir miljoene gebruikers regoor die wêreld. \nSluit aan by die gemeenskap en help om \'n beter kaart vir almal te maak!</string>
     <string name="login_to_make_edits_visible">Skep \'n OpenStreetMap-rekening of meld aan om jou kaartwysigings aan die wêreld te publiseer.</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d van %2$d</string>
@@ -448,8 +413,6 @@
     <string name="error_enter_correct_zip_code">Voer ’n geldige poskode in</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Nota aan OpenStreetMap-vrywilligers (opsioneel)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Beskryf foute in die kaart of wat nie met CoMaps geredigeer kan word nie</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Jou wysigings word opgelaai na die publieke <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a>-databasis. Moet asseblief nie persoonlike of kopiereginligting byvoeg nie.</string>
     <string name="editor_more_about_osm">Meer oor OpenStreetMap</string>
@@ -459,7 +422,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operateur: %s</string>
     <string name="editor_category_unsuitable_title">Kan u nie \'n geskikte kategorie vind nie?</string>
-    <string name="editor_category_unsuitable_text">CoMaps laat toe om slegs eenvoudige puntkategorieë by te voeg, dit beteken geen dorpe, paaie, mere, gebouomlynings, ens. Voeg asseblief sulke kategorieë direk by <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Gaan ons <a href="https://www.comaps.app/support/advanced-map-editing/">gids</a> na vir gedetailleerde stap-vir-stap-instruksies.</string>
     <string name="downloader_no_downloaded_maps_title">U het geen kaarte afgelaai nie</string>
     <string name="downloader_no_downloaded_maps_message">Laai kaarte af om die ligging te soek en vanlyn te navigeer.</string>
     <string name="current_location_unknown_error_title">Huidige ligging is onbekend.</string>
@@ -511,15 +473,11 @@
     <string name="mobile_data_option_ask">Vra altyd</string>
     <string name="traffic_update_maps_text">Kaarte moet bygewerk word om verkeersdata te vertoon.</string>
     <string name="big_font">Vergroot lettergrootte op kaart</string>
-    <string name="traffic_update_app">Werk CoMaps asb. by</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Verkeersdata is nie beskikbaar nie</string>
     <string name="enable_logging">Staan logboekinskrywing toe</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Algemene terugvoer</string>
     <string name="prefs_languages_information">Ons gebruik die TTS-stelsel vir steminstruksies. Talle Android-toestelle gebruik Google TTS; u kan dit aflaai of bywerk deur Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Vir sommige tale sal u ’n spraaksintetiseerder of bykomende taalpakket vanaf die toepwinkel (Google Play, Galaxy Store, App Gallery, FDroid) moet installeer. \nOpen u toestel se instellings → Taal en toevoer → Spraak → Teks na spraak afvoer. \nHier kan u instellings vir spraaksintetisering bestuur (bv. laai taalpakket vir vanlyn gebruik af) en kies ’n ander teks-na-spraak-enjin.</string>
-    <string name="prefs_languages_information_off_link">Sien hierdie gids vir meer inligting</string>
     <string name="transliteration_title">Transliterasie in Latynse alfabet</string>
     <string name="learn_more">Meer inligting</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -531,7 +489,6 @@
     <string name="placepage_remove_stop">Verwyder stop</string>
     <string name="placepage_add_stop">Voeg tussenstop toe</string>
     <string name="dialog_error_storage_title">Bergtoegangprobleem</string>
-    <string name="dialog_error_storage_message">Eksterne bergspasie is nie toeganklik nie. Die SD-kaart is dalk verwyder, beskadig, of die lêerstelsel is leesalleen. Gaan u SD-kaart na of kontak ons by support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Emuleer slegte bergspasie</string>
     <string name="error_enter_correct_name">Voer asb. ’n korrekte naam in</string>
     <string name="bookmark_lists">Lyste</string>
@@ -555,8 +512,6 @@
     <string name="restore">Stel terug</string>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Privaatheid</string>
-    <string name="privacy_policy">Privaatheidsbeleid</string>
-    <string name="terms_of_use">Gebruiksvoorwaardes</string>
     <string name="button_layer_traffic">Verkeer</string>
     <string name="subway">Moltrein</string>
     <string name="layers_title">Kaartstyle en -lae</string>
@@ -581,7 +536,6 @@
     <string name="power_managment_setting_never">Nooit</string>
     <string name="power_managment_setting_auto">Wanneer battery laag as</string>
     <string name="power_managment_setting_manual_max">Altyd</string>
-    <string name="enable_logging_warning_message">Aktiveer hierdie opsie tydelik om ’n gedetailleerde diagnosestaat van u probleem op te neem en handmatig na ons te stuur d.m.v. die “Rapporteer ’n fout” in die Help-dialoog. Sulke state kan liggingsinligting bevat.</string>
     <string name="driving_options_title">Ompadopsies</string>
     <string name="avoid_unpaved">Vermy grondpaaie</string>
     <string name="avoid_ferry">Vermy veerbootkruisings</string>
@@ -677,9 +631,6 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Kaartdata vanad OpenStreetMap</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Tik enige plek op die kaart om enigiets te kies. Tik lank om te versteek en om die koppelvlak terug te wys.</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Stap</string>
@@ -728,13 +679,8 @@
     <string name="edit_track">Wysig Roete</string>
     <string name="uri_open_location_failed">Geen toepassing geïnstalleer wat die ligging kan oopmaak nie</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="panoramax">Panoramax-prent</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Gestoor</string>
 </resources>

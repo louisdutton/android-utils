@@ -43,8 +43,6 @@ val VoiceInputAlternativeICComposing = SettingsKey(
  * This is a wrapper around InputConnection that works around wonky app behavior by avoiding use of
  * the actual composing API. When apps don't implement it correctly or do weird things around it,
  * letters and entire words can become duplicated, causing a poor user experience.
- * Related issue: https://github.com/futo-org/android-keyboard/issues/1519
- *
  * This wrapper implements setComposingText, setComposingRegion by keeping track of the state
  * internally and it ultimately issues commitText and deleteSurroundingText calls to the underlying
  * input connection. It can also use the buffering wrapper to further work around bugs. It makes

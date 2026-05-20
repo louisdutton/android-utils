@@ -20,11 +20,9 @@
       style="@style/MwmWidget.M3.Editor.CardView">
 
       <LinearLayout
-        android:id="@+id/examples"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true">
+        android:orientation="vertical">
           <com.google.android.material.textfield.TextInputLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -45,27 +43,6 @@
               tools:hint="hint"
               tools:text="trololo \ntrololo \ntrololo"/>
           </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-          android:id="@+id/tv__examples_title"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="?clickableBackground"
-          android:drawablePadding="@dimen/margin_base"
-          android:gravity="center_vertical"
-          android:padding="@dimen/margin_base"
-          android:text="@string/editor_example_values"
-          android:textAppearance="@style/MwmTextAppearance.Body3"
-          android:textColor="?colorSecondary"/>
-
-        <include layout="@layout/item_divider" />
-
-        <WebView
-          android:id="@+id/wv__examples"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/margin_base"/>
-
       </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

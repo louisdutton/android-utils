@@ -121,11 +121,6 @@
   <string name="theme_dynamic_dark">Dynamisch Donker</string>
   <string name="theme_dynamic_light">Dynamisch Licht</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Updatecontrole service</string>
-  <string name="autoupdater_update_available_title">Update Beschikbaar</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;Er is een update beschikbaar (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). Tik om te downloaden&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Afwijzen</string>
-  <string name="autoupdater_perform_update">Bijwerken</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">\"%1$s\" van suggesties uitsluiten?</string>
   <!-- Must be fairly short -->
@@ -136,68 +131,13 @@
   <string name="keyboard_version_status">Alpha</string>
   <string name="keyboard_switch_keyboard">Toetsenbord Wisselen</string>
   <string name="keyboard_language_settings">Instellingen</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Betaling</string>
-  <string name="payment_screen_title">Betaal voor FUTO Toetsenbord</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;U gebruikt FUTO Toetsenbord al &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; dagen. Als u deze app nuttig vindt, overweeg dan alstublieft om te betalen ter ondersteuning van de toekomstige ontwikkeling van FUTO-software.&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">Bedankt voor het uitproberen van FUTO Toetsenbord! Als u deze app nuttig vindt, overweeg dan alstublieft om te betalen ter ondersteuning van de toekomstige ontwikkeling van FUTO-software.</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO is toegewijd aan het maken van goede software die u niet misbruikt. Deze app zal u nooit advertenties tonen of uw persoonlijke gegevens verzamelen.</string>
-  <string name="payment_screen_sales_point_development_title">Duurzame Ontwikkeling</string>
-  <string name="payment_screen_sales_point_development_body">De missie van FUTO is dat open-source software en niet-malafide zakelijke praktijken een duurzame inkomstenbron worden voor projecten en hun ontwikkelaars. Om deze reden zijn we voorstander van gebruikers die daadwerkelijk betalen voor software.</string>
-  <string name="payment_screen_sales_point_privacy_title">Toewijding aan Privacy</string>
-  <string name="payment_screen_sales_point_privacy_body">Deze app zal u nooit advertenties tonen of uw gegevens verkopen. We zijn daar niet in geïnteresseerd.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Betaling is niet ondersteund op deze versie</string>
-  <string name="payment_screen_already_paid_title">Al betaald?</string>
-  <string name="payment_screen_already_paid_body">Als u al betaald heeft voor FUTO Toetsenbord of FUTO Steminvoer, tik dan hieronder.</string>
-  <string name="payment_screen_already_paid_button">Ik heb al betaald</string>
-  <string name="payment_screen_already_paid_confirmation">Bevestig uw keuze</string>
-  <string name="payment_screen_already_paid_confirmation_body">Weet u zeker dat u wilt bevestigen dat u al betaald heeft? Eenmaal bevestigd, wordt u niet meer gevraagd om opnieuw te betalen.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Ik heb al betaald</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Annuleren</string>
-  <string name="payment_screen_set_reminder_title">Nog niet klaar om te betalen?</string>
-  <string name="payment_screen_set_reminder_body">Dit verbergt de herinnering in het instellingenmenu voor de opgegeven periode.</string>
-  <string name="payment_screen_set_reminder_setter">Wanneer wilt u herinnerd worden?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">over 7 dagen</string>
-  <string name="payment_screen_set_reminder_setter_1_month">over 1 maand</string>
-  <string name="payment_screen_set_reminder_setter_6_months">over 6 maanden</string>
-  <string name="payment_screen_set_reminder_setter_next_century">volgende eeuw</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Bevestig herinnering</string>
-  <string name="payment_screen_other_options">Andere Opties</string>
-  <string name="payment_screen_need_help_title">Help</string>
-  <string name="payment_screen_need_help_subtitle">Hulp nodig? Bezoek onze website</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Betaal via Google Play (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + belasting)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;Betaal (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + belasting)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Meer opties</string>
-  <string name="payment_screen_payment_complete_title">Betaling Voltooid</string>
-  <string name="payment_screen_aftersales_title">Bedankt</string>
-  <string name="payment_screen_aftersales_title_pending">Betaling In Afwachting</string>
-  <string name="payment_screen_aftersales_paragraph_1">Bedankt voor uw aankoop van FUTO Toetsenbord!</string>
-  <string name="payment_screen_aftersales_paragraph_2">Uw aankoop zal de verdere ontwikkeling van FUTO Toetsenbord en andere FUTO-projecten ondersteunen.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">Uw betaling is nog in behandeling, maar zou binnenkort verwerkt moeten worden.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Als u net heeft betaald, kan uw betaling nog in verwerking zijn. U zou een e-mail met meer informatie moeten ontvangen.</string>
-  <string name="payment_screen_payment_failed_title">Betalingsfout</string>
-  <string name="payment_screen_payment_failed_body">Helaas is uw betaling om een of andere reden mislukt. Neem contact met ons op als u hulp nodig heeft. U kunt ons bereiken op keyboard@futo.org, met de knop hieronder, of via Feedback Delen in de Help.</string>
-  <string name="payment_screen_payment_failed_body_unconfident">Er kan een probleem zijn geweest met uw betaling. Als deze wel is doorgegaan, zou u een e-mail met een licentiesleutel moeten ontvangen. Neem contact met ons op als u hulp nodig heeft. U kunt ons bereiken op keyboard@futo.org, met de knop hieronder, of via Feedback Delen op het hoofdscherm.</string>
-  <string name="payment_screen_license_integrity_error">Licentie kon niet worden geverifieerd. Als u denkt dat dit een fout is, neem dan contact met ons op.</string>
-  <string name="payment_screen_continue_button">Doorgaan</string>
-  <string name="payment_unpaid_version_title">Onbetaald FUTO Toetsenbord</string>
-  <string name="payment_unpaid_version_indicator">Onbetaald</string>
-  <string name="payment_paid_version_indicator">Bedankt voor het gebruik van de betaalde versie van FUTO Toetsenbord!</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Updates Kennisgeving</string>
-  <string name="manual_update_notice_paragraph_1">Deze app maakt geen verbinding met het internet en kan geen automatische updates controleren. U kunt echter handmatig naar updates zoeken.</string>
-  <string name="manual_update_notice_paragraph_2">Gebruik F-Droid of Obtainium voor automatische updates. Bezoek keyboard.futo.org voor downloadopties.</string>
-  <string name="manual_update_notice_dev_paragraph">U gebruikt de ontwikkelversie van FUTO Toetsenbord. Bezoek keyboard.futo.org als u de stabiele versie wilt downloaden.</string>
-  <string name="manual_update_notice_visit_site_button">Bezoek</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Afwijzen</string>
   <!-- General settings strings -->
   <string name="settings_tip">Tip</string>
   <string name="settings_unknown_error_title">Onbekende Fout</string>
   <string name="settings_unknown_error_subtitle">Er is een onbekende fout opgetreden.</string>
   <string name="settings_try_typing_here">Probeer hier te typen…</string>
   <string name="settings_external_model_name">Extern geïmporteerd model</string>
-  <string name="settings_check_for_updates_manually">Handmatig naar updates zoeken</string>
   <string name="settings_update_available">Update Beschikbaar</string>
   <!-- When adding a new language -->
   <string name="language_settings_title">Talen &amp; Modellen</string>
@@ -216,27 +156,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">Ingebouwd Woordenboek</string>
   <string name="language_settings_resource_voice_input_selected">Wilt u het steminvoermodel terugzetten naar de standaardinstelling of vervangen door een ander bestand?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Er bestaat geen ingebouwd steminvoermodel voor deze taal, dus als u het verwijdert, stopt steminvoer met werken voor deze taal totdat u een ander model importeert!</string>
-  <string name="language_settings_resource_voice_input_selected_unset">U heeft geen aangepast steminvoermodel voor deze taal geconfigureerd. U kunt online downloads verkennen of er een importeren vanuit een bestand.</string>
   <string name="language_settings_resource_transformer_selected">Wilt u het transformer-model terugzetten naar de standaardinstelling of vervangen door een ander bestand?</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">Er bestaat geen ingebouwd transformer-model voor deze taal, dus als u het verwijdert, stoppen transformer-gebaseerde voorspellingen met werken voor deze taal totdat u een ander model importeert!</string>
-  <string name="language_settings_resource_transformer_selected_unset">U heeft geen aangepast transformer-model voor deze taal geconfigureerd. U kunt online downloads verkennen of er een importeren vanuit een bestand.</string>
   <string name="language_settings_resource_dictionary_selected">Wilt u het woordenboek terugzetten naar de standaardinstelling of vervangen door een ander bestand?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Er bestaat geen ingebouwd woordenboek voor deze taal, dus als u het verwijdert, stopt autocorrectie en voorspellingen met werken voor deze taal totdat u een ander woordenboek importeert!</string>
-  <string name="language_settings_resource_dictionary_selected_unset">U heeft geen aangepast woordenboek voor deze taal geconfigureerd. U kunt online downloads verkennen of er een importeren vanuit een bestand.</string>
   <string name="language_settings_resource_replace_button">Vervangen</string>
   <string name="language_settings_resource_import_file_button">Importeren</string>
   <string name="language_settings_resource_revert_to_default_button">Terugzetten naar Standaard</string>
   <string name="language_settings_resource_remove_button">Verwijderen</string>
-  <string name="language_settings_resource_explore_online_button">Verkennen</string>
   <string name="language_settings_remove_language_title">%1$s Verwijderen?</string>
   <string name="language_settings_remove_language_body">%1$s verwijderen, inclusief alle bijbehorende indelingen en aangepaste bronnen?</string>
   <string name="language_settings_remove_language_remove_button">Verwijderen</string>
   <string name="language_settings_remove_language_cancel_button">Annuleren</string>
   <string name="language_settings_other_options">Andere opties</string>
   <string name="language_settings_import_resource_from_file">Hulpmiddelbestand importeren</string>
-  <string name="language_settings_explore_voice_input_models_online">Verken steminvoermodellen</string>
-  <string name="language_settings_explore_dictionaries_online">Verken woordenboeken</string>
-  <string name="language_settings_explore_transformers_online">Verken transformer-modellen</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Steminvoermodel</string>
   <string name="file_kind_transformer_model">Transformer-model</string>
@@ -359,21 +292,6 @@
   <string name="prediction_settings_word_blacklist">Woorden Zwarte Lijst</string>
   <string name="prediction_settings_word_blacklist_add">Toevoegen aan zwarte lijst</string>
   <string name="prediction_settings_word_blacklist_none">Er zijn geen woorden op de zwarte lijst.</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Help &amp; Feedback</string>
-  <string name="help_menu_version_name">Versienaam: %1$s</string>
-  <string name="help_menu_version_code">Versiecode: %1$s</string>
-  <string name="help_menu_version_tip">We willen van u horen! Als u een probleem meldt, kan uw versie relevant zijn: v%1$s</string>
-  <string name="help_menu_documentation">Documentatie</string>
-  <string name="help_menu_documentation_subtitle">Leer meer over de functies en mogelijkheden van het toetsenbord</string>
-  <string name="help_menu_discord">Discord Server</string>
-  <string name="help_menu_discord_subtitle">Wil je praten maar houd je niet van Zulip? Chat hier</string>
-  <string name="help_menu_futo_chat">FUTO Chat</string>
-  <string name="help_menu_futo_chat_subtitle">Wil je praten maar houd je niet van Discord? Chat hier</string>
-  <string name="help_menu_github">Openbare probleemtracker</string>
-  <string name="help_menu_github_subtitle">Specifiek bug of functieaanvraag? Plaats hier</string>
-  <string name="help_menu_email">E-mail keyboard@futo.org</string>
-  <string name="help_menu_email_subtitle">Privéfeedback, hulp, of gebruik je GitHub niet? E-mail ons</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">Instelling - Stap 1</string>
   <string name="setup_step_2">Instelling - Stap 2</string>

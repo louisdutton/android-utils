@@ -7,7 +7,6 @@
     <string name="enter_group_name">그룹 이름 입력</string>
     <string name="settings_dark_theme">어두움</string>
     <string name="settings_light_theme">밝음</string>
-    <string name="debug_version_fmt">버전: <xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt"><xliff:g id="app_name">%s</xliff:g> 정보</string>
     <string name="settings_system_theme">시스템</string>
     <string name="settings_theme">테마</string>
@@ -87,7 +86,6 @@
     <string name="settings_locale">언어</string>
     <string name="settings_system_locale">시스템</string>
     <string name="selectColor">색상 선택</string>
-    <string name="app_contributors">제작 지원: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="showMoreInfo">정보 보기</string>
     <string name="updateBalance">잔액 업데이트</string>
     <string name="failedToRetrieveImageFile">이미지 파일을 검색하지 못했습니다</string>
@@ -96,7 +94,6 @@
     <string name="reverse">... 역순으로</string>
     <string name="sort_by">정렬 기준</string>
     <string name="version_history">버전 기록</string>
-    <string name="credits">학점</string>
     <string name="license">특허</string>
     <string name="source_repository">소스 저장소</string>
     <string name="and_data_usage">및 데이터 사용량</string>
@@ -123,7 +120,6 @@
     <string name="settings_keep_screen_on">화면 계속 켜기</string>
     <string name="unsupportedBarcodeType">이 바코드 유형은 아직 표시할 수 없습니다. 이후 버전의 앱에서 지원될 수 있습니다.</string>
     <string name="sort_by_expiry">만료</string>
-    <string name="on_github">GitHub에서</string>
     <string name="report_error">오류 신고</string>
     <string name="translate_platform">Weblate에서</string>
     <string name="shortcutSelectCard">카드 선택</string>
@@ -143,7 +139,6 @@
     <plurals name="selectedCardCount">
         <item quantity="other"><xliff:g>%d</xliff:g> 선택됨</item>
     </plurals>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">저작권 © 2019–<xliff:g>%d</xliff:g> Sylvia van Os 및 기여자</string>
     <string name="noCameraPermissionDirectToSystemSetting">바코드를 스캔하려면 Catima가 카메라에 접근해야 합니다. 권한 설정을 변경하려면 여기를 탭하세요.</string>
     <string name="exportOptionExplanation">데이터는 선택한 위치에 기록됩니다</string>
     <string name="app_license">GPL v3+로 라이선스된 카피레프트 자유 소프트웨어</string>
@@ -190,13 +185,9 @@
     <string name="barcodeImageDescriptionWithType">이미지 <xliff:g>%s</xliff:g> 바코드</string>
     <string name="photos">사진</string>
     <string name="storageReadPermissionRequired">이 작업에 필요한 저장소를 읽을 수 있는 권한…</string>
-    <string name="app_libraries">서드파티 라이브러리: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="cameraPermissionRequired">이 작업에 필요한 카메라 액세스 권한…</string>
     <string name="cameraPermissionDeniedTitle">카메라 접근 실패</string>
     <string name="importOptionFilesystemButton">파일 시스템에서</string>
-    <string name="app_copyright_old">Loyalty Card Keychain 기반
-\n저작권 © 2016–2020 Branden Archer</string>
-    <string name="app_resources">자유 타사 리소스: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="editGroup">그룹 편집: <xliff:g>%s</xliff:g></string>
     <string name="frontImageDescription">전면 사진</string>
     <string name="backImageDescription">후면 사진</string>
@@ -206,7 +197,6 @@
     <string name="newBalanceSentence">새 잔액: <xliff:g>%s</xliff:g></string>
     <string name="noGroupCards">이 그룹은 비어 있습니다</string>
     <string name="app_loyalty_card_keychain">로열티 카드 키체인</string>
-    <string name="privacy_policy">개인 정보 정책</string>
     <string name="importCatima">Catima에서 가져오기</string>
     <string name="importCatimaMessage">가져올 Catima에서 <i>catima.zip</i> 내보내기를 선택합니다. \n먼저 내보내기를 눌러 다른 Catima 앱의 가져오기/내보내기 메뉴에서 생성합니다.</string>
     <string name="importFidme">FidMe에서 가져오기</string>
@@ -222,7 +212,6 @@
     <string name="settings_disable_lockscreen_while_viewing_card_summary">카드가 보일 때 화면 잠금 방지</string>
     <string name="permissionReadCardsDescription">당신의 Catima 카드와 그에 대한 모든 세부 정보, 메모 및 이미지를 읽으세요</string>
     <string name="settings_oled_dark_summary">OLED 화면에서의 배터리 사용량 줄임</string>
-    <string name="app_copyright_short">저작권 © Sylvia van Os 및 기여자</string>
     <string name="settings_allow_content_provider_read_summary">접근을 위해서는 해당 앱에서 별도로 권한 요청을 해야 합니다</string>
     <string name="settings_allow_content_provider_read_title">다른 앱의 내 정보 접근 허용</string>
     <string name="permissionReadCardsLabel">Catima 카드 읽기</string>

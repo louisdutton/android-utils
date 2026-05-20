@@ -22,12 +22,10 @@ import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDispose
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
 import dev.octoshrimpy.quik.common.base.QkPresenter
 import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.makeToast
 import dev.octoshrimpy.quik.interactor.PerformBackup
-import dev.octoshrimpy.quik.manager.BillingManager
 import dev.octoshrimpy.quik.repository.BackupRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
@@ -37,10 +35,8 @@ import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
     private val backupRepo: BackupRepository,
-    private val billingManager: BillingManager,
     private val context: Context,
     private val dateFormatter: DateFormatter,
-    private val navigator: Navigator,
     private val performBackup: PerformBackup
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
@@ -55,8 +51,6 @@ class BackupPresenter @Inject constructor(
                 .distinctUntilChanged()
                 .subscribe { progress -> newState { copy(restoreProgress = progress) } }
 
-        disposables += billingManager.upgradeStatus
-                .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
     }
 
     override fun bindIntents(view: BackupView) {
@@ -70,11 +64,9 @@ class BackupPresenter @Inject constructor(
         view.restoreClicks()
                 .withLatestFrom(
                         backupRepo.getBackupProgress(),
-                        backupRepo.getRestoreProgress(),
-                        billingManager.upgradeStatus)
-                { _, backupProgress, restoreProgress, upgraded ->
+                        backupRepo.getRestoreProgress())
+                { _, backupProgress, restoreProgress ->
                     when {
-                        !upgraded -> context.makeToast(R.string.backup_restore_error_plus)
                         backupProgress.running -> context.makeToast(R.string.backup_restore_error_backup)
                         restoreProgress.running -> context.makeToast(R.string.backup_restore_error_restore)
                         else -> view.selectFile(backupRepo.getBackupPathUriForPicker())
@@ -84,15 +76,13 @@ class BackupPresenter @Inject constructor(
                 .subscribe()
 
         view.backupClicks()
-                .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
                 .autoDispose(view.scope())
-                .subscribe { upgraded ->
+                .subscribe {
                     when {
                         backupRepo.getBackupDocumentTree() == null -> {
                             newState { copy(showLocationRationale = true) }
                         }
-                        !upgraded -> navigator.showQksmsPlusActivity("backup_fab")
-                        upgraded -> performBackup.execute(Unit)
+                        else -> performBackup.execute(Unit)
                     }
                 }
 

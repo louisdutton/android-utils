@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">Η λήψη απέτυχε</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Δοκιμάστε ξανά</string>
-    <string name="about_menu_title">Σχετικά με το CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Εύκολο στη χρήση και προσεγμένο</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Δεν εξαντλεί τη μπαταρία, λειτουργεί εκτός σύνδεσης</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Εκτός σύνδεσης, γρήγορο και συμπαγές</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Εφαρμογή ανοιχτού κώδικα που δημιουργήθηκε από θιασώτες και εθελοντές.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Ρυθμίσεις τοποθεσίας</string>
     <string name="close">Κλείσιμο</string>
     <string name="unsupported_phone">Η εφαρμογή απαιτεί OpenGL με επιτάχυνση υλικού. Δυστυχώς, η συσκευή σας δεν το υποστηρίζει.</string>
     <string name="download">Λήψη</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Αποσυνδέστε το καλώδιο USB ή τοποθετήστε την κάρτα μνήμης για να χρησιμοποιήσετε το CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Ελευθερώσετε χώρο αποθήκευσης στην SD κάρτα/USB πρώτα προκειμένου να χρησιμοποιήσετε την εφαρμογή</string>
     <string name="download_resources">Πριν ξεκινήσετε τη χρήση της εφαρμογής, επιτρέψτε μας να κατεβάσουμε το γενικό παγκόσμιο χάρτη στη συσκευή σας. \nΘα χρησιμοποιήσει %s αποθηκευτικού χώρου.</string>
@@ -145,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Σημειώσεις</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Τα Αγαπημένα μου στο CoMaps</string>
-    <string name="share_bookmarks_email_body">Γειά σου! \n \nΣου επισυνάπτω τα Αγαπημένα μου. Παρακαλώ άνοιξε τα με το CoMaps. Αν δεν το έχεις εγκατεστημένο, μπορείς να το κατεβάσεις από εδώ: https://www.comaps.app/download/ \n \nΚαλή διασκέδαση ταξιδεύοντας με το CoMaps!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Φορτώνονται τα Αγαπημένα</string>
     <!-- Kmz file successful loading -->
@@ -166,10 +153,6 @@
     <string name="cant_change_this_setting">Λυπούμαστε, οι ρυθμίσεις αποθήκευσης χαρτών είναι προς το παρόν απενεργοποιημένες</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Η λήψη χάρτη βρίσκεται σε εξέλιξη</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Δες την τρέχουσα τοποθεσία μου στο CoMaps! %1$s ή %2$s Αν δεν έχεις τους χάρτες εκτός σύνδεσης, μπορείς να τους κατεβάσεις εδώ: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Γεια, δες την τρέχουσα τοποθεσία μου στο χάρτη του CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Κοινοποίηση</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -227,24 +210,9 @@
     <string name="menu">Μενού</string>
     <!-- Text in menu -->
     <string name="website">Ιστότοπος</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Νέα</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Σχόλια</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Βαθμολογήστε την εφαρμογή</string>
     <!-- Text in menu -->
-    <string name="help">Βοήθεια</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Συχνές ερωτήσεις</string>
     <!-- Button in the main menu -->
-    <string name="donate">Δωρεά</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Γίνετε εθελοντής και βελτιώστε το CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Πνευματικά δικαιώματα</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Αναφορά σφάλματος</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Βελτιώστε την κατεύθυνση των βελών μετακινώντας το τηλέφωνο με μια κίνηση σχήματος οκτώ για να καλιμπράρετε την πυξίδα.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -391,7 +359,6 @@
     <string name="editor_time_advanced">Αναλυτική Προβολή</string>
     <string name="editor_time_simple">Απλή προβολή</string>
     <string name="editor_hours_closed">Μη-εργάσιμες ώρες</string>
-    <string name="editor_example_values">Παραδείγματα</string>
     <string name="editor_correct_mistake">Διόρθωση λάθους</string>
     <string name="editor_add_select_location">Επιλέξτε τοποθεσία</string>
     <string name="editor_report_problem_send_button">Αποστολή</string>
@@ -452,8 +419,6 @@
     <string name="message_invalid_feature_position">Δε μπορεί να τοποθετηθεί αντικείμενο εδώ</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Δεδομένα OpenStreetMap που δημιουργήθηκαν από την κοινότητα στις %s. Μάθετε περισσότερα για τον τρόπο επεξεργασίας και ενημέρωσης του χάρτη στο OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">Το OpenStreetMap.org (OSM) είναι ένα κοινοτικό έργο για τη δημιουργία ενός ελεύθερου και ανοικτού χάρτη. Είναι η κύρια πηγή δεδομένων χάρτη στους CoMaps και λειτουργεί παρόμοια με τη Wikipedia. Μπορείτε να προσθέσετε ή να επεξεργαστείτε τοποθεσίες και αυτές γίνονται διαθέσιμες σε εκατομμύρια χρήστες σε όλο τον κόσμο. \nΕνταχθείτε στην κοινότητα και βοηθήστε να φτιάξουμε έναν καλύτερο χάρτη για όλους!</string>
     <string name="login_to_make_edits_visible">Δημιουργήστε έναν λογαριασμό OpenStreetMap ή συνδεθείτε για να δημοσιεύσετε τις επεξεργασίες του χάρτη σας στον κόσμο</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d από %2$d</string>
@@ -466,8 +431,6 @@
     <string name="error_enter_correct_zip_code">Εισάγετε έναν έγκυρο ταχυδρομικό κώδικα</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Σημείωση για τους εθελοντές του OpenStreetMap (προαιρετική)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Περιγράψτε λάθη στο χάρτη ή πράγματα που δεν μπορούν να επεξεργαστούν με τους CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Οι επεξεργασίες σας μεταφορτώνονται στη δημόσια βάση δεδομένων <a href="https://wiki.openstreetmap.org/wiki/El:About_OpenStreetMap">OpenStreetMap</a>. Παρακαλούμε μην προσθέτετε προσωπικές πληροφορίες ή πληροφορίες που προστατεύονται από πνευματικά δικαιώματα.</string>
     <string name="editor_more_about_osm">Περισσότερα σχετικά με το OpenStreetMap</string>
@@ -477,7 +440,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Χειριστής: %s</string>
     <string name="editor_category_unsuitable_title">Δεν μπορείτε να βρείτε την κατάλληλη κατηγορία;</string>
-    <string name="editor_category_unsuitable_text">Το CoMaps έχει τη δυνατότητα προσθήκης κατηγοριών απλών σημείων μόνο, δεν έχει τη δυνατότητα για προσθήκη πόλεων, δρόμων, λιμνών, περιγραμμάτων κτιρίων κ.λπ. Παρακαλούμε προσθέστε τέτοιες κατηγορίες απευθείας στο <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Ελέγξτε τον <a href="https://www.comaps.app/support/advanced-map-editing/">οδηγό μας</a> για λεπτομερείς οδηγίες βήμα προς βήμα.</string>
     <string name="downloader_no_downloaded_maps_title">Δεν έχετε κατεβάσει χάρτες</string>
     <string name="downloader_no_downloaded_maps_message">Κατεβάστε χάρτες για να κάνετε αναζήτηση και να πλοηγηθείτε χωρίς σύνδεση</string>
     <string name="current_location_unknown_error_title">Η τρέχουσα τοποθεσία είναι άγνωστη</string>
@@ -526,15 +488,11 @@
     <string name="mobile_data_option_ask">Να γίνεται πάντα ερώτηση</string>
     <string name="traffic_update_maps_text">Για να εμφανιστούν πληροφορίες για την κίνηση, πρέπει να ενημερωθούν οι χάρτες</string>
     <string name="big_font">Αύξηση μεγέθους γραμματοσειράς στο χάρτη</string>
-    <string name="traffic_update_app">Κάντε ενημέρωση του CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Οι πληροφορίες για την κίνηση δεν είναι διαθέσιμες</string>
     <string name="enable_logging">Ενεργοποίηση αρχείου καταγραφής</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Αποστολή σχολίων</string>
     <string name="prefs_languages_information">Χρησιμοποιούμε το σύστημα TTS για τις φωνητικές οδηγίες. Αρκετές συσκευές Android χρησιμοποιούν το Google TTS, μπορείτε να το κατεβάσετε ή να το ενημερώσετε από το Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Για μερικές γλώσσες θα χρειαστεί να εγκαταστήσετε συνθεσάιζερ ομιλίας ή κάποιο συμπληρωματικό πακέτο γλώσσας από το app store (Google Play, Galaxy Store, App Gallery, FDroid). \nΑνοίξτε τις Ρυθμίσεις της συσκευής σας → Γλώσσα και εισαγωγή → Ομιλία → Μετατροπή κειμένου σε ομιλία. \nΕδώ μπορείτε να διαχειριστείτε τις ρυθμίσεις της σύνθεσης ομιλίας (για παράδειγμα, μπορείτε να κατεβάσετε πακέτο γλώσσας για χρήση εκτός σύνδεσης) και να επιλέξετε άλλη μηχανή μετατροπής κειμένου σε ομιλία.</string>
-    <string name="prefs_languages_information_off_link">Για περισσότερες πληροφορίες δείτε αυτό τον οδηγό</string>
     <string name="transliteration_title">Μεταγραφή στο λατινικό αλφάβητο</string>
     <string name="learn_more">Μάθετε περισσότερα</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -546,7 +504,6 @@
     <string name="placepage_remove_stop">Αφαίρεση στάσης</string>
     <string name="placepage_add_stop">Προσθήκη στάσης</string>
     <string name="dialog_error_storage_title">Πρόβλημα πρόσβασης στον αποθηκευτικό χώρο</string>
-    <string name="dialog_error_storage_message">Ο εξωτερικός απθηκευτικός χώρος δεν είναι διαθέσιμος, πιθανότατα έχει αφαιρεθεί η κάρτα SD, είναι κατεστραμμένη ή το σύστημα αρχείων είναι μόνο για ανάγνωση. Ελέγξτε το και επικοινωνήστε μαζί μας στη διεύθυνση support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Εξομείωση κακού αποθηκευτικού χώρου</string>
     <string name="error_enter_correct_name">Εισάγετε ένα σωστό όνομα</string>
     <string name="bookmark_lists">Λίστες αγαπημένων</string>
@@ -582,8 +539,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Απόρρητο</string>
-    <string name="privacy_policy">Πολιτική απορρήτου</string>
-    <string name="terms_of_use">Όροι χρήσης</string>
     <string name="button_layer_traffic">Κίνηση</string>
     <string name="subway">Μετρό</string>
     <string name="layers_title">Στυλ χάρτη και επίπεδα</string>
@@ -608,7 +563,6 @@
     <string name="power_managment_setting_never">Ποτέ</string>
     <string name="power_managment_setting_auto">Όταν η μπαταρία είναι χαμηλή</string>
     <string name="power_managment_setting_manual_max">Πάντα</string>
-    <string name="enable_logging_warning_message">Αυτή η λειτουργία είναι ενεργοποιημένη για την καταγραφή ενεργειών για διαγνωστικούς σκοπούς. Αυτό βοηθά την ομάδα να εντοπίζει προβλήματα με την εφαρμογή. Να ενεργοποιείτε τη λειτουργία μόνο κατόπιν αιτήματος της υποστήριξης του CoMaps.</string>
     <string name="driving_options_title">Ρυθμίσεις δρομολόγησης</string>
     <string name="avoid_tolls">Αποφυγή διοδίων</string>
     <string name="avoid_unpaved">Αποφυγή χωματόδρομων</string>
@@ -711,33 +665,19 @@
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/El:Σχετικά_με_το_OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Σας ευχαριστούμε που χρησιμοποιείτε τους χάρτες μας που δημιουργήθηκαν από την κοινότητα!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Με τις δωρεές και την υποστήριξή σας, μπορούμε να δημιουργήσουμε τους καλύτερους χάρτες στον κόσμο!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Σας αρέσει η εφαρμογή μας; Παρακαλούμε κάντε μια δωρεά για να στηρίξετε την ανάπτυξη! Ακόμα δεν σας αρέσει; Ενημερώστε μας και θα το διορθώσουμε!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Εάν γνωρίζετε έναν προγραμματιστή λογισμικού, μπορείτε να του ζητήσετε να υλοποιήσει μια λειτουργία που χρειάζεστε.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Πατήστε οπουδήποτε στο χάρτη για να επιλέξετε οτιδήποτε. Πατήστε παρατεταμένα για να αποκρύψετε και να εμφανίσετε ξανά το περιβάλλον εργασίας.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Γνωρίζετε ότι μπορείτε να επιλέξετε την τρέχουσα τοποθεσία σας στο χάρτη;</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Μπορείτε να βοηθήσετε στη μετάφραση της εφαρμογής μας στη γλώσσα σας.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Η εφαρμογή μας έχει αναπτυχθεί από λίγους θιασώτες και την κοινότητα.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Μπορείτε εύκολα να διορθώσετε και να βελτιώσετε τα δεδομένα χάρτη.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Ο κύριος στόχος μας είναι να δημιουργήσουμε γρήγορους, εύχρηστους και με σεβασμό στην ιδιωτικότητα χάρτες που θα λατρέψετε.</string>
-    <string name="car_used_on_the_phone_screen">Αυτή τη στιγμή το CoMaps βρίσκεται στην οθόνη του κινητού</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Στην οθόνη του αυτοκινήτου</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Πεζοπορία</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -787,17 +727,12 @@
     <!-- preference string for using auto theme only in navigation mode -->
     <string name="wikimedia_commons">Κοινά της Wikimedia</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="level_value_generic">Όροφος: %s</string>
     <string name="miles_per_hour">μλ/ώ</string>
     <string name="minute">λεπ</string>
     <string name="day">μέρ</string>
     <string name="hour">ώ</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="panoramax">εικόνα Panoramax</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Αποθηκεύτηκε</string>
     <string name="opens_at">Ανοίγει στις %s</string>
     <string name="closes_at">Κλείνει στις %s</string>
@@ -810,7 +745,6 @@
     <string name="hours_confirmed_time_ago">Επιβεβαιώθηκε %s</string>
     <string name="existence_confirmed_time_ago">Ύπαρξη επιβεβαιώθηκε %s</string>
     <string name="editor_building_levels">Όροφοι (με το ισόγειο, χωρίς την ταράτσα)</string>
-    <string name="about_headline">Ανοιχτό έργο με την υποστήριξη της κοινότητας</string>
     <string name="offline_explanation_text">Χρειάζεται να ληφθεί ένας χάρτης για να δείτε και να πλοηγηθείτε την περιοχή.\nΚατεβάστε χάρτες για τις περιοχές που θέλετε να ταξιδέψετε.</string>
     <string name="avoid_steps">Αποφυγή σκαλοπατιών</string>
     <string name="avoid_paved">Αποφυγή στρωμένων δρόμων</string>
@@ -825,13 +759,11 @@
     <string name="pedestrian">Πεζός</string>
     <string name="bicycle">Ποδήλατο</string>
     <string name="bookmark_color">Χρώμα για Αγαπημένο</string>
-    <string name="about_help">Σχετικά &amp; Βοήθεια</string>
     <string name="open_now">Ανοιχτό τώρα</string>
     <string name="closed_now">Κλειστό τώρα</string>
     <string name="at">στις %s</string>
     <string name="share_track">Κοινοποίηση Ίχνους</string>
     <string name="delete_track_dialog_title">Διαγραφή %s;</string>
-    <string name="place_page_app_too_old_description">Τα τρέχοντα δεδομένα χάρτη σας είναι πολύ παλιά, παρακαλούμε ενημερώστε την εφαρμογή CoMaps.</string>
     <string name="editor_level">Όροφος (το 0 είναι το ισόγειο)</string>
     <string name="error_enter_correct_level">Εισάγετε έναν έγκυρο αριθμό ορόφου</string>
     <string name="editor_business_vacant_button">Η επιχείρηση είναι κενή</string>
@@ -850,7 +782,6 @@
     <string name="list_description_empty">Επεξεργαστείτε τη λίστα για να προσθέσετε περιγραφή</string>
     <string name="download_resources_custom_url_summary_none">Δεν έχει οριστεί</string>
     <string name="download_resources_custom_url_title">Προσαρμοσμένος διακομιστής χάρτη</string>
-    <string name="download_resources_custom_url_message">Παρακάμπτει τον προεπιλεγμένο διακομιστή λήψης χάρτη για τις λήψεις χαρτών. Αφήστε το κενό για να χρησιμοποιήσετε τον προεπιλεγμένο διακομιστή του CoMaps.</string>
     <string name="navigation_start_tts_message">"Εκκίνηση Πλοήγησης, γλώσσα φωνητικών οδηγιών: "</string>
     <string name="navigation_start_tts_disabled_message">Φωνητικές οδηγίες απενεργοποιημένες: δεν υπάρχει διαθέσιμη μηχανή TTS</string>
     <string name="pref_tts_no_system_tts_short">Δεν βρέθηκε μηχανή κείμενο-σε-ομιλία, ελέγξτε τις ρυθμίσεις της εφαρμογής</string>
@@ -883,7 +814,6 @@
     <string name="dialog_report_error_missing_folder">Η επιλεγμένη τοποθεσία αντιγράφου ασφαλείας δεν είναι διαθέσιμη ή εγγράψιμη. Παρακαλούμε επιλέξτε μια διαφορετική τοποθεσία.</string>
     <string name="prefs_speed_cameras_information">Οι προειδοποιήσεις καμερών ταχύτητας είναι απενεργοποιημένες σε χώρες όπου ειδοποιήσεις απαγορεύονται από τοπική νομοθεσία.</string>
     <string name="pref_backup_location_summary_initial">Παρακαλούμε επιλέξτε έναν φάκελο πρώτα και παραχωρήστε άδεια</string>
-    <string name="dialog_report_error_with_logs">Παρακαλούμε στείλτε μας μια αναφορά σφάλματος:\n - \"Ενεργοποίηση αρχείου καταγραφής\" στις ρυθμίσεις\n - κάντε αναπαραγωγή του προβλήματος\n - στην οθόνη \"Σχετικά &amp; Βοήθεια\" πατήστε το κουμπί \"Αναφορά σφάλματος\" και στείλτε μέσω email ή συνομιλία\n - απενεργοποιήστε την καταγραφή</string>
     <string name="pref_alt_map_lang_handling_ignore_alternatives">Να μην χρησιμοποιούνται εναλλακτικές</string>
     <string name="pref_alt_map_lang_handling">Εναλλακτικές γλώσσες χάρτη</string>
     <string name="pref_alt_map_lang_handling_system_order">Χρήση με σειρά συστήματος</string>
@@ -896,7 +826,6 @@
     <string name="route_finished">Διαδρομή ολοκληρώθηκε</string>
     <string name="not_following_route">Δεν ακολουθείται η διαδρομή</string>
     <string name="pref_openexternallinks_title">Αυτόματο άνοιγμα τρίτων συνδέσμων</string>
-    <string name="pref_openexternallinks_summary">Άνοιγμα τρίτων συνδέσμων στο CoMaps από προεπιλογή</string>
     <string name="destination">Προορισμός</string>
     <string name="stop">Στάση</string>
     <string name="mb_downloaded">%1$d MB / %2$d MB</string>

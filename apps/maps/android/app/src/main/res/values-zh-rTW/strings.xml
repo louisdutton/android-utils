@@ -34,24 +34,12 @@
     <string name="country_status_download_failed">下載失敗</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">再試一次</string>
-    <string name="about_menu_title">關於 CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_headline">由社群推動的開放項目</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• 使用方便，外觀精美</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">•注重隱私，毫無廣告</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• 離線、快速、精簡</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">完全開源、決策問責、財務透明的非營利應用。</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">位置設定</string>
     <string name="close">關閉</string>
     <string name="unsupported_phone">該應用程式需要硬體加速的 OpenGL。很遺憾，您的裝置不受支援。</string>
     <string name="download">下載</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">請拔除 USB 線或插入 SD 卡以使用 CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">請先釋放一些 SD 卡 / USB 儲存空間以便使用 CoMaps</string>
     <string name="download_resources">在您開始使用此應用程式之前，請下載全球地圖到您的裝置\n它將使用 %s 的儲存空間。</string>
@@ -147,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">註釋</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">我的 CoMaps 最愛</string>
-    <string name="share_bookmarks_email_body">您好！\n\n附件是我的最愛，請在 CoMaps 中打開。如果您沒有安裝 CoMaps，可以在這裡下載: https://www.comaps.app/download/\n\n祝您使用 CoMaps 旅行愉快！</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">正在載入最愛</string>
     <!-- Kmz file successful loading -->
@@ -168,10 +153,6 @@
     <string name="cant_change_this_setting">很抱歉，地圖儲存設定目前已停用</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">地圖下載進行中</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">嘿，在 CoMaps 查看我的目前的位置吧！請打開 %1$s 或 %2$s 鏈接，還沒安裝離線地圖？在此下載: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">嗨，到 CoMaps 查看我目前的位置！</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">分享</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -229,26 +210,11 @@
     <string name="menu">菜單</string>
     <!-- Text in menu -->
     <string name="website">網站</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">新聞</string>
     <!-- Text in menu -->
     <!-- Text in menu -->
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">回饋</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">為我們評分</string>
     <!-- Text in menu -->
-    <string name="help">幫助</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">問題和解答</string>
     <!-- Button in the main menu -->
-    <string name="donate">捐助我們</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">志工與改進 CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">版權</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">報告問題</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">以 8 字形移動手機來改善箭頭方向，以校準羅盤。</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -397,7 +363,6 @@
     <string name="editor_time_advanced">高級模式</string>
     <string name="editor_time_simple">簡易模式</string>
     <string name="editor_hours_closed">休息時間</string>
-    <string name="editor_example_values">範例值</string>
     <string name="editor_correct_mistake">修正錯誤</string>
     <string name="editor_add_select_location">選擇位置</string>
     <string name="editor_report_problem_send_button">傳送</string>
@@ -460,8 +425,6 @@
     <string name="message_invalid_feature_position">地點無法放置在這裡</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">截至 %s 的社群創建的 OpenStreetMap 資料。請訪問 OpenStreetMap.org 以了解有關如何編輯和更新地圖的更多資訊</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org（OSM）是一個建立免費開放地圖的社群專案。 它是 CoMaps 中地圖資料的主要來源，其工作原理類似於維基百科。 您可以新增或編輯地點，可供全世界數以百萬計的使用者使用並受益。\n 加入OSM，讓我們共繪更優質的地圖吧！</string>
     <string name="login_to_make_edits_visible">建立 OpenStreetMap 帳戶或登入以向全世界發布您的地圖編輯</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d / %2$d</string>
@@ -474,8 +437,6 @@
     <string name="error_enter_correct_zip_code">輸入有效的郵遞區號</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">OpenStreetMap 志工注意事項（可選）</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">描述地圖中的錯誤或無法使用 CoMaps 編輯的內容</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">您的編輯內容將上傳至公用 <a href="https://wiki.openstreetmap.org/wiki/Zh-hant:關於OpenStreetMap">OpenStreetMap</a> 資料庫。請不要添加個人或版權資訊。</string>
     <string name="editor_more_about_osm">關於 OpenStreetMap 的更多資訊</string>
@@ -485,7 +446,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">操作員: %s</string>
     <string name="editor_category_unsuitable_title">找不到合適的類別？</string>
-    <string name="editor_category_unsuitable_text">CoMaps 只允許加入簡單的點類別，即無法添加城鎮、道路、湖泊、建築輪廓等類別。請直接向 <a href="https://www.openstreetmap.org">OpenStreetMap.org</a> 新增此類類別。請查看我們的<a href="https://www.comaps.app/support/advanced-map-editing/">指南</a>，以了解詳細的步驟說明。</string>
     <string name="downloader_no_downloaded_maps_title">您尚未下載任何地圖</string>
     <string name="downloader_no_downloaded_maps_message">下載地圖來尋找位置和離線瀏覽</string>
     <string name="current_location_unknown_error_title">目前位置未知</string>
@@ -538,15 +498,11 @@
     <string name="mobile_data_option_ask">一律詢問</string>
     <string name="traffic_update_maps_text">若要顯示交通資料，必須更新地圖</string>
     <string name="big_font">增加地圖上的字體大小</string>
-    <string name="traffic_update_app">請更新 CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">交通資訊不可用</string>
     <string name="enable_logging">啟用日誌記錄</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">一般反應</string>
     <string name="prefs_languages_information">我們的語音導航使用“文字轉語音”系統。許多 Android 裝置使用 Google 的文字轉語音系統，您可以從 Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts) 下載或更新這一功能</string>
     <string name="prefs_languages_information_off">某些語言需要從應用商店（Google Play、三星Galaxy Store、華為應用市場、F-Droid）安裝相關的語音合成器或語言套件，才能使用此功能。\n打開您的裝置的設定 → 語言和輸入法 → 語音 → 文字轉語音 (TTS) 輸出\n您可以在這裡管理語音合成的設定（例如，下載語言套件供離線使用）和選擇其他 TTS 引擎。</string>
-    <string name="prefs_languages_information_off_link">如需瞭解更多資訊，請參閱此指南</string>
     <string name="transliteration_title">拉丁字母音譯</string>
     <string name="learn_more">瞭解更多資訊</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -558,7 +514,6 @@
     <string name="placepage_remove_stop">刪除停止</string>
     <string name="placepage_add_stop">新增中途點</string>
     <string name="dialog_error_storage_title">儲存空間存儲問題</string>
-    <string name="dialog_error_storage_message">外部儲存空間不可用，很可能是因為 SD 卡已移除、毀損，或檔案系統處於唯讀狀態。請進行檢查，然後透過 support@comaps.app 聯絡我們</string>
     <string name="setting_emulate_bad_storage">模擬不良儲存空間</string>
     <string name="error_enter_correct_name">請輸入正確的名稱</string>
     <string name="bookmark_lists">最愛列表</string>
@@ -591,8 +546,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">隱私</string>
-    <string name="privacy_policy">隱私政策</string>
-    <string name="terms_of_use">使用條款</string>
     <string name="button_layer_traffic">路況</string>
     <string name="subway">捷運</string>
     <string name="layers_title">地圖樣式和圖層</string>
@@ -617,7 +570,6 @@
     <string name="power_managment_setting_never">從不</string>
     <string name="power_managment_setting_auto">當電量低時</string>
     <string name="power_managment_setting_manual_max">最大程度省電</string>
-    <string name="enable_logging_warning_message">暫時啟用此選項，以便使用“報告問題”功能在幫助對話框中記錄並手動發送詳細的診斷日誌給我們。日誌可能包含位置資訊。</string>
     <string name="driving_options_title">繞行設定</string>
     <string name="avoid_tolls">避開收費公路</string>
     <string name="avoid_unpaved">避開無鋪面道路</string>
@@ -717,38 +669,22 @@
     <string name="change_map_locale">地圖語言</string>
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">地圖資料來自 OpenStreetMap</string>
-    <!-- Translated CoMaps site, add new translations here: https://translate.codeberg.org/projects/comaps/website -->
-    <string name="translated_om_site_url">https://comaps.app/zh-Hant/</string>
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Zh-hant:關於OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">感謝您使用我們社區構建的地圖！</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">有了您的捐贈和支持，我們可以創造世界上最好的地圖！</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">您喜歡我們的應用嗎？請捐款以支持發展！還不喜歡嗎？請告訴我們，我們會修復您提到的問題！</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">如果您認識軟體開發人員，您可以要求他實現您需要的功能。</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">點擊地圖上的任何位置即可選擇任何內容。長按可隱藏和顯示介面。</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">您知道您可以在地圖上選擇您目前的位置嗎？</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">您可以幫助將我們的應用程序翻譯成您的語言。</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">我們的應用程序是由一些愛好者和社區開發的。</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">您可以輕鬆修復和改進地圖數據。</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">我們的主要目標是構建您會喜歡的快速、注重隱私、易於使用的地圖。</string>
-    <string name="car_used_on_the_phone_screen">您現在正在手機螢幕上使用 CoMaps</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">轉到汽車螢幕</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">徒步旅行</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -796,11 +732,7 @@
     <string name="edit_track">編輯軌跡</string>
     <string name="uri_open_location_failed">沒有安裝可以打開該位置的應用程式</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="app_site_url">https://comaps.app/zh-Hant/</string>
     <string name="saved">已儲存</string>
     <string name="error_enter_correct_fediverse_page">請輸入有效的 Mastodon 使用者名稱或網址</string>
     <string name="error_enter_correct_bluesky_page">請輸入有效的 Bluesky 使用者名稱或網址</string>
@@ -820,11 +752,9 @@
     <string name="closed_now">現已打烊</string>
     <string name="open_now">營業中</string>
     <string name="pref_backup_location_summary_initial">請先選擇資料夾並授予權限</string>
-    <string name="about_help">關於和幫助</string>
     <string name="pref_backup_summary">自動備份至您裝置上的資料夾</string>
     <string name="pref_backup_history_title">需要備份的數目</string>
     <string name="dialog_report_error_missing_folder">選擇的備份位置無法使用或是無法寫入，請選擇另外的位置。</string>
-    <string name="dialog_report_error_with_logs">請寄送錯誤報告：\n\n - 設定中\"啟動記錄\"\n\n - 重現問題\n\n - 在\"關於&amp;說明\"畫面按\"回報臭蟲\"按鈕以及透過電子郵件傳送或聊天\n\n - 關閉記錄</string>
     <string name="pref_backup_now_title">立刻備份</string>
     <string name="pref_backup_now_summary">立即建立備份</string>
     <string name="pref_backup_now_summary_progress">備份中…</string>
@@ -854,7 +784,6 @@
     <string name="editor_submit">提交</string>
     <string name="place_page_map_too_old_title">地圖資料已過時</string>
     <string name="place_page_map_too_old_description">你目前的地圖資料非常舊，請更新地圖。</string>
-    <string name="place_page_app_too_old_description">你目前的地圖資滿斗相當舊，請更新 CoMaps app。</string>
     <string name="place_page_update_too_old_map">更新地圖區域</string>
     <string name="place_page_too_old_to_edit">目前因為地圖資料太舊而關閉開放街圖編輯功能。</string>
     <string name="osm_note_hint">或是，其他的作為為留下註解讓開放街圖社群能夠新增或是修正這邊該地點。</string>
@@ -892,7 +821,6 @@
     <string name="list_description_empty">編輯清單來增加描述</string>
     <string name="advanced">進階</string>
     <string name="download_resources_custom_url_title">自訂地圖伺服器</string>
-    <string name="download_resources_custom_url_message">覆寫下載地圖資料的預設地圖下載伺服器。留空則表示使用 CoMaps 預設伺服器。</string>
     <string name="download_resources_custom_url_summary_none">還沒設定</string>
     <string name="download_resources_custom_url_error_scheme">請輸入 http:// 或是 https:// 開頭的網址</string>
     <string name="building_route">建構導航…</string>

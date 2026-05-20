@@ -16,7 +16,6 @@ import org.futo.inputmethod.latin.ReadOnlyBinaryDictionary
 import org.futo.inputmethod.latin.Subtypes
 import org.futo.inputmethod.latin.localeFromString
 import org.futo.inputmethod.latin.utils.Dictionaries
-import org.futo.inputmethod.updates.openURI
 import org.futo.voiceinput.shared.BUILTIN_ENGLISH_MODEL
 import org.futo.voiceinput.shared.types.ModelFileFile
 import org.futo.voiceinput.shared.types.ModelLoader
@@ -35,16 +34,7 @@ enum class FileKind {
     VoiceInput,
     Transformer,
     Dictionary,
-    Invalid;
-
-    fun getAddonUrlForLocale(locale: Locale?): String {
-        return when(this) {
-            VoiceInput -> "https://keyboard.futo.org/voice-input-models?locale=${locale?.toLanguageTag() ?: ""}"
-            Transformer -> "https://keyboard.futo.org/models?locale=${locale?.toLanguageTag() ?: ""}"
-            Dictionary -> "https://keyboard.futo.org/dictionaries?locale=${locale?.toLanguageTag() ?: ""}"
-            Invalid -> "https://keyboard.futo.org/"
-        }
-    }
+    Invalid
 }
 
 fun FileKind.preferenceKeyFor(locale: String): Preferences.Key<String> {
@@ -231,8 +221,7 @@ object MissingDictionaryHelper {
         }
 
         override fun onOpen(context: Context) {
-            resetNotice()
-            context.openURI(FileKind.Dictionary.getAddonUrlForLocale(locale), true)
+            onDismiss(context, false)
         }
     }
 }

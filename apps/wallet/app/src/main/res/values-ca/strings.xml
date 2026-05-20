@@ -23,10 +23,7 @@
     <string name="unarchive">Desarxivar</string>
     <string name="settings_locale">Idioma</string>
     <string name="field_must_not_be_empty">El camp no pot estar buit</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os i col·laboradors</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os i col·laboradors</string>
     <string name="app_license">Programari lliure Copyleft, licència GPLv3+</string>
-    <string name="app_resources">Recursos de tercers: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="thumbnailDescription">Miniatura</string>
     <string name="starImage">Estrella de preferides</string>
     <string name="settings">Configuració</string>
@@ -107,7 +104,6 @@
     <string name="takePhoto">Fer una foto</string>
     <string name="help_translate_this_app">Ajuda a traduïr aquesta app</string>
     <string name="license">Llicència</string>
-    <string name="credits">Crèdits</string>
     <string name="unarchived">Targeta desarxivades</string>
     <string name="failedLaunchingPhotoPicker">No s\'ha pogut trobar una aplicació de galeria de fotos</string>
     <string name="previousCard">Anterior</string>
@@ -123,7 +119,6 @@
     <string name="amountParsingFailed">Import invàlid</string>
     <string name="barcodeImageDescriptionWithType">Codi de barres <xliff:g>%s</xliff:g></string>
     <string name="about_title_fmt">Sobre <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versió: <xliff:g id="version">%s</xliff:g></string>
     <string name="settings_display_barcode_max_brightness_summary">Alguns escàners ho necesiten</string>
     <string name="settings_keep_screen_on">Mantenir la pantalla encesa</string>
     <string name="settings_keep_screen_on_summary">Desactiva el bloqueix de la pantalla mentre mostra una targeta</string>
@@ -140,7 +135,6 @@
     <string name="settings_oled_dark">Negre pur en el tema fosc</string>
     <string name="selectColor">Sel•leccioni el color</string>
     <string name="setIcon">Setegi la miniatura</string>
-    <string name="app_contributors">Fet possible per: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="updateBalance">Actualitzar el balanç</string>
     <string name="sort_by_name">Nom</string>
     <string name="archive">Arxivar</string>
@@ -172,13 +166,11 @@
     <string name="starred">Preferides</string>
     <string name="deleteConfirmationGroup">Vols eliminar aquest grup?</string>
     <string name="removeImage">Eliminar imatge</string>
-    <string name="app_libraries">Llibreries de tercers: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="settings_display_barcode_max_brightness">Màxima iluminació</string>
     <string name="manually_enter_barcode_instructions">Introdueixi el ID de la targeta manualment i trii un codi de barres que s\'assembli al de la seva targeta.</string>
     <string name="exportPasswordHint">Introdueixi el password</string>
     <string name="backImageDescription">Imatge posterior</string>
     <string name="source_repository">Repositori font</string>
-    <string name="on_github">al Github</string>
     <string name="include_if_asking_support">Si vol demanar suport tècnic, inclogui la següent informació:</string>
     <string name="newBalanceSentence">Nou balanç: <xliff:g>%s</xliff:g></string>
     <string name="openBackImageInGalleryApp">Obrir la imatge posterior a l\'app de la galeria</string>
@@ -243,7 +235,6 @@
     <string name="cameraPermissionDeniedTitle">No s\'ha pogut accedir a la càmera</string>
     <string name="noCameraPermissionDirectToSystemSetting">Per escanejar codis de barres, Catima necessitarà accés a la teva càmera. Toca aquí per canviar la configuració dels permisos.</string>
     <string name="about">Sobre</string>
-    <string name="app_copyright_old">Clauer basat en na Loyalty Card Keychain\ncopyright © 2016–2020 Branden Archer</string>
     <string name="addManually">Introduïu el codi de barres manualment</string>
     <string name="addFromImage">Seleccioneu una imatge de la galeria</string>
     <string name="groupsList">Grups: <xliff:g>%s</xliff:g></string>

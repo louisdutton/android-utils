@@ -150,11 +150,6 @@
   <string name="theme_dynamic_dark">Динамічний темний</string>
   <string name="theme_dynamic_light">Динамічний світлий</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Служба перевірки оновлень</string>
-  <string name="autoupdater_update_available_title">Доступне оновлення</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;Доступне оновлення (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). Натисніть, щоб завантажити&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Відхилити</string>
-  <string name="autoupdater_perform_update">Оновити</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">Відхилити пропозицію \"%1$s\"?</string>
   <!-- Must be fairly short -->
@@ -165,7 +160,6 @@
   <string name="keyboard_version_status">Альфа</string>
   <string name="keyboard_switch_keyboard">Перемкнути клавіатуру</string>
   <string name="keyboard_language_settings">Налаштування</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">Натисніть, щоби перевірити наявність оновлень, або перевірте в налаштуваннях.</string>
   <!--
     Talkback descriptions (screen readers)
 
@@ -196,68 +190,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Згорнути</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Оплата</string>
-  <string name="payment_screen_title">Оплатити FUTO Клавіатуру</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;Ви користуєтеся FUTO Клавіатурою вже &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; днів. Якщо ви вважаєте цей застосунок корисним, розгляньте можливість оплати для підтримки подальшого розвитку програмного забезпечення FUTO.&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">Дякуємо, що спробували FUTO Клавіатуру! Якщо ви вважаєте цей застосунок корисним, розгляньте можливість оплати для підтримки подальшого розвитку програмного забезпечення FUTO.</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO прагне створювати якісне програмне забезпечення, яке не зловживає вами. Цей застосунок ніколи не показуватиме вам рекламу або не збиратиме ваші особисті дані.</string>
-  <string name="payment_screen_sales_point_development_title">Сталий розвиток</string>
-  <string name="payment_screen_sales_point_development_body">Місія FUTO полягає в тому, щоб програмне забезпечення з відкритим кодом та добросовісні бізнес-практики стали сталим джерелом доходу для проєктів та їхніх розробників. З цієї причини ми підтримуємо ідею, що користувачі повинні платити за програмне забезпечення.</string>
-  <string name="payment_screen_sales_point_privacy_title">"Зобов\'язання щодо приватності"</string>
-  <string name="payment_screen_sales_point_privacy_body">Цей застосунок ніколи не показуватиме вам рекламу або не продаватиме ваші дані. Ми не займаємося цим бізнесом.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Оплата не підтримується в цій версії</string>
-  <string name="payment_screen_already_paid_title">Вже оплатили?</string>
-  <string name="payment_screen_already_paid_body">Якщо ви вже оплатили FUTO Клавіатуру або FUTO Голосовий ввід, натисніть нижче.</string>
-  <string name="payment_screen_already_paid_button">Я вже оплатив</string>
-  <string name="payment_screen_already_paid_confirmation">Підтвердьте свій вибір</string>
-  <string name="payment_screen_already_paid_confirmation_body">Ви впевнені, що хочете підтвердити, що вже оплатили? Після підтвердження вас більше не запитуватимуть про оплату.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Я вже оплатив</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Скасувати</string>
-  <string name="payment_screen_set_reminder_title">Ще не готові платити?</string>
-  <string name="payment_screen_set_reminder_body">Це приховає нагадування в екрані налаштувань на вказаний період днів.</string>
-  <string name="payment_screen_set_reminder_setter">Коли ви хочете отримати нагадування?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">через 7 днів</string>
-  <string name="payment_screen_set_reminder_setter_1_month">через 1 місяць</string>
-  <string name="payment_screen_set_reminder_setter_6_months">через 6 місяців</string>
-  <string name="payment_screen_set_reminder_setter_next_century">в наступному столітті</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Підтвердити нагадування</string>
-  <string name="payment_screen_other_options">Інші варіанти</string>
-  <string name="payment_screen_need_help_title">Допомога</string>
-  <string name="payment_screen_need_help_subtitle">Потрібна допомога? Відвідайте наш вебсайт</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Оплатити через Google Play (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + податок)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;Оплатити (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + податок)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Більше варіантів</string>
-  <string name="payment_screen_payment_complete_title">Оплата завершена</string>
-  <string name="payment_screen_aftersales_title">Дякуємо</string>
-  <string name="payment_screen_aftersales_title_pending">Оплата в обробці</string>
-  <string name="payment_screen_aftersales_paragraph_1">Дякуємо за покупку FUTO Клавіатури!</string>
-  <string name="payment_screen_aftersales_paragraph_2">Ваша покупка допоможе в подальшому розвитку FUTO Клавіатури та інших проєктів FUTO.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">Ваша оплата ще в обробці, але вона повинна пройти незабаром.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Якщо ви щойно оплатили, ваша оплата може ще оброблятися, ви повинні отримати лист з додатковою інформацією.</string>
-  <string name="payment_screen_payment_failed_title">Помилка оплати</string>
-  <string name="payment_screen_payment_failed_body">"На жаль, ваша оплата не пройшла з тієї чи іншої причини. Зв\'яжіться з нами, якщо вам потрібна допомога. Ви можете зв\'язатися з нами за адресою keyboard@futo.org, за допомогою кнопки нижче або через «Надіслати відгук» у розділі «Допомога»."</string>
-  <string name="payment_screen_payment_failed_body_unconfident">"Можливо, виникла проблема з вашою оплатою. Якщо вона пройшла, ви повинні отримати лист з ліцензійним ключем. Зв\'яжіться з нами, якщо вам потрібна допомога. Ви можете зв\'язатися з нами за адресою keyboard@futo.org, за допомогою кнопки нижче або через «Поділитися відгуком« на головному екрані."</string>
-  <string name="payment_screen_license_integrity_error">"Не вдалося перевірити ліцензію. Якщо ви вважаєте, що це помилка, зв\'яжіться з нами."</string>
-  <string name="payment_screen_continue_button">Продовжити</string>
-  <string name="payment_unpaid_version_title">Неоплачена FUTO Клавіатура</string>
-  <string name="payment_unpaid_version_indicator">Неоплачена</string>
-  <string name="payment_paid_version_indicator">Дякуємо за використання платної версії FUTO Клавіатури!</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Повідомлення про оновлення</string>
-  <string name="manual_update_notice_paragraph_1">Цей застосунок не під\'єднюється до мережі й не зможе перевіряти автоматичні оновлення. Проте ви можете перевірити оновлення вручну.</string>
-  <string name="manual_update_notice_paragraph_2">Використовуйте F-Droid або Obtainium для автоматичних оновлень. Відвідайте keyboard.futo.org для варіантів завантаження.</string>
-  <string name="manual_update_notice_dev_paragraph">Ви використовуєте розробницьку версію FUTO Клавіатури. Відвідайте keyboard.futo.org, якщо хочете завантажити стабільну версію.</string>
-  <string name="manual_update_notice_visit_site_button">Відвідати</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Відхилити</string>
   <!-- General settings strings -->
   <string name="settings_tip">Порада</string>
   <string name="settings_unknown_error_title">Невідома помилка</string>
   <string name="settings_unknown_error_subtitle">Виникла невідома помилка.</string>
   <string name="settings_try_typing_here">Спробуйте ввести текст тут…</string>
   <string name="settings_external_model_name">Екстернально імпортована модель</string>
-  <string name="settings_check_for_updates_manually">Перевірити оновлення вручну</string>
   <string name="settings_update_available">Доступне оновлення</string>
   <!--
     May be translated as "Start", "All", etc. This is the starting menu where all settings live.
@@ -295,27 +234,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">Вбудований словник</string>
   <string name="language_settings_resource_voice_input_selected">Бажаєте повернути модель голосового вводу до стандартної, або замінити її на інший файл?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Для цієї мови не існує вбудованої моделі голосового вводу, тому якщо ви її видалите, голосовий ввід перестане працювати для цієї мови, поки ви не імпортуєте іншу модель!</string>
-  <string name="language_settings_resource_voice_input_selected_unset">Ви не налаштували власну модель голосового вводу для цієї мови. Ви можете знайти завантаження в Інтернеті або імпортувати одну з файлу.</string>
   <string name="language_settings_resource_transformer_selected">Бажаєте повернути модель трансформера до стандартної, або замінити її на інший файл?</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">Для цієї мови не існує вбудованої моделі трансформера, тому якщо ви її видалите, прогнози на основі трансформера перестануть працювати для цієї мови, поки ви не імпортуєте іншу модель!</string>
-  <string name="language_settings_resource_transformer_selected_unset">Ви не налаштували власну модель трансформера для цієї мови. Ви можете знайти завантаження в Інтернеті або імпортувати одну з файлу.</string>
   <string name="language_settings_resource_dictionary_selected">Бажаєте повернути словник до стандартного, або замінити його на інший файл?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Для цієї мови не існує вбудованого словника, тому якщо ви його видалите, автокорекція та прогнози перестануть працювати для цієї мови, поки ви не імпортуєте інший словник!</string>
-  <string name="language_settings_resource_dictionary_selected_unset">Ви не налаштували власний словник для цієї мови. Ви можете знайти завантаження в Інтернеті або імпортувати один з файлу.</string>
   <string name="language_settings_resource_replace_button">Замінити</string>
   <string name="language_settings_resource_import_file_button">Імпортувати</string>
   <string name="language_settings_resource_revert_to_default_button">Повернути до стандартного</string>
   <string name="language_settings_resource_remove_button">Видалити</string>
-  <string name="language_settings_resource_explore_online_button">Дослідити</string>
   <string name="language_settings_remove_language_title">Видалити %1$s?</string>
   <string name="language_settings_remove_language_body">"Видалити %1$s, всі його пов\'язані розкладки та користувацькі ресурси?"</string>
   <string name="language_settings_remove_language_remove_button">Видалити</string>
   <string name="language_settings_remove_language_cancel_button">Скасувати</string>
   <string name="language_settings_other_options">Інші варіанти</string>
   <string name="language_settings_import_resource_from_file">Імпортувати файл ресурсу</string>
-  <string name="language_settings_explore_voice_input_models_online">Дослідити моделі голосового вводу</string>
-  <string name="language_settings_explore_dictionaries_online">Дослідити словники</string>
-  <string name="language_settings_explore_transformers_online">Дослідити моделі трансформерів</string>
   <string name="language_settings_import_dictionary_or_model">Імпортувати словник чи модель</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Модель голосового вводу</string>
@@ -473,24 +405,6 @@
   <string name="prediction_settings_word_blacklist">Чорний список слів</string>
   <string name="prediction_settings_word_blacklist_add">Додати до чорного списку</string>
   <string name="prediction_settings_word_blacklist_none">Чорного списку слів немає.</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Допомога та відгуки</string>
-  <string name="help_menu_version_name">Назва версії: %1$s</string>
-  <string name="help_menu_version_code">Код версії: %1$s</string>
-  <string name="help_menu_version_tip">Ми хочемо почути вашу думку! Якщо ви повідомляєте про проблему, ваша версія може бути важливою: v%1$s</string>
-  <string name="help_menu_website">Вебсайт FUTO</string>
-  <string name="help_menu_website_subtitle">Дізнатися про нас та нашу філософію</string>
-  <string name="help_menu_website_tags">завантаження, застосунок, голосовий ввід</string>
-  <string name="help_menu_documentation">Документація</string>
-  <string name="help_menu_documentation_subtitle">Дізнайтеся більше про функції та можливості клавіатури</string>
-  <string name="help_menu_discord">Сервер Discord</string>
-  <string name="help_menu_discord_subtitle">Хочете поговорити, але не любите Zulip? Чат тут</string>
-  <string name="help_menu_futo_chat">Чат FUTO</string>
-  <string name="help_menu_futo_chat_subtitle">Хочете поговорити, але не любите Discord? Чат тут</string>
-  <string name="help_menu_github">Публічний трекер проблем</string>
-  <string name="help_menu_github_subtitle">Конкретна помилка або запит на функцію? Напишіть тут</string>
-  <string name="help_menu_email">Поштова адреса: keyboard@futo.org</string>
-  <string name="help_menu_email_subtitle">Приватний відгук, допомога або не користуєтеся GitHub? Напишіть нам</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">Налаштування - Крок 1</string>
   <string name="setup_step_2">Налаштування - Крок 2</string>
@@ -500,10 +414,6 @@
   <string name="setup_warning_multiple_versions">Увага: Схоже, у вас встановлені як версія з Play Store, так і автономна версія, ми рекомендуємо встановлювати лише одну</string>
   <string name="setup_active_input_method">Виберіть FUTO Клавіатуру як ваш активний метод введення.</string>
   <string name="setup_switch_input_methods">Переключити методи введення</string>
-  <!-- Credits menu -->
-  <string name="credits_menu_title">Автори</string>
-  <string name="credits_menu_team_translators_title">Перекладачі</string>
-  <string name="credits_menu_contribute_translations_button">Допомогти перекласти застосунок</string>
   <!-- Advanced parameters, these are only really relevant for English -->
   <string name="prediction_settings_transformer_advanced_params">Розширені параметри</string>
 </resources>

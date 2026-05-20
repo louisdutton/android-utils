@@ -5,14 +5,6 @@
     <string name="limited_accuracy">Usahihi mdogo</string>
     <!-- A dialog text, that warns a user that Precise Location is disabled and suggests to turn it on -->
     <string name="precise_location_is_disabled_long_text">Ili kuhakikisha urambazaji sahihi huwezesha eneo sahihi katika mipangilio.</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Hakuna matangazo, hakuna ufuatiliaji, hakuna mkusanyiko wa data</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Hakuna betri kuisha, inafanya kazi nje ya mtandao</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Nje ya mtandao, haraka na fupi</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Maombi ya chanzo-wazi iliyoundwa na wanaovutia na wanaojitolea.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Mipangilio ya mahali</string>
     <!-- Editor title above street and house number, duplicates [type.building.address] in types_strings.txt -->
@@ -59,14 +51,7 @@
     <string name="pref_tts_test_voice_title">Jaribu maelekezo ya sauti (TTS, maandishi-kwa-hotuba)</string>
     <!-- Settings «Route» category: Pop-up message when clicking «Test Voice Directions» -->
     <string name="pref_tts_playing_test_voice">Angalia mipangilio ya sauti au ya mfumo ya kubadilisha maandishi-hadi-hotuba ikiwa husikii sauti sasa.</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Habari</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Maswali na majibu</string>
     <!-- Button in the main menu -->
-    <string name="donate">Changia</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Saidia mradi</string>
     <!-- Toast text when user hides UI with a long tap anywhere on the map -->
     <string name="long_tap_toast">Gusa kwa muda mrefu kwenye ramani tena ili kuona kiolesura</string>
     <!-- Preference title -->
@@ -107,13 +92,9 @@
     <string name="editor_default_language_hint">Kama ilivyoandikwa katika lugha ya kienyeji</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Data ya OpenStreetMap iliyoundwa na jumuiya kufikia %s. Pata maelezo zaidi kuhusu jinsi ya kuhariri na kusasisha ramani katika OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) ni mradi wa jumuiya wa kujenga ramani isiyolipishwa na iliyo wazi. Ndiyo chanzo kikuu cha data ya ramani katika CoMaps na inafanya kazi sawa na Wikipedia. Unaweza kuongeza au kubadilisha maeneo na yanapatikana kwa mamilioni ya watumiaji kote Ulimwenguni. \nJiunge na jumuiya na usaidie kutengeneza ramani bora kwa kila mtu!</string>
     <string name="login_to_make_edits_visible">Fungua akaunti ya OpenStreetMap au ingia ili kuchapisha mabadiliko yako ya ramani kwa ulimwengu.</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Kumbuka kwa wanaojitolea wa OpenStreetMap (si lazima)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Eleza hitilafu kwenye ramani au kile ambacho hakiwezi kuhaririwa kwa kutumia CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Mabadiliko yako yanapakiwa kwenye hifadhidata ya <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> ya umma. Tafadhali usiongeze maelezo ya kibinafsi au yenye hakimiliki.</string>
     <string name="editor_osm_history">Historia yako ya uhariri</string>
@@ -122,17 +103,13 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Mwendeshaji: %s</string>
     <string name="editor_category_unsuitable_title">Je, huwezi kupata aina inayofaa?</string>
-    <string name="editor_category_unsuitable_text">CoMaps huruhusu kuongeza kategoria rahisi pekee, hiyo inamaanisha hakuna miji, barabara, maziwa, muhtasari wa majengo, n.k. Tafadhali ongeza kategoria kama hizo moja kwa moja kwenye <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Angalia <a href="https://www.comaps.app/support/advanced-map-editing/">mwongozo wetu</a> kwa maagizo ya kina ya hatua kwa hatua.</string>
     <string name="placepage_personal_notes_hint">Vidokezo vya kibinafsi (maandishi au HTML)</string>
     <string name="placepage_add_place_button">Ongeza Mahali kwa OpenStreetMap</string>
     <string name="editor_share_to_all_dialog_message_2">Wahariri wa OpenStreetMap watakagua mabadiliko na kuwasiliana nawe ikiwa wana maswali yoyote.</string>
     <!-- Shown as toast when starting the recent track recording -->
     <string name="track_recording">Kurekodi wimbo</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Maoni Jumla</string>
     <string name="prefs_languages_information">Tunatumia maagizo ya sautii ya TTS ya mfumo. Vifaa vingi vya Android vinatumia Google TTS, unaweza kuipakua au kuisasisha kwenye Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Kwa baadhi ya lugha, utahitaji kusakinisha programu nyingine ya kusanidi usemi au kifurushi cha ziada cha lugha kutoka kwenye duka la programu-tumizi (Google Play, Galaxy Store, App Gallery, FDroid). \nFungua mipangilio ya kifaa chako → Lugha na Ingizo → Usemi → Tokeo la maandishi kuwa usemi. \nHapa unaweza kusimamia usanidi wa usemi (kwa mfano, kupakua kifurushi cha lugha ili utumie nje ya mtandao) na uchague injini nyingine ya maandishi-kuwa-usemi.</string>
-    <string name="prefs_languages_information_off_link">Kwa maelezo zaidi tafadhali tazama mwongozo huu.</string>
     <string name="transliteration_title">Tafsiri kwa lugha ya Kilatini</string>
     <string name="learn_more">Jua mengi zaidi</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -144,7 +121,6 @@
     <string name="placepage_remove_stop">Ondoa eneo la kusimama</string>
     <string name="placepage_add_stop">Ongeza eneo la kusimama</string>
     <string name="dialog_error_storage_title">Tatizo la kufikia hifadhi</string>
-    <string name="dialog_error_storage_message">Hifadhi ya nje haipatikani, pengine Kadi ya SD imeondolewa, imeharibika au mfumo wa faili ni wa kusoma pekee. Tafadhali ikague na uwasiliane nasi kwa kutumia support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Onyeshana hifadhi mbaya</string>
     <string name="error_enter_correct_name">Tafadhali, weka jina sahihi</string>
     <string name="bookmark_lists">Orodha</string>
@@ -179,8 +155,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Faragha</string>
-    <string name="privacy_policy">Sera ya faragha</string>
-    <string name="terms_of_use">Masharti ya matumizi</string>
     <string name="button_layer_traffic">Trafiki</string>
     <string name="subway">Njia ya chini</string>
     <string name="layers_title">Mitindo ya Ramani na Tabaka</string>
@@ -205,7 +179,6 @@
     <string name="power_managment_setting_never">Kamwe</string>
     <string name="power_managment_setting_auto">Kiotomatiki</string>
     <string name="power_managment_setting_manual_max">Upeo wa kuhifadhi nishati</string>
-    <string name="enable_logging_warning_message">Chaguo huwasha data kwa madhumuni ya uchunguzi. Itakuwa muhimu kwa wafanyakazi wetu ambao wanatatua matatizo ya programu. Washa chaguo hili kwa maombi ya mhudumu wa CoMaps tu.</string>
     <string name="driving_options_title">Machaguo ya njia</string>
     <string name="avoid_tolls">Epuka barabara za ushuru</string>
     <string name="avoid_unpaved">Epuka barabara za vumbi</string>
@@ -291,33 +264,19 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Data ya ramani kutoka OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Asante kwa kutumia ramani zetu zilizojengwa na jumuiya!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Kwa michango na usaidizi wako, tunaweza kuunda ramani bora zaidi Duniani!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Je, unapenda programu yetu? Tafadhali toa mchango ili kusaidia maendeleo! Je, huipendi bado? Tafadhali tujulishe, na tutarekebisha!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Ikiwa unajua msanidi programu, unaweza kumwomba kutekeleza kipengele unachohitaji.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Gusa popote kwenye ramani ili kuchagua chochote. Gusa kwa muda mrefu ili kuficha na kuonyesha kiolesura.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Je, unajua kwamba unaweza kuchagua eneo lako la sasa kwenye ramani?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Unaweza kusaidia kutafsiri programu yetu katika lugha yako.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Programu yetu imeundwa na washiriki wachache na jamii.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Unaweza kurekebisha na kuboresha data ya ramani kwa urahisi.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Lengo letu kuu ni kujenga ramani za haraka, zinazozingatia faragha, na rahisi kutumia ambazo utapenda.</string>
-    <string name="car_used_on_the_phone_screen">Sasa unatumia CoMaps kwenye skrini ya simu</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Kwa skrini ya gari</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Kutembea kwa miguu</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -365,15 +324,10 @@
     <string name="edit_track">Hariri Njia</string>
     <string name="uri_open_location_failed">Hakuna Programu iliyosakinishwa inayoweza kufungua eneo</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="panoramax">Picha ya Panoramax</string>
     <string name="delete">Delete</string>
     <string name="kilometres">Kilomita</string>
     <string name="download">Pakua</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Imehifadhiwa</string>
 </resources>

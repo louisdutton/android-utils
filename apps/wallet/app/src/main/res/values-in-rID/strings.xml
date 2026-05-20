@@ -15,7 +15,6 @@
     <string name="sort_by_name">Nama</string>
     <string name="sort_by">Sortir dengan</string>
     <string name="sort">Urut</string>
-    <string name="credits">Kredit</string>
     <string name="license">Lisensi</string>
     <string name="settings">Pengaturan</string>
     <string name="settings_system_theme">Sistem</string>
@@ -82,14 +81,8 @@
     <string name="importOptionFilesystemExplanation">Pilih berkas tertentu dari sistem berkas</string>
     <string name="importOptionFilesystemButton">Dari pengelola file bawaan</string>
     <string name="about">Tentang</string>
-    <string name="app_copyright_fmt">Hak Cipta © 2019–<xliff:g>%d</xliff:g> Sylvia van Os dan para kontributor</string>
-    <string name="app_copyright_old">Berdasarkan Loyalty Card Keychain 
-\nhak cipta © 2016–2020 Branden Archer</string>
     <string name="app_license">Perangkat lunak bebas copyleft, berlisensi GPLv3+</string>
     <string name="about_title_fmt">Tentang <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versi: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Perpustakaan pihak ketiga: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Sumber daya pihak ketiga: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="thumbnailDescription">Gambar tampilan</string>
     <string name="starImage">Favorit</string>
     <string name="settings_light_theme">Terang</string>
@@ -121,7 +114,6 @@
     <string name="moveBarcodeToTopOfScreen">Pindah barcode ke bagian paling depan</string>
     <string name="points">Poin</string>
     <string name="app_loyalty_card_keychain">Gantungan kunci kartu kesetiaan</string>
-    <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="importCatimaMessage">Pilih ekspor Anda dari Catima untuk diimpor.\nBuatlah dari menu Impor/Ekspor aplikasi Catima lainnya dengan menekan Ekspor.</string>
     <string name="importFidmeMessage">Pilih ekspor Anda dari FidMe untuk diimpor, lalu pilih jenis barcode secara manual setelahnya.\nBuatlah dari profil FidMe Anda dengan memilih Data Protection, lalu tekan Extract my data.</string>
     <string name="importLoyaltyCardKeychain">Impor dari Loyalty Card Keychain</string>
@@ -137,12 +129,10 @@
     <string name="passwordRequired">Masukkan kata sandi</string>
     <string name="exportPassword">Tetapkan kata sandi untuk melindungi ekspor anda (opsional)</string>
     <string name="failedGeneratingShareURL">Tidak dapat menghasilkan URL yang dapat dibagikan</string>
-    <string name="app_contributors">Pengembangan dibantu oleh: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="reverse">…dalam urutan terbalik</string>
     <string name="version_history">Riwayat versi</string>
     <string name="help_translate_this_app">Bantu terjemahkan aplikasi ini</string>
     <string name="source_repository">Repositori sumber</string>
-    <string name="on_github">di GitHub</string>
     <string name="and_data_usage">dan penggunaan data</string>
     <string name="cardShortcut">Pintasan Kartu</string>
     <string name="barcodeImageDescriptionWithType">Gambar <xliff:g>%s</xliff:g> barcode</string>
@@ -233,7 +223,6 @@
     <string name="show_archived_cards">Tampilkan kartu yang sudah disimpan</string>
     <string name="action_display_options">Pilihan tampilan</string>
     <string name="view_online">Lihat di Internet</string>
-    <string name="app_copyright_short">Terdapat Hak Cipta © Sylvia van Os dan para kontributor</string>
     <string name="card_id_must_not_be_empty">ID Kartu tidak boleh kosong</string>
     <string name="balanceParsingFailed">Saldo tidak valid</string>
     <string name="add_a_card_in_a_different_way">Tambah kartu dengan cara lain</string>

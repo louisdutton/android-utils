@@ -86,15 +86,9 @@
     <string name="exportOptionExplanation">Os dados serão gravados em um local de sua escolha</string>
     <string name="importOptionFilesystemTitle">Importar dos seus arquivos</string>
     <string name="importOptionFilesystemExplanation">Escolha um arquivo específico nos seus arquivos</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os e contribuidores</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os e contribuidores</string>
-    <string name="app_copyright_old">Baseado no Loyalty Card Keychain \ncopyright © 2016–2020 Branden Archer</string>
     <string name="app_license">Software livre com copyleft, licenciado sob a licença GPLv3+</string>
     <string name="about_title_fmt">Sobre <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versão: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Bibliotecas de terceiros : <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Selecionar código de barras</string>
-    <string name="app_resources">Recursos de terceiros: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="thumbnailDescription">Miniatura</string>
     <string name="starImage">Item favorito</string>
     <string name="settings">Configurações</string>
@@ -152,7 +146,6 @@
     <string name="points">Pontos</string>
     <string name="balanceParsingFailed">Saldo inválido</string>
     <string name="chooseImportType">Importar dados de</string>
-    <string name="privacy_policy">Política de Privacidade</string>
     <string name="accept">Aceitar</string>
     <string name="importCatima">Importar do Catima</string>
     <string name="importCatimaMessage">Selecione o arquivo exportado do Catima para importação. \nFaça isso a partir do menu \"Importar/Exportar\" em outro aplicativo Catima tocando em Exportar.</string>
@@ -189,7 +182,6 @@
     <string name="settings_system_locale">Sistema</string>
     <string name="selectColor">Selecionar cor</string>
     <string name="setIcon">Definir miniatura</string>
-    <string name="app_contributors">Só foi possível graças a: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">Ordenar</string>
     <string name="showMoreInfo">Mostrar informações</string>
     <string name="updateBalance">Atualizar saldo</string>
@@ -202,11 +194,9 @@
     <string name="reverse">...em ordem inversa</string>
     <string name="sort_by">Ordenar por</string>
     <string name="version_history">Histórico de Atualização</string>
-    <string name="credits">Créditos</string>
     <string name="help_translate_this_app">Ajude a traduzir este aplicativo</string>
     <string name="license">Licença</string>
     <string name="source_repository">Repositório de origem</string>
-    <string name="on_github">no GitHub</string>
     <string name="and_data_usage">e uso de dados</string>
     <string name="report_error">Informar erro</string>
     <string name="translate_platform">no Weblate</string>

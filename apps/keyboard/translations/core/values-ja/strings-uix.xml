@@ -156,11 +156,6 @@
   <string name="theme_dynamic_dark">ダイナミックダーク</string>
   <string name="theme_dynamic_light">ダイナミックライト</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">アップデート確認サービス</string>
-  <string name="autoupdater_update_available_title">アップデートが可能</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;アップデートが可能です (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). ダウンロードするにはタップしてください&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">無視</string>
-  <string name="autoupdater_perform_update">アップデート</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">&lt;string name="keyboard_suggest_blacklist_body"&gt;「&lt;xliff:g name="wordToBlacklist" example="crane"&gt;%s&lt;/xliff:g&gt;」を入力候補から除外しますか？&lt;/string&gt;</string>
   <!-- Must be fairly short -->
@@ -171,7 +166,6 @@
   <string name="keyboard_version_status">アルファ</string>
   <string name="keyboard_switch_keyboard">キーボード切り替え</string>
   <string name="keyboard_language_settings">設定</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">タップでアップデートするか、設定を確認してください</string>
   <!-- Should be fairly short (under 40 chars). Means there are no predictions for this language and a download is necessary by tapping on this notice. Appears in suggestion bar -->
   <string name="keyboard_actionbar_no_dictionary_installed_notice">辞書がありません。タップでダウンロード</string>
   <!--
@@ -204,68 +198,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">たたむ</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">決済</string>
-  <string name="payment_screen_title">FUTO キーボードの購入</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;FUTO キーボードを&lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt;日間使用しています。このアプリが役に立つと思われる場合は、FUTO ソフトウェアの今後の開発を支援するため、ぜひお支払いをご検討ください。&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">FUTO キーボードをご利用いただきありがとうございます！ もしこのアプリが便利だと感じたら、今後の FUTO ソフトウェア開発を支援するために購入をご検討ください。</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO は権利を濫用しない、良いソフトウェアの提供に専念しています。このアプリは広告を表示したり、個人情報を収集したりすることは決してありません。</string>
-  <string name="payment_screen_sales_point_development_title">持続可能な開発</string>
-  <string name="payment_screen_sales_point_development_body">FUTOの使命は、オープンソースソフトウェアや悪意のないソフトウェアのビジネス慣行が、プロジェクトや開発者にとって持続可能な収入源となることです。これらの理由から、ユーザーがソフトウェアに対して実際に料金を支払うことを支持しています。</string>
-  <string name="payment_screen_sales_point_privacy_title">プライバシー保護への取り組み</string>
-  <string name="payment_screen_sales_point_privacy_body">このアプリはあなたに広告を提供したり、あなたの個人情報を販売することは決していたしません。 私たちがそのような事業を行うことはありません。</string>
-  <string name="payment_screen_error_build_unsupported_payment">このビルドでは決済がサポートされていません</string>
-  <string name="payment_screen_already_paid_title">お支払い済みですか？</string>
-  <string name="payment_screen_already_paid_body">すでに FUTO キーボードまたは FUTO 音声入力を購入済みの場合は、下をタップしてください。</string>
-  <string name="payment_screen_already_paid_button">支払い済みです</string>
-  <string name="payment_screen_already_paid_confirmation">選択を確認してください</string>
-  <string name="payment_screen_already_paid_confirmation_body">すでに支払い済みであることを確定してもよろしいですか？一度確定すると、再度支払いについて確認されることはありません。</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">支払い済みです</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">キャンセル</string>
-  <string name="payment_screen_set_reminder_title">支払いの準備ができていませんか？</string>
-  <string name="payment_screen_set_reminder_body">入力した日数の間、設定画面の通知が非表示になります。</string>
-  <string name="payment_screen_set_reminder_setter">いつ通知を受け取りたいですか？</string>
-  <string name="payment_screen_set_reminder_setter_7_days">7日後</string>
-  <string name="payment_screen_set_reminder_setter_1_month">1ヶ月後</string>
-  <string name="payment_screen_set_reminder_setter_6_months">6ヶ月後</string>
-  <string name="payment_screen_set_reminder_setter_next_century">一世紀後</string>
-  <string name="payment_screen_set_reminder_setter_confirm">通知を確認</string>
-  <string name="payment_screen_other_options">その他オプション</string>
-  <string name="payment_screen_need_help_title">ヘルプ</string>
-  <string name="payment_screen_need_help_subtitle">お困りですか？ウェブサイトをご覧ください。</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Google Play で支払う（&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt;＋税）&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;支払う（&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt;＋税）&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">その他オプション</string>
-  <string name="payment_screen_payment_complete_title">支払い完了</string>
-  <string name="payment_screen_aftersales_title">ありがとうございました</string>
-  <string name="payment_screen_aftersales_title_pending">支払い待ち</string>
-  <string name="payment_screen_aftersales_paragraph_1">FUTO キーボードをご購入いただきありがとうございます！</string>
-  <string name="payment_screen_aftersales_paragraph_2">あなたの購入が、FUTO キーボードやその他 FUTO プロジェクトの継続的な開発の支えとなっています。</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">お支払いはまだ確認中ですが、まもなく処理されます。</string>
-  <string name="payment_screen_aftersales_paragraph_3">もしお支払いをされたばかりなら、処理のため反映に時間がかかることがあります。詳細は別途メールにてお知らせします。</string>
-  <string name="payment_screen_payment_failed_title">支払いエラー</string>
-  <string name="payment_screen_payment_failed_body">申し訳ありませんが、お支払いが何らかの理由で失敗しました。お困りの際は、お気軽にお問い合わせください。keyboard@futo.org までメールをいただくか、下のボタン、またはヘルプの「フィードバックを送信」からご連絡いただけます。</string>
-  <string name="payment_screen_payment_failed_body_unconfident">お支払いに問題があった可能性があります。もしお支払いが完了していれば、ライセンスキーが記載されたメールが届くはずです。ご不明な点がありましたら、お気軽にお問い合わせください。keyboard@futo.org までメールをいただくか、下のボタン、またはメイン画面の「フィードバックを共有」からご連絡いただけます。</string>
-  <string name="payment_screen_license_integrity_error">ライセンスの認証に失敗しました。エラーだと思われる場合は、お問い合わせください。</string>
-  <string name="payment_screen_continue_button">続行</string>
-  <string name="payment_unpaid_version_title">未払い FUTO キーボード</string>
-  <string name="payment_unpaid_version_indicator">未払い</string>
-  <string name="payment_paid_version_indicator">有料版 FUTO キーボードをご利用いただきありがとうございます！</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">アップデート通知</string>
-  <string name="manual_update_notice_paragraph_1">このアプリはインターネットに接続されておらず、自動でアップデートを確認することができません。しかし、手動でアップデートを確認することは可能です。</string>
-  <string name="manual_update_notice_paragraph_2">自動アップデートのためには F-Droid または Obtainium を使用してください。ダウンロードオプションについては、keyboard.futo.org をご覧ください。</string>
-  <string name="manual_update_notice_dev_paragraph">現在、FUTO キーボードの開発版ビルドを使用しています。安定版をダウンロードするには、keyboard.futo.org をご覧ください。</string>
-  <string name="manual_update_notice_visit_site_button">アクセス</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">無視</string>
   <!-- General settings strings -->
   <string name="settings_tip">チップ</string>
   <string name="settings_unknown_error_title">不明のエラー</string>
   <string name="settings_unknown_error_subtitle">不明のエラーが発生しました</string>
   <string name="settings_try_typing_here">ここになにか打ち込んでみて…</string>
   <string name="settings_external_model_name">外部から導入されたモデル</string>
-  <string name="settings_check_for_updates_manually">手動でアップデートを確認</string>
   <string name="settings_update_available">アップデートが可能</string>
   <!--
     May be translated as "Start", "All", etc. This is the starting menu where all settings live.
@@ -303,27 +242,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">組み込み辞書</string>
   <string name="language_settings_resource_voice_input_selected">音声入力モデルをデフォルトに戻しますか、それとも別のファイルに置き換えますか？</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">この言語には組み込み音声入力モデルが存在しないため、これを削除すると、別のモデルをインポートするまで音声入力が使えなくなります！</string>
-  <string name="language_settings_resource_voice_input_selected_unset">この言語のカスタム音声入力モデルは設定されていません。ファイルからインポートするか、オンラインでダウンロードを検索することができます。</string>
   <string name="language_settings_resource_transformer_selected">変換器モデルをデフォルトに戻しますか、それとも別のファイルに置き換えますか？</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">この言語には組み込み変換器モデルが存在しないため、これを削除すると、別のモデルをインポートするまで変換器に基づいた入力予測が使えなくなります！</string>
-  <string name="language_settings_resource_transformer_selected_unset">この言語のカスタム変換器モデルは設定されていません。ファイルからインポートするか、オンラインでダウンロードを検索することができます。</string>
   <string name="language_settings_resource_dictionary_selected">辞書をデフォルトに戻しますか、それとも別のファイルに置き換えますか？</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">この言語には組み込み辞書が存在しないため、これを削除すると、別のモデルをインポートするまで予測変換や自動修正が使えなくなります！</string>
-  <string name="language_settings_resource_dictionary_selected_unset">この言語のカスタム辞書は設定されていません。ファイルからインポートするか、オンラインでダウンロードを検索することができます。</string>
   <string name="language_settings_resource_replace_button">入れ替え</string>
   <string name="language_settings_resource_import_file_button">インポート</string>
   <string name="language_settings_resource_revert_to_default_button">初期設定に戻す</string>
   <string name="language_settings_resource_remove_button">削除</string>
-  <string name="language_settings_resource_explore_online_button">探す</string>
   <string name="language_settings_remove_language_title">%1$s を削除しますか？</string>
   <string name="language_settings_remove_language_body">%1$sと、それに関連するすべての配列やカスタムリソースを削除しますか？</string>
   <string name="language_settings_remove_language_remove_button">削除</string>
   <string name="language_settings_remove_language_cancel_button">キャンセル</string>
   <string name="language_settings_other_options">その他オプション</string>
   <string name="language_settings_import_resource_from_file">リソースファイルをインポート</string>
-  <string name="language_settings_explore_voice_input_models_online">音声入力モデルを探す</string>
-  <string name="language_settings_explore_dictionaries_online">辞書を探す</string>
-  <string name="language_settings_explore_transformers_online">変換器モデルを探す</string>
   <string name="language_settings_import_dictionary_or_model">辞書・モデルをインポート</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">音声入力モデル</string>
@@ -506,25 +438,6 @@
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_title">ブラックリストされた単語を表示・編集</string>
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_subtitle">ブラックリストに登録された候補の一覧、項目の追加・削除はこちら</string>
   <string name="prediction_settings_word_blacklist_remove_word_from_blacklist">単語を消去</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">ヘルプとフィードバック</string>
-  <string name="help_menu_version_name">バージョン名：%1$s</string>
-  <string name="help_menu_version_code">バージョンコード：%1$s</string>
-  <string name="help_menu_version_tip">ご意見をお聞かせください！問題を報告される場合は、お使いのバージョン：v%1$s が重要となります。</string>
-  <string name="help_menu_website">FUTO 公式サイト</string>
-  <string name="help_menu_website_subtitle">私たちのことや、私たちの理念についてもっと知る</string>
-  <string name="help_menu_website_tags">download, apps, voice input, ダウンロード, アプリ, 音声入力</string>
-  <string name="help_menu_documentation">ドキュメンテーション</string>
-  <string name="help_menu_documentation_subtitle">キーボードの機能や性能について詳しく知る</string>
-  <string name="help_menu_discord">Discord サーバー</string>
-  <string name="help_menu_discord_subtitle">話したいけど Zulip は苦手？ ならこっちでチャットしよう</string>
-  <string name="help_menu_futo_chat">FUTO チャット (Zulip)</string>
-  <string name="help_menu_futo_chat_subtitle">話したいけど Discord は苦手？ ならこっちでチャットしよう</string>
-  <string name="help_menu_github">公開イシュートラッカー (GitHub)</string>
-  <string name="help_menu_github_subtitle">不具合やバグ報告、新機能の要望などはこちらに投稿してください</string>
-  <string name="help_menu_email">keyboard@futo.org 宛にメールを送る</string>
-  <string name="help_menu_email_subtitle">個人的な感想、ヘルプ、または GitHub を使用していない場合は、Eメールでお問い合わせください</string>
-  <string name="help_menu_email_tags">gmail, support, contact, help, broken, bug, error, issue, problem, complaint, ticket, payment, support, glitch, malfunction, fix, customer service, crash, question, inquiry, assistance, メール, サポート, コンタクト, ヘルプ, こわれた, バグ, エラー, 問題, 窓口, 決済, お支払い, 質問, カスタマーサービス, クラッシュ</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">セットアップ - ステップ 1</string>
   <string name="setup_step_2">セットアップ - ステップ 2</string>
@@ -534,18 +447,6 @@
   <string name="setup_warning_multiple_versions">警告： Play ストア版とスタンドアロン版の両方がインストールされているようです。どちらか一方のインストールのみを推奨します。</string>
   <string name="setup_active_input_method">入力方法に FUTO キーボードを選択してください。</string>
   <string name="setup_switch_input_methods">入力方法を切り替える</string>
-  <!-- Credits menu -->
-  <string name="credits_menu_title">クレジット</string>
-  <string name="credits_menu_header_text">FUTO キーボードを素晴らしいアプリにすることに貢献してくださったこれらの方々に感謝します！</string>
-  <string name="credits_menu_team_translators_title">翻訳者</string>
-  <string name="credits_menu_team_keyboard_layouts_title">配列貢献者</string>
-  <string name="credits_menu_team_code_title">コード貢献者</string>
-  <string name="credits_menu_nonaffiliation_notice">上記の著者らは当社と提携しておらず、必ずしも当社を支持または推奨しているわけではありません。掲載は提携や支持を意味するものではありません。</string>
-  <string name="credits_menu_contribute_translations_button">アプリの翻訳に協力してください</string>
-  <string name="credits_menu_contribute_keyboard_layouts_button">配列を貢献する</string>
-  <string name="credits_menu_contribute_code_button">コードを貢献する</string>
-  <string name="credits_menu_project_information_title">%s 情報</string>
-  <string name="credits_menu_project_url_link">プロジェクト URL</string>
   <!-- Settings category title -->
   <string name="language_specific_settings_title">言語特有の設定</string>
   <!-- Specific to Japanese input method -->

@@ -18,7 +18,6 @@ import org.futo.inputmethod.latin.R
 import org.futo.inputmethod.latin.uix.Action
 import org.futo.inputmethod.latin.uix.ActionWindow
 import org.futo.inputmethod.latin.uix.settings.ScrollableList
-import org.futo.inputmethod.updates.openURI
 
 
 data class BugInfo(val name: String, val details: String)
@@ -120,12 +119,6 @@ val BugViewerAction = Action(
                                 clipboardManager.setPrimaryClip(clip)
                             }) {
                                 Text("Copy to clipboard")
-                            }
-
-                            TextButton(onClick = {
-                                manager.getContext().openURI("mailto:keyboard@futo.org", newTask = true)
-                            }) {
-                                Text("Email us (include the copy)")
                             }
                         }
                         Text(it.details, style = DebugLabel)

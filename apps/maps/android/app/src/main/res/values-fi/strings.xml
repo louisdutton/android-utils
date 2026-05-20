@@ -34,24 +34,12 @@
     <string name="country_status_download_failed">Lataus epäonnistui</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Yritä uudelleen</string>
-    <string name="about_menu_title">Tietoa CoMapsista</string>
-    <!-- Text in About screen -->
-    <string name="about_headline">Avoin projekti yhteisön toteuttamana</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Helppokäyttöinen ja viimeistelty</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Kunnioittaa yksityisyyttä ja ei sisällä mainoksia</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Yhteydetön tila, nopea ja kompakti</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Täysin avoimeen lähdekoodiin perustuva, voittoa tavoittelematon sekä läpinäkyvä päätöksenteko ja talous.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Sijaintiasetukset</string>
     <string name="close">Sulje</string>
     <string name="unsupported_phone">Laitteistokiihdytetty OpenGL vaaditaan. Valitettavasti laitteesi ei ole tuettu.</string>
     <string name="download">Lataa</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Irrota USB-kaapeli tai syötä muistikortti käyttääksesi CoMaps -sovellusta</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Vapauta ensin tilaa SD-kortilta/USB-massamuistilta käyttääksesi sovellusta</string>
     <string name="download_resources">Ennen aloitusta laitteelle tulee ladata yleinen maailmankartta. \nSe tarvitsee yhteensä %s tilaa.</string>
@@ -147,8 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Muistiinpanot</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">CoMaps Suosikkini</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Ladataan kirjanmerkkejä</string>
     <!-- Kmz file successful loading -->
@@ -167,10 +153,6 @@
     <string name="cant_change_this_setting">Valitettavasti karttatallennustilaasetukset ovat tällä hetkellä poissa käytöstä</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Kartan lataus on parhaillaan käynnissä</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Hei, katso sijaintini CoMaps-sovelluksessa! %1$s tai %2$s Eikö sinulla ole vielä offline-karttoja? Lataa ne täältä: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Hei, kurkkaa tämänhetkinen sijaintini CoMaps:n kartalla!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Jaa</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -228,24 +210,9 @@
     <string name="menu">Menu</string>
     <!-- Text in menu -->
     <string name="website">Kotisivut</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Uutiset</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Palaute</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Arvioi sovellus</string>
     <!-- Text in menu -->
-    <string name="help">Ohje</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Usein kysytyt kysymykset</string>
     <!-- Button in the main menu -->
-    <string name="donate">Lahjoita</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Auta ja paranna CoMapsia</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Tekijänoikeudet</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Ilmoita virheestä</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Paranna nuolien suuntaa liikuttamalla puhelinta kahdeksikon suuntaisesti kompassin kalibroimiseksi.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -392,7 +359,6 @@
     <string name="editor_time_advanced">Edistynyt tila</string>
     <string name="editor_time_simple">Yksinkertainen tila</string>
     <string name="editor_hours_closed">Suljettuna tunnit</string>
-    <string name="editor_example_values">Esimerkkiarvot</string>
     <string name="editor_correct_mistake">Korjaa virhe</string>
     <string name="editor_add_select_location">Valitse sijainti</string>
     <string name="editor_report_problem_send_button">Lähetä</string>
@@ -453,8 +419,6 @@
     <string name="message_invalid_feature_position">Kohdetta ei voida asettaa tänne</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Yhteisön luomat OpenStreetMap-tiedot %s:sta alkaen. Lisätietoja kartan muokkaamisesta ja päivittämisestä osoitteessa OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) on yhteisöprojekti, jonka tarkoituksena on rakentaa ilmainen ja avoin kartta. Se on CoMapsin tärkein karttatietojen lähde ja toimii samalla tavalla kuin Wikipedia. Voit lisätä tai muokata paikkoja, ja ne tulevat miljoonien käyttäjien saataville kaikkialla maailmassa. \nLiity yhteisöön ja auta tekemään parempi kartta kaikille!</string>
     <string name="login_to_make_edits_visible">Luo OpenStreetMap-tili tai kirjaudu sisään, jotta voit julkaista karttamuokkauksesi maailmalle</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d/%2$d</string>
@@ -467,8 +431,6 @@
     <string name="error_enter_correct_zip_code">Anna kelvollinen postinumero</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Huomautus OpenStreetMapin vapaaehtoisille (valinnainen)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Kuvaile kartassa olevia virheitä tai asioita, joita ei voi muokata CoMapsilla</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Muokkauksesi ladataan julkiseen <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a>-tietokantaan. Älä lisää henkilökohtaisia tai tekijänoikeudella suojattuja tietoja.</string>
     <string name="editor_more_about_osm">Lisätietoja OpenStreetMapista</string>
@@ -478,7 +440,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operaattori: %s</string>
     <string name="editor_category_unsuitable_title">Etkö löydä sopivaa luokkaa?</string>
-    <string name="editor_category_unsuitable_text">CoMaps mahdollistaa vain yksinkertaisten pisteluokkien lisäämisen, eli ei kaupunkeja, teitä, järviä, rakennusten ääriviivoja jne. Lisää tällaiset luokat suoraan <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Tarkista <a href="https://www.comaps.app/support/advanced-map-editing/">oppaastamme</a> yksityiskohtaiset ohjeet vaihe vaiheelta.</string>
     <string name="downloader_no_downloaded_maps_title">Et ole ladannut yhtään karttaa</string>
     <string name="downloader_no_downloaded_maps_message">Lataa karttoja ei-verkkotilassa etsimistä ja navigoimista varten</string>
     <string name="current_location_unknown_error_title">Nykyinen sijainti on tuntematon</string>
@@ -531,15 +492,11 @@
     <string name="mobile_data_option_ask">Kysy aina</string>
     <string name="traffic_update_maps_text">Liikennetietojen näyttämiseksi kartat on päivitettävä</string>
     <string name="big_font">Suurenna fonttikokoa kartalla</string>
-    <string name="traffic_update_app">Päivitä CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Liikennetietoja ei ole saatavilla</string>
     <string name="enable_logging">Ota loki käyttöön</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Yleinen palaute</string>
     <string name="prefs_languages_information">Käytämme ääniohjeisiin tekstistä puheeksi -järjestelmää. Monet Android-laitteet käyttävät Googlen tekstistä puheeksi -sovellusta, jonka voit ladata tai päivittää Google Playssä (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Joidenkin kielien osalta sinun täytyy asentaa toinen puhesyntetisaattori tai lisäkielipaketti sovelluskaupasta (Google Play, Galaxy Store, App Gallery, FDroid).\nAvaa laitteen asetukset → Kieli ja syöttötapa → Puhe → Teksistä puheeksi -toisto. \nTäällä voit hallita puhesynteesin asetuksia (esimerkiksi ladata offline-tilassa käytettävän kielipaketin) ja valita toisen tekstistä puheeksi -moottorin.</string>
-    <string name="prefs_languages_information_off_link">Lisätietoja saat tästä oppaasta</string>
     <string name="transliteration_title">Translitterointi latinalaisiksi aakkosiksi</string>
     <string name="learn_more">Lisätietoja</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -551,7 +508,6 @@
     <string name="placepage_remove_stop">Poista pysähdys</string>
     <string name="placepage_add_stop">Lisää pysähdys</string>
     <string name="dialog_error_storage_title">Ongelma tallennustilan käyttämisessä</string>
-    <string name="dialog_error_storage_message">Ulkoinen tallennustila ei ole käytettävissä, SD-kortti on luultavasti poistettu tai vahingoittunut tai tiedostojärjestelmä on vain luku -tilassa. Tarkista SD-kortin toiminta tai ota yhteyttä osoitteeseen support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Jäljittele virheellistä tallennustilaa</string>
     <string name="error_enter_correct_name">Anna oikea nimi</string>
     <string name="bookmark_lists">Luettelot</string>
@@ -587,8 +543,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Yksityisyys</string>
-    <string name="privacy_policy">Yksityisyyskäytäntö</string>
-    <string name="terms_of_use">Käyttöehdot</string>
     <string name="button_layer_traffic">Liikenne</string>
     <string name="subway">Metro</string>
     <string name="layers_title">Karttatyylit ja tasot</string>
@@ -613,7 +567,6 @@
     <string name="power_managment_setting_never">Ei koskaan</string>
     <string name="power_managment_setting_auto">Automaattinen</string>
     <string name="power_managment_setting_manual_max">Täysi virransäästö</string>
-    <string name="enable_logging_warning_message">Valinta ottaa käyttöön lokikirjaukset diagnostiikkaa varten. Se voi auttaa tukihenkilöstöämme, kun he korjaavat sovelluksen ongelmia. Ota tämä ominaisuus käyttöön vain, jos CoMaps:n tuki pyytää.</string>
     <string name="driving_options_title">Reititysvalinnat</string>
     <string name="avoid_tolls">Vältä maksullisia teitä</string>
     <string name="avoid_unpaved">Vältä päällystämättömiä teitä</string>
@@ -714,33 +667,19 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">OpenStreetMapin karttatiedot</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Kiitos, että käytät yhteisön laatimia karttojamme!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Lahjoituksellasi ja tuellasi voimme luoda maailman parhaat kartat!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Pidätkö sovelluksestamme? Lahjoita tukemaan kehitystä! Etkö pidä siitä vielä? Kerro meille, niin korjaamme asian!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Jos tunnet ohjelmistokehittäjän, voit pyytää häntä ottamaan käyttöön tarvitsemasi ominaisuuden.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Voit valita mitä tahansa napauttamalla mitä tahansa kohtaa kartalla. Piilota ja näytä käyttöliittymä takaisin pitkällä napautuksella.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Tiesitkö, että voit valita nykyisen sijaintisi kartalta?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Voit auttaa kääntämään sovelluksemme kielellesi.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Sovelluksemme on muutaman harrastajan ja yhteisön kehittämä.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Voit helposti korjata ja parantaa karttatietoja.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Päätavoitteemme on rakentaa nopeita, yksityisyyteen keskittyviä, helppokäyttöisiä karttoja, joista pidät.</string>
-    <string name="car_used_on_the_phone_screen">Käytät nyt CoMapsia puhelimen näytöllä</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Auton näyttöön</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Vaellus</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -789,17 +728,11 @@
     <string name="uri_open_location_failed">Ei asennettua sovellusta, joka voi avata sijainnin</string>
     <!-- preference string for using auto theme only in navigation mode -->
     <string name="level_value_generic">Kerros: %s</string>
-    <string name="share_bookmarks_email_body">Hei!\n\nLiitteenä kirjanmerkkini. Avaa ne CoMaps-sovelluksella. Jos sinulla ei ole vielä sovellusta, voit ladata sen osoitteesta: https://www.comaps.app/download/\n\nNauti matkustamisesta CoMapsin kanssa!</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="translated_om_site_url">https://comaps.app/fi/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>
     <string name="error_enter_correct_fediverse_page">Kirjoita kelvollinen Mastodon-käyttäjänimi tai verkko-osoite</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="error_enter_correct_bluesky_page">Kirjoita kelvollinen Bluesky-käyttäjänimi tai verkko-osoite</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="app_site_url">https://comaps.app/fi/</string>
     <string name="saved">Tallennettu</string>
     <string name="error_enter_correct_level">Syötä kerrosnumero</string>
     <string name="editor_building_levels">Kerrokset (sis. pohjakerroksen, jätä pois katto)</string>
@@ -811,7 +744,6 @@
     <string name="bicycle">Polkupyörä</string>
     <string name="ruler">Viivoitin</string>
     <string name="bookmark_color">Suosikin väri</string>
-    <string name="about_help">Tietoja ja ohje</string>
     <string name="panoramax">Panoramax-kuva</string>
     <string name="pref_backup_summary">Varmuuskopioi laitteeseen automaattisesti</string>
     <string name="pref_backup_now_title">Varmuuskopioi nyt</string>
@@ -831,7 +763,6 @@
     <string name="pref_backup_title">Kirjanmerkkien ja reittien varmuuskopiointi</string>
     <string name="pref_backup_status_summary_success">Viimeisin onnistunut varmuuskopio</string>
     <string name="backup_interval_manual_only">Pois (Varmuuskopioi manuaalisesti)</string>
-    <string name="dialog_report_error_with_logs">Lähetä meille virheraportti:\n - kytke \"Ota loki käyttöön\" asetuksista\n - yritä toistaa ongelma\n - paina \"Tietoja ja ohje\" valikosta \"Ilmoita virhe\" painiketta ja lähetä virheraportti sähköpostin tai chatin kautta\n - kytke lokitallennus pois käytöstä</string>
     <string name="open_now">Auki nyt</string>
     <string name="closed_now">Suljettu nyt</string>
     <string name="at">kello %s</string>
@@ -877,7 +808,6 @@
     <string name="editor_business_vacant_button">Liike on tyhjillään</string>
     <string name="place_page_map_too_old_title">Karttatiedot vanhentuneet</string>
     <string name="place_page_map_too_old_description">Nykyinen karttadata on hyvin vanhaa, päivitä kartta.</string>
-    <string name="place_page_app_too_old_description">Nykyinen karttadata on hyvin vanhaa, päivitä CoMaps-sovellus.</string>
     <string name="place_page_update_too_old_map">Päivitä kartta-alue</string>
     <string name="place_page_too_old_to_edit">OpenStreetMap-muokkaus on poistettu käytöstä, koska karttadata on liian vanhaa.</string>
     <string name="prefs_speed_cameras_information">Nopeuskameravaroitukset on poistettu käytöstä niissä maissa, missä varoitukset on kielletty lain nojalla.</string>
@@ -887,7 +817,6 @@
     <string name="download_resources_custom_url_title">Mukautettu karttapalvelin</string>
     <string name="download_resources_custom_url_summary_none">Ei asetettu</string>
     <string name="download_resources_custom_url_error_scheme">Anna URL-osoite, joka alkaa http:// tai https://</string>
-    <string name="download_resources_custom_url_message">Ohita karttalatausten oletuspalvelin. Jätä tyhjäksi käyttääksesi CoMapsin oletuspalvelinta.</string>
     <string name="navigation_start_tts_disabled_message">Ääniohjeistukset pois käytöstä: TTS-moottori ei saatavilla</string>
     <string name="charge_socket_schuko">EU</string>
     <string name="pref_speedlimit_title">Näytä nopeusrajoitukset</string>
@@ -905,7 +834,6 @@
     <string name="route_finished">Reitti valmis</string>
     <string name="not_following_route">Ei reitillä</string>
     <string name="pref_openexternallinks_title">Avaa kolmannen osapuolen linkit automaattisesti</string>
-    <string name="pref_openexternallinks_summary">Avaa kolmannen osapuolen linkit oletuksena CoMapsissa</string>
     <string name="editor_mark_business_vacant_title">Merkitse liike tyhjillään olevaksi</string>
     <string name="population">Asukasluku: %s</string>
     <string name="pref_maplanguage_local">Paikallinen kieli</string>

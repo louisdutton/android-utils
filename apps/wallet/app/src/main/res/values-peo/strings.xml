@@ -61,11 +61,8 @@
     <string name="importOptionFilesystemExplanation">یه فایل خاص رو از سیستم انتخاب کن</string>
     <string name="importOptionFilesystemButton">از فایلای سیستم</string>
     <string name="about">درمورد</string>
-    <string name="app_copyright_short">حق نشر © سیلویا وَن اُس و مشارکت کننده‌ها</string>
-    <string name="app_copyright_old">تبغ کارت وفاداری Keychain\nکپی رایت © 2016-2020 سازنده : Branden</string>
     <string name="app_license">نرم‌افزار آزاد با حقوق کپی‌لفت، تحت مجوز GPLv3+</string>
     <string name="about_title_fmt">درمورد <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">ورژن <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">بارکد انتخاب کن</string>
     <string name="thumbnailDescription">عکس کوچیک</string>
     <string name="starImage">ستاره دوست داشتنی</string>
@@ -131,7 +128,6 @@
     <string name="balanceParsingFailed">موجودی یوخدی</string>
     <string name="chooseImportType">وارد کردن اطلاعات از</string>
     <string name="app_loyalty_card_keychain">جاکیلیدی کارت وفاداری</string>
-    <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
     <string name="accept">باشه</string>
     <string name="importCatima">واردات از کاتیما</string>
     <string name="importCatimaMessage">خروجی خودتو از کاتیما برای وارد کردن \nانتخاب کن.\n\n اونارو از منوی واردات/صادرات یه برنامه کاتیما دیگه با فشار دادن صادرات ایجاد کن.</string>
@@ -168,13 +164,10 @@
     <string name="settings_oled_dark">پس‌زمینه‌ی یه‌دست سیاه برای حالت تاریک</string>
     <string name="settings_oled_dark_summary">استفاده‌ی باتری رو برای نمایشگرهای OLED کاهش می‌دهد</string>
     <string name="editCardTitle">عوض کردن کارت</string>
-    <string name="app_libraries">کتابخانه-تصادفات رانندگی: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">منابع-تصادفات رانندگی: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="share">اشتراک گزاری</string>
     <string name="settings_system_locale">سیستم</string>
     <string name="selectColor">رنگ انتخاب کن</string>
     <string name="setIcon">قالب پیش‌نمایه رو نشون‌بده</string>
-    <string name="app_contributors">ساخته شده توسط: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">تمیزکردن</string>
     <string name="showMoreInfo">دیدن اطلاعات</string>
     <string name="updateBalance">به‌روزرسانی موجودی</string>
@@ -187,11 +180,9 @@
     <string name="reverse">…به ترتیب برعکس</string>
     <string name="sort_by">مرتب کردن بر اساس</string>
     <string name="version_history">تاریخچه نسخه</string>
-    <string name="credits">اعتبارات</string>
     <string name="help_translate_this_app">به ترجمه این برنامه کمک کن</string>
     <string name="license">مجوز</string>
     <string name="source_repository">مخزن منبع</string>
-    <string name="on_github">تو گیت‌هاب</string>
     <string name="and_data_usage">و مصرف داده</string>
     <string name="report_error">گزارش خطا</string>
     <string name="translate_platform">تو سایت</string>

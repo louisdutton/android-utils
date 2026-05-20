@@ -202,9 +202,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
   @SuppressWarnings("NotNullFieldNotInitialized")
   @NonNull
-  private ActivityResultLauncher<SharingUtils.SharingIntent> mShareLauncher;
-  @SuppressWarnings("NotNullFieldNotInitialized")
-  @NonNull
   private ActivityResultLauncher<Intent> mPowerSaveSettings;
   @NonNull
   private boolean mPowerSaveDisclaimerShown = false;
@@ -470,8 +467,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
                                                                    this::onPostNotificationPermissionResult);
     mPowerSaveSettings =
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::onPowerSaveResult);
-
-    mShareLauncher = SharingUtils.RegisterLauncher(this);
 
     final Intent intent = getIntent();
     final boolean isLaunchByDeepLink = intent != null && !intent.hasCategory(Intent.CATEGORY_LAUNCHER);
@@ -2021,10 +2016,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
             .setTitle(R.string.load_kmz_title)
             .setMessage(getString(R.string.unknown_file_type, uri))
             .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.report_a_bug,
-                               (dialog, which)
-                                   -> Utils.sendBugReport(mShareLauncher, this, getString(R.string.load_kmz_title),
-                                                          getString(R.string.unknown_file_type, uri)))
             .setOnDismissListener(dialog -> mAlertDialog = null)
             .show();
   }
@@ -2038,10 +2029,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
             .setTitle(R.string.load_kmz_title)
             .setMessage(getString(R.string.failed_to_open_file, uri, error))
             .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.report_a_bug,
-                               (dialog, which)
-                                   -> Utils.sendBugReport(mShareLauncher, this, getString(R.string.load_kmz_title),
-                                                          getString(R.string.failed_to_open_file, uri, error)))
             .setOnDismissListener(dialog -> mAlertDialog = null)
             .show();
   }

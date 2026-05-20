@@ -74,7 +74,6 @@ import org.futo.inputmethod.latin.uix.urlEncode
 import org.futo.inputmethod.latin.utils.Dictionaries
 import org.futo.inputmethod.latin.utils.SubtypeLocaleUtils
 import org.futo.inputmethod.latin.xlm.ModelPaths
-import org.futo.inputmethod.updates.openURI
 import java.util.Locale
 
 private val InputMethodSubtype.layoutSetName
@@ -363,7 +362,6 @@ data class LanguageOptions(
 fun ConfirmResourceActionDialog(
     onDismissRequest: () -> Unit,
 
-    onExplore: () -> Unit,
     onDelete: () -> Unit,
 
     resourceKind: FileKind,
@@ -430,9 +428,6 @@ fun ConfirmResourceActionDialog(
 
                 }
             } else {
-                TextButton(onClick = { onExplore() }) {
-                    Text(stringResource(R.string.language_settings_resource_explore_online_button))
-                }
             }
         },
         dismissButton = {
@@ -499,38 +494,6 @@ val LanguageSettingsTop = listOf(
         navigateTo = "addLanguage",
     )
 )
-val LanguageSettingsBottom = listOf(
-    userSettingNavigationItem(
-        title = R.string.language_settings_explore_voice_input_models_online,
-        style = NavigationItemStyle.Misc,
-        navigate = { nav ->
-            nav.context.openURI(
-                FileKind.VoiceInput.getAddonUrlForLocale(null),
-                true
-            )
-        },
-    ),
-    userSettingNavigationItem(
-        title = R.string.language_settings_explore_dictionaries_online,
-        style = NavigationItemStyle.Misc,
-        navigate = { nav ->
-            nav.context.openURI(
-                FileKind.Dictionary.getAddonUrlForLocale(null),
-                true
-            )
-        },
-    ),
-    userSettingNavigationItem(
-        title = R.string.language_settings_explore_transformers_online,
-        style = NavigationItemStyle.Misc,
-        navigate = { nav ->
-            nav.context.openURI(
-                FileKind.Transformer.getAddonUrlForLocale(null),
-                true
-            )
-        },
-    )
-)
 
 val LanguageSettingsLite = UserSettingsMenu(
     title = R.string.language_settings_title,
@@ -542,7 +505,7 @@ val LanguageSettingsLite = UserSettingsMenu(
             navigateTo = "languages",
             style = NavigationItemStyle.Misc
         )
-    ) + LanguageSettingsBottom
+    )
 )
 
 @Preview(showBackground = true)
@@ -566,10 +529,6 @@ fun LanguagesScreen(navController: NavHostController = rememberNavController()) 
         val info = deleteDialogInfo.value!!
         ConfirmResourceActionDialog(
             onDismissRequest = { deleteDialogInfo.value = null },
-            onExplore = {
-                context.openURI(info.kind.getAddonUrlForLocale(info.locale), true)
-                deleteDialogInfo.value = null
-            },
             onDelete = {
                 ResourceHelper.deleteResourceForLanguage(context, info.kind, info.locale)
                 deleteDialogInfo.value = null
@@ -725,12 +684,6 @@ fun LanguagesScreen(navController: NavHostController = rememberNavController()) 
             Spacer(modifier = Modifier.height(12.dp))
         }
 
-        item {
-            Spacer(modifier = Modifier.height(32.dp))
-            ScreenTitle(stringResource(R.string.language_settings_other_options))
-        }
-        items(LanguageSettingsBottom) {
-            it.component()
-        }
+        item { Spacer(modifier = Modifier.height(32.dp)) }
     }
 }

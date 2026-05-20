@@ -249,14 +249,6 @@
             android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/about"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_info_black_24dp"
-            app:title="@string/settings_about_title"
-            tools:summary="@string/settings_version" />
-
     </LinearLayout>
 
 </ScrollView>

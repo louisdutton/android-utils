@@ -28,12 +28,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
-import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDispose
-import dev.octoshrimpy.quik.BuildConfig
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.MenuItem
 import dev.octoshrimpy.quik.common.QkChangeHandler
@@ -47,7 +45,6 @@ import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.common.widget.PreferenceView
 import dev.octoshrimpy.quik.common.widget.TextInputDialog
 import dev.octoshrimpy.quik.databinding.SettingsControllerBinding
-import dev.octoshrimpy.quik.feature.settings.about.AboutController
 import dev.octoshrimpy.quik.feature.settings.swipe.SwipeActionsController
 import dev.octoshrimpy.quik.feature.themepicker.ThemePickerController
 import dev.octoshrimpy.quik.injection.appComponent
@@ -78,7 +75,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         TextInputDialog(activity!!, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
     }
 
-    private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
     private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val signatureSubject: Subject<String> = PublishSubject.create()
@@ -108,7 +104,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
         messageLinkHandlingDialog.adapter.setData(R.array.messageLinkHandlings, R.array.messageLinkHandling_ids)
 
-        binding.about.summary = context.getString(R.string.settings_version, BuildConfig.VERSION_NAME)
     }
 
     override fun onAttach(view: View) {
@@ -123,10 +118,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
             .mapNotNull { view -> view as? PreferenceView }
             .map { preference -> preference.clicks().map { preference } }
             .let { preferences -> Observable.merge(preferences) }
-
-    override fun aboutLongClicks(): Observable<*> = binding.about.longClicks()
-
-    override fun viewQksmsPlusClicks(): Observable<*> = viewQksmsPlusSubject
 
     override fun nightModeSelected(): Observable<Int> = nightModeDialog.adapter.menuItemClicks
 
@@ -208,16 +199,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         }
     }
 
-    override fun showQksmsPlusSnackbar() {
-        view?.run {
-            Snackbar.make(binding.contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
-                setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
-                setActionTextColor(context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, colors.theme().theme))
-                show()
-            }
-        }
-    }
-
     // TODO change this to a PopupWindow
     override fun showNightModeDialog() = nightModeDialog.show(activity!!)
 
@@ -251,12 +232,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun showThemePicker() {
         router.pushController(RouterTransaction.with(ThemePickerController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
-    }
-
-    override fun showAbout() {
-        router.pushController(RouterTransaction.with(AboutController())
                 .pushChangeHandler(QkChangeHandler())
                 .popChangeHandler(QkChangeHandler()))
     }

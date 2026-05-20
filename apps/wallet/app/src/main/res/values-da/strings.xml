@@ -50,8 +50,6 @@
     <string name="starImage">Favorit stjerne</string>
     <string name="thumbnailDescription">Thumbnail</string>
     <string name="selectBarcodeTitle">Vælg stregkode</string>
-    <string name="app_copyright_old">Baseret på Loyalty Card Keychain
-\ncopyright © 2016-2020 Branden Archer.</string>
     <string name="about">Om</string>
     <string name="noCardsMessage">Tilføj først et kort</string>
     <string name="cardShortcut">Genvej til kort</string>
@@ -91,10 +89,7 @@
     <string name="permissionReadCardsDescription">læs dit Catima kort og alle kortets detaljer, også noter og billeder</string>
     <string name="cameraPermissionDeniedTitle">Kunne ikke få adgang til kamera</string>
     <string name="noCameraPermissionDirectToSystemSetting">For at scanne stregkoder, har Catima behov for at få adgang til dit kamera. Klik her for at ændre dine tilladelser i indstillinger.</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os og hjælpere</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os og hjælpere</string>
     <string name="about_title_fmt">Om <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Version: <xliff:g id="version">%s</xliff:g></string>
     <string name="app_license">Copylefted libre software, GPLv3+ licens</string>
     <string name="barcodeImageDescriptionWithType">Billede<xliff:g>%s</xliff:g> stregkode</string>
     <string name="group_name_already_in_use">Gruppenavn allerede i brug</string>
@@ -118,7 +113,6 @@
     <string name="settings_display_barcode_max_brightness_summary">Nødvendigt for nogle scannere til at fungerer</string>
     <string name="editBarcode">Rediger stregkode</string>
     <string name="points">Point</string>
-    <string name="privacy_policy">Privatlivspolitik</string>
     <plurals name="groupCardCount">
         <item quantity="one"><xliff:g>%d</xliff:g> kort</item>
         <item quantity="other"><xliff:g>%d</xliff:g> kort</item>

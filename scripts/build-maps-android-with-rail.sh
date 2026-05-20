@@ -26,7 +26,7 @@ fi
 gradle_args=("$@")
 if [[ "${#gradle_args[@]}" -eq 0 ]]; then
   gradle_args=(
-    :app:assembleFdroidDebug
+    :app:assembleDebug
     -Parm64
     --no-daemon
     -Pnjobs="${COMAPS_NJOBS:-4}"

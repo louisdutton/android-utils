@@ -70,8 +70,6 @@
     <string name="ok">OK</string>
     <string name="cardId">ID kartice</string>
     <string name="exportFailed">Nisam uspio izvršiti izvoz</string>
-    <string name="app_copyright_old">Bazirano na Loyalty Card privjesku
-\ncopyright © 2016-2020 Branden Archer</string>
     <string name="noGiftCardsGroup">Napravite nekoliko kartica, a zatim ih dodijelite grupi ovdje</string>
     <string name="importExportHelp">Pravljenje sigurnosne kopije podataka omogućava njihovo premještanje na drugi uređaj</string>
     <string name="importSuccessfulTitle">Uvezeno</string>
@@ -131,13 +129,8 @@
     <string name="permissionReadCardsDescription">da pročita vaše Catima kartice i sve njihove detalje, uključujući bilješke i slike</string>
     <string name="cameraPermissionDeniedTitle">Nije bilo moguće pristupiti kameri</string>
     <string name="noCameraPermissionDirectToSystemSetting">Za skeniranje barkodova, Catima će trebati pristup vašoj kameri. Dodirnite ovdje da promijenite postavke dozvola.</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Autorska prava © 2019–<xliff:g>%d</xliff:g> Sylvia van Os i saradnici</string>
-    <string name="app_copyright_short">Autorska prava © Sylvia van Os i saradnici</string>
     <string name="app_license">Slobodni softver zaštićen autorskim pravom, licenciran pod GPLv3+</string>
     <string name="about_title_fmt">O aplikaciji <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Verzija: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Biblioteke trećih strana: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Resursi trećih strana: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Odaberite barkod</string>
     <string name="thumbnailDescription">Sličica</string>
     <string name="settings">Postavke</string>
@@ -167,7 +160,6 @@
     <string name="balanceParsingFailed">Nevažeći saldo</string>
     <string name="chooseImportType">Uvoz podataka iz</string>
     <string name="app_loyalty_card_keychain">Privjesak za ključeve s karticom vjernosti</string>
-    <string name="privacy_policy">Politika privatnosti</string>
     <string name="accept">Prihvati</string>
     <string name="importFidme">Uvoz iz FidMe-a</string>
     <string name="importFidmeMessage">Odaberite izvoz iz FidMe-a za uvoz i nakon toga ručno odaberite vrste barkodova. \nKreirajte ga iz svog FidMe profila odabirom Zaštita podataka, a zatim pritiskom na Izdvoji moje podatke.</string>
@@ -204,18 +196,15 @@
     <string name="translate_platform">na Weblateu</string>
     <string name="report_error">Prijavi grešku</string>
     <string name="and_data_usage">i korištenje podataka</string>
-    <string name="on_github">na GitHubu</string>
     <string name="source_repository">Izvorni repozitorij</string>
     <string name="license">Licenca</string>
     <string name="help_translate_this_app">Pomozite u prevođenju ove aplikacije</string>
-    <string name="credits">Zasluge</string>
     <string name="version_history">Historija verzija</string>
     <string name="sort_by_valid_from">Vrijedi od</string>
     <string name="barcodeLongPressMessage">U aplikaciji galerija mogu se otvoriti samo slike</string>
     <string name="failedToRetrieveImageFile">Neuspjevam preuzimanje slikovne datoteke</string>
     <string name="updateBalance">Ažuriraj stanje</string>
     <string name="showMoreInfo">Prikaži informacije</string>
-    <string name="app_contributors">Omogućeno zahvaljujući: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="setIcon">Postavi sličicu</string>
     <string name="selectColor">Odaberite boju</string>
     <string name="settings_oled_dark_summary">Smanjuje potrošnju baterije na OLED ekranima</string>

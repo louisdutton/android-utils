@@ -22,7 +22,6 @@ import org.futo.inputmethod.latin.uix.settings.ScrollableList
 import org.futo.inputmethod.latin.uix.settings.Tip
 import org.futo.inputmethod.latin.xlm.ModelInfo
 import org.futo.inputmethod.latin.xlm.ModelPaths
-import org.futo.inputmethod.updates.openURI
 import java.net.URLEncoder
 import java.util.Locale
 
@@ -88,14 +87,5 @@ fun ModelListScreen(navController: NavHostController = rememberNavController()) 
             }
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
-        ScreenTitle("Actions")
-        NavigationItem(
-            title = "Docs",
-            style = NavigationItemStyle.Misc,
-            navigate = {
-                context.openURI("https://gitlab.futo.org/alex/keyboard-wiki/-/wikis/Keyboard-LM-docs")
-            }
-        )
     }
 }

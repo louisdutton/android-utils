@@ -23,7 +23,6 @@
     <string name="about">Apie</string>
     <string name="app_license">Copylefted laisvoji programinė įranga, licencijuota GPLv3+</string>
     <string name="about_title_fmt">Apie <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versija: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Pasirinkite brūkšninį kodą</string>
     <string name="noCardsMessage">Pirmiausia pridėkite kortelę</string>
     <string name="sendLabel">Siųsti…</string>
@@ -72,7 +71,6 @@
 \nSukurkite ją iš kitos Catima programos importavimo / eksportavimo meniu, pirmiausia ten paspausdami Eksportuoti.</string>
     <string name="importCatima">Importuoti iš Catima</string>
     <string name="accept">Priimti</string>
-    <string name="privacy_policy">Privatumo politika</string>
     <string name="chooseImportType">Importuoti duomenis iš</string>
     <string name="points">Taškai</string>
     <string name="currency">Valiuta</string>
@@ -117,11 +115,6 @@
     <string name="settings">Nustatymai</string>
     <string name="starImage">Mėgstamiausia žvaigždė</string>
     <string name="thumbnailDescription">Miniatiūra</string>
-    <string name="app_resources">Laisvosios trečiųjų šalių ištekliai: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Laisvosios trečiųjų šalių bibliotekos: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_copyright_old">Paremta Loyalty Card Keychain
-\nautorinės teisės © 2016–2020 Branden Archer</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Autorinės teisės © 2019–<xliff:g>%d</xliff:g> Sylvia van Os</string>
     <string name="importOptionFilesystemButton">Iš failų sistemos</string>
     <string name="importOptionFilesystemExplanation">Pasirinkite konkretų failą iš failų sistemos.</string>
     <string name="importOptionFilesystemTitle">Importuoti iš failų sistemos</string>
@@ -152,7 +145,6 @@
     </plurals>
     <string name="settings_system_locale">Sistemos</string>
     <string name="settings_locale">Kalba</string>
-    <string name="app_contributors">Tapo įmanoma su pagalba: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Grupėje yra tuščia</string>
     <string name="barcodeImageDescriptionWithType"><xliff:g>%s</xliff:g> brūkšninio kodo vaizdas</string>
     <string name="sort_by">Rikiuoti pagal</string>
@@ -161,12 +153,10 @@
     <string name="sort_by_most_recently_used">Vėliausiai naudota</string>
     <string name="sort_by_name">Pavadinimas</string>
     <string name="sort">Rikiuoti</string>
-    <string name="credits">Padėkos</string>
     <string name="source_repository">Šaltinio repozitorija</string>
     <string name="and_data_usage">ir duomenų naudojimas</string>
     <string name="version_history">Versijų istorija</string>
     <string name="license">Licencija</string>
-    <string name="on_github">GitHub</string>
     <string name="help_translate_this_app">Padėkite išversti šią programėlę</string>
     <string name="report_error">Pranešti apie klaidą</string>
     <string name="exportPasswordHint">Įveskite slaptažodį</string>
@@ -272,7 +262,6 @@
     <string name="add_a_card_in_a_different_way">Pridėti kortelę kitu būdu</string>
     <string name="field_must_not_be_empty">Laukelis negali būti tuščias</string>
     <string name="app_name">Wallet</string>
-    <string name="app_copyright_short">Autorių teisės © Sylvia van Os ir pagalbininkai</string>
     <string name="useFrontImage">Naudoti priekinį vaizdą</string>
     <string name="useBackImage">Naudoti galinį vaizdą</string>
     <string name="sort_by_valid_from">Teisinga forma</string>

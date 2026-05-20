@@ -155,11 +155,6 @@
   <string name="theme_dynamic_dark">Dinâmico Escuro</string>
   <string name="theme_dynamic_light">Dinâmico Claro</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Serviço de Verificação de Atualizações</string>
-  <string name="autoupdater_update_available_title">Atualização Disponível</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;Uma atualização está disponível (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). Toque para descarregar&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Ignorar</string>
-  <string name="autoupdater_perform_update">Atualizar</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">Adicionar \"%1$s\" à lista negra para não ser sugerido?</string>
   <!-- Must be fairly short -->
@@ -170,7 +165,6 @@
   <string name="keyboard_version_status">Alpha</string>
   <string name="keyboard_switch_keyboard">Mudar Teclado</string>
   <string name="keyboard_language_settings">Definições</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">Toque para encontrar atualizações, ou verifique nas definições</string>
   <!-- Should be fairly short (under 40 chars). Means there are no predictions for this language and a download is necessary by tapping on this notice. Appears in suggestion bar -->
   <string name="keyboard_actionbar_no_dictionary_installed_notice">Sem dicionário instalado, toque para descarregar?</string>
   <!--
@@ -203,68 +197,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Retrair</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Pagamento</string>
-  <string name="payment_screen_title">Pagar pelo Teclado FUTO</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;Tem utilizado o Teclado FUTO durante &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; dias. Se achar esta aplicação útil, considere pagar para apoiar o desenvolvimento futuro do software FUTO.&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">Obrigado por experimentar o Teclado FUTO! Se achar esta aplicação útil, considere pagar para apoiar o desenvolvimento futuro do software FUTO.</string>
-  <string name="payment_screen_sales_paragraph_2">A FUTO está dedicada a criar bom software que não o prejudique. Esta aplicação nunca lhe mostrará anúncios nem recolherá os seus dados pessoais.</string>
-  <string name="payment_screen_sales_point_development_title">Desenvolvimento Sustentável</string>
-  <string name="payment_screen_sales_point_development_body">A missão da FUTO é que o software de código aberto e as práticas comerciais não maliciosas se tornem uma fonte de rendimento sustentável para projetos e seus desenvolvedores. Por esta razão, somos a favor de que os utilizadores realmente paguem pelo software.</string>
-  <string name="payment_screen_sales_point_privacy_title">Compromisso com a Privacidade</string>
-  <string name="payment_screen_sales_point_privacy_body">Esta aplicação nunca lhe mostrará anúncios nem venderá os seus dados. Não estamos nesse negócio.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Pagamento não suportado nesta versão</string>
-  <string name="payment_screen_already_paid_title">Já pagou?</string>
-  <string name="payment_screen_already_paid_body">Se já pagou pelo Teclado FUTO ou pela Entrada por Voz FUTO, toque abaixo.</string>
-  <string name="payment_screen_already_paid_button">Já paguei</string>
-  <string name="payment_screen_already_paid_confirmation">Confirme a sua escolha</string>
-  <string name="payment_screen_already_paid_confirmation_body">Tem a certeza de que deseja confirmar que já pagou? Uma vez confirmado, não será questionado sobre o pagamento novamente.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Já paguei</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Cancelar</string>
-  <string name="payment_screen_set_reminder_title">Ainda não está pronto para pagar?</string>
-  <string name="payment_screen_set_reminder_body">Isto irá ocultar o lembrete na tela de definições pelo período de dias inserido.</string>
-  <string name="payment_screen_set_reminder_setter">Quando gostaria de ser lembrado?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">daqui a 7 dias</string>
-  <string name="payment_screen_set_reminder_setter_1_month">daqui a 1 mês</string>
-  <string name="payment_screen_set_reminder_setter_6_months">daqui a 6 meses</string>
-  <string name="payment_screen_set_reminder_setter_next_century">próximo século</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Confirmar lembrete</string>
-  <string name="payment_screen_other_options">Outras Opções</string>
-  <string name="payment_screen_need_help_title">Ajuda</string>
-  <string name="payment_screen_need_help_subtitle">Precisa de ajuda? Visite o nosso site</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Pagar via Google Play (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + IVA)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;Pagar (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + IVA)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Mais opções</string>
-  <string name="payment_screen_payment_complete_title">Pagamento Completo</string>
-  <string name="payment_screen_aftersales_title">Obrigado</string>
-  <string name="payment_screen_aftersales_title_pending">Pagamento Pendente</string>
-  <string name="payment_screen_aftersales_paragraph_1">Obrigado por adquirir o Teclado FUTO!</string>
-  <string name="payment_screen_aftersales_paragraph_2">A sua compra ajudará no desenvolvimento contínuo do Teclado FUTO e de outros projetos FUTO.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">O seu pagamento ainda está pendente, mas deverá ser processado em breve.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Se acabou de pagar, o seu pagamento pode ainda estar a ser processado. Deverá receber um e-mail com mais informações.</string>
-  <string name="payment_screen_payment_failed_title">Erro de Pagamento</string>
-  <string name="payment_screen_payment_failed_body">Infelizmente, o seu pagamento falhou por uma razão ou outra. Por favor, contacte-nos se precisar de ajuda. Pode entrar em contacto connosco através do e-mail keyboard@futo.org, com o botão abaixo, ou através de Enviar Feedback na Ajuda.</string>
-  <string name="payment_screen_payment_failed_body_unconfident">Pode ter havido um problema com o seu pagamento. Se o pagamento foi processado, deverá receber um e-mail com uma chave de licença. Por favor, contacte-nos se precisar de ajuda. Pode entrar em contacto connosco através do e-mail keyboard@futo.org, com o botão abaixo, ou através de Partilhar Feedback na tela principal.</string>
-  <string name="payment_screen_license_integrity_error">Falha na verificação da licença. Se acredita que isto é um erro, por favor, contacte-nos.</string>
-  <string name="payment_screen_continue_button">Continuar</string>
-  <string name="payment_unpaid_version_title">Teclado FUTO Não Pago</string>
-  <string name="payment_unpaid_version_indicator">Não Pago</string>
-  <string name="payment_paid_version_indicator">Obrigado por usar a versão paga do Teclado FUTO!</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Aviso de Atualizações</string>
-  <string name="manual_update_notice_paragraph_1">Esta aplicação não se conecta à internet e não poderá verificar atualizações automáticas. No entanto, pode verificar atualizações manualmente.</string>
-  <string name="manual_update_notice_paragraph_2">Por favor, utilize o F-Droid ou o Obtainium para atualizações automáticas. Visite keyboard.futo.org para opções de download.</string>
-  <string name="manual_update_notice_dev_paragraph">Está na versão de desenvolvimento do Teclado FUTO. Visite keyboard.futo.org se quiser descarregar a versão estável.</string>
-  <string name="manual_update_notice_visit_site_button">Visitar</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Ignorar</string>
   <!-- General settings strings -->
   <string name="settings_tip">Dica</string>
   <string name="settings_unknown_error_title">Erro Desconhecido</string>
   <string name="settings_unknown_error_subtitle">Ocorreu um erro desconhecido.</string>
   <string name="settings_try_typing_here">Tente escrever aqui…</string>
   <string name="settings_external_model_name">Modelo importado externamente</string>
-  <string name="settings_check_for_updates_manually">Verificar atualizações manualmente</string>
   <string name="settings_update_available">Atualização Disponível</string>
   <!--
     May be translated as "Start", "All", etc. This is the starting menu where all settings live.
@@ -302,27 +241,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">Dicionário Integrado</string>
   <string name="language_settings_resource_voice_input_selected">Gostaria de reverter o modelo de entrada por voz para o padrão ou substituí-lo por outro ficheiro?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Não existe modelo de entrada por voz integrado para este idioma, portanto, se o remover, a entrada por voz deixará de funcionar para este idioma até que importe um modelo diferente!</string>
-  <string name="language_settings_resource_voice_input_selected_unset">Não configurou um modelo de entrada por voz personalizado para este idioma. Pode explorar downloads online ou importar um a partir de um ficheiro.</string>
   <string name="language_settings_resource_transformer_selected">Gostaria de reverter o modelo de transformador para o padrão ou substituí-lo por outro ficheiro?</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">Não existe modelo de transformador integrado para este idioma, portanto, se o remover, as previsões baseadas em transformador deixarão de funcionar para este idioma até que importe um modelo diferente!</string>
-  <string name="language_settings_resource_transformer_selected_unset">Não configurou um modelo de transformador personalizado para este idioma. Pode explorar downloads online ou importar um a partir de um ficheiro.</string>
   <string name="language_settings_resource_dictionary_selected">Gostaria de reverter o dicionário para o padrão ou substituí-lo por outro ficheiro?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Não existe dicionário integrado para este idioma, portanto, se o remover, a correção automática e as previsões deixarão de funcionar para este idioma até que importe um dicionário diferente!</string>
-  <string name="language_settings_resource_dictionary_selected_unset">Não configurou um dicionário personalizado para este idioma. Pode explorar downloads online ou importar um a partir de um ficheiro.</string>
   <string name="language_settings_resource_replace_button">Substituir</string>
   <string name="language_settings_resource_import_file_button">Importar</string>
   <string name="language_settings_resource_revert_to_default_button">Reverter para Padrão</string>
   <string name="language_settings_resource_remove_button">Remover</string>
-  <string name="language_settings_resource_explore_online_button">Explorar</string>
   <string name="language_settings_remove_language_title">Eliminar %1$s?</string>
   <string name="language_settings_remove_language_body">Remover %1$s e todos os seus layouts e recursos personalizados associados?</string>
   <string name="language_settings_remove_language_remove_button">Remover</string>
   <string name="language_settings_remove_language_cancel_button">Cancelar</string>
   <string name="language_settings_other_options">Outras opções</string>
   <string name="language_settings_import_resource_from_file">Importar ficheiro de recurso</string>
-  <string name="language_settings_explore_voice_input_models_online">Explorar modelos de entrada por voz</string>
-  <string name="language_settings_explore_dictionaries_online">Explorar dicionários</string>
-  <string name="language_settings_explore_transformers_online">Explorar modelos de transformador</string>
   <string name="language_settings_import_dictionary_or_model">Importar dicionário ou modelo</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Modelo de Entrada por Voz</string>
@@ -499,25 +431,6 @@
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_title">Visualizar e editar palavras bloqueadas</string>
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_subtitle">Clique aqui para visualizar a lista de sugestões bloqueadas, adicione ou remova itens</string>
   <string name="prediction_settings_word_blacklist_remove_word_from_blacklist">Remover palavra</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Ajuda &amp; Feedback</string>
-  <string name="help_menu_version_name">Nome da Versão: %1$s</string>
-  <string name="help_menu_version_code">Código da Versão: %1$s</string>
-  <string name="help_menu_version_tip">Queremos ouvir a sua opinião! Se está a reportar um problema, a sua versão pode ser relevante: v%1$s</string>
-  <string name="help_menu_website">Site do FUTO</string>
-  <string name="help_menu_website_subtitle">Saiba mais sobre nós e a nossa filosofia</string>
-  <string name="help_menu_website_tags">download, apps, entrada de voz</string>
-  <string name="help_menu_documentation">Documentação</string>
-  <string name="help_menu_documentation_subtitle">Saiba mais sobre as funcionalidades e capacidades do teclado</string>
-  <string name="help_menu_discord">Servidor Discord</string>
-  <string name="help_menu_discord_subtitle">Quer conversar mas não gosta do Zulip? Converse aqui</string>
-  <string name="help_menu_futo_chat">Chat FUTO</string>
-  <string name="help_menu_futo_chat_subtitle">Quer conversar mas não gosta do Discord? Converse aqui</string>
-  <string name="help_menu_github">Rastreador de problemas público</string>
-  <string name="help_menu_github_subtitle">Problema específico ou pedido de funcionalidade? Publique aqui</string>
-  <string name="help_menu_email">Email keyboard@futo.org</string>
-  <string name="help_menu_email_subtitle">Feedback privado, ajuda ou não usa o GitHub? Envie-nos um email</string>
-  <string name="help_menu_email_tags">gmail, suporte, ajuda, contato, funcionando, quebrado, bug, erro, problema, reclamação, ticket, pagamento, glitch, resolver, arrumar, corrigir, consumidor, crash, falha, questão, pergunta, assistência</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">Configuração - Passo 1</string>
   <string name="setup_step_2">Configuração - Passo 2</string>
@@ -527,18 +440,6 @@
   <string name="setup_warning_multiple_versions">Aviso: Parece que tem instaladas as versões da Play Store e a versão Standalone, recomendamos apenas a instalação de uma delas</string>
   <string name="setup_active_input_method">Por favor, selecione o Teclado FUTO como seu método de entrada ativo.</string>
   <string name="setup_switch_input_methods">Mudar Métodos de Entrada</string>
-  <!-- Credits menu -->
-  <string name="credits_menu_title">Créditos</string>
-  <string name="credits_menu_header_text">Obrigado a estas pessoas por ajudarem a tornar o FUTO Keyboard numa excelente aplicação!</string>
-  <string name="credits_menu_team_translators_title">Tradutores</string>
-  <string name="credits_menu_team_keyboard_layouts_title">Contribuidores de layouts</string>
-  <string name="credits_menu_team_code_title">Contribuidores de layouts</string>
-  <string name="credits_menu_nonaffiliation_notice">Os autores na lista acima não estão afiliados conosco, e não necessariamente nos aprova ou promove. Essa lista não sugere afiliação ou apoio.</string>
-  <string name="credits_menu_contribute_translations_button">Ajude a traduzir a app</string>
-  <string name="credits_menu_contribute_keyboard_layouts_button">Contribua com layouts</string>
-  <string name="credits_menu_contribute_code_button">Contribua com código</string>
-  <string name="credits_menu_project_information_title">Informações sobre %s</string>
-  <string name="credits_menu_project_url_link">URL do projeto</string>
   <!-- Settings category title -->
   <string name="language_specific_settings_title">Definições específicas do idioma</string>
   <!-- Specific to Japanese input method -->

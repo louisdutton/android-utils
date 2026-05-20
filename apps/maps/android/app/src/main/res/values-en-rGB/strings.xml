@@ -26,8 +26,6 @@
     <string name="dialog_pedestrian_route_is_long_header">No metro route found</string>
     <string name="dialog_pedestrian_route_is_long_message">Please choose a start or end point closer to a metro station</string>
     <string name="bookmarks_and_tracks">Favourites</string>
-    <string name="share_bookmarks_email_subject">My CoMaps Favourites</string>
-    <string name="share_bookmarks_email_body">Hello! \n \nAttached are my Favourites, please open them in CoMaps. If you don\'t have it installed you can download it here: https://www.comaps.app/download/ \n \nEnjoy travelling with CoMaps!</string>
     <string name="load_kmz_title">Loading Favourites</string>
     <string name="load_kmz_successful">Favourites loaded successfully! You can find them on the map or on the Favourites Manager screen.</string>
     <string name="load_kmz_failed">Failed to load Favourites. The file may be corrupted or defective.</string>
@@ -41,12 +39,8 @@
     <string name="bookmark_color">Colour for Favourite</string>
     <string name="choose_color">Choose Colour</string>
     <string name="category_atm">Cash Machine</string>
-    <string name="app_tip_09">Our main goal is to build fast, privacy-focussed, easy-to-use maps that you will love.</string>
     <string name="location_is_disabled_long_text">You currently have all Location Services for this device or application disabled. Please enable them in Settings.</string>
     <string name="limited_accuracy">Limited Accuracy</string>
-    <string name="about_menu_title">About CoMaps</string>
-    <string name="about_proposition_1">• Easy to use and polished</string>
-    <string name="about_developed_by_enthusiasts">Fully open source, not for profit, transparent decision-making and finances.</string>
     <string name="unsupported_phone">The app requires hardware accelerated OpenGL. Unfortunately, your device is not supported.</string>
     <string name="not_enough_free_space_on_sdcard">Please free up some space on the SD card/USB storage first in order to use the app</string>
     <string name="download_resources">Before you start using the app, please download the world overview map to your device. \nIt will use %s of storage.</string>
@@ -54,7 +48,6 @@
     <string name="downloading_country_can_proceed">Downloading %1$s (%2$s). You can now \nproceed to the map.</string>
     <string name="download_country_ask">Download %1$s? (%2$s)</string>
     <string name="search">Search</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>

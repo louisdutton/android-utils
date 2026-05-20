@@ -1,1 +1,0 @@
- * Fix remembering database location #2262

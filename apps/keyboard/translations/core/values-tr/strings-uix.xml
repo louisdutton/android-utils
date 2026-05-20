@@ -151,11 +151,6 @@
   <string name="theme_dynamic_dark">Dinamik Koyu</string>
   <string name="theme_dynamic_light">Dinamik Aydınlık</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Güncelleme Kontrol Servisi</string>
-  <string name="autoupdater_update_available_title">Güncelleme Mevcut</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;Bir güncelleme mevcut (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). İndirmek için dokunun&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Kapat</string>
-  <string name="autoupdater_perform_update">Güncelle</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">“%1$s” önerilerden çıkarılsın mı?</string>
   <!-- Must be fairly short -->
@@ -166,7 +161,6 @@
   <string name="keyboard_version_status">Alpha</string>
   <string name="keyboard_switch_keyboard">Klavye Değiştir</string>
   <string name="keyboard_language_settings">Ayarlar</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">Güncellemeleri kontrol etmek için dokunun veya ayarlardan kontrol edin</string>
   <!--
     Talkback descriptions (screen readers)
 
@@ -197,68 +191,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Daralt</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Ödeme</string>
-  <string name="payment_screen_title">FUTO Klavye için Ödeme Yap</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;&amp;quot;FUTO Klavye\'yi &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; gündür kullanıyorsunuz. Bu uygulamayı faydalı buluyorsanız, FUTO yazılımının gelecekteki geliştirmelerini desteklemek için ödeme yapmayı düşünün.&amp;quot;&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">"FUTO Klavye\'yi denediğiniz için teşekkürler! Bu uygulamayı faydalı buluyorsanız, FUTO yazılımının gelecekteki geliştirmelerini desteklemek için ödeme yapmayı düşünün."</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO, sizi kötüye kullanmayan iyi yazılımlar yapmaya kendini adamıştır. Bu uygulama asla reklam göstermez veya kişisel verilerinizi toplamaz.</string>
-  <string name="payment_screen_sales_point_development_title">Sürdürülebilir Geliştirme</string>
-  <string name="payment_screen_sales_point_development_body">FUTO’nun misyonu, açık kaynak yazılım ve zararsız yazılım iş modellerinin, projeler ve geliştiriciler için sürdürülebilir bir gelir kaynağı haline gelmesini sağlamaktır. Bu nedenle, kullanıcıların yazılım için gerçekten ödeme yapmasından yanayız.</string>
-  <string name="payment_screen_sales_point_privacy_title">Gizliliğe Bağlılık</string>
-  <string name="payment_screen_sales_point_privacy_body">Bu uygulama asla reklam göstermez veya verilerinizi satmaz. Biz bu işin içinde değiliz.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Bu sürümde ödeme desteklenmiyor</string>
-  <string name="payment_screen_already_paid_title">Zaten ödeme yaptınız mı?</string>
-  <string name="payment_screen_already_paid_body">Eğer FUTO Klavye veya FUTO Ses Girişi için zaten ödeme yaptıysanız, aşağıya dokunun.</string>
-  <string name="payment_screen_already_paid_button">Zaten ödeme yaptım</string>
-  <string name="payment_screen_already_paid_confirmation">Seçiminizi onaylayın</string>
-  <string name="payment_screen_already_paid_confirmation_body">Zaten ödeme yaptığınızı onaylamak istediğinizden emin misiniz? Onaylandıktan sonra tekrar ödeme yapmanız istenmeyecek.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Zaten ödeme yaptım</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">İptal</string>
-  <string name="payment_screen_set_reminder_title">Henüz ödemeye hazır değil misiniz?</string>
-  <string name="payment_screen_set_reminder_body">Bu, ayarlardaki hatırlatmayı girdiğiniz gün sayısı kadar gizleyecektir.</string>
-  <string name="payment_screen_set_reminder_setter">Ne zaman hatırlatılmak istersiniz?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">7 gün içinde</string>
-  <string name="payment_screen_set_reminder_setter_1_month">1 ay içinde</string>
-  <string name="payment_screen_set_reminder_setter_6_months">6 ay içinde</string>
-  <string name="payment_screen_set_reminder_setter_next_century">gelecek yüzyılda</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Hatırlatmayı onayla</string>
-  <string name="payment_screen_other_options">Diğer Seçenekler</string>
-  <string name="payment_screen_need_help_title">Yardım</string>
-  <string name="payment_screen_need_help_subtitle">Yardım mı gerekiyor? Web sitemizi ziyaret edin</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Google Play ile Öde (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + vergi)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;Öde (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + vergi)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Daha Fazla Seçenek</string>
-  <string name="payment_screen_payment_complete_title">Ödeme Tamamlandı</string>
-  <string name="payment_screen_aftersales_title">Teşekkürler</string>
-  <string name="payment_screen_aftersales_title_pending">Ödeme Beklemede</string>
-  <string name="payment_screen_aftersales_paragraph_1">"FUTO Klavye\'yi satın aldığınız için teşekkür ederiz!"</string>
-  <string name="payment_screen_aftersales_paragraph_2">Satın alımınız, FUTO Klavye ve diğer FUTO projelerinin devam eden geliştirilmesine yardımcı olacaktır.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">Ödemeniz hala beklemede, ancak yakında onaylanması gerekir.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Eğer yeni ödeme yaptıysanız, ödemeniz hala işleniyor olabilir; daha fazla bilgi içeren bir e-posta alacaksınız.</string>
-  <string name="payment_screen_payment_failed_title">Ödeme Hatası</string>
-  <string name="payment_screen_payment_failed_body">"Maalesef, ödemeniz bir sebepten dolayı başarısız oldu. Yardıma ihtiyacınız varsa lütfen bizimle iletişime geçin. Bize keyboard@futo.org adresinden, aşağıdaki butonla veya Yardım\'daki Geri Bildirim ile ulaşabilirsiniz."</string>
-  <string name="payment_screen_payment_failed_body_unconfident">Ödemenizde bir sorun olmuş olabilir. Eğer ödeme gerçekleştiyse, bir lisans anahtarı içeren bir e-posta almanız gerekir. Yardıma ihtiyacınız varsa lütfen bizimle iletişime geçin. Bize keyboard@futo.org adresinden, aşağıdaki butonla veya ana ekrandaki Geri Bildirim ile ulaşabilirsiniz.</string>
-  <string name="payment_screen_license_integrity_error">Lisans doğrulaması başarısız oldu. Bunun bir hata olduğunu düşünüyorsanız, lütfen bizimle iletişime geçin.</string>
-  <string name="payment_screen_continue_button">Devam et</string>
-  <string name="payment_unpaid_version_title">Ödenmemiş FUTO Klavye</string>
-  <string name="payment_unpaid_version_indicator">Ödenmemiş</string>
-  <string name="payment_paid_version_indicator">Ücretli FUTO Klavye sürümünü kullandığınız için teşekkür ederiz!</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Güncellemeler Hakkında</string>
-  <string name="manual_update_notice_paragraph_1">Bu uygulama internete bağlanmaz ve otomatik güncellemeleri kontrol edemez. Ancak, güncellemeleri manuel olarak kontrol edebilirsiniz.</string>
-  <string name="manual_update_notice_paragraph_2">Otomatik güncellemeler için lütfen F-Droid veya Obtainium kullanın. İndirme seçenekleri için keyboard.futo.org adresini ziyaret edin.</string>
-  <string name="manual_update_notice_dev_paragraph">"FUTO Klavye\'nin geliştirme sürümündesiniz. Kararlı sürümü indirmek istiyorsanız keyboard.futo.org adresini ziyaret edin."</string>
-  <string name="manual_update_notice_visit_site_button">Ziyaret et</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Kapat</string>
   <!-- General settings strings -->
   <string name="settings_tip">İpucu</string>
   <string name="settings_unknown_error_title">Bilinmeyen Hata</string>
   <string name="settings_unknown_error_subtitle">Bilinmeyen bir hata oluştu.</string>
   <string name="settings_try_typing_here">Buraya yazmayı deneyin…</string>
   <string name="settings_external_model_name">Dış kaynaklı model</string>
-  <string name="settings_check_for_updates_manually">Güncellemeleri manuel olarak kontrol et</string>
   <string name="settings_update_available">Güncelleme Mevcut</string>
   <!--
     May be translated as "Start", "All", etc. This is the starting menu where all settings live.
@@ -296,27 +235,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">Yerleşik Sözlük</string>
   <string name="language_settings_resource_voice_input_selected">Ses girişi modelini varsayılan ayarlara döndürmek mi yoksa başka bir dosya ile değiştirmek mi istersiniz?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Bu dil için yerleşik sesli giriş modeli yok, bu yüzden modeli kaldırırsanız, farklı bir model içe aktarana kadar sesli giriş bu dilde çalışmayacaktır!</string>
-  <string name="language_settings_resource_voice_input_selected_unset">Bu dil için özel bir ses girişi modeli yapılandırmadınız. İnternetten indirme seçeneklerini keşfedebilir veya bir dosyadan içe aktarabilirsiniz.</string>
   <string name="language_settings_resource_transformer_selected">Dönüştürücü modelini varsayılan ayarlara döndürmek mi yoksa başka bir dosya ile değiştirmek mi istersiniz?</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">Bu dil için yerleşik bir dönüştürücü modeli yok, bu nedenle eğer bunu kaldırırsanız, dönüştürücü tabanlı tahminler bu dil için çalışmayacaktır, başka bir model içe aktarana kadar!</string>
-  <string name="language_settings_resource_transformer_selected_unset">Bu dil için özel bir dönüştürücü modeli yapılandırmadınız. İnternetten indirme seçeneklerini keşfedebilir veya bir dosyadan içe aktarabilirsiniz.</string>
   <string name="language_settings_resource_dictionary_selected">Sözlüğü varsayılan ayarlara döndürmek mi yoksa başka bir dosya ile değiştirmek mi istersiniz?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Bu dil için yerleşik sözlük bulunmamaktadır, bu yüzden sözlüğü kaldırırsanız, farklı bir sözlük yükleyene kadar otomatik düzeltme ve tahminler bu dilde çalışmayacaktır!</string>
-  <string name="language_settings_resource_dictionary_selected_unset">Bu dil için özel bir sözlük yapılandırmadınız. İnternetten indirme seçeneklerini keşfedebilir veya bir dosyadan içe aktarabilirsiniz.</string>
   <string name="language_settings_resource_replace_button">Değiştir</string>
   <string name="language_settings_resource_import_file_button">İçe aktar</string>
   <string name="language_settings_resource_revert_to_default_button">Varsayılan Ayarlara Dön</string>
   <string name="language_settings_resource_remove_button">Kaldır</string>
-  <string name="language_settings_resource_explore_online_button">Keşfet</string>
   <string name="language_settings_remove_language_title">%1$s silinsin mi?</string>
   <string name="language_settings_remove_language_body">%1$s kaldırılsın mı? Tüm ilişkili düzenleri ve özel kaynakları da silinecek.</string>
   <string name="language_settings_remove_language_remove_button">Kaldır</string>
   <string name="language_settings_remove_language_cancel_button">İptal</string>
   <string name="language_settings_other_options">Diğer seçenekler</string>
   <string name="language_settings_import_resource_from_file">Kaynak dosyasını içe aktar</string>
-  <string name="language_settings_explore_voice_input_models_online">Ses girişi modellerini keşfet</string>
-  <string name="language_settings_explore_dictionaries_online">Sözlükleri keşfet</string>
-  <string name="language_settings_explore_transformers_online">Dönüştürücü modelleri keşfet</string>
   <string name="language_settings_import_dictionary_or_model">Sözlük veya model içe aktar</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Ses Girişi Modeli</string>
@@ -441,21 +373,6 @@
   <string name="prediction_settings_word_blacklist">Kelime Siyah Listesi</string>
   <string name="prediction_settings_word_blacklist_add">Siyah listeye ekle</string>
   <string name="prediction_settings_word_blacklist_none">Siyah listeye alınmış kelime yok.</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Yardım &amp; Geri Bildirim</string>
-  <string name="help_menu_version_name">Sürüm Adı: %1$s</string>
-  <string name="help_menu_version_code">Sürüm Kodu: %1$s</string>
-  <string name="help_menu_version_tip">Sizden haber almak istiyoruz! Bir sorun bildiriyorsanız, sürümünüz ilgili olabilir: v%1$s</string>
-  <string name="help_menu_documentation">Belgeler</string>
-  <string name="help_menu_documentation_subtitle">Klavye özellikleri ve yetenekleri hakkında daha fazla bilgi edinin</string>
-  <string name="help_menu_discord">Discord Sunucusu</string>
-  <string name="help_menu_discord_subtitle">"Konuşmak ister misiniz ama Zulip\'i sevmiyor musunuz? Burada sohbet edin"</string>
-  <string name="help_menu_futo_chat">FUTO Sohbeti</string>
-  <string name="help_menu_futo_chat_subtitle">"Konuşmak ister misiniz ama Discord\'u sevmiyor musunuz? Burada sohbet edin"</string>
-  <string name="help_menu_github">Halka açık sorun takipçisi</string>
-  <string name="help_menu_github_subtitle">Belirli bir hata veya özellik isteği mi var? Burada paylaşın</string>
-  <string name="help_menu_email">E-posta: keyboard@futo.org</string>
-  <string name="help_menu_email_subtitle">Özel geri bildirim, yardım veya GitHub kullanmıyor musunuz? Bize e-posta gönderin</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">Kurulum - Adım 1</string>
   <string name="setup_step_2">Kurulum - Adım 2</string>

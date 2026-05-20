@@ -4,8 +4,6 @@
     <plurals name="groupCardCount">
         <item quantity="other"><xliff:g>%d</xliff:g> 卡片</item>
     </plurals>
-    <string name="app_libraries">第三方程序库：<xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="debug_version_fmt">版本：<xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt">关于 <xliff:g id="app_name">%s</xliff:g></string>
     <string name="card">卡片</string>
     <string name="addManually">手动输入卡号</string>
@@ -27,7 +25,6 @@
     <string name="importCatimaMessage">选择 Catima 导出文件来导入。 \n先按另一个 Catima 应用的导入/导出菜单中“导出”来创建文件。</string>
     <string name="importCatima">从 Catima 导入</string>
     <string name="accept">接受</string>
-    <string name="privacy_policy">隐私政策</string>
     <string name="app_loyalty_card_keychain">会员卡卡包</string>
     <string name="chooseImportType">数据导入源</string>
     <string name="points">积分</string>
@@ -66,10 +63,7 @@
     <string name="settings">设置</string>
     <string name="thumbnailDescription">缩略图</string>
     <string name="selectBarcodeTitle">选择条码</string>
-    <string name="app_resources">第三方资源：<xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="app_license">本软件为自由软件，使用 GPLv3+ 许可证</string>
-    <string name="app_copyright_old">基于 Loyalty Card Keychain
-\nCopyright © 2016–2020 Branden Archer</string>
     <string name="about">关于</string>
     <string name="importOptionFilesystemExplanation">请从文件系统选择文件</string>
     <string name="importOptionFilesystemTitle">从文件系统导入</string>
@@ -168,12 +162,10 @@
     <string name="selectColor">选择颜色</string>
     <string name="sort_by_expiry">到期日</string>
     <string name="noGroupCards">该组是空的</string>
-    <string name="on_github">在GitHub上</string>
     <string name="group_updated">群组已更新</string>
     <string name="editGroup">编辑组：<xliff:g>%s</xliff:g></string>
     <string name="settings_system_locale">系统</string>
     <string name="exportPassword">设置密码来保护导出的内容（可选）</string>
-    <string name="app_contributors">因他们而存在: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="and_data_usage">和数据使用方法</string>
     <string name="failedLaunchingPhotoPicker">找不到支持的图片选择应用</string>
     <string name="previousCard">前一张</string>
@@ -182,7 +174,6 @@
         <item quantity="other"><xliff:g>%1$d</xliff:g> 张卡 (<xliff:g id="archivedCount">%2$d</xliff:g> 张已归档)</item>
     </plurals>
     <string name="license">许可证</string>
-    <string name="credits">鸣谢</string>
     <string name="starred">已收藏</string>
     <string name="duplicateCard">创建副本</string>
     <string name="archive">归档</string>
@@ -230,9 +221,7 @@
     <string name="settings_category_title_cards">卡片视图</string>
     <string name="settings_category_title_general">常规</string>
     <string name="action_display_options">显示选项</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">版权所有 © 2019–<xliff:g>%d</xliff:g> Sylvia van Os 及其贡献者们</string>
     <string name="show_archived_cards">显示已存档的卡片</string>
-    <string name="app_copyright_short">版权所有 © Sylvia van Os 及其贡献者们</string>
     <string name="view_online">在线查看</string>
     <string name="card_id_must_not_be_empty">卡片 ID 不能为空</string>
     <string name="balanceParsingFailed">无效余额</string>

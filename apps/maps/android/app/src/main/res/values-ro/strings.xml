@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">Descărcarea a eșuat</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Mai încearcă</string>
-    <string name="about_menu_title">Despre CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Ușor de utilizat și rafinat</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Concentrat pe confidențialitate și fără reclame</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Offline, rapid și compact</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Complet open source, fără scop lucrativ, decizii și finanțare transparente.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Setări locație</string>
     <string name="close">Închide</string>
     <string name="unsupported_phone">Această aplicație necesită accelerarea hardware OpenGL. Din păcate, dispozitivul tău nu este compatibil.</string>
     <string name="download">Descarcă</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Deconectează cablul USB sau introdu un card de memorie pentru a utiliza CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Spațiul de stocare de pe cardul SD/memoria USB este insuficient pentru a putea utiliza aplicația</string>
     <string name="download_resources">Înainte de a începe, trebuie descărcată harta generală a lumii în dispozitivul tău. \nSe vor descărca %s.</string>
@@ -141,9 +131,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Detalii</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Locurile mele preferate din CoMaps</string>
-    <string name="share_bookmarks_email_body">Bună!\n\nAtașate sunt marcajele mele; te rog să le deschizi în CoMaps. Dacă nu îl ai instalat, îl poți descărca de aici: https://www.comaps.app/download/\n\nSă călătorești plăcut cu CoMaps!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Se încarcă locurile preferatel</string>
     <!-- Kmz file successful loading -->
@@ -162,10 +149,6 @@
     <string name="cant_change_this_setting">Opțiunile pentru stocarea hărților sunt dezactivate în acest moment</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Harta este în curs de descărcare</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Poți vedea poziția mea pe harta CoMaps! %1$s sau %2$s Nu ai descărcat aplicația? O poți descărca de aici: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Poți vedea poziția mea pe harta CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Trimite</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -221,24 +204,9 @@
     <string name="search_show_on_map">Vezi pe hartă</string>
     <!-- Text in menu -->
     <string name="website">Site web</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Știri</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Părere</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Evaluează aplicația</string>
     <!-- Text in menu -->
-    <string name="help">Ajutor</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Întrebări frecvente</string>
     <!-- Button in the main menu -->
-    <string name="donate">Donează</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Fii voluntar și îmbunătățește CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Drepturi de autor</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Raportează o eroare</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Îmbunătățiți direcția săgeții prin mișcarea telefonului într-o mișcare în opt pentru a calibra busola.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -385,7 +353,6 @@
     <string name="editor_time_advanced">Mod Avansat</string>
     <string name="editor_time_simple">Mod simplu</string>
     <string name="editor_hours_closed">Pauză</string>
-    <string name="editor_example_values">Exemple</string>
     <string name="editor_correct_mistake">Corectare greșeală</string>
     <string name="editor_add_select_location">Selectați locația</string>
     <string name="editor_report_problem_send_button">Trimite</string>
@@ -446,8 +413,6 @@
     <string name="message_invalid_feature_position">Niciun obiect nu poate fi poziționat aici</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Date OpenStreetMap create de comunitate din data de %s. Aflați mai multe despre cum să editați și să actualizați harta la OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) este un proiect comunitar pentru construirea unei hărți libere și deschise. Este principala sursă de date cartografice în CoMaps și funcționează similar cu Wikipedia. Puteți adăuga sau edita locuri, iar acestea devin disponibile pentru milioane de utilizatori din întreaga lume. \nAlăturați-vă comunității și ajutați la crearea unei hărți mai bune pentru toată lumea!</string>
     <string name="login_to_make_edits_visible">Creați un cont OpenStreetMap sau conectați-vă pentru a vă publica editările hărții pentru întreaga lume</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d din %2$d</string>
@@ -460,8 +425,6 @@
     <string name="error_enter_correct_zip_code">Introdu codul poștal corect</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Notiță pentru voluntarii OpenStreetMap (opțional)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Descrieți erorile de pe hartă sau lucrurile care nu pot fi editate cu CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Editările dvs. sunt încărcate în baza de date publică <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a>. Vă rugăm să nu adăugați informații personale sau protejate prin drepturi de autor.</string>
     <string name="editor_more_about_osm">Mai multe despre OpenStreetMap</string>
@@ -471,7 +434,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operator: %s</string>
     <string name="editor_category_unsuitable_title">Nu găsiți o categorie potrivită?</string>
-    <string name="editor_category_unsuitable_text">CoMaps permite adăugarea doar a unor categorii de puncte simple, ceea ce înseamnă că nu există orașe, drumuri, lacuri, contururi de clădiri, etc. Vă rugăm să adăugați astfel de categorii direct la <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Consultați <a href="https://www.comaps.app/support/advanced-map-editing/">ghidul nostru</a> pentru instrucțiuni detaliate pas cu pas.</string>
     <string name="downloader_no_downloaded_maps_title">Nu ai descărcat nicio hartă</string>
     <string name="downloader_no_downloaded_maps_message">Descarcă hărți pentru a căuta un loc și a naviga fără conectare la internet</string>
     <string name="current_location_unknown_error_title">Poziția actuală este necunoscută</string>
@@ -524,15 +486,11 @@
     <string name="mobile_data_option_ask">Întreabă întotdeauna</string>
     <string name="traffic_update_maps_text">Pentru a afișa datele privind traficul, hărțile trebuie actualizate</string>
     <string name="big_font">Mărește dimensiunea literelor pe hartă</string>
-    <string name="traffic_update_app">Actualizează CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Datele privind traficul nu sunt disponibile</string>
     <string name="enable_logging">Activează jurnalizarea</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Părere generală</string>
     <string name="prefs_languages_information">Pentru instrucțiuni vocale utilizăm sistemul TTS. Multe dispozitive Android folosesc Google TTS. Poți descărca sau actualiza aplicația din Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Pentru unele limbi trebuie să instalezi alt sintetizator de voce sau un pachet lingvistic suplimentar din Magazinul de aplicații (Google Play, Galaxy Store, App Gallery, FDroid). \nDeschide setările dispozitivului → Limbă → Transformare text în vorbire → Motor preferat. \nAici poți alege motorul de transformare a textului în vorbire și poți descărca o limbă pentru utilizare fără internet.</string>
-    <string name="prefs_languages_information_off_link">Consultă acest ghid pentru informații suplimentare</string>
     <string name="transliteration_title">Transcrie în alfabet latin</string>
     <string name="learn_more">Mai multe</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -544,7 +502,6 @@
     <string name="placepage_remove_stop">Scoateți opritorul</string>
     <string name="placepage_add_stop">Adaugă oprire</string>
     <string name="dialog_error_storage_title">Problemă de acces la spațiul de stocare</string>
-    <string name="dialog_error_storage_message">Spațiul de stocare extern nu este disponibil. Probabil cardul SD nu este introdus, este deteriorat sau sistemul de fișiere este doar pentru citire. Verifică sau contactează-ne la support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Simulare arhivă deteriorată</string>
     <string name="error_enter_correct_name">Introdu un nume corect</string>
     <string name="bookmark_lists">Liste</string>
@@ -583,8 +540,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Confidențialitate</string>
-    <string name="privacy_policy">Confidențialitate</string>
-    <string name="terms_of_use">Termeni de utilizare</string>
     <string name="button_layer_traffic">Trafic</string>
     <string name="subway">Metrou</string>
     <string name="layers_title">Stiluri și straturi de hartă</string>
@@ -609,7 +564,6 @@
     <string name="power_managment_setting_never">Niciodată</string>
     <string name="power_managment_setting_auto">Automat</string>
     <string name="power_managment_setting_manual_max">Economisire maximă a energiei</string>
-    <string name="enable_logging_warning_message">Opțiunea activează jurnalizarea în scopuri de diagnosticare. Aceasta poate fi utilă echipei noastre pentru a rezolva problemele cu aplicația. Activează temporar această opțiune pentru a înregistra și a ne trimite jurnale detaliate despre problema ta.</string>
     <string name="driving_options_title">Opțiuni de ocolire</string>
     <string name="avoid_tolls">Evitați drumurile cu taxă</string>
     <string name="avoid_unpaved">Evitați drumurile neasfaltate</string>
@@ -706,33 +660,19 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Date cartografice din OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Mulțumim că folosești hărțile construite de comunitatea noastră!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Cu donațiile și sprijinul dumneavoastră, putem crea cele mai bune hărți din lume!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Îți place aplicația noastră? Vă rugăm să donați pentru a sprijini dezvoltarea! Nu-ți place încă? Vă rugăm să ne anunțați și vom remedia!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Dacă cunoașteți un dezvoltator de software, îi puteți cere să implementeze o caracteristică de care aveți nevoie.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Atingeți oriunde pe hartă pentru a selecta orice. Atingeți lung pentru a ascunde și a reda interfața.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Știți că vă puteți selecta locația curentă pe hartă?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Puteți ajuta la traducerea aplicației noastre în limba dvs.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Aplicația noastră este dezvoltată de câțiva entuziaști și de comunitate.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Puteți remedia și îmbunătăți cu ușurință datele hărții.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Scopul nostru principal este să construim hărți rapide, axate pe confidențialitate și ușor de utilizat, care să vă placă.</string>
-    <string name="car_used_on_the_phone_screen">Acum utilizați CoMaps pe ecranul telefonului</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">La ecranul mașinii</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Drumeție</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -780,15 +720,9 @@
     <string name="edit_track">Editează traseul</string>
     <string name="uri_open_location_failed">Nu există nicio aplicație instalată care să poată deschide locația</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="panoramax">Imagine Panoramax</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Salvat</string>
-    <string name="about_headline">Proiect deschis, susținut de comunitate</string>
     <string name="editor_level">Etaj (0 reprezintă parterul)</string>
     <string name="error_enter_correct_level">Introduceți un număr de etaj valid</string>
     <string name="disk_error_title">Eroare disk</string>
@@ -821,14 +755,12 @@
     <string name="pedestrian">Pieton</string>
     <string name="hours_confirmed_time_ago">Confirmat %s</string>
     <string name="level_value_generic">Nivel: %s</string>
-    <string name="dialog_report_error_with_logs">Vă rugăm să ne trimiteți un raport de eroare: \n - activați „Înregistrare evenimente” în setări\n - Reproduceți problema \n - În ecranul „Despre &amp; Ajutor” apăsați butonul „Raportează un bug” și trimiteți prin email sau chat\n - Dezactivați înregistrarea evenimentelor</string>
     <string name="clear">Ștergere</string>
     <string name="route_type">Tipul de rută</string>
     <string name="vehicle">Vehicul</string>
     <string name="bicycle">Bicicletă</string>
     <string name="ruler">Riglă</string>
     <string name="bookmark_color">Culoare marcaj</string>
-    <string name="about_help">Despre &amp; Ajutor</string>
     <string name="at">la %s</string>
     <string name="disk_error">Nu se poate crea dosarul și nu se pot muta fișierele în memoria internă a dispozitivului sau pe cardul SD</string>
     <string name="error_enter_correct_bluesky_page">Introduceți un nume de utilizator Bluesky valid sau o adresă web</string>
@@ -863,7 +795,6 @@
     <string name="charge_socket_unknown_other">Alte tipuri necunoscute</string>
     <string name="place_page_map_too_old_title">Harta este prea veche</string>
     <string name="place_page_map_too_old_description">Harta dvs. este foarte veche, vă rugăm actualizați-o.</string>
-    <string name="place_page_app_too_old_description">Harta dvs. este foarte veche, vă rugăm actualizați CoMaps.</string>
     <string name="place_page_update_too_old_map">Actualizează regiunea</string>
     <string name="place_page_too_old_to_edit">Editarea OpenStreetMap este dezactivată pentru că harta descărcată este prea veche.</string>
     <string name="prefs_speed_cameras_information">Avertizările pentru radare sunt dezactivate unde avertizarea este interzisă de legea locală.</string>
@@ -873,7 +804,6 @@
     <string name="download_resources_custom_url_error_scheme">Introduceți o adresă completă care începe cu https:// și se termină cu /</string>
     <string name="download_resources_custom_url_summary_none">Nesetat</string>
     <string name="download_resources_custom_url_title">Server hărți custom</string>
-    <string name="download_resources_custom_url_message">Înlocuiți serverul prestabilit folosit pentru descărcarea hărților. Lăsați liber pentru serverul prestabilit.</string>
     <string name="advanced">Avansate</string>
     <string name="pref_speedlimit_title">Afișează limita de viteză</string>
     <string name="rooms">%s camere</string>

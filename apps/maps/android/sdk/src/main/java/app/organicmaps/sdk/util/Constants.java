@@ -17,17 +17,6 @@ public final class Constants
     public static final String MAIL_SUBJECT = "?subject=";
     public static final String MAIL_BODY = "&body=";
 
-    public static final String MATRIX = "https://matrix.to/#/%23comaps:matrix.org";
-    public static final String MASTODON = "https://floss.social/@comaps";
-    public static final String LEMMY = "https://sopuli.xyz/c/CoMaps";
-    public static final String BLUESKY = "https://bsky.app/profile/comaps.app";
-    public static final String PIXELFED = "https://pixelfed.social/comaps";
-    public static final String CODE_REPO = "https://codeberg.org/comaps/comaps";
-
-    public static final String COPYRIGHT = "file:///android_asset/copyright.html";
-    public static final String FAQ = "file:///android_asset/faq.html";
-    public static final String OPENING_HOURS_MANUAL = "file:///android_asset/opening_hours_how_to_edit.html";
-
     public static final String OSM_REGISTER = "https://www.openstreetmap.org/user/new";
 
     private Url() {}

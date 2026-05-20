@@ -102,18 +102,11 @@
     <string name="add_manually_warning_message">Em alguns cartões, o valor do código de barras difere do número escrito no cartão. Por isso, inserir o código de barras manualmente pode não funcionar. Recomenda-se escanear o código de barras com a câmera. Deseja continuar?</string>
     <string name="about">Sobre</string>
     <string name="about_title_fmt">Sobre <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versão: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Selecionar código de barras</string>
     <string name="settings">Configurações</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os e contribuidores</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os e contribuidores</string>
-    <string name="app_copyright_old">Baseado no Loyalty Card Keychain
-\ncopyright © 2016–2020 Branden Archert</string>
     <string name="importOptionFilesystemButton">A partir do Sistema de Arquivos</string>
     <string name="thumbnailDescription">Miniatura</string>
     <string name="starImage">Item favorito</string>
-    <string name="app_libraries">Bibliotecas de terceiros : <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Recursos de terceiros: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="updateBarcodeQuestionText">Você mudou o ID. Também quer atualizar o código de barras para usar o mesmo valor?</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
@@ -124,7 +117,6 @@
     <string name="settings_oled_dark_summary">Reduz o uso da bateria em telas OLED</string>
     <string name="settings_system_locale">Sistema</string>
     <string name="settings_oled_dark">Preto puro como cor de fundo para o tema escuro</string>
-    <string name="app_contributors">Só foi possível graças a: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">Ordenar</string>
     <string name="showMoreInfo">Mostrar informações</string>
     <string name="updateBalance">Atualizar saldo</string>
@@ -171,10 +163,8 @@
     <string name="selectColor">Selecionar cor</string>
     <string name="sort_by_name">Nome</string>
     <string name="sort_by_expiry">Expiração</string>
-    <string name="credits">Créditos</string>
     <string name="license">Licença</string>
     <string name="source_repository">Repositório de origem</string>
-    <string name="on_github">no GitHub</string>
     <string name="translate_platform">no Weblate</string>
     <string name="help_translate_this_app">Ajude a traduzir este aplicativo</string>
     <string name="shortcutSelectCard">Selecione um cartão</string>
@@ -251,7 +241,6 @@
     <string name="card">Cartão</string>
     <string name="errorReadingImage">Não foi possível ler a imagem</string>
     <string name="points">Pontos</string>
-    <string name="privacy_policy">Política de Privacidade</string>
     <string name="currency">Moeda</string>
     <string name="chooseImportType">Importar dados de</string>
     <string name="importCatima">Importar do Catima</string>

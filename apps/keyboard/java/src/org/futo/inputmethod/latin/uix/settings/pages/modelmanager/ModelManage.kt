@@ -36,27 +36,16 @@ import org.futo.inputmethod.latin.xlm.MODEL_OPTION_KEY
 import org.futo.inputmethod.latin.xlm.ModelInfo
 import org.futo.inputmethod.latin.xlm.ModelInfoLoader
 import org.futo.inputmethod.latin.xlm.ModelPaths
-import org.futo.inputmethod.updates.openURI
 import java.io.File
 
 
 @Composable
 fun DamagedModelScreen(model: ModelInfoLoader, navController: NavHostController = rememberNavController()) {
-    val context = LocalContext.current
-
-
     ScrollableList {
         ScreenTitle(model.name, showBack = true, navController)
 
         Tip("This model is damaged, its metadata could not be loaded. It may be corrupt or it may not be a valid model file.")
 
-        NavigationItem(
-            title = "Visit FAQ",
-            style = NavigationItemStyle.Misc,
-            navigate = {
-                context.openURI("https://gitlab.futo.org/alex/futo-keyboard-lm-docs/-/blob/main/README.md")
-            }
-        )
         NavigationItem(
             title = "Delete",
             style = NavigationItemStyle.Misc,

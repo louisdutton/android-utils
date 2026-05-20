@@ -75,8 +75,6 @@
     <string name="barcodeImageDescriptionWithType">تصویر بارکد <xliff:g>%s</xliff:g></string>
     <string name="importOptionFilesystemButton">از فایل های سیستم</string>
     <string name="about">درباره</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">حق تکثیر © 2019–<xliff:g>%d</xliff:g> سیلویا وَن اُس و مشارکت کنندگان</string>
-    <string name="app_copyright_short">حق نشر © سیلویا وَن اُس و مشارکت کنندگان</string>
     <string name="failedParsingImportUriError">تجزیه URI ورودی ناموفق بود</string>
     <string name="importOptionFilesystemExplanation">یک فایل مشخص از فایل‌های سیستم انتخاب کنید.</string>
     <string name="importOptionFilesystemTitle">ورود از فایل سیستم</string>
@@ -105,10 +103,7 @@
     <string name="settings_use_volume_keys_navigation">جابجایی میان کارت ها با استفاده از کلید های صدا</string>
     <string name="settings_use_volume_keys_navigation_summary">از کلید های صدا برای تغیر کارت نمایشی استفاده کنید</string>
     <string name="about_title_fmt">درباره <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">نسخه <xliff:g id="version">%s</xliff:g></string>
     <string name="chooseExpiryDate">انتخاب تاریخ انقضاء</string>
-    <string name="app_libraries">کتابخانه های آزاد شخص ثالث: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_copyright_old">بر اساس کارت وفاداری Keychain\nکپی رایت © 2016-2020 سازنده : Branden</string>
     <string name="app_license">نرم‌افزار آزاد با حقوق کپی‌لفت، تحت مجوز GPLv3+</string>
     <string name="groups">گروه‌ها</string>
     <string name="noGroupCards">این گروه خالی است</string>
@@ -129,7 +124,6 @@
     <string name="enter_group_name">نام گروه را وارد کنید</string>
     <string name="importLoyaltyCardKeychain">وارد کردن از جاکلیدی کارت وفاداری</string>
     <string name="importLoyaltyCardKeychainMessage">فایل خروجی <i>LoyaltyCardKeychain.csv</i> خود را از جاسوئیچی کارت وفاداری برای وارد کردن انتخاب کنید.\nآن را از منوی وارد/صادر‌کردن در جاسوئیچی کارت وفاداری با فشردن دکمه صادر‌کردن ابتدا ایجاد کنید.</string>
-    <string name="app_resources">منابع آزاد از طرف شخص ثالث: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <plurals name="groupCardCount">
         <item quantity="one"><xliff:g>%d</xliff:g> کارت</item>
         <item quantity="other"><xliff:g>%d</xliff:g> کارت</item>
@@ -160,7 +154,6 @@
     <string name="balanceParsingFailed">موجودی نامعتبر</string>
     <string name="chooseImportType">وارد کردن داده ها از</string>
     <string name="app_loyalty_card_keychain">جاکلیدی کارت وفاداری</string>
-    <string name="privacy_policy">خط مشی رازداری</string>
     <string name="accept">قبول</string>
     <string name="importCatima">واردات از کاتیما</string>
     <string name="importFidme">واردات از FidMe</string>
@@ -199,10 +192,8 @@
     <string name="setIcon">قالب پیش‌نمایه را بگمارید</string>
     <string name="settings_system_locale">سیستم</string>
     <string name="selectColor">رنگ را برگزینید</string>
-    <string name="app_contributors">با کمک او ممکن شد: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">مرتب‌کردن</string>
     <string name="showMoreInfo">نمایش اطلاعات</string>
-    <string name="credits">اعتبارها</string>
     <string name="archived">کارت بایگانی شد</string>
     <string name="unarchived">کارت از بایگانی برچیده شد</string>
     <string name="show_validity">درستی را نشان دهید</string>
@@ -249,7 +240,6 @@
     <string name="shortcutSelectCard">یک کارت برگزینید</string>
     <string name="options">گزینه‌ها</string>
     <string name="starred">نشان‌شده</string>
-    <string name="on_github">روی گیتهاب</string>
     <string name="and_data_usage">و مصرف داده</string>
     <string name="archive">بایگانی</string>
     <string name="updateBalanceHint">مقدار را وارد کنید</string>

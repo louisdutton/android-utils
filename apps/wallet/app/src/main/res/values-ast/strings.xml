@@ -34,14 +34,11 @@
     <string name="ok">D\'acuerdu</string>
     <string name="exportFailedTitle">La esportación falló</string>
     <string name="noCameraPermissionDirectToSystemSetting">Pa escaniar códigos de barres, Catima tien d\'acceder a la cámara. Toca equí pa camudar la configuración de los permisos.</string>
-    <string name="debug_version_fmt">Versión: <xliff:g id="version">%s</xliff:g></string>
     <string name="importing">Importando…</string>
     <string name="exporting">Esportando…</string>
     <string name="storageReadPermissionRequired">Esta aición precisa\'l permisu pa lleer l\'almacenamientu…</string>
     <string name="cameraPermissionRequired">Esta aición precisa l\'accesu a la cámara…</string>
     <string name="cameraPermissionDeniedTitle">Nun se pudo acceder a la cámara</string>
-    <string name="app_copyright_old">Básase en Loyalty Card Keychain
-\ncopyright © 2016–2020 Branden Archer</string>
     <string name="thumbnailDescription">Miniatura</string>
     <string name="settings">Configuración</string>
     <string name="settings_theme">Estilu</string>

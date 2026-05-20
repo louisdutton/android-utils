@@ -1,6 +1,6 @@
 # maps_generator
 
-`maps_generator` is the Python CLI for generating `.mwm` maps for the CoMaps. This tool functions as the driver for the `generator_tool` C++ executable.
+`maps_generator` is the Python CLI for generating `.mwm` maps. This tool functions as the driver for the `generator_tool` C++ executable.
 
 **Use the `generator_tool` and application from the same release. The application does not support
 maps built by a generator_tool newer than the app.**
@@ -8,7 +8,7 @@ maps built by a generator_tool newer than the app.**
 ## What are maps?
 
 Maps are `.mwm` binary files with special meta-information for rendering, searching, routing, and other use cases.
-Files from [data/borders](https://codeberg.org/comaps/comaps/src/branch/main/data/borders) define map boundaries for each individual file. The world is segmented into separate files by these boundaries, with the intent of having manageably small files to download. These files are referred to as *maps* or *countries*. A country is referring to one of these files, not necessarily a geographic country. Also note that there are two special countries called *World* and *WorldCoasts*. These are small simplified maps of the world and coastlines (sea and ocean watercover) used when other maps have not yet been downloaded.
+Files from `data/borders` define map boundaries for each individual file. The world is segmented into separate files by these boundaries, with the intent of having manageably small files to download. These files are referred to as *maps* or *countries*. A country is referring to one of these files, not necessarily a geographic country. Also note that there are two special countries called *World* and *WorldCoasts*. These are small simplified maps of the world and coastlines (sea and ocean watercover) used when other maps have not yet been downloaded.
 
 ## Setup
 
@@ -20,7 +20,7 @@ You must have Python version >= 3.7 and complete the following steps:
 git checkout 2023.06.04-13-android
 ```
 
-The app version can be found in the "About" section of CoMaps.
+Use the app version that matches the build you are testing.
 
 2. Build the `generator_tool` binary (run from the root of the repo):
 
@@ -42,7 +42,7 @@ cd tools/python/
 pip install -r maps_generator/requirements_dev.txt
 ```
 
-5. Create a [configuration file with defaults](https://codeberg.org/comaps/comaps/src/branch/main/tools/python/maps_generator/var/etc/map_generator.ini.default):
+5. Create a configuration file from the local defaults:
 
 ```sh
 cp maps_generator/var/etc/map_generator.ini.default maps_generator/var/etc/map_generator.ini
@@ -170,7 +170,7 @@ In this example we skipped generation of the World\* files because they are ones
 
 ### Subways layer
 
-You can manually generate a subway layer file to use in the `SUBWAY_URL` ini setting. See [instructions](https://codeberg.org/comaps/comaps/src/branch/main/docs/SUBWAY_GENERATION.md).
+You can manually generate a subway layer file to use in the `SUBWAY_URL` ini setting.
 
 ## Testing maps
 If you're testing a new feature you likely wish to test the maps locally
@@ -188,8 +188,6 @@ In this folder the map file is in a YYMMDD subfolder
 ## Changing Map Borders
 
 > TODO: this section is a work in progress and is probably missing parts.
-
-See also: [HOW_TO_EDIT_HIERARCHY.TXT.md](https://codeberg.org/comaps/comaps/src/branch/main/data/HOW_TO_EDIT_HIERARCHY.TXT.md)
 
 - Edit the various `data/borders/*.poly` files as needed, ideally sharing nodes between polygons to avoid gaps.
   - These are Osmosis Polygon "osmpoly" files and there are multiple tools and editing options available: https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Format

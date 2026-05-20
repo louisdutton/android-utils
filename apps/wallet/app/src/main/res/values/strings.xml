@@ -86,14 +86,8 @@
     <string name="importOptionFilesystemExplanation">Choose a specific file from the filesystem</string>
     <string name="importOptionFilesystemButton">From filesystem</string>
     <string name="about">About</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os and contributors</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os and contributors</string>
-    <string name="app_copyright_old">Based on Loyalty Card Keychain\ncopyright © 2016–2020 Branden Archer</string>
     <string name="app_license">Copylefted libre software, licensed GPLv3+</string>
     <string name="about_title_fmt">About <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Version: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Third-party libraries: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Third-party resources: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Select barcode</string>
     <string name="thumbnailDescription">Thumbnail</string>
     <string name="starImage">Favorite star</string>
@@ -184,7 +178,6 @@
     <string name="balanceParsingFailed">Invalid balance</string>
     <string name="chooseImportType">Import data from</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
-    <string name="privacy_policy">Privacy policy</string>
     <string name="accept">Accept</string>
     <string name="importCatima">Import from Catima</string>
     <string name="importCatimaMessage">Select your export from Catima to import.
@@ -228,7 +221,6 @@
     <string name="settings_system_locale">System</string>
     <string name="selectColor">Select color</string>
     <string name="setIcon">Set thumbnail</string>
-    <string name="app_contributors">Made possible by: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">Sort</string>
     <string name="showMoreInfo">Show info</string>
     <string name="updateBalance">Update balance</string>
@@ -243,11 +235,9 @@
     <string name="sort_by">Sort by</string>
     <string name="version_history">Version history</string>
     <string name="arrow" translatable="false"><![CDATA[>]]></string>
-    <string name="credits">Credits</string>
     <string name="help_translate_this_app">Help translate this app</string>
     <string name="license">License</string>
     <string name="source_repository">Source repository</string>
-    <string name="on_github">on GitHub</string>
     <string name="and_data_usage">and data usage</string>
     <string name="report_error">Report error</string>
     <string name="translate_platform">on Weblate</string>

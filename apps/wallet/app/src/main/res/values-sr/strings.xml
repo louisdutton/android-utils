@@ -48,9 +48,6 @@
     <string name="importOptionFilesystemTitle">Uvezi iz sistema za upravljanje datotekama</string>
     <string name="importOptionFilesystemButton">Iz sistema za upravljanje datotekama</string>
     <string name="about">O aplikaciji</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Autorska prava © 2019–<xliff:g>%d</xliff:g> Sylvia van Os i saradnici</string>
-    <string name="app_copyright_old">Bazirana na osnovu aplikcije Loyalty Card Keychain
-\nautorska prava © 2016–2020 Branden Archer</string>
     <string name="starImage">Omiljena zvezda</string>
     <string name="settings">Podešavanja</string>
     <string name="settings_theme">Tema</string>
@@ -94,7 +91,6 @@
     <string name="balanceParsingFailed">Nevažeće stanje</string>
     <string name="chooseImportType">Uvoz podataka iz</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
-    <string name="privacy_policy">Politika privatnosti</string>
     <string name="accept">Prihvati</string>
     <string name="importCatima">Uvezi iz Catime</string>
     <string name="importFidme">Uvoz iz FidMe</string>
@@ -136,11 +132,9 @@
     <string name="reverse">…u obrnutom redosledu</string>
     <string name="sort_by">Sortiraj po</string>
     <string name="version_history">Istorija verzija</string>
-    <string name="credits">Stanje</string>
     <string name="help_translate_this_app">Pomozi da prevedemo aplikaciju</string>
     <string name="license">Licenca</string>
     <string name="source_repository">Izvorni repozitorijum</string>
-    <string name="on_github">na GitHub-u</string>
     <string name="and_data_usage">i korišćenje podataka</string>
     <string name="report_error">Prijavi grešku</string>
     <string name="shortcutSelectCard">Odaberi karticu</string>
@@ -200,12 +194,8 @@
     <string name="permissionReadCardsDescription">Pročitaj svoje Catima kartice i sve njihove detalje, uključujući beleške i slike</string>
     <string name="cameraPermissionDeniedTitle">Nije moguće pristupiti kameri</string>
     <string name="exportFailed">Nije moguće izvršiti izvoz</string>
-    <string name="app_copyright_short">Autorska prava © Sylvia van Os i saradnici</string>
     <string name="app_license">Kopileftovani slobodni softver, licenciran GPLv3+</string>
     <string name="about_title_fmt">O <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Verzija: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Biblioteke trećih strana: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Resursi trećih strana: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="settings_keep_screen_on">Drži ekran uključen</string>
     <string name="settings_keep_screen_on_summary">Onemogućava vremensko ograničenje gašenja ekrana dok gledate karticu</string>
     <string name="settings_disable_lockscreen_while_viewing_card_summary">Onemogućava zaključavanje ekrana dok gledate karticu</string>
@@ -236,7 +226,6 @@
     <string name="passwordRequired">Unesi lozinku</string>
     <string name="updateBarcodeQuestionText">Promenio si broj kartice. Da li želiš da ažuriraš i bar-kod da bude iste vrednosti?</string>
     <string name="no">Ne</string>
-    <string name="app_contributors">Saradnici: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="barcodeLongPressMessage">Samo fotografije mogu da se otvore u galerija aplikaciji</string>
     <string name="translate_platform">na Weblate-u</string>
     <plurals name="groupCardCountWithArchived">

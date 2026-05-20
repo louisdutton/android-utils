@@ -1,5 +1,3 @@
-// Contributed by @tenextractor in https://github.com/futo-org/android-keyboard/pull/899
-
 package org.futo.inputmethod.event.combiners
 
 import android.text.TextUtils

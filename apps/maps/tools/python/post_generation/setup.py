@@ -16,10 +16,8 @@ with chdir(os.path.abspath(os.path.dirname(__file__))):
     setuptools.setup(
         name="omim-post_generation",
         version=str(get_version()),
-        author="CoMaps",
-        author_email="info@comaps.app",
+        author="GrapheneOS Essentials",
         description="This package is a library for post-processing the generated maps.",
-        url="https://codeberg.org/comaps",
         package_dir={"post_generation": ""},
         packages=["post_generation"],
         classifiers=[

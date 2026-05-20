@@ -6,16 +6,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SeekBarPreference;
@@ -183,7 +179,6 @@ public class VoiceInstructionsSettingsFragment extends BaseXmlSettingsFragment
     };
 
     initVolume();
-    initTtsLangInfoLink();
     initSpeedCamerasPrefs();
     updateTts();
   }
@@ -318,25 +313,6 @@ public class VoiceInstructionsSettingsFragment extends BaseXmlSettingsFragment
     mTtsVolume.setValue(volumeInt);
     mTtsVolume.setSummary(Integer.toString(volumeInt));
     TtsPlayer.INSTANCE.setVolume(volume);
-  }
-
-  private void initTtsLangInfoLink()
-  {
-    final Preference ttsLangInfoLink = getPreference(getString(R.string.pref_tts_info_link));
-    final String ttsLinkText = getString(R.string.prefs_languages_information_off_link);
-    final Spannable link = new SpannableString(ttsLinkText + "↗");
-    // Set link color.
-    link.setSpan(new ForegroundColorSpan(ContextCompat.getColor(
-                     requireContext(),
-                     UiUtils.getStyledResourceId(requireContext(), com.google.android.material.R.attr.colorSecondary))),
-                 0, ttsLinkText.length(), 0);
-    ttsLangInfoLink.setSummary(link);
-
-    final String ttsInfoUrl = requireActivity().getString(R.string.tts_info_link);
-    ttsLangInfoLink.setOnPreferenceClickListener(preference -> {
-      Utils.openUrl(requireContext(), ttsInfoUrl);
-      return false;
-    });
   }
 
   private void initSpeedCamerasPrefs()

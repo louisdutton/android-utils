@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<voice-interaction-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:sessionService="digital.dutton.essentials.assistant.AssistantVoiceInteractionSessionService"
+    android:recognitionService="digital.dutton.essentials.assistant.AssistantRecognitionService"
+    android:settingsActivity="digital.dutton.essentials.assistant.MainActivity"
+    android:supportsAssist="true"
+    android:supportsLaunchVoiceAssistFromKeyguard="true"
+    android:supportsLocalInteraction="true" />

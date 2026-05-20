@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">Lejupielāde neizdevās</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Mēģināt vēlreiz</string>
-    <string name="about_menu_title">Par „CoMaps“</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Vienkārši izmantojama un noslīpēta</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Vērsta uz privātumu un bez reklāmām</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Bezsaistē, ātri un kompakti</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Pilnībā atvērts pirmkods, bezpeļņas, caurskatāma lēmumu pieņemšana un naudas plūsma.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Atrašanās vietas iestatījumi</string>
     <string name="close">Aizvērt</string>
     <string name="unsupported_phone">Lietotnei nepieciešams „OpenGL“ aparatūras paātrinājums, bet diemžēl Jūsu ierīce to neatbalsta.</string>
     <string name="download">Lejupielādēt</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Lai lietotu „CoMaps“, atvienojiet USB kabeli vai ievietojiet atmiņas karti</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Lietotnes izmantošanai atbrīvojiet vietu ierīces krātuvē</string>
     <string name="download_resources">Pirms sākt izmantot lietotni lejupielādējiet pasaules pārskata karti. \nTā ierīces krātuvē aizņems %s vietas.</string>
@@ -145,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Piezīmes</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Mana “CoMaps” izlase</string>
-    <string name="share_bookmarks_email_body">Sveiciens! \n \nPielikumā ir mana izlase. Lūgums atvērt to lietotnē “CoMaps”. Ja tā nav uzstādīta, to var iegūt šeit: https://www.comaps.app/download/ \n \nIzbaudi ceļošanu ar “CoMaps”!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Ielādē izlasi</string>
     <!-- Kmz file successful loading -->
@@ -166,10 +153,6 @@
     <string name="cant_change_this_setting">Atvainojamies, karšu krātuves iestatījumi šobrīd ir atspējoti</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Tagad notiek kartes lejupielāde</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Apskatiet manu atrašanās vietu „CoMaps“ lietotnē! %1$s vai %2$s Vai Jums nav nesaistes kartes? Lejupielādējiet to: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Sveiciens! Apskati manu atrašanās vietu CoMaps kartē!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Kopīgot</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -227,24 +210,9 @@
     <string name="menu">Izvēlne</string>
     <!-- Text in menu -->
     <string name="website">Tīmekļa vietne</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Jaunumi</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Atgriezeniskā saite</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Novērtējiet lietotni</string>
     <!-- Text in menu -->
-    <string name="help">Palīdzība</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Biežāk uzdotie jautājumi</string>
     <!-- Button in the main menu -->
-    <string name="donate">Ziedot</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Iesaistīties un uzlabot CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Autortiesības</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Ziņot par kļūdu</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Uzlabojiet bultiņas virzienu, pārvietojot tālruni astoņniekā, kas kalibrēs kompasu.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -391,7 +359,6 @@
     <string name="editor_time_advanced">Paplašinātais režīms</string>
     <string name="editor_time_simple">Parastais režīms</string>
     <string name="editor_hours_closed">Laiks, kad slēgts</string>
-    <string name="editor_example_values">Piemēra vērtības</string>
     <string name="editor_correct_mistake">Labot kļūdu</string>
     <string name="editor_add_select_location">Izvēlieties atrašanās vietu</string>
     <string name="editor_report_problem_send_button">Sūtīt</string>
@@ -454,8 +421,6 @@
     <string name="message_invalid_feature_position">Šeit objekti nevar atrasties</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Kopienas veidotie OpenStreetMap dati, %s. Uzzināt vairāk par to, kā labot un atjaunināt karti, var OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) ir kopienas projekts, kura mērķis ir izveidot atvērtajos datos balstītu karti, kura ir pieejama bez maksas. Tas ir CoMaps galvenais karšu datu avots un darbojas līdzīgi kā Vikipēdija. Jūs varat pievienot vai rediģēt vietas, un tās kļūst pieejamas miljoniem lietotāju visā pasaulē.\nPievienojieties kopienai, lai palīdzētu izveidot labāku karti visiem!</string>
     <string name="login_to_make_edits_visible">Izveido OpenStreetMap kontu vai piesakies, lai padarītu savus karšu labojumus pieejamus visiem</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d no %2$d</string>
@@ -473,7 +438,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operators: %s</string>
     <string name="editor_category_unsuitable_title">Vai neatrodat atbilstošu kategoriju?</string>
-    <string name="editor_category_unsuitable_text">CoMaps ļauj pievienot tikai vienkāršu punktu kategorijas, tā nevar pievienot pilsētas, ceļus, ezerus, ēku aprises utt.. Šādas kategorijas lūdzam pievienot tiešā veidā <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Lai uzzinātu, kā to izdarīt, jāseko norādēm <a href="https://www.comaps.app/support/advanced-map-editing/">rokasgrāmatā</a>.</string>
     <string name="downloader_no_downloaded_maps_title">Ierīcē nav lejupielādētu karšu</string>
     <string name="downloader_no_downloaded_maps_message">Lejupielādē kartes, lai meklētu un saņemtu pārvietošanās norādes bezsaistē</string>
     <string name="current_location_unknown_error_title">Pašreizējā atrašanās vieta nav zināma</string>
@@ -526,15 +490,11 @@
     <string name="mobile_data_option_ask">Jautāt vienmēr</string>
     <string name="traffic_update_maps_text">Lai attēlotu satiksmes datus, ir jāatjaunina kartes</string>
     <string name="big_font">Palielināt fonta lielumu kartē</string>
-    <string name="traffic_update_app">Atjauniniet „CoMaps“</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Satiksmes dati nav pieejami</string>
     <string name="enable_logging">Ieslēgt žurnalēšanu</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Vispārīgas atsauksmes</string>
     <string name="prefs_languages_information">Balss norādēm lietotne izmanto teksta pārveides runā sistēmu (TTS). Daudzas Android ierīces izmanto Google TTS, ko var lejupielādēt un atjaunināt Google Play veikalā (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Dažām valodām nepieciešams uzstādīt runas atveidotāju vai papildu valodas paku, kas atrodama lietotņu veikalā (Google Play, Galaxy Store, App Gallery, F-Droid). \nJāatver ierīces iestatījumi → Valoda un ievade → Runa → Teksta pārveide runā. \nŠeit var pārvaldīt runas atveidošanas iestatījumus (piemēram, lejupielādēt valodas paku lietošanai bezsaistē, kā arī var nomainīt teksta pārvēršanas runā dzinēju.</string>
-    <string name="prefs_languages_information_off_link">Lai iegūtu vairāk informācijas, lūgums ieskatīties šajās norādēs</string>
     <string name="transliteration_title">Transliterācija uz latīņu alfabētu</string>
     <string name="learn_more">Uzzināt vairāk</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -546,7 +506,6 @@
     <string name="placepage_remove_stop">Noņemt starppunktu</string>
     <string name="placepage_add_stop">Pievienot starppunktu</string>
     <string name="dialog_error_storage_title">Krātuves pieejas problēma</string>
-    <string name="dialog_error_storage_message">Ārējā krātuve nav pieejama. Iespējams, ir izņemta vai bojāta SD karte, vai arī datņu sistēma ir tikai lasāma. Pārbaudiet savu SD karti vai sazinieties ar mums, rakstot uz support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Simulēt bojātu krātuvi</string>
     <string name="error_enter_correct_name">Ierakstiet pareizu nosaukumu</string>
     <string name="bookmark_lists">Izlases saraksti</string>
@@ -585,8 +544,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Privātums</string>
-    <string name="privacy_policy">Privātuma politika</string>
-    <string name="terms_of_use">Izmantošanas nosacījumi</string>
     <string name="button_layer_traffic">Satiksme</string>
     <string name="subway">Metro</string>
     <string name="layers_title">Kartes stili un slāņi</string>
@@ -611,7 +568,6 @@
     <string name="power_managment_setting_never">Nekad</string>
     <string name="power_managment_setting_auto">Kad ir zems uzlādes līmenis</string>
     <string name="power_managment_setting_manual_max">Vienmēr</string>
-    <string name="enable_logging_warning_message">Uz laiku ieslēdziet šo opciju, lai reģistrētu un manuāli nosūtītu sīkākus žurnālus problēmu diagnostikai, izmantojot „Ziņot par kļūdu“ funkciju palīdzības lodziņā. Žurnāli var saturēt informāciju par atrašanās vietu.</string>
     <string name="driving_options_title">Maršruta opcijas</string>
     <string name="avoid_tolls">Izvairīties no maksas ceļiem</string>
     <string name="avoid_unpaved">Izvairīties no zemes ceļiem</string>
@@ -710,28 +666,17 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Kartes dati ir no “OpenStreetMap”</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Paldies, ka izmantojat mūsu kopienas veidotās kartes!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Ar jūsu ziedojumiem un atbalstu varam izveidot pasaulē labākās kartes!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Vai jums patīk mūsu lietotne? Lūdzam ziedot tās attīstībai! Varbūt tā nepatīk? Tādā gadījumā lūdzam mums pastāstīt, kas tajā nepatīk, lai varam „CoMaps“ uzlabot!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Ja pazīstat kādu programmatūras izstrādātāju, varat viņam vai viņai palūgt ieviest funkciju, kas jums pietrūkst.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Vai zinājāt, ka ir iespējams atlasīt jūsu pašreizējo atrašanās vietu kartē?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Varat palīdzēt tulkot lietotni savā valodā.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Šo lietotni veido daži entuziasti un mūsu kopiena.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Kartes datus varat viegli labot un papildināt.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Mūsu mērķis ir izveidot viegli lietojamas kartes, kas respektē jūsu privātumu un kuras jums patiks.</string>
-    <string name="car_used_on_the_phone_screen">Tagad „CoMaps“ izmantojat tālruņa ekrānā</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Uz auto ekrānu</string>
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Aktīvā atpūta</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -770,7 +715,6 @@
     <string name="stop_without_saving">Pārtraukt ierakstīšanu</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
     <string name="continue_recording">Turpināt ierakstīt</string>
     <string name="track_recording_alert_title">Pievienot izlasei?</string>
     <string name="editor_other_info">Piezīme OpenStreetMap brīvprātigajiem (nav obligāts)</string>
@@ -778,14 +722,8 @@
     <string name="error_no_file_manager_app">Nevar attēlot mapes atlasīšanas logu, jo ierīcē nav uzstādīta piemērota lietotne. Lūgums uzstādīt datņu pārvaldnieka lietotni un mēģināt vēlreiz.</string>
     <string name="uri_open_location_failed">Nav uzstādīta neviena lietotne, kas varētu atvērt atrašanās vietu</string>
     <string name="editor_about_osm">Jūsu labojumi tiek augšupielādēti sabiedriskajā <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> datubāzē. Lūdzu, nepievienojiet personisku vai ar autortiesībām aizsargātu informāciju.</string>
-    <string name="editor_note_hint">Aprakstiet kļūdas kartē vai lietas, ko nevar izlabot, izmantojot CoMaps</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="panoramax">Panoramax attēls</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Saglabāts</string>
-    <string name="about_headline">Atvērts projekts, kuru darbina kopiena</string>
     <string name="error_invalid_number">Nederīgs skaitlis</string>
     <string name="hours_confirmed_time_ago">Apstiprināts %s</string>
     <string name="existence_confirmed_time_ago">Esamība apstiprināta %s</string>
@@ -809,7 +747,6 @@
     <string name="charge_socket_type2_combo">2. veida apvienojums</string>
     <string name="list_description_empty">Jālabo saraksts, lai pievienotu aprakstu</string>
     <string name="delete_track_dialog_title">Izdzēst %s?</string>
-    <string name="app_tip_04">Jāpiesit jebkur kartē, lai atlasītu jebko. Ilga piespiešana tiek izmantota, lai paslēptu un parādītu saskarni.</string>
     <string name="error_enter_correct_level">Jāievada derīgs stāvu skaits</string>
     <string name="error_enter_correct_fediverse_page">Jāievada derīgs Mastodon lietotājvārds vai tīmekļa adrese</string>
     <string name="error_enter_correct_bluesky_page">Jāievada derīgs Bluesky lietotājvārds vai tīmekļa adrese</string>
@@ -820,7 +757,6 @@
     <string name="editor_submit">Iesniegt</string>
     <string name="place_page_map_too_old_title">Novecojuši kartes dati</string>
     <string name="place_page_map_too_old_description">Pašreizējie kartes dati ir ļoti veci, lūgums atjaunināt karti.</string>
-    <string name="place_page_app_too_old_description">Pašreizējie kartes dati ir ļoti veci, lūgums atjaunināt CoMaps lietotni.</string>
     <string name="place_page_update_too_old_map">Atjaunināt karšu apgabalu</string>
     <string name="place_page_too_old_to_edit">OpenStreetMap labošana ir atspējota, jo kartes dati ir pārāk veci.</string>
     <string name="navigation_start_tts_disabled_message">Balss norādes atspējotas: nav pieejams teksta pārveidošanas runā dzinējs</string>
@@ -858,7 +794,6 @@
     <string name="bicycle">Divriteņu</string>
     <string name="ruler">Lineāls</string>
     <string name="bookmark_color">Izlases vienumu krāsa</string>
-    <string name="about_help">Par un palīdzība</string>
     <string name="open_now">Šobrīd atvērts</string>
     <string name="pref_speedlimit_title">Rādīt ātruma ierobežojumus</string>
     <string name="location_privacy">Atrašanās vietas privātums</string>
@@ -874,7 +809,6 @@
     <string name="power_management">Enerģijas pārvaldība</string>
     <string name="route_recalculating">Pārrēķina maršrutu…</string>
     <string name="pref_openexternallinks_title">Automātiski atvērt trešo pušu saites</string>
-    <string name="pref_openexternallinks_summary">Pēc noklusējuma atvērt trešo pušu saites CoMaps</string>
     <string name="stop">Apturēt</string>
     <string name="destination">Galamērķis</string>
     <string name="pref_alt_map_lang_handling">Kartes papildu valodas</string>

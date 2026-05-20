@@ -49,7 +49,6 @@
     <string name="importFidme">Внасяне от FidMe</string>
     <string name="exportOptionExplanation">Данните ще бъдат запазени на място по ваш избор</string>
     <string name="accept">Приемане</string>
-    <string name="privacy_policy">Политика за личните данни</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
     <string name="turn_flashlight_off">Изключва светкавицата</string>
     <string name="turn_flashlight_on">Включва светкавицата</string>
@@ -105,13 +104,7 @@
     <string name="importCatimaMessage">Изберете предварително изнесен файл от Catima, който да внесете.\nСъздайте такъв файл от меню Внасяне/изнасяне от друго устройство с Catima като изберете Изнасяне.</string>
     <string name="importOptionFilesystemButton">Избиране от файлова система</string>
     <string name="importOptionFilesystemExplanation">Изберете определен файл от файловата система</string>
-    <string name="app_resources">Ресурси: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Библиотеки: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="debug_version_fmt">Издание: <xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt">Относно <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Всички права запазени © 2019–<xliff:g>%d</xliff:g> Силвия ван Ос и сътрудници</string>
-    <string name="app_copyright_old">На основата на Loyalty Card Keychain
-\nвсички права запазени © 2016–2020 Бранден Арчър</string>
     <string name="about">Относно</string>
     <string name="importOptionFilesystemTitle">Внасяне от файловата система</string>
     <string name="importCatima">Внасяне от Catima</string>
@@ -142,7 +135,6 @@
         <item quantity="one">Желаете ли <xliff:g>%d</xliff:g> карта да бъде премахната\?</item>
         <item quantity="other">Желаете ли тези <xliff:g>%d</xliff:g> карти да бъдат премахнати\?</item>
     </plurals>
-    <string name="app_contributors">Осъществено от: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="settings_system_locale">Система</string>
     <string name="settings_locale">Език</string>
     <string name="noGroupCards">Групата е празна</string>
@@ -153,10 +145,8 @@
     <string name="sort_by_most_recently_used">Последно използване</string>
     <string name="sort_by_name">Наименование</string>
     <string name="sort">Сортиране</string>
-    <string name="credits">Заслуги</string>
     <string name="license">Лиценз</string>
     <string name="source_repository">Хранилище на изходния код</string>
-    <string name="on_github">в GitHub</string>
     <string name="report_error">Докладване на грешка</string>
     <string name="version_history">История на изданията</string>
     <string name="and_data_usage">и използване на данни</string>
@@ -239,7 +229,6 @@
     <string name="action_display_options">Настройки на списъка</string>
     <string name="show_archived_cards">Архивирани карти</string>
     <string name="view_online">Преглед</string>
-    <string name="app_copyright_short">Всички права запазени © Силвия ван Ос и сътрудници</string>
     <string name="card_id_must_not_be_empty">Номера на картата не трябва да бъде празен</string>
     <string name="balanceParsingFailed">Неприемлив баланс</string>
     <string name="add_a_card_in_a_different_way">Добавяне на карта по друг начин</string>

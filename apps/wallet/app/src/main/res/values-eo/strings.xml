@@ -6,9 +6,7 @@
     <string name="cardId">Identigilo de karto</string>
     <string name="settings">Agordoj</string>
     <string name="selectBarcodeTitle">Elekti strikodon</string>
-    <string name="debug_version_fmt">Versio: <xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt">Pri <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Kopirajto © 2019–<xliff:g>%d</xliff:g> Sylvia van Os kaj kontribuantoj</string>
     <string name="importOptionFilesystemButton">El dosiersistemo</string>
     <string name="importOptionFilesystemTitle">Enporti el dosiersistemo</string>
     <string name="exportFailedTitle">Eksportado malsukcesis</string>
@@ -52,8 +50,6 @@
     <string name="settings_display_barcode_max_brightness">Heligi barcode vido</string>
     <string name="starImage">Stelmarko</string>
     <string name="thumbnailDescription">Bildeto</string>
-    <string name="app_copyright_old">Bazita sur Lojaleco Karto Keychain
-\nkopirajto © 2016-2020 Branden Archer</string>
     <string name="importOptionFilesystemExplanation">Elektu specifa dosiero de la dosiersistemo.</string>
     <string name="exportOptionExplanation">La datumoj estos skribita al loko de via elekto.</string>
     <string name="exportFailed">Ne povis fari eksportadon</string>
@@ -102,7 +98,6 @@
     <string name="moveBarcodeToTopOfScreen">Movi la strekodon al la supro de la ekrano</string>
     <string name="errorReadingImage">Ne eblis legi bildon</string>
     <string name="showMoreInfo">Montri informojn</string>
-    <string name="on_github">sur GitHub</string>
     <string name="archive">Enarkivigi</string>
     <string name="duplicateCard">Duoblaĵo</string>
     <string name="unarchived">Karto elarkivigita</string>
@@ -117,7 +112,6 @@
     <string name="addFromImage">Elekti bildon el la galerio</string>
     <string name="shortcutSelectCard">Elekti karton</string>
     <string name="chooseValidFromDate">Elekti startdaton de valideco</string>
-    <string name="privacy_policy">Regularo pri privateco</string>
     <string name="chooseExpiryDate">Elektu findaton de valideco</string>
     <string name="group_updated">Grupo ĝisdatigita</string>
     <string name="leaveWithoutSaveTitle">Eliri</string>
@@ -171,7 +165,6 @@
     <string name="sort_by_expiry">Dato de eksvalidiĝo</string>
     <string name="sort_by">Ordigi laŭ</string>
     <string name="version_history">Versio historio</string>
-    <string name="credits">Dankoj</string>
     <string name="license">Permesilo</string>
     <string name="and_data_usage">kaj datumuzado</string>
     <string name="report_error">Raporti eraron</string>
@@ -193,7 +186,6 @@
     <string name="settings_allow_content_provider_read_title">Permesi al aliaj apoj aliri miajn datumojn</string>
     <string name="moveUp">Movi supren</string>
     <string name="expiryStateSentence">Valida ĝis: <xliff:g>%s</xliff:g></string>
-    <string name="app_contributors">Ebligita de: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">Ordigi</string>
     <string name="source_repository">Koda deponejo</string>
     <string name="include_if_asking_support">Si vi volas peti subtenon, inkluzivu la sekvan informon:</string>
@@ -207,7 +199,6 @@
     <string name="permissionReadCardsDescription">legi viajn Catima-kartojn kaj ĉiujn iliajn detalojn, inkluzive de notoj kaj bildoj</string>
     <string name="cameraPermissionDeniedTitle">Fotilo neatingebla</string>
     <string name="noCameraPermissionDirectToSystemSetting">Por skani strikodojn Catima bezonas atingorajton al via fotilo. Klaku ĉi tie por ŝanĝi viajn permesajn agordojn.</string>
-    <string name="app_copyright_short">Kopirajto © Sylvia van Os kaj kontribuantoj</string>
     <string name="settings_display_barcode_max_brightness_summary">Bezonata por ke iuj skaniloj funkciu</string>
     <string name="unsupportedBarcodeType">Ne eblas montri ĉi tiun strikodspecon. Ĝi eble estos subtenata en posta versio de la apo.</string>
     <string name="importVoucherVaultMessage">Elektu la <i>vouchervault.json</i> eksporton de Voucher Vault kiun vi volas importi.
@@ -234,14 +225,12 @@
     <string name="wrongValueForBarcodeType">La valoro ne validas por la elektita tipo de strikodo</string>
     <string name="importCancelled">Importado nuligita</string>
     <string name="exportCancelled">Eksportado nuligita</string>
-    <string name="app_libraries">Liberaj triaj bibliotekoj: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="addFromPdfFile">Elekti PDF-dosieron</string>
     <string name="failedLaunchingFileManager">Subtenata dosiermastrumilo ne trovebla</string>
     <string name="errorReadingFile">Dosiero nelegebla</string>
     <string name="multipleBarcodesFoundPleaseChooseOne">Kiun el la trovitaj strikodoj vi volas uzi?</string>
     <string name="pageWithNumber">Paĝo <xliff:g>%d</xliff:g></string>
     <string name="settings_system_locale">Sistemo</string>
-    <string name="app_resources">Liberaj triaj risurcoj: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="importCatimaMessage">Elektu la <i>catima.zip</i> eksporton kiun vi volas importi.
 \nKreu ĝin unue en la importi/eksporti menuo en alia Catima apo elektante \'eksporti\' tie.</string>
     <string name="importFidme">Importi el FidMe</string>

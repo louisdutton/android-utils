@@ -13,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
@@ -45,7 +44,6 @@ import org.futo.inputmethod.latin.uix.setSetting
 import org.futo.inputmethod.latin.uix.settings.SettingsActivity
 import org.futo.inputmethod.latin.uix.utils.ModelOutputSanitizer
 import org.futo.inputmethod.latin.xlm.UserDictionaryObserver
-import org.futo.inputmethod.updates.openURI
 import org.futo.voiceinput.shared.ModelDoesNotExistException
 import org.futo.voiceinput.shared.RecognizerView
 import org.futo.voiceinput.shared.RecognizerViewListener
@@ -75,18 +73,8 @@ val SystemVoiceInputAction = Action(
 
 @Composable
 fun NoModelInstalled(locale: Locale) {
-    val context = LocalContext.current
     Box(modifier = Modifier
-        .fillMaxSize()
-        .clickable(
-            enabled = true,
-            onClickLabel = null,
-            onClick = {
-                context.openURI("https://keyboard.futo.org/voice-input-models", true)
-            },
-            role = null,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() })) {
+        .fillMaxSize()) {
         Text(
             stringResource(
                 R.string.action_voice_input_no_model_for_language_x_installed,

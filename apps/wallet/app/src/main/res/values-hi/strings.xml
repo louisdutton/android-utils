@@ -35,7 +35,6 @@
     <string name="importFailedTitle">आयात विफल</string>
     <string name="exportOptionExplanation">डाटा आपके पसंद के स्थान पर लिखा जाएगा</string>
     <string name="importOptionFilesystemExplanation">फाईल सिस्टम से एक विशिष्ट फाईल चुनें</string>
-    <string name="app_copyright_old">लोयलटी कार्ड कीचैंन पर आधारित\nकॉपीराइट © 2016–2020 ब्रांडन आर्चर</string>
     <string name="action_add">जोड़ें</string>
     <string name="edit">संपादित करें</string>
     <string name="confirm">पुष्टि करें</string>
@@ -107,7 +106,6 @@
         <item quantity="other"><xliff:g>%d</xliff:g> चयनित किए गए</item>
     </plurals>
     <string name="groups">समूह</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">कॉपीराइट © 2019–<xliff:g>%d</xliff:g> Sylvia van Os और योगदाता</string>
     <plurals name="groupCardCount">
         <item quantity="one"><xliff:g>%d</xliff:g> कार्ड</item>
         <item quantity="other"><xliff:g>%d</xliff:g> कार्डो</item>
@@ -119,11 +117,9 @@
     <string name="editGroup">समूह संपादन: <xliff:g>%s</xliff:g></string>
     <string name="points">पॉइंट्स</string>
     <string name="chooseImportType">यहाँ से डेटा का आयात करें</string>
-    <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="importCatima">कैटिमा से आयात करें</string>
     <string name="app_license">कॉपीलेफ्ट लिबर सॉफ्टवेयर, GPLv3+ लाइसेंस प्राप्त</string>
     <string name="about_title_fmt"><xliff:g id="app_name">%s</xliff:g> के बारे में</string>
-    <string name="debug_version_fmt">संस्करण: <xliff:g id="version">%s</xliff:g></string>
     <string name="cameraPermissionRequired">इस क्रिया के लिए कैमरा की अनुमति चाहिए…</string>
     <string name="permissionReadCardsLabel">कैटीमा कार्ड्स पढ़ें</string>
     <string name="storageReadPermissionRequired">इस क्रिया के लिए स्टोरेज पढ़ने की अनुमति आवश्यक है…</string>
@@ -142,15 +138,12 @@
     <string name="photos">फ़ोटो</string>
     <string name="updateBarcodeQuestionTitle">बारकोड का मान अपडेट करें?</string>
     <string name="settings_display_barcode_max_brightness_summary">कुछ स्कैनरों के काम करने के लिए यह आवश्यक है</string>
-    <string name="app_copyright_short">कॉपीराइट © सिल्विया वैन ओएस और योगदानकर्ता</string>
     <string name="settings_allow_content_provider_read_summary">ऐप्स को अभी भी पहुंच प्रदान करने के लिए अनुमति का अनुरोध करना होगा</string>
     <string name="settings_allow_content_provider_read_title">अन्य ऐप्स को मेरे डाटा की अनुमति दें</string>
     <string name="expiryStateSentence">समय अवधि समाप्त: <xliff:g>%s</xliff:g></string>
     <string name="balanceSentence">शेष राशि: <xliff:g>%s</xliff:g></string>
     <string name="settings_disable_lockscreen_while_viewing_card_summary">कार्ड देखते समय स्क्रीन का लॉक हो जाना बंद करें</string>
     <string name="expiryStateSentenceExpired">समय अवधि समाप्त: <xliff:g>%s</xliff:g></string>
-    <string name="app_libraries">तृतीय-पक्ष लाइब्रेरी: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">तृतीय-पक्ष संसाधन: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="settings_keep_screen_on_summary">कार्ड देखते समय स्क्रीन टाइमआउट बंद करें</string>
     <string name="removeImage">छवि हटाएं</string>
     <string name="setBackImage">पीछे की छवि सेट करें</string>
@@ -180,7 +173,6 @@
     <string name="failedGeneratingShareURL">साझा करने योग्य URL जनरेट नहीं किया जा सकता. कृपया इसकी रिपोर्ट करें</string>
     <string name="sort_by_most_recently_used">सबसे हाल ही में उपयोग किया गया</string>
     <string name="updateBalanceHint">राशि डालें</string>
-    <string name="on_github">गिटहब पर</string>
     <string name="donate">दान करें /भेंट दें</string>
     <string name="shortcutSelectCard">एक कार्ड चुनें</string>
     <string name="settings_category_title_privacy">गोपनीयता</string>
@@ -195,7 +187,6 @@
     <string name="settings_locale">भाषा</string>
     <string name="settings_oled_dark">गाढ़े (गहरे) रंग की थीम के लिए शुद्ध काले रंग की पृष्ठभूमि</string>
     <string name="selectColor">रंग चुने</string>
-    <string name="app_contributors">इनके द्वारा संभव बनाया गया: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">क्रमबद्ध करें</string>
     <string name="show_note">नोट दिखाएँ</string>
     <string name="importFidmeMessage">आयात करने के लिए FidMe से अपना निर्यात चुनें, और उसके बाद मैन्युअल रूप से बारकोड प्रकार चुनें।\nडेटा सुरक्षा चुनकर और फिर मेरा डेटा निकालें दबाकर इसे अपनी FidMe प्रोफ़ाइल से बनाएँ।</string>
@@ -233,7 +224,6 @@
     <string name="importVoucherVaultMessage">आयात करने के लिए वाउचर वॉल्ट से अपना निर्यात चुनें।\nवाउचर वॉल्ट में एक्सपोर्ट दबाकर इसे बनाएं।</string>
     <string name="turn_flashlight_on">टॉर्च चालू करें</string>
     <string name="sort_by_name">नाम</string>
-    <string name="credits">आभार</string>
     <string name="unarchive">असंग्रहित (Unarchive)</string>
     <string name="failedToOpenUrl">सबसे पहले एक वेब ब्राउज़र इंस्टॉल करें</string>
     <string name="currentBalanceSentence">वर्तमान शेष राशि: <xliff:g>%s</xliff:g></string>

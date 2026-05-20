@@ -136,11 +136,6 @@
   <string name="theme_dynamic_dark">Dünaamiline tume</string>
   <string name="theme_dynamic_light">Dünaamiline hele</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Uuenduste kontrollimise teenus</string>
-  <string name="autoupdater_update_available_title">Uuendus on saadaval</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;Saadaval on uuendus (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). Puuduta allalaadimiseks&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Eira</string>
-  <string name="autoupdater_perform_update">Uuenda</string>
   <!-- Must be fairly short -->
   <string name="keyboard_suggest_add_word_to_blacklist">Must nimekiri</string>
   <!-- Must be fairly short -->
@@ -149,7 +144,6 @@
   <string name="keyboard_version_status">Alfa</string>
   <string name="keyboard_switch_keyboard">Vaheta klaviatuuri</string>
   <string name="keyboard_language_settings">Seaded</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">Puuduta värskenduste kontrollimiseks või otsi seadetes</string>
   <!--
     Talkback descriptions (screen readers)
 
@@ -178,66 +172,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Ahenda</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Tasu</string>
-  <string name="payment_screen_title">Tasu FUTO klaviatuuri eest</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;Oled kasutanud FUTO klaviatuuri &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; päeva. Kui leiad, et see rakendus on kasulik, kaalu palun tasumist, et toetada FUTO tarkvara edasist arendamist.&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">Täname FUTO klaviatuuri proovimise eest! Kui leiad, et see rakendus on kasulik, kaalu tasumist, et toetada FUTO tarkvara edasist arendamist.</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO on pühendunud hea tarkvara loomisele, mis sind ei kuritarvita. See rakendus ei kuva sulle kunagi reklaame ega kogu sinu isikuandmeid.</string>
-  <string name="payment_screen_sales_point_development_title">Jätkusuutlik arendamine</string>
-  <string name="payment_screen_sales_point_privacy_title">Pühendumine privaatsusele</string>
-  <string name="payment_screen_sales_point_privacy_body">See rakendus ei kuva kunagi reklaame ega müü teie andmeid. Me ei tegele sellega.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Selle versiooni puhul makseid ei toetata</string>
-  <string name="payment_screen_already_paid_title">Kas oled juba tasunud?</string>
-  <string name="payment_screen_already_paid_body">Kui oled FUTO klaviatuuri või FUTO häälsisendi eest juba tasunud, puuduta allpool.</string>
-  <string name="payment_screen_already_paid_button">Olen juba tasunud</string>
-  <string name="payment_screen_already_paid_confirmation">Kinnita oma valik</string>
-  <string name="payment_screen_already_paid_confirmation_body">Kas soovid kinnitada, et oled juba tasunud? Pärast seda tasumise kohta enam ei küsita.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Olen juba tasunud</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Tühista</string>
-  <string name="payment_screen_set_reminder_title">Pole veel valmis maksma?</string>
-  <string name="payment_screen_set_reminder_body">See peidab meeldetuletuse määratud perioodiks seadete ekraanilt.</string>
-  <string name="payment_screen_set_reminder_setter">Millal soovid meeldetuletust saada?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">7 päeva pärast</string>
-  <string name="payment_screen_set_reminder_setter_1_month">1 kuu pärast</string>
-  <string name="payment_screen_set_reminder_setter_6_months">6 kuu pärast</string>
-  <string name="payment_screen_set_reminder_setter_next_century">järgmisel sajandil</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Kinnita meeldetuletus</string>
-  <string name="payment_screen_other_options">Muud valikud</string>
-  <string name="payment_screen_need_help_title">Abi</string>
-  <string name="payment_screen_need_help_subtitle">Kas vajad abi? Külasta meie veebilehte</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Maksa Google Play abil (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + maksud)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Rohkem valikuid</string>
-  <string name="payment_screen_payment_complete_title">Makse on sooritatud</string>
-  <string name="payment_screen_aftersales_title">Aitäh</string>
-  <string name="payment_screen_aftersales_title_pending">Makse on ootel</string>
-  <string name="payment_screen_aftersales_paragraph_1">Täname FUTO klaviatuuri ostmise eest!</string>
-  <string name="payment_screen_aftersales_paragraph_2">See ost aitab kaasa FUTO klaviatuuri ja teiste FUTO projektide edasisele arendamisele.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">Su makse on endiselt ootel, kuid see peaks peagi laekuma.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Kui sa just maksid ja sinu makse võib veel töötlemisel olla, peaksid saama lisateabega e-kirja.</string>
-  <string name="payment_screen_payment_failed_title">Makseviga</string>
-  <string name="payment_screen_payment_failed_body">Kahjuks makse nurjus mingil põhjusel. Palun võta meiega ühendust, kui vajad abi. Võid meiega ühendust võtta aadressil keyboard@futo.org, alloleva nupu abil või abimenüüs tagasiside saatmise kaudu</string>
-  <string name="payment_screen_payment_failed_body_unconfident">Su maksega võis olla probleeme. Kui see õnnestus, peaksid saama litsentsivõtmega e-kirja. Kui vajad abi, võta meiega ühendust. Võid meiega ühendust võtta aadressil keyboard@futo.org, alloleva nupu abil või peamenüüs oleva tagasiside jagamise kaudu.</string>
-  <string name="payment_screen_license_integrity_error">Litsentsi kinnitamine nurjus. Kui usud, et see on viga, võta meiega ühendust.</string>
-  <string name="payment_screen_continue_button">Jätka</string>
-  <string name="payment_unpaid_version_title">Tasumata FUTO klaviatuur</string>
-  <string name="payment_unpaid_version_indicator">Tasumata</string>
-  <string name="payment_paid_version_indicator">Täname sind FUTO klaviatuuri tasulise versiooni kasutamise eest!</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Uuenduse märguanne</string>
-  <string name="manual_update_notice_paragraph_1">See rakendus ei loo internetiühendust ja ei saa automaatselt uuendusi kontrollida. Kuid uuendusi saab otsida käsitsi.</string>
-  <string name="manual_update_notice_paragraph_2">Automaatsete uuenduste jaoks kasuta F-Droidi või Obtainiumit. Allalaadimisvõimaluste nägemiseks külasta veebilehte keyboard.futo.org.</string>
-  <string name="manual_update_notice_dev_paragraph">Kasutad FUTO klaviatuuri arendusversiooni. Stabiilse versiooni allalaadimiseks külasta keyboard.futo.org.</string>
-  <string name="manual_update_notice_visit_site_button">Külasta</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Eira</string>
   <!-- General settings strings -->
   <string name="settings_tip">Nõuanne</string>
   <string name="settings_unknown_error_title">Tundmatu viga</string>
   <string name="settings_unknown_error_subtitle">Tekkis tundmatu viga.</string>
   <string name="settings_try_typing_here">Proovi siia kirjutada…</string>
   <string name="settings_external_model_name">Väliselt imporditud mudel</string>
-  <string name="settings_check_for_updates_manually">Kontrolli uuendusi käsitsi</string>
   <string name="settings_update_available">Uuendus on saadaval</string>
   <!-- When adding a new language -->
   <string name="language_settings_title">Keeled ja mudelid</string>
@@ -256,23 +197,18 @@
   <string name="language_settings_resource_builtin_dictionary_name">Sisseehitatud sõnastik</string>
   <string name="language_settings_resource_voice_input_selected">Kas soovid taastada häälesisestusmudeli vaikeväärtused või asendada selle teise failiga?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Selle keele jaoks pole sisseehitatud häälsisestusmudelit, seega kui selle eemaldad, siis häälsisend lakkab selle keele puhul töötamast, kuni impordid uue mudeli!</string>
-  <string name="language_settings_resource_voice_input_selected_unset">Sa pole selle keele jaoks kohandatud häälsisestusmudelit seadistanud. Võid uurida allalaaditavaid faile veebis või importida selle failist.</string>
   <string name="language_settings_resource_dictionary_selected">Kas soovid lähtestada sõnastiku vaikeväärtusele või asendada selle teise failiga?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Selle keele jaoks pole sisseehitatud sõnastikku, seega kui selle eemaldad, siis automaatkorrektuur ja ennustused lakkavad selle keele puhul uue sõnastiku importimiseni töötamast!</string>
-  <string name="language_settings_resource_dictionary_selected_unset">Sa pole selle keele jaoks kohandatud sõnastikku seadistanud. Võid uurida allalaaditavaid faile veebis või failist sõnastiku importida.</string>
   <string name="language_settings_resource_replace_button">Asenda</string>
   <string name="language_settings_resource_import_file_button">Impordi</string>
   <string name="language_settings_resource_revert_to_default_button">Taasta vaikeseaded</string>
   <string name="language_settings_resource_remove_button">Eemalda</string>
-  <string name="language_settings_resource_explore_online_button">Uuri veebist</string>
   <string name="language_settings_remove_language_title">Kas kustutada %1$s?</string>
   <string name="language_settings_remove_language_body">Kas eemaldada %1$s, kõik sellega seotud paigutused ja kohandatud ressursid?</string>
   <string name="language_settings_remove_language_remove_button">Eemalda</string>
   <string name="language_settings_remove_language_cancel_button">Tühista</string>
   <string name="language_settings_other_options">Muud valikud</string>
   <string name="language_settings_import_resource_from_file">Impordi keelefail</string>
-  <string name="language_settings_explore_voice_input_models_online">Uuri häälsisestusmudeleid</string>
-  <string name="language_settings_explore_dictionaries_online">Uuri sõnastikke</string>
   <string name="language_settings_import_dictionary_or_model">Impordi sõnastik või mudel</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Häälsisendi mudel</string>
@@ -320,19 +256,4 @@
   <string name="voice_input_settings_builtin_disabled_notice">Sisseehitatud häälsisend on keelatud!</string>
   <string name="voice_input_settings_disable_builtin_voice_input">Keela sisseehitatud häälsisend</string>
   <string name="voice_input_settings_change_models">Mudelid</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Abi ja tagasiside</string>
-  <string name="help_menu_version_name">Versiooni nimi: %1$s</string>
-  <string name="help_menu_version_code">Versioonikood: %1$s</string>
-  <string name="help_menu_version_tip">Tahame kuulda tagasisidet! Kui teatad probleemist, võib versioon olla tähtis: v%1$s</string>
-  <string name="help_menu_documentation">Dokumentatsioon</string>
-  <string name="help_menu_documentation_subtitle">Tutvu klaviatuuri funktsioonide ja võimalustega</string>
-  <string name="help_menu_discord">Discord server</string>
-  <string name="help_menu_email_subtitle">Privaatne tagasiside, abi või ei kasuta GitHubi? Kirjuta meile</string>
-  <string name="credits_menu_header_text">Tänan neid inimesi, kes aitasid muuta FUTO klaviatuuri suurepäraseks rakenduseks!</string>
-  <string name="credits_menu_team_translators_title">Tõlkijad</string>
-  <string name="credits_menu_nonaffiliation_notice">Ülaltoodud autorid ei ole meiega seotud ja ei pruugi meid tingimata toetada ega reklaamida. Nende nimetamine ei tähenda seotust ega toetust.</string>
-  <string name="credits_menu_contribute_translations_button">Aita rakendust tõlkida</string>
-  <string name="credits_menu_project_information_title">%s teave</string>
-  <string name="credits_menu_project_url_link">Projekti URL</string>
 </resources>

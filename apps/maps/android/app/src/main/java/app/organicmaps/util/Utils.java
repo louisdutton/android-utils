@@ -25,7 +25,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.DimenRes;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -35,18 +34,14 @@ import androidx.core.app.NavUtils;
 import androidx.core.os.BundleCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import app.organicmaps.BuildConfig;
 import app.organicmaps.MwmActivity;
 import app.organicmaps.MwmApplication;
 import app.organicmaps.R;
 import app.organicmaps.sdk.util.Constants;
 import app.organicmaps.sdk.util.Distance;
 import app.organicmaps.sdk.util.StringUtils;
-import app.organicmaps.sdk.util.concurrency.UiThread;
 import app.organicmaps.sdk.util.log.Logger;
-import app.organicmaps.sdk.util.log.LogsManager;
 import com.google.android.material.snackbar.Snackbar;
-import java.lang.ref.WeakReference;
 import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
@@ -59,8 +54,6 @@ public class Utils
   public static final int INVALID_ID = 0;
   public static final String UTF_8 = "utf-8";
   public static final String TEXT_HTML = "text/html; charset=utf-8";
-  public static final String ZIP_MIME_TYPE = "application/x-zip";
-  public static final String EMAIL_MIME_TYPE = "message/rfc822";
 
   private Utils() {}
 
@@ -230,29 +223,6 @@ public class Utils
     return url.startsWith("http://") || url.startsWith("https://");
   }
 
-  // subject is optional (could be an empty string).
-
-  /**
-   * @param subject could be an empty string
-   */
-  public static void sendBugReport(@NonNull ActivityResultLauncher<SharingUtils.SharingIntent> launcher,
-                                   @NonNull Activity activity, @NonNull String subject, @NonNull String body)
-  {
-    subject =
-        activity.getString(R.string.project_name) + " Bug Report" + (TextUtils.isEmpty(subject) ? "" : ": " + subject);
-    LogsManager.INSTANCE.zipLogs(
-        new SupportInfoWithLogsCallback(launcher, activity, subject, body, BuildConfig.SUPPORT_MAIL));
-  }
-
-  // TODO: Don't send logs with general feedback, send system information only (version, device name, connectivity,
-  // etc.)
-  public static void sendFeedback(@NonNull ActivityResultLauncher<SharingUtils.SharingIntent> launcher,
-                                  @NonNull Activity activity)
-  {
-    LogsManager.INSTANCE.zipLogs(new SupportInfoWithLogsCallback(
-        launcher, activity, activity.getString(R.string.project_name) + " Feedback", "", BuildConfig.SUPPORT_MAIL));
-  }
-
   public static void navigateToParent(@NonNull Activity activity)
   {
     if (activity instanceof MwmActivity)
@@ -353,60 +323,6 @@ public class Utils
     if (TextUtils.isEmpty(level))
       return "";
     return context.getString(R.string.level_value_generic, level);
-  }
-
-  private static class SupportInfoWithLogsCallback implements LogsManager.OnZipCompletedListener
-  {
-    @NonNull
-    ActivityResultLauncher<SharingUtils.SharingIntent> mLauncher;
-    @NonNull
-    private final WeakReference<Activity> mActivityRef;
-    @NonNull
-    private final String mSubject;
-    @NonNull
-    private final String mBody;
-    @NonNull
-    private final String mEmail;
-
-    private SupportInfoWithLogsCallback(@NonNull ActivityResultLauncher<SharingUtils.SharingIntent> launcher,
-                                        @NonNull Activity activity, @NonNull String subject, @NonNull String body,
-                                        @NonNull String email)
-    {
-      mActivityRef = new WeakReference<>(activity);
-      mSubject = subject;
-      mBody = body;
-      mEmail = email;
-      mLauncher = launcher;
-    }
-
-    @Override
-    public void onCompleted(final boolean success, @Nullable final String zipPath)
-    {
-      // TODO: delete zip file after its sent.
-      UiThread.run(() -> {
-        final Activity activity = mActivityRef.get();
-        if (activity == null)
-          return;
-
-        SharingUtils.ShareInfo info = new SharingUtils.ShareInfo();
-
-        info.mMail = mEmail;
-        info.mSubject = "[" + BuildConfig.VERSION_NAME + "] " + mSubject;
-        info.mText = mBody;
-
-        if (success)
-        {
-          info.mFileName = zipPath;
-          info.mMimeType = ZIP_MIME_TYPE;
-        }
-        else
-        {
-          info.mMimeType = EMAIL_MIME_TYPE;
-        }
-
-        SharingUtils.shareFile(activity.getApplicationContext(), mLauncher, info);
-      });
-    }
   }
 
   public static <T> T getParcelable(@NonNull Bundle in, @Nullable String key, @NonNull Class<T> clazz)

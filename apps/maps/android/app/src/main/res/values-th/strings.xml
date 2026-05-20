@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">การดาวน์โหลดล้มเหลว</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">ลองอีกครั้ง</string>
-    <string name="about_menu_title">เกี่ยวกับ CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• ไม่มีโฆษณาไม่มีการติดตามไม่มีการรวบรวมข้อมูล</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• ไม่มีแบตเตอรี่หมด ทำงานแบบออฟไลน์</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• ออฟไลน์ รวดเร็ว และกะทัดรัด</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">แอปพลิเคชันโอเพนซอร์ซที่สร้างขึ้นโดยผู้ที่ชื่นชอบและอาสาสมัคร</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">การตั้งค่าตำแหน่ง</string>
     <string name="close">ปิด</string>
     <string name="unsupported_phone">จำเป็นต้องใช้ฮาร์ดแวร์ที่เพิ่มความเร็ว OpenGL โชคไม่ดีที่อุปกรณ์ของคุณไม่รองรับ</string>
     <string name="download">ดาวน์โหลด</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">โปรดยกเลิกการเชื่อมต่อสาย USB หรือใส่การ์ดหน่วยความจำเพื่อใช้ CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">โปรดเพิ่มพื้นที่บางส่วนบนการ์ด SD /พื้นที่จัดเก็บ USB ก่อนเพื่อใช้แอป</string>
     <string name="download_resources">ก่อนที่คุณจะเริ่มต้น โปรดให้เราดาวน์โหลดแผนที่โลกลงในอุปกรณ์ของคุณ \nจำเป็นต้องใช้ %s ของข้อมูล</string>
@@ -141,8 +131,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">บันทึก</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">แชร์บุ๊กมาร์กของ CoMaps แล้ว</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">กำลังโหลดบุ๊กมาร์ก</string>
     <!-- Kmz file successful loading -->
@@ -161,10 +149,6 @@
     <string name="cant_change_this_setting">ขออภัย ไม่มีการเปิดใช้งานการตั้งค่าพื้นที่จัดเก็บแผนที่ในปัจจุบัน</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">กำลังดำเนินการดาวน์โหลดประเทศในตอนนี้</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">เฮ้อ ตรวจสอบตำแหน่งที่ตั้งปัจจุบันของฉันที่ CoMaps! %1$s หรือ %2$s ไม่มีการติดตั้งแผนที่แบบออฟไลน์? ดาวน์โหลดที่นี่: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">นี่ มาดูตำแหน่งปัจจุบันของฉันที่แผนที่ CoMaps สิ!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">แชร์</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -216,24 +200,9 @@
     <string name="search_show_on_map">ดูบนแผนที่</string>
     <!-- Text in menu -->
     <string name="website">เว็บไซต์</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">ข่าว</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">ข้อเสนอแนะ</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">ให้คะแนนแอป</string>
     <!-- Text in menu -->
-    <string name="help">ความช่วยเหลือ</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">คำถามและคำตอบ</string>
     <!-- Button in the main menu -->
-    <string name="donate">บริจาค</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">สนับสนุนโครงการ</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">ลิขสิทธิ์</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">แจ้งข้อผิดพลาด</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">ปรับปรุงทิศทางลูกศรโดยขยับโทรศัพท์เป็นเลขแปดเพื่อปรับเทียบเข็มทิศ</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -378,7 +347,6 @@
     <string name="editor_time_advanced">โหมดขั้นสูง</string>
     <string name="editor_time_simple">โหมดแบบง่าย</string>
     <string name="editor_hours_closed">ปิดเวลา</string>
-    <string name="editor_example_values">ตัวอย่างของค่าที่ตั้งไว้</string>
     <string name="editor_correct_mistake">แก้ไขข้อผิดพลาด</string>
     <string name="editor_add_select_location">เลือกสถานที่</string>
     <string name="editor_report_problem_send_button">ส่ง</string>
@@ -434,8 +402,6 @@
     <string name="message_invalid_feature_position">ไม่สามารถตั้งวัตถุได้ที่นี่</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">ข้อมูล OpenStreetMap ที่สร้างโดยชุมชน ณ %s เรียนรู้เพิ่มเติมเกี่ยวกับวิธีแก้ไขและอัปเดตแผนที่ได้ที่ OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) เป็นโครงการชุมชนเพื่อสร้างแผนที่แบบเปิดและเสรี เป็นแหล่งข้อมูลแผนที่หลักในCoMapsและทำงานคล้ายกับวิกิพีเดีย คุณสามารถเพิ่มหรือแก้ไขสถานที่ได้ และสถานที่เหล่านั้นจะพร้อมให้บริการแก่ผู้ใช้หลายล้านคนทั่วโลก \nเข้าร่วมชุมชนและช่วยสร้างแผนที่ที่ดีขึ้นสำหรับทุกคน!</string>
     <string name="login_to_make_edits_visible">สร้างบัญชี OpenStreetMap หรือเข้าสู่ระบบเพื่อเผยแพร่การแก้ไขแผนที่ของคุณไปทั่วโลก</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d จาก %2$d</string>
@@ -448,8 +414,6 @@
     <string name="error_enter_correct_zip_code">กรุณาใส่รหัสไปรษณีย์ที่ถูกต้อง</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">หมายเหตุถึงอาสาสมัคร OpenStreetMap (ไม่บังคับ)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">อธิบายข้อผิดพลาดในแผนที่หรือสิ่งที่ไม่สามารถแก้ไขได้โดยใช้CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">การแก้ไขของคุณจะถูกอัปโหลดไปยังฐานข้อมูล <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> สาธารณะ กรุณาอย่าเพิ่มข้อมูลส่วนบุคคลหรือข้อมูลที่มีลิขสิทธิ์</string>
     <string name="editor_more_about_osm">ข้อมูลเพิ่มเติมเกี่ยวกับ OpenStreetMap</string>
@@ -459,7 +423,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">ตัวดำเนินการ: %s</string>
     <string name="editor_category_unsuitable_title">ไม่พบหมวดหมู่ที่เหมาะสมใช่ไหม?</string>
-    <string name="editor_category_unsuitable_text">CoMapsอนุญาตให้เพิ่มหมวดหมู่จุดธรรมดาเท่านั้น ซึ่งหมายความว่าไม่มีเมือง ถนน ทะเลสาบ โครงร่างอาคาร ฯลฯ โปรดเพิ่มหมวดหมู่ดังกล่าวลงใน <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. ดู<a href="https://www.comaps.app/support/advanced-map-editing/">คำแนะนำ</a> ของเราเพื่อดูคำแนะนำโดยละเอียดทีละขั้นตอน</string>
     <string name="downloader_no_downloaded_maps_title">คุณยังไม่ได้ดาวน์โหลดแผนที่</string>
     <string name="downloader_no_downloaded_maps_message">ดาวน์โหลดแผนที่เพื่อค้นหาสถานที่ และนำทางแบบออฟไลน์</string>
     <string name="current_location_unknown_error_title">ไม่ทราบชื่อของที่ตั้งปัจจุบัน</string>
@@ -505,15 +468,11 @@
     <string name="mobile_data_option_ask">ถามก่อนเสมอ</string>
     <string name="traffic_update_maps_text">ต้องอัปเดตแผนที่เพื่อแสดงข้อมูลการจราจร</string>
     <string name="big_font">เพิ่มขนาดฟอนต์บนแผนที่</string>
-    <string name="traffic_update_app">กรุณาอัปเดต CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">ไม่มีข้อมูลการจราจร</string>
     <string name="enable_logging">เปิดใช้งานการเก็บล็อก</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">ข้อเสนอแนะทั่วไป</string>
     <string name="prefs_languages_information">เราใช้ระบบ TTS สำหรับคำแนะนำด้วยเสียงพูด เครื่องแอนดรอยด์จำนวนมากใช้งาน Google TTS คุณสามารถดาวน์โหลดหรืออัปเดตได้จาก Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">สำหรับบางภาษาคุณจำเป็นต้องติดตั้งตัวสังเคราะห์เสียงหรือชุดภาษาเพิ่มเติมจากแอปสโตร์ (Google Play, Galaxy Store, App Gallery, FDroid) \nเปิดการตั้งค่าของเครื่องคุณ → ภาษาและการป้อนข้อมูล → คำพูด → เอาต์พุตการอ่านออกเสียง \nที่นี่คุณสามารถจัดการการตั้งค่าสำหรับการสังเคราะห์เสียง (ตัวอย่างเช่น ดาวน์โหลดชุดภาษาสำหรับใช้งานออฟไลน์) และเลือกเครื่องมืออ่านออกเสียงข้อความตัวอื่นได้</string>
-    <string name="prefs_languages_information_off_link">สำหรับข้อมูลเพิ่มเติม กรุณาเข้าชมคำแนะนำนี้</string>
     <string name="transliteration_title">การทับศัพท์เป็นภาษาละติน</string>
     <string name="learn_more">ศึกษาเพิ่มเติม</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -525,7 +484,6 @@
     <string name="placepage_remove_stop">ลบจุดแวะพัก</string>
     <string name="placepage_add_stop">เพิ่มจุดแวะพัก</string>
     <string name="dialog_error_storage_title">ปัญหาการเข้าถึงที่เก็บข้อมูล</string>
-    <string name="dialog_error_storage_message">ที่เก็บข้อมูลภายนอกไม่พร้อมใช้งาน อาจเป็นเพราะการ์ด SD ถูกถอดออกไป ได้รับความเสียหาย หรือระบบไฟล์ให้เขียนได้อย่างเดียว กรุณาตรวจสอบและติดต่อเราได้ที่ support@comaps.app</string>
     <string name="setting_emulate_bad_storage">จำลองแบบที่เก็บข้อมูลที่ไม่ดี</string>
     <string name="error_enter_correct_name">กรุณาใส่ชื่อที่ถูกต้อง</string>
     <string name="bookmark_lists">รายการ</string>
@@ -558,8 +516,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">ความเป็นส่วนตัว</string>
-    <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
-    <string name="terms_of_use">ข้อกำหนดในการใช้งาน</string>
     <string name="button_layer_traffic">การจราจร</string>
     <string name="subway">รถไฟใต้ดิน</string>
     <string name="layers_title">รูปแบบและเลเยอร์ของแผนที่</string>
@@ -584,7 +540,6 @@
     <string name="power_managment_setting_never">ไม่ใช้</string>
     <string name="power_managment_setting_auto">อัตโนมัติ</string>
     <string name="power_managment_setting_manual_max">ประหยัดพลังงานสูงสุด</string>
-    <string name="enable_logging_warning_message">ออปชันเพื่อเปิดการบันทึกประวัติการทำงานเพื่อการวินิจฉัย ประวัติดังกล่าวอาจเป็นประโยชน์กับทีมงานช่วยเหลือของเราที่คอยจัดการกับปัญหาที่เจอระหว่างแอปทำงาน โปรดเปิดออปชันดังกล่าวจากการร้องข้อการสนับสนุนจาก CoMaps เท่านั้น</string>
     <string name="driving_options_title">ทางเลือกเส้นทางขับขี่</string>
     <string name="avoid_tolls">หลีกเลี่ยงถนนที่เก็บค่าผ่านทาง</string>
     <string name="avoid_unpaved">เลี่ยงถนนดินทั้งหมด</string>
@@ -670,33 +625,19 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">ข้อมูลแผนที่จาก OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">ขอขอบคุณที่ใช้แผนที่ที่สร้างโดยชุมชนของเรา!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">ด้วยการบริจาคและการสนับสนุนของคุณ เราสามารถสร้างแผนที่ที่ดีที่สุดในโลกได้!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">คุณชอบแอพของเราหรือไม่? กรุณาบริจาคเพื่อสนับสนุนการพัฒนา! ยังไม่ชอบมันเหรอ? โปรดแจ้งให้เราทราบ และเราจะแก้ไขมัน!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">หากคุณรู้จักนักพัฒนาซอฟต์แวร์ คุณสามารถขอให้เขาหรือเธอใช้คุณลักษณะที่คุณต้องการได้</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">แตะที่ใดก็ได้บนแผนที่เพื่อเลือกอะไรก็ได้ แตะยาวเพื่อซ่อนและแสดงอินเทอร์เฟซ</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">คุณรู้หรือไม่ว่าคุณสามารถเลือกตำแหน่งปัจจุบันของคุณบนแผนที่ได้?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">คุณสามารถช่วยแปลแอปของเราเป็นภาษาของคุณได้</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">แอพของเราได้รับการพัฒนาโดยผู้ที่ชื่นชอบและชุมชนบางส่วน</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">คุณสามารถแก้ไขและปรับปรุงข้อมูลแผนที่ได้อย่างง่ายดาย</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">เป้าหมายหลักของเราคือการสร้างแผนที่ที่รวดเร็ว เน้นความเป็นส่วนตัว และใช้งานง่ายที่คุณจะหลงรัก</string>
-    <string name="car_used_on_the_phone_screen">ขณะนี้คุณกำลังใช้CoMapsบนหน้าจอโทรศัพท์</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">ไปที่หน้าจอรถ</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">การเดินป่า</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -744,13 +685,8 @@
     <string name="edit_track">แก้ไขเส้นทาง</string>
     <string name="uri_open_location_failed">ไม่มีการติดตั้งแอปที่สามารถเปิดตำแหน่งได้</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Th:เกี่ยวกับ_OpenStreetMap</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="wikimedia_commons">วิกิมีเดียคอมมอนส์</string>
     <string name="panoramax">ภาพถ่าย Panoramax</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">บันทึกแล้ว</string>
 </resources>

@@ -108,7 +108,6 @@ val SupportsNavbarExtension = Build.VERSION.SDK_INT >= 28
 val SupportsNonComposing = Build.VERSION.SDK_INT >= 31
 
 val UseTransparentNavbar =
-    // https://github.com/futo-org/android-keyboard/issues/772
     !Build.MANUFACTURER.lowercase().contains("motorola")
 
 val HideKeyboardWhenHardKeyboardConnected = SettingsKey(

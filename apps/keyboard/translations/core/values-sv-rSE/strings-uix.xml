@@ -153,11 +153,6 @@
   <string name="theme_dynamic_dark">Dynamisk Mörk</string>
   <string name="theme_dynamic_light">Dynamisk Ljus</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Uppdateringstjänst</string>
-  <string name="autoupdater_update_available_title">Uppdatering Tillgänglig</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;En uppdatering är tillgänglig (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). Klicka för att ladda ner&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Avvisa</string>
-  <string name="autoupdater_perform_update">Uppdatera</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">&lt;string name="keyboard_suggest_blacklist_body"&gt;Svartlista ordet \&amp;quot;&lt;xliff:g name="wordToBlacklist" example="crane"&gt;%s&lt;/xliff:g&gt;\&amp;quot; från att föreslås?&lt;/string&gt;</string>
   <!-- Must be fairly short -->
@@ -168,7 +163,6 @@
   <string name="keyboard_version_status">Bokstäver</string>
   <string name="keyboard_switch_keyboard">Byt Tangentbord</string>
   <string name="keyboard_language_settings">Inställningar</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">Klicka för att söka efter uppdateringar, eller kolla i inställningarna</string>
   <!--
     Talkback descriptions (screen readers)
 
@@ -197,68 +191,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Fäll ihop</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Betalningar</string>
-  <string name="payment_screen_title">Betala för FUTO Tangentbord</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;Du har använt FUTO Tangentbord i &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; dagar. Om du tycker att appen är användbar får du gärna stödja fortsatt utveckling av FUTO:s mjukvara.&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">Tack för att du provar FUTO Tangentbord! Om du tycker att appen är användbar får du gärna stödja fortsatt utveckling av FUTO:s mjukvara.</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO bygger tillförlitlig mjukvara som inte utnyttjar dig. Den här appen kommer aldrig att visa annonser eller samla in din personliga data.</string>
-  <string name="payment_screen_sales_point_development_title">Hållbar Utveckling</string>
-  <string name="payment_screen_sales_point_development_body">FUTO:s uppdrag är att få öppen källkod-program och icke-skadliga affärsmetoder att bli hållbara inkomstkällor för projekt och deras utvecklare. Av den här anledningen föredrar vi att användare betalar för mjukvara.</string>
-  <string name="payment_screen_sales_point_privacy_title">Åtagande för Integritet</string>
-  <string name="payment_screen_sales_point_privacy_body">Den här appen kommer aldrig att visa annonser eller sälja din data. Vi sysslar inte med sånt.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Betalningar stöds inte i det här bygget</string>
-  <string name="payment_screen_already_paid_title">Redan betalat?</string>
-  <string name="payment_screen_already_paid_body">Om du redan har betalar för FUTO Tangentbord eller FUTO Röstinmatning, klicka nedan.</string>
-  <string name="payment_screen_already_paid_button">Jag har redan betalat</string>
-  <string name="payment_screen_already_paid_confirmation">Bekräfta ditt val</string>
-  <string name="payment_screen_already_paid_confirmation_body">Är du säker på att du vill bekräfta att du redan har betalat? När det är bekräftat kommer du inte bli tillfrågad om betalning igen.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Jag har redan betalat</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Avbryt</string>
-  <string name="payment_screen_set_reminder_title">Inte redo att betala än?</string>
-  <string name="payment_screen_set_reminder_body">Det här kommer att dölja påminnelsen i inställningarna under den valda tiden.</string>
-  <string name="payment_screen_set_reminder_setter">När vill du bli påmind?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">om 7 dagar</string>
-  <string name="payment_screen_set_reminder_setter_1_month">om 1 månad</string>
-  <string name="payment_screen_set_reminder_setter_6_months">om 6 månader</string>
-  <string name="payment_screen_set_reminder_setter_next_century">nästa århundrade</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Bekräfta påminnelse</string>
-  <string name="payment_screen_other_options">Andra Möjligheter</string>
-  <string name="payment_screen_need_help_title">Hjälp</string>
-  <string name="payment_screen_need_help_subtitle">Behöver du hjälp? Besök vår webbplats</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Betala via Google Play (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + skatt)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;Betala (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + skatt)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Fler möjligheter</string>
-  <string name="payment_screen_payment_complete_title">Betalning Sutförd</string>
-  <string name="payment_screen_aftersales_title">Tack så mycket</string>
-  <string name="payment_screen_aftersales_title_pending">Betalning Behandlas</string>
-  <string name="payment_screen_aftersales_paragraph_1">Tack för att du köpt FUTO Tangentbord!</string>
-  <string name="payment_screen_aftersales_paragraph_2">Ditt köp kommer att hjälpa fortsatt utveckling av FUTO Tangentbord och andra FUTO-projekt.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">Din betalning behandlas fortfarande, men borde snart gå igenom.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Om du precis har betalat kan din betalning fortfarande vara under behandling. Du bör få ett e-postmeddelande med mer information.</string>
-  <string name="payment_screen_payment_failed_title">Fel vid Betalning</string>
-  <string name="payment_screen_payment_failed_body">Tyvärr har din betalning av någon anledning misslyckats. Kontakta oss om du behöver hjälp. Du kan nå oss på keyboard@futo.org, med knappen nedan eller via Skicka Återkoppling under Hjälp</string>
-  <string name="payment_screen_payment_failed_body_unconfident">Det kan ha uppstått ett problem med din betalning. Om den har gått igenom bör du ha fått ett e-postmeddelande med en licensnyckel. Kontakta oss om du behöver hjälp. Du kan nå oss på keyboard@futo.org, med knappen nedan eller via Skicka Återkoppling på huvudsidan.</string>
-  <string name="payment_screen_license_integrity_error">Misslyckades med att verifiera licensen. Kontakta oss om du tror att detta är fel.</string>
-  <string name="payment_screen_continue_button">Fortsätt</string>
-  <string name="payment_unpaid_version_title">Ångra betalningen av FUTO Tangentbord</string>
-  <string name="payment_unpaid_version_indicator">Ångra betalningen</string>
-  <string name="payment_paid_version_indicator">Tack för att du använder betalversionen av FUTO Tangentbord!</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Uppdateringar</string>
-  <string name="manual_update_notice_paragraph_1">Den här appen kopplar inte upp sig på internet och kommer inte att kunna söka efter uppdateringar automatiskt. Du kan söka efter uppdateringar manuellt dock.</string>
-  <string name="manual_update_notice_paragraph_2">Använd F-Droid eller Obtainium för automatiska uppdateringar. Besök keyboard.futo.org för nedladdningsalternativ.</string>
-  <string name="manual_update_notice_dev_paragraph">Du är på en utvecklingsversion av FUTO Tangentbord. Besök keyboard.futo.org om du vill ladda ner en stabil version.</string>
-  <string name="manual_update_notice_visit_site_button">Besök</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Avvisa</string>
   <!-- General settings strings -->
   <string name="settings_tip">Tips</string>
   <string name="settings_unknown_error_title">Okänt Fel</string>
   <string name="settings_unknown_error_subtitle">Ett okänt fel har inträffat.</string>
   <string name="settings_try_typing_here">Testa att skriva här…</string>
   <string name="settings_external_model_name">Externt importerade modeller</string>
-  <string name="settings_check_for_updates_manually">Sök efter uppdateringar manuellt</string>
   <string name="settings_update_available">Uppdatering Tillgänglig</string>
   <!-- When adding a new language -->
   <string name="language_settings_title">Språk &amp; Modeller</string>
@@ -277,27 +216,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">Inbyggd Ordlista</string>
   <string name="language_settings_resource_voice_input_selected">Vill du återställa röstinmatningsmodellen till standard eller byta ut den mot en annan fil?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Det finns ingen inbyggd röstinmatningsmodell för det här språket, så om du tar bort den kommer röstinmatning att sluta fungera tills du har importerat en annan modell!</string>
-  <string name="language_settings_resource_voice_input_selected_unset">Du har inte konfigurerat någon egen röstinmatningsmodell för det här språket. Du kan söka efter nedladdningsbara filer online eller importera en från en fil.</string>
   <string name="language_settings_resource_transformer_selected">Vill du återställa transformer-modellen till standardmodellen eller byta ut den mot en annan fil?</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">Det finns ingen inbyggd transformer-modell för det här språket, så om du tar bort den kommer transformer-baserade förslag att sluta fungera tills du har importerat en annan modell!</string>
-  <string name="language_settings_resource_transformer_selected_unset">Du har inte konfigurerat någon egen transformer-modell för det här språket. Du kan söka efter nedladdningsbara filer online eller importera en från en fil.</string>
   <string name="language_settings_resource_dictionary_selected">Vill du återställa ordlistan till standard eller byta ut den mot en annan fil?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Det finns ingen inbyggd ordlista för det här språket, så om du tar bort den kommer autokorrigering och förslag att sluta fungera tills du har importerat en annan modell!</string>
-  <string name="language_settings_resource_dictionary_selected_unset">Du har inte konfigurerat någon egen ordlista för det här språket. Du kan söka efter nedladdningsbara filer online eller importera en från en fil.</string>
   <string name="language_settings_resource_replace_button">Byt ut</string>
   <string name="language_settings_resource_import_file_button">Importera</string>
   <string name="language_settings_resource_revert_to_default_button">Återställ till Standard</string>
   <string name="language_settings_resource_remove_button">Ta bort</string>
-  <string name="language_settings_resource_explore_online_button">Utforska</string>
   <string name="language_settings_remove_language_title">Ta bort %1$s?</string>
   <string name="language_settings_remove_language_body">Ta bort %1$s, alla dess associerade layouter och egna resurser?</string>
   <string name="language_settings_remove_language_remove_button">Ta bort</string>
   <string name="language_settings_remove_language_cancel_button">Avbryt</string>
   <string name="language_settings_other_options">Andra alternativ</string>
   <string name="language_settings_import_resource_from_file">Importera en resursfil</string>
-  <string name="language_settings_explore_voice_input_models_online">Utforska röstinmatningsmodeller</string>
-  <string name="language_settings_explore_dictionaries_online">Utforska ordlistor</string>
-  <string name="language_settings_explore_transformers_online">Utforska transformer-modeller</string>
   <string name="language_settings_import_dictionary_or_model">Importera en ordlista eller modell</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Röstinmatningsmodell</string>
@@ -442,21 +374,6 @@
   <string name="prediction_settings_word_blacklist">Svartlista för Ord</string>
   <string name="prediction_settings_word_blacklist_add">Lägg till i svartlista</string>
   <string name="prediction_settings_word_blacklist_none">Det finns inga svartlistade ord.</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Hjälp &amp; Återkoppling</string>
-  <string name="help_menu_version_name">Versionsnamn: %1$s</string>
-  <string name="help_menu_version_code">Versionskod: %1$s</string>
-  <string name="help_menu_version_tip">Vi vill höra från dig! Om du rapporterar problem kan dun version vara relevant: v%1$s</string>
-  <string name="help_menu_documentation">Dokumentation</string>
-  <string name="help_menu_documentation_subtitle">Lär dig mer om tangentbordets funktioner</string>
-  <string name="help_menu_discord">Discordserver</string>
-  <string name="help_menu_discord_subtitle">Vill du prata, men inte på Zulip? Chatta här</string>
-  <string name="help_menu_futo_chat">FUTO Chat</string>
-  <string name="help_menu_futo_chat_subtitle">Vill du prata, men inte på Discord? Chatta här</string>
-  <string name="help_menu_github">Offentlig ärendehantering</string>
-  <string name="help_menu_github_subtitle">Specifik bugg eller funktionsförslag? Skriv här</string>
-  <string name="help_menu_email">E-post keyboard@futo.org</string>
-  <string name="help_menu_email_subtitle">Privat återkoppling, hjälp eller använder du inte GitHub? Mejla oss</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">Setup - Steg 1</string>
   <string name="setup_step_2">Setup - Steg 2</string>
@@ -466,18 +383,6 @@
   <string name="setup_warning_multiple_versions">Varning: Du verkar ha både Play Butik-versionen och den fristående versionen installerade. Vi rekommenderar att bara ha en installerad</string>
   <string name="setup_active_input_method">Välj FUTO Tangentbord som din aktiva inmatningsmetod.</string>
   <string name="setup_switch_input_methods">Byt Inmatningsmetod</string>
-  <!-- Credits menu -->
-  <string name="credits_menu_title">Omnämnanden</string>
-  <string name="credits_menu_header_text">Tack till de här personerna som hjälper till att göra FUTO Tangentbord till en jättebra app!</string>
-  <string name="credits_menu_team_translators_title">Översättare</string>
-  <string name="credits_menu_team_keyboard_layouts_title">Har bidragit med layouter</string>
-  <string name="credits_menu_team_code_title">Har bidragit med kod</string>
-  <string name="credits_menu_nonaffiliation_notice">Författarna ovan är inte knutna till oss, och kanske inte stödjer eller rekommenderar oss. Att någon listas innebär inte att vi stödjer eller är knutna till den.</string>
-  <string name="credits_menu_contribute_translations_button">Hjälp till att översätta appen</string>
-  <string name="credits_menu_contribute_keyboard_layouts_button">Bidra med layouter</string>
-  <string name="credits_menu_contribute_code_button">Bidra med kod</string>
-  <string name="credits_menu_project_information_title">%s-information</string>
-  <string name="credits_menu_project_url_link">Projektets URL</string>
   <!-- Advanced parameters, these are only really relevant for English -->
   <string name="prediction_settings_transformer_advanced_params">Avancerade Parametrar</string>
 </resources>

@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">डाउनलोड विफल हो गया है</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">पुनः प्रयास करें</string>
-    <string name="about_menu_title">CoMaps के बारे में</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• कोई विज्ञापन नहीं, कोई ट्रैकिंग नहीं, कोई डेटा संग्रह नहीं</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• कोई बैटरी ख़त्म नहीं, ऑफ़लाइन काम करता है</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• ऑफ़लाइन, तेज़ और कॉम्पैक्ट</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">उत्साही और स्वयंसेवकों द्वारा बनाया गया ओपन-सोर्स एप्लिकेशन।</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">स्थान सेटिंग्स</string>
     <string name="close">बंद करना</string>
     <string name="unsupported_phone">ऐप को हार्डवेयर त्वरित ओपनजीएल की आवश्यकता है। दुर्भाग्य से, आपका डिवाइस समर्थित नहीं है.</string>
     <string name="download">डाउन लोड करना</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">ऑर्गेनिक मैप्स का उपयोग करने के लिए कृपया यूएसबी केबल को डिस्कनेक्ट करें या मेमोरी कार्ड डालें</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">ऐप का उपयोग करने के लिए कृपया पहले एसडी कार्ड/यूएसबी स्टोरेज पर कुछ जगह खाली कर लें</string>
     <string name="download_resources">ऐप का उपयोग शुरू करने से पहले, कृपया अपने डिवाइस पर सामान्य विश्व मानचित्र डाउनलोड करें। \nयह %s स्टोरेज का उपयोग करेगा।</string>
@@ -145,7 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">टिप्पणियाँ</string>
-    <string name="share_bookmarks_email_body">नमस्ते! \n \nमेरे बुकमार्क संलग्न हैं; कृपया उन्हें CoMaps में खोलें। यदि आपने इसे इंस्टॉल नहीं किया है तो आप इसे यहां से डाउनलोड कर सकते हैं: https://www.comaps.app/download/ \n \nCoMaps के साथ यात्रा का आनंद लें!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">बुकमार्क लोड हो रहे हैं</string>
     <!-- Kmz file successful loading -->
@@ -164,10 +153,6 @@
     <string name="cant_change_this_setting">क्षमा करें, मानचित्र संग्रहण सेटिंग वर्तमान में अक्षम हैं।</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">मानचित्र डाउनलोड अभी प्रगति पर है.</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">CoMaps में मेरा वर्तमान स्थान देखें! %1$s या %2$s के पास ऑफ़लाइन मानचित्र नहीं हैं? यहां डाउनलोड करें: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">अरे, CoMaps मानचित्र पर मेरा वर्तमान स्थान देखें!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">साझा करें</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -225,24 +210,9 @@
     <string name="menu">मेन्यू</string>
     <!-- Text in menu -->
     <string name="website">वेबसाइट</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">समाचार</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">प्रतिक्रिया</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">एप्लिकेशन की श्रेणी बताओ</string>
     <!-- Text in menu -->
-    <string name="help">सहायता</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">अक्सर पूछे जाने वाले प्रश्नों</string>
     <!-- Button in the main menu -->
-    <string name="donate">दान देना</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">परियोजना का समर्थन करें</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">कॉपीराइट</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">एक बग रिपोर्ट करो</string>
     <!-- Toast text when user hides UI with a long tap anywhere on the map -->
     <string name="long_tap_toast">इंटरफ़ेस देखने के लिए मानचित्र पर फिर से देर तक टैप करें</string>
     <!-- Cancel all button text -->
@@ -299,7 +269,6 @@
     <string name="editor_time_open">खुला</string>
     <string name="editor_time_close">बंद</string>
     <string name="editor_time_title">काम करने के घंटे</string>
-    <string name="editor_example_values">उदाहरण मान</string>
     <string name="editor_add_select_location">स्थान चुनें</string>
     <string name="autodownload">मानचित्र स्वतः डाउनलोड करें</string>
     <!-- Place Page opening hours text -->
@@ -333,15 +302,11 @@
     <string name="editor_edit_place_category_title">वर्ग</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">समुदाय-निर्मित OpenStreetMap डेटा %s तक। OpenStreetMap.org पर मानचित्र को संपादित और अपडेट करने के तरीके के बारे में और जानें</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) एक निःशुल्क और खुला मानचित्र बनाने के लिए एक सामुदायिक परियोजना है। यह CoMaps में मानचित्र डेटा का मुख्य स्रोत है और विकिपीडिया के समान काम करता है। आप स्थानों को जोड़ या संपादित कर सकते हैं और वे दुनिया भर में लाखों उपयोगकर्ताओं के लिए उपलब्ध हो जाते हैं। \nसमुदाय में शामिल हों और सभी के लिए एक बेहतर मानचित्र बनाने में सहायता करें!</string>
     <string name="login_to_make_edits_visible">अपने मानचित्र संपादनों को दुनिया भर में प्रकाशित करने के लिए एक OpenStreetMap खाता बनाएं या लॉग इन करें।</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%2$d में से %1$d</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">OpenStreetMap स्वयंसेवकों के लिए नोट (वैकल्पिक)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">मानचित्र में त्रुटियों का वर्णन करें या CoMaps का उपयोग करके क्या संपादित नहीं किया जा सकता है</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">आपके संपादन सार्वजनिक <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> डेटाबेस पर अपलोड किए जाते हैं। कृपया व्यक्तिगत या कॉपीराइट जानकारी न जोड़ें।</string>
     <string name="editor_more_about_osm">OpenStreetMap के बारे में अधिक जानकारी</string>
@@ -351,7 +316,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">ऑपरेटर: %s</string>
     <string name="editor_category_unsuitable_title">कोई उपयुक्त श्रेणी नहीं मिल रही?</string>
-    <string name="editor_category_unsuitable_text">CoMaps केवल सरल बिंदु श्रेणियां जोड़ने की अनुमति देता है, जिसका अर्थ है कि शहर, सड़कें, झीलें, भवन की रूपरेखा आदि नहीं। कृपया ऐसी श्रेणियां सीधे <a href="https://www.openstreetmap.org">OpenStreetMap.org</a> पर जोड़ें।. विस्तृत चरण-दर-चरण निर्देशों के लिए हमारी <a href="https://www.comaps.app/support/advanced-map-editing/">मार्गदर्शिका</a> देखें।</string>
     <string name="hour">घंटे</string>
     <string name="minute">मिनट</string>
     <string name="day">दिन</string>
@@ -373,7 +337,6 @@
     <string name="big_font">मानचित्र लेबल के लिए आकार बढ़ाएँ</string>
     <string name="enable_logging">लॉगिंग करने देना</string>
     <string name="prefs_languages_information_off">कुछ भाषाओं के लिए, आपको ऐप स्टोर (Google Play, Galaxy Store, App Gallery, FDroid) से एक स्पीच सिंथेसाइज़र या एक अतिरिक्त भाषा पैक इंस्टॉल करना होगा। \nअपने डिवाइस की सेटिंग्स खोलें → भाषा और इनपुट → स्पीच → टेक्स्ट टू स्पीच आउटपुट. \nयहां आप वाक् संश्लेषण के लिए सेटिंग्स प्रबंधित कर सकते हैं (उदाहरण के लिए, ऑफ़लाइन उपयोग के लिए भाषा पैक डाउनलोड करें) और एक अन्य टेक्स्ट-टू-स्पीच इंजन का चयन कर सकते हैं।</string>
-    <string name="prefs_languages_information_off_link">अधिक जानकारी के लिए कृपया इस गाइड को देखें।</string>
     <string name="transliteration_title">लैटिन में लिप्यंतरण</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
     <string name="routing_add_start_point">मार्ग का प्रारंभिक बिंदु जोड़ने के लिए खोज का उपयोग करें या मानचित्र पर टैप करें</string>
@@ -400,8 +363,6 @@
     <string name="profile">OpenStreetMap प्रोफ़ाइल</string>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">निजता</string>
-    <string name="privacy_policy">गोपनीयता नीति</string>
-    <string name="terms_of_use">उपयोग की शर्तें</string>
     <string name="subway">भूमिगत मार्ग</string>
     <string name="layers_title">मानचित्र शैलियाँ और परतें</string>
     <string name="export_file">निर्यात KMZ</string>
@@ -414,7 +375,6 @@
     <string name="power_managment_setting_never">कभी नहीं</string>
     <string name="power_managment_setting_auto">जब बैटरी कम हो</string>
     <string name="power_managment_setting_manual_max">हमेशा</string>
-    <string name="enable_logging_warning_message">सहायता संवाद में \"बग की रिपोर्ट करें\" का उपयोग करके हमें अपनी समस्या के बारे में विस्तृत डायग्नोस्टिक लॉग रिकॉर्ड करने और मैन्युअल रूप से भेजने के लिए इस विकल्प को अस्थायी रूप से सक्षम करें। लॉग में स्थान की जानकारी शामिल हो सकती है.</string>
     <string name="driving_options_title">रूटिंग विकल्प</string>
     <string name="avoid_tolls">पथकर को टालना</string>
     <string name="avoid_unpaved">कच्ची सड़कों से बचें</string>
@@ -455,36 +415,20 @@
     <string name="enable_show_on_lock_screen_description">सक्षम होने पर, डिवाइस लॉक होने पर भी ऐप लॉकस्क्रीन पर काम करेगा।</string>
     <!-- Current language of the map! -->
     <string name="change_map_locale">मानचित्र भाषा</string>
-    <!-- Translated CoMaps site, add new translations here: https://translate.codeberg.org/projects/comaps/website -->
-    <string name="translated_om_site_url">https://comaps.app/hi/</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">हमारे समुदाय-निर्मित मानचित्रों का उपयोग करने के लिए धन्यवाद!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">आपके दान और समर्थन से, हम दुनिया में सबसे अच्छे मानचित्र बना सकते हैं!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">क्या आपको हमारा ऐप पसंद है? कृपया विकास का समर्थन करने के लिए दान करें! अभी तक यह पसंद नहीं आया? कृपया हमें बताएं, और हम इसे ठीक कर देंगे!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">यदि आप किसी सॉफ़्टवेयर डेवलपर को जानते हैं, तो आप उससे वह सुविधा लागू करने के लिए कह सकते हैं जिसकी आपको आवश्यकता है।</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">कुछ भी चुनने के लिए मानचित्र पर कहीं भी टैप करें। इंटरफ़ेस को छिपाने और वापस दिखाने के लिए लंबे समय तक टैप करें।</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">क्या आप जानते हैं कि आप मानचित्र पर अपना वर्तमान स्थान चुन सकते हैं?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">आप हमारे ऐप को अपनी भाषा में अनुवाद करने में मदद कर सकते हैं।</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">हमारा ऐप कुछ उत्साही लोगों और समुदाय द्वारा विकसित किया गया है।</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">आप मानचित्र डेटा को आसानी से ठीक और सुधार सकते हैं।</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">हमारा मुख्य लक्ष्य तेज़, गोपनीयता-केंद्रित, उपयोग में आसान मानचित्र बनाना है जो आपको पसंद आएंगे।</string>
-    <string name="car_used_on_the_phone_screen">अब आप फ़ोन स्क्रीन पर CoMaps का उपयोग कर रहे हैं</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">कार स्क्रीन पर</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">लंबी पैदल यात्रा</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -532,12 +476,8 @@
     <string name="edit_track">मार्ग संपादित करें</string>
     <string name="uri_open_location_failed">कोई ऐप इंस्टॉल नहीं है जो लोकेशन खोल सके</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <string name="wikimedia_commons">विकिमीडिया कॉमन्स</string>
     <string name="panoramax">Panoramax चित्र</string>
-    <string name="app_site_url">https://comaps.app/hi/</string>
     <string name="saved">सहेजी हुई</string>
 </resources>

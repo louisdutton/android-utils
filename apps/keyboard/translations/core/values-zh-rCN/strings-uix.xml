@@ -156,11 +156,6 @@
   <string name="theme_dynamic_dark">动态深色</string>
   <string name="theme_dynamic_light">动态浅色</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">更新检查服务</string>
-  <string name="autoupdater_update_available_title">有新更新可用</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;一个更新可用 (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;)。点击下载&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">无视</string>
-  <string name="autoupdater_perform_update">更新</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">&lt;string name="keyboard_suggest_blacklist_body"&gt;将单词 \&amp;quot;&lt;xliff:g name="wordToBlacklist" example="crane"&gt;%s&lt;/xliff:g&gt;\&amp;quot; 加入黑名单，使其不会再被建议？&lt;/string&gt;</string>
   <!-- Must be fairly short -->
@@ -171,7 +166,6 @@
   <string name="keyboard_version_status">阿尔法</string>
   <string name="keyboard_switch_keyboard">切换键盘</string>
   <string name="keyboard_language_settings">设置</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">请单击检查更新，或在设置内检查</string>
   <!-- Should be fairly short (under 40 chars). Means there are no predictions for this language and a download is necessary by tapping on this notice. Appears in suggestion bar -->
   <string name="keyboard_actionbar_no_dictionary_installed_notice">没有己安装的词典，要下载吗？</string>
   <!--
@@ -204,46 +198,10 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">折叠</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">支付</string>
-  <string name="payment_screen_title">为FUTO Keyboard支付</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;你已经使用FUTO Keyboard&lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt;天了。若你觉得这个软件十分好用，请考虑通过支付支持FUTO软件的后续开发。&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">感谢你试用FUTO Keyboard！如果你觉得这款软件十分不错，请考虑通过支付支持FUTO软件的后续开发。</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO致力于打造优质软件，绝不侵犯用户权益。本应用绝不会向您展示广告或收集您的个人数据。</string>
-  <string name="payment_screen_sales_point_development_title">可持续开发</string>
-  <string name="payment_screen_sales_point_development_body">FUTO的使命是让开源软件和非恶意软件的商业实践成为项目及其开发者的可持续收入来源。因此，我们支持用户实际为软件付费。</string>
-  <string name="payment_screen_sales_point_privacy_title">对隐私的承诺</string>
-  <string name="payment_screen_sales_point_privacy_body">该应用绝不会向您展示广告或出售您的数据。我们不从事此类业务。</string>
-  <string name="payment_screen_error_build_unsupported_payment">此版本不支持支付功能</string>
-  <string name="payment_screen_already_paid_title">已经支付了？</string>
-  <string name="payment_screen_already_paid_body">如果你已经为FUTO Keyboard或FUTO Voice Input支付，点击下方。</string>
-  <string name="payment_screen_already_paid_button">我已经支付</string>
-  <string name="payment_screen_already_paid_confirmation">确认你的选择</string>
-  <string name="payment_screen_already_paid_confirmation_body">你真的确定你要确认你已付款吗？一旦确认，你将不会收到任何关于支付的请求。</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">我已经付款了</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">取消</string>
-  <string name="payment_screen_set_reminder_title">还没有准备好付款？</string>
-  <string name="payment_screen_set_reminder_setter">您想何时收到提醒呢？</string>
-  <string name="payment_screen_set_reminder_setter_7_days">7 天内</string>
-  <string name="payment_screen_set_reminder_setter_1_month">1 月内</string>
-  <string name="payment_screen_set_reminder_setter_6_months">6 月内</string>
-  <string name="payment_screen_set_reminder_setter_next_century">一世纪后</string>
-  <string name="payment_screen_set_reminder_setter_confirm">确认提醒</string>
-  <string name="payment_screen_other_options">其他选项</string>
-  <string name="payment_screen_need_help_title">帮助</string>
-  <string name="payment_screen_need_help_subtitle">需要帮助吗？请访问我们的网站！</string>
-  <string name="payment_screen_more_options">更多选项</string>
-  <string name="payment_screen_payment_complete_title">支付完成</string>
-  <string name="payment_screen_aftersales_title">谢谢！</string>
-  <string name="payment_screen_aftersales_paragraph_1">感谢您购买 FUTO 键盘！</string>
-  <string name="payment_screen_aftersales_paragraph_2">你的购买有助于 FUTO 键盘和其他 FUTO 产品的持续开发。</string>
-  <string name="payment_screen_payment_failed_title">支付异常</string>
-  <string name="payment_screen_payment_failed_body">抱歉，支付出于某些原因失败了。如果您需要帮助，请联系我们。您可以通过下面的按钮获取我们的邮箱（keyboard@futo.org），或者在“帮助”页面发送反馈。</string>
   <string name="settings_unknown_error_title">未知错误</string>
   <string name="settings_unknown_error_subtitle">发生了未知错误。</string>
   <string name="settings_try_typing_here">试试在这里输入吧~</string>
   <string name="settings_external_model_name">外部导入的模型</string>
-  <string name="settings_check_for_updates_manually">手动检查更新</string>
   <string name="settings_update_available">可更新</string>
   <!--
     May be translated as "Start", "All", etc. This is the starting menu where all settings live.
@@ -282,16 +240,12 @@
   <string name="language_settings_resource_import_file_button">导入</string>
   <string name="language_settings_resource_revert_to_default_button">切换为默认值</string>
   <string name="language_settings_resource_remove_button">移除</string>
-  <string name="language_settings_resource_explore_online_button">浏览</string>
   <string name="language_settings_remove_language_title">删除%1$s？</string>
   <string name="language_settings_remove_language_body">真的要删除%1$s吗？这包括所有与它关联的布局和自定义资源！</string>
   <string name="language_settings_remove_language_remove_button">移除</string>
   <string name="language_settings_remove_language_cancel_button">取消</string>
   <string name="language_settings_other_options">其他选项</string>
   <string name="language_settings_import_resource_from_file">导入资源文件</string>
-  <string name="language_settings_explore_voice_input_models_online">浏览语音输入模型</string>
-  <string name="language_settings_explore_dictionaries_online">浏览词典</string>
-  <string name="language_settings_explore_transformers_online">浏览转换模型</string>
   <string name="language_settings_import_dictionary_or_model">导入词典或模型</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">语音输入模型</string>
@@ -404,5 +358,4 @@
   <string name="voice_input_settings_verbose_progress_subtitle">显示额外信息，例如正在使用麦克风</string>
   <string name="voice_input_settings_use_bluetooth_mic">优先使用蓝牙麦克风</string>
   <string name="voice_input_settings_audio_focus">音频聚焦</string>
-  <string name="help_menu_email">电子邮箱 keyboard@futo.org</string>
 </resources>

@@ -34,24 +34,12 @@
     <string name="country_status_download_failed">İndirme başarısız oldu</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Tekrar Dene</string>
-    <string name="about_menu_title">CoMaps Hakkında</string>
-    <!-- Text in About screen -->
-    <string name="about_headline">Gücünü topluluktan alan açık kaynaklı bir proje</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Kullanımı kolay ve temiz bir arayüz</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Gizlilik odaklı ve reklamsız</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Çevrimdışı, hızlı ve pratik</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Tamamen açık kaynaklı, kâr amacı gütmeyen, şeffaf fonlama ve karar alma süreçlerine sahip harita uygulaması.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Konum ayarları</string>
     <string name="close">Kapat</string>
     <string name="unsupported_phone">Uygulama, donanım hızlandırmalı OpenGL gerektiriyor. Ne yazık ki aygıtınız desteklenmiyor.</string>
     <string name="download">İndir</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">CoMaps’i kullanabilmek için lütfen USB kablosunun bağlantısını kesin veya hafıza kartı takın</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Uygulamayı kullanabilmek için lütfen SD kart/USB depolama aygıtında biraz alan boşaltın</string>
     <string name="download_resources">Uygulamayı kullanmadan önce lütfen aygıtınıza dünya genel görünüm haritasını indirin. \nBu, %s alan kullanacaktır.</string>
@@ -147,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Notlar</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Seninle paylaşılan CoMaps yer imleri</string>
-    <string name="share_bookmarks_email_body">Merhaba! \n \nEktekiler benim CoMaps yer imlerim. Eğer CoMaps\'i yüklediyseniz lütfen ektekileri açın. Eğer yüklemediyseniz, bu bağlantıyı takip ederek iOS ve Android cihazınız için uygulamayı yükleyebilirsiniz: https://www.comaps.app/download/ \n \nCoMaps ile seyahat etmenin keyfini çıkarın!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Yer İmleri Yükleniyor</string>
     <!-- Kmz file successful loading -->
@@ -168,10 +153,6 @@
     <string name="cant_change_this_setting">Üzgünüz, harita depolama ayarları şu anda devre dışı</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Harita indiriliyor</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Hey, CoMaps’te geçerli konumumu incele! %1$s veya %2$s Çevrimdışı haritalar sende yok mu? Buradan indir: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Hey, CoMaps’te geçerli konumumu incele!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Paylaş</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -227,24 +208,9 @@
     <string name="search_show_on_map">Haritada görüntüle</string>
     <!-- Text in menu -->
     <string name="website">Web Sitesi</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Haberler</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Geri bildirim</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Uygulamayı değerlendir</string>
     <!-- Text in menu -->
-    <string name="help">Yardım</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Sıkça Sorulan Sorular</string>
     <!-- Button in the main menu -->
-    <string name="donate">Bağış yap</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Gönüllü olun ve CoMaps\'i iyileştirin</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Telif hakkı</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Hata bildir</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Pusulayı kalibre etmek için telefonu sekiz şeklinde hareket ettirerek ok yönünü iyileştirin.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -389,7 +355,6 @@
     <string name="editor_time_advanced">Gelişmiş Kip</string>
     <string name="editor_time_simple">Basit Kip</string>
     <string name="editor_hours_closed">Kapalı olduğu saatler</string>
-    <string name="editor_example_values">Örnek Değerler</string>
     <string name="editor_correct_mistake">Hatayı düzelt</string>
     <string name="editor_add_select_location">Konum Seç</string>
     <string name="editor_report_problem_send_button">Gönder</string>
@@ -452,8 +417,6 @@
     <string name="message_invalid_feature_position">Buraya bir nesne konumlandırılamıyor</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">%s tarihine ait topluluk tarafından oluşturulmuş OpenStreetMap verilerini kullanıyorsunuz. OpenStreetMap.org adresinden haritayı nasıl düzenleyebileceğiniz hakkında bilgi edinebilirsiniz</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM), ücretsiz ve açık harita oluşturmayı amaçlayan bir topluluk projesidir. OSM, CoMaps\'teki harita verilerinin ana kaynağıdır ve Vikipedi\'ye benzer şekilde çalışır. Haritadaki yerleri ekleyebilir veya düzenleyebilirsiniz ve bunlar tüm dünyadaki milyonlarca kullanıcı tarafından kullanılabilir hale gelir. \nTopluluğa katılın ve herkes için daha iyi bir harita oluşturmaya yardımcı olun!</string>
     <string name="login_to_make_edits_visible">Harita düzenlemelerinizi herkese ulaştırmak için OpenStreetMap hesabı oluşturun veya oturum açın</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d/%2$d</string>
@@ -466,8 +429,6 @@
     <string name="error_enter_correct_zip_code">Geçerli bir posta kodu girin</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">OpenStreetMap gönüllülerine not (isteğe bağlı)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Haritadaki hataları veya CoMaps ile düzenlenemeyen şeyleri tanımlayın</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Düzenlemeleriniz halka açık <a href="https://wiki.openstreetmap.org/wiki/Tr:About">OpenStreetMap</a> veritabanına yüklenir. Lütfen kişisel veya telif hakkıyla korunan bilgiler eklemeyin.</string>
     <string name="editor_more_about_osm">OpenStreetMap ile ilgili ek bilgi</string>
@@ -477,7 +438,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">İşletici: %s</string>
     <string name="editor_category_unsuitable_title">Uygun bir kategori bulamıyor musunuz?</string>
-    <string name="editor_category_unsuitable_text">CoMaps yalnızca basit nokta kategorilerini eklemeye izin verir. Yani kasaba, yol, göl, bina vb. çizgi/alan verisi ekleme desteği yoktur. Lütfen bu tür kategorileri doğrudan <a href="https://www.openstreetmap.org">OpenStreetMap.org</a> üzerinden ekleyin. Adım adım ayrıntılı yönergeler için <a href="https://www.comaps.app/support/advanced-map-editing/">rehberimize</a> göz atabilirsiniz.</string>
     <string name="downloader_no_downloaded_maps_title">Hiç harita indirmediniz</string>
     <string name="downloader_no_downloaded_maps_message">İnternetsiz olarak biyerleri bulmak ve gezinmek için haritaları indirin.</string>
     <string name="current_location_unknown_error_title">Mevcut konum bilinmiyor.</string>
@@ -530,15 +490,11 @@
     <string name="mobile_data_option_ask">Her Zaman Sor</string>
     <string name="traffic_update_maps_text">Trafik verilerini görüntülemek için haritaların güncellenmesi gerekiyor</string>
     <string name="big_font">Haritadaki yazı tipi boyutunu artır</string>
-    <string name="traffic_update_app">Lütfen CoMaps\'i güncelleyin</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Trafik verileri kullanılamıyor</string>
     <string name="enable_logging">Günlüğü etkinleştir</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Genel Geri Bildirim</string>
     <string name="prefs_languages_information">Sesli yönlendirme için TTS sistemini kullanıyoruz. Çoğu Android aygıt, Google TTS\'yi kullanıyor. Uygulamayı, Google Play\'den indirebilir veya güncelleyebilirsiniz (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Bazı diller için uygulama mağazasından (Google Play, Galaxy Store, App Gallery, FDroid) başka konuşma sentezleyici ya da ek dil paketi kurmanız gerekebilir.\nAygıt ayarları → Dil ve Giriş → Konuşma → Metin Okuma seçeneğini açın.\nBuradan konuşma sentezi ayarlarını yönetebilir (örneğin, çevrim dışı kullanım için dil paketini karşıdan yükleyebilir) ve başka metin okuma motorunu seçebilirsiniz.</string>
-    <string name="prefs_languages_information_off_link">Daha fazla bilgi için lütfen bu kılavuzu inceleyin</string>
     <string name="transliteration_title">Latin alfabesine çevir</string>
     <string name="learn_more">Daha fazla bilgi edinin</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -550,7 +506,6 @@
     <string name="placepage_remove_stop">Durağı Kaldır</string>
     <string name="placepage_add_stop">Ara nokta ekle</string>
     <string name="dialog_error_storage_title">Depolama alanı erişim sorunu</string>
-    <string name="dialog_error_storage_message">Harici bellek kullanılamıyor, muhtemelen SD Kart çıkarılmış, hasarlı veya dosya sistemi salt okunur. Lütfen kontrol edin veya support@comaps.app adresinden bizimle iletişime geçin</string>
     <string name="setting_emulate_bad_storage">Bozuk depolama alanını taklit et</string>
     <string name="error_enter_correct_name">Lütfen doğru ad girin</string>
     <string name="bookmark_lists">Listeler</string>
@@ -586,8 +541,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Gizlilik</string>
-    <string name="privacy_policy">Gizlilik politikası</string>
-    <string name="terms_of_use">Kullanım koşulları</string>
     <string name="button_layer_traffic">Trafik</string>
     <string name="subway">Metro</string>
     <string name="layers_title">Harita Stilleri ve Katmanlar</string>
@@ -612,7 +565,6 @@
     <string name="power_managment_setting_never">Asla</string>
     <string name="power_managment_setting_auto">Pil düşükken</string>
     <string name="power_managment_setting_manual_max">Her zaman</string>
-    <string name="enable_logging_warning_message">Bu seçenek tanılama amacıyla günlüğe kaydetmeyi açar. Ekibimizin uygulamayla ilgili sorunları gidermesine yardımcı olabilir. Sorununuzla ilgili ayrıntılı günlükleri kaydetmek ve bize göndermek için bu seçeneği geçici olarak etkinleştirin.</string>
     <string name="driving_options_title">Yönlendirme seçenekleri</string>
     <string name="avoid_tolls">Ücretli yollardan kaçın</string>
     <string name="avoid_unpaved">Asfaltsız yollardan kaçın</string>
@@ -712,40 +664,22 @@
     <string name="change_map_locale">Harita dili</string>
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Harita verileri OpenStreetMap\'ten</string>
-    <!-- Telegram group url for the "?" About page -->
-    <!-- Instagram account url for the "?" About page -->
-    <!-- Translated CoMaps site, add new translations here: https://translate.codeberg.org/projects/comaps/website -->
-    <string name="translated_om_site_url">https://comaps.app/tr/</string>
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Tr:About_OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Topluluk tarafından oluşturulan haritalarımızı kullandığınız için teşekkür ederiz!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Bağışlarınız ve desteğinizle dünyanın en iyi haritalar uygulamasını oluşturabiliriz!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Uygulamamızı beğendiniz mi? Geliştirmemizi desteklemek için lütfen bağış yapın! Henüz beğenmediniz mi? Lütfen beğenmediğiniz şeyleri bize bildirin, düzelteceğiz!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Bir yazılım mühendisi / geliştirici tanıyorsanız, ondan ihtiyacınız olan bir özelliği uygulamaya eklemesini isteyebilirsiniz.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Herhangi bir şeyi seçmek için haritada üzerine dokunun. Ekrandaki seçenekleri gizlemek ve geri getirmek için ise basılı tutun.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Haritada şu anki konumunuzu seçebileceğinizi biliyor musunuz?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Uygulamamızın kendi dilinize çevrilmesine yardımcı olabilirsiniz.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Uygulamamız birkaç teknoloji tutkunu ve topluluk tarafından geliştirilmiştir.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Harita verilerini kolayca düzeltebilir ve iyileştirebilirsiniz.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Temel amacımız hızlı, gizlilik odaklı, kullanımı kolay, seveceğiniz bir harita uygulaması oluşturmaktır.</string>
-    <string name="car_used_on_the_phone_screen">Artık CoMaps\'i telefon ekranında kullanıyorsunuz</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Arabada göster</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Açık Hava</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -796,17 +730,12 @@
     <string name="wikimedia_commons">Wikimedia Commons</string>
     <string name="menu">Menü</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="app_site_url">https://comaps.app/tr/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="telegram_url">https://t.me/CoMaps_TR</string>
     <string name="error_enter_correct_fediverse_page">Gireceğiniz Mastodon kullanıcı adı ve adresi halihazırda mevcut olmalı</string>
     <string name="saved">Kaydedildi</string>
     <string name="error_enter_correct_bluesky_page">Gireceğiniz Bluesky kullanıcı adı ve adresi halihazırda mevcut olmalı</string>
     <string name="editor_building_levels">Kat sayısı (zemin kat dahil, çatı hariç)</string>
     <string name="editor_level">Kaçıncı katta bulunuyor (zemin kat 0\'dır)</string>
     <string name="error_enter_correct_level">Geçerli kat numarası girin</string>
-    <string name="about_help">Hakkında ve Yardım</string>
     <string name="panoramax">Panoramax Görseli</string>
     <string name="vehicle">Taşıt</string>
     <string name="pedestrian">Yaya</string>
@@ -833,7 +762,6 @@
     <string name="closed_now">Şu anda kapalı</string>
     <string name="at">%s\'da</string>
     <string name="pref_backup_title">Yer imleri ve izlerin yedeği</string>
-    <string name="dialog_report_error_with_logs">Lütfen bize hata raporu yollayın:\n - Ayarlardan \"Günlüğe kaydetmeyi etkinleştir\" \n - hatayı tekrarlayın\n - \"Hakkında ve Yardım\" ekranında \"Hata Bildir\" düğmesine basın ve e-posta veya sohbet yoluyla gönderin\n - günlüğe kaydetmeyi devre dışı bırak</string>
     <string name="pref_backup_now_summary_folder_unavailable">Yedekleme klasörü kullanılamıyor</string>
     <string name="pref_backup_now_summary_empty_lists">Yedeklenecek yer imi ve parça yok</string>
     <string name="dialog_report_error_missing_folder">Seçilen yedekleme konumu kullanılamıyor veya yazılabilir değil. Lütfen farklı bir konum seçin.</string>
@@ -868,18 +796,15 @@
     <string name="avoid_paved">Asfalt yollardan kaçın</string>
     <string name="place_page_map_too_old_title">Harita verisi güncel değil</string>
     <string name="place_page_map_too_old_description">Mevcut harita verileriniz çok eski, lütfen haritayı güncelleyin.</string>
-    <string name="place_page_app_too_old_description">Mevcut harita verileriniz çok eski, lütfen CoMaps uygulamasını güncelleyin.</string>
     <string name="place_page_update_too_old_map">Bölge haritasını güncelle</string>
     <string name="place_page_too_old_to_edit">Harita verisi çok eski olduğu için OpenStreetMap düzenleyicisi devre dışı.</string>
     <string name="prefs_speed_cameras_information">Yerel yasalarca uyarıların yasaklandığı ülkelerde hız kamerası uyarıları devre dışıdır.</string>
     <string name="pref_speedlimit_title">Hız sınırını göster</string>
     <string name="power_management">Güç yönetimi</string>
     <string name="pref_openexternallinks_title">Üçüncü taraf bağlantıları otomatik aç</string>
-    <string name="pref_openexternallinks_summary">Üçüncü taraf bağlantıları varsayılan olarak CoMaps\'te aç</string>
     <string name="pref_alt_map_lang_handling">Alternatif Harita Dilleri</string>
     <string name="pref_alt_map_lang_handling_ignore_alternatives">Alternatif dil kullanma</string>
     <string name="pref_alt_map_lang_handling_system_order">Sistem dili sırasına göre kullan</string>
     <string name="pref_alt_map_lang_handling_local_only">Sadece anadil olduğu yerlerde tercih et</string>
     <string name="download_resources_custom_url_title">Özel Harita Sunucusu</string>
-    <string name="download_resources_custom_url_message">Harita indirmek için kullanılan varsayılan sunucu yerine farklı sunucu kullanabilirsiniz. CoMaps varsayılan sunucusunu kullanmak için boş bırakın.</string>
 </resources>

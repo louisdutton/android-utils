@@ -24,8 +24,6 @@ import io.reactivex.Observable
 
 interface SettingsView : QkViewContract<SettingsState> {
     fun preferenceClicks(): Observable<PreferenceView>
-    fun aboutLongClicks(): Observable<*>
-    fun viewQksmsPlusClicks(): Observable<*>
     fun nightModeSelected(): Observable<Int>
     fun nightStartSelected(): Observable<Pair<Int, Int>>
     fun nightEndSelected(): Observable<Pair<Int, Int>>
@@ -35,7 +33,6 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun mmsSizeSelected(): Observable<Int>
     fun messageLinkHandlingSelected(): Observable<Int>
 
-    fun showQksmsPlusSnackbar()
     fun showNightModeDialog()
     fun showStartTimePicker(hour: Int, minute: Int)
     fun showEndTimePicker(hour: Int, minute: Int)
@@ -46,5 +43,4 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun showMessageLinkHandlingDialogPicker()
     fun showSwipeActions()
     fun showThemePicker()
-    fun showAbout()
 }

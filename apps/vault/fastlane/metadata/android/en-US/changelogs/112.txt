@@ -1,3 +1,0 @@
- * Remove "Select share info" setting for Magikeyboard #1304
- * Fix quick search and better loadGroup implementation #1302
- * Fix small bugs

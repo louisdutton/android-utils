@@ -20,7 +20,6 @@
     <string name="importCatimaMessage">Valitse tuotava vientitiedosto Catimasta. \nLuo se Catima-sovelluksen Tuo/vie-valikosta painamalla siellä ensin Vie.</string>
     <string name="importCatima">Tuo Catima varmuuskopiotiedostosta</string>
     <string name="accept">Hyväksy</string>
-    <string name="privacy_policy">Tietosuojakäytäntö</string>
     <string name="app_loyalty_card_keychain">Kanta-asiakaskortin avainnippu</string>
     <string name="chooseImportType">Tuo tietoja kohteesta</string>
     <string name="points">Pisteet</string>
@@ -68,14 +67,8 @@
     <string name="starImage">Suosikkitähti</string>
     <string name="thumbnailDescription">Pienoiskuva</string>
     <string name="selectBarcodeTitle">Valitse viivakoodi</string>
-    <string name="app_resources">Kolmannen osapuolen resurssit: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Kolmannen osapuolen kirjastot: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versio: <xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt">Tietoja <xliff:g id="app_name">%s</xliff:g></string>
     <string name="app_license">Copyleft (käyttäjänoikeus) - vapaa ohjelmisto, lisenssi GPLv3+</string>
-    <string name="app_copyright_old">Perustuu Loyalty Card Keychain -sovellukseen
-\ntekijänoikeus © 2016–2020 Branden Archer</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Tekijänoikeus © 2019–<xliff:g>%d</xliff:g> Sylvia van Os ja avustajat</string>
     <string name="about">Tietoja</string>
     <string name="importOptionFilesystemButton">Tiedostojärjestelmästä</string>
     <string name="importOptionFilesystemExplanation">Valitse tietty tiedosto tiedostojärjestelmästä</string>
@@ -143,7 +136,6 @@
     <string name="failedGeneratingShareURL">Jaettavaa URL-osoitetta ei voitu luoda</string>
     <string name="turn_flashlight_on">Käytä taskulamppua</string>
     <string name="turn_flashlight_off">Sammuta salamavalo</string>
-    <string name="app_contributors">Mahdollistanut: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="settings_system_locale">Järjestelmä</string>
     <string name="settings_locale">Kieli</string>
     <string name="noGroupCards">Tämä ryhmä on tyhjä</string>
@@ -163,11 +155,9 @@
     <string name="sort_by_expiry">Viimeinen voimassaoloaika</string>
     <string name="reverse">...käänteisessä järjestyksessä</string>
     <string name="sort_by">Lajitteluperuste</string>
-    <string name="credits">Kiitettävää</string>
     <string name="help_translate_this_app">Auta kääntämään tämä sovellus</string>
     <string name="license">Lisenssi</string>
     <string name="source_repository">Lähdekoodivarasto</string>
-    <string name="on_github">GitHubissa</string>
     <string name="and_data_usage">ja datan käyttö</string>
     <string name="report_error">Ilmoita ongelmasta</string>
     <string name="shortcutSelectCard">Valitse kortti</string>
@@ -238,7 +228,6 @@
     <string name="settings_category_title_cards">Korttinäkymä</string>
     <string name="settings_category_title_general">Yleiset</string>
     <string name="action_display_options">Näyttövalinnat</string>
-    <string name="app_copyright_short">Tekijänoikeus © Sylvia van Os ja avustajat</string>
     <string name="show_archived_cards">Näytä arkistoidut kortit</string>
     <string name="card_id_must_not_be_empty">Kortin tunniste ei saa olla tyhjä</string>
     <string name="add_a_card_in_a_different_way">Lisää kortti toisella tavalla</string>

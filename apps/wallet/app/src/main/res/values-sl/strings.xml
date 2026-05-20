@@ -35,7 +35,6 @@
     <string name="about">Več o aplikaciji</string>
     <string name="app_license">Prosta programska oprema s copyleftom, licenca GPL3+</string>
     <string name="about_title_fmt">Več o <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Verzija: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Izberi črtno kodo</string>
     <string name="thumbnailDescription">Sličica</string>
     <string name="settings">Nastavitve</string>
@@ -66,7 +65,6 @@
     <string name="settings_system_theme">Sistem</string>
     <string name="settings_theme">Tema</string>
     <string name="starImage">Zvezdica za priljubljene</string>
-    <string name="app_copyright_old">Na podlagi aplikacije Loyalty Card Keychain \navtorske pravice © 2016-2020 Branden Archer</string>
     <string name="exportOptionExplanation">Podatki bodo zapisani na izbrano mesto</string>
     <string name="failedParsingImportUriError">Ni bilo mogoče razčleniti URI uvoza</string>
     <string name="share">Deli</string>
@@ -90,7 +88,6 @@
     <string name="sort_by_name">Ime</string>
     <string name="sort">Razvrsti</string>
     <string name="license">Licence</string>
-    <string name="on_github">na GitHubu</string>
     <string name="report_error">Prijavi napako</string>
     <string name="and_data_usage">in uporaba podatkov</string>
     <string name="source_repository">Izvorna koda</string>
@@ -103,7 +100,6 @@
     <string name="chooseImportType">Uvozi podatke iz</string>
     <string name="importCatima">Izvoz iz aplikacije Catima</string>
     <string name="importVoucherVault">Uvoz iz aplikacije Voucher Vault</string>
-    <string name="privacy_policy">Politika zasebnosti</string>
     <string name="turn_flashlight_off">Izklopi svetilko</string>
     <string name="turn_flashlight_on">Vklopi svetilko</string>
     <string name="passwordRequired">Vnesi geslo</string>
@@ -153,7 +149,6 @@
     <string name="showMoreInfo">Prikaži informacije</string>
     <string name="updateBalance">Posodobi stanje</string>
     <string name="failedToRetrieveImageFile">Slikovne datoteke ni bilo mogoče pridobiti</string>
-    <string name="credits">Zasluge</string>
     <string name="translate_platform">na Weblate-u</string>
     <string name="options">Možnosti</string>
     <string name="duplicateCard">Podvoji</string>
@@ -170,8 +165,6 @@
     <string name="group_name_is_empty">Ime skupine ne sme biti prazno</string>
     <string name="group_updated">Skupina posodobljena</string>
     <string name="groupsList">Skupine: <xliff:g>%s</xliff:g></string>
-    <string name="app_libraries">Knjižnice tretjih oseb: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">Viri tretjih oseb: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="expiryStateSentence">Poteče: <xliff:g>%s</xliff:g></string>
     <string name="expiryStateSentenceExpired">Poteklo: <xliff:g>%s</xliff:g></string>
     <string name="expiryDate">Datum poteka veljavnosti</string>
@@ -208,7 +201,6 @@
     <string name="failedGeneratingShareURL">URL-ja za skupno rabo ni bilo mogoče ustvariti</string>
     <string name="settings_oled_dark">Čisto črno ozadje za temno temo</string>
     <string name="selectColor">Izberi barvo</string>
-    <string name="app_contributors">Omogočeno od: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="barcodeLongPressMessage">V aplikaciji za gledanje slik lahko odpremo samo slike</string>
     <plurals name="groupCardCountWithArchived">
         <item quantity="one"><xliff:g>%1$d</xliff:g> kartica (<xliff:g id="archivedCount">%2$d</xliff:g> arhivirana)</item>
@@ -224,8 +216,6 @@
     <string name="chooseValidFromDate">Izberi datum začetka veljavnosti</string>
     <string name="permissionReadCardsDescription">preberi svoje kartice Catima in vse podrobnosti, vključno z opombami in slikami</string>
     <string name="settings_display_barcode_max_brightness_summary">Potrebno za delovanje nekaterih skenerjev</string>
-    <string name="app_copyright_short">Avtorske pravice © Sylvia van Os in drugi sodelujoči</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Avtorske pravice © 2019–<xliff:g>%d</xliff:g> Sylvia van Os in drugi sodelujoči</string>
     <string name="permissionReadCardsLabel">Preberi kartice Catima</string>
     <string name="app_name">Wallet</string>
     <string name="settings_keep_screen_on_summary">Med ogledom kartice ohrani vključen zaslon</string>

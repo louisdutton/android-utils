@@ -7,8 +7,6 @@
     <string name="later">Ticki</string>
     <string name="search">Nadi</string>
     <string name="try_again">Ɛreḍ tikkelt niḍen</string>
-    <string name="copyright">Izerfan n usuffeɣ</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="close">Mdel</string>
     <string name="download">Zdem</string>
     <string name="pause">Seṛǧu</string>
@@ -17,16 +15,11 @@
     <string name="address">Tansa</string>
     <string name="list">Tabdart</string>
     <string name="settings">Iɣewwaren</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="self_service">Aseqdec n yiman</string>
     <string name="panoramax">Tugna n Panoramax</string>
     <string name="kilometres">Ikilumitren</string>
     <string name="saved">Yettwasekles</string>
-    <string name="about_proposition_3">• Yezmer ad yaweḍ berra i usmel, s tɣawla yerna d ameẓyan</string>
     <string name="bookmarks_and_tracks">Imenyafen</string>
     <string name="category_police">Tamsulta</string>
     <string name="category_water">Aman</string>
@@ -37,10 +30,6 @@
     <string name="done">Yemmug</string>
     <string name="menu">Umuɣ</string>
     <string name="website">Asmel web</string>
-    <string name="news">Isallen</string>
-    <string name="feedback">Timawin</string>
-    <string name="help">Tallalt</string>
-    <string name="donate">Muddet tawsa</string>
     <string name="downloader_downloaded_subtitle">Yettwasader-d</string>
     <string name="auto">Awurman</string>
     <string name="placepage_distance">Ameccaq</string>
@@ -91,7 +80,6 @@
     <string name="prefs_group_route">Tunigin</string>
     <string name="off">Ur irmid ara</string>
     <string name="on">D urmid</string>
-    <string name="about_menu_title">Ɣef CoMaps</string>
     <string name="unknown_count">d arussin</string>
     <string name="unknown_power_output">d arussin</string>
     <string name="downloader_download_all_button">Sader-iten-id akk</string>

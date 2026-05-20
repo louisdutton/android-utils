@@ -35,7 +35,6 @@
     <string name="about">Información</string>
     <string name="app_license">Programa libre con «copyleft», disponible en virtud de la licencia GPLv3+</string>
     <string name="about_title_fmt">Acerca de <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versión: <xliff:g id="version">%s</xliff:g></string>
     <string name="settings">Ajustes</string>
     <string name="settings_display_barcode_max_brightness">Iluminar pantalla</string>
     <string name="exportSuccessful">Datos exportados</string>
@@ -45,8 +44,6 @@
     <string name="settings_light_theme">Claro</string>
     <string name="settings_system_theme">Sistema</string>
     <string name="settings_theme">Tema</string>
-    <string name="app_copyright_old">Basado en Loyalty Card Keychain
-\nderechos de autor © 2016-2020 de Branden Archer</string>
     <string name="exportOptionExplanation">Los datos se guardarán en la ubicación que elija</string>
     <string name="failedParsingImportUriError">No se pudo procesar el URI de importación</string>
     <string name="share">Compartir</string>
@@ -85,9 +82,6 @@
     <string name="card">Tarjeta</string>
     <string name="expiryStateSentenceExpired">Expirado: <xliff:g>%s</xliff:g></string>
     <string name="expiryStateSentence">Expira: <xliff:g>%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Derechos de autor © 2019-<xliff:g>%d</xliff:g> Sylvia van Os y colaboradores</string>
-    <string name="app_resources">Recursos de terceros: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Bibliotecas de terceros: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="importCatimaMessage">Seleccione su exportado desde Catima para importarlo.\nCréalo primero desde el menú Importar/Exportar de otra app de Catima al presionar Exportar desde allí.</string>
     <string name="importFidmeMessage">Seleccione su exportado desde FidMe para importar, y luego escoja los tipos de códigos de barras manualmente.\nCréalo desde tu perfil de FidMe eligiendo Protección de datos y pulsa Extraer mis datos.</string>
     <string name="importLoyaltyCardKeychainMessage">Seleccione su exportado desde Loyalty Card Keychain para importarlo.\nCréalo desde el menú Importar/Exportar en Loyalty Card Keychain pulsando Exportar desde allí.</string>
@@ -118,7 +112,6 @@
     <string name="importFidme">Importar desde FidMe</string>
     <string name="importCatima">Importar desde Catima</string>
     <string name="accept">Aceptar</string>
-    <string name="privacy_policy">Política de privacidad</string>
     <string name="app_loyalty_card_keychain">Llavero con tarjeta de fidelización</string>
     <string name="chooseImportType">Importar datos de</string>
     <string name="currency">Moneda</string>
@@ -146,7 +139,6 @@
         <item quantity="many">Borrar <xliff:g>%d</xliff:g> tarjetas</item>
         <item quantity="other">Borrar <xliff:g>%d</xliff:g> tarjetas</item>
     </plurals>
-    <string name="app_contributors">Hecho posible por: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="settings_system_locale">Sistema</string>
     <string name="settings_locale">Idioma</string>
     <string name="noGroupCards">Este grupo está vacío</string>
@@ -167,11 +159,9 @@
     <string name="shortcutSelectCard">Seleccione una tarjeta</string>
     <string name="showMoreInfo">Mostrar información</string>
     <string name="reverse">… en orden inverso</string>
-    <string name="credits">Créditos</string>
     <string name="sort_by_name">Nombre</string>
     <string name="license">Licencia</string>
     <string name="source_repository">Repositorio de fuente</string>
-    <string name="on_github">en GitHub</string>
     <string name="report_error">Informar de un error</string>
     <string name="translate_platform">en Weblate</string>
     <string name="selectColor">Seleccione el color</string>
@@ -244,7 +234,6 @@
     <string name="settings_category_title_privacy">Privacidad</string>
     <string name="view_online">Ver en línea</string>
     <string name="show_archived_cards">Mostrar las tarjetas archivadas</string>
-    <string name="app_copyright_short">Derechos de autor © Sylvia van Os y colaboradores</string>
     <string name="action_display_options">Opciones de la pantalla</string>
     <string name="card_id_must_not_be_empty">La identificación de la tarjeta no debe estar vacía</string>
     <string name="balanceParsingFailed">Saldo incorrecto</string>

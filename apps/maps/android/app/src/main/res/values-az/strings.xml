@@ -34,24 +34,12 @@
     <string name="country_status_download_failed">Yükləmə uğursuz oldu</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Yenidən cəhd et</string>
-    <string name="about_menu_title">CoMaps Haqqında</string>
-    <!-- Text in About screen -->
-    <string name="about_headline">Hər kəs üçün ödənişsiz və sevgi ilə hazırlanmış xəritə</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Reklam yoxdur, izləmə yoxdur, məlumatların toplanması yoxdur</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Batareyanın boşalması yoxdur, oflayn işləyir</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Oflayn, sürətli və yığcam</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Həvəskarlar və könüllülər tərəfindən yaradılan açıq mənbə proqramı.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Məkan parametrləri</string>
     <string name="close">Yaxın</string>
     <string name="unsupported_phone">Tətbiq aparatla sürətləndirilmiş OpenGL tələb edir. Təəssüf ki, cihazınız dəstəklənmir.</string>
     <string name="download">Yüklə</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">CoMaps\'dan istifadə etmək üçün zəhmət olmasa USB kabeli ayırın və ya yaddaş kartı daxil edin</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Tətbiqdən istifadə etmək üçün SD kartda/USB yaddaş cihazında bir qədər yer boşaldın.</string>
     <string name="download_resources">Başlamazdan əvvəl gəlin ümumi dünya xəritəsini cihazınıza endirək. \n%s yer tələb olunur.</string>
@@ -147,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Qeydlər</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">CoMaps əlfəcinləri sizinlə paylaşıldı</string>
-    <string name="share_bookmarks_email_body">Salam! \n \nCoMaps əlfəcinlərim əlavə olunub. Zəhmət olmasa CoMaps-da onları açın. Əgər onu quraşdırmamısınızsa, bu linkə daxil olub cihazınıza yükləyə bilərsiniz: https://www.comaps.app/download/ \n \nCoMaps ilə səyahətdən həzz alın!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Əlfəcinlər yüklənir</string>
     <!-- Kmz file successful loading -->
@@ -168,10 +153,6 @@
     <string name="cant_change_this_setting">Üzr istəyirik, Xəritə Yaddaşı parametrləri hazırda deaktivdir.</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Xəritənin endirilməsi hazırda davam edir.</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Salam, CoMaps\'da mənim hal-hazırda olduğum ünvanı yoxla! %1$s və ya %2$s Oflayn xəritələriniz yoxdur? Buradan endirin: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Hey, CoMaps\'da mənim hal-hazırda olduğum ünvana baxın!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Paylaşın</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -227,24 +208,9 @@
     <string name="search_show_on_map">Xəritədə baxın</string>
     <!-- Text in menu -->
     <string name="website">Veb sayt</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Xəbərlər</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Rəy</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Proqramı qiymətləndirin</string>
     <!-- Text in menu -->
-    <string name="help">Yardım</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Tez-tez soruşulan suallar</string>
     <!-- Button in the main menu -->
-    <string name="donate">Bağışlamaq</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Bu layihəni dəstəkləyin</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Müəllif hüququ</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Problemi bildirin</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Kompası kalibrləmək və ox istiqamətini yaxşılaşdırmaq üçün telefonu səkkiz rəqəmi şəklinə çevirin.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -391,7 +357,6 @@
     <string name="editor_time_advanced">Qabaqcıl rejim</string>
     <string name="editor_time_simple">Sadə rejim</string>
     <string name="editor_hours_closed">Qeyri-iş saatları</string>
-    <string name="editor_example_values">Nümunə Dəyərləri</string>
     <string name="editor_correct_mistake">Səhvi düzəldin</string>
     <string name="editor_add_select_location">Yer seçin</string>
     <string name="editor_report_problem_send_button">Göndər</string>
@@ -452,8 +417,6 @@
     <string name="message_invalid_feature_position">Burada obyekti yerləşdirmək mümkün deyil</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">%s tarixinə icma tərəfindən yaradılmış OpenStreetMap datası. OpenStreetMap.org saytında xəritəni necə redaktə etmək və yeniləmək haqqında ətraflı məlumat əldə edin</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) pulsuz və açıq xəritə yaratmaq üçün icma layihəsidir. O, CoMaps xəritə məlumatlarının əsas mənbəyidir və Vikipediyaya oxşar işləyir. Siz yerlər əlavə edə və ya redaktə edə bilərsiniz və onlar bütün dünyada milyonlarla istifadəçi üçün əlçatan olur. \nİcmaya qoşulun və hər kəs üçün daha yaxşı xəritə yaratmağa kömək edin!</string>
     <string name="login_to_make_edits_visible">OpenStreetMap hesabı yaradın və ya xəritə redaktələrinizi dünyada dərc etmək üçün daxil olun.</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d/%2$d</string>
@@ -466,8 +429,6 @@
     <string name="error_enter_correct_zip_code">Etibarlı poçt kodu daxil edin</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">OpenStreetMap könüllüləri üçün qeyd (isteğe bağlı)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Xəritədəki səhvləri və ya CoMaps istifadə edərək redaktə edilə bilməyənləri təsvir edin</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Redaktələriniz ictimai <a href="https://wiki.openstreetmap.org/wiki/Tr:About">OpenStreetMap</a> verilənlər bazasına yüklənir. Zəhmət olmasa şəxsi və ya müəllif hüquqları ilə qorunan məlumatları əlavə etməyin.</string>
     <string name="editor_more_about_osm">OpenStreetMap haqqında əlavə məlumat</string>
@@ -477,7 +438,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operator: %s</string>
     <string name="editor_category_unsuitable_title">Uyğun kateqoriya tapa bilmirsiniz?</string>
-    <string name="editor_category_unsuitable_text">CoMaps yalnız sadə nöqtə kateqoriyaları əlavə etməyə imkan verir, bu o deməkdir ki, şəhərlər, yollar, göllər, bina konturları və s. yoxdur. Lütfən, belə kateqoriyaları birbaşa <a href="https://www.openstreetmap.org">OpenStreetMap.org</a> saytına əlavə edin. Ətraflı addım-addım təlimatlar üçün <a href="https://www.comaps.app/support/advanced-map-editing/">bələdçimizi</a> yoxlayın.</string>
     <string name="downloader_no_downloaded_maps_title">Siz heç bir xəritə endirməmisiniz</string>
     <string name="downloader_no_downloaded_maps_message">Ünvanları tapmaq və oflayn naviqasiya etmək üçün xəritələri endirin.</string>
     <string name="current_location_unknown_error_title">Cari yer məlum deyil.</string>
@@ -530,15 +490,11 @@
     <string name="mobile_data_option_ask">Həmişə Soruşun</string>
     <string name="traffic_update_maps_text">Nəqliyyat məlumatlarını göstərmək üçün xəritələr yenilənməlidir.</string>
     <string name="big_font">Xəritədə şrift ölçüsünü artırın</string>
-    <string name="traffic_update_app">CoMaps\'i yeniləyin</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Nəqliyyat məlumatları mövcud deyil</string>
     <string name="enable_logging">Girişi aktivləşdirin</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Ümumi rəy</string>
     <string name="prefs_languages_information">Biz səsli təlimatlar üçün TTS sistemindən istifadə edirik. Əksər Android cihazları Google TTS-dən istifadə edir. Siz proqramı Google Play-dən yükləyə və ya yeniləyə bilərsiniz (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Bəzi dillər üçün proqram mağazasından (Google Play, Galaxy Store, App Gallery, FDroid) fərqli nitq sintezatoru və ya əlavə dil paketi quraşdırmalı ola bilərsiniz. \nCihaz parametrləri → Dil və Daxiletmə → Nitq → Mətndən nitqə funksiyasını yandırın. \nBuradan siz nitq sintezi parametrlərini idarə edə bilərsiniz (məsələn, oflayn istifadə üçün dil paketini endirə bilərsiniz) və başqa mətndən-nitqə mühərrik seçə bilərsiniz.</string>
-    <string name="prefs_languages_information_off_link">Əlavə məlumat üçün bu təlimatı nəzərdən keçirin.</string>
     <string name="transliteration_title">Latın transliterasiyası</string>
     <string name="learn_more">Daha ətraflı</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -550,7 +506,6 @@
     <string name="placepage_remove_stop">Kəsmə nöqtəsini silin</string>
     <string name="placepage_add_stop">Dayanacaq nöqtəsini əlavə edin</string>
     <string name="dialog_error_storage_title">Yaddaş giriş problemi</string>
-    <string name="dialog_error_storage_message">Xarici yaddaş mövcud deyil, ola bilsin ki, SD Kart çıxarılıb, zədələnib və ya fayl sistemi yalnız oxunur. Zəhmət olmasa yoxlayın və ya support@comaps.app ünvanında bizimlə əlaqə saxlayın</string>
     <string name="setting_emulate_bad_storage">Zədələnmiş yaddaşı təqlid edin</string>
     <string name="error_enter_correct_name">Düzgün ad daxil edin</string>
     <string name="bookmark_lists">Siyahılar</string>
@@ -586,8 +541,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Məxfilik</string>
-    <string name="privacy_policy">Gizlilik Siyasəti</string>
-    <string name="terms_of_use">İstifadə qaydaları</string>
     <string name="button_layer_traffic">Nəqliyyat</string>
     <string name="subway">Metro</string>
     <string name="layers_title">Xəritə Üslubları və Qatları</string>
@@ -612,7 +565,6 @@
     <string name="power_managment_setting_never">Heç vaxt</string>
     <string name="power_managment_setting_auto">Avtomatik</string>
     <string name="power_managment_setting_manual_max">Maksimum enerji qənaəti</string>
-    <string name="enable_logging_warning_message">Yardım dialoq qutusunda “Problemi bildir” istifadə etməklə probleminizlə bağlı ətraflı diaqnostik jurnalları qeyd etmək və bizə göndərmək üçün bu seçimi müvəqqəti aktivləşdirin. Qeydlərə məkan məlumatı daxil ola bilər.</string>
     <string name="driving_options_title">Marşrutlaşdırma seçimləri</string>
     <string name="avoid_tolls">Rüsumlardan çəkinin</string>
     <string name="avoid_unpaved">Asfaltsız yollardan çəkinin</string>
@@ -710,20 +662,13 @@
     <string name="change_map_locale">Xəritə dili</string>
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">OpenStreetMap-dan xəritə məlumatları</string>
-    <!-- Telegram group url for the "?" About page -->
-    <!-- Translated CoMaps site, add new translations here: https://translate.codeberg.org/projects/comaps/website -->
-    <string name="translated_om_site_url">https://comaps.app/tr/</string>
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Az:Layihə_haqqında</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">İcma tərəfindən yaradılmış xəritələrimizdən istifadə etdiyiniz üçün təşəkkür edirik!</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Nəyisə seçmək üçün xəritədə istənilən yerə toxunun. Gizlətmək və interfeysi geri göstərmək üçün uzun müddət toxunun.</string>
-    <string name="car_used_on_the_phone_screen">İndi telefon ekranında CoMaps istifadə edirsiniz</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Avtomobil ekranına</string>
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Yürüyüş</string>
     <string name="volume">Həcm</string>
@@ -769,11 +714,7 @@
     <string name="edit_track">Marşrutu redaktə edin</string>
     <string name="uri_open_location_failed">Məkanı aça biləcək proqram quraşdırılmayıb</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="wikimedia_commons">Vikianbar</string>
     <string name="panoramax">Panoramax Şəkil</string>
-    <string name="app_site_url">https://comaps.app/tr/</string>
     <string name="saved">Saxlandı</string>
 </resources>

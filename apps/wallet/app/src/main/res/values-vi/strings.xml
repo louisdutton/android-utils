@@ -29,7 +29,6 @@
     <string name="failedParsingImportUriError">Không thể phân tích URI đã nhập</string>
     <string name="exporting">Đang xuất dữ liệu…</string>
     <string name="group_edit">Sửa nhóm</string>
-    <string name="debug_version_fmt">Phiên bản: <xliff:g id="version">%s</xliff:g></string>
     <string name="backImageDescription">Ảnh mặt sau</string>
     <string name="view_online">Xem online</string>
     <string name="noCameraPermissionDirectToSystemSetting">Để quét mã vạch, Catima sẽ cần truy cập vào camera của bạn. Nhấn vào đây để thay đổi cài đặt việc cấp quyền.</string>
@@ -55,8 +54,6 @@
     <string name="settings_disable_lockscreen_while_viewing_card_summary">Tắt tính năng khóa màng hình khi đang xem thẻ</string>
     <string name="action_more_options">Tùy chọn mở rộng</string>
     <string name="exportOptionExplanation">Dữ liệu sẽ được ghi vào vị trí mà bạn chọn</string>
-    <string name="app_copyright_old">Dựa trên Loyalty Card Keychain
-\nbản quyền © 2016–2020 Branden Archer</string>
     <string name="importVoucherVaultMessage">Chọn tập tin đã xuất từ Voucher Vault để nhập liệu. \nTạo tập tin này bằng cách bấm Export trong ứng dụng Voucher Vault.</string>
     <string name="importFailed">Không thể nhập dữ liệu</string>
     <string name="chooseImportType">Nhập dữ liệu từ</string>
@@ -110,7 +107,6 @@
     <string name="star">Đánh dấu ưa thích</string>
     <string name="addFromImage">Chọn ảnh từ thư viện ảnh</string>
     <string name="reverse">...theo trật tự đảo ngược</string>
-    <string name="app_copyright_short">Bản quyền © Sylvia van Os và các cộng sự</string>
     <string name="importExportHelp">Sao lưu cho phép bạn chuyển dữ liệu của mình đến thiết bị khác</string>
     <string name="settings_oled_dark">Nền đen tuyền cho chủ đề tối</string>
     <string name="starred">Ưa thích</string>
@@ -138,7 +134,6 @@
     <string name="failedGeneratingShareURL">Không tạo được URL để chia sẻ</string>
     <string name="selectColor">Chọn màu</string>
     <string name="setBarcodeHeight">Đặt chiều cao cho mã vạch</string>
-    <string name="privacy_policy">Chính sách quyền riêng tư</string>
     <string name="enter_group_name">Nhập tên nhóm</string>
     <string name="addCardTitle">Thêm Thẻ</string>
     <string name="exportFailed">Không thể xuất dữ liệu</string>
@@ -146,7 +141,6 @@
     <string name="settings_system_locale">Hệ thống</string>
     <string name="addManually">Nhập mã vạch thủ công</string>
     <string name="updateBalance">Cập nhật số dư</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Bản quyền © 2019–<xliff:g>%d</xliff:g> Sylvia van Os và các cộng sự</string>
     <string name="sort_by_most_recently_used">Sử dụng gần đây nhất</string>
     <string name="noGiftCards">Bấm nút dấu cộng + để thêm thẻ, hoặc nhập dữ liệu từ ⋮ menu</string>
     <string name="importVoucherVault">Nhập dữ liệu từ Voucher Vault</string>
@@ -176,7 +170,6 @@
     <string name="updateBalanceHint">Nhập số lượng</string>
     <string name="action_search">Tìm kiếm</string>
     <string name="noGiftCardsGroup">Tạo vài thẻ, và sắp xếp chúng vào nhóm này</string>
-    <string name="on_github">trên Github</string>
     <string name="sort">Sắp Xếp</string>
     <string name="permissionReadCardsLabel">Đọc thẻ Catima</string>
     <string name="groups">Nhóm</string>
@@ -199,11 +192,9 @@
     <string name="show_archived_cards">Hiện thẻ lưu trữ</string>
     <string name="selectBarcodeTitle">Chọn Mã Vạch</string>
     <string name="importSuccessful">Nhập dữ liệu xong</string>
-    <string name="app_libraries">Thư viện mở từ bên thứ ba: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="updateBalanceTitle">Bạn đã chi tiêu hoặc nhận được bao nhiêu?</string>
     <string name="editCardTitle">Sửa thẻ</string>
     <string name="archive">Lưu trữ</string>
-    <string name="app_resources">Tài nguyên mở từ bên thứ ba: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="shortcutSelectCard">Chọn một thẻ</string>
     <string name="accept">Đồng ý</string>
     <string name="noCardsMessage">Thêm danh sách thẻ</string>
@@ -230,7 +221,6 @@
     <string name="settings_keep_screen_on_summary">Vô hiệu hóa thời gian tắt màng hình khi đang xem thẻ</string>
     <string name="thumbnailDescription">Ảnh con</string>
     <string name="deleteConfirmationGroup">Xóa nhóm\?</string>
-    <string name="credits">Ghi nhận</string>
     <string name="app_name">Wallet</string>
     <string name="openFrontImageInGalleryApp">Mở hình ảnh mặt trước trong ứng dụng thư viện ảnh</string>
     <string name="and_data_usage">và sử dụng dữ liệu</string>
@@ -241,7 +231,6 @@
     <string name="switchToFrontImage">Chuyển sang hình ảnh phía trước</string>
     <string name="openBackImageInGalleryApp">Mở hình ảnh mặt sau trong ứng dụng thư viện ảnh</string>
     <string name="failedToRetrieveImageFile">Không thể truy xuất tệp hình ảnh</string>
-    <string name="app_contributors">Được thực hiện bởi: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="app_license">Phần mềm miễn phí có bản quyền theo giấy phép GPLv3+</string>
     <string name="continue_">Tiếp tục</string>
     <string name="add_manually_warning_title">Nên quét</string>

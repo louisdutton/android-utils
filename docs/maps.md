@@ -43,14 +43,14 @@ be built through the helper script:
 nix develop --no-write-lock-file --command ./scripts/build-comaps-android.sh
 ```
 
-The default Maps build is `:app:assembleFdroidDebug -Parm64`. The F-Droid debug
-build uses the suite package id `digital.dutton.essentials.maps` and launcher
-label `Maps`, so it updates the old Maps install instead of appearing as a
-separate CoMaps debug app. Pass Gradle tasks to the script to override that
+The default Maps build is `:app:assembleDebug -Parm64`. The debug build uses
+the suite package id `digital.dutton.essentials.maps` and launcher label
+`Maps`, so it updates the existing Maps install instead of appearing as a
+separate upstream debug app. Pass Gradle tasks to the script to override that
 default, for example:
 
 ```sh
-nix develop --no-write-lock-file --command ./scripts/build-comaps-android.sh :app:installFdroidDebug -Parm64
+nix develop --no-write-lock-file --command ./scripts/build-comaps-android.sh :app:installDebug -Parm64
 ```
 
 ## Android Tooling

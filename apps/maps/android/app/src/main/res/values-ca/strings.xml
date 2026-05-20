@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">La baixada ha fallat</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Torna-ho a intentar</string>
-    <string name="about_menu_title">Quant al CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Fàcil d\'usar i elegant</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Centrat en la privacitat i sense anuncis</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Fora de línia, ràpid i compacte</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Codi totalment obert, sense ànim de lucre i transparència en la presa de decisions i finances.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Paràmetres d’ubicació</string>
     <string name="close">Tanca</string>
     <string name="unsupported_phone">L’aplicació requereix acceleració per maquinari OpenGL. Malauradament, el vostre aparell no ho admet.</string>
     <string name="download">Baixa</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Desconnecteu el cable USB o inseriu una targeta de memòria per a usar l’CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Allibereu espai en la targeta SD o emmagatzematge USB per a poder usar l’aplicació</string>
     <string name="download_resources">Abans d’usar l’aplicació, cal que baixeu el mapa del món general al vostre aparell. \nUsarà %s d’emmagatzematge.</string>
@@ -145,9 +135,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Notes</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Els meus preferits de CoMaps</string>
-    <string name="share_bookmarks_email_body">Hola! \n \nAdjunto els meus marcadors de l\'aplicació CoMaps. Obriu-los si teniu l\'CoMaps instal·lat. O, si no teniu l\'aplicació, baixeu-la per al vostre dispositiu iOS o Android seguint aquest enllaç: https://www.comaps.app/download/ \n \nGaudiu viatjant amb CoMaps!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Carregant Preferits</string>
     <!-- Kmz file successful loading -->
@@ -166,10 +153,6 @@
     <string name="cant_change_this_setting">La configuració de l\'emmagatzematge del mapes està desactivada</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">La baixada del mapa és en curs</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Mira la meva ubicació en l\'CoMaps! %1$s o %2$s No teniu mapes sense connexió? Baixeu-los aquí: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Ep, mireu la meva ubicació actual en el mapa del CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Comparteix</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -227,24 +210,9 @@
     <string name="menu">Menú</string>
     <!-- Text in menu -->
     <string name="website">Lloc web</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Notícies</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Comentaris</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Puntua l\'aplicació</string>
     <!-- Text in menu -->
-    <string name="help">Ajuda</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Preguntes més freqüents</string>
     <!-- Button in the main menu -->
-    <string name="donate">Donatiu</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Feu-vos voluntaris i milloreu CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Drets d’autor</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Informa d’un error</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Milloreu la direcció de la fletxa movent el telèfon amb un moviment de vuit per calibrar la brúixola.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -391,7 +359,6 @@
     <string name="editor_time_advanced">Mode avançat</string>
     <string name="editor_time_simple">Mode senzill</string>
     <string name="editor_hours_closed">Horari de tancament</string>
-    <string name="editor_example_values">Valors d\'exemple</string>
     <string name="editor_correct_mistake">Corregeix un error</string>
     <string name="editor_add_select_location">Seleccioneu Ubicació</string>
     <string name="editor_report_problem_send_button">Envia</string>
@@ -451,8 +418,6 @@
     <string name="message_invalid_feature_position">No s’ha trobat cap objecte aquí</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Dades de l’OpenStreetMap creades per la comunitat el %s. Obteniu més informació sobre com editar i actualitzar el mapa a OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) és un projecte comunitari per construir un mapa lliure i obert. És la font principal de dades de mapes a CoMaps i funciona de manera similar a la Viquipèdia. Pots afegir o editar llocs i estaran disponibles per a milions d\'usuaris de tot el món. \nUneix-te a la comunitat i ajuda a crear un mapa millor per a tothom!</string>
     <string name="login_to_make_edits_visible">Creeu un compte d\'OpenStreetMap o inicieu sessió per publicar les vostres edicions de mapes al món</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d/%2$d</string>
@@ -465,8 +430,6 @@
     <string name="error_enter_correct_zip_code">Introduïu un codi postal vàlid</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Nota per als voluntaris d\'OpenStreetMap (opcional)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Descriu errors al mapa o què no es pot editar amb CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Les vostres edicions es pengen a la base de dades pública <a href="https://wiki.openstreetmap.org/wiki/Ca:About">OpenStreetMap</a>. Si us plau, no afegiu informació personal o amb drets d\'autor.</string>
     <string name="editor_more_about_osm">Més sobre l\'OpenStreetMap</string>
@@ -476,7 +439,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operador: %s</string>
     <string name="editor_category_unsuitable_title">No trobeu una categoria adequada?</string>
-    <string name="editor_category_unsuitable_text">CoMaps només permet afegir categories de punts simples, no pot afegir ciutats, carreteres, llacs, contorns d\'edificis, etc. Si us plau, afegiu aquestes categories directament a <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Consulteu la nostra <a href="https://www.comaps.app/support/advanced-map-editing/">guia</a> per obtenir instruccions detallades pas a pas.</string>
     <string name="downloader_no_downloaded_maps_title">No heu baixat cap mapa</string>
     <string name="downloader_no_downloaded_maps_message">Baixeu mapes per a cercar una ubicació i usar la navegació sense connexió</string>
     <string name="current_location_unknown_error_title">Es desconeix la ubicació actual</string>
@@ -529,15 +491,11 @@
     <string name="mobile_data_option_ask">Demana-ho sempre</string>
     <string name="traffic_update_maps_text">Per a mostrar les dades de trànsit, els mapes han d\'estar actualitzats</string>
     <string name="big_font">Augmenta la mida de lletra del mapa</string>
-    <string name="traffic_update_app">Actualitzeu l’CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">No hi ha dades de trànsit disponibles</string>
     <string name="enable_logging">Activa el registre</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Opinió general</string>
     <string name="prefs_languages_information">Fem servir el sistema de síntesi de veu per a les instruccions de veu. Molts aparells Android empren motor de síntesi de veu de Google, podeu baixar o actualitzar-lo des del Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Per a algunes llengües, haureu d\'instal·lar un sintetitzador de veu o un paquet de llengua addicional des de la botiga d\'aplicacions (Google Play, Samsung Galaxy Store, Huawei AppGallery, F-Droid). \nObriu la configuració del dispositiu → Idioma i entrada → Veu → Sortida de text a veu. \nAquí podeu gestionar la configuració de la síntesi de veu (per exemple, baixar un paquet de llengua per a ús sense connexió) i triar un altre motor de síntesi de veu.</string>
-    <string name="prefs_languages_information_off_link">Per a més informació, vegeu aquesta guia</string>
     <string name="transliteration_title">Transliteració a l’alfabet llatí</string>
     <string name="learn_more">Més informació</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -549,7 +507,6 @@
     <string name="placepage_remove_stop">Elimina parada</string>
     <string name="placepage_add_stop">Afegeix una parada</string>
     <string name="dialog_error_storage_title">S\'ha produït un problema en l\'accés a l\'emmagatzematge</string>
-    <string name="dialog_error_storage_message">L\'emmagatzematg extern no és accessible. La targeta SD potser s\'ha retirat, malmès, o el sistema de fitxer és de només lectura. Comproveu la targeta SD o contacteu amb nosaltres a support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Emula un emmagatzematge malmès</string>
     <string name="error_enter_correct_name">Introduïu un nom correcte</string>
     <string name="bookmark_lists">Llista de Preferits</string>
@@ -588,8 +545,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Privadesa</string>
-    <string name="privacy_policy">Política de privadesa</string>
-    <string name="terms_of_use">Condicions del servei</string>
     <string name="button_layer_traffic">Trànsit</string>
     <string name="subway">Metro</string>
     <string name="layers_title">Estils i capes del mapa</string>
@@ -614,7 +569,6 @@
     <string name="power_managment_setting_never">Mai</string>
     <string name="power_managment_setting_auto">Automàtic</string>
     <string name="power_managment_setting_manual_max">Sempre</string>
-    <string name="enable_logging_warning_message">Activeu aquesta opció temporalment per a registrar i enviar manualment registres de diagnòstic detallats sobre el vostre problema utilitzant «Informeu d’un error» al diàleg Ajuda. Els registres poden incloure informació d’ubicació.</string>
     <string name="driving_options_title">Opcions d’encaminament</string>
     <string name="avoid_tolls">Evita peatges</string>
     <string name="avoid_unpaved">Evita vies sense pavimentar</string>
@@ -714,38 +668,22 @@
     <string name="change_map_locale">Llengua del mapa</string>
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Dades del mapa de l\'OpenStreetMap</string>
-    <!-- Translated CoMaps site -->
-    <string name="translated_om_site_url">https://comaps.app/ca/</string>
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Ca:About_OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Gràcies per utilitzar els nostres mapes creats per la comunitat!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Amb les vostres donacions i suport, podem crear els millors mapes del món!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Us agrada la nostra aplicació? Feu una donació per donar suport al desenvolupament! Encara no us agrada? Si us plau, feu-nos-ho saber i ho solucionarem!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Si coneixeu un desenvolupador de programari, podeu demanar-li que implementi una funcionalitat que necessiteu.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Toqueu qualsevol lloc del mapa per seleccionar qualsevol cosa. Toqueu llargament per amagar i mostrar la interfície.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Sabíeu que podeu seleccionar la vostra ubicació actual al mapa?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Podeu ajudar a traduir la nostra aplicació a la vostra llengua.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">La nostra aplicació està desenvolupada per uns quants entusiastes i la comunitat.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Podeu corregir i millorar fàcilment les dades del mapa.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">El nostre objectiu principal és crear mapes ràpids, centrats en la privadesa i fàcils d\'utilitzar que us encantaran.</string>
-    <string name="car_used_on_the_phone_screen">Ara esteu utilitzant els CoMaps a la pantalla del telèfon</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">A la pantalla del cotxe</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Senderisme</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -796,14 +734,9 @@
     <string name="level_value_generic">Nivell: %s</string>
     <string name="login_osm">Inicia sessió a l’OpenStreetMap</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="panoramax">Imatge Panoramax</string>
-    <string name="app_site_url">https://comaps.app/ca/</string>
     <string name="saved">S\'ha desat</string>
-    <string name="about_headline">Projecte obert, desenvolupat per la comunitat</string>
     <string name="error_enter_correct_level">Introdueix un valor de pis vàlid</string>
     <string name="error_enter_correct_fediverse_page">Introdueix un nom d\'usuari o una adreça web de Mastodon vàlids</string>
     <string name="pref_backup_now_summary">Crear una còpia de seguretat immediatament</string>
@@ -833,12 +766,10 @@
     <string name="bicycle">Bicicleta</string>
     <string name="ruler">Regle</string>
     <string name="bookmark_color">Color del preferit</string>
-    <string name="about_help">Quant a i Ajuda</string>
     <string name="open_now">Obert ara</string>
     <string name="closed_now">Tancat ara</string>
     <string name="at">a les %s</string>
     <string name="dialog_report_error_missing_folder">La ubicació seleccionada per a la còpia de seguretat no està disponible o no s\'hi pot escriure. Si us plau, selecciona una ubicació diferent.</string>
-    <string name="dialog_report_error_with_logs">Si us plau, envia\'ns un informe d\'error:\n - \"Activa el registre\" a la configuració\n - reprodueix el problema\n - a la pantalla \"Quant a i Ajuda\" prem el botó \"Informa d’un error\" i envia-ho via email o xat\n - desactiva el registre</string>
     <string name="hours_confirmed_time_ago">Confirmat %s</string>
     <string name="existence_confirmed_time_ago">Existència confirmada %s</string>
     <string name="osm_note_hint">O també podeu deixar una nota a la comunitat OpenStreetMap de manera que algú pugui afegir o arreglar un lloc aquí.</string>
@@ -887,14 +818,12 @@
     <string name="place_page_too_old_to_edit">L\'edició de dades d\'OpenStreetMap està deshabilitada perquè les dades del mapa són massa antigues.</string>
     <string name="place_page_map_too_old_title">Dades del mapa desactualitzades</string>
     <string name="place_page_map_too_old_description">Les teves dades de mapa son molt antigues, per favor actualitza el mapa.</string>
-    <string name="place_page_app_too_old_description">Les teues dades del mapa son molt antigues, per favor actualitza l\'app de CoMaps.</string>
     <string name="place_page_update_too_old_map">Actualitzar regió del mapa</string>
     <string name="prefs_speed_cameras_information">Les advertències de càmeres radar estan deshabilitades als països on estan prohibides per llei.</string>
     <string name="navigation_start_tts_message">"Iniciant Navegació, idioma d\'instruccions de veu: "</string>
     <string name="navigation_start_tts_disabled_message">Instruccions de veu desactivades: motor TTS no disponible</string>
     <string name="advanced">Avançat</string>
     <string name="download_resources_custom_url_title">Servidor de Mapes Personalitzat</string>
-    <string name="download_resources_custom_url_message">Sobreescriu el servidor de descàrrega de mapes per defecte. Deixa en blanc per a emprar el servidor per defecte de CoMaps.</string>
     <string name="download_resources_custom_url_summary_none">No establert</string>
     <string name="download_resources_custom_url_error_scheme">Per favor introdueix una URL que comence amb http:// o https://</string>
     <string name="pref_maplanguage_local">Idioma Local</string>
@@ -915,7 +844,6 @@
     <string name="pref_alt_map_lang_handling_ignore_alternatives">No facis servir alternatives</string>
     <string name="pref_alt_map_lang_handling_system_order">Fes servir en l\'ordre del sistema</string>
     <string name="pref_openexternallinks_title">Obre enllaços de tercers automàticament</string>
-    <string name="pref_openexternallinks_summary">Obre enllaços de tercers amb CoMaps per defecte</string>
     <string name="my_position_share_email">Seguiu aquest enllaç %1$s o pegueu aquestes coordenades %2$s als vostres mapes per a veure la meua ubicació.</string>
     <string name="bookmark_share_email_subject">Seguiu aquest enllaç %1$s o enganxeu aquestes coordenades %2$s a la teva aplicació de mapes per a veure aquesta ubicació.</string>
     <string name="stop">Parada</string>

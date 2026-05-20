@@ -15,10 +15,8 @@
     <string name="downloader_status_maps">Mapas</string>
     <string name="category_nightlife">Vida nocturna</string>
     <string name="category_bank">Banco</string>
-    <string name="editor_example_values">Valores de exemplo</string>
     <string name="day_off">Pechado</string>
     <string name="day">d</string>
-    <string name="news">Noticias</string>
     <string name="pink">Rosa</string>
     <string name="accept">Aceptar</string>
     <string name="downloader_queued">En cola</string>
@@ -32,8 +30,6 @@
     <string name="details">Detalles</string>
     <string name="editor_reset_edits_button">Desbotar cambios</string>
     <string name="category_parking">Aparcamento</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="select_cuisine">Seleccionar cociña</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="menu">Menú</string>
@@ -62,11 +58,7 @@
     <string name="mobile_data_option_ask">Preguntar sempre</string>
     <string name="traffic_update_maps_text">Para mostrar os datos de tráfico, deben actualizarse os mapas</string>
     <string name="big_font">Aumentar tamaño do texto no mapa</string>
-    <string name="traffic_update_app">Por favor, actualice CoMaps</string>
-    <string name="prefs_languages_information_off_link">Para obter máis información, consulte esta guía</string>
     <string name="privacy">Privacidade</string>
-    <string name="privacy_policy">Normativa de privacidade</string>
-    <string name="terms_of_use">Condiciones de uso</string>
     <string name="button_layer_traffic">Tráfico</string>
     <string name="subway">Metro</string>
     <string name="layers_title">Estilos e capas do mapa</string>
@@ -97,8 +89,6 @@
     <string name="connection_failure">Fallo de conexión</string>
     <string name="disconnect_usb_cable_title">Desconecte o cable USB</string>
     <string name="enable_keep_screen_on">Manter pantalla acesa</string>
-    <string name="app_tip_09">O noso principal obxectivo é crear mapas rápidos, centrados na privacidade e fáciles de utilizar que lle encantarán.</string>
-    <string name="car_used_on_the_phone_screen">Agora usa CoMaps na pantalla do teléfono</string>
     <string name="select_option">Selecciona a opción</string>
     <string name="edit_track">Editar traxecto</string>
     <string name="uri_open_location_failed">Non hai ningunha aplicación instalada que poida abrir a localización</string>
@@ -145,13 +135,7 @@
     <string name="precise_location_is_disabled_long_text">Para garantir unha navegación máis precisa, active a Precisión da localización nos axustes.</string>
     <string name="zoom_to_country">Amosar no mapa</string>
     <string name="country_status_download_failed">Erro durante a descarga</string>
-    <string name="about_headline">Proxecto de código aberto xestionado pola comunidade</string>
-    <string name="about_proposition_1">• Fácil de usar e clara</string>
-    <string name="about_proposition_2">• Centrada na privacidade e sen publicidade</string>
-    <string name="about_proposition_3">• Sen conexión, rápida e compacta</string>
-    <string name="about_developed_by_enthusiasts">Código completamente aberto, sen ánimo de lucro, proceso de toma de decisións económicas transparente.</string>
     <string name="unsupported_phone">A aplicación require OpenGL acelerado por hardware. Lamentablemente, o seu dispositivo non é compatible.</string>
-    <string name="disconnect_usb_cable">por favor, desconecte o cable USB ou insira unha tarxeta de memoria SD para usar CoMaps</string>
     <string name="not_enough_free_space_on_sdcard">Libere espazo na memoria SD ou almacenamento USB para usar a aplicación</string>
     <string name="download_resources">Antes de comezar, permita que descarguemos no seu dispositivo un mapamundi xeral. \nRequírense %s de almacenamento.</string>
     <string name="download_resources_continue">Ir ao mapa</string>
@@ -178,8 +162,6 @@
     <string name="category_children">Lecer en familia</string>
     <string name="category_rv">Instalacións para autocaravanas</string>
     <string name="description">Notas</string>
-    <string name="share_bookmarks_email_subject">Marcadores de CoMaps compartidos con vostede</string>
-    <string name="share_bookmarks_email_body">Ola! \n \nAdxunto os meus marcadores da aplicación CoMaps. Por favor, ábraos se ten instalado CoMaps. Ou, se non o ten, descargue a aplicación para o seu dispositivo iOS ou Android seguindo esta ligazón: https://www.comaps.app/download/ \n \nGozar viaxando con CoMaps!</string>
     <string name="load_kmz_successful">Os marcadores cargáronse con éxito! Pode atopalos no mapa ou na pantalla de Xestión de marcadores.</string>
     <string name="load_kmz_failed">Non se puideron cargar os marcadores. O arquivo podería ter danos ou defectos.</string>
     <string name="unknown_file_type">A aplicación non recoñece o tipo de arquivo: \n%1$s</string>
@@ -187,8 +169,6 @@
     <string name="unknown_current_position">Aínda non se determinou a súa localización</string>
     <string name="cant_change_this_setting">Sentímolo, a configuración da almacenaxe de mapas está desactivada</string>
     <string name="downloading_is_active">A descarga do mapa está en curso</string>
-    <string name="my_position_share_sms">Olla a miña localización actual en CoMaps! %1$s ou %2$s Non ten mapas offline? Descárgueos aquí: https://www.comaps.app/download/</string>
-    <string name="my_position_share_email_subject">Mira a miña localización actual no mapa en CoMaps!</string>
     <string name="copied_to_clipboard">Copiado ao portarretallos: %s</string>
     <string name="data_version">Datos de OpenStreetMap: %s</string>
     <string name="share_my_location">Compartir a miña localización</string>
@@ -207,13 +187,6 @@
     <string name="pref_tts_unavailable">Non dispoñible</string>
     <string name="pref_map_auto_zoom">Zum automático</string>
     <string name="search_show_on_map">Ver no mapa</string>
-    <string name="feedback">Comentarios</string>
-    <string name="rate_the_app">Valore a aplicación</string>
-    <string name="faq">Preguntas frecuentes</string>
-    <string name="donate">Doar</string>
-    <string name="how_to_support_us">Voluntariado para mellorar CoMaps</string>
-    <string name="copyright">Dereitos de autor</string>
-    <string name="report_a_bug">Informar dun fallo</string>
     <string name="compass_calibration_recommended">Mellore a dirección da frecha movendo o teléfono en forma de oito para calibrar o compás.</string>
     <string name="compass_calibration_required">Mova o teléfono en forma de oito para calibrar o compás e fixar a dirección da frecha no mapa.</string>
     <string name="long_tap_toast">Volva pulsar prolongadamente sobre o mapa para ver a interface</string>
@@ -305,7 +278,6 @@
     <string name="editor_report_problem_other_title">Un problema diferente</string>
     <string name="message_invalid_feature_position">Non se pode situar ningún obxecto aquí</string>
     <string name="osm_presentation">Datos de OpenStreetMap creados pola comunidade a data de %s. Máis información sobre como editar e actualizar o mapa en OpenStreetMap.org</string>
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) é un proxecto comunitario para construír un mapa libre e aberto. É a principal fonte de datos cartográficos de CoMaps e funciona de forma similar a Wikipedia. Vostede pode engadir ou editar lugares e estes pasan a estar dispoñibles para millóns de usuarios de todo o mundo. \nÚnase á comunidade e axude a crear un mapa mellor para todos!</string>
     <string name="login_to_make_edits_visible">Cre unha conta OpenStreetMap ou inicie sesión para publicar as súas edicións de mapas en todo o mundo</string>
     <string name="download_over_mobile_header">Descargar con conexión de rede móbil?</string>
     <string name="download_over_mobile_message">Podería ser moi caro con certos plans ou con itinerancia de datos</string>
@@ -314,12 +286,10 @@
     <string name="error_enter_correct_zip_code">Introduza un código postal válido</string>
     <string name="editor_about_osm">As súas edicións cárganse na base de datos pública <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a>. Por favor, non engada información persoal ou protexida por dereitos de autor.</string>
     <string name="editor_other_info">Nota para os voluntarios de OpenStreetMap (opcional)</string>
-    <string name="editor_note_hint">Describa os erros no mapa ou as cousas que non se poden editar con CoMaps</string>
     <string name="editor_more_about_osm">Más acerca de OpenStreetMap</string>
     <string name="editor_osm_history">O seu historial de edicións</string>
     <string name="editor_osm_notes">As miñas notas de datos do mapa</string>
     <string name="editor_category_unsuitable_title">Non acha unha categoría adecuada?</string>
-    <string name="editor_category_unsuitable_text">CoMaps permite engadir unicamente categorías de puntos sinxelos, é dicir, non cidades, estradas, lagos, contornos de edificios, etc. Por favor, engada ditas categorías directamente <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Consulte nosa <a href="https://www.comaps.app/support/advanced-map-editing/">guía</a> para obter instrucións detalladas paso a paso.</string>
     <string name="downloader_no_downloaded_maps_title">Non descargou ningún mapa</string>
     <string name="downloader_no_downloaded_maps_message">Descargue mapas para atopar a localización e navegar sen conexión</string>
     <string name="current_location_unknown_error_title">Descoñécese a localización actual</string>
@@ -348,7 +318,6 @@
     <string name="mobile_data">Internet móbil</string>
     <string name="mobile_data_description">Necesítase Internet móbil para notificacións de actualizacións do mapa e subir edicións</string>
     <string name="traffic_data_unavailable">Os datos de tráfico non están dispoñibles</string>
-    <string name="feedback_general">Opinión xeral</string>
     <string name="prefs_languages_information">Utilizamos o sistema TTS para as instrucións de voz. Moitos dispositivos de Android usan Google TTS. Pode descargar ou actualizalo desde Google Play (https://play.google.com/store/apps/details?ide=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Para algúns idiomas, debe instalar outro sintetizador de voz ou un paquete de idioma adicional desde a tenda de aplicacións (Google Play, Galaxy Store, App Gallery, FDroid). \nAbra os Axustes do seu dispositivo → Idioma e entrada de texto → Voz → Opcións texto a voz.\nAquí pode administrar a configuración de síntese de voz (por exemplo, descargar un paquete de idioma para poder usalo sen conexión) ou seleccionar outro motor de texto a voz.</string>
     <string name="transliteration_title">Transliteración ao alfabeto latino</string>
@@ -360,7 +329,6 @@
     <string name="placepage_remove_stop">Eliminar parada</string>
     <string name="placepage_add_stop">Engadir parada</string>
     <string name="dialog_error_storage_title">Problema de acceso ao almacenamento</string>
-    <string name="dialog_error_storage_message">Non se pode acceder ao almacenamento externo. É posible que a tarxeta SD fose eliminada, danada ou que o sistema de ficheiros sexa só de lectura. Comprobe a súa tarxeta SD ou póñase en contacto connosco en support@comaps.app</string>
     <string name="error_enter_correct_name">Por favor, introduza o nome correcto</string>
     <string name="bookmark_lists_show_all">Amosar todo</string>
     <string name="bookmarks_create_new_group">Crear nova lista</string>
@@ -381,7 +349,6 @@
     <string name="power_managment_title">Modo de aforro de enerxía</string>
     <string name="power_managment_description">Tratarase de reducir o consumo de enerxía a expensas de certas funcións</string>
     <string name="power_managment_setting_auto">Cando queda pouca enerxía</string>
-    <string name="enable_logging_warning_message">Active esta opción temporalmente para gravar e enviar de forma manual rexistros para diagnosticar defectos enviados mediante a opción «Informar dun fallo» no diálogo Axuda. Os rexistros poden incluír localizacións.</string>
     <string name="driving_options_title">Opcións de encamiñamento</string>
     <string name="avoid_unpaved">Evitar camiños sen pavimentar</string>
     <string name="avoid_motorways">Evitar autoestradas</string>
@@ -414,16 +381,6 @@
     <string name="enable_show_on_lock_screen_description">Cando se activa, non ten que desbloquear o dispositivo para executar a aplicación.</string>
     <string name="change_map_locale">Idioma do mapa</string>
     <string name="splash_subtitle">Datos do mapa de OpenStreetMap</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="app_tip_00">Grazas por utilizar os nosos mapas creados pola comunidade!</string>
-    <string name="app_tip_01">Coas súas doazóns e apoio, podemos crear os mellores mapas do mundo!</string>
-    <string name="app_tip_02">Gústalle a nosa aplicación? Por favor doe para apoiar o seu desenvolvemento! Aínda non lle gusta? Díganos por que e arranxarémolo!</string>
-    <string name="app_tip_03">Se coñece a algún desarrollador ou desarrolladora de software, pódelle pedir que implemente algunha funcionalidade que vostede necesite.</string>
-    <string name="app_tip_04">Toque en calquera lugar do mapa para seleccionar calquera elemento. Manteña pulsado para ocultar e volver amosar a interface.</string>
-    <string name="app_tip_05">Sabía que a súa localización actual no mapa pódese seleccionar?</string>
-    <string name="app_tip_06">Pode axudar a traducir a nosa aplicación ao seu idioma.</string>
-    <string name="app_tip_07">A nosa aplicación está desenvolta por uns poucos entusiastas e a comunidade.</string>
-    <string name="app_tip_08">Pode arranxar e mellorar facilmente os datos do mapa.</string>
     <string name="car_continue_in_the_car">Á pantalla do coche</string>
     <string name="button_layer_outdoor">Sendeirismo</string>
     <string name="browser_not_available">A navegador web non está dispoñible</string>
@@ -456,7 +413,6 @@
     <string name="settings">Configuración</string>
     <string name="next_button">Seguinte</string>
     <string name="editor_report_problem_send_button">Enviar</string>
-    <string name="translated_om_site_url">https://comaps.app/gl/</string>
     <string name="category_shopping">Compras</string>
     <string name="placepage_distance">Distancia</string>
     <string name="category_toilet">Baño</string>
@@ -468,7 +424,6 @@
     <string name="website">Sitio web</string>
     <string name="downloader_update_map">Actualizar mapa</string>
     <string name="yes">Si</string>
-    <string name="help">Axuda</string>
     <string name="downloader_downloaded_subtitle">Descargado</string>
     <string name="kilometers_per_hour">km/h</string>
     <string name="create">Crear</string>
@@ -512,7 +467,6 @@
     <string name="mobile_data_option_never">Non usar nunca</string>
     <string name="enable_logging">Activar rexistros</string>
     <string name="bookmark_lists_hide_all">Ocultar todo</string>
-    <string name="about_menu_title">Acerca de CoMaps</string>
     <string name="profile">Perfil de OpenStreetMap</string>
     <string name="place_description_title">Descrición do lugar</string>
     <string name="avoid_tolls">Evitar peaxes</string>
@@ -541,8 +495,6 @@
     </plurals>
     <string name="panoramax">Imaxe Panoramax</string>
     <string name="saved">Gardado</string>
-    <string name="app_site_url">https://comaps.app/gl/</string>
-    <string name="about_help">Sobre e Axuda</string>
     <string name="bicycle">En bicicleta</string>
     <string name="vehicle">Vehículo</string>
     <string name="pedestrian">A pé</string>
@@ -570,7 +522,6 @@
     <string name="ruler">Regra</string>
     <string name="bookmark_color">Cor do marcador</string>
     <string name="dialog_report_error_missing_folder">A localización seleccionada non é accesible ou non se pode escribir nela. Elixe outra por favor.</string>
-    <string name="dialog_report_error_with_logs">Envíanos un informe co fallo:\n - \"Activa o rexistro\" nos axustes\n - reproduce o problema\n - na pantalla \"Sobre e Axuda\" preme en \"Informar dun problema\" e envía un correo ou á mensaxería\n - desactiva o rexistro</string>
     <string name="pref_backup_now_summary">Crear unha copia agora mesmo</string>
     <string name="pref_backup_location_summary_initial">Primeiro elixe un cartafol e concede permiso de acceso</string>
     <string name="pref_backup_title">Copia de apoio de marcadores e rutas</string>
@@ -621,7 +572,6 @@
     <string name="editor_mark_business_vacant_title">Marcar como dispoñible para negocios</string>
     <string name="place_page_map_too_old_title">Datos do mapa desactualizados</string>
     <string name="place_page_map_too_old_description">Os datos do mapa son moi antigos, por favor actualiza o mapa.</string>
-    <string name="place_page_app_too_old_description">Os datos do mapa actual son moi antigos, actualiza a app CoMaps.</string>
     <string name="place_page_update_too_old_map">Actualizar rexión do mapa</string>
     <string name="place_page_too_old_to_edit">A edición de OpenStreetMap está desactivada porque o mapa é demasiado antigo.</string>
     <string name="prefs_speed_cameras_information">Os avisos de radares están desactivados nos paises onde a lei local prohibe estas alertas.</string>
@@ -631,7 +581,6 @@
     <string name="charge_socket_schuko">Doméstico na UE</string>
     <string name="advanced">Avanzado</string>
     <string name="download_resources_custom_url_title">Servidor persoal do mapa</string>
-    <string name="download_resources_custom_url_message">Sobrescribe o servidor predefinido para descargar mapas. Deixar baleiro para usar o servidor por defecto de CoMaps.</string>
     <string name="download_resources_custom_url_summary_none">Sen establecer</string>
     <string name="download_resources_custom_url_error_scheme">Escribe un URL que comece por http:// ou https://</string>
     <string name="bookmark_share_email_subject">Sigue esta ligazón %1$s ou pega estas coordenadas %2$s na túa aplicación de mapas para ver esta localización.</string>

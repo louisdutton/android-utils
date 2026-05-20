@@ -65,7 +65,6 @@
     <string name="go_to_settings" msgid="3019191145506686424">"Settings"</string>
     <string name="install_dict" msgid="8963966683066463555">"Install"</string>
     <string name="cancel_download_dict" msgid="8877923127773611502">"Cancel"</string>
-    <string name="version_text" msgid="3213200439763585436">"Version <xliff:g id="VERSION_NUMBER">%1$s</xliff:g>"</string>
     <string name="user_dict_settings_add_menu_title" msgid="2094235623352820667">"Add"</string>
     <string name="user_dict_settings_add_dialog_title" msgid="2721075588858235712">"Add to dictionary"</string>
     <string name="user_dict_settings_add_screen_title" msgid="3777988967870363317">"Phrase"</string>

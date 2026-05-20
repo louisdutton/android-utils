@@ -34,24 +34,12 @@
     <string name="country_status_download_failed">Hentning mislykket</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Prøv igen</string>
-    <string name="about_menu_title">Om CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_headline">Åbent projekt drevet af fællesskabet</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Let at bruge og veludført</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Fokuseret på beskyttelse af privatlivets fred og fri for reklamer</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Offline, hurtig og kompakt</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Helt open source, non-profit, gennemsigtig beslutningstagning og økonomi.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Indstillinger for placering</string>
     <string name="close">Luk</string>
     <string name="unsupported_phone">Appen kræver hardwareaccelereret OpenGL. Din enhed er desværre ikke understøttet.</string>
     <string name="download">Hent</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Frakobl venligst USB-kabel, eller indsæt et hukommelseskort for at bruge CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Frigør først noget plads på dit SD-kort/USB lager for at bruge denne app</string>
     <string name="download_resources">Før du begynder at bruge appen, skal du hente oversigtskortet over verden til din enhed. \nDet vil bruge %s lagerplads.</string>
@@ -143,8 +131,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Noter</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Mine CoMaps-favoritter</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Indlæser favoritter</string>
     <!-- Kmz file successful loading -->
@@ -163,10 +149,6 @@
     <string name="cant_change_this_setting">Beklager, indstillingerne for kortlagring er i øjeblikket deaktiveret</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Download af kort er i gang nu</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Hey, tjek min nuværende placering på CoMaps! %1$s eller %2$s. Har du ikke offline kort? Download her: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Hey, tjek min nuværende placering på CoMaps-kortet!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Del</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -218,24 +200,9 @@
     <string name="search_show_on_map">Vis på kort</string>
     <!-- Text in menu -->
     <string name="website">Hjemmeside</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Nyheder</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Feedback</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Bedøm appen</string>
     <!-- Text in menu -->
-    <string name="help">Hjælp</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Spørgsmål og svar</string>
     <!-- Button in the main menu -->
-    <string name="donate">Doner</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Bliv frivillig og forbedr CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Copyright</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Rapportér fejl</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Forbedre pilens retning ved at bevæge telefonen i en ottetalsbevægelse for at kalibrere kompasset.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -380,7 +347,6 @@
     <string name="editor_time_advanced">Avanceret tilstand</string>
     <string name="editor_time_simple">Enkel tilstand</string>
     <string name="editor_hours_closed">Lukket-timer</string>
-    <string name="editor_example_values">Eksempelværdier</string>
     <string name="editor_correct_mistake">Ret fejl</string>
     <string name="editor_add_select_location">Vælg placering</string>
     <string name="editor_report_problem_send_button">Send</string>
@@ -438,8 +404,6 @@
     <string name="message_invalid_feature_position">Et objekt kan ikke placeres her</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Fællesskabsskabte OpenStreetMap-data fra %s. Få mere at vide om, hvordan du redigerer og opdaterer kortet på OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) er et fællesskabsprojekt til opbygning af et gratis og åbent kort. Det er hovedkilden til kortdata i CoMaps og fungerer på samme måde som Wikipedia. Du kan tilføje eller redigere steder, og de bliver tilgængelige for millioner af brugere over hele verden. \nSlut dig til fællesskabet og vær med til at skabe et bedre kort for alle!</string>
     <string name="login_to_make_edits_visible">Opret en OpenStreetMap-konto eller log ind for at offentliggøre dine kortredigeringer for hele verden</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d af %2$d</string>
@@ -452,8 +416,6 @@
     <string name="error_enter_correct_zip_code">Indtast et gyldigt postnummer</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Note til OpenStreetMap-frivillige (valgfrit)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Beskriv fejl på kortet eller ting, der ikke kan redigeres med CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Dine ændringer uploades til den offentlige <a href="https://wiki.openstreetmap.org/wiki/Da:Om_OpenStreetMap">OpenStreetMap</a>-database. Tilføj venligst ikke personlige eller ophavsretligt beskyttede oplysninger.</string>
     <string name="editor_more_about_osm">Mere om OpenStreetMap</string>
@@ -463,7 +425,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operatør: %s</string>
     <string name="editor_category_unsuitable_title">Kan du ikke finde en passende kategori?</string>
-    <string name="editor_category_unsuitable_text">CoMaps giver kun mulighed for at tilføje simple punktkategorier, dvs. ingen byer, veje, søer, bygningsomrids etc. Tilføj sådanne kategorier direkte på <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Se vores <a href="https://www.comaps.app/support/advanced-map-editing/">guide</a> for detaljerede trin for trin-instruktioner.</string>
     <string name="downloader_no_downloaded_maps_title">Du har ikke downloadet nogen kort</string>
     <string name="downloader_no_downloaded_maps_message">Download kort for at søge og navigere offline</string>
     <string name="current_location_unknown_error_title">Aktuel placering er ukendt</string>
@@ -508,15 +469,11 @@
     <string name="mobile_data_option_ask">Spørg altid</string>
     <string name="traffic_update_maps_text">Kort skal opdateres for at vise trafikdata</string>
     <string name="big_font">Forøg størrelsen på kortetiketter</string>
-    <string name="traffic_update_app">Opdater CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Trafikdata er ikke tilgængelige</string>
     <string name="enable_logging">Aktiver logføring</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Generel feedback</string>
     <string name="prefs_languages_information">Vi bruger systemets TTS til stemmevejledning. Mange Android-enheder bruger Google TTS, du kan hente eller opdatere det via Google Play Butik (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Nogle sprog kræver, at du installerer en talesyntese eller et ekstra sprogpakke fra en app-butik (Google Play, Galaxy Store, App Gallery, F-Droid). \nÅbn din enheds indstillinger → Sprog og input → Tale → Tekst til tale. \nHer kan du administrere indstillingerne for talesyntese (f.eks. downloade en sprogpakke til offline brug) og vælge et andet tekst-til-tale-program.</string>
-    <string name="prefs_languages_information_off_link">Se denne vejledning for flere oplysninger</string>
     <string name="transliteration_title">Translitterer til det latinske alfabet</string>
     <string name="learn_more">Flere oplysninger</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -528,7 +485,6 @@
     <string name="placepage_remove_stop">Fjern stop</string>
     <string name="placepage_add_stop">Tilføj stop</string>
     <string name="dialog_error_storage_title">Problem med lageradgang</string>
-    <string name="dialog_error_storage_message">Eksternt lager er ikke tilgængeligt. SD-kortet kan være blevet fjernet eller beskadiget, eller filsystemet er skrivebeskyttet. Kontroller dit SD-kort eller kontakt os på support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Emulér beskadiget lager</string>
     <string name="error_enter_correct_name">Angiv et korrekt navn</string>
     <string name="bookmark_lists">Favoritlister</string>
@@ -564,8 +520,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Privatliv</string>
-    <string name="privacy_policy">Privatlivspolitik</string>
-    <string name="terms_of_use">Vilkår for bruger</string>
     <string name="button_layer_traffic">Trafik</string>
     <string name="subway">Undergrundsbane</string>
     <string name="layers_title">Kortstile og -lag</string>
@@ -590,7 +544,6 @@
     <string name="power_managment_setting_never">Aldrig</string>
     <string name="power_managment_setting_auto">Når batteriniveauet er lavt</string>
     <string name="power_managment_setting_manual_max">Altid</string>
-    <string name="enable_logging_warning_message">Aktivér denne mulighed midlertidigt for at registrere og manuelt sende detaljerede diagnostiske logfiler om dit problem til os ved hjælp af \"Rapportér en fejl\" i Hjælp-dialogen. Logfiler kan indeholde placeringsoplysninger.</string>
     <string name="driving_options_title">Indstillinger for ruteberegning</string>
     <string name="avoid_tolls">Undgå betalingsveje</string>
     <string name="avoid_unpaved">Undgå veje uden fast belægning</string>
@@ -678,33 +631,19 @@
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/Da:Om_OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Tak, fordi du bruger vores fællesskabsskabte kort!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Med dine donationer og støtte kan vi skabe de bedste kort i verden!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Kan du lide vores app? Donér venligst for at støtte udviklingen! Kan du ikke lide det endnu? Fortæl os det, så ordner vi det!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Hvis du kender en softwareudvikler, kan du bede ham eller hende om at implementere en funktion, som du har brug for.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Tryk hvor som helst på kortet for at vælge noget. Tryk længe for at skjule og vise grænsefladen igen.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Ved du, at du kan vælge din nuværende placering på kortet?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Du kan hjælpe med at oversætte vores app til dit sprog.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Vores app er udviklet af nogle få entusiaster og fællesskabet.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Du kan nemt rette og forbedre kortdataene.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Vores hovedmål er at bygge hurtige, privatlivsfokuserede, brugervenlige kort, som du vil elske.</string>
-    <string name="car_used_on_the_phone_screen">Du bruger nu CoMaps på telefonens skærm</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Til bilens skærm</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Vandring</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -761,15 +700,12 @@
     <string name="error_enter_correct_facebook_page">Indtast en gyldig Facebook-webadresse, -konto eller -sidenavn</string>
     <string name="connection_failure">Forbindelsesfejl</string>
     <string name="error_enter_correct_twitter_page">Indtast et gyldigt Twitter-brugernavn eller en webadresse</string>
-    <string name="share_bookmarks_email_body">Hej! \n \nVedhæftet er mine favoritter; åbn dem i CoMaps. Hvis du ikke har den installeret, kan du downloade den her: https://www.comaps.app/download/\n \nGod rejse med CoMaps!</string>
     <string name="delete_place_empty_comment_error">Angiv begrundelsen for at slette stedet</string>
     <string name="disk_error_title">Diskfejl</string>
     <string name="error_enter_correct_instagram_page">Indtast et gyldigt Instagram-brugernavn eller en webadresse</string>
-    <string name="translated_om_site_url">https://comaps.app/da/</string>
     <string name="navigation_stop_button">Stop</string>
     <string name="error_enter_correct_vk_page">Indtast et gyldigt VK-brugernavn eller en webadresse</string>
     <string name="error_enter_correct_line_page">Indtast et gyldigt LINE ID eller en webadresse</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="level_value_generic">Etage: %s</string>
     <string name="closes_in">Lukker om %s</string>
     <string name="enable_show_on_lock_screen_description">Når den er aktiveret, fungerer appen på låseskærmen, selv når enheden er låst.</string>
@@ -782,11 +718,8 @@
     <string name="menu">Menu</string>
     <string name="change_map_locale">Sprog på kort</string>
     <string name="prefs_group_information">Information</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="panoramax">Panoramax-billede</string>
     <string name="saved">Gemt</string>
-    <string name="about_help">Om og hjælp</string>
     <string name="error_enter_correct_fediverse_page">Indtast et gyldigt Mastodon-brugernavn eller en gyldig webadresse</string>
     <string name="error_enter_correct_bluesky_page">Indtast et gyldigt Bluesky-brugernavn eller en webadresse</string>
     <string name="editor_level">Etage (0 er stueetage)</string>
@@ -802,7 +735,6 @@
     <string name="backup_interval_every_week">Ugentligt</string>
     <string name="backup_interval_manual_only">Fra (kun manuelt)</string>
     <string name="dialog_report_error_missing_folder">Den valgte sikkerhedskopi-placering er ikke tilgængelig eller skrivbar. Vælg en anden placering.</string>
-    <string name="dialog_report_error_with_logs">Send os en fejlrapport:\n - \"Aktivér logning\" i indstillingerne\n - genskab problemet\n - Tryk på knappen \"Rapporter en fejl\" i skærmbilledet \"Om og hjælp\" og send via e-mail eller chat.\n - deaktiver logning</string>
     <string name="editor_building_levels">Etager (inkl. stueetage, ekskl. tag)</string>
     <string name="error_enter_correct_level">Indtast et gyldigt etagenummer</string>
     <string name="pref_backup_title">Sikkerhedskopiér favoritter</string>
@@ -818,7 +750,6 @@
     <string name="pref_backup_summary">Automatisk sikkerhedskopiering til en mappe på din enhed</string>
     <string name="pref_backup_now_summary_progress">Sikkerhedskopiering i gang…</string>
     <string name="pref_backup_location_title">Placering af sikkerhedskopi</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="closed_now">Lukket nu</string>
     <string name="open_now">Åben nu</string>
     <string name="at">kl. %s</string>
@@ -870,13 +801,11 @@
     <string name="navigation_start_tts_message">"Starter navigation, sprog for stemmeinstruktioner: "</string>
     <string name="place_page_map_too_old_title">Kortdata forældet</string>
     <string name="place_page_map_too_old_description">Dine nuværende kortdata er meget gamle. Opdater kortet.</string>
-    <string name="place_page_app_too_old_description">Dine nuværende kortdata er meget gamle. Opdater CoMaps-appen.</string>
     <string name="place_page_update_too_old_map">Opdater kortregion</string>
     <string name="place_page_too_old_to_edit">Redigering af OpenStreetMap er deaktiveret, fordi kortdataene er for gamle.</string>
     <string name="navigation_start_tts_disabled_message">Stemmeinstruktioner deaktiveret: TTS-motor ikke tilgængelig</string>
     <string name="advanced">Avanceret</string>
     <string name="download_resources_custom_url_title">Brugerdefineret kortserver</string>
-    <string name="download_resources_custom_url_message">Tilsidesæt den som standard anvendte server til download af kort. Lad feltet være tomt for at bruge CoMaps\' standardserver.</string>
     <string name="download_resources_custom_url_summary_none">Ikke indstillet</string>
     <string name="download_resources_custom_url_error_scheme">Indtast en URL, der starter med http:// eller https://</string>
     <string name="pref_maplanguage_local">Lokalt sprog</string>
@@ -893,7 +822,6 @@
     <string name="route_finished">Rute færdig</string>
     <string name="not_following_route">Følger ikke rute</string>
     <string name="pref_openexternallinks_title">Åbn automatisk links fra tredjeparter</string>
-    <string name="pref_openexternallinks_summary">Åbn som standard links fra tredjeparter i CoMaps</string>
     <string name="pref_alt_map_lang_handling">Alternative kortsprog</string>
     <string name="pref_alt_map_lang_handling_ignore_alternatives">Brug ikke alternativer</string>
     <string name="pref_alt_map_lang_handling_system_order">Brug i systemorden</string>

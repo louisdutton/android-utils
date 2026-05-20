@@ -22,7 +22,6 @@ import dev.octoshrimpy.quik.model.ScheduledMessage
 
 data class ScheduledState(
     val scheduledMessages: List<ScheduledMessage>? = null,
-    val upgraded: Boolean = true,
     val selectedMessages: Int = 0,
     val conversationId: Long? = null,
 )

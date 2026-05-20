@@ -1,0 +1,10 @@
+# ninja log v5
+1	40	1779300640680842240	CMakeFiles/assistant_whisper.dir/whisper_jni_common.cpp.o	80e8216befb8b663
+2	190	1779300640830136491	CMakeFiles/assistant_whisper.dir/Users/louis/projects/grapheneos-essentials/apps/keyboard/native/jni/src/ggml/ggml-alloc.c.o	6ed2318e3750b402
+2	239	1779300640876285217	CMakeFiles/assistant_whisper.dir/Users/louis/projects/grapheneos-essentials/apps/keyboard/native/jni/src/ggml/ggml-backend.c.o	4ee36d4ef62f1afa
+1	307	1779300640946482225	CMakeFiles/assistant_whisper.dir/Users/louis/projects/grapheneos-essentials/apps/keyboard/native/jni/src/jni_utils.cpp.o	b0abadfac38abce9
+2	401	1779300641039190135	CMakeFiles/assistant_whisper.dir/Users/louis/projects/grapheneos-essentials/apps/keyboard/native/jni/src/ggml/ggml-quants.c.o	35b8ffc089a6ca44
+1	470	1779300641107175136	CMakeFiles/assistant_whisper.dir/Users/louis/projects/grapheneos-essentials/apps/keyboard/native/jni/org_futo_voiceinput_WhisperGGML.cpp.o	11b536add9b1bb7
+1	1942	1779300642567923173	CMakeFiles/assistant_whisper.dir/Users/louis/projects/grapheneos-essentials/apps/keyboard/native/jni/src/ggml/ggml.c.o	419d70bc5428050d
+3	3991	1779300644593640283	CMakeFiles/assistant_whisper.dir/Users/louis/projects/grapheneos-essentials/apps/keyboard/native/jni/src/ggml/whisper.cpp.o	75554450568cc52f
+3991	4040	1779300644671205647	/Users/louis/projects/grapheneos-essentials/apps/assistant/build/intermediates/cxx/Debug/621hv4g6/obj/x86/libassistant_whisper.so	3d91c77f3e5059fa

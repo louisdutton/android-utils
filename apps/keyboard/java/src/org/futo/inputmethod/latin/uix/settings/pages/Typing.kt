@@ -200,10 +200,10 @@ fun ResizeScreen(navController: NavHostController = rememberNavController()) {
         ScrollableList {
             ScreenTitle(stringResource(R.string.size_settings_title), showBack = true, navController)
 
-            PaymentSurface(
+            SettingsSurface(
                 isPrimary = false,
             ) {
-                PaymentSurfaceHeading(title = stringResource(R.string.settings_tip))
+                SettingsSurfaceHeading(title = stringResource(R.string.settings_tip))
 
                 Text(
                     buildAnnotatedString {

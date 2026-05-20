@@ -39,7 +39,6 @@
     <string name="about">O aplikacji</string>
     <string name="app_license">Wolne oprogramowanie typu copyleft, na licencji GPLv3+</string>
     <string name="about_title_fmt">O <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Wersja: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Wybierz kod kreskowy</string>
     <string name="thumbnailDescription">Miniaturka</string>
     <string name="settings">Ustawienia</string>
@@ -57,8 +56,6 @@
     <string name="exportSuccessful">Dane zostały wyeksportowane</string>
     <string name="importSuccessful">Zaimportowano dane</string>
     <string name="starImage">Gwiazdka ulubionych</string>
-    <string name="app_copyright_old">Na podstawie Loyalty Card Keychain
-\nWszelkie prawa zastrzeżone © 2016–2020 Branden Archer</string>
     <string name="exportOptionExplanation">Dane zostaną zapisane w wybranym przez ciebie miejscu</string>
     <string name="unstar">Usuń z ulubionych</string>
     <string name="star">Dodaj do ulubionych</string>
@@ -66,7 +63,6 @@
     <string name="barcodeType">Typ kodu kreskowego</string>
     <string name="deleteTitle">Usuń kartę</string>
     <string name="deleteConfirmation">Usunąć tę kartę na stałe\?</string>
-    <string name="app_contributors">Możliwe dzięki: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="settings_system_locale">System</string>
     <string name="settings_locale">Język</string>
     <string name="turn_flashlight_off">Wyłącz latarkę</string>
@@ -99,7 +95,6 @@
     <string name="importCatimaMessage">Wybierz swój plik eksportu z Catima, aby zaimportować. \nUtwórz go z menu Import/eksport innej aplikacji Catima poprzez wybór opcji Eksport.</string>
     <string name="importCatima">Importuj z Catima</string>
     <string name="accept">Zaakceptuj</string>
-    <string name="privacy_policy">Polityka prywatności</string>
     <string name="app_loyalty_card_keychain">Brelok dla twoich kart lojalnościowych</string>
     <string name="chooseImportType">Importuj dane z</string>
     <string name="points">Punkty</string>
@@ -133,9 +128,6 @@
     <string name="noGroupCards">Ta grupa jest pusta</string>
     <string name="settings_disable_lockscreen_while_viewing_card">Zapobiegaj wyłączeniu ekranu</string>
     <string name="settings_keep_screen_on">Nie wygaszaj ekranu</string>
-    <string name="app_resources">Zasoby zewnętrzne: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Biblioteki zewnętrzne: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Wszelkie prawa zastrzeżone © 2019–<xliff:g>%d</xliff:g> Sylvia van Os i współtwórcy</string>
     <plurals name="deleteCardsConfirmation">
         <item quantity="one">Usunąć tą <xliff:g>%d</xliff:g> kartę permamentnie\?</item>
         <item quantity="few">Usunąć te <xliff:g>%d</xliff:g> karty permamentnie\?</item>
@@ -159,12 +151,10 @@
     <string name="sort_by_most_recently_used">Ostatnio używane</string>
     <string name="sort_by_expiry">Wygaśnięcie</string>
     <string name="sort_by">Sortuj według</string>
-    <string name="credits">Podziękowania</string>
     <string name="help_translate_this_app">Pomóż przetłumaczyć tę aplikację</string>
     <string name="source_repository">Repozytorium źródłowe</string>
     <string name="report_error">Zgłoś błąd</string>
     <string name="setIcon">Ustaw miniaturę</string>
-    <string name="on_github">na GitHub\'ie</string>
     <string name="selectColor">Wybierz kolor</string>
     <string name="version_history">Historia wersji</string>
     <string name="and_data_usage">i wykorzystanie danych</string>
@@ -248,7 +238,6 @@
     <string name="settings_category_title_cards">Widok karty</string>
     <string name="settings_category_title_general">Ogólne</string>
     <string name="settings_category_title_privacy">Prywatność</string>
-    <string name="app_copyright_short">Wszelkie prawa zastrzeżone © Sylvia van Os i współtwórcy</string>
     <string name="action_display_options">Opcje wyświetlania</string>
     <string name="show_archived_cards">Pokaż zarchiwizowane karty</string>
     <string name="view_online">Zobacz online</string>

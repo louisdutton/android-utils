@@ -54,7 +54,7 @@ EOF
 cd "$maps_dir/android"
 
 if [[ "$#" -eq 0 ]]; then
-  set -- :app:assembleFdroidDebug -Parm64 --no-daemon -Pnjobs="${COMAPS_NJOBS:-4}"
+  set -- :app:assembleDebug -Parm64 --no-daemon -Pnjobs="${COMAPS_NJOBS:-4}"
 fi
 
 ./gradlew "$@"

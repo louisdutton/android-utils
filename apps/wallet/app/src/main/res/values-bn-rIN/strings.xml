@@ -74,14 +74,12 @@
     <string name="deleteTitle">কার্ড ডিলিট করুন</string>
     <string name="ok">ঠিক আছে</string>
     <string name="about">সম্পর্কিত</string>
-    <string name="debug_version_fmt">সংস্করণ: <xliff:g id="version">%s</xliff:g></string>
     <string name="moveUp">উপরে উঠান</string>
     <string name="moveDown">নিচে নামান</string>
     <string name="expiryDate">মেয়াদোত্তীর্ণ তারিখ</string>
     <string name="noBarcodeFound">কোনো বারকোড পাওয়া যায়নি</string>
     <string name="cameraPermissionRequired">এই কাজটির জন্য ক্যামেরা ব্যবহার করার অনুমতি লাগবে…</string>
     <string name="noCameraPermissionDirectToSystemSetting">বারকোড স্ক্যান করার জন্য, Catima কে ক্যামেরাটি ব্যবহার করার অনুমতি দিতে হবে। এইখানে টাচ করে আপনার অনুমতি সেটিংস পালটে নিন।</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">মেধাস্বত্ব © 2019–<xliff:g>%d</xliff:g> Sylvia van Os</string>
     <string name="app_license">কপিলেফট দ্বারা রক্ষা করা মুক্ত সফটওয়্যার, লাইসেন্স করা GPLv3+ এর অধীনে</string>
     <plurals name="deleteCardsConfirmation">
         <item quantity="one">এই <xliff:g>%d</xliff:g>টি কার্ড কি চিরকালের জন্য মুছে দেবো\?</item>
@@ -97,9 +95,7 @@
     </plurals>
     <string name="cameraPermissionDeniedTitle">ক্যামেরাটি ব্যবহার করা যাচ্ছে না</string>
     <string name="importOptionFilesystemExplanation">স্টোরেজ থেকে নির্দিষ্ট একটি ফাইল বাছুন।</string>
-    <string name="app_libraries">মুক্ত লাইব্রেরি যেগুলি আমার নয়: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="about_title_fmt"><xliff:g id="app_name">%s</xliff:g>টির সম্পর্কে</string>
-    <string name="app_resources">মুক্ত সম্পদ যেগুলি আমার নয়: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="thumbnailDescription">থাম্বনেইল</string>
     <string name="barcodeImageDescriptionWithType">ছবি <xliff:g>%s</xliff:g> বারকোড</string>
     <string name="exportName">রপ্তানি</string>
@@ -121,8 +117,6 @@
     <string name="exportOptionExplanation">ডেটাটি আপনার পছন্দের জায়গায় রাখা হবে।</string>
     <string name="importOptionFilesystemTitle">স্টোরেজ থেকে আমদানি করুন</string>
     <string name="importOptionFilesystemButton">স্টোরেজ থেকে</string>
-    <string name="app_copyright_old">Loyalty Card Keychain এর উপর ভিত্তি করে
-\nমেধাস্বত্ব © 2016–2020 Branden Archer</string>
     <string name="selectBarcodeTitle">বারকোড নির্বাচন করুন</string>
     <string name="settings">সেটিংস</string>
     <string name="settings_dark_theme">অন্ধকার</string>
@@ -159,10 +153,8 @@
     <string name="points">পয়েন্ট</string>
     <string name="chooseImportType">এখান থেকে তথ্য আমদানি করুন</string>
     <string name="app_loyalty_card_keychain">আনুগত্য কার্ড কীচেন</string>
-    <string name="privacy_policy">ব্যক্তিগত তথ্যের গোপনীয়তা নীতি</string>
     <string name="accept">গ্রহণ</string>
     <string name="failedToRetrieveImageFile">ছবি ফাইল পুনরুদ্ধার করতে ব্যর্থ হয়েছে</string>
-    <string name="on_github">GitHub -এ</string>
     <string name="importLoyaltyCardKeychainMessage">আমদানি করতে লয়্যালটি কার্ড কীচেন থেকে আপনার <i>LoyaltyCardKeychain.csv</i> এক্সপোর্ট নির্বাচন করুন।
 \nলয়্যালটি কার্ড কীচেনের আমদানি/রপ্তানি মেনু থেকে প্রথমে সেখানে রপ্তানি টিপে এটি তৈরি করুন।</string>
     <string name="selectColor">রঙ নির্বাচন করুন</string>
@@ -179,10 +171,8 @@
     <string name="chooseValidFromDate">তারিখ থেকে বৈধ নির্বাচন করুন</string>
     <string name="validFromSentence">এর থেকে বৈধ: <xliff:g>%s</xliff:g></string>
     <string name="version_history">সংস্করণ ইতিহাস</string>
-    <string name="credits">ক্রেডিট</string>
     <string name="help_translate_this_app">এই অ্যাপটি অনুবাদ করতে সাহায্য করুন</string>
     <string name="showMoreInfo">তথ্য দেখান</string>
-    <string name="app_contributors">এর দ্বারা সম্ভব হয়েছে: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="importCards">কার্ড আমদানি করুন</string>
     <string name="importFidmeMessage">FidMe থেকে আমদানি করতে আপনার <i>fidme-export-request-xxxxxx.zip</i> রপ্তানি নির্বাচন করুন এবং পরে বারকোডের ধরন ম্যানুয়ালি নির্বাচন করুন।
 \nআপনার FidMe প্রোফাইল থেকে ডেটা সুরক্ষা নির্বাচন করে এবং তারপর প্রথমে আমার ডেটা বের করুন টিপে এটি তৈরি করুন।</string>

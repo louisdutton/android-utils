@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">Збой спампоўвання</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Паспрабаваць зноў</string>
-    <string name="about_menu_title">Аб праграме CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Без рэкламы, без трэкінгу, без збірання вашых даных</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Без празмернай разрадкі батарэі, працуе ў аўтаномным рэжыме</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Афлайн, хуткі і кампактны</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Праграма з адкрытым зыходным кодам, створаная энтузіястамі і валанцёрамі.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Налады месцазнаходжання</string>
     <string name="close">Закрыць</string>
     <string name="unsupported_phone">Для працы праграмы патрабуецца апаратнае паскарэнне OpenGL. На жаль, ваша прылада не падтрымліваецца.</string>
     <string name="download">Спампаваць</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Адключыце кабель USB або ўстаўце карту памяці, каб карыстацца CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Вызваліце месца на SD-карце/USB-сховішчы, каб карыстацца праграмай</string>
     <string name="download_resources">Перш чым пачаць карыстацца праграмай, спампуйце на сваю прыладу аглядную карту свету. \nДля яе спатрэбіцца %s у сховішчы.</string>
@@ -143,9 +133,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Нататкі</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">З вамі падзяліліся закладкамі Ogranic Maps</string>
-    <string name="share_bookmarks_email_body">Вітаю! \n \nУ далучаным файле мае закладкі з праграмы CoMaps. Калі ласка, адкрыйце іх, калі ў вас усталяваны CoMaps. Калі не, спампуйце праграму для вашай прылады iOS альбо Andriod па спасылцы: https://www.comaps.app/download/ \n \nПрыемных падарожжаў з CoMaps!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Загрузка закладак</string>
     <!-- Kmz file successful loading -->
@@ -163,9 +150,6 @@
     <!-- Alert message that we can't run Map Storage settings due to some reasons. -->
     <string name="cant_change_this_setting">На жаль, налады сховішча карты зараз адключаны.</string>
     <!-- Alert message that downloading is in progress. -->
-    <string name="my_position_share_sms">Гэй, глядзі дзе я зараз на карце CoMaps! %1$s або %2$s Няма афлайн-карт? Спампуй тут: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Гэй, глядзі дзе я зараз на мапе CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Абагуліць</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -221,24 +205,9 @@
     <string name="search_show_on_map">Паглядзець на карце</string>
     <!-- Text in menu -->
     <string name="website">Вэб-сайт</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Навіны</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Водгук</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Ацаніць праграму</string>
     <!-- Text in menu -->
-    <string name="help">Даведка</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Пытанні і адказы</string>
     <!-- Button in the main menu -->
-    <string name="donate">Падтрымаць грашыма</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Падтрымаць праект</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Аўтарскія правы</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Паведаміць аб памылцы</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Палепшыце кірунак стрэлкі, перамяшчаючы тэлефон у выглядзе васьмёркі, каб адкалібраваць компас.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -385,7 +354,6 @@
     <string name="editor_time_advanced">Пашыраны рэжым</string>
     <string name="editor_time_simple">Просты рэжым</string>
     <string name="editor_hours_closed">Час, калі закрыта</string>
-    <string name="editor_example_values">Прыклады значэнняў</string>
     <string name="editor_correct_mistake">Выправіць памылку</string>
     <string name="editor_add_select_location">Выберыце месца</string>
     <string name="editor_report_problem_send_button">Адправіць</string>
@@ -445,8 +413,6 @@
     <string name="message_invalid_feature_position">Аб\'ект не можа знаходзіцца тут</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Створаныя супольнасцю даныя OpenStreetMap па стане на %s. Даведайцеся больш пра тое, як рэдагаваць і абнаўляць карту на OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) - гэта грамадскі праект па стварэнні бясплатнай і адкрытай мапы, і асноўная крыніца картаграфічных даных у CoMaps, якая працуе падобна на Вікіпедыю. Кожны можа дадаваць або рэдагаваць месцы, якія пабачуць мільёны карыстальнікаў па ўсім свеце. \nДалучайцеся да супольнасці і дапамажыце зрабіць лепшую мапу для ўсіх!</string>
     <string name="login_to_make_edits_visible">Стварыце ўліковы запіс OpenStreetMap або ўвайдзіце ў сістэму, каб апублікаваць праўкі мапы ўсім на свеце.</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d з %2$d</string>
@@ -459,8 +425,6 @@
     <string name="error_enter_correct_zip_code">Увядзіце правільны паштовы індэкс</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Заўвага для валанцёраў OpenStreetMap (неабавязкова)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Апішыце памылкі на карце або рэчы, якія немагчыма адрэдагаваць з дапамогай CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Вашы праўкі запампоўваюцца ў публічную базу даных <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a>. Не дадавайце асабістую інфармацыю або інфармацыю, якая абаронена аўтарскім правам.</string>
     <string name="editor_more_about_osm">Падрабязней пра OpenStreetMap</string>
@@ -470,7 +434,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Аператар: %s</string>
     <string name="editor_category_unsuitable_title">Няма прыдатнай катэгорыі?</string>
-    <string name="editor_category_unsuitable_text">CoMaps дазваляе дадаваць на карту толькі простыя тыпы аб\'ектаў, гэта значыць без гарадоў, дарог, азёр і будынкаў. Калі ласка, дадавайце такія катэгорыі на сайце <a href="https://www.openstreetmap.org/">OpenStreetMap.org </a>. Мы таксама рэкамендуем азнаёміцца з <a href="https://www.comaps.app/support/advanced-map-editing/">падрабязнымі інструкцыямі і іншымі праграмамі для рэдагавання карты</a>.</string>
     <string name="downloader_no_downloaded_maps_title">Вы не спампавалі ніводнай карты</string>
     <string name="downloader_no_downloaded_maps_message">Спампуйце карты, каб шукаць месцы і карыстацца навігацыяй без інтэрнэту.</string>
     <string name="current_location_unknown_error_title">Месцазнаходжанне невядома.</string>
@@ -519,15 +482,11 @@
     <string name="mobile_data_option_ask">Заўсёды пытаць</string>
     <string name="traffic_update_maps_text">Каб паказаць даныя пра заторы, трэба абнавіць карты.</string>
     <string name="big_font">Павялічыць шрыфт карты</string>
-    <string name="traffic_update_app">Абнавіце CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Даныя пра заторы недаступны</string>
     <string name="enable_logging">Уключыць вядзенне журнала</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Агульны водгук</string>
     <string name="prefs_languages_information">Мы выкарыстоўваем сістэмны сінтэзатар маўлення (TTS). На большасці прылад Android выкарыстоўваецца Google TTS, яго можна спампаваць або абнавіць праз Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Для некаторых моў вам спатрэбіцца ўсталяваць сінтэзатар маўлення або дадатковы моўны пакет з крамы праграм (Google Play, Galaxy Store, App Gallery, F-Droid). \nЗайдзіце на вашай прыладзе ў Налады → Мова і ўвод → Маўленне → Сінтэз маўлення. \nТут вы можаце задаць налады сінтэзу маўлення (напрыклад, спампаваць моўны пакет для выкарыстання без падключэння да інтэрнэту) або выбраць іншы сінтэзатар маўлення.</string>
-    <string name="prefs_languages_information_off_link">Больш падрабязная інфармацыя знаходзіцца ў гэтым кіраўніцтве.</string>
     <string name="transliteration_title">Транслітарацыя лацінкай</string>
     <string name="learn_more">Даведацца больш</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -539,7 +498,6 @@
     <string name="placepage_remove_stop">Выдаліць прыпынак</string>
     <string name="placepage_add_stop">Дадаць прыпынак</string>
     <string name="dialog_error_storage_title">Праблема з доступам да сховішча</string>
-    <string name="dialog_error_storage_message">Знешняе сховішча недаступна. Магчыма, SD-карта была вынята або пашкоджана ці файлавая сістэма даступна толькі для чытання. Праверце SD-карту або зважыцеся з намі праз support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Эмуляваць дрэннае сховішча</string>
     <string name="error_enter_correct_name">Увядзіце правільную назву</string>
     <string name="bookmark_lists">Спісы</string>
@@ -575,8 +533,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Прыватнасць</string>
-    <string name="privacy_policy">Палітыка прыватнасці</string>
-    <string name="terms_of_use">Умовы выкарыстання</string>
     <string name="button_layer_traffic">Рух</string>
     <string name="subway">Метро</string>
     <string name="layers_title">Стылі і слаі карты</string>
@@ -601,7 +557,6 @@
     <string name="power_managment_setting_never">Ніколі</string>
     <string name="power_managment_setting_auto">Аўтаматычна</string>
     <string name="power_managment_setting_manual_max">Заўсёды</string>
-    <string name="enable_logging_warning_message">Часова ўключыце гэты параметр , каб запісаць і ўручную адправіць нам падрабязную інфармацыю пра знойдзеную праблему праз кнопку «Паведаміць аб памылцы» ў акне «Даведка». Журнал падзей можа змяшчаць даныя пра месцазнаходжанне.</string>
     <string name="driving_options_title">Налады пракладвання маршрутаў</string>
     <string name="avoid_tolls">Пазбягаць платных дарог</string>
     <string name="avoid_unpaved">Пазбягаць грунтавых дарог</string>
@@ -697,38 +652,20 @@
     <string name="change_map_locale">Мова карты</string>
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Даныя карты з OpenStreetMap</string>
-    <!-- Telegram group url for the "?" About page -->
-    <string name="telegram_url">https://t.me/CoMaps_RU</string>
-    <!-- Translated CoMaps site -->
-    <string name="translated_om_site_url">https://comaps.app/ru/</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Дзякуй за выкарыстанне нашых карт, створаных супольнасцю!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Дзякуючы вашым ахвяраванням і падтрымцы мы можам стварыць лепшыя карты ў свеце!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Вам падабаецца наша праграма? Калі ласка, ахвяруйце, каб падтрымаць яе распрацоўку. Яшчэ не падабаецца? Напішыце чаму, і мы гэта выправім!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Калі вы ведаеце распрацоўшчыка праграмнага забеспячэння, вы можаце папрасіць яго рэалізаваць неабходную вам функцыю.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Націсніце ў любое месца на карце, каб што-небудзь выбраць. Выкарыстоўвайце працяглае націсканне, каб схаваць або зноў паказаць інтэрфейс.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">А вы ведалі, што сваё месцазнаходжанне на карце можна выбраць?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Вы можаце дапамагчы перакласці нашу праграму на вашу мову.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Наша праграма распрацавана некалькімі энтузіястамі і супольнасцю.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Вы можаце лёгка выпраўляць і палепшаць даныя карты.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Наша галоўная мэта - ствараць хуткія, арыентаваныя на прыватнасць і простыя ў выкарыстанні карты, якія вам спадабаюцца.</string>
-    <string name="car_used_on_the_phone_screen">Вы выкарыстоўваеце CoMaps на экране тэлефона</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">На экран аўто</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Актыўны адпачынак</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -785,7 +722,6 @@
     <string name="disk_error">Немагчыма стварыць папку і перамясціць файлы на ўнутраную памяць прылады або SD-карту</string>
     <string name="error_enter_correct_facebook_page">Увядзіце сапраўдны вэб-адрас уліковага запісу ці імя старонкі Facebook</string>
     <string name="error_enter_correct_instagram_page">Увядзіце сапраўднае імя карыстальніка або спасылку Instagram</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <plurals name="bookmarks_detect_message">
         <item quantity="one">Знойдзены %d файл. Вы можаце ўбачыць яго пасля пераўтварэння.</item>
         <item quantity="few">Знойдзена %d файлы. Вы можаце ўбачыць іх пасля пераўтварэння.</item>
@@ -796,8 +732,6 @@
     <string name="wikimedia_commons">Вікісховішча</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/RU:О_проекте</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="panoramax">Фота Panoramax</string>
-    <string name="app_site_url">https://comaps.app/ru/</string>
     <string name="saved">Захавана</string>
 </resources>

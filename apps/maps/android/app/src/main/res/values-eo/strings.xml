@@ -4,13 +4,11 @@
     <string name="cancel">Nuligi</string>
     <string name="bookmarks_and_tracks">Favoratoj</string>
     <string name="back">Reen</string>
-    <string name="app_site_url">https://comaps.app/eo</string>
     <string name="delete">Forigi</string>
     <string name="download_maps">Elŝuti mapojn</string>
     <string name="download_has_failed">Elŝutado malsukcesita, tuŝi por provi denove</string>
     <string name="downloading">Elŝutado…</string>
     <string name="pref_alt_map_lang_handling_ignore_alternatives">Ne uzi aliajn lingvojn</string>
-    <string name="editor_category_unsuitable_text">CoMaps nur povas aldoni simplajn lokojn, kaj ne urbojn, vojojn, lagojn, formojn de konstruaĵoj, ktp. Bonvolu aldoni tian aĵojn senpere al <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Vidu nian <a href="https://www.comaps.app/support/advanced-map-editing/">gvidilon</a> por pli da instrukcioj.</string>
     <string name="pref_alt_map_lang_handling_local_only">Preferi sisteman lingvon, kiu estas loka</string>
     <string name="offline_explanation_title">Eksterretaj Mapoj</string>
     <string name="offline_explanation_text">Vi devas elŝuti mapon por vidi kaj navigi la lokon.\nElŝutu mapojn de lokoj vi volas vojaĝi.</string>
@@ -22,18 +20,10 @@
     <string name="location_is_disabled_long_text">Ĉiuj poziciaj servoj estas malŝaltitaj por tiu ĉi apo. Bonvolu ŝalti ilin per la apo de agordoj.</string>
     <string name="limited_accuracy">Limigita Precizeco</string>
     <string name="precise_location_is_disabled_long_text">Por preciza navigado, ŝalti Precizan Pozicion per la apo de agordoj</string>
-    <string name="about_headline">Libera projekto subtenita per la komunumo</string>
     <string name="country_status_download_failed">Elŝuto malsukcesis</string>
-    <string name="feedback">Pri-komento</string>
     <string name="try_again">Reklopodi</string>
-    <string name="about_menu_title">Pri CoMaps</string>
-    <string name="about_proposition_1">Facila uzebla kaj rafinita</string>
-    <string name="about_proposition_2">Forta privateco kaj sen reklamoj</string>
-    <string name="about_proposition_3">Senreta, rendimenta, kaj uzas malmulte da diskospaco</string>
-    <string name="about_developed_by_enthusiasts">Tute libera fontkodo, neprofitcela, publikaj decidado kaj financa informo.</string>
     <string name="location_settings">Agordoj pri poziciaj servoj</string>
     <string name="unsupported_phone">La apo bezonas OpenGL kun aparatara plirapidigo. Bedaŭrinde, via komputilo ne povas ruli tiun ĉi apon.</string>
-    <string name="disconnect_usb_cable">Bonvolu malkonekti la USB-draton aŭ enmeti memorkarton por uzi CoMaps</string>
     <string name="not_enough_free_space_on_sdcard">Bonvolu liberigi iom da diskospaco de la SD-karto/USB-konservejo por ke vi povas uzi la apon</string>
     <string name="download_resources">Antaŭ vi uzas la apon, bonvolu elŝuti la mapon de la ĝenerala mondo al via komputilo.\nLa necesa diskospaco estas %s.</string>
     <string name="close">Fermi</string>
@@ -57,13 +47,11 @@
     <string name="wait_several_minutes">Tiu ĉi eble daŭras plurajn minutojn.\nBonvolu atendi…</string>
     <string name="name">Nomo</string>
     <string name="measurement_units_summary">Elektu aŭ miloj aŭ kilometroj</string>
-    <string name="share_bookmarks_email_subject">Miaj favoratoj de CoMaps</string>
     <string name="unknown_file_type">La dosiertipon ne konas la apo: \n%1$s</string>
     <string name="failed_to_open_file">Malsukcesis malfermi dosieron %1$s\n\n%2$s</string>
     <string name="address">Adreso</string>
     <string name="cant_change_this_setting">Agordoj de mapa konservejo estas malŝaltita</string>
     <string name="downloading_is_active">Mapo elŝutiĝas nun</string>
-    <string name="my_position_share_sms">Vidu mian pozicion per CoMaps! %1$s aŭ %2$s. Ĉu vi ne havas senretajn mapojn? Elŝutu je https://www.comaps.app/download/</string>
     <string name="bookmark_share_email_subject">Sekvu la ligilo %1$s aŭ enigu la koordinatojn %2$s en vian mapan apon por vidi tiun ĉi pozicion.</string>
     <string name="my_position_share_email">Sekvu la ligilo %1$s aŭ enigu la koordinatojn %2$s en vian mapan apon por vidi mian pozicion.</string>
     <string name="dialog_routing_error_location_not_found">Ne povas krei vojon. Viaj nunaj koordinatoj ne troviĝis per GPS.</string>

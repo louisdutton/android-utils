@@ -75,8 +75,6 @@
     <string name="chooseImportType">Importar dados de</string>
     <string name="card">Cartão</string>
     <string name="expiryStateSentence">Expiram: <xliff:g>%s</xliff:g></string>
-    <string name="app_resources">Recursos de terceiros: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Bibliotecas de terceiros: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="takePhoto">Tirar uma fotografia</string>
     <string name="yes">Sim</string>
     <string name="exportPassword">Defina uma palavra-passe para proteger a exportação (opcional)</string>
@@ -101,11 +99,7 @@
         <item quantity="other"><xliff:g>%d</xliff:g> cartões</item>
     </plurals>
     <string name="importOptionFilesystemTitle">Importar do sistema de ficheiros</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019-<xliff:g>%d</xliff:g> Sylvia van Os e contribuidores</string>
-    <string name="app_copyright_old">Baseado no Loyalty Card Keychain
-\ndireitos de autor © 2016–2020 Branden Archer</string>
     <string name="about_title_fmt">Sobre o <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versão: <xliff:g id="version">%s</xliff:g></string>
     <string name="expiryStateSentenceExpired">Expirados: <xliff:g>%s</xliff:g></string>
     <string name="leaveWithoutSaveConfirmation">Sair sem guardar\?</string>
     <string name="addManually">Insira o código de barras manualmente</string>
@@ -123,7 +117,6 @@
     <string name="currency">Moeda</string>
     <string name="points">Pontos</string>
     <string name="app_loyalty_card_keychain">Chaveiro de cartão de fidelidade</string>
-    <string name="privacy_policy">Política de privacidade</string>
     <string name="accept">Aceitar</string>
     <string name="importCatima">Importar do Catima</string>
     <string name="importCatimaMessage">Selecione a exportação <i>catima.zip</i> do Catima a importar. \nPrimeiro crie a exportação no menu \"Importar / exportar\" de outra aplicação Catima pressionando \"Exportar\" nesse menu.</string>
@@ -140,7 +133,6 @@
     <string name="turn_flashlight_off">Desligar lanterna</string>
     <string name="settings_locale">Idioma</string>
     <string name="settings_system_locale">Sistema</string>
-    <string name="app_contributors">Tornado possível por: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">Ordenar</string>
     <string name="sort_by_name">Nome</string>
     <string name="sort_by_most_recently_used">Mais recentemente utilizado</string>
@@ -148,11 +140,9 @@
     <string name="reverse">…na ordem inversa</string>
     <string name="sort_by">Ordenar por</string>
     <string name="version_history">Histórico de versões</string>
-    <string name="credits">Créditos</string>
     <string name="help_translate_this_app">Ajude a traduzir esta aplicação</string>
     <string name="license">Licença</string>
     <string name="source_repository">Repositório do código-fonte</string>
-    <string name="on_github">no GitHub</string>
     <string name="and_data_usage">e utilização de dados</string>
     <string name="exportOptionExplanation">Os dados serão guardados num local à sua escolha</string>
     <plurals name="deleteCardsTitle">
@@ -251,7 +241,6 @@
     <string name="enter_card_id">Digite o número ID ou o texto em seu cartão</string>
     <string name="action_display_options">Opções de visualização</string>
     <string name="addWithoutBarcode">Adicione um cartão sem código de barras</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os e contribuidores</string>
     <string name="field_must_not_be_empty">O campo não pode estar vazio</string>
     <string name="show_archived_cards">Mostrar cartões arquivados</string>
     <string name="app_name">Wallet</string>

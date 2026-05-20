@@ -1074,28 +1074,6 @@ public class Utils {
         return result.toString();
     }
 
-    // Very crude Markdown to HTML conversion.
-    // Only supports what's currently being used in CHANGELOG.md and PRIVACY.md.
-    // May break easily.
-    public static String basicMDToHTML(final String input) {
-        return input
-                .replaceAll("(?m)^#\\s+(.*)", "<h1>$1</h1>")
-                .replaceAll("(?m)^##\\s+(.*)", "<h2>$1</h2>")
-                .replaceAll("\\[([^]]+)\\]\\((https?://[\\w@#%&+=:?/.-]+)\\)", "<a href=\"$2\">$1</a>")
-                .replaceAll("\\*\\*([^*]+)\\*\\*", "<b>$1</b>")
-                .replaceAll("(?m)^-\\s+(.*)", "<ul><li>&nbsp;$1</li></ul>")
-                .replace("</ul>\n<ul>", "");
-    }
-
-    // Very crude autolinking.
-    // Only supports what's currently being used in CHANGELOG.md and PRIVACY.md.
-    // May break easily.
-    public static String linkify(final String input) {
-        return input
-                .replaceAll("([\\w.-]+@[\\w-]+(\\.[\\w-]+)+)", "<a href=\"mailto:$1\">$1</a>")
-                .replaceAll("(?<!href=\")\\b(https?://[\\w@#%&+=:?/.-]*[\\w@#%&+=:?/-])", "<a href=\"$1\">$1</a>");
-    }
-
     /**
      * Sets an icon or text with background on the given ImageView and/or TextView, including background colour.
      *

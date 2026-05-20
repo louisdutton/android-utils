@@ -41,7 +41,6 @@
     <string name="importOptionFilesystemExplanation">Выберыце пэўны файл з файлавай сістэмы.</string>
     <string name="importOptionFilesystemButton">З файлавай сістэмы</string>
     <string name="about">Аб праграме</string>
-    <string name="app_copyright_short">Аўтарскае права © Sylvia van Os і суаўтары</string>
     <plurals name="deleteCardsConfirmation">
         <item quantity="one">Выдаліць <xliff:g>%d</xliff:g> карту назаўсёды?</item>
         <item quantity="few">Выдаліць <xliff:g>%d</xliff:g> карты назаўсёды?</item>
@@ -64,7 +63,6 @@
     <string name="noCardsMessage">Спачатку дадайце карту</string>
     <string name="importExport">Імпарт/Экспарт</string>
     <string name="importOptionFilesystemTitle">Імпарт з файлавай сістэмы</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Аўтарскае права © 2019–<xliff:g>%d</xliff:g> Sylvia van Os і суаўтары</string>
     <string name="importExportHelp">Рэзервовае капіяванне даных дазваляе перанесці іх на іншую прыладу</string>
     <string name="failedParsingImportUriError">Не атрымалася разабраць URI імпарту</string>
     <string name="exportFailedTitle">Не ўдалося экспартаваць</string>
@@ -72,11 +70,8 @@
     <string name="permissionReadCardsDescription">чытаць вашы карты Catima і ўсе іх дэталі, уключаючы нататкі і выявы</string>
     <string name="exporting">Экспартаванне…</string>
     <string name="cameraPermissionDeniedTitle">Не атрымалася атрымаць доступ да камеры</string>
-    <string name="app_copyright_old">Заснавана на Loyalty Card Keychain\nаўтарскае права © 2016–2020 Branden Archer</string>
     <string name="noCameraPermissionDirectToSystemSetting">Каб сканаваць штрыхкоды, Catima спатрэбіцца доступ да вашай камеры. Націсніце тут, каб змяніць параметры дазволу.</string>
     <string name="about_title_fmt">Пра <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Версія: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_libraries">Бясплатныя староннія бібліятэкі: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Выберыце штрыхкод</string>
     <string name="starImage">Зорка абранага</string>
     <string name="settings">Налады</string>
@@ -129,7 +124,6 @@
     <string name="balanceParsingFailed">Няправільны баланс</string>
     <string name="chooseImportType">Імпартаваць даныя з</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
-    <string name="privacy_policy">Палітыка прыватнасці</string>
     <string name="accept">Прыняць</string>
     <string name="importCatima">Імпарт з Catima</string>
     <string name="importFidme">Імпарт з FidMe</string>
@@ -158,7 +152,6 @@
     <string name="settings_oled_dark">Чысты чорны фон для цёмнай тэмы</string>
     <string name="selectColor">Выбраць колер</string>
     <string name="setIcon">Задаць мініяцюру</string>
-    <string name="app_contributors">Стала магчымым дзякуючы: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">Сартаваць</string>
     <string name="showMoreInfo">Паказаць інфармацыю</string>
     <string name="updateBalance">Абнавіць баланс</string>
@@ -171,11 +164,9 @@
     <string name="reverse">...у адваротным парадку</string>
     <string name="sort_by">Сартаваць па</string>
     <string name="version_history">Гісторыя версій</string>
-    <string name="credits">Удзельнікі</string>
     <string name="help_translate_this_app">Дапамажыце перакласці гэтую праграму</string>
     <string name="license">Ліцэнзія</string>
     <string name="source_repository">Зыходны рэпазіторый</string>
-    <string name="on_github">на GitHub</string>
     <string name="and_data_usage">і выкарыстанне трафіка</string>
     <string name="translate_platform">на Weblate</string>
     <string name="shortcutSelectCard">Выбраць карту</string>
@@ -256,7 +247,6 @@
     <string name="editGroup">Рэдагаванне групы: <xliff:g>%s</xliff:g></string>
     <string name="addFromImage">Выбраць малюнак з галерэі</string>
     <string name="settings_keep_screen_on">Трымаць экран уключаным</string>
-    <string name="app_resources">Бясплатныя староннія рэсурсы: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="leaveWithoutSaveTitle">Выйсці</string>
     <string name="settings_allow_content_provider_read_title">Дазволіць іншым праграмам доступ да маіх даных</string>
     <string name="settings_display_barcode_max_brightness">Павялічваць яркасць экрану</string>

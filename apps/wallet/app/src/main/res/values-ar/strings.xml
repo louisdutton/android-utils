@@ -37,10 +37,7 @@
     <string name="exportOptionExplanation">ستكون البيانات مكتوبة في المسار الذي تختاره</string>
     <string name="importOptionFilesystemButton">من نظام الملفات</string>
     <string name="about">حول</string>
-    <string name="app_copyright_old">بناء على Loyalty Card Keychain
-\nحقوق النشر © 2016-2020 Branden Archer</string>
     <string name="app_license">البرمجيات الحرة متروكة الحقوق, ترخيص +GPLv3</string>
-    <string name="app_libraries">مكتبات الطرف الثالث : <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="selectBarcodeTitle">اختار الباركود</string>
     <string name="thumbnailDescription">صورة مصغرة</string>
     <string name="starImage">نجم مفضل</string>
@@ -68,7 +65,6 @@
     <string name="points">نقاط</string>
     <string name="chooseImportType">استيراد البيانات من</string>
     <string name="app_loyalty_card_keychain">سلسلة مفاتيح بطاقة الولاء</string>
-    <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="accept">قبول</string>
     <string name="importCatima">الاستيراد من Catima</string>
     <string name="importCatimaMessage">حدّد ملفك تصدير من Catima للاستيراد.\nإنشئها من قائمة الاستيراد / التصدير لتطبيق Catima آخر بالضغط على تصدير .</string>
@@ -101,13 +97,11 @@
     <string name="settings_locale">لغة</string>
     <string name="settings_system_locale">النظام</string>
     <string name="setIcon">تعيين الصورة المصغرة</string>
-    <string name="app_contributors">أصبح ممكنًا بواسطة: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="sort">فرز</string>
     <string name="showMoreInfo">اظهر المعلومات</string>
     <string name="reverse">... بترتيب معكوس</string>
     <string name="sort_by">صنف حسب</string>
     <string name="settings_oled_dark">خلفية سوداء نقية لمظهر داكن</string>
-    <string name="credits">الاعتمادات</string>
     <string name="source_repository">مستودع المصدر</string>
     <string name="and_data_usage">واستخدام البيانات</string>
     <string name="translate_platform">على Weblate</string>
@@ -167,9 +161,7 @@
     <string name="importOptionFilesystemTitle">الاستيراد من نظام الملفات</string>
     <string name="importOptionFilesystemExplanation">اختر ملفًا محددًا من نظام الملفات</string>
     <string name="about_title_fmt">حول <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">نسخة: <xliff:g id="version">%s</xliff:g></string>
     <string name="settings_system_theme">النظام</string>
-    <string name="app_resources">موارد الطرف الثالث الحرة: <xliff:g id="app_resources_list">%s</xliff:g></string>
     <string name="groups">مجموعات</string>
     <string name="settings_keep_screen_on">حافظ على الشاشة قيد التشغيل</string>
     <string name="intent_import_card_from_url_share_text">اريد مشاركة بطاقة معك</string>
@@ -208,7 +200,6 @@
     <string name="chooseExpiryDate">اختر تاريخ انتهاء الصلاحية</string>
     <string name="errorReadingImage">لا يمكن قراءة الصورة</string>
     <string name="noBarcodeFound">لم يتم العثور على باركود</string>
-    <string name="on_github">على GitHub</string>
     <string name="report_error">الإبلاغ عن خطأ</string>
     <string name="sort_by_expiry">انقضاء</string>
     <string name="importLoyaltyCardKeychain">الاستيراد من Loyalty Card Keychain</string>
@@ -239,8 +230,6 @@
     <string name="permissionReadCardsDescription">اقرأ بطاقتك مع جميع التفاصيل، بما فيه الملاحظات والصور</string>
     <string name="settings_display_barcode_max_brightness_summary">ظروري لعمل بعض الماسحات الضوئية</string>
     <string name="permissionReadCardsLabel">اقرأ بطاقات كاتيما</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">حقوق النشر © 2019–<xliff:g>%d</xliff:g> Sylvia van Os والمساهمون</string>
-    <string name="app_copyright_short">حقوق النشر © Sylvia van Os والمساهمون</string>
     <string name="openFrontImageInGalleryApp">افتح الصورة الأمامية في تطبيق المعرض</string>
     <string name="show_name_below_image_thumbnail">إظهار الاسم أسفل الصورة المصغرة</string>
     <string name="show_validity">إظهار الصلاحية</string>

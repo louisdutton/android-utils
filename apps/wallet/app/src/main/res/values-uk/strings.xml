@@ -30,7 +30,6 @@
     <string name="importFidme">Імпорт з FidMe</string>
     <string name="importCatima">Імпорт з Catima</string>
     <string name="accept">Прийняти</string>
-    <string name="privacy_policy">Політика конфіденційності</string>
     <string name="app_loyalty_card_keychain">Брелок для картки лояльності</string>
     <string name="chooseImportType">Імпортувати дані з</string>
     <string name="points">Бали</string>
@@ -73,14 +72,8 @@
     <string name="starImage">Улюблена зірка</string>
     <string name="thumbnailDescription">Ескіз</string>
     <string name="intent_import_card_from_url_share_multiple_text">Я хочу поділитися з тобою деякими картками</string>
-    <string name="app_resources">Сторонні ресурси: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Бібліотеки сторонніх розробників: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="debug_version_fmt">Версія: <xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt">Про <xliff:g id="app_name">%s</xliff:g></string>
     <string name="app_license">Вільне копілефт програмне забезпечення, ліцензоване GPLv3+</string>
-    <string name="app_copyright_old">Створено на основі Loyalty Card Keychain
-\nавторські права © 2016–2020 Branden Archer</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Авторські права © 2019–<xliff:g>%d</xliff:g> Sylvia van Os та співавтори</string>
     <string name="about">Про застосунок</string>
     <string name="importOptionFilesystemButton">Обрати файл</string>
     <string name="importOptionFilesystemExplanation">Оберіть потрібний файл у провіднику</string>
@@ -152,7 +145,6 @@
     </plurals>
     <string name="settings_system_locale">Системна</string>
     <string name="settings_locale">Мова</string>
-    <string name="app_contributors">Стало можливим завдяки: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Пуста група</string>
     <string name="barcodeImageDescriptionWithType">Зображення штрих-коду <xliff:g>%s</xliff:g></string>
     <string name="sort_by">Сортувати за</string>
@@ -165,9 +157,7 @@
     <string name="help_translate_this_app">Допомогти з перекладом застосунку</string>
     <string name="license">Ліцензія</string>
     <string name="source_repository">Репозиторій вихідного коду</string>
-    <string name="on_github">на GitHub</string>
     <string name="and_data_usage">та використання даних</string>
-    <string name="credits">Подяки</string>
     <string name="report_error">Повідомити про помилку</string>
     <string name="exportPassword">Встановіть пароль для захисту експорту (необов\'язково)</string>
     <string name="exportPasswordHint">Введіть пароль</string>
@@ -250,7 +240,6 @@
     <string name="settings_category_title_privacy">Конфіденційність</string>
     <string name="view_online">Переглянути онлайн</string>
     <string name="action_display_options">Параметри відображення</string>
-    <string name="app_copyright_short">Авторські права © Sylvia van Os та співавтори</string>
     <string name="show_archived_cards">Показати архівовані картки</string>
     <string name="card_id_must_not_be_empty">ID картки не повинен бути порожнім</string>
     <string name="balanceParsingFailed">Неправильний баланс</string>

@@ -1,25 +1,4 @@
-buildscript {
-  repositories {
-    google()
-    mavenCentral()
-  }
-
-  // Detect flavors from the task name.
-  def taskName = getGradle().getStartParameter().getTaskRequests().toString().toLowerCase()
-  def isFdroid = taskName.contains('fdroid')
-
-  dependencies {
-    classpath libs.android.tools
-    classpath(libs.huawei.publish)
-  }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'ru.cian.huawei-publish-gradle-plugin'
-
-def getCommitMessage() {
-  return run(['git', '--no-pager', 'show', '-s', '--format=%s%n%n%b', 'HEAD']).trim()
-}
 
 def quotedBuildConfigString(value) {
   return '"' + value.toString().replace('\\', '\\\\').replace('"', '\\"') + '"'
@@ -71,9 +50,7 @@ android {
     minSdk = propMinSdkVersion.toInteger()
     targetSdk = propTargetSdkVersion.toInteger()
     applicationId project.ext.appId
-    buildConfigField 'String', 'SUPPORT_MAIL', '"android@comaps.app"'
-    // Should be customized in flavors.
-    buildConfigField 'String', 'REVIEW_URL', '""'
+    buildConfigField 'String', 'FLAVOR', '""'
     buildConfigField 'String', 'RAIL_SCHEDULE_MANIFEST_URL',
         quotedBuildConfigString(project.findProperty('railScheduleManifestUrl') ?: '')
 
@@ -87,35 +64,6 @@ android {
       def railScheduleAssetDir = project.findProperty('railScheduleAssetDir')
       if (railScheduleAssetDir)
         assets.srcDir(file(railScheduleAssetDir))
-    }
-  }
-
-  flavorDimensions += 'default'
-
-  productFlavors {
-    // 01 is a historical artefact, sorry.
-    final int HUAWEI_VERSION_CODE_BASE = 01_00_00_00_00
-
-    // Distributed directly by the project, e.g. in repo releases, chats, etc.
-    web {
-      dimension 'default'
-      versionName = android.defaultConfig.versionName
-      buildConfigField 'String', 'SUPPORT_MAIL', '"apk@comaps.app"'
-    }
-
-    fdroid {
-      dimension 'default'
-      versionName = android.defaultConfig.versionName + '-FDroid'
-      buildConfigField 'String', 'SUPPORT_MAIL', '"fdroid@comaps.app"'
-    }
-
-    huawei {
-      dimension 'default'
-      applicationIdSuffix '.huawei'
-      versionName = android.defaultConfig.versionName + '-Huawei'
-      versionCode = HUAWEI_VERSION_CODE_BASE + android.defaultConfig.versionCode
-      buildConfigField 'String', 'SUPPORT_MAIL', '"huawei@comaps.app"'
-      buildConfigField 'String', 'REVIEW_URL', '"appmarket://details?id=app.comaps"'
     }
   }
 
@@ -355,37 +303,6 @@ android.applicationVariants.all { variant ->
   def flavor = variant.getMergedFlavor()
   flavor.manifestPlaceholders += [FILE_PROVIDER_PLACEHOLDER : authorityValue]
   variant.resValue 'string', 'app_id', variant.applicationId
-}
-
-huaweiPublish {
-  instances {
-    huaweiRelease {
-      credentialsPath = "$projectDir/huawei-appgallery.json"
-      buildFormat = 'aab'
-      deployType = 'draft' // confirm manually
-      def releaseDescriptions = []
-      def localeOverride = [
-          'am' : 'am-ET',
-          'gu': 'gu_IN',
-          'iw-IL': 'he_IL',
-          'kn-IN': 'kn_IN',
-          'ml-IN': 'ml_IN',
-          'mn-MN': 'mn_MN',
-          'mr-IN': 'mr_IN',
-          'ta-IN': 'ta_IN',
-          'te-IN': 'te_IN',
-      ]
-      def files = fileTree(dir: "$projectDir/src/fdroid/play/listings",
-          include: '**/release-notes.txt')
-      files.each { File file ->
-        def path = file.getPath()
-        def locale = file.parentFile.getName()
-        locale = localeOverride.get(locale, locale)
-        releaseDescriptions.add(new ru.cian.huawei.publish.ReleaseNote(locale, path))
-      }
-      releaseNotes = new ru.cian.huawei.publish.ReleaseNotesExtension(releaseDescriptions, true)
-    }
-  }
 }
 
 tasks.withType(JavaCompile).configureEach {

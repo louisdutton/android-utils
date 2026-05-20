@@ -9,9 +9,7 @@
     <string name="list">Llista</string>
     <string name="description">Notes</string>
     <string name="open_in_app">Abrir n’otra aplicación</string>
-    <string name="help">Ayuda</string>
     <string name="categories">Categoríes</string>
-    <string name="news">Noticies</string>
     <string name="name">Nome</string>
     <string name="length">Llonxitú</string>
     <string name="menu">Menú</string>
@@ -33,13 +31,11 @@
     <string name="no">Non</string>
     <string name="network">Rede: %s</string>
     <string name="export_file_gpx">Esportar GPX</string>
-    <string name="about_menu_title">Tocante a CoMaps</string>
     <string name="search_show_on_map">Ver nel mapa</string>
     <string name="downloader_delete_map">Desaniciar mapa</string>
     <string name="edit">Editar</string>
     <string name="downloader_update_map">Anovar mapa</string>
     <string name="editor_zip_code">Códigu postal</string>
-    <string name="editor_example_values">Valores d’exemplu</string>
     <string name="downloader_of">%1$d de %2$d</string>
     <string name="elevation_profile_difficulty">Dificultá</string>
     <string name="delete">Desaniciar</string>
@@ -66,7 +62,6 @@
     <string name="editor_edit_place_name_hint">Nome del llugar</string>
     <string name="current_location_unknown_error_title">Desconózse l’allugamientu actual.</string>
     <string name="elevation_profile_ascent">Ascensu</string>
-    <string name="traffic_update_app">Anueva CoMaps</string>
     <string name="placepage_add_stop">Amestar parada</string>
     <string name="placepage_remove_stop">Desaniciar parada</string>
     <string name="privacy">Privacidá</string>
@@ -111,7 +106,6 @@
     <string name="category_pharmacy">Farmacia</string>
     <string name="category_hospital">Hospital</string>
     <string name="website">Sitiu web</string>
-    <string name="faq">Entrugues frecuentes</string>
     <string name="hide">Anubrir</string>
     <string name="kilometers_per_hour">km/h</string>
     <string name="continue_button">Siguir</string>
@@ -152,15 +146,9 @@
     <string name="choose_street">Escueyi una cai</string>
     <string name="select_option">Esbilla una opción</string>
     <string name="choose_color">Escueyi un color</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
     <string name="wikimedia_commons">Wikimedia Commons</string>
     <string name="panoramax">Panoramax Foto</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <string name="saved">Archivos</string>
-    <string name="about_proposition_3">• Offline, rápidu y compactu</string>
     <string name="back">Atrás</string>
 </resources>

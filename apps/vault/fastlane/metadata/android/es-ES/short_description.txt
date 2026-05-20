@@ -1,1 +1,0 @@
-Gestione passkeys y contraseñas en una bóveda local y de código abierto

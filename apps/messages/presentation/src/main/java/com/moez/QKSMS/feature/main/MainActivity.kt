@@ -39,8 +39,6 @@ import dev.octoshrimpy.quik.common.base.QkThemedActivity
 import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.widget.TextInputDialog
 import dev.octoshrimpy.quik.feature.blocking.BlockingDialog
-import dev.octoshrimpy.quik.feature.changelog.ChangelogDialog
-import dev.octoshrimpy.quik.manager.ChangelogManager
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.repository.SyncRepository
 import dev.octoshrimpy.quik.util.Preferences
@@ -72,14 +70,11 @@ class MainActivity : QkThemedActivity(), MainView {
     private val homeSubject: Subject<Unit> = PublishSubject.create()
     private val navigationSubject: Subject<NavItem> = PublishSubject.create()
     private val optionsItemSubject: Subject<Int> = PublishSubject.create()
-    private val dismissRatingSubject: Subject<Unit> = PublishSubject.create()
-    private val rateSubject: Subject<Unit> = PublishSubject.create()
     private val conversationsSelectedSubject: BehaviorSubject<List<Long>> =
         BehaviorSubject.createDefault(emptyList())
     private val confirmDeleteSubject: Subject<List<Long>> = PublishSubject.create()
     private val renameConversationSubject: Subject<String> = PublishSubject.create()
     private val swipeConversationSubject: Subject<Pair<Long, Int>> = PublishSubject.create()
-    private val changelogMoreSubject: Subject<Unit> = PublishSubject.create()
     private val undoArchiveSubject: Subject<Unit> = PublishSubject.create()
     private val snackbarButtonSubject: Subject<Unit> = PublishSubject.create()
 
@@ -99,21 +94,16 @@ class MainActivity : QkThemedActivity(), MainView {
     override val homeIntent: Observable<*> = homeSubject
     override val navigationIntent: Observable<NavItem> = navigationSubject
     override val optionsItemIntent: Observable<Int> = optionsItemSubject
-    override val dismissRatingIntent: Observable<*> = dismissRatingSubject
-    override val rateIntent: Observable<*> = rateSubject
     override val conversationsSelectedIntent: Observable<List<Long>> = conversationsSelectedSubject
     override val confirmDeleteIntent: Observable<List<Long>> = confirmDeleteSubject
     override val renameConversationIntent: Observable<String> = renameConversationSubject
     override val swipeConversationIntent: Observable<Pair<Long, Int>> = swipeConversationSubject
-    override val changelogMoreIntent: Observable<*> = changelogMoreSubject
     override val undoArchiveIntent: Observable<Unit> = undoArchiveSubject
     override val snackbarButtonIntent: Observable<Unit> = snackbarButtonSubject
 
     private val viewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
     }
-    private val changelogDialog by lazy { ChangelogDialog(this) }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -258,9 +248,6 @@ class MainActivity : QkThemedActivity(), MainView {
         )
             .setText(conversationName)
             .show()
-
-    override fun showChangelog(changelog: ChangelogManager.CumulativeChangelog) =
-        changelogDialog.show(changelog)
 
     override fun showArchivedSnackbar(countConversationsArchived: Int, isArchiving: Boolean) {
         val text = if (isArchiving) {

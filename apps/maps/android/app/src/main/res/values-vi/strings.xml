@@ -34,22 +34,12 @@
     <string name="country_status_download_failed">Tải xuống đã thất bại</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Thử lại</string>
-    <string name="about_menu_title">Giới thiệu về CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Dễ sử dụng và chỉn chu</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Chú trọng quyền riêng tư và không quảng cáo</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Ngoại tuyến, nhanh chóng và nhỏ gọn</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Mã nguồn mở hoàn toàn, phi lợi nhuận, minh bạch trong việc ra quyết định và tài chính.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Cài đặt vị trí</string>
     <string name="close">Đóng</string>
     <string name="unsupported_phone">Cần có OpenGL được tăng tốc phần cứng. Thật không may, thiết bị của bạn không được hỗ trợ.</string>
     <string name="download">Tải xuống</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Bạn vui lòng tháo cáp USB hoặc lắp thẻ nhớ vào để sử dụng CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Bạn vui lòng giải phóng dung lượng trên ổ lưu trữ thẻ SD/USB để có thể sử dụng ứng dụng</string>
     <string name="download_resources">Trước khi bạn bắt đầu, hãy để chúng tôi tải bản đồ thế giới vào thiết bị của bạn. \nBản đồ này cần %s dữ liệu.</string>
@@ -141,8 +131,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Ghi chú</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">Điểm CoMaps Ưa thích của tôi</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Đang tải Ưa thích</string>
     <!-- Kmz file successful loading -->
@@ -161,10 +149,6 @@
     <string name="cant_change_this_setting">Rất tiếc, cài đặt Lưu trữ Bản đồ hiện đã bị tắt</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Đang tải xuống bản đồ</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Này, hãy xem vị trí hiện tại của tôi tại CoMaps! %1$s hoặc %2$s Bạn không có bản đồ ngoại tuyến? Tải xuống tại đây: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Này, hãy xem vị trí hiện tại của tôi trên ứng dụng CoMaps!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Chia sẻ</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -216,24 +200,9 @@
     <string name="search_show_on_map">Xem trên bản đồ</string>
     <!-- Text in menu -->
     <string name="website">Trang web</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Tin tức</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Phản hồi</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Cho điểm ứng dụng</string>
     <!-- Text in menu -->
-    <string name="help">Trợ giúp</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Câu hỏi thường gặp</string>
     <!-- Button in the main menu -->
-    <string name="donate">Quyên tặng</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Giúp cải thiện CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Bản quyền</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Báo cáo lỗi</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Cải thiện hướng mũi tên bằng cách di chuyển điện thoại theo chuyển động hình số tám để hiệu chỉnh la bàn.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -378,7 +347,6 @@
     <string name="editor_time_advanced">Chế độ nâng cao</string>
     <string name="editor_time_simple">Chế độ đơn giản</string>
     <string name="editor_hours_closed">Giờ đóng cửa</string>
-    <string name="editor_example_values">Giá trị ví dụ</string>
     <string name="editor_correct_mistake">Sửa lỗi</string>
     <string name="editor_add_select_location">Chọn vị trí</string>
     <string name="editor_report_problem_send_button">Gửi</string>
@@ -434,8 +402,6 @@
     <string name="message_invalid_feature_position">Không đối tượng nào có thể đặt ở đây</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Dữ liệu OpenStreetMap do cộng đồng tạo ra tính đến %s. Tìm hiểu thêm về cách chỉnh sửa và cập nhật bản đồ tại OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) là một dự án cộng đồng nhằm xây dựng bản đồ mở và miễn phí. Đây là nguồn dữ liệu bản đồ chính trong CoMaps và hoạt động tương tự như Wikipedia. Bạn có thể thêm hoặc chỉnh sửa địa điểm và chúng sẽ có sẵn cho hàng triệu người dùng trên toàn thế giới. \nTham gia cộng đồng và giúp tạo bản đồ tốt hơn cho mọi người!</string>
     <string name="login_to_make_edits_visible">Tạo tài khoản OpenStreetMap hoặc đăng nhập để xuất bản các chỉnh sửa bản đồ của bạn với thế giới</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d trên %2$d</string>
@@ -448,8 +414,6 @@
     <string name="error_enter_correct_zip_code">Nhập mã bưu chính hợp lệ</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Lưu ý dành cho tình nguyện viên OpenStreetMap (tùy chọn)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Mô tả lỗi trên bản đồ hoặc những gì không thể chỉnh sửa bằng CoMaps</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Các chỉnh sửa của bạn sẽ được tải lên cơ sở dữ liệu <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> công khai. Vui lòng không thêm thông tin cá nhân hoặc có bản quyền.</string>
     <string name="editor_more_about_osm">Thông tin bổ sung về OpenStreetMap</string>
@@ -459,7 +423,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Đơn vị vận hành: %s</string>
     <string name="editor_category_unsuitable_title">Không thể tìm thấy một danh mục phù hợp?</string>
-    <string name="editor_category_unsuitable_text">CoMaps chỉ có thể thêm các danh mục điểm đơn giản, nó không thể thêm thị trấn, đường, hồ, đường viền tòa nhà, v.v. Vui lòng thêm các danh mục đó trực tiếp vào <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Hãy xem <a href="https://www.comaps.app/support/advanced-map-editing/">hướng dẫn</a> của chúng tôi để biết chỉ dẫn chi tiết từng bước.</string>
     <string name="downloader_no_downloaded_maps_title">Bạn chưa tải về bất kỳ bản đồ nào</string>
     <string name="downloader_no_downloaded_maps_message">Tải về bản đồ để tìm kiếm và tìm đường ngoại tuyến</string>
     <string name="current_location_unknown_error_title">Vị trí hiện tại không xác định được</string>
@@ -505,15 +468,11 @@
     <string name="mobile_data_option_ask">Luôn Hỏi</string>
     <string name="traffic_update_maps_text">Để hiển thị dữ liệu giao thông, cần cập nhật bản đồ</string>
     <string name="big_font">Tăng kích thước các nhãn trên bản đồ</string>
-    <string name="traffic_update_app">Vui lòng cập nhật CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Dữ liệu giao thông không khả dụng</string>
     <string name="enable_logging">Bật nhật ký hoạt động</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Phản hồi chung</string>
     <string name="prefs_languages_information">Chúng tôi sử dụng TTS hệ thống cho chức năng hướng dẫn bằng giọng nói. Nhiều thiết bị Android sử dụng Google TTS, bạn có thể tải về hoặc cập nhật nó từ Cửa hàng Google Play (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">Đối với một số ngôn ngữ, bạn sẽ cần cài đặt một trình tổng hợp lời nói hoặc một gói ngôn ngữ bổ sung từ cửa hàng ứng dụng (Google Play, Galaxy Store, App Gallery, FDroid). \nMở cài đặt của thiết bị → Ngôn ngữ và nhập liệu → Lời nói → Đầu ra của chuyển văn bản thành lời nói. \nTại đây bạn có thể quản lý các cài đặt tổng hợp lời nói (ví dụ, tải về các gói ngôn ngữ để sử dụng ngoại tuyến) và chọn một công cụ chuyển đổi văn bản thành lời nói khác.</string>
-    <string name="prefs_languages_information_off_link">Để biết thêm thông tin, vui lòng kiểm tra hướng dẫn này</string>
     <string name="transliteration_title">Chuyển ngữ sang chữ Latinh</string>
     <string name="learn_more">Tìm hiểu thêm</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -525,7 +484,6 @@
     <string name="placepage_remove_stop">Xóa điểm dừng</string>
     <string name="placepage_add_stop">Thêm điểm dừng</string>
     <string name="dialog_error_storage_title">Vấn đề truy cập bộ nhớ</string>
-    <string name="dialog_error_storage_message">Bộ nhớ bên ngoài không truy cập được. Thẻ SD có thể đã bị tháo, bị hỏng hoặc hệ thống tập tin được thiết lập chỉ đọc. Vui lòng kiểm tra thẻ SD hoặc liên hệ với chúng tôi qua support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Giả lập bộ nhớ hỏng</string>
     <string name="error_enter_correct_name">Vui lòng nhập một tên chính xác</string>
     <string name="bookmark_lists">Danh sách Ưa thích</string>
@@ -555,8 +513,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Sự riêng tư</string>
-    <string name="privacy_policy">Chính sách bảo mật</string>
-    <string name="terms_of_use">Điều khoản sử dụng</string>
     <string name="button_layer_traffic">Giao thông</string>
     <string name="subway">Tàu điện ngầm</string>
     <string name="layers_title">Kiểu và lớp bản đồ</string>
@@ -581,7 +537,6 @@
     <string name="power_managment_setting_never">Không bao giờ</string>
     <string name="power_managment_setting_auto">Khi pin thấp</string>
     <string name="power_managment_setting_manual_max">Luôn luôn</string>
-    <string name="enable_logging_warning_message">Tạm thời bật tùy chọn này để ghi và gửi thủ công nhật ký chẩn đoán chi tiết về vấn đề của bạn đến chúng tôi bằng \"Báo cáo lỗi\" trong mục Giúp đỡ. Nhật ký có thể gồm dữ liệu vị trí.</string>
     <string name="driving_options_title">Tùy chọn tuyến đường</string>
     <string name="avoid_tolls">Tránh đường thu phí</string>
     <string name="avoid_unpaved">Tránh đường đất</string>
@@ -667,33 +622,19 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Dữ liệu bản đồ từ OpenStreetMap</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Cảm ơn bạn đã sử dụng bản đồ do cộng đồng xây dựng của chúng tôi!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Với sự đóng góp và hỗ trợ của bạn, chúng tôi có thể tạo ra những bản đồ tốt nhất trên Thế giới!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Bạn có thích ứng dụng của chúng tôi không? Hãy quyên góp để hỗ trợ sự phát triển! Bạn chưa thích nó? Vui lòng cho chúng tôi biết và chúng tôi sẽ khắc phục nó!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Nếu bạn biết một nhà phát triển phần mềm, bạn có thể yêu cầu họ triển khai một tính năng mà bạn cần.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Nhấn vào bất cứ nơi nào trên bản đồ để chọn bất cứ thứ gì. Nhấn và giữ để ẩn và hiển thị lại giao diện.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Bạn có biết rằng bạn có thể chọn vị trí hiện tại của mình trên bản đồ không?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Bạn có thể giúp dịch ứng dụng của chúng tôi sang ngôn ngữ của bạn.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Ứng dụng của chúng tôi được phát triển bởi một số người đam mê và cộng đồng.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Bạn có thể dễ dàng sửa chữa và cải thiện dữ liệu bản đồ.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Mục tiêu chính của chúng tôi là xây dựng các bản đồ nhanh chóng, tập trung vào quyền riêng tư, dễ sử dụng mà bạn sẽ yêu thích.</string>
-    <string name="car_used_on_the_phone_screen">Bạn hiện đang sử dụng CoMaps trên màn hình điện thoại</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Đến màn hình ô tô</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Ngoài trời</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -741,18 +682,11 @@
     <string name="edit_track">Chỉnh sửa hành trình</string>
     <string name="uri_open_location_failed">Không có ứng dụng nào được cài đặt có thể mở vị trí</string>
     <!-- preference string for using auto theme only in navigation mode -->
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="app_site_url">https://comaps.app/</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="panoramax">Ảnh Panoramax</string>
     <string name="saved">Đã lưu</string>
-    <string name="about_headline">Dự án mở được vận hành bởi cộng đồng</string>
     <string name="maps_storage_free_size">%1$s trống của %2$s</string>
     <string name="move_maps_error">Lỗi khi chuyển các tệp bản đồ</string>
-    <string name="share_bookmarks_email_body">Xin chào! \n \nĐính kèm là các điểm Ưa thích của tôi; vui lòng mở chúng trong CoMaps. Nếu bạn chưa cài đặt nó thì bạn có thể tải nó xuống ở đây: https://www.comaps.app/download/ \n \nTận hưởng hành trình với CoMaps nhé!</string>
     <string name="bookmark_share_email_subject">Theo đường dẫn này %1$s hoặc dán tọa độ này %2$s vào ứng dụng bản đồ của bạn để xem vị trí này.</string>
     <string name="my_position_share_email">Theo đường dẫn này %1$s hoặc dán tọa độ này %2$s vào ứng dụng bản đồ của bạn để xem vị trí của tôi.</string>
     <string name="prefs_group_general">Cài đặt chung</string>
@@ -838,7 +772,6 @@
     <string name="error_enter_correct_bluesky_page">Nhập một tên người dùng Bluesky hoặc địa chỉ web hợp lệ</string>
     <string name="place_page_map_too_old_title">Dữ liệu bản đồ đã lỗi thời</string>
     <string name="place_page_map_too_old_description">Dữ liệu bản đồ hiện tại của bạn rất cũ, vui lòng cập nhật bản đồ.</string>
-    <string name="place_page_app_too_old_description">Dữ liệu bản đồ hiện tại của bạn rất cũ, vui lòng cập nhật ứng dụng CoMaps.</string>
     <string name="place_page_update_too_old_map">Cập nhật khu vực bản đồ</string>
     <string name="place_page_too_old_to_edit">Việc chỉnh sửa OpenStreetMap đã bị tắt vì dữ liệu bản đồ quá cũ.</string>
     <string name="osm_note_hint">Hoặc, một cách khác là để lại ghi chú cho cộng đồng OpenStreetMap để người khác có thể thêm hoặc sửa địa điểm ở đây.</string>
@@ -865,9 +798,7 @@
     <string name="pref_backup_history_title">Số lượng bản sao lưu cần giữ</string>
     <string name="backup_interval_manual_only">Tắt (chỉ làm thủ công)</string>
     <string name="dialog_report_error_missing_folder">Vị trí sao lưu đã chọn không có sẵn hoặc không ghi vào được. Vui lòng chọn vị trí khác.</string>
-    <string name="dialog_report_error_with_logs">Vui lòng gửi cho chúng tôi một bản báo cáo lỗi:\n - \"Bật nhật ký hoạt động\" trong phần cài đặt\n - tạo lại vấn đề\n - trong phần \"Giới thiệu &amp; Trợ giúp\" nhấn nút \"Báo cáo lỗi\" và gửi qua email hoặc tin nhắn\n - tắt nhật ký hoạt động</string>
     <string name="bookmark_color">Màu cho Ưa thích</string>
-    <string name="about_help">Giới thiệu &amp; Trợ giúp</string>
     <string name="pref_tts_no_system_tts_short">Không có công cụ chuyển văn bản thành giọng nói nào được tìm thấy, kiểm tra cài đặt ứng dụng</string>
     <string name="navigation_start_tts_message">"Đang bắt đầu Chỉ đường, ngôn ngữ hướng dẫn bằng giọng nói: "</string>
     <string name="navigation_start_tts_disabled_message">Hướng dẫn bằng giọng nói đã bị tắt: công cụ TTS không có sẵn</string>
@@ -881,7 +812,6 @@
     <string name="offline_explanation_text">Một bản đồ cần được tải xuống để xem và điều hướng trong vùng.\nTải xuống bản đồ cho những khu vực bạn muốn đến.</string>
     <string name="list_description_empty">Chỉnh sửa danh sách để thêm mô tả</string>
     <string name="download_resources_custom_url_title">Tùy chỉnh máy chủ bản đồ</string>
-    <string name="download_resources_custom_url_message">Ghi đè máy chủ tải xuống bản đồ mặc định. Để trống để sử dụng máy chủ mặc định của CoMaps.</string>
     <string name="download_resources_custom_url_error_scheme">Vui lòng nhập một URL bắt đầu bằng http:// hoặc https://</string>
     <string name="pref_alt_map_lang_handling">Ngôn ngữ bản đồ thay thế</string>
     <string name="pref_alt_map_lang_handling_ignore_alternatives">Không sử dụng ngôn ngữ thay thế</string>
@@ -897,5 +827,4 @@
     <string name="not_following_route">Đang lệch khỏi tuyến đường</string>
     <string name="route_recalculating">Đang tính lại tuyến đường…</string>
     <string name="pref_openexternallinks_title">Tự động mở các đường dẫn bên thứ ba</string>
-    <string name="pref_openexternallinks_summary">Mặc định mở các đường dẫn bên thứ ba trong CoMaps</string>
 </resources>

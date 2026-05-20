@@ -2,7 +2,6 @@
 <resources>
     <!-- Project only name, app_name is added to strings in build.gradle & can contain "Debug" etc. prefixes. -->
     <string name="project_name" translatable="false">CoMaps</string>
-    <string name="app_site_url">https://comaps.app/</string>
     <!-- SECTION: Strings -->
     <!-- Button text (should be short) -->
     <string name="back">Back</string>
@@ -37,24 +36,13 @@
     <string name="country_status_download_failed">Download has failed</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Try Again</string>
-    <string name="about_menu_title">About CoMaps</string>
-    <!-- Text in About screen -->
-    <string name="about_headline">Open project powered by the community</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Easy to use and polished</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Privacy-focused and ads-free</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Offline, fast and compact</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Fully open source, not for profit, transparent decision-making and finances.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Location Settings</string>
     <string name="close">Close</string>
     <string name="unsupported_phone">The app requires hardware accelerated OpenGL. Unfortunately, your device is not supported.</string>
     <string name="download">Download</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Please disconnect USB cable or insert memory card to use CoMaps</string>
+    <string name="disconnect_usb_cable">Please disconnect USB cable or insert a memory card to use the app</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Please free up some space on the SD card/USB storage first in order to use the app</string>
     <string name="download_resources">Before you start using the app, please download the world overview map to your device.
@@ -156,12 +144,10 @@
     <!-- Notes field in Favorites view -->
     <string name="description">Notes</string>
     <!-- Email Subject when sharing Favorite list -->
-    <string name="share_bookmarks_email_subject">My CoMaps Favorites</string>
+    <string name="share_bookmarks_email_subject">Shared Maps favorites</string>
     <string name="share_bookmarks_email_body">Hello!
 \n
-\nAttached are my Favorites; please open them in CoMaps. If you don\'t have it installed you can download it here: https://www.comaps.app/download/
-\n
-\nEnjoy travelling with CoMaps!</string>
+\nAttached are my Favorites. Open the attached file in Maps to import them.</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Loading Favorites</string>
     <!-- Kmz file successful loading -->
@@ -171,7 +157,7 @@
     <!-- Failed to recognize the format of a Favorites or tracks file. -->
     <string name="unknown_file_type">The file type is not recognized by the app:
 \n%1$s</string>
-    <!-- Failed to open a Favorites file in CoMaps. -->
+    <!-- Failed to open a Favorites file. -->
     <string name="failed_to_open_file">Failed to open file %1$s
 \n
 \n%2$s</string>
@@ -193,23 +179,23 @@
     <string name="cant_change_this_setting">Sorry, Map Storage settings are currently disabled</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Map download is in progress now</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Check out my current location in CoMaps! %1$s or %2$s Don\'t have offline maps? Download here: https://www.comaps.app/download/</string>
-  <!-- Share a position using EMail, %1$@ is https://comaps.at link WITH NAME and %2$@ is the geo url containing only coordinates.  -->
+    <!-- Share my position using SMS. %1$s is the app link and %2$s is the geo URL. -->
+    <string name="my_position_share_sms">My current location: %1$s or %2$s</string>
+  <!-- Share a position using EMail. %1$s is the app link and %2$s is the geo URL containing only coordinates.  -->
     <string name="bookmark_share_email_subject">Follow this link %1$s or paste these coordinates %2$s into your maps app to see this location.</string>
     <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Hey, check out my current location on the CoMaps map!</string>
-    <!-- Share my position using EMail, %1$@ is https://comaps.at link WITHOUT NAME and %2$@ is the geo url  -->
+    <string name="my_position_share_email_subject">My current location</string>
+    <!-- Share my position using EMail. %1$s is the app link and %2$s is the geo URL. -->
     <string name="my_position_share_email">Follow this link %1$s or paste these coordinates %2$s into your maps app to see my location.</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Share</string>
-    <!-- Share by email button text, also used in editor and About. -->
+    <!-- Share by email button text, also used in editor. -->
     <string name="email">Email</string>
     <!-- Text for message when used successfully copied something -->
     <string name="copied_to_clipboard">Copied to clipboard: %s</string>
     <!-- Used for Favorite editing -->
     <string name="done">Done</string>
-    <!-- Data version in «About» screen, %@ is replaced by a local, human readable date. -->
+    <!-- Data version, %s is replaced by a local, human readable date. -->
     <string name="data_version">OpenStreetMap data: %s</string>
     <!-- Title for tracks category in Favorites manager -->
     <string name="tracks_title">Tracks</string>
@@ -263,26 +249,11 @@
     <string name="menu">Menu</string>
     <!-- Text in menu -->
     <string name="website">Website</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">News</string>
     <!-- Text on the place page -->
     <string name="panoramax">Panoramax Picture</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Feedback</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Rate the app</string>
     <!-- Text in menu -->
-    <string name="help">Help</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Frequently Asked Questions</string>
     <!-- Button in the main menu -->
-    <string name="donate">Donate</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Volunteer and improve CoMaps</string>
-    <!-- Button in the main Help dialog -->
-    <string name="copyright">Copyright</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Report a bug</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Improve arrow direction by moving the phone in a figure-eight motion to calibrate the compass.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -442,7 +413,6 @@
     <string name="editor_time_advanced">Advanced Mode</string>
     <string name="editor_time_simple">Simple Mode</string>
     <string name="editor_hours_closed">Non-Business Hours</string>
-    <string name="editor_example_values">Example Values</string>
     <string name="editor_correct_mistake">Correct mistake</string>
     <string name="editor_add_select_location">Select Location</string>
     <string name="editor_report_problem_send_button">Send</string>
@@ -518,8 +488,7 @@
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Community-created OpenStreetMap data as of %s. Learn more about how to edit and update the map at OpenStreetMap.org</string>
     <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) is a community project to build a free and open map. It\'s the main source of map data in CoMaps and works similar to Wikipedia. You can add or edit places and they become available to millions of users all over the World.
-\nJoin the community and help to make a better map for everyone!</string>
+    <string name="login_osm_presentation">OpenStreetMap.org (OSM) is a public project that builds a free and open map. It is the primary source of map data. You can add or edit places there, and accepted changes become available to map users.</string>
     <string name="login_to_make_edits_visible">Create an OpenStreetMap account or log in to publish your map edits to the world</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d of %2$d</string>
@@ -534,7 +503,7 @@
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Note to OpenStreetMap volunteers (optional)</string>
     <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Describe errors on the map or things that cannot be edited with CoMaps</string>
+    <string name="editor_note_hint">Describe map errors or details that cannot be edited here</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Your edits are uploaded to the public <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> database. Please do not add personal or copyrighted information.</string>
     <string name="editor_more_about_osm">More about OpenStreetMap</string>
@@ -544,7 +513,7 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Operator: %s</string>
     <string name="editor_category_unsuitable_title">Can\'t find a suitable category?</string>
-    <string name="editor_category_unsuitable_text">CoMaps is only able to add simple point categories, it isn\'t able to add towns, roads, lakes, building outlines, etc. Please add such categories directly to <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Check our <a href="https://www.comaps.app/support/advanced-map-editing/">guide</a> for detailed step by step instructions.</string>
+    <string name="editor_category_unsuitable_text">Maps can add simple point categories only. Add towns, roads, lakes, building outlines, and other complex map features with a full OpenStreetMap editor.</string>
     <string name="downloader_no_downloaded_maps_title">You haven\'t downloaded any maps</string>
     <string name="downloader_no_downloaded_maps_message">Download maps to search and navigate offline</string>
     <string name="current_location_unknown_error_title">Current location is unknown</string>
@@ -592,7 +561,7 @@
     <!-- Description of info shown when the map is older than 3 months -->
     <string name="place_page_map_too_old_description"> Your current map data is very old, please update the map.</string>
     <!-- Description of info shown when the app and the map are older than 6 months -->
-    <string name="place_page_app_too_old_description"> Your current map data is very old, please update the CoMaps app.</string>
+    <string name="place_page_app_too_old_description">Your current map data is very old. Please update the app.</string>
     <!-- Button to update map region, part of the map too old info -->
     <string name="place_page_update_too_old_map">Update map region</string>
     <!-- Toast shown after pressing add place / edit OpenStreetMap when editing is disabled -->
@@ -622,17 +591,14 @@
     <string name="mobile_data_option_ask">Always Ask</string>
     <string name="traffic_update_maps_text">To display traffic data, maps must be updated</string>
     <string name="big_font">Increase size for map labels</string>
-    <string name="traffic_update_app">Please update CoMaps</string>
+    <string name="traffic_update_app">Please update the app</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Traffic data is not available</string>
     <string name="enable_logging">Enable logging</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">General Feedback</string>
     <string name="prefs_languages_information">We use system TTS for voice instructions. Many Android devices use Google TTS, you can download or update it from the Google Play Store (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">For some languages, you will need to install a speech synthesizer or an additional language pack from an app store (Google Play, Galaxy Store, App Gallery, F-Droid).
 \nOpen your device\'s settings → Language and input → Speech → Text to speech output.
 \nHere you can manage the settings for speech synthesis (for example, to download language a pack for offline use) and select a different text-to-speech engine.</string>
-    <string name="prefs_languages_information_off_link">For more information please check this guide</string>
     <string name="prefs_speed_cameras_information">Speed camera warnings are disabled in countries where alerts are prohibited by local law.</string>
     <string name="transliteration_title">Transliterate into the Latin alphabet</string>
     <string name="learn_more">Learn more</string>
@@ -646,7 +612,7 @@
     <string name="placepage_add_stop">Add Stop</string>
     <string name="saved">Saved</string>
     <string name="dialog_error_storage_title">Storage access problem</string>
-    <string name="dialog_error_storage_message">External storage is not accessible. The SD card may have been removed, damaged, or the file system is read-only. Please, check your SD card or contact us at support@comaps.app</string>
+    <string name="dialog_error_storage_message">External storage is not accessible. The SD card may have been removed, damaged, or the file system is read-only.</string>
     <string name="setting_emulate_bad_storage">Emulate bad storage</string>
     <string name="error_enter_correct_name">Please enter a correct name</string>
     <string name="bookmark_lists">Favorite Lists</string>
@@ -682,9 +648,7 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Privacy</string>
-    <string name="privacy_policy">Privacy policy</string>
     <string name="power_management">Power management</string>
-    <string name="terms_of_use">Terms of use</string>
     <string name="button_layer_traffic">Traffic</string>
     <string name="subway">Subway</string>
     <string name="layers_title">Map Styles and Layers</string>
@@ -709,7 +673,7 @@
     <string name="power_managment_setting_never">Never</string>
     <string name="power_managment_setting_auto">When battery is low</string>
     <string name="power_managment_setting_manual_max">Always</string>
-    <string name="enable_logging_warning_message">Enable this option temporarily to record and manually send detailed diagnostic logs about your issue to us using \"Report a bug\" in the Help dialog. Logs may include location info.</string>
+    <string name="enable_logging_warning_message">Enable this temporarily to record diagnostic logs. Logs may include location data.</string>
     <string name="driving_options_title">Routing options</string>
     <string name="avoid_tolls">Avoid tolls</string>
     <string name="avoid_unpaved">Avoid unpaved roads</string>
@@ -819,46 +783,25 @@
     <string name="pref_maplanguage_local">Local Language</string>
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Map data from OpenStreetMap</string>
-    <!-- Telegram group url for the "?" About page -->
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
-    <!-- Instagram account url for the "?" About page -->
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <!-- A link to the TTS FAQ -->
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
-    <!-- Translated CoMaps site, add new translations here: https://translate.codeberg.org/projects/comaps/website -->
-    <string name="translated_om_site_url">https://comaps.app/</string>
     <!-- Link to OSM wiki for Editor, Profile and About pages -->
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
     <!-- A number of places and a number of tracks, separated by comma, like: 1 saved place, 5 tracks -->
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Thank you for using our community-built maps!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">With your donations and support, we can create the best maps in the World!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Do you like our app? Please donate to support the development! Don\'t like it yet? Please let us know why, and we will fix it!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">If you know a software developer, you can ask him or her to implement a feature that you need.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Tap anywhere on the map to select anything. A long tap is used to hide and show the interface.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Did you know that your current location on the map can be selected?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">You can help to translate our app into your language.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Our app is developed by a few enthusiasts and the community.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">You can easily fix and improve the map data.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Our main goal is to build fast, privacy-focused, easy-to-use maps that you will love.</string>
-    <string name="car_used_on_the_phone_screen">You are now using CoMaps on the phone screen</string>
+    <string name="car_used_on_the_phone_screen">You are now using the app on the phone screen</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">To the car screen</string>
-    <!-- Ask user to grant location permissions -->
-    <!-- Notification title for permission request from AA. -->
     <!-- The text in the activity for location permission request. -->
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">Outdoors</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -925,12 +868,7 @@
     <string name="backup_interval_every_week">Weekly</string>
     <string name="backup_interval_manual_only">Off (manual only)</string>
     <string name="dialog_report_error_missing_folder">The selected backup location is not available or writable. Select a different location, please.</string>
-    <string name="dialog_report_error_with_logs">Please send us an error report:\n
-    - \"Enable logging\" in the settings\n
-    - reproduce the problem\n
-    - in the \"About &amp; Help\" screen press the \"Report a bug\" button and send via email or chat\n
-    - disable logging
-    </string>
+    <string name="dialog_report_error_with_logs">Backup failed. Enable logging in settings, reproduce the problem, then try the backup again. Logs may include location data.</string>
     <string name="clear">Clear</string>
     <string name="route_type">Route type</string>
     <string name="vehicle">Vehicle</string>
@@ -938,7 +876,6 @@
     <string name="bicycle">Bicycle</string>
     <string name="ruler">Ruler</string>
     <string name="bookmark_color">Color for Favorite</string>
-    <string name="about_help">About &amp; Help</string>
     <string name="open_now">Open now</string>
     <string name="closed_now">Closed now</string>
     <!-- Used in navigation panel. -->
@@ -979,7 +916,7 @@
     <string name="advanced">Advanced</string>
     <!-- Custom Download URL -->
     <string name="download_resources_custom_url_title">Custom Map Server</string>
-    <string name="download_resources_custom_url_message">Override the default map download server used for map downloads. Leave empty to use CoMaps default server.</string>
+    <string name="download_resources_custom_url_message">Override the default map download server. Leave empty to use the default server.</string>
     <string name="download_resources_custom_url_summary_none">Not set</string>
     <string name="download_resources_custom_url_error_scheme">Please enter a URL starting with http:// or https://</string>
     <!-- legacy string name retained for compatibility -->
@@ -1002,7 +939,7 @@
     <!-- Should match TTS string with the same id, eg. data/sound-strings/en.json/localize.json -->
     <string name="route_recalculating">Recalculating the route…</string>
     <string name="pref_openexternallinks_title">Automatically open third-party links</string>
-    <string name="pref_openexternallinks_summary">Open third-party links in CoMaps by default</string>
+    <string name="pref_openexternallinks_summary">Open third-party links in this app by default</string>
     <string name="pref_keyboard_typing_history_title">Keyboard incognito mode</string>
     <string name="pref_keyboard_typing_history_summary">Request system keyboard to not record typing history</string>
 

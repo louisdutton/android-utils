@@ -38,10 +38,7 @@ import dev.octoshrimpy.quik.interactor.SpeakThreads
 import dev.octoshrimpy.quik.interactor.SyncContacts
 import dev.octoshrimpy.quik.interactor.SyncMessages
 import dev.octoshrimpy.quik.listener.ContactAddedListener
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.manager.ChangelogManager
 import dev.octoshrimpy.quik.manager.PermissionManager
-import dev.octoshrimpy.quik.manager.RatingManager
 import dev.octoshrimpy.quik.repository.ConversationRepository
 import dev.octoshrimpy.quik.repository.MessageRepository
 import dev.octoshrimpy.quik.repository.SyncRepository
@@ -50,20 +47,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    billingManager: BillingManager,
     contactAddedListener: ContactAddedListener,
     markAllSeen: MarkAllSeen,
     migratePreferences: MigratePreferences,
     syncRepository: SyncRepository,
-    private val changelogManager: ChangelogManager,
     private val conversationRepo: ConversationRepository,
     private val messageRepo: MessageRepository,
     private val deleteConversations: DeleteConversations,
@@ -77,7 +68,6 @@ class MainViewModel @Inject constructor(
     private val navigator: Navigator,
     private val permissionManager: PermissionManager,
     private val prefs: Preferences,
-    private val ratingManager: RatingManager,
     private val syncContacts: SyncContacts,
     private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(
@@ -102,15 +92,6 @@ class MainViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { copy(syncing = syncing) } }
 
-        // Update the upgraded status
-        disposables += billingManager.upgradeStatus
-                .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
-
-        // Show the rating UI
-        disposables += ratingManager.shouldShowRating
-                .subscribe { show -> newState { copy(showRating = show) } }
-
-
         // Migrate the preferences from 2.7.3
         migratePreferences.execute(Unit)
 
@@ -133,7 +114,6 @@ class MainViewModel @Inject constructor(
                     .subscribe { syncContacts.execute(Unit) }
         }
 
-        ratingManager.addSession()
         markAllSeen.execute(Unit)
         observeConversationPage(archived = false)
     }
@@ -220,25 +200,6 @@ class MainViewModel @Inject constructor(
                     }
                 }
 
-        // Show changelog
-        if (changelogManager.didUpdate()) {
-            if (Locale.getDefault().language.startsWith("en")) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    val changelog = changelogManager.getChangelog()
-                    changelogManager.markChangelogSeen()
-                    view.showChangelog(changelog)
-                }
-            } else {
-                changelogManager.markChangelogSeen()
-            }
-        } else {
-            changelogManager.markChangelogSeen()
-        }
-
-        view.changelogMoreIntent
-                .autoDispose(view.scope())
-                .subscribe { navigator.showChangelog() }
-
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -319,10 +280,6 @@ class MainViewModel @Inject constructor(
                         NavItem.BLOCKING -> navigator.showBlockedConversations()
                         NavItem.MESSAGE_UTILS -> navigator.showMessageUtils()
                         NavItem.SETTINGS -> navigator.showSettings()
-                        NavItem.ABOUT -> navigator.showAbout()
-//                        NavItem.PLUS -> navigator.showQksmsPlusActivity("main_menu")
-//                        NavItem.HELP -> navigator.showSupport()
-                        NavItem.INVITE -> navigator.showInvite()
                         else -> Unit
                     }
                     drawerItem
@@ -443,24 +400,6 @@ class MainViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(view.scope())
             .subscribe { conversation -> view.showRenameDialog(conversation.name) }
-
-//        view.plusBannerIntent
-//                .autoDispose(view.scope())
-//                .subscribe {
-//                    newState { copy(drawerOpen = false) }
-//                    navigator.showQksmsPlusActivity("main_banner")
-//                }
-
-        view.rateIntent
-                .autoDispose(view.scope())
-                .subscribe {
-                    navigator.showRating()
-                    ratingManager.rate()
-                }
-
-        view.dismissRatingIntent
-                .autoDispose(view.scope())
-                .subscribe { ratingManager.dismiss() }
 
         view.conversationsSelectedIntent
                 .observeOn(Schedulers.io())

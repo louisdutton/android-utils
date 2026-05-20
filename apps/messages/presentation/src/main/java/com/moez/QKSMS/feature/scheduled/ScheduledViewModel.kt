@@ -10,7 +10,6 @@ import dev.octoshrimpy.quik.common.util.ClipboardUtils
 import dev.octoshrimpy.quik.extensions.mapNotNull
 import dev.octoshrimpy.quik.interactor.DeleteScheduledMessages
 import dev.octoshrimpy.quik.interactor.SendScheduledMessage
-import dev.octoshrimpy.quik.manager.BillingManager
 import dev.octoshrimpy.quik.repository.ScheduledMessageRepository
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +21,6 @@ import javax.inject.Named
 
 class ScheduledViewModel @Inject constructor(
     @Named("conversationId") private val conversationId: Long?,
-    billingManager: BillingManager,
     private val context: Context,
     private val navigator: Navigator,
     private val scheduledMessageRepo: ScheduledMessageRepository,
@@ -35,8 +33,6 @@ class ScheduledViewModel @Inject constructor(
 
     init {
         loadMessages(conversationId)
-        disposables += billingManager.upgradeStatus
-            .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
     }
 
     override fun bindView(view: ScheduledView) {
@@ -176,9 +172,6 @@ class ScheduledViewModel @Inject constructor(
                 view.clearSelection()
             }
 
-        view.upgradeIntent
-            .autoDispose(view.scope())
-            .subscribe { navigator.showQksmsPlusActivity("schedule_fab") }
     }
 
     private fun loadMessages(conversationId: Long?) {

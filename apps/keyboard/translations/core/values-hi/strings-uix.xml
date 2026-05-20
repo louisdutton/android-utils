@@ -76,7 +76,6 @@
     <!-- अपेक्षाकृत छोटा होना चाहिए -->
     <string name="action_clipboard_manager_delete_corrupted_clipboard_button">हटाएँ</string>
     <string name="action_clipboard_manager_error_clipboard_history_disabled_title">क्लिपबोर्ड इतिहास निष्क्रिय</string>
-    <string name="action_clipboard_manager_error_clipboard_history_disabled_text">क्लिपबोर्ड इतिहास सक्षम नहीं है। क्लिपबोर्ड आइटम सहेजने के लिए, आप क्लिपबोर्ड इतिहास सक्षम कर सकते हैं। यह 3 दिनों के लिए 25 आइटम तक रखेगा जब तक कि पिन न किया जाए। पासवर्ड और अन्य संवेदनशील आइटम इतिहास से बाहर रखे जाते हैं।</string>
     <string name="action_clipboard_manager_enable_clipboard_history_button">क्लिपबोर्ड इतिहास सक्षम करें</string>
     <string name="action_clipboard_manager_error_app_image_insertion_unsupported">ऐप छवि सम्मिलन का समर्थन नहीं करता</string>
 
@@ -129,11 +128,6 @@
     <string name="theme_dynamic_light">डायनामिक लाइट</string>
 
     <!-- ऑटो अपडेट स्ट्रिंग्स (नोट: ऑटो अपडेटर वर्तमान में निष्क्रिय है) -->
-    <string name="autoupdater_service_title">अपडेट जांचने की सेवा</string>
-    <string name="autoupdater_update_available_title">अपडेट उपलब्ध है</string>
-    <string name="autoupdater_update_available_body">एक अपडेट उपलब्ध है (<xliff:g name="versionDiff" example="v1 -> v2">%s</xliff:g>)। डाउनलोड करने के लिए टैप करें</string>
-    <string name="autoupdater_dismiss_update">अस्वीकृत करें</string>
-    <string name="autoupdater_perform_update">अपडेट करें</string>
 
     <!-- ये स्ट्रिंग्स कीबोर्ड में स्वयं प्रकट हो सकती हैं -->
     <string name="keyboard_suggest_add_word_to_blacklist">ब्लैकलिस्ट</string>
@@ -144,64 +138,12 @@
     <string name="keyboard_language_settings">सेटिंग्स</string>
 
     <!-- भुगतान स्क्रीन -->
-    <string name="payment_screen_short_title">भुगतान</string>
-    <string name="payment_screen_title">FUTO कीबोर्ड के लिए भुगतान करें</string>
-    <string name="payment_screen_sales_paragraph_1">आपने FUTO कीबोर्ड का उपयोग <xliff:g name="days" example="30">%d</xliff:g> दिनों से किया है। यदि आपको यह ऐप उपयोगी लगता है, तो कृपया FUTO सॉफ़्टवेयर के भविष्य के विकास का समर्थन करने के लिए भुगतान करने पर विचार करें।</string>
-    <string name="payment_screen_sales_paragraph_1_alt">FUTO कीबोर्ड आजमाने के लिए धन्यवाद! यदि आपको यह ऐप उपयोगी लगता है, तो कृपया FUTO सॉफ़्टवेयर के भविष्य के विकास का समर्थन करने के लिए भुगतान करने पर विचार करें।</string>
-    <string name="payment_screen_sales_paragraph_2">FUTO अच्छे सॉफ़्टवेयर बनाने के लिए समर्पित है जो आपको नुकसान नहीं पहुँचाता। यह ऐप कभी भी आपको विज्ञापन नहीं दिखाएगा या आपका व्यक्तिगत डेटा एकत्र नहीं करेगा।</string>
-    <string name="payment_screen_sales_point_development_title">सतत विकास</string>
-    <string name="payment_screen_sales_point_development_body">FUTO का मिशन ओपन-सोर्स सॉफ़्टवेयर और गैर-दुष्ट सॉफ़्टवेयर व्यावसायिक प्रथाओं को परियोजनाओं और उनके डेवलपर्स के लिए एक स्थायी आय स्रोत बनाना है। इस कारण से, हम उपयोगकर्ताओं द्वारा सॉफ़्टवेयर के लिए भुगतान करने के पक्ष में हैं।</string>
-    <string name="payment_screen_sales_point_privacy_title">गोपनीयता के प्रति प्रतिबद्धता</string>
-    <string name="payment_screen_sales_point_privacy_body">यह ऐप कभी भी आपको विज्ञापन नहीं दिखाएगा या आपका डेटा नहीं बेचेगा। हम इस व्यवसाय में नहीं हैं।</string>
-    <string name="payment_screen_error_build_unsupported_payment">इस निर्माण पर भुगतान समर्थित नहीं है</string>
-    <string name="payment_screen_already_paid_title">क्या पहले ही भुगतान कर चुके हैं?</string>
-    <string name="payment_screen_already_paid_body">यदि आपने पहले ही FUTO कीबोर्ड या FUTO वॉयस इनपुट के लिए भुगतान किया है, तो नीचे टैप करें।</string>
-    <string name="payment_screen_already_paid_button">मैंने पहले ही भुगतान किया</string>
-    <string name="payment_screen_already_paid_confirmation">अपने विकल्प की पुष्टि करें</string>
-    <string name="payment_screen_already_paid_confirmation_body">क्या आप सुनिश्चित हैं कि आप पुष्टि करना चाहते हैं कि आपने पहले ही भुगतान किया है? एक बार पुष्टि करने के बाद, आपसे फिर से भुगतान के बारे में नहीं पूछा जाएगा।</string>
-    <string name="payment_screen_already_paid_confirmation_confirm">मैंने पहले ही भुगतान किया</string>
-    <string name="payment_screen_already_paid_confirmation_cancel">रद्द करें</string>
-    <string name="payment_screen_set_reminder_title">अभी भुगतान करने के लिए तैयार नहीं?</string>
-    <string name="payment_screen_set_reminder_body">यह सेटिंग स्क्रीन में दिनों की अवधि के लिए अनुस्मारक को छिपा देगा।</string>
-    <string name="payment_screen_set_reminder_setter">आपको कब याद दिलाया जाए?</string>
-    <string name="payment_screen_set_reminder_setter_7_days">7 दिनों में</string>
-    <string name="payment_screen_set_reminder_setter_1_month">1 महीने में</string>
-    <string name="payment_screen_set_reminder_setter_6_months">6 महीनों में</string>
-    <string name="payment_screen_set_reminder_setter_next_century">अगले सदी में</string>
-    <string name="payment_screen_set_reminder_setter_confirm">अनुस्मारक की पुष्टि करें</string>
-    <string name="payment_screen_other_options">अन्य विकल्प</string>
-    <string name="payment_screen_need_help_title">मदद</string>
-    <string name="payment_screen_need_help_subtitle">मदद चाहिए? हमारी वेबसाइट पर जाएँ</string>
 
-    <string name="payment_screen_pay_via_google">गूगल प्ले के माध्यम से भुगतान करें (<xliff:g name="price" example="~$2.99">%s</xliff:g> + कर)</string>
-    <string name="payment_screen_pay_via_futopay">भुगतान करें (<xliff:g name="price" example="~$2.99">%s</xliff:g> + कर)</string>
-    <string name="payment_screen_more_options">अधिक विकल्प</string>
 
-    <string name="payment_screen_payment_complete_title">भुगतान पूरा</string>
-    <string name="payment_screen_aftersales_title">धन्यवाद</string>
-    <string name="payment_screen_aftersales_title_pending">भुगतान लंबित</string>
-    <string name="payment_screen_aftersales_paragraph_1">FUTO कीबोर्ड खरीदने के लिए धन्यवाद!</string>
-    <string name="payment_screen_aftersales_paragraph_2">आपकी खरीद FUTO कीबोर्ड और अन्य FUTO परियोजनाओं के निरंतर विकास में मदद करेगी।</string>
-    <string name="payment_screen_aftersales_paragraph_2_pending">आपका भुगतान अभी भी लंबित है, लेकिन यह जल्द ही साफ हो जाएगा।</string>
-    <string name="payment_screen_aftersales_paragraph_3">यदि आपने अभी भुगतान किया है, तो आपका भुगतान अभी भी प्रक्रिया में हो सकता है, आपको अधिक जानकारी के साथ एक ईमेल प्राप्त होगा।</string>
-    <string name="payment_screen_payment_failed_title">भुगतान त्रुटि</string>
-    <string name="payment_screen_payment_failed_body">दुर्भाग्यवश, आपका भुगतान किसी न किसी कारण से विफल हो गया है। यदि आपको मदद की आवश्यकता है, तो कृपया हमसे संपर्क करें। आप हमें keyboard@futo.org पर, नीचे दिए गए बटन से, या मदद में "फीडबैक भेजें" के माध्यम से संपर्क कर सकते हैं।</string>
-    <string name="payment_screen_payment_failed_body_unconfident">आपके भुगतान में कोई समस्या हो सकती है। यदि यह सफल रहा, तो आपको एक लाइसेंस कुंजी के साथ एक ईमेल प्राप्त होना चाहिए। यदि आपको मदद की आवश्यकता है, तो कृपया हमसे संपर्क करें। आप हमें keyboard@futo.org पर, नीचे दिए गए बटन से, या मुख्य स्क्रीन पर "फीडबैक साझा करें" के माध्यम से संपर्क कर सकते हैं।</string>
-    <string name="payment_screen_license_integrity_error">लाइसेंस सत्यापित करने में विफल। यदि आपको लगता है कि यह एक त्रुटि है, तो कृपया हमसे संपर्क करें।</string>
-    <string name="payment_screen_continue_button">जारी रखें</string>
 
-    <string name="payment_unpaid_version_title">अवैतनिक FUTO कीबोर्ड</string>
-    <string name="payment_unpaid_version_indicator">अवैतनिक</string>
-    <string name="payment_paid_version_indicator">FUTO कीबोर्ड के भुगतान किए गए संस्करण का उपयोग करने के लिए धन्यवाद!</string>
 
     <!-- स्वचालित अपडेट की कमी का नोटिस -->
-    <string name="manual_update_notice_title">अपडेट नोटिस</string>
-    <string name="manual_update_notice_paragraph_1">यह ऐप इंटरनेट से कनेक्ट नहीं होता है और यह स्वचालित अपडेट की जांच नहीं कर सकेगा। हालांकि, आप मैन्युअल रूप से अपडेट की जांच कर सकते हैं।</string>
-    <string name="manual_update_notice_paragraph_2">कृपया स्वचालित अपडेट के लिए F-Droid या Obtainium का उपयोग करें। डाउनलोड विकल्पों के लिए keyboard.futo.org पर जाएँ।</string>
-    <string name="manual_update_notice_dev_paragraph">आप FUTO कीबोर्ड के विकास निर्माण पर हैं। यदि आप स्थिर निर्माण डाउनलोड करना चाहते हैं, तो keyboard.futo.org पर जाएँ।</string>
-    <string name="manual_update_notice_visit_site_button">जाएँ</string>
     <!-- इसे "समझा" आदि के रूप में अनुवादित किया जा सकता है -->
-    <string name="manual_update_notice_dismiss_notice_button">अस्वीकृत करें</string>
 
     <!-- सामान्य सेटिंग्स स्ट्रिंग्स -->
     <string name="settings_tip">टिप</string>
@@ -209,7 +151,6 @@
     <string name="settings_unknown_error_subtitle">एक अज्ञात त्रुटि हुई है।</string>
     <string name="settings_try_typing_here">यहाँ टाइप करने का प्रयास करें…</string>
     <string name="settings_external_model_name">बाहरी आयातित मॉडल</string>
-    <string name="settings_check_for_updates_manually">मैन्युअल रूप से अपडेट की जांच करें</string>
     <string name="settings_update_available">अपडेट उपलब्ध है</string>
 
     <!-- जब एक नई भाषा जोड़ते हैं -->
@@ -230,18 +171,14 @@
     <string name="language_settings_resource_builtin_dictionary_name">निर्मित शब्दकोश</string>
     <string name="language_settings_resource_voice_input_selected">क्या आप वॉयस इनपुट मॉडल को डिफ़ॉल्ट पर वापस लाना चाहेंगे, या इसे किसी अन्य फ़ाइल से बदलना चाहेंगे?</string>
     <string name="language_settings_resource_voice_input_selected_no_default_warning">इस भाषा के लिए कोई अंतर्निहित वॉयस इनपुट मॉडल मौजूद नहीं है, इसलिए यदि आप इसे हटाते हैं, तो इस भाषा के लिए वॉयस इनपुट काम करना बंद कर देगा जब तक आप एक अलग मॉडल आयात नहीं करते!</string>
-    <string name="language_settings_resource_voice_input_selected_unset">आपने इस भाषा के लिए कोई कस्टम वॉयस इनपुट मॉडल कॉन्फ़िगर नहीं किया है। आप ऑनलाइन डाउनलोड की खोज कर सकते हैं, या किसी फ़ाइल से एक आयात कर सकते हैं।</string>
     <string name="language_settings_resource_transformer_selected">क्या आप ट्रांसफार्मर मॉडल को डिफ़ॉल्ट पर वापस लाना चाहेंगे, या इसे किसी अन्य फ़ाइल से बदलना चाहेंगे?</string>
     <string name="language_settings_resource_transformer_selected_no_default_warning">इस भाषा के लिए कोई अंतर्निहित ट्रांसफार्मर मॉडल मौजूद नहीं है, इसलिए यदि आप इसे हटाते हैं, तो ट्रांसफार्मर-आधारित भविष्यवाणियाँ इस भाषा के लिए काम करना बंद कर देंगी जब तक आप एक अलग मॉडल आयात नहीं करते!</string>
-    <string name="language_settings_resource_transformer_selected_unset">आपने इस भाषा के लिए कोई कस्टम ट्रांसफार्मर मॉडल कॉन्फ़िगर नहीं किया है। आप ऑनलाइन डाउनलोड की खोज कर सकते हैं, या किसी फ़ाइल से एक आयात कर सकते हैं।</string>
     <string name="language_settings_resource_dictionary_selected">क्या आप शब्दकोश को डिफ़ॉल्ट पर वापस लाना चाहेंगे, या इसे किसी अन्य फ़ाइल से बदलना चाहेंगे?</string>
     <string name="language_settings_resource_dictionary_selected_no_default_warning">इस भाषा के लिए कोई अंतर्निहित शब्दकोश मौजूद नहीं है, इसलिए यदि आप इसे हटाते हैं, तो ऑटोकरेक्ट और भविष्यवाणियाँ इस भाषा के लिए काम करना बंद कर देंगी जब तक आप एक अलग शब्दकोश आयात नहीं करते!</string>
-    <string name="language_settings_resource_dictionary_selected_unset">आपने इस भाषा के लिए कोई कस्टम शब्दकोश कॉन्फ़िगर नहीं किया है। आप ऑनलाइन डाउनलोड की खोज कर सकते हैं, या किसी फ़ाइल से एक आयात कर सकते हैं।</string>
     <string name="language_settings_resource_replace_button">बदलें</string>
     <string name="language_settings_resource_import_file_button">आयात करें</string>
     <string name="language_settings_resource_revert_to_default_button">डिफ़ॉल्ट पर वापस लौटें</string>
     <string name="language_settings_resource_remove_button">हटाएँ</string>
-    <string name="language_settings_resource_explore_online_button">खोजें</string>
 
     <string name="language_settings_remove_language_title">क्या %1$s हटाएँ?</string>
     <string name="language_settings_remove_language_body">%1$s को हटाएँ, इसके सभी संबंधित लेआउट और कस्टम संसाधन?</string>
@@ -250,9 +187,6 @@
 
     <string name="language_settings_other_options">अन्य विकल्प</string>
     <string name="language_settings_import_resource_from_file">संसाधन फ़ाइल आयात करें</string>
-    <string name="language_settings_explore_voice_input_models_online">वॉयस इनपुट मॉडल खोजें</string>
-    <string name="language_settings_explore_dictionaries_online">शब्दकोश खोजें</string>
-    <string name="language_settings_explore_transformers_online">ट्रांसफार्मर मॉडल खोजें</string>
 
     <!-- संसाधन आयातक -->
     <string name="file_kind_voice_input_model">वॉयस इनपुट मॉडल</string>
@@ -280,7 +214,6 @@
 
     <!-- कीबोर्ड के आकार की सेटिंग्स -->
     <string name="size_settings_title">कीबोर्ड का आकार बदलें</string>
-    <string name="size_settings_subtitle">कीबोर्ड की ऊँचाई और ऑफसेट बदलें</string>
     <string name="size_settings_resize_tip">आकार बदलने के लिए \"कीबोर्ड का आकार बदलें\" बटन पर टैप करें।</string>
     <string name="size_settings_keyboard_modes_tip">आप इस क्रिया को कहीं भी कीबोर्ड मोड्स क्रिया के साथ एक्सेस कर सकते हैं:</string>
     <string name="size_settings_reset">आकार सेटिंग्स रीसेट करें</string>
@@ -293,7 +226,6 @@
     <string name="morekey_settings_reset">डिफ़ॉल्ट पर रीसेट करें</string>
     <string name="morekey_settings_active">सक्रिय</string>
     <string name="morekey_settings_inactive">निष्क्रिय</string>
-    <string name="morekey_settings_enable">सक्रिय करें</string>
     <string name="morekey_settings_disable">निष्क्रिय करें</string>
     <string name="morekey_settings_keys">लंबे प्रेस कुंजी</string>
     <string name="morekey_settings_show_hints">संकेत दिखाएँ</string>
@@ -334,9 +266,6 @@
 
     <!-- स्वचालित स्पेस सम्मिलन -->
     <string name="typing_settings_auto_space_mode">स्वचालित स्पेस मोड</string>
-    <string name="typing_settings_auto_space_mode_auto">विराम चिह्न के बाद या सुझाव सम्मिलित करने के बाद स्वचालित रूप से स्पेस सम्मिलित करें</string>
-    <string name="typing_settings_auto_space_mode_suggestions">सिर्फ सुझाव सम्मिलित करने के बाद स्वचालित रूप से स्पेस सम्मिलित करें</string>
-    <string name="typing_settings_auto_space_mode_legacy">कोई स्पेस स्वचालित रूप से सम्मिलित न करें (विरासत मोड)</string>
 
     <!-- विविध कीबोर्ड सेटिंग्स -->
     <string name="keyboard_settings_title">कीबोर्ड</string>
@@ -357,7 +286,6 @@
     <string name="theme_settings_title">थीम</string>
     <string name="theme_settings_key_borders">कुंजी सीमाएँ</string>
     <string name="dev_settings_title">डेवलपर सेटिंग्स</string>
-    <string name="credits_title">श्रेय</string>
 
     <!-- वॉयस इनपुट सेटिंग्स मेनू -->
     <string name="voice_input_settings_title">वॉयस इनपुट</string>
@@ -396,20 +324,6 @@
     <string name="prediction_settings_word_blacklist_none">कोई ब्लैकलिस्टेड शब्द नहीं हैं।</string>
 
     <!-- सहायता और फीडबैक मेनू -->
-    <string name="help_menu_title">सहायता और फीडबैक</string>
-    <string name="help_menu_version_name">संस्करण नाम: %1$s</string>
-    <string name="help_menu_version_code">संस्करण कोड: %1$s</string>
-    <string name="help_menu_version_tip">हम आपकी राय सुनना चाहते हैं! यदि आप कोई समस्या रिपोर्ट कर रहे हैं, तो आपका संस्करण प्रासंगिक हो सकता है: v%1$s</string>
-    <string name="help_menu_documentation">दस्तावेज़ीकरण</string>
-    <string name="help_menu_documentation_subtitle">कीबोर्ड की विशेषताओं और क्षमताओं के बारे में अधिक जानें</string>
-    <string name="help_menu_discord">डिस्कॉर्ड सर्वर</string>
-    <string name="help_menu_discord_subtitle">बात करना चाहते हैं लेकिन ज़ुलिप पसंद नहीं है? यहाँ चैट करें</string>
-    <string name="help_menu_futo_chat">FUTO चैट</string>
-    <string name="help_menu_futo_chat_subtitle">बात करना चाहते हैं लेकिन डिस्कॉर्ड पसंद नहीं है? यहाँ चैट करें</string>
-    <string name="help_menu_github">सार्वजनिक समस्या ट्रैकर</string>
-    <string name="help_menu_github_subtitle">विशिष्ट बग या फीचर अनुरोध? यहाँ पोस्ट करें</string>
-    <string name="help_menu_email">ईमेल करें keyboard@futo.org</string>
-    <string name="help_menu_email_subtitle">निजी फीडबैक, सहायता, या GitHub का उपयोग नहीं करते? हमें ईमेल करें</string>
 
     <!-- सेटअप कॉन्फ़िगरेशन -->
     <string name="setup_step_1">सेटअप - चरण 1</string>

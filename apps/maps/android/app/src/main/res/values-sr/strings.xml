@@ -30,22 +30,12 @@
     <string name="country_status_download_failed">Преузимање није успело</string>
     <!-- Button text for the button under the country_status_download_failed message -->
     <string name="try_again">Покушај поново</string>
-    <string name="about_menu_title">О апликацији</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_1">• Лака и полирана</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_2">• Оријентисана на приватност и без реклама</string>
-    <!-- Text in About screen -->
-    <string name="about_proposition_3">• Офлајн, брза и компактна</string>
-    <!-- Text in About screen -->
-    <string name="about_developed_by_enthusiasts">Потпуно отвореног кода, непрофитна, транспарентна у одлучивању и финансијама.</string>
     <!-- The button that opens system location settings -->
     <string name="location_settings">Подешавања локације</string>
     <string name="close">Затвори</string>
     <string name="unsupported_phone">Ова апликација захтева OpenGL. На жалост, ваш уређај није подржан.</string>
     <string name="download">Преузми</string>
     <!-- Used in DownloadResources startup screen -->
-    <string name="disconnect_usb_cable">Молим вас откачите УСБ кабл, или убаците меморијску картицу да бисте користили CoMaps</string>
     <!-- Used in DownloadResources startup screen -->
     <string name="not_enough_free_space_on_sdcard">Молим вас, прво ослободите нешто простора на СД картици или на УСБ меморији да бисте користили апликацију</string>
     <string name="download_resources">Пре него што почнете да користите апликацију, прво преузмите на ваш уређај мапу света. \nЗа то ће бити потребно %s меморије.</string>
@@ -141,9 +131,6 @@
     <!-- SECTION: Other translations -->
     <!-- Notes field in Bookmarks view -->
     <string name="description">Напомене</string>
-    <!-- Email Subject when sharing bookmark list -->
-    <string name="share_bookmarks_email_subject">CoMaps маркери</string>
-    <string name="share_bookmarks_email_body">Здраво! \n \nУ прилогу су моји маркери; молим те да их отвориш у CoMaps-у. Ако га немаш већ инсталираног, можеш да га преузмеш одавде: https://www.comaps.app/download/ \n \nУживај у путовању са CoMaps-ом!</string>
     <!-- message title of loading file -->
     <string name="load_kmz_title">Учитавање маркера</string>
     <!-- Kmz file successful loading -->
@@ -162,10 +149,6 @@
     <string name="cant_change_this_setting">Извините, подешавање локације за чување мапа је тренутно онемогућено</string>
     <!-- Alert message that downloading is in progress. -->
     <string name="downloading_is_active">Преузимање мапа је у току</string>
-    <!-- Share my position using SMS, %1$@ contains om:// and %2$@ https://comaps.app link WITHOUT NAME. @NOTE non-ascii symbols in the link will result in max 70 characters SMS instead of 140. -->
-    <string name="my_position_share_sms">Види моју тренутну локацију у CoMaps-у! %1$s или %2$s Још не користиш offline мапе? Преузми их овде: https://www.comaps.app/download/</string>
-    <!-- Subject for emailed position -->
-    <string name="my_position_share_email_subject">Хеј, види моју тренутну локацију на CoMaps мапи!</string>
     <!-- Share button text which opens menu with more buttons, like Message, EMail, Facebook etc. -->
     <string name="share">Подели</string>
     <!-- Share by email button text, also used in editor and About. -->
@@ -223,22 +206,9 @@
     <string name="menu">Мени</string>
     <!-- Text in menu -->
     <string name="website">Веб-сајт</string>
-    <!-- Text in About menu, opens CoMaps news website -->
-    <string name="news">Новости</string>
-    <!-- Settings: Send feedback button and dialog title -->
-    <string name="feedback">Повратне информације</string>
     <!-- Text in menu -->
-    <string name="rate_the_app">Оцена апликације</string>
     <!-- Text in menu -->
-    <string name="help">Помоћ</string>
-    <!-- Button in the main Help dialog -->
-    <string name="faq">Често постављена питања</string>
     <!-- Button in the main menu -->
-    <string name="donate">Донација</string>
-    <!-- Button in the main Help dialog -->
-    <string name="how_to_support_us">Волонтирајте и побољшајте CoMaps</string>
-    <!-- Text in menu + Button in the main Help dialog -->
-    <string name="report_a_bug">Пријавите проблем</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
     <string name="compass_calibration_recommended">Побољшајте смер стрелице тако што ћете померати телефон у путањи осмице као бисте калибрисали компас.</string>
     <!-- Toast text when compass calibration may improve the correctness of the current position arrow -->
@@ -387,7 +357,6 @@
     <string name="editor_time_advanced">Напредни режим</string>
     <string name="editor_time_simple">Једноставни режим</string>
     <string name="editor_hours_closed">Нерадно време</string>
-    <string name="editor_example_values">Примери</string>
     <string name="editor_correct_mistake">Исправи грешку</string>
     <string name="editor_report_problem_send_button">Пошаљи</string>
     <string name="autodownload">Аутоматско преузимање мапа</string>
@@ -446,8 +415,6 @@
     <string name="message_invalid_feature_position">Објекат не може бити на овом месту</string>
     <!-- Text in About and OSM Login screens. First %@ is replaced by a local, human readable date. -->
     <string name="osm_presentation">Подаци са OpenStreetMap-а које је креирала заједница до %s. Научите више о томе како да мењате и ажурирате мапу на OpenStreetMap.org</string>
-    <!-- OSM explanation on Android login screen -->
-    <string name="login_osm_presentation">OpenStreetMap.org (OSM) је пројекат заједнице који има за циљ прављење бесплатне, слободне и отворене мапе. OSM је главни извор података за мапе у CoMaps-у и функционише на сличан начин као Википедија. Можете додати или променити места и ваше промене постају видљиве милионима корисника широм света. \nПридружите се заједници и помозите да направимо бољу мапу која је доступна свима!</string>
     <string name="login_to_make_edits_visible">Пријавите се на openstreetmap.org да бисте објавили ваше промене остатку света</string>
     <!-- Downloaded 10 **of** 20 <- it is that "of" -->
     <string name="downloader_of">%1$d од %2$d</string>
@@ -460,8 +427,6 @@
     <string name="error_enter_correct_zip_code">Унесите исправан поштански број</string>
     <!-- Title for OSM note section in the editor -->
     <string name="editor_other_info">Напомена за OpenStreetMap волонтере (није обавезна)</string>
-    <!-- Hint of the input field in the OSM note section of the editor -->
-    <string name="editor_note_hint">Опишите грешке на мапи или ствари које се не могу променити помоћу CoMaps-а</string>
     <!-- Information about OSM at the top of the editing page -->
     <string name="editor_about_osm">Ваше промене су послате у јавну <a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap">OpenStreetMap</a> базу података. Молимо Вас да не додајете личне податке или податке заштићене ауторским правима.</string>
     <string name="editor_more_about_osm">Више о OpenStreetMap-у</string>
@@ -469,7 +434,6 @@
     <!-- To indicate the operator of ATMs, bicycle rentals, electric vehicle charging stations... -->
     <string name="operator">Оператор: %s</string>
     <string name="editor_category_unsuitable_title">Не можете да пронађете одговарајућу категорију?</string>
-    <string name="editor_category_unsuitable_text">CoMaps омогућава додавање једноставних категорија за тачке на мапи, што искључује градове, путеве, језера, тлоцрте зграда, итд. Молимо Вас да такве категорије додате директно на <a href="https://www.openstreetmap.org">OpenStreetMap.org</a>. Прочитајте наше <a href="https://www.comaps.app/support/advanced-map-editing/">упутство</a> за детаљне инструкције, корак по корак.</string>
     <string name="downloader_no_downloaded_maps_title">Нисте преузели ни једну мапу</string>
     <string name="downloader_no_downloaded_maps_message">Преузмите мапе да бисте претраживали и користили навигацију без интернета</string>
     <string name="current_location_unknown_error_title">Тренутна локација није позната</string>
@@ -521,15 +485,11 @@
     <string name="mobile_data_option_ask">Увек ме питај</string>
     <string name="traffic_update_maps_text">Да би се приказали подаци о саобраћају, мапа мора да се ажурира</string>
     <string name="big_font">Увећана слова на мапи</string>
-    <string name="traffic_update_app">Молим Вас да ажурирате CoMaps</string>
     <!-- "traffic" as in "road congestion" -->
     <string name="traffic_data_unavailable">Подаци о саобраћају нису доступни</string>
     <string name="enable_logging">Снимање лог фајлова</string>
-    <!-- Settings: "Send general feedback" button -->
-    <string name="feedback_general">Ваше мишљење</string>
     <string name="prefs_languages_information">Користимо системски сервис текст-у-говор за гласовне инструкције. Многи Андроид уређаји користе Google Препознавање и синтезу говора, који можете да преузмете или ажурирате путем Google Play продавнице (https://play.google.com/store/apps/details?id=com.google.android.tts)</string>
     <string name="prefs_languages_information_off">За поједине језике, мораћете да инсталирате синтетизатор говора или језички пакет путем продавнице апликација (Google Play, Galaxy Store, App Gallery, FDroid).\nОтворите Подешавања вашег уређаја → Језик и унос → Говор → Излаз Текста у говор.\nОвде можете да управљате подешавањима за синтезу говора (на пример, да преузмете језички пакет за употребу без интернета) и да изаберете неку другу машину за Текст-у-говор.</string>
-    <string name="prefs_languages_information_off_link">За више информација погледајте ово упутство</string>
     <string name="transliteration_title">Транслитерација у латиницу</string>
     <string name="learn_more">Сазнај више</string>
     <!-- User selected the destination by pressing Route To, but the current position is unknown. User needs to select a starting point of a route using search or by tapping on the map and then pressing "Route From". -->
@@ -541,7 +501,6 @@
     <string name="placepage_remove_stop">Уклони међуодредиште</string>
     <string name="placepage_add_stop">Међуодредиште</string>
     <string name="dialog_error_storage_title">Проблем са приступом меморији</string>
-    <string name="dialog_error_storage_message">Екстерна меморија није доступна. SD картица је можда уклоњена, оштећена, или је фајл систем само за читање. Молим Вас, проверите Вашу SD картицу или нас контактирајте на support@comaps.app</string>
     <string name="setting_emulate_bad_storage">Симулирај неисправну меморију</string>
     <string name="error_enter_correct_name">Молим Вас да унесете исправан назив</string>
     <string name="bookmark_lists">Листе фаворита</string>
@@ -580,8 +539,6 @@
     </plurals>
     <!-- Settings privacy group in settings screen -->
     <string name="privacy">Приватност</string>
-    <string name="privacy_policy">Политика приватности</string>
-    <string name="terms_of_use">Услови коришћења</string>
     <string name="button_layer_traffic">Саобраћај</string>
     <string name="subway">Метро</string>
     <string name="layers_title">Стилови мапе и слојеви</string>
@@ -606,7 +563,6 @@
     <string name="power_managment_setting_never">Никад</string>
     <string name="power_managment_setting_auto">Када је батерија при крају</string>
     <string name="power_managment_setting_manual_max">Увек</string>
-    <string name="enable_logging_warning_message">Привремено укључите ову опцију да бисте сачували детаљне дијагностичке логове уколико имате неки проблем. Логове можете да нам пошаљете коришћењем опције \"Пријавите проблем\" у прозору Помоћ. Напомена: Логови могу да садрже информације о вашој локацији.</string>
     <string name="driving_options_title">Опције рутирања</string>
     <string name="avoid_tolls">Избегавај путарине</string>
     <string name="avoid_unpaved">Избегавај неасфалтиране путеве</string>
@@ -705,30 +661,18 @@
     <!-- OpenStreetMap text on splash screen -->
     <string name="splash_subtitle">Подаци за мапе су са OpenStreetMap-а</string>
     <!-- App Tip #00 -->
-    <string name="app_tip_00">Хвала што користите мапе које је направила заједница!</string>
     <!-- App tip #01 -->
-    <string name="app_tip_01">Са вашим донацијама и подршком, можемо да направимо најбоље мапе на свету!</string>
     <!-- App tip #02 -->
-    <string name="app_tip_02">Да ли вам се допада наша апликација? Молим Вас да донирате да бисте подржали даљи развој! Још вам се не допада? Молимо Вас да нам јавите зашто, па ћемо да је поправимо!</string>
     <!-- App tip #03 -->
-    <string name="app_tip_03">Ако знате неког програмера, можете да га замолите да имплементира функционалност која вам је потребна.</string>
     <!-- App tip #04 -->
-    <string name="app_tip_04">Додирните било где на мапи да бисте изабрали било шта. Дуг додир се користи да се сакрије и прикаже интерфејс.</string>
     <!-- App tip #05 -->
-    <string name="app_tip_05">Да ли сте знали да можете да изаберете вашу тренутну локацију на мапи?</string>
     <!-- App tip #06 -->
-    <string name="app_tip_06">Можете да помогнете да се апликација преведе на ваш језик.</string>
     <!-- App tip #07 -->
-    <string name="app_tip_07">Наша апликација је развијена од стране неколико ентузијаста и заједнице.</string>
     <!-- App tip #08 -->
-    <string name="app_tip_08">Лако можете да поправите или унапредите податке на мапи.</string>
     <!-- App tip #09 -->
-    <string name="app_tip_09">Наш главни циљ је да направимо брзу апликацију за мапе, једноставну за коришћење, оријентисану на приватност, коју ћете волети.</string>
-    <string name="car_used_on_the_phone_screen">Ви сада користите CoMaps на екрану телефона</string>
     <!-- Text on the phone placeholder screen that maps are displayed on the car screen -->
     <!-- Displayed on the phone screen. Button to display maps on the phone screen instead of a car -->
     <string name="car_continue_in_the_car">Пребаци на екран аутомобила</string>
-    <!-- Grant Permissions button. -->
     <!-- Outdoors/hiking map style (activity) name in the Styles and Layers dialog -->
     <string name="button_layer_outdoor">На отвореном</string>
     <!-- Text displayed when a webview or a browser are disabled, and external links can't be opened. -->
@@ -779,22 +723,16 @@
     <string name="elevation_profile_max_elevation">Максимална висина</string>
     <string name="elevation_profile_min_elevation">Минимална висина</string>
     <string name="osm_wiki_about_url">https://wiki.openstreetmap.org/wiki/About_OpenStreetMap</string>
-    <string name="copyright">Copyright</string>
     <string name="editor_add_select_location">Изаберите локацију</string>
     <string name="limited_accuracy">Ограничена тачност</string>
     <string name="editor_focus_map_on_location">Превуците мапу да поставите крст на локацију места или посла.</string>
     <string name="precise_location_is_disabled_long_text">Да би се осигурала тачна навигација омогућите прецизну локацију у подешавањима</string>
-    <string name="translated_om_site_url">https://comaps.app/</string>
-    <string name="tts_info_link">https://www.comaps.app/support/tts-configuration-guide-for-android/</string>
     <string name="editor_osm_history">Ваша историја уређивања</string>
     <string name="editor_osm_notes">Ваши подаци о мапи</string>
     <string name="placepage_personal_notes_hint">Личне белешке (текст или хтмл)</string>
     <string name="comma_separated_pair">%1$s, %2$s</string>
     <string name="social_media">Друштвени медији</string>
     <string name="building">Зграда</string>
-    <string name="instagram_url">https://www.instagram.com/comaps.app/</string>
-    <string name="app_site_url">https://comaps.app/</string>
-    <string name="telegram_url">https://t.me/CoMapsApp/</string>
     <string name="error_enter_correct_fediverse_page">Унесите важеће корисничко име Мастодона или веб адресу</string>
     <string name="error_enter_correct_bluesky_page">Unesite važeće Bluesky korisničko ime ili veb adresu</string>
     <string name="saved">Сачувано</string>
@@ -808,7 +746,6 @@
     <string name="ruler">Лењир</string>
     <string name="bookmark_color">Боја маркера</string>
     <string name="vehicle">Возило</string>
-    <string name="about_help">О програму и помоћ</string>
     <string name="panoramax">Panoramax Picture</string>
     <string name="pref_backup_now_title">Направите резервну копију сада</string>
     <string name="pref_backup_now_summary">Направите резервну копију</string>
@@ -824,7 +761,6 @@
     <string name="backup_interval_manual_only">Искључено (само ручно)</string>
     <string name="pref_backup_summary">Аутоматски направити резервну копију у фолдеру на уређају</string>
     <string name="pref_backup_status_summary_success">Последња успешна резервна копија</string>
-    <string name="dialog_report_error_with_logs">Молимо вас, пошаљите нам поруку о грешци:\n- \"Омогући вођење дневника\" у подешавањима\n- репродукујте проблем\n- на екрану \"О програму и помоћ\" кликните на дугме \"Пријави грешку\" и пошаљите на е-маил или чат\n- онемогући вођење дневника</string>
     <string name="dialog_report_error_missing_folder">Изабрана локација резервне копије није доступна за снимање. Молимо вас, одаберите друго место.</string>
     <string name="pref_backup_interval_title">Аутоматска резервна копија</string>
     <string name="pref_backup_now_summary_empty_lists">Нема маркера и путања за израду резервне копије</string>
@@ -832,7 +768,6 @@
     <string name="closed_now">Затворено сада</string>
     <string name="open_now">Сада је отворено</string>
     <string name="at">на %s</string>
-    <string name="about_headline">Отворени пројекат који покреће заједница</string>
     <string name="delete_track_dialog_title">Обрисати %s?</string>
     <string name="share_track">Подели путању</string>
     <string name="existence_confirmed_time_ago">Проверено да постоји %s</string>
@@ -878,7 +813,6 @@
     <string name="editor_submit">Пошаљи</string>
     <string name="place_page_map_too_old_title">Мапе су застареле</string>
     <string name="place_page_map_too_old_description">Мапе су старе, преузмите нове.</string>
-    <string name="place_page_app_too_old_description">Мапе су веома старе, преузмите нову везију CoMaps апликације.</string>
     <string name="place_page_update_too_old_map">Ажурирање регионалних мапа</string>
     <string name="place_page_too_old_to_edit">Уређивање OpenStreetMap-а је онемогућено јер су подаци мапе сувише стари.</string>
     <string name="prefs_speed_cameras_information">Упозорења о прекршајним камерама за брзину су онемогућена у земљама у којима су упозорења забрањена законом.</string>
@@ -888,7 +822,6 @@
     <string name="charge_socket_schuko">Шухо</string>
     <string name="advanced">Напредно</string>
     <string name="download_resources_custom_url_title">Сопствени сервер мапа</string>
-    <string name="download_resources_custom_url_message">Замени подразумевани сервер за преузимање мапа који се користи за преузимања мапа. Оставите празно да бисте користили CoMaps сервер.</string>
     <string name="download_resources_custom_url_summary_none">Није постављено</string>
     <string name="download_resources_custom_url_error_scheme">Унесите пуну УРЛ адресу која почиње са https:// и која се завршава са /</string>
     <string name="pref_maplanguage_local">Локални језик</string>
@@ -909,7 +842,6 @@
     <string name="pref_alt_map_lang_handling_system_order">Користите системски редослед</string>
     <string name="pref_alt_map_lang_handling_local_only">Преферирају и користе само тамо где матерњи</string>
     <string name="pref_openexternallinks_title">Аутоматски отворите линкове независних произвођача</string>
-    <string name="pref_openexternallinks_summary">Отворите линкове независних произвођача у CoMaps-у по дефаулту</string>
     <string name="bookmark_share_email_subject">Кликните на овај линк %1$s или копирајте ове координате %2$s у вашу апликацију за мапе, да бисте видели локацију.</string>
     <string name="my_position_share_email">Кликните на овај линк %1$s или копирајте ове координате %2$s у вашу апликацију за мапе, да бисте видели моју локацију.</string>
     <string name="destination">Одредиште</string>

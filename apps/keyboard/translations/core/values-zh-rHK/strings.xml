@@ -65,7 +65,6 @@
     <string name="go_to_settings" msgid="3019191145506686424">"設定"</string>
     <string name="install_dict" msgid="8963966683066463555">"安裝"</string>
     <string name="cancel_download_dict" msgid="8877923127773611502">"取消"</string>
-    <string name="version_text" msgid="3213200439763585436">"版本 <xliff:g id="VERSION_NUMBER">%1$s</xliff:g>"</string>
     <string name="user_dict_settings_add_menu_title" msgid="2094235623352820667">"新增"</string>
     <string name="user_dict_settings_add_dialog_title" msgid="2721075588858235712">"加入字典"</string>
     <string name="user_dict_settings_add_screen_title" msgid="3777988967870363317">"詞組"</string>

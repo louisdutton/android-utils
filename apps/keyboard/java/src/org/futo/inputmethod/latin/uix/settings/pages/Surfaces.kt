@@ -32,7 +32,7 @@ fun ParagraphText(
 }
 
 @Composable
-fun PaymentSurfaceHeading(title: String) {
+fun SettingsSurfaceHeading(title: String) {
     Text(
         title,
         style = Typography.Body.MediumMl,
@@ -41,7 +41,7 @@ fun PaymentSurfaceHeading(title: String) {
 }
 
 @Composable
-fun PaymentSurface(
+fun SettingsSurface(
     isPrimary: Boolean,
     onClick: (() -> Unit)? = null,
     content: @Composable () -> Unit

@@ -1,2 +1,0 @@
- * Fix service parameter and workflow to remove notification when service is killed
- * Fix color

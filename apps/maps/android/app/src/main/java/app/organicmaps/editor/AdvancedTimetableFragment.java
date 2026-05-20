@@ -6,27 +6,18 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import app.organicmaps.R;
 import app.organicmaps.base.BaseMwmFragment;
 import app.organicmaps.sdk.editor.OpeningHours;
-import app.organicmaps.sdk.util.Constants;
-import app.organicmaps.util.Graphics;
 import app.organicmaps.util.InputUtils;
-import app.organicmaps.util.UiUtils;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
 
-public class AdvancedTimetableFragment extends BaseMwmFragment implements View.OnClickListener, TimetableProvider
+public class AdvancedTimetableFragment extends BaseMwmFragment implements TimetableProvider
 {
-  private boolean mIsExampleShown;
   private TextInputEditText mInput;
-  private WebView mExample;
-  private MaterialTextView mExamplesTitle;
   private static ShapeableImageView mSaveButton;
   @Nullable
   private String mInitTimetables;
@@ -46,7 +37,6 @@ public class AdvancedTimetableFragment extends BaseMwmFragment implements View.O
     super.onViewCreated(view, savedInstanceState);
     initViews(view);
     refreshTimetables();
-    showExample(false);
   }
 
   @Override
@@ -57,44 +47,9 @@ public class AdvancedTimetableFragment extends BaseMwmFragment implements View.O
 
   private void initViews(View view)
   {
-    view.findViewById(R.id.examples).setOnClickListener(this);
     mInput = view.findViewById(R.id.et__timetable);
-    mExample = view.findViewById(R.id.wv__examples);
-    mExample.getSettings().setJavaScriptEnabled(true);
-    mExample.loadUrl(Constants.Url.OPENING_HOURS_MANUAL);
-    mExamplesTitle = view.findViewById(R.id.tv__examples_title);
-    setExampleDrawables(R.drawable.ic_type_text, R.drawable.ic_expand_more);
     setTextChangedListener(mInput, mListener);
     mSaveButton = getParentFragment().getParentFragment().getView().findViewById(R.id.save);
-  }
-
-  private void showExample(boolean show)
-  {
-    mIsExampleShown = show;
-    if (mIsExampleShown)
-    {
-      UiUtils.show(mExample);
-      setExampleDrawables(R.drawable.ic_type_text, R.drawable.ic_expand_less);
-    }
-    else
-    {
-      UiUtils.hide(mExample);
-      setExampleDrawables(R.drawable.ic_type_text, R.drawable.ic_expand_more);
-    }
-  }
-
-  private void setExampleDrawables(@DrawableRes int left, @DrawableRes int right)
-  {
-    mExamplesTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(
-        Graphics.tint(requireActivity(), left, com.google.android.material.R.attr.colorSecondary), null,
-        Graphics.tint(requireActivity(), right, com.google.android.material.R.attr.colorSecondary), null);
-  }
-
-  @Override
-  public void onClick(View v)
-  {
-    if (v.getId() == R.id.examples)
-      showExample(!mIsExampleShown);
   }
 
   @Nullable

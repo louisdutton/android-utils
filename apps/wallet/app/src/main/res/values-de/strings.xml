@@ -39,7 +39,6 @@
     <string name="about">Über</string>
     <string name="app_license">Freie Software, lizensiert unter der GPLv3+</string>
     <string name="about_title_fmt">Über <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Version: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Barcode auswählen</string>
     <string name="thumbnailDescription">Vorschaubild</string>
     <string name="settings">Einstellungen</string>
@@ -51,8 +50,6 @@
     <string name="settings_light_theme">Hell</string>
     <string name="settings_system_theme">System</string>
     <string name="settings_theme">Farbschema</string>
-    <string name="app_copyright_old">Basierend auf Loyalty Card Keychain
-\nCopyright © 2016-2020 Branden Archer</string>
     <string name="exportOptionExplanation">Die Daten werden an einen Ort deiner Wahl geschrieben</string>
     <string name="failedParsingImportUriError">Die Import-URI konnte nicht verarbeitet werden</string>
     <string name="share">Teilen</string>
@@ -93,7 +90,6 @@
     <string name="settings_disable_lockscreen_while_viewing_card">Sperrbildschirm verhindern</string>
     <string name="settings_keep_screen_on">Bildschirm aktiv lassen</string>
     <string name="accept">Annehmen</string>
-    <string name="privacy_policy">Datenschutzrichtlinie</string>
     <string name="importVoucherVaultMessage">Wähle deinen Export aus „Voucher Vault“ zum Importieren aus.\nErstelle ihn, indem du Export in Voucher Vault drückst.</string>
     <string name="importVoucherVault">Aus Voucher Vault importieren</string>
     <string name="importLoyaltyCardKeychainMessage">Wähle deinen Export vom „Loyalty Card Keychain“ zum Importieren aus.\nErstelle ihn über das Import/Export Menü in Loyalty Card Keychain, indem du dort auf Export drückst.</string>
@@ -110,8 +106,6 @@
     <string name="addFromImage">Bild aus der Galerie wählen</string>
     <string name="unsupportedBarcodeType">Dieser Barcodetyp kann noch nicht angezeigt werden. Wir hoffen das Format in einer zukünftigen Version zu unterstützen.</string>
     <string name="wrongValueForBarcodeType">Der Wert ist ungültig für den gewählten Barcodetyp</string>
-    <string name="app_resources">Ressourcen von Drittanbietern: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Bibliotheken von Drittanbietern: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="intent_import_card_from_url_share_multiple_text">Ich möchte diese Karten mit dir teilen</string>
     <string name="no">Nein</string>
     <string name="yes">Ja</string>
@@ -144,7 +138,6 @@
     </plurals>
     <string name="settings_system_locale">System</string>
     <string name="settings_locale">Sprache</string>
-    <string name="app_contributors">Ermöglicht durch: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="barcodeImageDescriptionWithType">Bild <xliff:g>%s</xliff:g> Barcode</string>
     <string name="sort_by">Sortieren nach</string>
     <string name="sort_by_expiry">Gültig bis</string>
@@ -153,12 +146,10 @@
     <string name="sort">Sortieren</string>
     <string name="reverse">…in umgekehrter Reihenfolge</string>
     <string name="version_history">Versionshistorie</string>
-    <string name="credits">Dank an</string>
     <string name="help_translate_this_app">Hilf bei der Übersetzung</string>
     <string name="and_data_usage">und Datennutzung</string>
     <string name="license">Lizenz</string>
     <string name="source_repository">Quellcode</string>
-    <string name="on_github">auf GitHub</string>
     <string name="report_error">Fehler melden</string>
     <string name="exportPassword">Lege ein Passwort fest, um deinen Export zu schützen (optional)</string>
     <string name="exportPasswordHint">Passwort eingeben</string>
@@ -238,8 +229,6 @@
     <string name="view_online">Online anzeigen</string>
     <string name="action_display_options">Anzeigeoptionen</string>
     <string name="show_archived_cards">Archivierte Karten anzeigen</string>
-    <string name="app_copyright_short">Copyright © Sylvia van Os und Mitwirkende</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Copyright © 2019–<xliff:g>%d</xliff:g> Sylvia van Os und Mitwirkende</string>
     <string name="card_id_must_not_be_empty">Kartennummer darf nicht leer sein</string>
     <string name="balanceParsingFailed">Ungültiges Guthaben</string>
     <string name="add_a_card_in_a_different_way">Karte anders hinzufügen</string>

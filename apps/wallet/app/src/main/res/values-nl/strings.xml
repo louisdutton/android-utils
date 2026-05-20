@@ -41,7 +41,6 @@
     <string name="about">Over</string>
     <string name="app_license">Vrije software, uitgebracht onder de GPLv3+-licentie</string>
     <string name="about_title_fmt">Over <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versie: <xliff:g id="version">%s</xliff:g></string>
     <string name="selectBarcodeTitle">Barcode toevoegen</string>
     <string name="thumbnailDescription">Miniatuurvoorbeeld</string>
     <string name="settings">Instellingen</string>
@@ -59,8 +58,6 @@
     <string name="groups">Groepen</string>
     <string name="enter_group_name">Voer een groepsnaam in</string>
     <string name="starImage">Favorietster</string>
-    <string name="app_copyright_old">Gebaseerd op Klantenkaartkluis,
-\ncopyright ©2016–2020 Branden Archer</string>
     <string name="unstar">Verwijderen uit favorieten</string>
     <string name="star">Toevoegen aan favorieten</string>
     <string name="addManually">Barcode handmatig invoeren</string>
@@ -91,7 +88,6 @@
     <string name="app_loyalty_card_keychain">Klantenkaartkluis</string>
     <string name="settings_disable_lockscreen_while_viewing_card">Schermvergrendeling uitschakelen</string>
     <string name="settings_keep_screen_on">Scherm niet uitschakelen</string>
-    <string name="privacy_policy">Privacybeleid</string>
     <string name="accept">Accepteren</string>
     <string name="importVoucherVaultMessage">Kies het te importeren exportbestand. \nGa naar het exportmenu van Voucher Vault om een exportbestand samen te stellen.</string>
     <string name="importVoucherVault">Importeren uit Voucher Vault</string>
@@ -109,9 +105,6 @@
     <string name="barcodeId">Barcodewaarde</string>
     <string name="unsupportedBarcodeType">Dit type barcode kan nog niet worden getoond - we hopen hiervoor in een nieuwere versie ondersteuning toe te voegen.</string>
     <string name="wrongValueForBarcodeType">Deze waarde komt niet overeen met het gekozen barcodetype</string>
-    <string name="app_resources">Externe bronnen: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Externe bibliotheken: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Auteursrecht © 2019–<xliff:g>%d</xliff:g> Sylvia van Os en bijdragers</string>
     <string name="intent_import_card_from_url_share_multiple_text">Ik wil kaarten met je delen</string>
     <string name="no">Nee</string>
     <string name="yes">Ja</string>
@@ -144,7 +137,6 @@
     </plurals>
     <string name="settings_system_locale">Systeemtaal</string>
     <string name="settings_locale">Taal</string>
-    <string name="app_contributors">Mede mogelijk gemaakt door: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Deze groep bevat geen kaarten</string>
     <string name="barcodeImageDescriptionWithType">Afbeelding van barcode <xliff:g>%s</xliff:g></string>
     <string name="sort_by">Sorteren op</string>
@@ -155,11 +147,9 @@
     <string name="sort">Sorteren</string>
     <string name="report_error">Fout melden</string>
     <string name="and_data_usage">en gegevensgebruik</string>
-    <string name="on_github">op GitHub</string>
     <string name="source_repository">Broncode</string>
     <string name="license">Licentie</string>
     <string name="help_translate_this_app">Help deze app te vertalen</string>
-    <string name="credits">Met dank aan</string>
     <string name="version_history">Versiegeschiedenis</string>
     <string name="exportPasswordHint">Voer een wachtwoord in</string>
     <string name="exportPassword">Stel een wachtwoord in om je exportbestand te beveiligen (optioneel)</string>
@@ -236,7 +226,6 @@
     <string name="settings_oled_dark_summary">Verlaagt het accuverbruik op oledschermen</string>
     <string name="settings_category_title_cards">Kaart</string>
     <string name="settings_category_title_general">Algemeen</string>
-    <string name="app_copyright_short">Auteursrecht © Sylvia van Os en bijdragers</string>
     <string name="action_display_options">Weergave-instellingen</string>
     <string name="view_online">Online bekijken</string>
     <string name="show_archived_cards">Gearchiveerde kaarten tonen</string>

@@ -155,11 +155,6 @@
   <string name="theme_dynamic_dark">Dinamički tamni</string>
   <string name="theme_dynamic_light">Dinamički svijetli</string>
   <!-- Auto update strings (note: the auto updater is currently inactive) -->
-  <string name="autoupdater_service_title">Ažuriraj uslugu provjere</string>
-  <string name="autoupdater_update_available_title">Ažuriranje dostupno</string>
-  <string name="autoupdater_update_available_body">&lt;string name="autoupdater_update_available_body"&gt;ažuriranje je dostupno (&lt;xliff:g name="versionDiff" example="v1 -&amp;gt; v2"&gt;%s&lt;/xliff:g&gt;). Dodirnite za preuzimanje&lt;/string&gt;</string>
-  <string name="autoupdater_dismiss_update">Odbaci</string>
-  <string name="autoupdater_perform_update">Ažuriraj</string>
   <!-- These strings can appear in the keyboard itself -->
   <string name="keyboard_suggest_blacklist_body">&lt;string name="keyboard_suggest_blacklist_body"&gt;Dodati riječ \&amp;quot;&lt;xliff:g name="wordToBlacklist" example="crane"&gt;%s&lt;/xliff:g&gt;\&amp;quot; na crnu listu za predlaganje?&lt;/string&gt;</string>
   <!-- Must be fairly short -->
@@ -170,7 +165,6 @@
   <string name="keyboard_version_status">Alpha</string>
   <string name="keyboard_switch_keyboard">Prebaci tipkovnicu</string>
   <string name="keyboard_language_settings">Postavke</string>
-  <string name="keyboard_actionbar_manual_update_check_notice">Dodirnite za provjeru ažuriranja ili provjerite u postavkama</string>
   <!-- Should be fairly short (under 40 chars). Means there are no predictions for this language and a download is necessary by tapping on this notice. Appears in suggestion bar -->
   <string name="keyboard_actionbar_no_dictionary_installed_notice">Rječnik nije instaliran, dodirnite za preuzimanje?</string>
   <!--
@@ -203,68 +197,13 @@
     into the keyboard, undocking it from above the keyboard.
   -->
   <string name="keyboard_actionbar_undock_action_window_collapse_into_keyboard_talkback">Sažmi</string>
-  <!-- Payment screen -->
-  <string name="payment_screen_short_title">Plaćanje</string>
-  <string name="payment_screen_title">Platite za FUTO tipkovnicu</string>
-  <string name="payment_screen_sales_paragraph_1">&lt;string name="payment_screen_sales_paragraph_1"&gt;Koristite FUTO tipkovnicu već &lt;xliff:g name="days" example="30"&gt;%d&lt;/xliff:g&gt; dana. Ako smatrate da je ova aplikacija korisna, razmislite o plaćanju kako biste podržali budući razvoj FUTO softvera.&lt;/string&gt;</string>
-  <string name="payment_screen_sales_paragraph_1_alt">Hvala što ste isprobali FUTO tipkovnicu! Ako smatrate da je ova aplikacija korisna, razmislite o plaćanju kako biste podržali budući razvoj FUTO softvera.</string>
-  <string name="payment_screen_sales_paragraph_2">FUTO je posvećen razvoju dobrog softvera koji vas ne iskorištava. Ova aplikacija nikada neće prikazivati oglase niti prikupljati vaše osobne podatke.</string>
-  <string name="payment_screen_sales_point_development_title">Održivi razvoj</string>
-  <string name="payment_screen_sales_point_development_body">Misija FUTO-a je da otvoreni softver i poslovne prakse koje nisu zlonamjerne postanu održiv izvor prihoda za projekte i njihove programere. Iz tog razloga, podržavamo korisnike koji zapravo plaćaju za softver.</string>
-  <string name="payment_screen_sales_point_privacy_title">Obveza prema privatnosti</string>
-  <string name="payment_screen_sales_point_privacy_body">Ova aplikacija nikada neće prikazivati oglase niti prodavati vaše podatke. Nismo u tom poslu.</string>
-  <string name="payment_screen_error_build_unsupported_payment">Plaćanje nije podržano na ovoj verziji</string>
-  <string name="payment_screen_already_paid_title">Već ste platili?</string>
-  <string name="payment_screen_already_paid_body">Ako ste već platili za FUTO tipkovnicu ili FUTO glasovni unos, dodirnite ispod.</string>
-  <string name="payment_screen_already_paid_button">Već sam platio</string>
-  <string name="payment_screen_already_paid_confirmation">Potvrdite svoj izbor</string>
-  <string name="payment_screen_already_paid_confirmation_body">Jeste li sigurni da želite potvrditi da ste već platili? Nakon potvrde, više nećete biti pitani o plaćanju.</string>
-  <string name="payment_screen_already_paid_confirmation_confirm">Već sam platio</string>
-  <string name="payment_screen_already_paid_confirmation_cancel">Odustani</string>
-  <string name="payment_screen_set_reminder_title">Još niste spremni platiti?</string>
-  <string name="payment_screen_set_reminder_body">Ovo će sakriti podsjetnik u postavkama na razdoblje dana koje ste unijeli.</string>
-  <string name="payment_screen_set_reminder_setter">Kada želite da vas podsjetimo?</string>
-  <string name="payment_screen_set_reminder_setter_7_days">za 7 dana</string>
-  <string name="payment_screen_set_reminder_setter_1_month">za 1 mjesec</string>
-  <string name="payment_screen_set_reminder_setter_6_months">za 6 mjeseci</string>
-  <string name="payment_screen_set_reminder_setter_next_century">sljedeće stoljeće</string>
-  <string name="payment_screen_set_reminder_setter_confirm">Potvrdi podsjetnik</string>
-  <string name="payment_screen_other_options">Druge opcije</string>
-  <string name="payment_screen_need_help_title">Pomoć</string>
-  <string name="payment_screen_need_help_subtitle">Trebate pomoć? Posjetite našu web stranicu</string>
-  <string name="payment_screen_pay_via_google">&lt;string name="payment_screen_pay_via_google"&gt;Platite putem Google Playa (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + PDV)&lt;/string&gt;</string>
-  <string name="payment_screen_pay_via_futopay">&lt;string name="payment_screen_pay_via_futopay"&gt;Platite (&lt;xliff:g name="price" example="~$2.99"&gt;%s&lt;/xliff:g&gt; + PDV)&lt;/string&gt;</string>
-  <string name="payment_screen_more_options">Više opcija</string>
-  <string name="payment_screen_payment_complete_title">Plaćanje završeno</string>
-  <string name="payment_screen_aftersales_title">Hvala Vam</string>
-  <string name="payment_screen_aftersales_title_pending">Plaćanje na čekanju</string>
-  <string name="payment_screen_aftersales_paragraph_1">Hvala Vam što ste kupili FUTO tipkovnicu!</string>
-  <string name="payment_screen_aftersales_paragraph_2">Vaša kupnja će pomoći u daljnjem razvoju FUTO tipkovnice i drugih FUTO projekata.</string>
-  <string name="payment_screen_aftersales_paragraph_2_pending">Vaša uplata je još uvijek na čekanju, ali bi trebala biti obrađena uskoro.</string>
-  <string name="payment_screen_aftersales_paragraph_3">Ako ste upravo platili, vaša uplata se možda još obrađuje, trebali biste primiti e-mail s više informacija.</string>
-  <string name="payment_screen_payment_failed_title">Pogreška pri plaćanju</string>
-  <string name="payment_screen_payment_failed_body">Nažalost, vaša uplata nije uspjela iz nekog razloga. Molimo kontaktirajte nas ako trebate pomoć. Možete nas kontaktirati na keyboard@futo.org, putem gumba ispod ili putem opcije "Pošaljite povratne informacije" u pomoći.</string>
-  <string name="payment_screen_payment_failed_body_unconfident">Mogao je doći do problema s vašom uplatom. Ako je uplata prošla, trebali biste primiti e-mail s licenčnim ključem. Molimo kontaktirajte nas ako trebate pomoć. Možete nas kontaktirati na keyboard@futo.org, putem gumba ispod ili putem opcije "Podijelite povratne informacije" na glavnom ekranu.</string>
-  <string name="payment_screen_license_integrity_error">Nije uspjelo provjeriti licencu. Ako smatrate da je ovo greška, molimo kontaktirajte nas.</string>
-  <string name="payment_screen_continue_button">Nastavi</string>
-  <string name="payment_unpaid_version_title">Neplaćena FUTO tipkovnica</string>
-  <string name="payment_unpaid_version_indicator">Neplaćeno</string>
-  <string name="payment_paid_version_indicator">Hvala Vam što koristite plaćenu verziju FUTO tipkovnice!</string>
-  <!-- Lack of automatic updates notice -->
-  <string name="manual_update_notice_title">Obavijest o ažuriranjima</string>
-  <string name="manual_update_notice_paragraph_1">Ova aplikacija se ne povezuje na internet i neće moći provjeriti automatska ažuriranja. Međutim, možete provjeriti ažuriranja ručno.</string>
-  <string name="manual_update_notice_paragraph_2">Molimo koristite F-Droid ili Obtainium za automatska ažuriranja. Posjetite keyboard.futo.org za opcije preuzimanja.</string>
-  <string name="manual_update_notice_dev_paragraph">Na ste razvojnoj verziji FUTO tipkovnice. Posjetite keyboard.futo.org ako želite preuzeti stabilnu verziju.</string>
-  <string name="manual_update_notice_visit_site_button">Posjetite</string>
   <!-- can be translated as "understood", etc -->
-  <string name="manual_update_notice_dismiss_notice_button">Zatvori</string>
   <!-- General settings strings -->
   <string name="settings_tip">Savjet</string>
   <string name="settings_unknown_error_title">Nepoznata pogreška</string>
   <string name="settings_unknown_error_subtitle">Došlo je do nepoznate pogreške.</string>
   <string name="settings_try_typing_here">Pokušajte tipkati ovdje…</string>
   <string name="settings_external_model_name">Vanjski uvezeni model</string>
-  <string name="settings_check_for_updates_manually">Provjeri ažuriranja ručno</string>
   <string name="settings_update_available">Ažuriranje dostupno</string>
   <!--
     May be translated as "Start", "All", etc. This is the starting menu where all settings live.
@@ -302,27 +241,20 @@
   <string name="language_settings_resource_builtin_dictionary_name">Ugrađeni rječnik</string>
   <string name="language_settings_resource_voice_input_selected">Želite li vratiti model glasovnog unosa na zadani, ili ga zamijeniti drugom datotekom?</string>
   <string name="language_settings_resource_voice_input_selected_no_default_warning">Ne postoji ugrađeni model glasovnog unosa za ovaj jezik, pa ako ga uklonite, glasovni unos će prestati raditi za ovaj jezik dok ne uvezete drugi model!</string>
-  <string name="language_settings_resource_voice_input_selected_unset">Niste konfigurirali prilagođeni model glasovnog unosa za ovaj jezik. Možete istražiti preuzimanja online ili uvesti jedan iz datoteke.</string>
   <string name="language_settings_resource_transformer_selected">Želite li vratiti model transformatora na zadani, ili ga zamijeniti drugom datotekom?</string>
   <string name="language_settings_resource_transformer_selected_no_default_warning">Ne postoji ugrađeni model transformatora za ovaj jezik, pa ako ga uklonite, predikcije temeljene na transformatoru će prestati raditi za ovaj jezik dok ne uvezete drugi model!</string>
-  <string name="language_settings_resource_transformer_selected_unset">Niste konfigurirali prilagođeni model transformatora za ovaj jezik. Možete istražiti preuzimanja online ili uvesti jedan iz datoteke.</string>
   <string name="language_settings_resource_dictionary_selected">Želite li vratiti rječnik na zadani, ili ga zamijeniti drugom datotekom?</string>
   <string name="language_settings_resource_dictionary_selected_no_default_warning">Ne postoji ugrađeni rječnik za ovaj jezik, pa ako ga uklonite, automatsko ispravljanje i predikcije će prestati raditi za ovaj jezik dok ne uvezete drugi rječnik!</string>
-  <string name="language_settings_resource_dictionary_selected_unset">Niste konfigurirali prilagođeni rječnik za ovaj jezik. Možete istražiti preuzimanja online ili uvesti jedan iz datoteke.</string>
   <string name="language_settings_resource_replace_button">Zamijeni</string>
   <string name="language_settings_resource_import_file_button">Uvezi</string>
   <string name="language_settings_resource_revert_to_default_button">Vrati na zadano</string>
   <string name="language_settings_resource_remove_button">Ukloni</string>
-  <string name="language_settings_resource_explore_online_button">Istraži</string>
   <string name="language_settings_remove_language_title">Izbrisati %1$s?</string>
   <string name="language_settings_remove_language_body">Ukloniti %1$s, sve povezane rasporede i prilagođene resurse?</string>
   <string name="language_settings_remove_language_remove_button">Ukloni</string>
   <string name="language_settings_remove_language_cancel_button">Odustani</string>
   <string name="language_settings_other_options">Druge opcije</string>
   <string name="language_settings_import_resource_from_file">Uvezi datoteku resursa</string>
-  <string name="language_settings_explore_voice_input_models_online">Istraži modele glasovnog unosa</string>
-  <string name="language_settings_explore_dictionaries_online">Istraži rječnike</string>
-  <string name="language_settings_explore_transformers_online">Istraži modele transformatora</string>
   <string name="language_settings_import_dictionary_or_model">Uvezi rječnik ili model</string>
   <!-- Reource importer -->
   <string name="file_kind_voice_input_model">Model glasovnog unosa</string>
@@ -499,25 +431,6 @@
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_title">Pogledaj i uređuj riječi na crnoj listi</string>
   <string name="prediction_settings_word_blacklist_edit_blacklisted_words_subtitle">Kliknite ovdje za pregled popisa prijedloga na crnoj listi, dodavanje ili uklanjanje stavki</string>
   <string name="prediction_settings_word_blacklist_remove_word_from_blacklist">Ukloni riječ</string>
-  <!-- Help & feedback menu -->
-  <string name="help_menu_title">Pomoć i povratne informacije</string>
-  <string name="help_menu_version_name">Naziv verzije: %1$s</string>
-  <string name="help_menu_version_code">Kod verzije: %1$s</string>
-  <string name="help_menu_version_tip">Želimo čuti vaše mišljenje! Ako prijavljujete problem, vaša verzija može biti relevantna: v%1$s</string>
-  <string name="help_menu_website">FUTO web stranica</string>
-  <string name="help_menu_website_subtitle">Saznajte više o nama i našoj filozofiji</string>
-  <string name="help_menu_website_tags">preuzimanje, aplikacije, glasovni unos</string>
-  <string name="help_menu_documentation">Dokumentacija</string>
-  <string name="help_menu_documentation_subtitle">Saznajte više o značajkama i mogućnostima tipkovnice</string>
-  <string name="help_menu_discord">Discord poslužitelj</string>
-  <string name="help_menu_discord_subtitle">Želite razgovarati, ali ne volite Zulip? Čavrljajte ovdje</string>
-  <string name="help_menu_futo_chat">FUTO Chat (Zulip)</string>
-  <string name="help_menu_futo_chat_subtitle">Želite razgovarati, ali ne volite Discord? Čavrljajte ovdje</string>
-  <string name="help_menu_github">Javni sustav za praćenje problema (GitHub)</string>
-  <string name="help_menu_github_subtitle">Specifična greška ili zahtjev za značajkom? Objavite ovdje</string>
-  <string name="help_menu_email">Email: keyboard@futo.org</string>
-  <string name="help_menu_email_subtitle">Privatne povratne informacije, pomoć ili ne koristite GitHub? Pošaljite nam email</string>
-  <string name="help_menu_email_tags">gmail, podrška, kontakt, pomoć, kvar, greška, problem, pritužba, tiket, uplata, podrška, greška, neispravnost, popravak, korisnička služba, rušenje, pitanje, upit, pomoć</string>
   <!-- Setup configuration -->
   <string name="setup_step_1">Postavka - Korak 1</string>
   <string name="setup_step_2">Postavka - Korak 2</string>
@@ -527,18 +440,6 @@
   <string name="setup_warning_multiple_versions">Upozorenje: Čini se da imate instalirane i verzije iz Play Store-a i samostalne verzije, preporučujemo instalaciju samo jedne</string>
   <string name="setup_active_input_method">Molimo odaberite FUTO tipkovnicu kao svoju aktivnu metodu unosa.</string>
   <string name="setup_switch_input_methods">Prebaci metode unosa</string>
-  <!-- Credits menu -->
-  <string name="credits_menu_title">Zasluge</string>
-  <string name="credits_menu_header_text">Zahvaljujemo ovim ljudima što su pomogli da FUTO tipkovnica postane odlična aplikacija!</string>
-  <string name="credits_menu_team_translators_title">Prevoditelji</string>
-  <string name="credits_menu_team_keyboard_layouts_title">Suradnici za rasporede</string>
-  <string name="credits_menu_team_code_title">Suradnici za kod</string>
-  <string name="credits_menu_nonaffiliation_notice">Autori navedeni iznad nisu povezani s nama i ne moraju nužno podržavati ili promovirati nas. Navođenje ne implicira povezanost ili podršku.</string>
-  <string name="credits_menu_contribute_translations_button">Pomozite prevesti aplikaciju</string>
-  <string name="credits_menu_contribute_keyboard_layouts_button">Doprinijeti rasporedima</string>
-  <string name="credits_menu_contribute_code_button">Doprinijeti kodu</string>
-  <string name="credits_menu_project_information_title">%s informacije</string>
-  <string name="credits_menu_project_url_link">URL projekta</string>
   <!-- Settings category title -->
   <string name="language_specific_settings_title">Postavke specifične za jezik</string>
   <!-- Specific to Japanese input method -->

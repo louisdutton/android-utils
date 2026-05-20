@@ -69,10 +69,7 @@
     <string name="settings">Inställningar</string>
     <string name="thumbnailDescription">Miniatyrbild</string>
     <string name="selectBarcodeTitle">Välj streckkod</string>
-    <string name="debug_version_fmt">Version: <xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt">Om <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="app_copyright_old">Baserad på Loyalty Card Keychain
-\ncopyright © 2016–2020 Branden Archer</string>
     <string name="about">Om</string>
     <string name="importOptionFilesystemButton">Från filsystemet</string>
     <string name="importOptionFilesystemExplanation">Välj en specifik fil från filsystemet</string>
@@ -124,14 +121,11 @@
     <string name="exportSuccessfulTitle">Exporten lyckades</string>
     <string name="scanCardBarcode">Skanna streckkod</string>
     <string name="settings_system_theme">Systemtemat</string>
-    <string name="privacy_policy">Integritetspolicy</string>
     <string name="expiryStateSentenceExpired">Förföll: <xliff:g>%s</xliff:g></string>
     <string name="chooseExpiryDate">Välj förfallodatum</string>
     <string name="expiryDate">Förfallodatum</string>
     <string name="starImage">Favoritstjärna</string>
     <string name="app_license">Copyleftad fri programvara, under GPLv3+-licens</string>
-    <string name="app_resources">Tredjepartsresurser: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Tredjepartsbibliotek: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="balance">Saldo</string>
     <string name="balanceSentence">Saldo: <xliff:g>%s</xliff:g></string>
     <string name="settings_disable_lockscreen_while_viewing_card">Förhindra skärmlåsning</string>
@@ -143,7 +137,6 @@
     <string name="note">Anteckning</string>
     <string name="settings_system_locale">System</string>
     <string name="settings_locale">Språk</string>
-    <string name="app_contributors">Möjliggjordes av: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="noGroupCards">Denna grupp är tom</string>
     <string name="barcodeImageDescriptionWithType">Bild <xliff:g>%s</xliff:g> streckkod</string>
     <string name="reverse">...i omvänd ordning</string>
@@ -157,7 +150,6 @@
     <string name="report_error">Rapportera ett fel</string>
     <string name="version_history">Versionshistorik</string>
     <string name="help_translate_this_app">Hjälp till med översättningen av appen</string>
-    <string name="on_github">på GitHub</string>
     <string name="exportPassword">Sätt ett lösenord för att skydda din exporterade data (valfritt)</string>
     <string name="exportPasswordHint">Ange lösenord</string>
     <string name="group_updated">Gruppen har uppdaterats</string>
@@ -167,7 +159,6 @@
     <string name="editGroup">Redigerar grupp: <xliff:g>%s</xliff:g></string>
     <string name="selectColor">Välj färg</string>
     <string name="setIcon">Ställ in miniatyr</string>
-    <string name="credits">Bidragsgivare</string>
     <string name="source_repository">Källkodslager</string>
     <string name="noGiftCardsGroup">Skapa några kort och placera dem sedan i den här gruppen</string>
     <string name="translate_platform">på Weblate</string>
@@ -227,12 +218,10 @@
     <string name="settings_category_title_cards">Kortvy</string>
     <string name="show_note">Visa anteckning</string>
     <string name="switchToBackImage">Byt till bilden på baksidan</string>
-    <string name="app_copyright_short">Kopieringsskydd © Sylvia van Os och medverkande</string>
     <string name="switchToFrontImage">Byt till bilden på framsidan</string>
     <string name="settings_allow_content_provider_read_summary">Appar måste fortfarande begära åtkomst för att få tillgång</string>
     <string name="setBarcodeHeight">Ställ in streckkodens höjd</string>
     <string name="openBackImageInGalleryApp">Öppna bilden på baksidan i bildvisningsappen</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Kopieringsskydd © 2019–<xliff:g>%d</xliff:g> Sylvia van Os och medverkande</string>
     <string name="settings_allow_content_provider_read_title">Tillåt andra appar att komma åt min data</string>
     <string name="permissionReadCardsLabel">Läsa Catima-kort</string>
     <string name="donate">Donera</string>

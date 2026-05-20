@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_contributors">Katkıda bulunanlar: <xliff:g id="app_contributors">%s</xliff:g></string>
     <string name="settings_system_locale">Sistem</string>
     <string name="settings_locale">Dil</string>
     <string name="turn_flashlight_off">El fenerini kapat</string>
@@ -33,7 +32,6 @@
     <string name="importCatimaMessage">İçe aktarmak için Catima\'dan dışa aktardığınız dosyayı seçin. \nBaşka bir Catima uygulamasının İçe/dışa aktar menüsündeki dışa aktar düğmesine basarak bir tane oluşturun.</string>
     <string name="importCatima">Catima\'dan içe aktar</string>
     <string name="accept">Kabul et</string>
-    <string name="privacy_policy">Gizlilik politikası</string>
     <string name="app_loyalty_card_keychain">Loyalty Card Keychain</string>
     <string name="chooseImportType">Verileri şuradan içe aktar</string>
     <string name="points">Puan</string>
@@ -82,14 +80,8 @@
     <string name="starImage">Sık kullanılan yıldız</string>
     <string name="thumbnailDescription">Küçük resim</string>
     <string name="selectBarcodeTitle">Barkod seç</string>
-    <string name="app_resources">Üçüncü taraf kaynakları: <xliff:g id="app_resources_list">%s</xliff:g></string>
-    <string name="app_libraries">Üçüncü taraf kütüphaneler: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="debug_version_fmt">Sürüm: <xliff:g id="version">%s</xliff:g></string>
     <string name="about_title_fmt"><xliff:g id="app_name">%s</xliff:g> hakkında</string>
     <string name="app_license">GPLv3+ altında lisanslanan copyleft özgür yazılım</string>
-    <string name="app_copyright_old">Loyalty Card Keychain temel alınmıştır
-\nTelif Hakkı © 2016–2020 Branden Archer</string>
-    <string name="app_copyright_fmt" tools:ignore="PluralsCandidate">Telif Hakkı © 2019–<xliff:g>%d</xliff:g> Sylvia van Os ve katkıda bulunanlar</string>
     <string name="about">Hakkında</string>
     <string name="importOptionFilesystemButton">Dosya sisteminden</string>
     <string name="importOptionFilesystemExplanation">Dosya sisteminden belirli bir dosya seçin</string>
@@ -155,11 +147,9 @@
     <string name="sort">Sırala</string>
     <string name="report_error">Hata bildir</string>
     <string name="and_data_usage">ve veri kullanımı</string>
-    <string name="on_github">GitHub\'da</string>
     <string name="source_repository">Kaynak deposu</string>
     <string name="license">Lisans</string>
     <string name="help_translate_this_app">Bu uygulamayı çevirmeye yardımcı olun</string>
-    <string name="credits">Emeği Geçenler</string>
     <string name="version_history">Sürüm geçmişi</string>
     <string name="exportPassword">Dışa aktarmanızı korumak için bir parola belirleyin (isteğe bağlı)</string>
     <string name="exportPasswordHint">Parola girin</string>
@@ -236,7 +226,6 @@
     <string name="settings_category_title_privacy">Gizlilik</string>
     <string name="settings_oled_dark_summary">OLED ekranlarda güç kullanımını düşürür</string>
     <string name="settings_category_title_cards">Kart görünümü</string>
-    <string name="app_copyright_short">Telif hakkı © Sylvia van Os ve katkıda bulunanlar</string>
     <string name="action_display_options">Görüntüleme seçenekleri</string>
     <string name="show_archived_cards">Arşivlenen kartları göster</string>
     <string name="view_online">Çevrim içi görüntüle</string>
