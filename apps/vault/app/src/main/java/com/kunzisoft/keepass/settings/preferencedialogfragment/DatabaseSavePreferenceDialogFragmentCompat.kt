@@ -25,7 +25,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.kunzisoft.androidclearchroma.ChromaUtil
 import com.kunzisoft.keepass.activities.legacy.DatabaseRetrieval
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.crypto.EncryptionAlgorithm
@@ -94,25 +93,6 @@ abstract class DatabaseSavePreferenceDialogFragmentCompat
 
     open fun onDialogClosed(database: ContextualDatabase?, positiveResult: Boolean) {
         // To inherit to save element in database
-    }
-
-    protected fun saveColor(
-        oldColor: Int?,
-        newColor: Int?
-    ) {
-        val oldColorString = if (oldColor != null)
-                ChromaUtil.getFormattedColorString(oldColor, false)
-            else
-                ""
-        val newColorString = if (newColor != null)
-            ChromaUtil.getFormattedColorString(newColor, false)
-        else
-            ""
-        mDatabaseViewModel.saveColor(
-            oldColorString,
-            newColorString,
-            mDatabaseAutoSaveEnable
-        )
     }
 
     protected fun saveCompression(

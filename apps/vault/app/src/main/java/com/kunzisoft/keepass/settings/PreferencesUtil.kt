@@ -116,9 +116,7 @@ object PreferencesUtil {
     }
 
     fun showEntryColors(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.show_entry_colors_key),
-            context.resources.getBoolean(R.bool.show_entry_colors_default))
+        return false
     }
 
     fun showExpiredEntries(context: Context): Boolean {
@@ -134,9 +132,7 @@ object PreferencesUtil {
     }
 
     fun colorizePassword(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.colorize_password_key),
-            context.resources.getBoolean(R.bool.colorize_password_default))
+        return false
     }
 
     fun showUsernamesListEntries(context: Context): Boolean {
@@ -477,15 +473,11 @@ object PreferencesUtil {
     }
 
     fun isLockDatabaseWhenBackButtonOnRootClicked(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.lock_database_back_root_key),
-            context.resources.getBoolean(R.bool.lock_database_back_root_default))
+        return false
     }
 
     fun showLockDatabaseButton(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.lock_database_show_button_key),
-            context.resources.getBoolean(R.bool.lock_database_show_button_default))
+        return false
     }
 
     fun isAutoSaveDatabaseEnabled(context: Context): Boolean {
@@ -511,22 +503,20 @@ object PreferencesUtil {
     }
 
     fun isBiometricUnlockEnable(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.biometric_unlock_enable_key),
-            context.resources.getBoolean(R.bool.biometric_unlock_enable_default))
-                && (if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             DeviceUnlockManager.biometricUnlockSupported(context)
         } else {
             false
-        })
+        }
     }
 
     fun isDeviceCredentialUnlockEnable(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        // Priority to biometric unlock
-        return prefs.getBoolean(context.getString(R.string.device_credential_unlock_enable_key),
-            context.resources.getBoolean(R.bool.device_credential_unlock_enable_default))
-                && !isBiometricUnlockEnable(context)
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            DeviceUnlockManager.isDeviceSecure(context)
+                    && DeviceUnlockManager.deviceCredentialUnlockSupported(context)
+        } else {
+            false
+        }
     }
 
     fun isTempDeviceUnlockEnable(context: Context): Boolean {
@@ -539,6 +529,24 @@ object PreferencesUtil {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getBoolean(context.getString(R.string.biometric_auto_open_prompt_key),
             context.resources.getBoolean(R.bool.biometric_auto_open_prompt_default))
+    }
+
+    fun enforceNativeVaultUnlockDefaults(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(context.getString(R.string.allow_no_password_key), false)
+            putBoolean(context.getString(R.string.remember_database_locations_key), false)
+            putBoolean(context.getString(R.string.show_recent_files_key), false)
+            putBoolean(context.getString(R.string.remember_keyfile_locations_key), false)
+            putBoolean(context.getString(R.string.remember_hardware_key_key), false)
+            putBoolean(context.getString(R.string.lock_database_back_root_key), false)
+            putBoolean(context.getString(R.string.lock_database_show_button_key), false)
+            putBoolean(context.getString(R.string.show_entry_colors_key), false)
+            putBoolean(context.getString(R.string.colorize_password_key), false)
+            putBoolean(context.getString(R.string.biometric_unlock_enable_key), true)
+            putBoolean(context.getString(R.string.device_credential_unlock_enable_key), true)
+            putBoolean(context.getString(R.string.biometric_auto_open_prompt_key), true)
+            putBoolean(context.getString(R.string.temp_device_unlock_enable_key), false)
+        }
     }
 
     fun getListSort(context: Context): SortNodeEnum {
@@ -918,10 +926,10 @@ object PreferencesUtil {
                 context.getString(R.string.setting_style_brightness_key) -> editor.remove(name)
                 context.getString(R.string.setting_icon_pack_choose_key) -> editor.remove(name)
                 context.getString(R.string.pure_black_oled_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(name, value.toBoolean())
+                context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(name, false)
                 context.getString(R.string.hide_expired_entries_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.hide_templates_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.colorize_password_key) -> editor.putBoolean(name, value.toBoolean())
+                context.getString(R.string.colorize_password_key) -> editor.putBoolean(name, false)
                 context.getString(R.string.list_entries_show_username_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.list_groups_show_number_entries_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.recursive_number_entries_key) -> editor.putBoolean(name, value.toBoolean())

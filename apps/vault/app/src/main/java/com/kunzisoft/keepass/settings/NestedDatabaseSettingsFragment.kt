@@ -21,13 +21,10 @@ package com.kunzisoft.keepass.settings
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.graphics.toColorInt
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -37,7 +34,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.TwoStatePreference
-import com.kunzisoft.androidclearchroma.ChromaUtil
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.SetMainCredentialDialogFragment
 import com.kunzisoft.keepass.activities.legacy.DatabaseRetrieval
@@ -52,13 +48,11 @@ import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
 import com.kunzisoft.keepass.database.helper.getLocalizedName
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService
-import com.kunzisoft.keepass.settings.preference.DialogColorPreference
 import com.kunzisoft.keepass.settings.preference.DialogListExplanationPreference
 import com.kunzisoft.keepass.settings.preference.InputKdfNumberPreference
 import com.kunzisoft.keepass.settings.preference.InputKdfSizePreference
 import com.kunzisoft.keepass.settings.preference.InputNumberPreference
 import com.kunzisoft.keepass.settings.preference.InputTextPreference
-import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseColorPreferenceDialogFragmentCompat
 import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseDataCompressionPreferenceDialogFragmentCompat
 import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseDefaultUsernamePreferenceDialogFragmentCompat
 import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseDescriptionPreferenceDialogFragmentCompat
@@ -99,7 +93,6 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
     private var dbNamePref: InputTextPreference? = null
     private var dbDescriptionPref: InputTextPreference? = null
     private var dbDefaultUsernamePref: InputTextPreference? = null
-    private var dbCustomColorPref: DialogColorPreference? = null
     private var dbDataCompressionPref: Preference? = null
     private var recycleBinGroupPref: DialogListExplanationPreference? = null
     private var templatesGroupPref: DialogListExplanationPreference? = null
@@ -200,7 +193,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                                             // Master Key
                                             getString(R.string.settings_database_change_credentials_key) -> {
                                                 SetMainCredentialDialogFragment
-                                                    .getInstance(database.allowNoMasterKey)
+                                                    .getNativeVaultInstance()
                                                     .show(parentFragmentManager, "passwordDialog")
                                             }
                                             else -> {}
@@ -326,19 +319,6 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         // Database default username
         dbDefaultUsernamePref = findPreference(getString(R.string.database_default_username_key))
         dbDefaultUsernamePref?.summary = database.defaultUsername
-
-        // Database custom color
-        dbCustomColorPref = findPreference(getString(R.string.database_custom_color_key))
-        dbCustomColorPref?.apply {
-            val customColor = database.customColor
-            if (customColor != null) {
-                color = customColor
-                summary = ChromaUtil.getFormattedColorString(customColor, false)
-            } else{
-                color = DialogColorPreference.DISABLE_COLOR
-                summary = ""
-            }
-        }
 
         // Version
         findPreference<Preference>(getString(R.string.database_version_key))
@@ -500,7 +480,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                     } else {
                         // Show credential dialog directly without user verification
                         SetMainCredentialDialogFragment
-                            .getInstance(database.allowNoMasterKey)
+                            .getNativeVaultInstance()
                             .show(parentFragmentManager, "passwordDialog")
                     }
                     false
@@ -510,28 +490,6 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                 false
             }
         }
-    }
-
-    private val colorSelectedListener: ((Int?)-> Unit) = { color ->
-        if (color != null) {
-            dbCustomColorPref?.color = color
-            dbCustomColorPref?.summary = ChromaUtil.getFormattedColorString(color, false)
-        } else {
-            dbCustomColorPref?.color = DialogColorPreference.DISABLE_COLOR
-            dbCustomColorPref?.summary = ""
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-
-        try {
-            // To reassign color listener after orientation change
-            val chromaDialog = parentFragmentManager.findFragmentByTag(TAG_PREF_FRAGMENT) as DatabaseColorPreferenceDialogFragmentCompat?
-            chromaDialog?.onColorSelectedListener = colorSelectedListener
-        } catch (_: Exception) {}
-
-        return view
     }
 
     // TODO check error
@@ -582,19 +540,6 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                                     oldDefaultUsername
                                 }
                         dbDefaultUsernamePref?.summary = defaultUsernameToShow
-                    }
-                    DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_COLOR_TASK -> {
-                        val oldColor = data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
-                        val newColor = data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
-
-                        val defaultColorToShow =
-                                if (result.isSuccess) {
-                                    newColor
-                                } else {
-                                    database.customColor = oldColor.toColorInt()
-                                    oldColor
-                                }
-                        dbCustomColorPref?.summary = defaultColorToShow
                     }
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_COMPRESSION_TASK -> {
                         val oldCompression = data.getSerializableCompat<CompressionAlgorithm>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
@@ -748,11 +693,6 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
             getString(R.string.database_default_username_key) -> {
                 dialogFragment = DatabaseDefaultUsernamePreferenceDialogFragmentCompat.newInstance(preference.key)
             }
-            getString(R.string.database_custom_color_key) -> {
-                dialogFragment = DatabaseColorPreferenceDialogFragmentCompat.newInstance(preference.key).apply {
-                    onColorSelectedListener = colorSelectedListener
-                }
-            }
             getString(R.string.database_data_compression_key) -> {
                 dialogFragment = DatabaseDataCompressionPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
@@ -833,7 +773,6 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
             getString(R.string.database_name_key),
             getString(R.string.database_description_key),
             getString(R.string.database_default_username_key),
-            getString(R.string.database_custom_color_key),
             getString(R.string.database_data_compression_key),
             getString(R.string.database_data_remove_unlinked_attachments_key),
             getString(R.string.recycle_bin_enable_key),

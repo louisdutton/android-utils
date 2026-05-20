@@ -27,6 +27,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
+import android.view.View
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.CompoundButton
@@ -238,6 +239,12 @@ class MainCredentialView @JvmOverloads constructor(context: Context,
             mCredentialStorage,
             conditionToStoreCredential()
         )
+    }
+
+    fun applyNativeVaultMode() {
+        checkboxPasswordView.visibility = View.GONE
+        findViewById<View>(R.id.container_key_file)?.visibility = View.GONE
+        findViewById<View>(R.id.container_hardware_key)?.visibility = View.GONE
     }
 
     // Auto select the password field and open keyboard

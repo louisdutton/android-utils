@@ -43,8 +43,6 @@ import android.widget.PopupWindow
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -94,7 +92,6 @@ class MagikeyboardService : InputMethodService(),
     private var keyboardView: KeyboardView? = null
     private var entryContainer: View? = null
     private var databaseText: TextView? = null
-    private var databaseColorView: ImageView? = null
     private var containerPackageText: View? = null
     private var containerShareText: View? = null
     private var shareBrowserText: TextView? = null
@@ -228,7 +225,6 @@ class MagikeyboardService : InputMethodService(),
         entryContainer = rootKeyboardView.findViewById(R.id.magikeyboard_entry_container)
         entryListView = rootKeyboardView.findViewById(R.id.magikeyboard_entry_list)
         databaseText = rootKeyboardView.findViewById(R.id.magikeyboard_database_text)
-        databaseColorView = rootKeyboardView.findViewById(R.id.magikeyboard_database_color)
         containerPackageText = rootKeyboardView.findViewById(R.id.magikeyboard_container_package)
         containerShareText = rootKeyboardView.findViewById(R.id.magikeyboard_share_browser)
         shareBrowserText = rootKeyboardView.findViewById(R.id.magikeyboard_share_browser_text)
@@ -351,14 +347,6 @@ class MagikeyboardService : InputMethodService(),
             entryContainer?.visibility = VISIBLE
         }
         databaseText?.text = mDatabase?.name ?: ""
-        val databaseColor = mDatabase?.customColor
-        if (databaseColor != null) {
-            databaseColorView?.drawable?.colorFilter = BlendModeColorFilterCompat
-                .createBlendModeColorFilterCompat(databaseColor, BlendModeCompat.SRC_IN)
-            databaseColorView?.visibility = VISIBLE
-        } else {
-            databaseColorView?.visibility = GONE
-        }
     }
 
     override fun onStartInputView(info: EditorInfo, restarting: Boolean) {

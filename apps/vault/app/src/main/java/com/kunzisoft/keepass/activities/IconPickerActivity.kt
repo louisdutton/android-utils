@@ -100,9 +100,8 @@ class IconPickerActivity : DatabaseLockActivity() {
         uploadButton = findViewById(R.id.icon_picker_upload)
 
         lockView = findViewById(R.id.lock_button)
-        lockView?.setOnClickListener {
-            lockAndExit()
-        }
+        lockView?.visibility = View.GONE
+        lockView?.setOnClickListener(null)
 
         intent?.getParcelableExtraCompat<IconImage>(EXTRA_ICON)?.let {
             mIconImage = it

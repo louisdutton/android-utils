@@ -24,33 +24,22 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.snackbar.Snackbar
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.SetMainCredentialDialogFragment
-import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
-import com.kunzisoft.keepass.activities.helpers.setOpenDocumentClickListener
 import com.kunzisoft.keepass.activities.legacy.DatabaseModeActivity
-import com.kunzisoft.keepass.adapters.FileDatabaseHistoryAdapter
-import com.kunzisoft.keepass.app.database.FileDatabaseHistoryAction
 import com.kunzisoft.keepass.credentialprovider.EntrySelectionHelper
 import com.kunzisoft.keepass.credentialprovider.SpecialMode
 import com.kunzisoft.keepass.credentialprovider.TypeMode
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.MainCredential
-import com.kunzisoft.keepass.education.FileDatabaseSelectActivityEducation
 import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
@@ -66,7 +55,7 @@ import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.view.asError
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
-import com.kunzisoft.keepass.viewmodels.DatabaseFilesViewModel
+import com.kunzisoft.keepass.vault.VaultFile
 import java.io.FileNotFoundException
 
 class FileDatabaseSelectActivity : DatabaseModeActivity(),
@@ -75,18 +64,8 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
     // Views
     private lateinit var coordinatorLayout: CoordinatorLayout
     private var createDatabaseButtonView: View? = null
-    private var openDatabaseButtonView: View? = null
-
-    private val databaseFilesViewModel: DatabaseFilesViewModel by viewModels()
-
-    private val mFileDatabaseSelectActivityEducation = FileDatabaseSelectActivityEducation(this)
-
-    // Adapter to manage database history list
-    private var mAdapterDatabaseHistory: FileDatabaseHistoryAdapter? = null
 
     private var mDatabaseFileUri: Uri? = null
-
-    private var mExternalFileHelper: ExternalFileHelper? = null
 
     override fun manageDatabaseInfo(): Boolean  = false
 
@@ -98,6 +77,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         // or is force quit within DeX mode and then the user leaves DeX mode. Without this, the
         // user would need to enter and exit DeX mode once to reenable the service.
         MagikeyboardUtil.setEnabled(this, !DexUtil.isDexMode(resources.configuration))
+        PreferencesUtil.enforceNativeVaultUnlockDefaults(this)
 
         setContentView(R.layout.activity_file_selection)
         coordinatorLayout = findViewById(R.id.activity_file_selection_coordinator_layout)
@@ -110,85 +90,13 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         createDatabaseButtonView = findViewById(R.id.create_database_button)
         createDatabaseButtonView?.setOnClickListener { createNewFile() }
 
-        // Open database button
-        mExternalFileHelper = ExternalFileHelper(this)
-        mExternalFileHelper?.buildOpenDocument { uri ->
-            uri?.let {
-                launchMainCredentialActivityWithPath(uri)
-            }
-        }
-        mExternalFileHelper?.buildCreateDocument("application/x-keepass") { databaseFileCreatedUri ->
-            mDatabaseFileUri = databaseFileCreatedUri
-            if (mDatabaseFileUri != null) {
-                SetMainCredentialDialogFragment.getInstance(true)
-                    .show(supportFragmentManager, "passwordDialog")
-            } else {
-                val error = getString(R.string.error_create_database)
-                Snackbar.make(coordinatorLayout, error, Snackbar.LENGTH_LONG).asError().show()
-                Log.e(TAG, error)
-            }
-        }
-        openDatabaseButtonView = findViewById(R.id.open_database_button)
-        openDatabaseButtonView?.setOpenDocumentClickListener(mExternalFileHelper)
-
-        // History list
-        val fileDatabaseHistoryRecyclerView = findViewById<RecyclerView>(R.id.file_list)
-        fileDatabaseHistoryRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        // Removes blinks
-        (fileDatabaseHistoryRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-        // Construct adapter with listeners
-        mAdapterDatabaseHistory = FileDatabaseHistoryAdapter(this)
-        mAdapterDatabaseHistory?.setOnFileDatabaseHistoryOpenListener { fileDatabaseHistoryEntityToOpen ->
-            fileDatabaseHistoryEntityToOpen.databaseUri?.let { databaseFileUri ->
-                launchMainCredentialActivity(
-                    databaseFileUri,
-                    fileDatabaseHistoryEntityToOpen.keyFileUri,
-                    fileDatabaseHistoryEntityToOpen.hardwareKey
-                )
-            }
-        }
-        fileDatabaseHistoryRecyclerView.adapter = mAdapterDatabaseHistory
-
         // Retrieve the database URI provided by file manager after an orientation change
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(EXTRA_DATABASE_URI)) {
             mDatabaseFileUri = savedInstanceState.getParcelableCompat(EXTRA_DATABASE_URI)
         }
 
-        // Observe list of databases
-        databaseFilesViewModel.databaseFilesLoaded.observe(this) { databaseFiles ->
-            try {
-                when (databaseFiles.databaseFileAction) {
-                    DatabaseFilesViewModel.DatabaseFileAction.NONE -> {
-                        mAdapterDatabaseHistory?.replaceAllDatabaseFileHistoryList(databaseFiles.databaseFileList)
-                    }
-                    DatabaseFilesViewModel.DatabaseFileAction.ADD -> {
-                        databaseFiles.databaseFileToActivate?.let { databaseFileToAdd ->
-                            mAdapterDatabaseHistory?.addDatabaseFileHistory(databaseFileToAdd)
-                        }
-                    }
-                    DatabaseFilesViewModel.DatabaseFileAction.UPDATE -> {
-                        databaseFiles.databaseFileToActivate?.let { databaseFileToUpdate ->
-                            mAdapterDatabaseHistory?.updateDatabaseFileHistory(databaseFileToUpdate)
-                        }
-                    }
-                    DatabaseFilesViewModel.DatabaseFileAction.DELETE -> {
-                        databaseFiles.databaseFileToActivate?.let { databaseFileToDelete ->
-                            mAdapterDatabaseHistory?.deleteDatabaseFileHistory(databaseFileToDelete)
-                        }
-                    }
-                }
-                databaseFilesViewModel.consumeAction()
-            } catch (e: Exception) {
-                Log.e(TAG, "Unable to observe database action", e)
-            }
-        }
-
-        // Remove all the remember locations if needed
-        if (PreferencesUtil.rememberDatabaseLocations(applicationContext).not()) {
-            FileDatabaseHistoryAction.getInstance(applicationContext)
-                .deleteAll()
-        }
+        openVaultOrStartCreation()
     }
 
     override fun onDatabaseRetrieved(database: ContextualDatabase) {
@@ -216,6 +124,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
                     database,
                     false
                 )
+                finish()
             }
             ACTION_DATABASE_LOAD_TASK -> {
                 launchGroupActivityIfLoaded(database)
@@ -239,13 +148,27 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         }
     }
 
-    /**
-     * Create a new file by calling the content provider
-     */
     private fun createNewFile() {
-        mExternalFileHelper?.createDocument(
-            getString(R.string.database_file_name_default) +
-                getString(R.string.database_file_extension_default))
+        if (VaultFile.exists(this)) {
+            launchMainCredentialActivityWithPath(VaultFile.uri(this))
+            finish()
+            return
+        }
+
+        VaultFile.file(this).parentFile?.mkdirs()
+        mDatabaseFileUri = VaultFile.uri(this)
+        if (supportFragmentManager.findFragmentByTag(PASSWORD_DIALOG_TAG) != null) return
+        SetMainCredentialDialogFragment.getNativeVaultInstance()
+            .show(supportFragmentManager, PASSWORD_DIALOG_TAG)
+    }
+
+    private fun openVaultOrStartCreation() {
+        if (VaultFile.exists(this)) {
+            launchMainCredentialActivityWithPath(VaultFile.uri(this))
+            finish()
+        } else if (mSpecialMode == SpecialMode.DEFAULT) {
+            createNewFile()
+        }
     }
 
     private fun fileNoFoundAction(e: FileNotFoundException) {
@@ -331,6 +254,9 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
     override fun onResume() {
         super.onResume()
 
+        openVaultOrStartCreation()
+        if (isFinishing) return
+
         // Show open and create button or special mode
         when (mSpecialMode) {
             SpecialMode.DEFAULT -> {
@@ -342,12 +268,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
             }
         }
 
-        // Show recent files if allowed
-        if (PreferencesUtil.showRecentFiles(this@FileDatabaseSelectActivity)) {
-            databaseFilesViewModel.loadListOfDatabases()
-        } else {
-            mAdapterDatabaseHistory?.clearDatabaseFileHistoryList()
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -369,7 +289,11 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         }
     }
 
-    override fun onAssignKeyDialogNegativeClick(mainCredential: MainCredential) {}
+    override fun onAssignKeyDialogNegativeClick(mainCredential: MainCredential) {
+        if (!VaultFile.exists(this)) {
+            finish()
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
@@ -378,41 +302,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
             MenuUtil.defaultMenuInflater(menuInflater, menu)
         }
 
-        Handler(Looper.getMainLooper()).post {
-            performedNextEducation()
-        }
-
         return true
-    }
-
-    private fun performedNextEducation() {
-        // If no recent files
-        val createDatabaseEducationPerformed =
-                createDatabaseButtonView != null
-                && createDatabaseButtonView!!.visibility == View.VISIBLE
-                && mFileDatabaseSelectActivityEducation.checkAndPerformedCreateDatabaseEducation(
-                        createDatabaseButtonView!!,
-                {
-                    createNewFile()
-                },
-                {
-                    // But if the user cancel, it can also select a database
-                    performedNextEducation()
-                })
-        if (!createDatabaseEducationPerformed) {
-            // selectDatabaseEducationPerformed
-            openDatabaseButtonView != null
-            && mFileDatabaseSelectActivityEducation.checkAndPerformedSelectDatabaseEducation(
-                openDatabaseButtonView!!,
-            { tapTargetView ->
-                tapTargetView?.let {
-                    mExternalFileHelper?.openDocument()
-                }
-            },
-            {
-
-            })
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -424,6 +314,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
 
         private const val TAG = "FileDbSelectActivity"
         private const val EXTRA_DATABASE_URI = "EXTRA_DATABASE_URI"
+        private const val PASSWORD_DIALOG_TAG = "passwordDialog"
 
         /*
          * -------------------------

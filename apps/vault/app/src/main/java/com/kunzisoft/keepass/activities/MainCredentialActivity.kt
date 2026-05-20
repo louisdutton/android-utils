@@ -38,7 +38,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import androidx.biometric.BiometricManager
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
@@ -51,7 +50,7 @@ import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.legacy.DatabaseModeActivity
 import com.kunzisoft.keepass.app.database.FileDatabaseHistoryAction
 import com.kunzisoft.keepass.biometric.DeviceUnlockFragment
-import com.kunzisoft.keepass.biometric.DeviceUnlockManager
+import com.kunzisoft.keepass.biometric.DeviceUnlockMode
 import com.kunzisoft.keepass.biometric.deviceUnlockError
 import com.kunzisoft.keepass.credentialprovider.EntrySelectionHelper
 import com.kunzisoft.keepass.credentialprovider.SpecialMode
@@ -76,7 +75,6 @@ import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.READ_ONLY_KEY
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.USER_VERIFICATION_KEY
 import com.kunzisoft.keepass.settings.AppearanceSettingsActivity
-import com.kunzisoft.keepass.settings.DeviceUnlockSettingsActivity
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.utils.BACK_PREVIOUS_KEYBOARD_ACTION
@@ -87,7 +85,9 @@ import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.MainCredentialView
 import com.kunzisoft.keepass.view.asError
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
+import com.kunzisoft.keepass.vault.VaultFile
 import com.kunzisoft.keepass.viewmodels.DatabaseFileViewModel
+import com.kunzisoft.keepass.viewmodels.DeviceUnlockPromptMode
 import com.kunzisoft.keepass.viewmodels.DeviceUnlockViewModel
 import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
@@ -104,6 +104,9 @@ class MainCredentialActivity : DatabaseModeActivity() {
     private var deviceUnlockButton: View? = null
     private var mainCredentialView: MainCredentialView? = null
     private var confirmButtonView: Button? = null
+    private var scrollContainerView: View? = null
+    private var nativeVaultUnlockShell: View? = null
+    private var passwordFooterView: View? = null
     private var infoContainerView: ViewGroup? = null
     private lateinit var coordinatorLayout: CoordinatorLayout
     private var deviceUnlockFragment: DeviceUnlockFragment? = null
@@ -149,6 +152,9 @@ class MainCredentialActivity : DatabaseModeActivity() {
         deviceUnlockButton = findViewById(R.id.fragment_device_unlock_container_view)
         mainCredentialView = findViewById(R.id.activity_password_credentials)
         confirmButtonView = findViewById(R.id.activity_password_open_button)
+        scrollContainerView = findViewById(R.id.scroll_container)
+        nativeVaultUnlockShell = findViewById(R.id.native_vault_unlock_shell)
+        passwordFooterView = findViewById(R.id.activity_password_footer)
         infoContainerView = findViewById(R.id.activity_password_info_container)
         coordinatorLayout = findViewById(R.id.activity_password_coordinator_layout)
 
@@ -186,10 +192,16 @@ class MainCredentialActivity : DatabaseModeActivity() {
 
         // If is a view intent
         getUriFromIntent(intent)
+        applyNativeVaultModeIfNeeded()
 
         // Show appearance
         logotypeButton?.setOnClickListener {
             startActivity(Intent(this, AppearanceSettingsActivity::class.java))
+        }
+        nativeVaultUnlockShell?.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                mDeviceUnlockViewModel?.showPrompt()
+            }
         }
 
         // Listen password checkbox to init advanced unlock and confirmation button
@@ -259,7 +271,11 @@ class MainCredentialActivity : DatabaseModeActivity() {
                 }
 
             // Define title
-            filenameView?.text = databaseFile?.databaseAlias ?: ""
+            filenameView?.text = if (isNativeVaultMode()) {
+                ""
+            } else {
+                databaseFile?.databaseAlias ?: ""
+            }
 
             onDatabaseFileLoaded(databaseFile?.databaseUri, keyFileUri, hardwareKey)
         }
@@ -301,6 +317,10 @@ class MainCredentialActivity : DatabaseModeActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     mDeviceUnlockViewModel?.let { deviceUnlockViewModel ->
                         deviceUnlockViewModel.uiState.collect { uiState ->
+                            updateNativeVaultUnlockShell(
+                                uiState.newDeviceUnlockMode,
+                                uiState.cryptoPromptState
+                            )
                             // New value received
                             uiState.credentialRequiredCipher?.let { cipher ->
                                 deviceUnlockViewModel.encryptCredential(
@@ -452,9 +472,39 @@ class MainCredentialActivity : DatabaseModeActivity() {
         mainCredentialView?.populateHardwareKeyView(hardwareKey)
     }
 
+    private fun isNativeVaultMode(): Boolean {
+        return mDatabaseFileUri == VaultFile.uri(this)
+    }
+
+    private fun applyNativeVaultModeIfNeeded() {
+        if (!isNativeVaultMode()) return
+
+        toolbar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
+        findViewById<View>(R.id.app_bar)?.visibility = View.GONE
+        filenameView?.visibility = View.GONE
+        logotypeButton?.visibility = View.GONE
+        mainCredentialView?.applyNativeVaultMode()
+    }
+
+    private fun updateNativeVaultUnlockShell(
+        mode: DeviceUnlockMode,
+        promptMode: DeviceUnlockPromptMode
+    ) {
+        val showShell = isNativeVaultMode()
+                && (mode == DeviceUnlockMode.EXTRACT_CREDENTIAL
+                || promptMode == DeviceUnlockPromptMode.SHOW
+                || promptMode == DeviceUnlockPromptMode.IDLE_SHOW)
+        nativeVaultUnlockShell?.visibility = if (showShell) View.VISIBLE else View.GONE
+        scrollContainerView?.visibility = if (showShell) View.GONE else View.VISIBLE
+        passwordFooterView?.visibility = if (showShell) View.GONE else View.VISIBLE
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         getUriFromIntent(intent)
+        applyNativeVaultModeIfNeeded()
     }
 
     private fun launchGroupActivityIfLoaded(database: ContextualDatabase) {
@@ -546,12 +596,12 @@ class MainCredentialActivity : DatabaseModeActivity() {
         hardwareKey: HardwareKey?
     ) {
         // Define Key File text
-        if (mRememberKeyFile) {
+        if (!isNativeVaultMode() && mRememberKeyFile) {
             mainCredentialView?.populateKeyFileView(keyFileUri)
         }
 
         // Define hardware key
-        if (mRememberHardwareKey) {
+        if (!isNativeVaultMode() && mRememberHardwareKey) {
             mainCredentialView?.populateHardwareKeyView(hardwareKey)
         }
 
@@ -615,6 +665,20 @@ class MainCredentialActivity : DatabaseModeActivity() {
 
     private fun loadDatabase() {
         getMainCredentialFromViews()
+        if (isNativeVaultMode() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!PreferencesUtil.isDeviceUnlockEnable(this)) {
+                Snackbar.make(
+                    coordinatorLayout,
+                    R.string.configure_biometric,
+                    Snackbar.LENGTH_LONG
+                ).asError().show()
+                return
+            }
+            if (mMainCredential.password != null
+                && mDeviceUnlockViewModel?.requestCredentialEncryptionPrompt() == true) {
+                return
+            }
+        }
         loadDatabase(
             databaseFileUri = mDatabaseFileUri,
             mainCredential = mMainCredential,
@@ -650,6 +714,14 @@ class MainCredentialActivity : DatabaseModeActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (isNativeVaultMode()) {
+            if (mSpecialMode == SpecialMode.DEFAULT) {
+                MenuUtil.defaultMenuInflater(menuInflater, menu)
+            }
+            super.onCreateOptionsMenu(menu)
+            return true
+        }
+
         val inflater = menuInflater
         // Read menu
         inflater.inflate(R.menu.open_file, menu)
@@ -733,31 +805,9 @@ class MainCredentialActivity : DatabaseModeActivity() {
                         {
                             performedNextEducation(menu)
                         })
-                try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                        && !userVerificationEducationPerformed
-                    ) {
-                        val biometricCanAuthenticate = DeviceUnlockManager.canAuthenticate(this)
-                        if ((biometricCanAuthenticate == BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
-                                    || biometricCanAuthenticate == BiometricManager.BIOMETRIC_SUCCESS)
-                            && deviceUnlockButton != null
-                        ) {
-                            mPasswordActivityEducation.checkAndPerformedBiometricEducation(
-                                deviceUnlockButton!!,
-                                {
-                                    startActivity(
-                                        Intent(
-                                            this,
-                                            DeviceUnlockSettingsActivity::class.java
-                                        )
-                                    )
-                                },
-                                {
-
-                                })
-                        }
-                    }
-                } catch (_: Exception) {}
+                if (!userVerificationEducationPerformed) {
+                    performedEductionInProgress = false
+                }
             }
         }
     }

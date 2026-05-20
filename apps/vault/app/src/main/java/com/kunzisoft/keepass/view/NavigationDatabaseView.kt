@@ -5,8 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.kunzisoft.keepass.R
@@ -19,7 +17,6 @@ class NavigationDatabaseView @JvmOverloads constructor(context: Context,
     private var databaseNavContainerView: View? = null
     private var databaseNavIconView: ImageView? = null
     private var databaseNavModifiedView: ImageView? = null
-    private var databaseNavColorView: ImageView? = null
     private var databaseNavNameView: TextView? = null
     private var databaseNavPathView: TextView? = null
     private var databaseNavVersionView: TextView? = null
@@ -28,7 +25,6 @@ class NavigationDatabaseView @JvmOverloads constructor(context: Context,
         inflateHeaderView(R.layout.nav_header_database)
         databaseNavIconView = databaseNavContainerView?.findViewById(R.id.nav_database_icon)
         databaseNavModifiedView = databaseNavContainerView?.findViewById(R.id.nav_database_modified)
-        databaseNavColorView = databaseNavContainerView?.findViewById(R.id.nav_database_color)
         databaseNavNameView = databaseNavContainerView?.findViewById(R.id.nav_database_name)
         databaseNavPathView = databaseNavContainerView?.findViewById(R.id.nav_database_path)
         databaseNavVersionView = databaseNavContainerView?.findViewById(R.id.nav_database_version)
@@ -61,13 +57,4 @@ class NavigationDatabaseView @JvmOverloads constructor(context: Context,
         databaseNavModifiedView?.isVisible = modified
     }
 
-    fun setDatabaseColor(color: Int?) {
-        if (color != null) {
-            databaseNavColorView?.drawable?.colorFilter = BlendModeColorFilterCompat
-                .createBlendModeColorFilterCompat(color, BlendModeCompat.SRC_IN)
-            databaseNavColorView?.visibility = View.VISIBLE
-        } else {
-            databaseNavColorView?.visibility = View.GONE
-        }
-    }
 }

@@ -27,16 +27,6 @@
             android:title="@string/pure_black_oled_title"
             android:summary="@string/pure_black_oled_summary"
             android:defaultValue="@bool/pure_black_oled_default"/>
-        <SwitchPreferenceCompat
-            android:key="@string/show_entry_colors_key"
-            android:title="@string/show_entry_colors_title"
-            android:summary="@string/show_entry_colors_summary"
-            android:defaultValue="@bool/show_entry_colors_default"/>
-        <SwitchPreferenceCompat
-            android:key="@string/colorize_password_key"
-            android:title="@string/colorize_password_title"
-            android:summary="@string/colorize_password_summary"
-            android:defaultValue="@bool/colorize_password_default"/>
 
     </PreferenceCategory>
 

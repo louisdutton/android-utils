@@ -62,7 +62,6 @@ import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_RESTORE_ENTRY_HISTORY
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_SAVE
-import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_COLOR_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_COMPRESSION_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_DESCRIPTION_TASK
@@ -492,18 +491,6 @@ class DatabaseTaskProvider(
             putString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY, newDefaultUsername)
             putBoolean(DatabaseTaskNotificationService.SAVE_DATABASE_KEY, save)
         }, ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK)
-    }
-
-    fun startDatabaseSaveColor(
-        oldColor: String,
-        newColor: String,
-        save: Boolean
-    ) {
-        start(Bundle().apply {
-            putString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY, oldColor)
-            putString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY, newColor)
-            putBoolean(DatabaseTaskNotificationService.SAVE_DATABASE_KEY, save)
-        }, ACTION_DATABASE_UPDATE_COLOR_TASK)
     }
 
     fun startDatabaseSaveCompression(

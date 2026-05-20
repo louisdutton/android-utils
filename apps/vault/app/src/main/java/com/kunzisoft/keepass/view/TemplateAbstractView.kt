@@ -122,9 +122,8 @@ abstract class TemplateAbstractView<
         mTemplate?.icon?.let { templateIcon ->
             mEntryInfo?.icon = templateIcon
         }
-        // Change the entry color by the template color
-        mEntryInfo?.backgroundColor = mTemplate?.backgroundColor
-        mEntryInfo?.foregroundColor = mTemplate?.foregroundColor
+        mEntryInfo?.backgroundColor = null
+        mEntryInfo?.foregroundColor = null
     }
 
     private fun buildTemplate() {

@@ -71,16 +71,16 @@ class TemplateEditView @JvmOverloads constructor(context: Context,
     }
 
     fun setOnBackgroundColorClickListener(onClickListener: OnClickListener) {
-        backgroundColorButton.setOnClickListener(onClickListener)
+        backgroundColorButton.setOnClickListener(null)
     }
 
     fun getBackgroundColor(): Int? {
-        return mEntryInfo?.backgroundColor
+        return null
     }
 
     fun setBackgroundColor(color: Int?) {
-        applyBackgroundColor(color)
-        mEntryInfo?.backgroundColor = color
+        applyBackgroundColor(null)
+        mEntryInfo?.backgroundColor = null
     }
 
     private fun applyBackgroundColor(color: Int?) {
@@ -94,16 +94,16 @@ class TemplateEditView @JvmOverloads constructor(context: Context,
     }
 
     fun setOnForegroundColorClickListener(onClickListener: OnClickListener) {
-        foregroundColorButton.setOnClickListener(onClickListener)
+        foregroundColorButton.setOnClickListener(null)
     }
 
     fun getForegroundColor(): Int? {
-        return mEntryInfo?.foregroundColor
+        return null
     }
 
     fun setForegroundColor(color: Int?) {
-        applyForegroundColor(color)
-        mEntryInfo?.foregroundColor = color
+        applyForegroundColor(null)
+        mEntryInfo?.foregroundColor = null
     }
 
     private fun applyForegroundColor(color: Int?) {
@@ -277,8 +277,10 @@ class TemplateEditView @JvmOverloads constructor(context: Context,
 
     override fun populateViewsWithEntryInfo(showEmptyFields: Boolean): List<ViewField> {
         refreshIcon()
-        applyBackgroundColor(mEntryInfo?.backgroundColor)
-        applyForegroundColor(mEntryInfo?.foregroundColor)
+        mEntryInfo?.backgroundColor = null
+        mEntryInfo?.foregroundColor = null
+        applyBackgroundColor(null)
+        applyForegroundColor(null)
         return super.populateViewsWithEntryInfo(showEmptyFields)
     }
 

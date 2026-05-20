@@ -31,6 +31,7 @@ import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
@@ -83,6 +84,7 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
     private var mEmptyKeyFileConfirmationDialog: AlertDialog? = null
 
     private var mAllowNoMasterKey: Boolean  = false
+    private var mNativeVaultMode: Boolean = false
 
     private val passwordTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -133,6 +135,8 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             arguments?.apply {
                 if (containsKey(ALLOW_NO_MASTER_KEY_ARG))
                     mAllowNoMasterKey = getBoolean(ALLOW_NO_MASTER_KEY_ARG, false)
+                if (containsKey(NATIVE_VAULT_MODE_ARG))
+                    mNativeVaultMode = getBoolean(NATIVE_VAULT_MODE_ARG, false)
             }
 
             val builder = AlertDialog.Builder(activity)
@@ -141,8 +145,14 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             rootView = inflater.inflate(R.layout.fragment_set_main_credential, null)
             builder.setView(rootView)
                     // Add action buttons
-                    .setPositiveButton(android.R.string.ok) { _, _ -> }
+                    .setPositiveButton(
+                        if (mNativeVaultMode) R.string.create_keepass_file else android.R.string.ok
+                    ) { _, _ -> }
                     .setNegativeButton(android.R.string.cancel) { _, _ -> }
+
+            rootView.findViewById<TextView>(R.id.set_credential_title)?.setText(
+                if (mNativeVaultMode) R.string.create_vault_password else R.string.assign_master_key
+            )
 
             passwordCheckBox = rootView.findViewById(R.id.password_checkbox)
             passwordEditView = rootView.findViewById(R.id.password_view)
@@ -156,6 +166,13 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
 
             hardwareKeyCheckBox = rootView.findViewById(R.id.hardware_key_checkbox)
             hardwareKeySelectionView = rootView.findViewById(R.id.hardware_key_selection)
+
+            if (mNativeVaultMode) {
+                passwordCheckBox.isChecked = true
+                passwordCheckBox.visibility = View.GONE
+                rootView.findViewById<View>(R.id.card_view_key_file)?.visibility = View.GONE
+                rootView.findViewById<View>(R.id.card_view_hardware_key)?.visibility = View.GONE
+            }
 
             mExternalFileHelper = ExternalFileHelper(this)
             mExternalFileHelper?.buildCreateDocument { createdFileUri ->
@@ -230,8 +247,8 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
 
     private fun approveMainCredential() {
         val errorPassword = verifyPassword()
-        val errorKeyFile = verifyKeyFile()
-        val errorHardwareKey = verifyHardwareKey()
+        val errorKeyFile = if (mNativeVaultMode) false else verifyKeyFile()
+        val errorHardwareKey = if (mNativeVaultMode) false else verifyHardwareKey()
         // Check all to fill error
         var error = errorPassword || errorKeyFile || errorHardwareKey
         val hardwareKey = hardwareKeySelectionView.hardwareKey
@@ -248,6 +265,12 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
                 passwordRepeatTextInputLayout.error =
                     getString(R.string.error_disallow_no_credentials)
             }
+        } else if (!error
+            && mNativeVaultMode
+            && (mMasterPassword == null || mMasterPassword!!.isEmpty())
+        ) {
+            error = true
+            passwordRepeatTextInputLayout.error = getString(R.string.error_vault_password_required)
         } else if (!error
             && (mMasterPassword == null || mMasterPassword!!.isEmpty())
             && !keyFileCheckBox.isChecked
@@ -320,6 +343,10 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
     }
 
     private fun retrieveMainCredential(): MainCredential {
+        if (mNativeVaultMode) {
+            return MainCredential(mMasterPassword, null, null)
+        }
+
         val masterPassword = if (passwordCheckBox.isChecked) mMasterPassword else null
         val keyFileUri = if (keyFileCheckBox.isChecked) mKeyFileUri else null
         val hardwareKey = if (hardwareKeyCheckBox.isChecked) mHardwareKey else null
@@ -401,6 +428,7 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
         private val TAG = SetMainCredentialDialogFragment::class.simpleName
 
         private const val ALLOW_NO_MASTER_KEY_ARG = "ALLOW_NO_MASTER_KEY_ARG"
+        private const val NATIVE_VAULT_MODE_ARG = "NATIVE_VAULT_MODE_ARG"
         private val DEFAULT_KEYFILE_FORMAT = MasterCredential.CREATOR.KeyFileFormat.XML_2_0
         private val DEFAULT_KEYFILE_NAME = "keyfile.${DEFAULT_KEYFILE_FORMAT.defaultFileExtension}"
 
@@ -408,6 +436,15 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             val fragment = SetMainCredentialDialogFragment()
             val args = Bundle()
             args.putBoolean(ALLOW_NO_MASTER_KEY_ARG, allowNoMasterKey)
+            fragment.arguments = args
+            return fragment
+        }
+
+        fun getNativeVaultInstance(): SetMainCredentialDialogFragment {
+            val fragment = SetMainCredentialDialogFragment()
+            val args = Bundle()
+            args.putBoolean(ALLOW_NO_MASTER_KEY_ARG, false)
+            args.putBoolean(NATIVE_VAULT_MODE_ARG, true)
             fragment.arguments = args
             return fragment
         }

@@ -131,9 +131,8 @@ open class SettingsActivity
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        lockView?.setOnClickListener {
-            lockAndExit()
-        }
+        lockView?.hide()
+        lockView?.setOnClickListener(null)
 
         if (savedInstanceState == null) {
             lockView?.visibility = View.GONE
@@ -217,20 +216,7 @@ open class SettingsActivity
     override fun onAssignKeyDialogNegativeClick(mainCredential: MainCredential) {}
 
     private fun hideOrShowLockButton(key: NestedSettingsFragment.Screen) {
-        if (PreferencesUtil.showLockDatabaseButton(this)) {
-            when (key) {
-                NestedSettingsFragment.Screen.DATABASE,
-                NestedSettingsFragment.Screen.DATABASE_MASTER_KEY,
-                NestedSettingsFragment.Screen.DATABASE_SECURITY -> {
-                    lockView?.show()
-                }
-                else -> {
-                    lockView?.hide()
-                }
-            }
-        } else {
-            lockView?.hide()
-        }
+        lockView?.hide()
     }
 
     override fun onDatabaseBackPressed() {

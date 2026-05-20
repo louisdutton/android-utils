@@ -35,6 +35,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -203,7 +204,7 @@ class DeviceUnlockFragment: Fragment() {
                                 setDescription(promptDescription)
                             setConfirmationRequired(false)
                             if (isDeviceCredentialBiometricOperation(context)) {
-                                setAllowedAuthenticators(DEVICE_CREDENTIAL)
+                                setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                             } else {
                                 setNegativeButtonText(getString(android.R.string.cancel))
                             }
@@ -277,23 +278,13 @@ class DeviceUnlockFragment: Fragment() {
     }
 
     private fun setWaitCredentialMode() {
-        showViews(true)
-        setDeviceUnlockedTitleView(R.string.unavailable)
-        context?.let { context ->
-            mDeviceUnlockView?.setDeviceUnlockButtonViewClickListener {
-                mDeviceUnlockViewModel.setException(SecurityException(
-                    context.getString(R.string.credential_before_click_device_unlock_button)
-                ))
-            }
-        }
+        showViews(false)
+        mDeviceUnlockView?.setDeviceUnlockButtonViewClickListener(null)
     }
 
     private fun setStoreCredentialMode() {
-        showViews(true)
-        setDeviceUnlockedTitleView(R.string.unlock_and_link_biometric)
-        mDeviceUnlockView?.setDeviceUnlockButtonViewClickListener { _ ->
-            mDeviceUnlockViewModel.showPrompt()
-        }
+        showViews(false)
+        mDeviceUnlockView?.setDeviceUnlockButtonViewClickListener(null)
     }
 
     private fun setExtractCredentialMode() {

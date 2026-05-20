@@ -324,18 +324,6 @@ class DatabaseViewModel(application: Application): AndroidViewModel(application)
         )
     }
 
-    fun saveColor(
-        oldValue: String,
-        newValue: String,
-        save: Boolean
-    ) {
-        mDatabaseTaskProvider.startDatabaseSaveColor(
-            oldValue,
-            newValue,
-            save
-        )
-    }
-
     fun saveCompression(
         oldValue: CompressionAlgorithm,
         newValue: CompressionAlgorithm,

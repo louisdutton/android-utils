@@ -159,8 +159,6 @@ dependencies {
     implementation "androidx.autofill:autofill:1.1.0"
     // Time
     implementation "joda-time:joda-time:$joda_time_version"
-    // Color
-    implementation 'com.github.Kunzisoft:AndroidClearChroma:2.6'
     // Education
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.3'
     // Apache Commons

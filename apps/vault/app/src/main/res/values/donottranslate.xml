@@ -67,7 +67,7 @@
     <string name="lock_database_back_root_key" translatable="false">lock_database_back_root_key</string>
     <bool name="lock_database_back_root_default" translatable="false">false</bool>
     <string name="lock_database_show_button_key" translatable="false">lock_database_show_button_key</string>
-    <bool name="lock_database_show_button_default" translatable="false">true</bool>
+    <bool name="lock_database_show_button_default" translatable="false">false</bool>
     <string name="user_verification_mode_key" translatable="false">user_verification_mode_key</string>
     <bool name="user_verification_mode_default" translatable="false">true</bool>
     <string name="user_verification_device_credential_key" translatable="false">user_verification_device_credential_key</string>
@@ -75,19 +75,19 @@
     <string name="allow_copy_password_key" translatable="false">allow_copy_password_key</string>
     <bool name="allow_copy_password_default" translatable="false">false</bool>
     <string name="remember_database_locations_key" translatable="false">remember_database_locations_key</string>
-    <bool name="remember_database_locations_default" translatable="false">true</bool>
+    <bool name="remember_database_locations_default" translatable="false">false</bool>
     <string name="show_recent_files_key" translatable="false">show_recent_files_key</string>
-    <bool name="show_recent_files_default" translatable="false">true</bool>
+    <bool name="show_recent_files_default" translatable="false">false</bool>
     <string name="hide_broken_locations_key" translatable="false">hide_broken_locations_key</string>
     <bool name="hide_broken_locations_default" translatable="false">false</bool>
     <string name="remember_keyfile_locations_key" translatable="false">remember_keyfile_locations_key</string>
-    <bool name="remember_keyfile_locations_default" translatable="false">true</bool>
+    <bool name="remember_keyfile_locations_default" translatable="false">false</bool>
     <string name="remember_hardware_key_key" translatable="false">remember_hardware_key_key</string>
-    <bool name="remember_hardware_key_default" translatable="false">true</bool>
+    <bool name="remember_hardware_key_default" translatable="false">false</bool>
     <string name="biometric_unlock_enable_key" translatable="false">biometric_unlock_enable_key</string>
-    <bool name="biometric_unlock_enable_default" translatable="false">false</bool>
+    <bool name="biometric_unlock_enable_default" translatable="false">true</bool>
     <string name="device_credential_unlock_enable_key" translatable="false">device_credential_unlock_enable_key</string>
-    <bool name="device_credential_unlock_enable_default" translatable="false">false</bool>
+    <bool name="device_credential_unlock_enable_default" translatable="false">true</bool>
     <string name="biometric_auto_open_prompt_key" translatable="false">biometric_auto_open_prompt_key</string>
     <bool name="biometric_auto_open_prompt_default" translatable="false">true</bool>
     <string name="temp_device_unlock_enable_key" translatable="false">temp_advanced_unlock_enable_key</string>
@@ -185,13 +185,13 @@
     <string name="pure_black_oled_key" translatable="false">pure_black_oled_key</string>
     <bool name="pure_black_oled_default" translatable="false">false</bool>
     <string name="show_entry_colors_key" translatable="false">show_entry_colors_key</string>
-    <bool name="show_entry_colors_default" translatable="false">true</bool>
+    <bool name="show_entry_colors_default" translatable="false">false</bool>
     <string name="hide_expired_entries_key" translatable="false">hide_expired_entries_key</string>
     <bool name="hide_expired_entries_default" translatable="false">false</bool>
     <string name="hide_templates_key" translatable="false">hide_templates_key</string>
     <bool name="hide_templates_default" translatable="false">true</bool>
     <string name="colorize_password_key" translatable="false">colorize_password_key</string>
-    <bool name="colorize_password_default" translatable="false">true</bool>
+    <bool name="colorize_password_default" translatable="false">false</bool>
     <string name="list_entries_show_username_key" translatable="false">list_entries_show_username_key</string>
     <bool name="list_entries_show_username_default" translatable="false">true</bool>
     <string name="list_groups_show_number_entries_key" translatable="false">list_groups_show_number_entries_key</string>

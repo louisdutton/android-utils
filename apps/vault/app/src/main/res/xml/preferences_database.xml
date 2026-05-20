@@ -42,15 +42,6 @@
             android:title="@string/database_default_username_title"
             android:positiveButtonText="@string/save"
             android:negativeButtonText="@string/entry_cancel"/>
-        <com.kunzisoft.keepass.settings.preference.DialogColorPreference
-            xmlns:chroma="http://schemas.android.com/apk/res-auto"
-            android:key="@string/database_custom_color_key"
-            android:persistent="false"
-            android:title="@string/database_custom_color_title"
-            android:summary="[color]"
-            chroma:chromaShapePreview="ROUNDED_SQUARE"
-            chroma:chromaColorMode="RGB"
-            chroma:chromaIndicatorMode="HEX" />
         <Preference
             android:key="@string/database_version_key"
             android:persistent="false"

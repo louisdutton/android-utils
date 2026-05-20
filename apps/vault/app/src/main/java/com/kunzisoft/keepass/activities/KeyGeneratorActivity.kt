@@ -45,9 +45,8 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
         coordinatorLayout = findViewById(R.id.key_generator_coordinator)
 
         lockView = findViewById(R.id.lock_button)
-        lockView?.setOnClickListener {
-            lockAndExit()
-        }
+        lockView?.visibility = View.GONE
+        lockView?.setOnClickListener(null)
 
         validationButton = findViewById(R.id.key_generator_validation)
         validationButton.setOnClickListener {

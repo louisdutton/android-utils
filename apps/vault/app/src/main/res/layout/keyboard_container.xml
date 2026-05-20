@@ -113,14 +113,6 @@
             android:layout_gravity="center"
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
-            <ImageView
-                android:id="@+id/magikeyboard_database_color"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:layout_marginHorizontal="4dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/content_description_database_color"
-                android:src="@drawable/background_icon" />
             <TextView
                 android:id="@+id/magikeyboard_database_text"
                 android:layout_width="wrap_content"

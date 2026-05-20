@@ -55,6 +55,7 @@ class MainCredentialDialogFragment : DatabaseDialogFragment() {
 
             val root = activity.layoutInflater.inflate(R.layout.fragment_main_credential, null)
             mainCredentialView = root.findViewById(R.id.main_credential_view)
+            mainCredentialView?.applyNativeVaultMode()
             databaseUri?.let {
                 root.findViewById<TextView>(R.id.title_database)?.text =
                     it.getDocumentFile(requireContext())?.name

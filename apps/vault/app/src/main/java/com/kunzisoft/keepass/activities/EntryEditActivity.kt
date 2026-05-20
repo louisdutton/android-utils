@@ -48,7 +48,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.dialogs.ColorPickerDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.EntryCustomFieldDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.FileTooBigDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.FileTooBigDialogFragment.Companion.MAX_WARNING_BINARY_FILE
@@ -105,7 +104,6 @@ import com.kunzisoft.keepass.view.showActionErrorIfNeeded
 import com.kunzisoft.keepass.view.showError
 import com.kunzisoft.keepass.view.updateButtonPaddingEnd
 import com.kunzisoft.keepass.view.updateButtonPaddingStart
-import com.kunzisoft.keepass.viewmodels.ColorPickerViewModel
 import com.kunzisoft.keepass.viewmodels.EntryEditViewModel
 import com.kunzisoft.keepass.viewmodels.UserVerificationViewModel
 import kotlinx.coroutines.launch
@@ -131,7 +129,6 @@ class EntryEditActivity : DatabaseLockActivity(),
     private val mEntryEditViewModel: EntryEditViewModel by viewModels()
     private var mTemplatesSelectorAdapter: TemplatesSelectorAdapter? = null
 
-    private val mColorPickerViewModel: ColorPickerViewModel by viewModels()
     private val mUserVerificationViewModel: UserVerificationViewModel by viewModels()
 
     // To manage attachments
@@ -236,8 +233,8 @@ class EntryEditActivity : DatabaseLockActivity(),
 
         mAttachmentFileBinderManager = AttachmentFileBinderManager(this)
 
-        // Lock button
-        lockView?.setOnClickListener { lockAndExit() }
+        lockView?.visibility = View.GONE
+        lockView?.setOnClickListener(null)
         // Save button
         validateButton?.setOnClickListener { validateEntry() }
 
@@ -285,15 +282,6 @@ class EntryEditActivity : DatabaseLockActivity(),
         // View model listeners
         mEntryEditViewModel.requestIconSelection.observe(this) { iconImage ->
             IconPickerActivity.launch(this@EntryEditActivity, iconImage, mIconSelectionActivityResultLauncher)
-        }
-
-        mEntryEditViewModel.requestColorSelection.observe(this) { color ->
-            ColorPickerDialogFragment.newInstance(color)
-                .show(supportFragmentManager, "ColorPickerFragment")
-        }
-
-        mColorPickerViewModel.colorPicked.observe(this) { color ->
-            mEntryEditViewModel.selectColor(color)
         }
 
         mEntryEditViewModel.requestDateTimeSelection.observe(this) { dateInstant ->

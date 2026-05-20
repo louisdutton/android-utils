@@ -23,7 +23,6 @@ import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -152,7 +151,6 @@ class GroupActivity : DatabaseLockActivity(),
     private var lockView: View? = null
     private var toolbar: Toolbar? = null
     private var databaseModifiedView: ImageView? = null
-    private var databaseColorView: ImageView? = null
     private var databaseNameView: TextView? = null
     private var searchView: SearchView? = null
     private var searchFiltersView: SearchFiltersView? = null
@@ -304,7 +302,6 @@ class GroupActivity : DatabaseLockActivity(),
         addNodeButtonView = findViewById(R.id.add_node_button)
         toolbar = findViewById(R.id.toolbar)
         databaseModifiedView = findViewById(R.id.database_modified)
-        databaseColorView = findViewById(R.id.database_color)
         databaseNameView = findViewById(R.id.database_name)
         searchFiltersView = findViewById(R.id.search_filters)
         breadcrumbListView = findViewById(R.id.breadcrumb_list)
@@ -329,9 +326,8 @@ class GroupActivity : DatabaseLockActivity(),
             ))
         }
 
-        lockView?.setOnClickListener {
-            lockAndExit()
-        }
+        lockView?.visibility = View.GONE
+        lockView?.setOnClickListener(null)
 
         toolbar?.title = ""
         setSupportActionBar(toolbar)
@@ -396,9 +392,6 @@ class GroupActivity : DatabaseLockActivity(),
                                         mDatabase?.defaultFileExtension
                             )
                         }
-                    }
-                    R.id.menu_lock_all -> {
-                        lockAndExit()
                     }
                 }
                 false
@@ -726,17 +719,6 @@ class GroupActivity : DatabaseLockActivity(),
             val modified = it.dataModifiedSinceLastLoading
             databaseNavView?.setDatabaseModifiedSinceLastLoading(modified)
             databaseModifiedView?.isVisible = modified
-            val customColor = it.customColor
-            databaseNavView?.setDatabaseColor(customColor)
-            if (customColor != null) {
-                databaseColorView?.visibility = View.VISIBLE
-                databaseColorView?.setColorFilter(
-                    customColor,
-                    PorterDuff.Mode.SRC_IN
-                )
-            } else {
-                databaseColorView?.visibility = View.GONE
-            }
         }
     }
 
@@ -1246,12 +1228,7 @@ class GroupActivity : DatabaseLockActivity(),
     override fun onResume() {
         super.onResume()
 
-        // Show the lock button
-        lockView?.visibility = if (PreferencesUtil.showLockDatabaseButton(this)) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        lockView?.visibility = View.GONE
         // Padding if lock button visible
         toolbarAction?.updateButtonPaddingStart()
 
@@ -1394,20 +1371,6 @@ class GroupActivity : DatabaseLockActivity(),
                     {
                         performedNextEducation(menu)
                     })
-
-                if (!sortMenuEducationPerformed) {
-                    // lockMenuEducationPerformed
-                    val lockButtonView = findViewById<View>(R.id.lock_button)
-                    lockButtonView != null
-                            && mGroupActivityEducation.checkAndPerformedLockMenuEducation(
-                        lockButtonView,
-                        {
-                            lockAndExit()
-                        },
-                        {
-                            performedNextEducation(menu)
-                        })
-                }
             }
         }
     }
@@ -1508,11 +1471,7 @@ class GroupActivity : DatabaseLockActivity(),
                 removeSearch()
                 intent.removeModes()
                 intent.removeInfo()
-                if (PreferencesUtil.isLockDatabaseWhenBackButtonOnRootClicked(this)) {
-                    lockAndExit()
-                } else {
-                    backToTheAppCaller()
-                }
+                backToTheAppCaller()
             }
         }
     }

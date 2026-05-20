@@ -48,6 +48,7 @@ class DeviceUnlockViewModel(application: Application): AndroidViewModel(applicat
         private set
     private var isAutoOpenBiometricPromptAllowed = true
     private var cryptoPromptShowPending: Boolean = false
+    private var credentialEncryptionPromptRequested: Boolean = false
 
     // TODO Retrieve credential storage from app database
     var credentialDatabaseStorage: CredentialStorage = CredentialStorage.DEFAULT
@@ -118,6 +119,20 @@ class DeviceUnlockViewModel(application: Application): AndroidViewModel(applicat
         checkUnlockAvailability()
     }
 
+    fun requestCredentialEncryptionPrompt(): Boolean {
+        if (!PreferencesUtil.isDeviceUnlockEnable(getApplication())) {
+            return false
+        }
+        credentialEncryptionPromptRequested = true
+        isConditionToStoreCredentialVerified = true
+        if (cryptoPrompt?.type == DeviceUnlockCryptoPromptType.CREDENTIAL_ENCRYPTION) {
+            showPrompt()
+        } else {
+            checkUnlockAvailability()
+        }
+        return true
+    }
+
     /**
      * Check unlock availability and change the current mode depending on device's state
      */
@@ -178,9 +193,7 @@ class DeviceUnlockViewModel(application: Application): AndroidViewModel(applicat
         _uiState.update { currentState ->
             currentState.copy(
                 newDeviceUnlockMode = deviceUnlockMode,
-                allowDeviceUnlockMenu = cipherDatabase != null
-                        && deviceUnlockMode != DeviceUnlockMode.BIOMETRIC_UNAVAILABLE
-                        && deviceUnlockMode != DeviceUnlockMode.KEY_MANAGER_UNAVAILABLE
+                allowDeviceUnlockMenu = false
             )
         }
     }
@@ -249,6 +262,7 @@ class DeviceUnlockViewModel(application: Application): AndroidViewModel(applicat
     }
 
     private fun retrieveCredentialForEncryption(cipher: Cipher?) {
+        credentialEncryptionPromptRequested = false
         _uiState.update { currentState ->
             currentState.copy(
                 credentialRequiredCipher = cipher
@@ -351,9 +365,17 @@ class DeviceUnlockViewModel(application: Application): AndroidViewModel(applicat
         autoOpen: Boolean = false
     ) {
         this@DeviceUnlockViewModel.cryptoPrompt = cryptoPrompt
+        val requestedCredentialEncryption =
+            credentialEncryptionPromptRequested
+                    && cryptoPrompt.type == DeviceUnlockCryptoPromptType.CREDENTIAL_ENCRYPTION
         if (cryptoPromptShowPending
-            || (autoOpen && PreferencesUtil.isDeviceUnlockPromptAutoOpenEnable(getApplication())))
+            || requestedCredentialEncryption
+            || (autoOpen && PreferencesUtil.isDeviceUnlockPromptAutoOpenEnable(getApplication()))) {
+            if (requestedCredentialEncryption) {
+                credentialEncryptionPromptRequested = false
+            }
             showPrompt()
+        }
     }
 
     fun showPrompt() {
@@ -419,6 +441,7 @@ class DeviceUnlockViewModel(application: Application): AndroidViewModel(applicat
 
     fun deleteEncryptedDatabaseKey() {
         closeBiometricPrompt()
+        credentialEncryptionPromptRequested = false
         databaseUri?.let { databaseUri ->
             cipherDatabaseAction.deleteByDatabaseUri(databaseUri)
         } ?: run {

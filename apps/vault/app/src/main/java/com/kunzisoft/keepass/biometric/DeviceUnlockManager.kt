@@ -115,7 +115,8 @@ class DeviceUnlockManager(private var appContext: Context) {
                                             // if no biometric enrolled
                                             setUserAuthenticationParameters(
                                                 0,
-                                                KeyProperties.AUTH_DEVICE_CREDENTIAL
+                                                KeyProperties.AUTH_BIOMETRIC_STRONG or
+                                                        KeyProperties.AUTH_DEVICE_CREDENTIAL
                                             )
                                         } else if (deviceCredentialUnlockEnable) {
                                             // Authent with device credential on Legacy Android M-Q

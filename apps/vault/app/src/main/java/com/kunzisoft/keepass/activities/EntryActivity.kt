@@ -238,9 +238,8 @@ class EntryActivity : DatabaseLockActivity() {
         // Init attachment service binder manager
         mAttachmentFileBinderManager = AttachmentFileBinderManager(this)
 
-        lockView?.setOnClickListener {
-            lockAndExit()
-        }
+        lockView?.visibility = View.GONE
+        lockView?.setOnClickListener(null)
 
         editFab?.setOnClickListener {
             requestEdition()

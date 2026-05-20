@@ -343,7 +343,6 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
         // To reload group when appearance settings are modified
         when (preference.key) {
             getString(R.string.pure_black_oled_key),
-            getString(R.string.show_entry_colors_key),
             getString(R.string.hide_expired_entries_key),
             getString(R.string.hide_templates_key),
             getString(R.string.list_entries_show_username_key),
