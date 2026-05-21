@@ -70,6 +70,8 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
@@ -148,6 +150,8 @@ class MainActivity : ComponentActivity() {
 data class CalendarUiState(
     val hasCalendarPermission: Boolean = false,
     val isLoading: Boolean = false,
+    val rangeStartDate: LocalDate = LocalDate.now(),
+    val rangeEndDate: LocalDate = LocalDate.now().plusDays(DefaultAgendaFutureDays),
     val calendars: List<CalendarSource> = emptyList(),
     val events: List<CalendarEvent> = emptyList(),
     val subscriptions: List<CalendarSubscription> = emptyList(),
@@ -174,6 +178,32 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun loadUpcomingEvents() {
+        val state = _uiState.value
+        loadEventsForRange(state.rangeStartDate, state.rangeEndDate)
+    }
+
+    fun loadNewerEvents() {
+        val state = _uiState.value
+        loadEventsForRange(
+            startDate = state.rangeStartDate,
+            endDate = state.rangeEndDate.plusDays(AgendaPageDays),
+        )
+    }
+
+    fun ensureDateVisible(date: LocalDate) {
+        val state = _uiState.value
+        if (date.isAfter(state.rangeEndDate)) {
+            loadEventsForRange(
+                startDate = state.rangeStartDate,
+                endDate = date.plusDays(AgendaSelectionPaddingDays),
+            )
+        }
+    }
+
+    private fun loadEventsForRange(
+        startDate: LocalDate,
+        endDate: LocalDate,
+    ) {
         if (!getApplication<Application>().applicationContext.hasCalendarPermissions()) {
             _uiState.update {
                 it.copy(
@@ -188,18 +218,26 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
             return
         }
 
+        val today = LocalDate.now()
+        val requestedStartDate = minOf(startDate, endDate)
+        val requestedEndDate = maxOf(startDate, endDate)
+        val normalizedStartDate = maxOf(requestedStartDate, today)
+        val normalizedEndDate = maxOf(requestedEndDate, normalizedStartDate)
+
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
                     hasCalendarPermission = true,
                     isLoading = true,
                     error = null,
+                    rangeStartDate = normalizedStartDate,
+                    rangeEndDate = normalizedEndDate,
                 )
             }
 
             val zone = ZoneId.systemDefault()
-            val start = LocalDate.now(zone).atStartOfDay(zone).toInstant().toEpochMilli()
-            val end = LocalDate.now(zone).plusDays(30).atStartOfDay(zone).toInstant().toEpochMilli()
+            val start = normalizedStartDate.atStartOfDay(zone).toInstant().toEpochMilli()
+            val end = normalizedEndDate.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
 
             runCatching {
                 subscriptionSyncer.repairSubscriptions()
@@ -353,7 +391,8 @@ private fun CalendarApp(
                 state = state,
                 initialSubscriptionUrl = initialSubscriptionUrl,
                 onRequestPermission = { permissionLauncher.launch(CalendarPermissions) },
-                onRefresh = viewModel::loadUpcomingEvents,
+                onLoadNewerEvents = viewModel::loadNewerEvents,
+                onEnsureDateVisible = viewModel::ensureDateVisible,
                 onCreateEvent = viewModel::createEvent,
                 onUpdateEvent = viewModel::updateEvent,
                 onDeleteEvent = viewModel::deleteEvent,
@@ -385,7 +424,8 @@ private fun CalendarScreen(
     state: CalendarUiState,
     initialSubscriptionUrl: String?,
     onRequestPermission: () -> Unit,
-    onRefresh: () -> Unit,
+    onLoadNewerEvents: () -> Unit,
+    onEnsureDateVisible: (LocalDate) -> Unit,
     onCreateEvent: (CalendarEventDraft) -> Unit,
     onUpdateEvent: (Long, CalendarEventDraft) -> Unit,
     onDeleteEvent: (Long) -> Unit,
@@ -396,18 +436,26 @@ private fun CalendarScreen(
     val context = LocalContext.current
     var isMonthExpanded by rememberSaveable { mutableStateOf(true) }
     var selectedDateText by rememberSaveable { mutableStateOf(LocalDate.now().toString()) }
+    var visibleMonthText by rememberSaveable { mutableStateOf(YearMonth.now().toString()) }
+    var pendingScrollDateText by rememberSaveable { mutableStateOf<String?>(LocalDate.now().toString()) }
     var eventDialog by remember { mutableStateOf<EventDialogState?>(null) }
     var subscriptionDialogUrl by rememberSaveable(initialSubscriptionUrl) {
         mutableStateOf(initialSubscriptionUrl)
     }
     var showManageSubscriptionsDialog by remember { mutableStateOf(false) }
-    val currentMonth = YearMonth.now()
     val defaultCalendar = state.calendars.defaultWritableCalendar()
     val selectedDate = remember(selectedDateText) { LocalDate.parse(selectedDateText) }
+    val visibleMonth = remember(visibleMonthText) { YearMonth.parse(visibleMonthText) }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val sections = state.events.agendaSections()
+    val nowMillis = remember(state.events, state.rangeStartDate, state.rangeEndDate) {
+        System.currentTimeMillis()
+    }
+    val agendaEvents = remember(state.events, nowMillis) {
+        state.events.filter { event -> event.endMillis > nowMillis }
+    }
+    val sections = agendaEvents.agendaSections()
 
     fun scrollToAgendaDate(date: LocalDate) {
         if (sections.isEmpty()) return
@@ -415,7 +463,10 @@ private fun CalendarScreen(
         val sectionIndex = sections.indexOfFirst { section -> section.date >= date }
             .takeUnless { it == -1 }
             ?: sections.lastIndex
-        val sectionItemIndex = 1 + (if (state.error == null) 0 else 1) + sectionIndex
+        val sectionItemIndex = 1 +
+            (if (state.error == null) 0 else 1) +
+            sectionIndex +
+            sections.monthJunctionCountThrough(sectionIndex)
 
         coroutineScope.launch {
             listState.animateScrollToItem(sectionItemIndex)
@@ -424,13 +475,37 @@ private fun CalendarScreen(
 
     fun selectDate(date: LocalDate) {
         selectedDateText = date.toString()
+        visibleMonthText = YearMonth.from(date).toString()
+        pendingScrollDateText = date.toString()
+        onEnsureDateVisible(date)
         scrollToAgendaDate(date)
+    }
+
+    fun moveVisibleMonth(monthOffset: Long) {
+        val nextMonth = visibleMonth.plusMonths(monthOffset)
+        val targetDate = if (nextMonth == YearMonth.now()) {
+            LocalDate.now()
+        } else {
+            nextMonth.atDay(1)
+        }
+        visibleMonthText = nextMonth.toString()
+        selectedDateText = targetDate.toString()
+        pendingScrollDateText = targetDate.toString()
+        onEnsureDateVisible(targetDate)
     }
 
     fun runDrawerAction(action: () -> Unit) {
         coroutineScope.launch {
             drawerState.close()
             action()
+        }
+    }
+
+    LaunchedEffect(sections, pendingScrollDateText) {
+        val targetDate = pendingScrollDateText?.let(LocalDate::parse) ?: return@LaunchedEffect
+        if (sections.isNotEmpty()) {
+            scrollToAgendaDate(targetDate)
+            pendingScrollDateText = null
         }
     }
 
@@ -456,16 +531,20 @@ private fun CalendarScreen(
             topBar = {
                 AgendaTopBar(
                     state = state,
-                    month = currentMonth,
+                    month = visibleMonth,
                     isMonthExpanded = isMonthExpanded,
                     onOpenNavigation = {
                         coroutineScope.launch { drawerState.open() }
                     },
                     onToggleMonth = { isMonthExpanded = !isMonthExpanded },
+                    onPreviousMonth = { moveVisibleMonth(-1) },
+                    onNextMonth = { moveVisibleMonth(1) },
                     onToday = {
                         val today = LocalDate.now()
                         selectedDateText = today.toString()
-                        onRefresh()
+                        visibleMonthText = YearMonth.from(today).toString()
+                        pendingScrollDateText = today.toString()
+                        onEnsureDateVisible(today)
                         scrollToAgendaDate(today)
                     },
                 )
@@ -507,8 +586,8 @@ private fun CalendarScreen(
                         exit = shrinkVertically() + fadeOut(),
                     ) {
                         MonthOverview(
-                            month = currentMonth,
-                            events = state.events,
+                            month = visibleMonth,
+                            events = agendaEvents,
                             selectedDate = selectedDate,
                             onDateSelected = ::selectDate,
                         )
@@ -526,11 +605,20 @@ private fun CalendarScreen(
 
                 if (sections.isEmpty() && !state.isLoading) {
                     item {
-                        EmptyAgenda()
+                        EmptyAgenda(state)
                     }
                 }
 
+                var previousSectionMonth: YearMonth? = null
                 sections.forEach { section ->
+                    val sectionMonth = YearMonth.from(section.date)
+                    if (sectionMonth != previousSectionMonth) {
+                        item(key = "month-$sectionMonth") {
+                            AgendaMonthJunction(month = sectionMonth)
+                        }
+                    }
+                    previousSectionMonth = sectionMonth
+
                     item(key = "date-${section.date}") {
                         AgendaDaySection(
                             section = section,
@@ -539,6 +627,13 @@ private fun CalendarScreen(
                             },
                         )
                     }
+                }
+
+                item(key = "range-end") {
+                    AgendaRangeEnd(
+                        isLoading = state.isLoading,
+                        onLoadNewerEvents = onLoadNewerEvents,
+                    )
                 }
             }
         }
@@ -616,6 +711,8 @@ private fun AgendaTopBar(
     isMonthExpanded: Boolean,
     onOpenNavigation: () -> Unit,
     onToggleMonth: () -> Unit,
+    onPreviousMonth: () -> Unit,
+    onNextMonth: () -> Unit,
     onToday: () -> Unit,
 ) {
     val toggleRotation by animateFloatAsState(
@@ -642,7 +739,7 @@ private fun AgendaTopBar(
                 horizontalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 Text(
-                    text = month.format(DateTimeFormatter.ofPattern("MMMM")),
+                    text = month.format(DateTimeFormatter.ofPattern("MMMM yyyy")),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                 )
@@ -661,6 +758,18 @@ private fun AgendaTopBar(
         },
         actions = {
             if (state.hasCalendarPermission) {
+                IconButton(onClick = onPreviousMonth) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+                        contentDescription = "Previous month",
+                    )
+                }
+                IconButton(onClick = onNextMonth) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                        contentDescription = "Next month",
+                    )
+                }
                 IconButton(onClick = onToday) {
                     Icon(
                         imageVector = Icons.Rounded.Today,
@@ -874,6 +983,46 @@ private fun CompactStatus(
 }
 
 @Composable
+private fun AgendaRangeEnd(
+    isLoading: Boolean,
+    onLoadNewerEvents: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        TextButton(
+            enabled = !isLoading,
+            onClick = onLoadNewerEvents,
+        ) {
+            Text("Load newer events")
+        }
+    }
+}
+
+@Composable
+private fun AgendaMonthJunction(month: YearMonth) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 2.dp, bottom = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Text(
+            text = month.format(DateTimeFormatter.ofPattern("MMMM yyyy")),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        HorizontalDivider(
+            modifier = Modifier.weight(1f),
+            color = MaterialTheme.colorScheme.outlineVariant,
+        )
+    }
+}
+
+@Composable
 private fun MonthOverview(
     month: YearMonth,
     events: List<CalendarEvent>,
@@ -994,12 +1143,15 @@ private fun AgendaDaySection(
     section: AgendaSection,
     onEventClick: (CalendarEvent) -> Unit,
 ) {
+    val today = LocalDate.now()
+    val isToday = section.date == today
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        DateRail(date = section.date)
+        DateRail(date = section.date, isToday = isToday)
 
         Column(
             modifier = Modifier.weight(1f),
@@ -1016,30 +1168,44 @@ private fun AgendaDaySection(
 }
 
 @Composable
-private fun DateRail(date: LocalDate) {
-    val isToday = date == LocalDate.now()
+private fun DateRail(
+    date: LocalDate,
+    isToday: Boolean,
+) {
+    val containerColor = if (isToday) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        Color.Transparent
+    }
+    val primaryTextColor = if (isToday) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSurface
+    }
+    val secondaryTextColor = if (isToday) {
+        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.78f)
+    } else {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
     Column(
-        modifier = Modifier.width(48.dp),
+        modifier = Modifier
+            .width(54.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(containerColor)
+            .padding(vertical = 7.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = date.dayOfMonth.toString(),
             style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Medium,
-            color = if (isToday) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            },
+            fontWeight = if (isToday) FontWeight.SemiBold else FontWeight.Medium,
+            color = primaryTextColor,
         )
         Text(
             text = date.format(DateTimeFormatter.ofPattern("EEE")),
             style = MaterialTheme.typography.labelMedium,
-            color = if (isToday) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            },
+            color = secondaryTextColor,
         )
     }
 }
@@ -1666,7 +1832,7 @@ private fun ConfirmDeleteDialog(
 }
 
 @Composable
-private fun EmptyAgenda() {
+private fun EmptyAgenda(state: CalendarUiState) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -1681,12 +1847,12 @@ private fun EmptyAgenda() {
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Text(
-                text = "No upcoming events",
+                text = "No events in this range",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
-                text = "Your next 30 days are clear.",
+                text = "Showing upcoming events through ${state.rangeEndDate.compactDateLabel()}. Load newer events to extend the agenda.",
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
@@ -1737,6 +1903,9 @@ private val WeekdayLabels = listOf("S", "M", "T", "W", "T", "F", "S")
 private val DateInputFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 private val TimeInputFormatter = DateTimeFormatter.ofPattern("H:mm")
 private val TimeOutputFormatter = DateTimeFormatter.ofPattern("HH:mm")
+private const val DefaultAgendaFutureDays = 30L
+private const val AgendaPageDays = 90L
+private const val AgendaSelectionPaddingDays = 14L
 private const val MapsPackageName = "digital.dutton.essentials.maps"
 private const val LocationIntentExtraSource = "digital.dutton.essentials.locations.extra.SOURCE"
 private const val LocationIntentExtraCalendarEventId = "digital.dutton.essentials.locations.extra.CALENDAR_EVENT_ID"
@@ -1775,16 +1944,29 @@ private fun YearMonth.calendarCells(): List<LocalDate?> {
 private fun List<CalendarEvent>.agendaSections(): List<AgendaSection> {
     val zone = ZoneId.systemDefault()
     return groupBy { event -> event.startDate(zone) }
+        .mapValues { (_, events) -> events.sortedBy { it.startMillis } }
         .toSortedMap()
         .map { (date, events) -> AgendaSection(date, events) }
+}
+
+private fun List<AgendaSection>.monthJunctionCountThrough(sectionIndex: Int): Int {
+    return take(sectionIndex + 1)
+        .filterIndexed { index, section ->
+            index == 0 || YearMonth.from(section.date) != YearMonth.from(this[index - 1].date)
+        }
+        .size
 }
 
 private fun CalendarUiState.agendaSubtitle(): String {
     return when {
         !hasCalendarPermission -> "Calendar access needed"
         isLoading -> "Refreshing agenda"
-        else -> "Next 30 days, ${calendars.size.calendarCountLabel()}"
+        else -> "Upcoming through ${rangeEndDate.compactDateLabel()}, ${calendars.size.calendarCountLabel()}"
     }
+}
+
+private fun LocalDate.compactDateLabel(): String {
+    return format(DateTimeFormatter.ofPattern("d MMM yyyy"))
 }
 
 private fun Int.calendarCountLabel(): String {
