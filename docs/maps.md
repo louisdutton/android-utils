@@ -10,10 +10,6 @@ The import started from upstream CoMaps commit
 app is maintained as GrapheneOS Essentials source rather than as a submodule or
 patch stack.
 
-The previous MapLibre prototype lives at `apps/maps-legacy`. It remains useful
-as a small integration reference for `:core:locations`, `geo:` intents, and
-calendar location linking, but it is no longer the product Maps architecture.
-
 ## Suite Intent Contract
 
 Calendar location handoff uses a normal Android map intent:

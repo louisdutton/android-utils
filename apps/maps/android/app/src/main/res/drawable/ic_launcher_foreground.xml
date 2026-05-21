@@ -7,14 +7,21 @@
     <group
         android:pivotX="54"
         android:pivotY="54"
-        android:scaleX="0.68"
-        android:scaleY="0.68">
+        android:scaleX="0.60"
+        android:scaleY="0.54"
+        android:translateY="-1.25">
         <path
-            android:fillColor="#FF000000"
-            android:fillType="evenOdd"
-            android:pathData="M54,23C42.95,23 34,31.95 34,43c0,14.9 20,42 20,42s20,-27.1 20,-42C74,31.95 65.05,23 54,23zM54,52c4.97,0 9,-4.03 9,-9s-4.03,-9 -9,-9s-9,4.03 -9,9s4.03,9 9,9z" />
+            android:fillColor="@android:color/transparent"
+            android:pathData="M54,23c-11.05,0 -20,8.95 -20,20c0,14.9 20,42 20,42s20,-27.1 20,-42c0,-11.05 -8.95,-20 -20,-20z"
+            android:strokeColor="#FF000000"
+            android:strokeLineJoin="round"
+            android:strokeWidth="7" />
         <path
-            android:fillColor="#FF000000"
-            android:pathData="M27,78h54v7H27z" />
+            android:fillColor="@android:color/transparent"
+            android:pathData="M54,36a7,7 0,1 0,0.1 0M31,85h46"
+            android:strokeColor="#FF000000"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:strokeWidth="7" />
     </group>
 </vector>

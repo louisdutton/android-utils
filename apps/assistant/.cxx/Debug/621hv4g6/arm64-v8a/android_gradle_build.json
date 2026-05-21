@@ -17,6 +17,12 @@
     "{LIST_OF_TARGETS_TO_BUILD}"
   ],
   "libraries": {
+    "assistant_core::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "arm64-v8a",
+      "artifactName": "assistant_core",
+      "output": "/Users/louis/projects/grapheneos-essentials/apps/assistant/.cxx/Debug/621hv4g6/arm64-v8a/libassistant_core.a"
+    },
     "assistant_whisper::@6890427a1f51a3e7e1df": {
       "toolchain": "toolchain",
       "abi": "arm64-v8a",
@@ -35,6 +41,7 @@
     "c"
   ],
   "cppFileExtensions": [
-    "cpp"
+    "cpp",
+    "cc"
   ]
 }

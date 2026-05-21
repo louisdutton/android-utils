@@ -19,5 +19,5 @@ rootProject.name = "grapheneos-essentials"
 include(":core:locations")
 
 include(":apps:assistant")
-include(":apps:maps-legacy")
 include(":apps:calendar")
+include(":apps:documents")

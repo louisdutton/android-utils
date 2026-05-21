@@ -14,11 +14,30 @@
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER__assistant_whisper_Debug
+rule C_COMPILER__assistant_core_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = /nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android31 --sysroot=/nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__assistant_core_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android31 --sysroot=/nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX static library.
+
+rule CXX_STATIC_LIBRARY_LINKER__assistant_core_Debug
+  command = $PRE_LINK && /nix/store/4hxl7kl83q3sj0jg74hsbqxfia2mh6yr-android-sdk-cmake-3.22.1/libexec/android-sdk/cmake/3.22.1/bin/cmake -E rm -f $TARGET_FILE && /nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar qc $TARGET_FILE $LINK_FLAGS $in && /nix/store/pxh2dimvvxlqggpsgj07v78awshpfly9-androidsdk/libexec/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib $TARGET_FILE && /nix/store/4hxl7kl83q3sj0jg74hsbqxfia2mh6yr-android-sdk-cmake-3.22.1/libexec/android-sdk/cmake/3.22.1/bin/cmake -E touch $TARGET_FILE && $POST_BUILD
+  description = Linking CXX static library $TARGET_FILE
+  restat = $RESTAT
 
 
 #############################################

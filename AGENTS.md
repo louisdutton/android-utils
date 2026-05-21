@@ -13,6 +13,8 @@
   `nix develop --no-write-lock-file --command ./scripts/build-wallet-android.sh`
 - `apps/assistant` is the local default assistant app. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-assistant-android.sh`
+- `apps/documents` is the local PDF-first document viewer app. Build it with:
+  `nix develop --no-write-lock-file --command ./scripts/build-documents-android.sh`
 - `apps/keyboard` is the hard-forked FUTO Keyboard-derived production Keyboard
   app, imported as normal source with its own Gradle project. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-keyboard-android.sh`
@@ -22,8 +24,6 @@
 - To build Maps with the bundled offline Cornwall rail timetable, use:
   `./scripts/build-maps-android-with-rail.sh`
   Generated rail assets default to `/tmp/grapheneos-essentials-rail-assets`.
-- The old MapLibre prototype is `:apps:maps-legacy`; keep it for integration
-  reference work, not as the production Maps target.
 - Prefer reusing an already-running Android emulator while iterating on app changes.
 - Before starting a new emulator, check for connected devices with:
   `nix develop --no-write-lock-file --command adb devices -l`
@@ -32,3 +32,4 @@
 - Keep the emulator running across build/install/debug cycles unless the user asks to shut it down, the emulator is unhealthy, or the task is complete and there is no reason to keep it open.
 - Use a cold boot only when no usable emulator is already running or when a clean device state is specifically needed.
 - Store emulator screenshots and temporary test captures outside the project, for example under `/tmp`, not in the repository.
+- Launcher icons for Essentials apps must follow `docs/launcher-icons.md`.

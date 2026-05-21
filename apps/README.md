@@ -8,10 +8,10 @@ own APK with a distinct application id.
   natural language requests to Android system intents.
 - `maps`: hard-forked CoMaps-derived offline Maps replacement with its own
   Android Gradle project under `apps/maps/android`.
-- `maps-legacy`: the previous MapLibre prototype, retained as a small
-  integration reference while Maps moves to the CoMaps native/offline stack.
 - `messaging`: messaging app scaffold.
 - `calendar`: provider-backed calendar app with event management.
+- `documents`: native PDF-first document viewer for legal documents, forms,
+  music scores, and other local files.
 - `keyboard`: hard-forked FUTO Keyboard-derived input method replacement with
   its own Android Gradle project under `apps/keyboard`.
 - `vault`: hard-forked KeePassDX-derived local KeePass/KeePassXC-compatible
