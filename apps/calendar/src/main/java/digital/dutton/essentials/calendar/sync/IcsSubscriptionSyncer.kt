@@ -31,6 +31,12 @@ class IcsSubscriptionSyncer(
     ): IcsSubscriptionSyncSummary = withContext(dispatcher) {
         requireCalendarPermissions()
         val url = normalizeSubscriptionUrl(rawUrl)
+        pruneDuplicateSubscriptions()
+        val existingSubscription = findExistingSubscription(url)
+        if (existingSubscription != null) {
+            return@withContext syncSubscription(existingSubscription.id)
+        }
+
         val fetch = fetchCalendar(url = url, etag = null, lastModified = null)
         val feed = parser.parse(fetch.body ?: "")
         val displayName = requestedName
@@ -67,24 +73,26 @@ class IcsSubscriptionSyncer(
 
     suspend fun syncSubscription(subscriptionId: String): IcsSubscriptionSyncSummary = withContext(dispatcher) {
         requireCalendarPermissions()
-        val subscription = store.get(subscriptionId)
+        val storedSubscription = store.get(subscriptionId)
             ?: throw IllegalArgumentException("Calendar subscription was not found.")
+        var activeSubscription = storedSubscription
 
         runCatching {
+            activeSubscription = ensureSubscriptionCalendar(activeSubscription)
             val fetch = fetchCalendar(
-                url = subscription.url,
-                etag = subscription.lastEtag,
-                lastModified = subscription.lastModified,
+                url = activeSubscription.url,
+                etag = activeSubscription.lastEtag,
+                lastModified = activeSubscription.lastModified,
             )
 
             if (fetch.notModified) {
-                val updatedSubscription = subscription.copy(
+                val updatedSubscription = activeSubscription.copy(
                     lastSyncMillis = System.currentTimeMillis(),
                     lastError = null,
                 )
                 store.upsert(updatedSubscription)
                 IcsSubscriptionSyncSummary(
-                    subscriptionId = subscription.id,
+                    subscriptionId = activeSubscription.id,
                     created = 0,
                     updated = 0,
                     deleted = 0,
@@ -92,11 +100,11 @@ class IcsSubscriptionSyncer(
                 )
             } else {
                 val feed = parser.parse(fetch.body ?: "")
-                val summary = writeEvents(subscription, feed.events)
+                val summary = writeEvents(activeSubscription, feed.events)
                 store.upsert(
-                    subscription.copy(
-                        lastEtag = fetch.etag ?: subscription.lastEtag,
-                        lastModified = fetch.lastModified ?: subscription.lastModified,
+                    activeSubscription.copy(
+                        lastEtag = fetch.etag ?: activeSubscription.lastEtag,
+                        lastModified = fetch.lastModified ?: activeSubscription.lastModified,
                         lastSyncMillis = System.currentTimeMillis(),
                         lastError = null,
                     ),
@@ -104,12 +112,13 @@ class IcsSubscriptionSyncer(
                 summary
             }
         }.getOrElse { error ->
-            store.upsert(subscription.copy(lastError = error.message ?: "Unable to sync calendar."))
+            store.upsert(activeSubscription.copy(lastError = error.message ?: "Unable to sync calendar."))
             throw error
         }
     }
 
     suspend fun syncAll(): List<IcsSubscriptionSyncSummary> = withContext(dispatcher) {
+        pruneDuplicateSubscriptions()
         val subscriptions = store.list()
         val summaries = mutableListOf<IcsSubscriptionSyncSummary>()
         val failures = mutableListOf<Throwable>()
@@ -140,17 +149,82 @@ class IcsSubscriptionSyncer(
         store.remove(subscription.id)
     }
 
+    suspend fun repairSubscriptions() = withContext(dispatcher) {
+        requireCalendarPermissions()
+        pruneDuplicateSubscriptions()
+        val subscriptions = store.list()
+        pruneOrphanedProviderEvents(subscriptions)
+        subscriptions.forEach(::pruneDuplicateProviderEvents)
+        subscriptions
+            .filter { !calendarExists(it.calendarId) }
+            .forEach { subscription ->
+                runCatching { syncSubscription(subscription.id) }
+            }
+    }
+
+    private fun pruneDuplicateSubscriptions() {
+        store.rawList()
+            .groupBy { it.url }
+            .values
+            .filter { it.size > 1 }
+            .forEach { subscriptions ->
+                val keep = subscriptions.preferredSubscription()
+                subscriptions
+                    .filter { it.id != keep.id }
+                    .forEach { duplicate ->
+                        deleteEventsForSubscription(duplicate)
+                        if (duplicate.calendarId != keep.calendarId && calendarExists(duplicate.calendarId)) {
+                            deleteCalendar(duplicate.calendarId)
+                        }
+                        store.remove(duplicate.id)
+                    }
+            }
+    }
+
+    private fun findExistingSubscription(url: String): CalendarSubscription? {
+        val subscriptions = store.findByUrl(url)
+        val existingSubscriptions = subscriptions.filter { calendarExists(it.calendarId) }
+        subscriptions
+            .filter { it !in existingSubscriptions }
+            .forEach { store.remove(it.id) }
+
+        return existingSubscriptions.takeIf { it.isNotEmpty() }?.preferredSubscription()
+    }
+
+    private fun List<CalendarSubscription>.preferredSubscription(): CalendarSubscription {
+        return maxWithOrNull(
+            compareBy<CalendarSubscription> { existingSyncedEventCount(it) }
+                .thenBy { if (calendarExists(it.calendarId)) 1 else 0 }
+                .thenBy { it.lastSyncMillis ?: Long.MIN_VALUE }
+                .thenBy { it.id },
+        ) ?: throw IllegalArgumentException("No calendar subscriptions to compare.")
+    }
+
+    private fun ensureSubscriptionCalendar(subscription: CalendarSubscription): CalendarSubscription {
+        if (calendarExists(subscription.calendarId)) return subscription
+
+        val repairedSubscription = subscription.copy(
+            calendarId = createSubscriptionCalendar(subscription.displayName),
+            lastEtag = null,
+            lastModified = null,
+            lastSyncMillis = null,
+        )
+        store.upsert(repairedSubscription)
+        return repairedSubscription
+    }
+
     private fun writeEvents(
         subscription: CalendarSubscription,
         events: List<IcsCalendarEvent>,
     ): IcsSubscriptionSyncSummary {
+        val uniqueEvents = events.distinctBy { it.remoteId }
         val existing = queryExistingEvents(subscription)
-        val incomingIds = events.map { it.remoteId }.toSet()
+        val incomingIds = uniqueEvents.map { it.remoteId }.toSet()
         var created = 0
         var updated = 0
         var skipped = 0
 
-        events.forEach { event ->
+        uniqueEvents.forEach { event ->
             val values = event.toContentValues(subscription)
             val existingId = existing[event.remoteId]
 
@@ -203,7 +277,7 @@ class IcsSubscriptionSyncer(
     }
 
     private fun queryExistingEvents(subscription: CalendarSubscription): Map<String, Long> {
-        return context.contentResolver.query(
+        val existingEvents = context.contentResolver.query(
             CalendarContract.Events.CONTENT_URI.asSubscriptionSyncAdapter(),
             ExistingEventProjection,
             "${CalendarContract.Events.CALENDAR_ID} = ? AND ${CalendarContract.Events.SYNC_DATA1} = ?",
@@ -214,10 +288,83 @@ class IcsSubscriptionSyncer(
                 while (cursor.moveToNext()) {
                     val eventId = cursor.requireLong(CalendarContract.Events._ID)
                     val remoteId = cursor.optionalString(CalendarContract.Events.SYNC_DATA2)
-                    if (remoteId != null) put(remoteId, eventId)
+                    if (remoteId != null) put(eventId, remoteId)
                 }
             }
         }.orEmpty()
+
+        return existingEvents
+            .entries
+            .groupBy({ it.value }, { it.key })
+            .mapValues { (_, eventIds) ->
+                val keepId = eventIds.maxOrNull()
+                    ?: throw IllegalArgumentException("No existing events to compare.")
+                eventIds
+                    .filter { it != keepId }
+                    .forEach(::deleteEvent)
+                keepId
+            }
+    }
+
+    private fun pruneDuplicateProviderEvents(subscription: CalendarSubscription) {
+        queryExistingEvents(subscription)
+    }
+
+    private fun pruneOrphanedProviderEvents(activeSubscriptions: List<CalendarSubscription>) {
+        val activeSubscriptionIds = activeSubscriptions.map { it.id }.toSet()
+        subscriptionCalendarIds().forEach { calendarId ->
+            val orphanedEventIds = context.contentResolver.query(
+                CalendarContract.Events.CONTENT_URI.asSubscriptionSyncAdapter(),
+                OrphanEventProjection,
+                "${CalendarContract.Events.CALENDAR_ID} = ?",
+                arrayOf(calendarId.toString()),
+                null,
+            )?.use { cursor ->
+                buildList {
+                    while (cursor.moveToNext()) {
+                        val eventId = cursor.requireLong(CalendarContract.Events._ID)
+                        val subscriptionId = cursor.optionalString(CalendarContract.Events.SYNC_DATA1)
+                        if (subscriptionId !in activeSubscriptionIds) {
+                            add(eventId)
+                        }
+                    }
+                }
+            }.orEmpty()
+            orphanedEventIds.forEach(::deleteEvent)
+        }
+    }
+
+    private fun subscriptionCalendarIds(): Set<Long> {
+        return context.contentResolver.query(
+            CalendarContract.Calendars.CONTENT_URI,
+            CalendarExistsProjection,
+            "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?",
+            arrayOf(SubscriptionAccountType),
+            null,
+        )?.use { cursor ->
+            buildSet {
+                while (cursor.moveToNext()) {
+                    add(cursor.requireLong(CalendarContract.Calendars._ID))
+                }
+            }
+        }.orEmpty()
+    }
+
+    private fun deleteEventsForSubscription(subscription: CalendarSubscription) {
+        context.contentResolver.delete(
+            CalendarContract.Events.CONTENT_URI.asSubscriptionSyncAdapter(),
+            "${CalendarContract.Events.CALENDAR_ID} = ? AND ${CalendarContract.Events.SYNC_DATA1} = ?",
+            arrayOf(subscription.calendarId.toString(), subscription.id),
+        )
+    }
+
+    private fun deleteEvent(eventId: Long) {
+        context.contentResolver.delete(
+            ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId)
+                .asSubscriptionSyncAdapter(),
+            null,
+            null,
+        )
     }
 
     private fun IcsCalendarEvent.toContentValues(subscription: CalendarSubscription): ContentValues {
@@ -329,6 +476,26 @@ class IcsSubscriptionSyncer(
         return ContentUris.parseId(uri)
     }
 
+    private fun calendarExists(calendarId: Long): Boolean {
+        return context.contentResolver.query(
+            CalendarContract.Calendars.CONTENT_URI,
+            CalendarExistsProjection,
+            "${CalendarContract.Calendars._ID} = ?",
+            arrayOf(calendarId.toString()),
+            null,
+        )?.use { it.moveToFirst() } ?: false
+    }
+
+    private fun existingSyncedEventCount(subscription: CalendarSubscription): Int {
+        return context.contentResolver.query(
+            CalendarContract.Events.CONTENT_URI.asSubscriptionSyncAdapter(),
+            EventCountProjection,
+            "${CalendarContract.Events.CALENDAR_ID} = ? AND ${CalendarContract.Events.SYNC_DATA1} = ?",
+            arrayOf(subscription.calendarId.toString(), subscription.id),
+            null,
+        )?.use { it.count } ?: 0
+    }
+
     private fun deleteCalendar(calendarId: Long) {
         context.contentResolver.delete(
             ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendarId)
@@ -413,6 +580,12 @@ class IcsSubscriptionSyncer(
             CalendarContract.Events._ID,
             CalendarContract.Events.SYNC_DATA2,
         )
+        val OrphanEventProjection = arrayOf(
+            CalendarContract.Events._ID,
+            CalendarContract.Events.SYNC_DATA1,
+        )
+        val CalendarExistsProjection = arrayOf(CalendarContract.Calendars._ID)
+        val EventCountProjection = arrayOf(CalendarContract.Events._ID)
         const val NetworkTimeoutMillis = 20_000
         const val MaxCalendarBytes = 5 * 1024 * 1024
         const val ErrorBodyBytes = 8 * 1024

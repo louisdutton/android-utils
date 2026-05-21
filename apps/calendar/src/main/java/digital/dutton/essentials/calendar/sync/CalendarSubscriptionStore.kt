@@ -6,9 +6,16 @@ class CalendarSubscriptionStore(context: Context) {
     private val preferences = context.getSharedPreferences(PreferencesName, Context.MODE_PRIVATE)
 
     fun list(): List<CalendarSubscription> {
+        return rawList().sortedBy { it.displayName.lowercase() }
+    }
+
+    fun rawList(): List<CalendarSubscription> {
         return preferences.getStringSet(KeyIds, emptySet()).orEmpty()
             .mapNotNull(::get)
-            .sortedBy { it.displayName.lowercase() }
+    }
+
+    fun findByUrl(url: String): List<CalendarSubscription> {
+        return rawList().filter { it.url == url }
     }
 
     fun get(id: String): CalendarSubscription? {

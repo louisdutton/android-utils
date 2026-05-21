@@ -164,7 +164,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     fun refreshPermissionState() {
         val hasPermission = getApplication<Application>()
             .applicationContext
-            .hasCalendarReadPermission()
+            .hasCalendarPermissions()
 
         _uiState.update { it.copy(hasCalendarPermission = hasPermission) }
         if (hasPermission) {
@@ -174,7 +174,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun loadUpcomingEvents() {
-        if (!getApplication<Application>().applicationContext.hasCalendarReadPermission()) {
+        if (!getApplication<Application>().applicationContext.hasCalendarPermissions()) {
             _uiState.update {
                 it.copy(
                     hasCalendarPermission = false,
@@ -202,6 +202,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
             val end = LocalDate.now(zone).plusDays(30).atStartOfDay(zone).toInstant().toEpochMilli()
 
             runCatching {
+                subscriptionSyncer.repairSubscriptions()
                 Triple(
                     repository.listCalendars(),
                     repository.listEvents(start, end),
@@ -1692,11 +1693,10 @@ private fun EmptyAgenda() {
     }
 }
 
-private fun Context.hasCalendarReadPermission(): Boolean {
-    return ContextCompat.checkSelfPermission(
-        this,
-        Manifest.permission.READ_CALENDAR,
-    ) == PackageManager.PERMISSION_GRANTED
+private fun Context.hasCalendarPermissions(): Boolean {
+    return CalendarPermissions.all { permission ->
+        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+    }
 }
 
 private fun Intent.subscriptionUrl(): String? {
