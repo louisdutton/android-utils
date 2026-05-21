@@ -48,6 +48,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -55,6 +56,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -64,15 +68,18 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -106,6 +113,10 @@ import digital.dutton.essentials.calendar.data.CalendarSource
 import digital.dutton.essentials.calendar.data.EventAvailability
 import digital.dutton.essentials.calendar.data.locationLink
 import digital.dutton.essentials.calendar.provider.AndroidCalendarRepository
+import digital.dutton.essentials.calendar.sync.CalendarSubscription
+import digital.dutton.essentials.calendar.sync.CalendarSubscriptionStore
+import digital.dutton.essentials.calendar.sync.IcsSubscriptionSyncWorker
+import digital.dutton.essentials.calendar.sync.IcsSubscriptionSyncer
 import digital.dutton.essentials.locations.EventLocationLink
 import java.time.Instant
 import java.time.LocalDate
@@ -129,7 +140,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { CalendarApp() }
+        setContent { CalendarApp(initialSubscriptionUrl = intent.subscriptionUrl()) }
     }
 }
 
@@ -138,11 +149,14 @@ data class CalendarUiState(
     val isLoading: Boolean = false,
     val calendars: List<CalendarSource> = emptyList(),
     val events: List<CalendarEvent> = emptyList(),
+    val subscriptions: List<CalendarSubscription> = emptyList(),
     val error: String? = null,
 )
 
 class CalendarViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AndroidCalendarRepository(application.applicationContext)
+    private val subscriptionStore = CalendarSubscriptionStore(application.applicationContext)
+    private val subscriptionSyncer = IcsSubscriptionSyncer(application.applicationContext)
     private val _uiState = MutableStateFlow(CalendarUiState())
     val uiState: StateFlow<CalendarUiState> = _uiState.asStateFlow()
 
@@ -153,6 +167,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
 
         _uiState.update { it.copy(hasCalendarPermission = hasPermission) }
         if (hasPermission) {
+            IcsSubscriptionSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
             loadUpcomingEvents()
         }
     }
@@ -165,6 +180,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                     isLoading = false,
                     calendars = emptyList(),
                     events = emptyList(),
+                    subscriptions = emptyList(),
                     error = null,
                 )
             }
@@ -185,13 +201,18 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
             val end = LocalDate.now(zone).plusDays(30).atStartOfDay(zone).toInstant().toEpochMilli()
 
             runCatching {
-                repository.listCalendars() to repository.listEvents(start, end)
-            }.onSuccess { (calendars, events) ->
+                Triple(
+                    repository.listCalendars(),
+                    repository.listEvents(start, end),
+                    subscriptionStore.list(),
+                )
+            }.onSuccess { (calendars, events, subscriptions) ->
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         calendars = calendars,
                         events = events,
+                        subscriptions = subscriptions,
                     )
                 }
             }.onFailure { error ->
@@ -220,6 +241,72 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
         mutateEvent { repository.deleteEvent(eventId) }
     }
 
+    fun subscribeCalendar(
+        url: String,
+        displayName: String?,
+    ) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                subscriptionSyncer.subscribe(url, displayName)
+            }.onSuccess { summary ->
+                IcsSubscriptionSyncWorker.enqueuePeriodic(
+                    getApplication<Application>().applicationContext,
+                    summary.subscriptionId,
+                )
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to subscribe to calendar.",
+                    )
+                }
+            }
+        }
+    }
+
+    fun syncSubscribedCalendars() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                subscriptionSyncer.syncAll()
+            }.onSuccess {
+                IcsSubscriptionSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to sync subscribed calendars.",
+                    )
+                }
+            }
+        }
+    }
+
+    fun unsubscribeCalendar(subscriptionId: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                subscriptionSyncer.unsubscribe(subscriptionId)
+            }.onSuccess {
+                IcsSubscriptionSyncWorker.cancel(
+                    getApplication<Application>().applicationContext,
+                    subscriptionId,
+                )
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to remove calendar subscription.",
+                    )
+                }
+            }
+        }
+    }
+
     private fun mutateEvent(action: suspend () -> Unit) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
@@ -242,6 +329,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
 @Composable
 private fun CalendarApp(
     viewModel: CalendarViewModel = viewModel(),
+    initialSubscriptionUrl: String? = null,
 ) {
     val state by viewModel.uiState.collectAsState()
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -261,11 +349,15 @@ private fun CalendarApp(
         ) {
             CalendarScreen(
                 state = state,
+                initialSubscriptionUrl = initialSubscriptionUrl,
                 onRequestPermission = { permissionLauncher.launch(CalendarPermissions) },
                 onRefresh = viewModel::loadUpcomingEvents,
                 onCreateEvent = viewModel::createEvent,
                 onUpdateEvent = viewModel::updateEvent,
                 onDeleteEvent = viewModel::deleteEvent,
+                onSubscribeCalendar = viewModel::subscribeCalendar,
+                onSyncSubscribedCalendars = viewModel::syncSubscribedCalendars,
+                onUnsubscribeCalendar = viewModel::unsubscribeCalendar,
             )
         }
     }
@@ -289,21 +381,30 @@ private fun CalendarTheme(content: @Composable () -> Unit) {
 @Composable
 private fun CalendarScreen(
     state: CalendarUiState,
+    initialSubscriptionUrl: String?,
     onRequestPermission: () -> Unit,
     onRefresh: () -> Unit,
     onCreateEvent: (CalendarEventDraft) -> Unit,
     onUpdateEvent: (Long, CalendarEventDraft) -> Unit,
     onDeleteEvent: (Long) -> Unit,
+    onSubscribeCalendar: (String, String?) -> Unit,
+    onSyncSubscribedCalendars: () -> Unit,
+    onUnsubscribeCalendar: (String) -> Unit,
 ) {
     val context = LocalContext.current
     var isMonthExpanded by rememberSaveable { mutableStateOf(true) }
     var selectedDateText by rememberSaveable { mutableStateOf(LocalDate.now().toString()) }
     var eventDialog by remember { mutableStateOf<EventDialogState?>(null) }
+    var subscriptionDialogUrl by rememberSaveable(initialSubscriptionUrl) {
+        mutableStateOf(initialSubscriptionUrl)
+    }
+    var showManageSubscriptionsDialog by remember { mutableStateOf(false) }
     val currentMonth = YearMonth.now()
     val defaultCalendar = state.calendars.defaultWritableCalendar()
     val selectedDate = remember(selectedDateText) { LocalDate.parse(selectedDateText) }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val sections = state.events.agendaSections()
 
     fun scrollToAgendaDate(date: LocalDate) {
@@ -324,90 +425,118 @@ private fun CalendarScreen(
         scrollToAgendaDate(date)
     }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface,
-        topBar = {
-            AgendaTopBar(
+    fun runDrawerAction(action: () -> Unit) {
+        coroutineScope.launch {
+            drawerState.close()
+            action()
+        }
+    }
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            CalendarDrawer(
                 state = state,
-                month = currentMonth,
-                isMonthExpanded = isMonthExpanded,
-                onToggleMonth = { isMonthExpanded = !isMonthExpanded },
-                onToday = {
-                    val today = LocalDate.now()
-                    selectedDateText = today.toString()
-                    onRefresh()
-                    scrollToAgendaDate(today)
+                onSubscribeCalendar = {
+                    runDrawerAction { subscriptionDialogUrl = "" }
+                },
+                onSyncSubscribedCalendars = {
+                    runDrawerAction(onSyncSubscribedCalendars)
+                },
+                onManageSubscriptions = {
+                    runDrawerAction { showManageSubscriptionsDialog = true }
                 },
             )
         },
-        floatingActionButton = {
-            if (state.hasCalendarPermission && defaultCalendar != null) {
-                FloatingActionButton(
-                    onClick = {
-                        eventDialog = EventDialogState.Create(defaultCalendar.id)
+    ) {
+        Scaffold(
+            containerColor = MaterialTheme.colorScheme.surface,
+            topBar = {
+                AgendaTopBar(
+                    state = state,
+                    month = currentMonth,
+                    isMonthExpanded = isMonthExpanded,
+                    onOpenNavigation = {
+                        coroutineScope.launch { drawerState.open() }
                     },
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Add,
-                        contentDescription = "Create event",
-                    )
-                }
-            }
-        },
-    ) { padding ->
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-        ) {
-            if (!state.hasCalendarPermission) {
-                item {
-                    PermissionPanel(onRequestPermission = onRequestPermission)
-                }
-                return@LazyColumn
-            }
-
-            item(key = "month-overview") {
-                AnimatedVisibility(
-                    visible = isMonthExpanded,
-                    enter = expandVertically() + fadeIn(),
-                    exit = shrinkVertically() + fadeOut(),
-                ) {
-                    MonthOverview(
-                        month = currentMonth,
-                        events = state.events,
-                        selectedDate = selectedDate,
-                        onDateSelected = ::selectDate,
-                    )
-                }
-            }
-
-            state.error?.let { message ->
-                item {
-                    CompactStatus(
-                        title = "Calendar unavailable",
-                        body = message,
-                    )
-                }
-            }
-
-            if (sections.isEmpty() && !state.isLoading) {
-                item {
-                    EmptyAgenda()
-                }
-            }
-
-            sections.forEach { section ->
-                item(key = "date-${section.date}") {
-                    AgendaDaySection(
-                        section = section,
-                        onEventClick = { event ->
-                            eventDialog = EventDialogState.Details(event)
+                    onToggleMonth = { isMonthExpanded = !isMonthExpanded },
+                    onToday = {
+                        val today = LocalDate.now()
+                        selectedDateText = today.toString()
+                        onRefresh()
+                        scrollToAgendaDate(today)
+                    },
+                )
+            },
+            floatingActionButton = {
+                if (state.hasCalendarPermission && defaultCalendar != null) {
+                    FloatingActionButton(
+                        onClick = {
+                            eventDialog = EventDialogState.Create(defaultCalendar.id)
                         },
-                    )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = "Create event",
+                        )
+                    }
+                }
+            },
+        ) { padding ->
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+            ) {
+                if (!state.hasCalendarPermission) {
+                    item {
+                        PermissionPanel(onRequestPermission = onRequestPermission)
+                    }
+                    return@LazyColumn
+                }
+
+                item(key = "month-overview") {
+                    AnimatedVisibility(
+                        visible = isMonthExpanded,
+                        enter = expandVertically() + fadeIn(),
+                        exit = shrinkVertically() + fadeOut(),
+                    ) {
+                        MonthOverview(
+                            month = currentMonth,
+                            events = state.events,
+                            selectedDate = selectedDate,
+                            onDateSelected = ::selectDate,
+                        )
+                    }
+                }
+
+                state.error?.let { message ->
+                    item {
+                        CompactStatus(
+                            title = "Calendar unavailable",
+                            body = message,
+                        )
+                    }
+                }
+
+                if (sections.isEmpty() && !state.isLoading) {
+                    item {
+                        EmptyAgenda()
+                    }
+                }
+
+                sections.forEach { section ->
+                    item(key = "date-${section.date}") {
+                        AgendaDaySection(
+                            section = section,
+                            onEventClick = { event ->
+                                eventDialog = EventDialogState.Details(event)
+                            },
+                        )
+                    }
                 }
             }
         }
@@ -455,6 +584,26 @@ private fun CalendarScreen(
 
         null -> Unit
     }
+
+    subscriptionDialogUrl?.let { initialUrl ->
+        SubscribeCalendarDialog(
+            initialUrl = initialUrl,
+            onDismiss = { subscriptionDialogUrl = null },
+            onSubscribe = { url, displayName ->
+                onSubscribeCalendar(url, displayName)
+                subscriptionDialogUrl = null
+            },
+        )
+    }
+
+    if (showManageSubscriptionsDialog) {
+        ManageSubscriptionsDialog(
+            subscriptions = state.subscriptions,
+            onDismiss = { showManageSubscriptionsDialog = false },
+            onSync = onSyncSubscribedCalendars,
+            onUnsubscribe = onUnsubscribeCalendar,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -463,6 +612,7 @@ private fun AgendaTopBar(
     state: CalendarUiState,
     month: YearMonth,
     isMonthExpanded: Boolean,
+    onOpenNavigation: () -> Unit,
     onToggleMonth: () -> Unit,
     onToday: () -> Unit,
 ) {
@@ -473,7 +623,7 @@ private fun AgendaTopBar(
 
     TopAppBar(
         navigationIcon = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = onOpenNavigation) {
                 Icon(
                     imageVector = Icons.Rounded.Menu,
                     contentDescription = "Open navigation",
@@ -515,12 +665,6 @@ private fun AgendaTopBar(
                         contentDescription = "Go to today",
                     )
                 }
-                IconButton(onClick = {}) {
-                    Icon(
-                        imageVector = Icons.Rounded.MoreVert,
-                        contentDescription = "More options",
-                    )
-                }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -530,6 +674,148 @@ private fun AgendaTopBar(
             actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         ),
     )
+}
+
+@Composable
+private fun CalendarDrawer(
+    state: CalendarUiState,
+    onSubscribeCalendar: () -> Unit,
+    onSyncSubscribedCalendars: () -> Unit,
+    onManageSubscriptions: () -> Unit,
+) {
+    ModalDrawerSheet {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(horizontal = 12.dp, vertical = 18.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                text = "Calendars",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = state.agendaSubtitle(),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 8.dp),
+                color = MaterialTheme.colorScheme.outlineVariant,
+            )
+            if (state.hasCalendarPermission) {
+                if (state.calendars.isEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        text = "No calendars connected.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    val subscriptionsByCalendarId = state.subscriptions.associateBy { it.calendarId }
+                    state.calendars.forEach { calendar ->
+                        CalendarDrawerRow(
+                            calendar = calendar,
+                            subscription = subscriptionsByCalendarId[calendar.id],
+                        )
+                    }
+                }
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                )
+                NavigationDrawerItem(
+                    label = { Text("Add calendar from URL") },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = null,
+                        )
+                    },
+                    onClick = onSubscribeCalendar,
+                )
+                if (state.subscriptions.isNotEmpty()) {
+                    NavigationDrawerItem(
+                        label = { Text("Sync subscriptions") },
+                        selected = false,
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Sync,
+                                contentDescription = null,
+                            )
+                        },
+                        onClick = onSyncSubscribedCalendars,
+                    )
+                }
+                if (state.subscriptions.isNotEmpty()) {
+                    NavigationDrawerItem(
+                        label = { Text("Manage URL calendars") },
+                        selected = false,
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Link,
+                                contentDescription = null,
+                            )
+                        },
+                        onClick = onManageSubscriptions,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CalendarDrawerRow(
+    calendar: CalendarSource,
+    subscription: CalendarSubscription?,
+) {
+    val secondaryText = calendar.drawerSecondaryText(subscription)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(14.dp)
+                .clip(CircleShape)
+                .background(calendar.drawerColor()),
+        )
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            Text(
+                text = calendar.displayName,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            secondaryText?.let { text ->
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        if (calendar.isDrawerReadOnly()) {
+            Icon(
+                imageVector = Icons.Rounded.Lock,
+                contentDescription = "Read-only calendar",
+                modifier = Modifier.size(18.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
 }
 
 @Composable
@@ -877,36 +1163,44 @@ private fun EventDetailsDialog(
 
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    TextButton(
-                        onClick = onDelete,
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.error,
-                        ),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Delete,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Text("Delete")
-                    }
-
+                if (event.isReadOnly) {
+                    Text(
+                        text = "Read-only subscribed event",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Button(onClick = onEdit) {
+                        TextButton(
+                            onClick = onDelete,
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colorScheme.error,
+                            ),
+                        ) {
                             Icon(
-                                imageVector = Icons.Rounded.Edit,
+                                imageVector = Icons.Rounded.Delete,
                                 contentDescription = null,
                                 modifier = Modifier.size(18.dp),
                             )
-                            Text("Edit")
+                            Text("Delete")
+                        }
+
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Button(onClick = onEdit) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Edit,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp),
+                                )
+                                Text("Edit")
+                            }
                         }
                     }
                 }
@@ -1148,6 +1442,195 @@ private fun EventEditorDialog(
 }
 
 @Composable
+private fun SubscribeCalendarDialog(
+    initialUrl: String,
+    onDismiss: () -> Unit,
+    onSubscribe: (String, String?) -> Unit,
+) {
+    var url by rememberSaveable(initialUrl) { mutableStateOf(initialUrl) }
+    var displayName by rememberSaveable { mutableStateOf("") }
+    var error by rememberSaveable { mutableStateOf<String?>(null) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "Subscribe from URL",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                error?.let { message ->
+                    Text(
+                        text = message,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = url,
+                    onValueChange = {
+                        url = it
+                        error = null
+                    },
+                    label = { Text("Calendar URL") },
+                    placeholder = { Text("https://example.com/calendar.ics") },
+                    singleLine = true,
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = displayName,
+                    onValueChange = {
+                        displayName = it
+                        error = null
+                    },
+                    label = { Text("Name") },
+                    placeholder = { Text("Optional") },
+                    singleLine = true,
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    val cleanedUrl = url.trim()
+                    if (cleanedUrl.isBlank()) {
+                        error = "Add a calendar URL."
+                    } else {
+                        onSubscribe(cleanedUrl, displayName.trim().takeIf { it.isNotBlank() })
+                    }
+                },
+            ) {
+                Text("Subscribe")
+            }
+        },
+    )
+}
+
+@Composable
+private fun ManageSubscriptionsDialog(
+    subscriptions: List<CalendarSubscription>,
+    onDismiss: () -> Unit,
+    onSync: () -> Unit,
+    onUnsubscribe: (String) -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "Calendar subscriptions",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                if (subscriptions.isEmpty()) {
+                    Text(
+                        text = "No subscribed calendars.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    subscriptions.forEach { subscription ->
+                        SubscriptionRow(
+                            subscription = subscription,
+                            onUnsubscribe = { onUnsubscribe(subscription.id) },
+                        )
+                    }
+                }
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Close")
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onSync()
+                    onDismiss()
+                },
+                enabled = subscriptions.isNotEmpty(),
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Sync,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp),
+                )
+                Text("Sync")
+            }
+        },
+    )
+}
+
+@Composable
+private fun SubscriptionRow(
+    subscription: CalendarSubscription,
+    onUnsubscribe: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(
+                text = subscription.displayName,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = subscription.url,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            subscription.lastError?.let { error ->
+                Text(
+                    text = error,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            } ?: Text(
+                text = subscription.lastSyncLabel(),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            TextButton(
+                onClick = onUnsubscribe,
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                ),
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Delete,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp),
+                )
+                Text("Unsubscribe")
+            }
+        }
+    }
+}
+
+@Composable
 private fun ConfirmDeleteDialog(
     event: CalendarEvent,
     onDismiss: () -> Unit,
@@ -1211,6 +1694,12 @@ private fun Context.hasCalendarReadPermission(): Boolean {
         this,
         Manifest.permission.READ_CALENDAR,
     ) == PackageManager.PERMISSION_GRANTED
+}
+
+private fun Intent.subscriptionUrl(): String? {
+    val uri = data ?: return null
+    val scheme = uri.scheme?.lowercase()
+    return uri.toString().takeIf { scheme == "webcal" || scheme == "webcals" }
 }
 
 private data class AgendaSection(
@@ -1303,6 +1792,27 @@ private fun Int.calendarCountLabel(): String {
     }
 }
 
+private fun CalendarSubscription.lastSyncLabel(): String {
+    val syncMillis = lastSyncMillis ?: return "Not synced yet"
+    val syncTime = Instant.ofEpochMilli(syncMillis)
+        .atZone(ZoneId.systemDefault())
+        .format(DateTimeFormatter.ofPattern("d MMM, HH:mm"))
+    return "Last synced $syncTime"
+}
+
+@Composable
+private fun CalendarSource.drawerColor(): Color {
+    return color?.let(::Color) ?: MaterialTheme.colorScheme.primary
+}
+
+private fun CalendarSource.isDrawerReadOnly(): Boolean {
+    return isSubscribed || !isWritable
+}
+
+private fun CalendarSource.drawerSecondaryText(subscription: CalendarSubscription?): String? {
+    return if (isSubscribed) subscription?.lastSyncLabel() ?: "Not synced yet" else null
+}
+
 private fun String.toCalendarNoteText(): CharSequence {
     val note = trim()
     return HtmlCompat.fromHtml(note, HtmlCompat.FROM_HTML_MODE_COMPACT)
@@ -1318,7 +1828,7 @@ private fun CharSequence.trimCalendarNote(): CharSequence {
 }
 
 private fun List<CalendarSource>.defaultWritableCalendar(): CalendarSource? {
-    return firstOrNull { it.isVisible } ?: firstOrNull()
+    return firstOrNull { it.isVisible && it.isWritable } ?: firstOrNull { it.isWritable }
 }
 
 private fun List<CalendarSource>.calendarName(calendarId: Long): String {

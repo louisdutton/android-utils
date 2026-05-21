@@ -8,6 +8,8 @@ data class CalendarSource(
     val color: Int?,
     val isPrimary: Boolean,
     val isVisible: Boolean,
+    val isWritable: Boolean,
+    val isSubscribed: Boolean,
 )
 
 data class CalendarEvent(
@@ -24,6 +26,7 @@ data class CalendarEvent(
     val timeZone: String?,
     val recurrenceRule: String?,
     val availability: EventAvailability,
+    val isReadOnly: Boolean,
 )
 
 data class CalendarEventDraft(

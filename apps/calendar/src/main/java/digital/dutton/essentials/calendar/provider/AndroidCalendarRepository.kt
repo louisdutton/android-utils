@@ -12,6 +12,7 @@ import digital.dutton.essentials.calendar.data.CalendarEventDraft
 import digital.dutton.essentials.calendar.data.CalendarRepository
 import digital.dutton.essentials.calendar.data.CalendarSource
 import digital.dutton.essentials.calendar.data.EventAvailability
+import digital.dutton.essentials.calendar.sync.SubscriptionAccountType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -44,6 +45,7 @@ class AndroidCalendarRepository(
     ): List<CalendarEvent> = withContext(dispatcher) {
         requireCalendarReadPermission()
 
+        val readOnlyCalendarIds = readOnlyCalendarIds()
         val uri = CalendarContract.Instances.CONTENT_URI.buildUpon()
             .appendPath(startMillis.toString())
             .appendPath(endMillis.toString())
@@ -58,7 +60,7 @@ class AndroidCalendarRepository(
         )?.use { cursor ->
             buildList {
                 while (cursor.moveToNext()) {
-                    add(cursor.toCalendarEvent())
+                    add(cursor.toCalendarEvent(readOnlyCalendarIds))
                 }
             }
         }.orEmpty()
@@ -139,23 +141,31 @@ class AndroidCalendarRepository(
     }
 
     private fun Cursor.toCalendarSource(): CalendarSource {
+        val accountType = optionalString(CalendarContract.Calendars.ACCOUNT_TYPE)
+        val accessLevel = optionalInt(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL)
+            ?: CalendarContract.Calendars.CAL_ACCESS_NONE
+        val isSubscribed = accountType == SubscriptionAccountType
+
         return CalendarSource(
             id = requireLong(CalendarContract.Calendars._ID),
             displayName = optionalString(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
                 ?: optionalString(CalendarContract.Calendars.NAME)
                 ?: "Calendar",
             accountName = optionalString(CalendarContract.Calendars.ACCOUNT_NAME),
-            accountType = optionalString(CalendarContract.Calendars.ACCOUNT_TYPE),
+            accountType = accountType,
             color = optionalInt(CalendarContract.Calendars.CALENDAR_COLOR),
             isPrimary = optionalInt(CalendarContract.Calendars.IS_PRIMARY) == 1,
             isVisible = optionalInt(CalendarContract.Calendars.VISIBLE) != 0,
+            isWritable = !isSubscribed && accessLevel >= CalendarContract.Calendars.CAL_ACCESS_CONTRIBUTOR,
+            isSubscribed = isSubscribed,
         )
     }
 
-    private fun Cursor.toCalendarEvent(): CalendarEvent {
+    private fun Cursor.toCalendarEvent(readOnlyCalendarIds: Set<Long>): CalendarEvent {
+        val calendarId = requireLong(CalendarContract.Instances.CALENDAR_ID)
         return CalendarEvent(
             id = requireLong(CalendarContract.Instances.EVENT_ID),
-            calendarId = requireLong(CalendarContract.Instances.CALENDAR_ID),
+            calendarId = calendarId,
             calendarName = optionalString(CalendarContract.Instances.CALENDAR_DISPLAY_NAME),
             calendarColor = optionalInt(CalendarContract.Instances.CALENDAR_COLOR),
             title = optionalString(CalendarContract.Instances.TITLE) ?: "Untitled",
@@ -172,7 +182,33 @@ class AndroidCalendarRepository(
                 CalendarContract.Events.AVAILABILITY_TENTATIVE -> EventAvailability.Tentative
                 else -> EventAvailability.Unknown
             },
+            isReadOnly = calendarId in readOnlyCalendarIds,
         )
+    }
+
+    private fun readOnlyCalendarIds(): Set<Long> {
+        return context.contentResolver.query(
+            CalendarContract.Calendars.CONTENT_URI,
+            CalendarReadOnlyProjection,
+            null,
+            null,
+            null,
+        )?.use { cursor ->
+            buildSet {
+                while (cursor.moveToNext()) {
+                    val id = cursor.requireLong(CalendarContract.Calendars._ID)
+                    val accountType = cursor.optionalString(CalendarContract.Calendars.ACCOUNT_TYPE)
+                    val accessLevel = cursor.optionalInt(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL)
+                        ?: CalendarContract.Calendars.CAL_ACCESS_NONE
+                    if (
+                        accountType == SubscriptionAccountType ||
+                        accessLevel < CalendarContract.Calendars.CAL_ACCESS_CONTRIBUTOR
+                    ) {
+                        add(id)
+                    }
+                }
+            }
+        }.orEmpty()
     }
 
     private fun Cursor.requireLong(columnName: String): Long {
@@ -199,6 +235,7 @@ class AndroidCalendarRepository(
             CalendarContract.Calendars.CALENDAR_COLOR,
             CalendarContract.Calendars.IS_PRIMARY,
             CalendarContract.Calendars.VISIBLE,
+            CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,
         )
 
         val EventProjection = arrayOf(
@@ -215,6 +252,12 @@ class AndroidCalendarRepository(
             CalendarContract.Instances.EVENT_TIMEZONE,
             CalendarContract.Instances.RRULE,
             CalendarContract.Instances.AVAILABILITY,
+        )
+
+        val CalendarReadOnlyProjection = arrayOf(
+            CalendarContract.Calendars._ID,
+            CalendarContract.Calendars.ACCOUNT_TYPE,
+            CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,
         )
     }
 }

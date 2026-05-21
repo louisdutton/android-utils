@@ -16,3 +16,9 @@ Calendar Provider
 
 CalDAV sync and iCalendar import/export should write through the same provider
 boundary unless there is a specific reason to bypass system calendar storage.
+
+Public read-only calendars are supported as ICS subscriptions from `https://`,
+`webcal://`, and `webcals://` URLs. The app creates one read-only Android
+Calendar Provider calendar per subscription, keeps remote event identity in
+provider sync columns, and refreshes feeds with WorkManager using `ETag` /
+`Last-Modified` when the server provides them.
