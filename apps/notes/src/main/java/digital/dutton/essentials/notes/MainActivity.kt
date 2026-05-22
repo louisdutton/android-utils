@@ -598,13 +598,12 @@ private fun NotesHomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .statusBarsPadding(),
+                .padding(padding),
         ) {
             SearchField(
                 query = state.searchQuery,
                 onQueryChange = onSearchChange,
-                modifier = Modifier.padding(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 12.dp),
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
             )
 
             state.error?.let { message ->
@@ -801,7 +800,7 @@ private fun NoteCard(
                 )
 
                 Text(
-                    text = note.updatedLabel(),
+                    text = note.inlineMetaLabel(isRecording),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
@@ -1498,6 +1497,17 @@ private fun Note.previewLine(): String {
     return bodyPreview ?: "Empty note"
 }
 
+private fun Note.inlineMetaLabel(isRecording: Boolean): String {
+    val length = when (kind) {
+        NoteKind.Text -> body.wordCountLabel()
+        NoteKind.Audio -> when {
+            isRecording -> "Recording"
+            else -> (audioDurationMillis ?: 0L).durationLabel()
+        }
+    }
+    return "$length · ${updatedLabel()}"
+}
+
 private fun Note.audioStatusLabel(
     isRecording: Boolean,
     isRecordingLocked: Boolean,
@@ -1587,6 +1597,13 @@ private fun List<Float>.toTimelineLevels(durationMillis: Long): List<Float> {
         val variation = 0.92f + ((index * 37) % 17) / 100f
         (interpolated * variation).coerceIn(0.04f, 1f)
     }
+}
+
+private val WordRegex = Regex("""\S+""")
+
+private fun String.wordCountLabel(): String {
+    val count = WordRegex.findAll(this).count()
+    return if (count == 1) "1 word" else "$count words"
 }
 
 private fun Long.durationLabel(): String {
