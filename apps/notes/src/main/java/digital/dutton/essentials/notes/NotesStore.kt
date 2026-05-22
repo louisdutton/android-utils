@@ -4,8 +4,14 @@ import android.content.Context
 import java.io.File
 import java.util.UUID
 
+enum class NoteKind {
+    Text,
+    Audio,
+}
+
 data class Note(
     val id: String,
+    val kind: NoteKind,
     val title: String,
     val body: String,
     val createdMillis: Long,
@@ -27,13 +33,14 @@ class NotesStore(context: Context) {
             .sortedByDescending { it.updatedMillis }
     }
 
-    fun createNote(
-        title: String = "Untitled note",
+    fun createTextNote(
+        title: String = "",
         body: String = "",
     ): Note {
         val now = System.currentTimeMillis()
         val note = Note(
             id = UUID.randomUUID().toString(),
+            kind = NoteKind.Text,
             title = title,
             body = body,
             createdMillis = now,
@@ -43,11 +50,37 @@ class NotesStore(context: Context) {
         return note
     }
 
-    fun save(note: Note): Note {
-        val updatedNote = note.copy(
-            title = note.title.ifBlank { "Untitled note" },
-            updatedMillis = System.currentTimeMillis(),
+    fun createAudioNote(
+        title: String = "",
+    ): Note {
+        val now = System.currentTimeMillis()
+        val note = Note(
+            id = UUID.randomUUID().toString(),
+            kind = NoteKind.Audio,
+            title = title,
+            body = "",
+            createdMillis = now,
+            updatedMillis = now,
         )
+        save(note)
+        return note
+    }
+
+    fun save(note: Note): Note {
+        val updatedNote = when (note.kind) {
+            NoteKind.Text -> note.copy(
+                title = note.title,
+                body = note.body,
+                audioFileName = null,
+                audioDurationMillis = null,
+                updatedMillis = System.currentTimeMillis(),
+            )
+            NoteKind.Audio -> note.copy(
+                title = note.title,
+                body = "",
+                updatedMillis = System.currentTimeMillis(),
+            )
+        }
         val directory = noteDirectory(updatedNote.id).apply { mkdirs() }
         File(directory, NoteFileName).writeText(updatedNote.toMarkdownDocument())
         return updatedNote
@@ -73,15 +106,27 @@ class NotesStore(context: Context) {
         val document = markdownFile.readText()
         val (metadata, body) = document.parseMarkdownDocument()
         val now = markdownFile.lastModified().takeIf { it > 0 } ?: System.currentTimeMillis()
+        val audioFileName = metadata["audio"]?.takeIf { it.isNotBlank() }
+        val kind = metadata["kind"]?.toNoteKind()
+            ?: if (audioFileName != null && body.isBlank()) NoteKind.Audio else NoteKind.Text
+        val defaultTitle = when (kind) {
+            NoteKind.Text -> "Untitled note"
+            NoteKind.Audio -> "Audio note"
+        }
 
         return Note(
             id = metadata["id"] ?: directory.name,
-            title = metadata["title"]?.takeIf { it.isNotBlank() } ?: "Untitled note",
-            body = body,
+            kind = kind,
+            title = metadata["title"] ?: defaultTitle,
+            body = if (kind == NoteKind.Text) body else "",
             createdMillis = metadata["created"]?.toLongOrNull() ?: now,
             updatedMillis = metadata["updated"]?.toLongOrNull() ?: now,
-            audioFileName = metadata["audio"]?.takeIf { it.isNotBlank() },
-            audioDurationMillis = metadata["audioDurationMillis"]?.toLongOrNull(),
+            audioFileName = if (kind == NoteKind.Audio) audioFileName else null,
+            audioDurationMillis = if (kind == NoteKind.Audio) {
+                metadata["audioDurationMillis"]?.toLongOrNull()
+            } else {
+                null
+            },
         )
     }
 
@@ -100,15 +145,35 @@ private fun Note.toMarkdownDocument(): String {
     return buildString {
         appendLine("---")
         appendLine("id: $id")
+        appendLine("kind: ${kind.toMetadataValue()}")
         appendLine("title: ${title.toMetadataValue()}")
         appendLine("created: $createdMillis")
         appendLine("updated: $updatedMillis")
-        audioFileName?.let { appendLine("audio: ${it.toMetadataValue()}") }
-        audioDurationMillis?.let { appendLine("audioDurationMillis: $it") }
+        if (kind == NoteKind.Audio) {
+            audioFileName?.let { appendLine("audio: ${it.toMetadataValue()}") }
+            audioDurationMillis?.let { appendLine("audioDurationMillis: $it") }
+        }
         appendLine("---")
         appendLine()
-        append(body.trimEnd())
+        if (kind == NoteKind.Text) {
+            append(body.trimEnd())
+        }
         appendLine()
+    }
+}
+
+private fun String.toNoteKind(): NoteKind? {
+    return when (trim().lowercase()) {
+        "text" -> NoteKind.Text
+        "audio" -> NoteKind.Audio
+        else -> null
+    }
+}
+
+private fun NoteKind.toMetadataValue(): String {
+    return when (this) {
+        NoteKind.Text -> "text"
+        NoteKind.Audio -> "audio"
     }
 }
 
