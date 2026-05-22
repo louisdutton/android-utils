@@ -40,7 +40,6 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -53,8 +52,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
@@ -436,21 +433,12 @@ private fun BillsApp() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BillsScreen(viewModel: BillsViewModel = viewModel()) {
     val state by viewModel.uiState.collectAsState()
     var showOctopusDialog by remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Bills") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                ),
-            )
-        },
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
@@ -541,69 +529,6 @@ private fun OverviewContent(
                 onSelectCategory = onSelectCategory,
             )
         }
-
-        item { SectionHeader("Connected bills") }
-
-        if (state.billAccounts.isEmpty()) {
-            item {
-                EmptyStateRow(
-                    icon = Icons.Rounded.Bolt,
-                    title = "No bill accounts loaded",
-                    detail = "Connect Octopus to load energy account status.",
-                    onClick = onOpenProviders,
-                )
-            }
-        } else {
-            state.billAccounts.forEach { account ->
-                item { UtilityAccountRow(account) }
-            }
-        }
-
-        if (state.octopusAccountNumber != null) {
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    OutlinedButton(
-                        onClick = onRefreshOctopus,
-                        enabled = !state.isRefreshingOctopus,
-                    ) {
-                        RefreshButtonContent(
-                            isRefreshing = state.isRefreshingOctopus,
-                            text = "Refresh Octopus",
-                        )
-                    }
-                }
-            }
-        }
-
-        item { SectionHeader("Upcoming providers") }
-
-        item {
-            PlannedProviderRow(
-                icon = Icons.Rounded.WaterDrop,
-                title = "South West Water",
-                detail = "Water billing and meter status.",
-                onClick = onOpenProviders,
-            )
-        }
-        item {
-            PlannedProviderRow(
-                icon = Icons.Rounded.Wifi,
-                title = "Broadband",
-                detail = "Package, renewal date, and monthly charge.",
-                onClick = onOpenProviders,
-            )
-        }
-        item {
-            PlannedProviderRow(
-                icon = Icons.Rounded.Home,
-                title = "Council tax",
-                detail = "Local authority account and billing schedule.",
-                onClick = onOpenProviders,
-            )
-        }
     }
 }
 
@@ -618,86 +543,50 @@ private fun BillingDashboard(
     var displayMetric by remember { mutableStateOf(BillingDisplayMetric.Usage) }
     val summary = state.billingSummary
 
-    ElevatedCard(
+    Column(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "Billing",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    Text(
-                        text = summary?.rangeLabel ?: "Connect a service to load usage",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+        PeriodSelector(
+            selectedPeriod = state.selectedBillingPeriod,
+            onSelectPeriod = onSelectPeriod,
+        )
 
-                if (state.octopusAccountNumber != null) {
-                    OutlinedButton(
-                        onClick = onRefreshOctopus,
-                        enabled = !state.isRefreshingOctopus && !state.isLoadingBilling,
-                    ) {
-                        RefreshButtonContent(
-                            isRefreshing = state.isRefreshingOctopus || state.isLoadingBilling,
-                            text = "Refresh",
-                        )
-                    }
-                }
-            }
+        CategoryFilterSelector(
+            state = state,
+            onSelectCategory = onSelectCategory,
+        )
 
-            PeriodSelector(
-                selectedPeriod = state.selectedBillingPeriod,
-                onSelectPeriod = onSelectPeriod,
-            )
-
-            CategoryFilterSelector(
-                state = state,
-                onSelectCategory = onSelectCategory,
-            )
-
-            if (state.isLoadingBilling) {
-                LoadingBillingRow()
-            } else {
-                when {
-                    summary == null -> InlineEmptyStateRow(
-                        icon = Icons.Rounded.Bolt,
-                        title = "No usage loaded",
-                        detail = "Connect Octopus to show billing usage and estimated costs.",
-                        onClick = onOpenProviders,
-                    )
-                    summary.rows.isEmpty() -> InlineEmptyStateRow(
-                        icon = Icons.Rounded.Bolt,
-                        title = "No usage in this period",
-                        detail = summary.notice ?: "Try a different period or refresh Octopus.",
-                        onClick = onRefreshOctopus,
-                    )
-                    else -> BillingGraphContent(
-                        summary = summary,
-                        displayMetric = displayMetric,
-                        onDisplayMetricChange = { displayMetric = it },
-                    )
-                }
-            }
-
-            summary?.notice?.let { notice ->
-                Text(
-                    text = notice,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+        if (state.isLoadingBilling) {
+            LoadingBillingRow()
+        } else {
+            when {
+                summary == null -> InlineEmptyStateRow(
+                    icon = Icons.Rounded.Bolt,
+                    title = "No usage loaded",
+                    detail = "Connect Octopus to show billing usage and estimated costs.",
+                    onClick = onOpenProviders,
+                )
+                summary.rows.isEmpty() -> InlineEmptyStateRow(
+                    icon = Icons.Rounded.Bolt,
+                    title = "No usage in this period",
+                    detail = summary.notice ?: "Try a different period or refresh Octopus.",
+                    onClick = onRefreshOctopus,
+                )
+                else -> BillingGraphContent(
+                    summary = summary,
+                    displayMetric = displayMetric,
+                    onDisplayMetricChange = { displayMetric = it },
                 )
             }
+        }
+
+        summary?.notice?.let { notice ->
+            Text(
+                text = notice,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
@@ -944,7 +833,7 @@ private fun BillingBarsChart(
                         pathEffect = dash,
                     )
                 }
-                    drawLine(
+                drawLine(
                     color = axisColor.copy(alpha = 0.6f),
                     start = Offset(chartStartX, chartTop),
                     end = Offset(chartStartX, chartBottom),
@@ -1248,8 +1137,6 @@ private fun ProvidersContent(
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        item { SectionHeader("Bill providers") }
-
         state.providerCards.forEach { provider ->
             item {
                 ProviderCard(
