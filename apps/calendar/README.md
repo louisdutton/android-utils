@@ -22,3 +22,9 @@ Public read-only calendars are supported as ICS subscriptions from `https://`,
 Calendar Provider calendar per subscription, keeps remote event identity in
 provider sync columns, and refreshes feeds with WorkManager using `ETag` /
 `Last-Modified` when the server provides them.
+
+CalDAV accounts are supported as writable server-backed calendars. The app
+discovers calendars from an HTTPS CalDAV server URL, stores events offline in
+Android's Calendar Provider, syncs remote changes with WorkManager, and pushes
+local create/update/delete changes back to the server using CalDAV `PUT` /
+`DELETE` with entity tags when available.

@@ -149,6 +149,20 @@ class IcsSubscriptionSyncer(
         store.remove(subscription.id)
     }
 
+    suspend fun renameSubscription(
+        subscriptionId: String,
+        displayName: String,
+    ) = withContext(dispatcher) {
+        requireCalendarPermissions()
+        val cleanedDisplayName = displayName.trim()
+        require(cleanedDisplayName.isNotBlank()) { "Add a calendar name." }
+        val subscription = store.get(subscriptionId)
+            ?: throw IllegalArgumentException("Calendar subscription was not found.")
+
+        updateSubscriptionCalendarName(subscription.calendarId, cleanedDisplayName)
+        store.upsert(subscription.copy(displayName = cleanedDisplayName))
+    }
+
     suspend fun repairSubscriptions() = withContext(dispatcher) {
         requireCalendarPermissions()
         pruneDuplicateSubscriptions()
@@ -505,6 +519,23 @@ class IcsSubscriptionSyncer(
         )
     }
 
+    private fun updateSubscriptionCalendarName(
+        calendarId: Long,
+        displayName: String,
+    ) {
+        val values = ContentValues().apply {
+            put(CalendarContract.Calendars.NAME, displayName)
+            put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, displayName)
+        }
+        context.contentResolver.update(
+            ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendarId)
+                .asSubscriptionSyncAdapter(),
+            values,
+            null,
+            null,
+        )
+    }
+
     private fun fetchCalendar(
         url: String,
         etag: String?,
@@ -546,9 +577,11 @@ class IcsSubscriptionSyncer(
         val uri = Uri.parse(rawUrl.trim())
         val scheme = uri.scheme?.lowercase()
         val normalized = when (scheme) {
+            "http" -> uri
             "https" -> uri
-            "webcal", "webcals" -> uri.buildUpon().scheme("https").build()
-            else -> throw IllegalArgumentException("Use an HTTPS or webcal calendar URL.")
+            "webcal" -> uri.buildUpon().scheme("http").build()
+            "webcals" -> uri.buildUpon().scheme("https").build()
+            else -> throw IllegalArgumentException("Use an HTTP, HTTPS, or webcal calendar URL.")
         }
 
         if (normalized.host.isNullOrBlank()) {

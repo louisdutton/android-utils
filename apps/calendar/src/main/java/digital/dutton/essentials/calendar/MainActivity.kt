@@ -15,14 +15,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -51,6 +47,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -73,16 +70,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material.icons.rounded.Today
+import androidx.compose.material.icons.rounded.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -95,11 +92,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -116,6 +113,11 @@ import digital.dutton.essentials.calendar.data.CalendarSource
 import digital.dutton.essentials.calendar.data.EventAvailability
 import digital.dutton.essentials.calendar.data.locationLink
 import digital.dutton.essentials.calendar.provider.AndroidCalendarRepository
+import digital.dutton.essentials.calendar.sync.CalDavAccount
+import digital.dutton.essentials.calendar.sync.CalDavAccountStore
+import digital.dutton.essentials.calendar.sync.CalDavCalendar
+import digital.dutton.essentials.calendar.sync.CalDavSyncWorker
+import digital.dutton.essentials.calendar.sync.CalDavSyncer
 import digital.dutton.essentials.calendar.sync.CalendarSubscription
 import digital.dutton.essentials.calendar.sync.CalendarSubscriptionStore
 import digital.dutton.essentials.calendar.sync.IcsSubscriptionSyncWorker
@@ -125,6 +127,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -155,6 +158,8 @@ data class CalendarUiState(
     val calendars: List<CalendarSource> = emptyList(),
     val events: List<CalendarEvent> = emptyList(),
     val subscriptions: List<CalendarSubscription> = emptyList(),
+    val calDavAccounts: List<CalDavAccount> = emptyList(),
+    val calDavCalendars: List<CalDavCalendar> = emptyList(),
     val error: String? = null,
 )
 
@@ -162,6 +167,8 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     private val repository = AndroidCalendarRepository(application.applicationContext)
     private val subscriptionStore = CalendarSubscriptionStore(application.applicationContext)
     private val subscriptionSyncer = IcsSubscriptionSyncer(application.applicationContext)
+    private val calDavStore = CalDavAccountStore(application.applicationContext)
+    private val calDavSyncer = CalDavSyncer(application.applicationContext)
     private val _uiState = MutableStateFlow(CalendarUiState())
     val uiState: StateFlow<CalendarUiState> = _uiState.asStateFlow()
 
@@ -173,6 +180,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
         _uiState.update { it.copy(hasCalendarPermission = hasPermission) }
         if (hasPermission) {
             IcsSubscriptionSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+            CalDavSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
             loadUpcomingEvents()
         }
     }
@@ -191,11 +199,27 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun ensureDateVisible(date: LocalDate) {
+        ensureDateRangeVisible(
+            startDate = date.minusDays(AgendaSelectionPaddingDays),
+            endDate = date.plusDays(AgendaSelectionPaddingDays),
+        )
+    }
+
+    fun ensureDateRangeVisible(
+        startDate: LocalDate,
+        endDate: LocalDate,
+    ) {
         val state = _uiState.value
-        if (date.isAfter(state.rangeEndDate)) {
+        val requestedStartDate = minOf(startDate, endDate)
+        val requestedEndDate = maxOf(startDate, endDate)
+
+        if (
+            requestedStartDate.isBefore(state.rangeStartDate) ||
+            requestedEndDate.isAfter(state.rangeEndDate)
+        ) {
             loadEventsForRange(
-                startDate = state.rangeStartDate,
-                endDate = date.plusDays(AgendaSelectionPaddingDays),
+                startDate = minOf(state.rangeStartDate, requestedStartDate),
+                endDate = maxOf(state.rangeEndDate, requestedEndDate),
             )
         }
     }
@@ -212,16 +236,17 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                     calendars = emptyList(),
                     events = emptyList(),
                     subscriptions = emptyList(),
+                    calDavAccounts = emptyList(),
+                    calDavCalendars = emptyList(),
                     error = null,
                 )
             }
             return
         }
 
-        val today = LocalDate.now()
         val requestedStartDate = minOf(startDate, endDate)
         val requestedEndDate = maxOf(startDate, endDate)
-        val normalizedStartDate = maxOf(requestedStartDate, today)
+        val normalizedStartDate = requestedStartDate
         val normalizedEndDate = maxOf(requestedEndDate, normalizedStartDate)
 
         viewModelScope.launch {
@@ -241,18 +266,23 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
 
             runCatching {
                 subscriptionSyncer.repairSubscriptions()
-                Triple(
-                    repository.listCalendars(),
-                    repository.listEvents(start, end),
-                    subscriptionStore.list(),
+                calDavSyncer.repairAccounts()
+                CalendarSnapshot(
+                    calendars = repository.listCalendars(),
+                    events = repository.listEvents(start, end),
+                    subscriptions = subscriptionStore.list(),
+                    calDavAccounts = calDavStore.listAccounts(),
+                    calDavCalendars = calDavStore.listCalendars(),
                 )
-            }.onSuccess { (calendars, events, subscriptions) ->
+            }.onSuccess { snapshot ->
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        calendars = calendars,
-                        events = events,
-                        subscriptions = subscriptions,
+                        calendars = snapshot.calendars,
+                        events = snapshot.events,
+                        subscriptions = snapshot.subscriptions,
+                        calDavAccounts = snapshot.calDavAccounts,
+                        calDavCalendars = snapshot.calDavCalendars,
                     )
                 }
             }.onFailure { error ->
@@ -267,7 +297,9 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun createEvent(event: CalendarEventDraft) {
-        mutateEvent { repository.createEvent(event) }
+        mutateEvent(reloadDate = event.startDate(ZoneId.systemDefault())) {
+            repository.createEvent(event)
+        }
     }
 
     fun updateEvent(
@@ -325,6 +357,123 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    fun connectCalDav(
+        serverUrl: String,
+        username: String,
+        password: String,
+        displayName: String?,
+    ) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                calDavSyncer.connect(
+                    baseUrl = serverUrl,
+                    username = username,
+                    password = password,
+                    requestedName = displayName,
+                )
+            }.onSuccess { summary ->
+                CalDavSyncWorker.enqueuePeriodic(
+                    getApplication<Application>().applicationContext,
+                    summary.accountId,
+                )
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to connect CalDAV account.",
+                    )
+                }
+            }
+        }
+    }
+
+    fun syncCalDavAccounts() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                calDavSyncer.syncAll()
+            }.onSuccess {
+                CalDavSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to sync CalDAV accounts.",
+                    )
+                }
+            }
+        }
+    }
+
+    fun syncRemoteCalendars() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                val failures = mutableListOf<Throwable>()
+                runCatching { subscriptionSyncer.syncAll() }.onFailure(failures::add)
+                runCatching { calDavSyncer.syncAll() }.onFailure(failures::add)
+                if (failures.isNotEmpty()) throw failures.first()
+            }.onSuccess {
+                IcsSubscriptionSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+                CalDavSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to sync calendars.",
+                    )
+                }
+            }
+        }
+    }
+
+    fun disconnectCalDav(accountId: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                calDavSyncer.disconnect(accountId)
+            }.onSuccess {
+                CalDavSyncWorker.cancel(
+                    getApplication<Application>().applicationContext,
+                    accountId,
+                )
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to remove CalDAV account.",
+                    )
+                }
+            }
+        }
+    }
+
+    fun renameCalDavCalendar(
+        calendarId: String,
+        displayName: String,
+    ) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                calDavSyncer.renameCalendar(calendarId, displayName)
+            }.onSuccess {
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to rename CalDAV calendar.",
+                    )
+                }
+            }
+        }
+    }
+
     fun unsubscribeCalendar(subscriptionId: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
@@ -347,13 +496,51 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    private fun mutateEvent(action: suspend () -> Unit) {
+    fun renameSubscription(
+        subscriptionId: String,
+        displayName: String,
+    ) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            runCatching {
+                subscriptionSyncer.renameSubscription(subscriptionId, displayName)
+            }.onSuccess {
+                loadUpcomingEvents()
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = error.message ?: "Unable to rename calendar subscription.",
+                    )
+                }
+            }
+        }
+    }
+
+    private fun mutateEvent(
+        reloadDate: LocalDate? = null,
+        action: suspend () -> Unit,
+    ) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             runCatching {
                 action()
             }.onSuccess {
-                loadUpcomingEvents()
+                if (reloadDate == null) {
+                    loadUpcomingEvents()
+                } else {
+                    val state = _uiState.value
+                    loadEventsForRange(
+                        startDate = minOf(
+                            state.rangeStartDate,
+                            reloadDate.minusDays(AgendaSelectionPaddingDays),
+                        ),
+                        endDate = maxOf(
+                            state.rangeEndDate,
+                            reloadDate.plusDays(AgendaSelectionPaddingDays),
+                        ),
+                    )
+                }
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(
@@ -365,6 +552,14 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
         }
     }
 }
+
+private data class CalendarSnapshot(
+    val calendars: List<CalendarSource>,
+    val events: List<CalendarEvent>,
+    val subscriptions: List<CalendarSubscription>,
+    val calDavAccounts: List<CalDavAccount>,
+    val calDavCalendars: List<CalDavCalendar>,
+)
 
 @Composable
 private fun CalendarApp(
@@ -393,12 +588,17 @@ private fun CalendarApp(
                 onRequestPermission = { permissionLauncher.launch(CalendarPermissions) },
                 onLoadNewerEvents = viewModel::loadNewerEvents,
                 onEnsureDateVisible = viewModel::ensureDateVisible,
+                onEnsureDateRangeVisible = viewModel::ensureDateRangeVisible,
                 onCreateEvent = viewModel::createEvent,
                 onUpdateEvent = viewModel::updateEvent,
                 onDeleteEvent = viewModel::deleteEvent,
                 onSubscribeCalendar = viewModel::subscribeCalendar,
-                onSyncSubscribedCalendars = viewModel::syncSubscribedCalendars,
                 onUnsubscribeCalendar = viewModel::unsubscribeCalendar,
+                onConnectCalDav = viewModel::connectCalDav,
+                onSyncRemoteCalendars = viewModel::syncRemoteCalendars,
+                onDisconnectCalDav = viewModel::disconnectCalDav,
+                onRenameSubscription = viewModel::renameSubscription,
+                onRenameCalDavCalendar = viewModel::renameCalDavCalendar,
             )
         }
     }
@@ -426,24 +626,31 @@ private fun CalendarScreen(
     onRequestPermission: () -> Unit,
     onLoadNewerEvents: () -> Unit,
     onEnsureDateVisible: (LocalDate) -> Unit,
+    onEnsureDateRangeVisible: (LocalDate, LocalDate) -> Unit,
     onCreateEvent: (CalendarEventDraft) -> Unit,
     onUpdateEvent: (Long, CalendarEventDraft) -> Unit,
     onDeleteEvent: (Long) -> Unit,
     onSubscribeCalendar: (String, String?) -> Unit,
-    onSyncSubscribedCalendars: () -> Unit,
     onUnsubscribeCalendar: (String) -> Unit,
+    onConnectCalDav: (String, String, String, String?) -> Unit,
+    onSyncRemoteCalendars: () -> Unit,
+    onDisconnectCalDav: (String) -> Unit,
+    onRenameSubscription: (String, String) -> Unit,
+    onRenameCalDavCalendar: (String, String) -> Unit,
 ) {
     val context = LocalContext.current
-    var isMonthExpanded by rememberSaveable { mutableStateOf(true) }
+    var viewModeText by rememberSaveable { mutableStateOf(CalendarViewMode.Agenda.name) }
     var selectedDateText by rememberSaveable { mutableStateOf(LocalDate.now().toString()) }
     var visibleMonthText by rememberSaveable { mutableStateOf(YearMonth.now().toString()) }
     var pendingScrollDateText by rememberSaveable { mutableStateOf<String?>(LocalDate.now().toString()) }
+    var pendingScrollRequiresExactDate by rememberSaveable { mutableStateOf(false) }
     var eventDialog by remember { mutableStateOf<EventDialogState?>(null) }
-    var subscriptionDialogUrl by rememberSaveable(initialSubscriptionUrl) {
+    var addCalendarDialogInitialUrl by rememberSaveable(initialSubscriptionUrl) {
         mutableStateOf(initialSubscriptionUrl)
     }
-    var showManageSubscriptionsDialog by remember { mutableStateOf(false) }
+    var selectedDrawerCalendarId by remember { mutableStateOf<Long?>(null) }
     val defaultCalendar = state.calendars.defaultWritableCalendar()
+    val viewMode = remember(viewModeText) { CalendarViewMode.valueOf(viewModeText) }
     val selectedDate = remember(selectedDateText) { LocalDate.parse(selectedDateText) }
     val visibleMonth = remember(visibleMonthText) { YearMonth.parse(visibleMonthText) }
     val listState = rememberLazyListState()
@@ -455,7 +662,7 @@ private fun CalendarScreen(
     val agendaEvents = remember(state.events, nowMillis) {
         state.events.filter { event -> event.endMillis > nowMillis }
     }
-    val sections = agendaEvents.agendaSections()
+    val sections = agendaEvents.agendaSectionsWithToday()
 
     fun scrollToAgendaDate(date: LocalDate) {
         if (sections.isEmpty()) return
@@ -463,7 +670,7 @@ private fun CalendarScreen(
         val sectionIndex = sections.indexOfFirst { section -> section.date >= date }
             .takeUnless { it == -1 }
             ?: sections.lastIndex
-        val sectionItemIndex = 1 +
+        val sectionItemIndex =
             (if (state.error == null) 0 else 1) +
             sectionIndex +
             sections.monthJunctionCountThrough(sectionIndex)
@@ -473,12 +680,10 @@ private fun CalendarScreen(
         }
     }
 
-    fun selectDate(date: LocalDate) {
+    fun selectMonthDate(date: LocalDate) {
         selectedDateText = date.toString()
         visibleMonthText = YearMonth.from(date).toString()
-        pendingScrollDateText = date.toString()
         onEnsureDateVisible(date)
-        scrollToAgendaDate(date)
     }
 
     fun moveVisibleMonth(monthOffset: Long) {
@@ -490,8 +695,30 @@ private fun CalendarScreen(
         }
         visibleMonthText = nextMonth.toString()
         selectedDateText = targetDate.toString()
-        pendingScrollDateText = targetDate.toString()
-        onEnsureDateVisible(targetDate)
+        onEnsureDateRangeVisible(nextMonth.atDay(1), nextMonth.atEndOfMonth())
+    }
+
+    fun openAgenda() {
+        viewModeText = CalendarViewMode.Agenda.name
+        pendingScrollDateText = selectedDateText
+        pendingScrollRequiresExactDate = false
+    }
+
+    fun openMonthView() {
+        viewModeText = CalendarViewMode.Month.name
+        onEnsureDateRangeVisible(visibleMonth.atDay(1), visibleMonth.atEndOfMonth())
+    }
+
+    fun goToToday() {
+        val today = LocalDate.now()
+        selectedDateText = today.toString()
+        visibleMonthText = YearMonth.from(today).toString()
+        onEnsureDateVisible(today)
+        if (viewMode == CalendarViewMode.Agenda) {
+            pendingScrollDateText = today.toString()
+            pendingScrollRequiresExactDate = false
+            scrollToAgendaDate(today)
+        }
     }
 
     fun runDrawerAction(action: () -> Unit) {
@@ -501,11 +728,21 @@ private fun CalendarScreen(
         }
     }
 
-    LaunchedEffect(sections, pendingScrollDateText) {
+    LaunchedEffect(sections, pendingScrollDateText, pendingScrollRequiresExactDate, state.error) {
         val targetDate = pendingScrollDateText?.let(LocalDate::parse) ?: return@LaunchedEffect
+        if (state.error != null) {
+            pendingScrollDateText = null
+            pendingScrollRequiresExactDate = false
+            return@LaunchedEffect
+        }
         if (sections.isNotEmpty()) {
+            val canConsumeScroll = !pendingScrollRequiresExactDate ||
+                sections.any { section -> section.date == targetDate }
+            if (!canConsumeScroll) return@LaunchedEffect
+
             scrollToAgendaDate(targetDate)
             pendingScrollDateText = null
+            pendingScrollRequiresExactDate = false
         }
     }
 
@@ -514,46 +751,38 @@ private fun CalendarScreen(
         drawerContent = {
             CalendarDrawer(
                 state = state,
-                onSubscribeCalendar = {
-                    runDrawerAction { subscriptionDialogUrl = "" }
+                onAddCalendar = {
+                    runDrawerAction { addCalendarDialogInitialUrl = "" }
                 },
-                onSyncSubscribedCalendars = {
-                    runDrawerAction(onSyncSubscribedCalendars)
+                onSyncCalendars = {
+                    runDrawerAction(onSyncRemoteCalendars)
                 },
-                onManageSubscriptions = {
-                    runDrawerAction { showManageSubscriptionsDialog = true }
-                },
+                onCalendarLongPress = { calendarId -> selectedDrawerCalendarId = calendarId },
             )
         },
     ) {
         Scaffold(
             containerColor = MaterialTheme.colorScheme.surface,
             topBar = {
-                AgendaTopBar(
+                CalendarTopBar(
                     state = state,
+                    viewMode = viewMode,
                     month = visibleMonth,
-                    isMonthExpanded = isMonthExpanded,
                     onOpenNavigation = {
                         coroutineScope.launch { drawerState.open() }
                     },
-                    onToggleMonth = { isMonthExpanded = !isMonthExpanded },
+                    onOpenAgenda = ::openAgenda,
+                    onOpenMonth = ::openMonthView,
                     onPreviousMonth = { moveVisibleMonth(-1) },
                     onNextMonth = { moveVisibleMonth(1) },
-                    onToday = {
-                        val today = LocalDate.now()
-                        selectedDateText = today.toString()
-                        visibleMonthText = YearMonth.from(today).toString()
-                        pendingScrollDateText = today.toString()
-                        onEnsureDateVisible(today)
-                        scrollToAgendaDate(today)
-                    },
+                    onToday = ::goToToday,
                 )
             },
             floatingActionButton = {
                 if (state.hasCalendarPermission && defaultCalendar != null) {
                     FloatingActionButton(
                         onClick = {
-                            eventDialog = EventDialogState.Create(defaultCalendar.id)
+                            eventDialog = EventDialogState.Create(defaultCalendar.id, selectedDate)
                         },
                     ) {
                         Icon(
@@ -564,77 +793,73 @@ private fun CalendarScreen(
                 }
             },
         ) { padding ->
-            LazyColumn(
-                state = listState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp),
-            ) {
-                if (!state.hasCalendarPermission) {
-                    item {
-                        PermissionPanel(onRequestPermission = onRequestPermission)
+            if (viewMode == CalendarViewMode.Agenda) {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
+                ) {
+                    if (!state.hasCalendarPermission) {
+                        item {
+                            PermissionPanel(onRequestPermission = onRequestPermission)
+                        }
+                        return@LazyColumn
                     }
-                    return@LazyColumn
-                }
 
-                item(key = "month-overview") {
-                    AnimatedVisibility(
-                        visible = isMonthExpanded,
-                        enter = expandVertically() + fadeIn(),
-                        exit = shrinkVertically() + fadeOut(),
-                    ) {
-                        MonthOverview(
-                            month = visibleMonth,
-                            events = agendaEvents,
-                            selectedDate = selectedDate,
-                            onDateSelected = ::selectDate,
-                        )
-                    }
-                }
-
-                state.error?.let { message ->
-                    item {
-                        CompactStatus(
-                            title = "Calendar unavailable",
-                            body = message,
-                        )
-                    }
-                }
-
-                if (sections.isEmpty() && !state.isLoading) {
-                    item {
-                        EmptyAgenda(state)
-                    }
-                }
-
-                var previousSectionMonth: YearMonth? = null
-                sections.forEach { section ->
-                    val sectionMonth = YearMonth.from(section.date)
-                    if (sectionMonth != previousSectionMonth) {
-                        item(key = "month-$sectionMonth") {
-                            AgendaMonthJunction(month = sectionMonth)
+                    state.error?.let { message ->
+                        item {
+                            CompactStatus(
+                                title = "Calendar unavailable",
+                                body = message,
+                            )
                         }
                     }
-                    previousSectionMonth = sectionMonth
 
-                    item(key = "date-${section.date}") {
-                        AgendaDaySection(
-                            section = section,
-                            onEventClick = { event ->
-                                eventDialog = EventDialogState.Details(event)
-                            },
+                    var previousSectionMonth: YearMonth? = null
+                    sections.forEach { section ->
+                        val sectionMonth = YearMonth.from(section.date)
+                        if (sectionMonth != previousSectionMonth) {
+                            item(key = "month-$sectionMonth") {
+                                AgendaMonthJunction(month = sectionMonth)
+                            }
+                        }
+                        previousSectionMonth = sectionMonth
+
+                        item(key = "date-${section.date}") {
+                            AgendaDaySection(
+                                section = section,
+                                onEventClick = { event ->
+                                    eventDialog = EventDialogState.Details(event)
+                                },
+                            )
+                        }
+                    }
+
+                    item(key = "range-end") {
+                        AgendaRangeEnd(
+                            isLoading = state.isLoading,
+                            onLoadNewerEvents = onLoadNewerEvents,
                         )
                     }
                 }
-
-                item(key = "range-end") {
-                    AgendaRangeEnd(
-                        isLoading = state.isLoading,
-                        onLoadNewerEvents = onLoadNewerEvents,
-                    )
-                }
+            } else {
+                MonthCalendarView(
+                    state = state,
+                    month = visibleMonth,
+                    events = state.events,
+                    selectedDate = selectedDate,
+                    onRequestPermission = onRequestPermission,
+                    onDateSelected = ::selectMonthDate,
+                    onEventClick = { event ->
+                        eventDialog = EventDialogState.Details(event)
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                )
             }
         }
     }
@@ -643,9 +868,16 @@ private fun CalendarScreen(
         is EventDialogState.Create -> EventEditorDialog(
             title = "New event",
             calendars = state.calendars,
-            initialState = newEventFormState(dialog.calendarId),
+            initialState = newEventFormState(dialog.calendarId, dialog.date),
+            canChooseCalendar = true,
             onDismiss = { eventDialog = null },
             onSave = { draft ->
+                val eventDate = draft.startDate(ZoneId.systemDefault())
+                selectedDateText = eventDate.toString()
+                visibleMonthText = YearMonth.from(eventDate).toString()
+                pendingScrollDateText = eventDate.toString()
+                pendingScrollRequiresExactDate = draft.endMillis > System.currentTimeMillis()
+                onEnsureDateVisible(eventDate)
                 onCreateEvent(draft)
                 eventDialog = null
             },
@@ -663,6 +895,7 @@ private fun CalendarScreen(
             title = "Edit event",
             calendars = state.calendars,
             initialState = dialog.event.toFormState(),
+            canChooseCalendar = false,
             onDismiss = { eventDialog = EventDialogState.Details(dialog.event) },
             onSave = { draft ->
                 onUpdateEvent(dialog.event.id, draft)
@@ -682,44 +915,67 @@ private fun CalendarScreen(
         null -> Unit
     }
 
-    subscriptionDialogUrl?.let { initialUrl ->
-        SubscribeCalendarDialog(
+    addCalendarDialogInitialUrl?.let { initialUrl ->
+        AddCalendarDialog(
             initialUrl = initialUrl,
-            onDismiss = { subscriptionDialogUrl = null },
+            onDismiss = { addCalendarDialogInitialUrl = null },
             onSubscribe = { url, displayName ->
                 onSubscribeCalendar(url, displayName)
-                subscriptionDialogUrl = null
+                addCalendarDialogInitialUrl = null
+            },
+            onConnect = { serverUrl, username, password, displayName ->
+                onConnectCalDav(serverUrl, username, password, displayName)
+                addCalendarDialogInitialUrl = null
             },
         )
     }
 
-    if (showManageSubscriptionsDialog) {
-        ManageSubscriptionsDialog(
-            subscriptions = state.subscriptions,
-            onDismiss = { showManageSubscriptionsDialog = false },
-            onSync = onSyncSubscribedCalendars,
-            onUnsubscribe = onUnsubscribeCalendar,
-        )
+    selectedDrawerCalendarId
+        ?.let { calendarId -> state.calendars.firstOrNull { it.id == calendarId } }
+        ?.let { calendar ->
+            val subscription = state.subscriptions.firstOrNull { it.calendarId == calendar.id }
+            val calDavCalendar = state.calDavCalendars.firstOrNull { it.localCalendarId == calendar.id }
+            val calDavAccount = calDavCalendar
+                ?.let { remote -> state.calDavAccounts.firstOrNull { it.id == remote.accountId } }
+            CalendarOptionsDialog(
+                calendar = calendar,
+                subscription = subscription,
+                calDavCalendar = calDavCalendar,
+                calDavAccount = calDavAccount,
+                onDismiss = { selectedDrawerCalendarId = null },
+                onRenameSubscription = { subscriptionId, displayName ->
+                    onRenameSubscription(subscriptionId, displayName)
+                    selectedDrawerCalendarId = null
+                },
+                onRenameCalDavCalendar = { calendarId, displayName ->
+                    onRenameCalDavCalendar(calendarId, displayName)
+                    selectedDrawerCalendarId = null
+                },
+                onUnsubscribe = { subscriptionId ->
+                    onUnsubscribeCalendar(subscriptionId)
+                    selectedDrawerCalendarId = null
+                },
+                onDisconnectCalDav = { accountId ->
+                    onDisconnectCalDav(accountId)
+                    selectedDrawerCalendarId = null
+                },
+            )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AgendaTopBar(
+private fun CalendarTopBar(
     state: CalendarUiState,
+    viewMode: CalendarViewMode,
     month: YearMonth,
-    isMonthExpanded: Boolean,
     onOpenNavigation: () -> Unit,
-    onToggleMonth: () -> Unit,
+    onOpenAgenda: () -> Unit,
+    onOpenMonth: () -> Unit,
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
     onToday: () -> Unit,
 ) {
-    val toggleRotation by animateFloatAsState(
-        targetValue = if (isMonthExpanded) 180f else 0f,
-        label = "Month toggle rotation",
-    )
-
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = onOpenNavigation) {
@@ -730,44 +986,46 @@ private fun AgendaTopBar(
             }
         },
         title = {
-            Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .clickable(onClick = onToggleMonth)
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
-            ) {
-                Text(
-                    text = month.format(DateTimeFormatter.ofPattern("MMMM yyyy")),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                Icon(
-                    imageVector = Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = if (isMonthExpanded) {
-                        "Collapse month"
-                    } else {
-                        "Expand month"
-                    },
-                    modifier = Modifier
-                        .size(20.dp)
-                        .rotate(toggleRotation),
-                )
-            }
+            Text(
+                text = if (viewMode == CalendarViewMode.Agenda) {
+                    "Agenda"
+                } else {
+                    month.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                },
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
         },
         actions = {
             if (state.hasCalendarPermission) {
-                IconButton(onClick = onPreviousMonth) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
-                        contentDescription = "Previous month",
-                    )
+                if (viewMode == CalendarViewMode.Month) {
+                    IconButton(onClick = onPreviousMonth) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+                            contentDescription = "Previous month",
+                        )
+                    }
+                    IconButton(onClick = onNextMonth) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                            contentDescription = "Next month",
+                        )
+                    }
                 }
-                IconButton(onClick = onNextMonth) {
+                IconButton(
+                    onClick = if (viewMode == CalendarViewMode.Agenda) onOpenMonth else onOpenAgenda,
+                ) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                        contentDescription = "Next month",
+                        imageVector = if (viewMode == CalendarViewMode.Agenda) {
+                            Icons.Rounded.CalendarMonth
+                        } else {
+                            Icons.Rounded.ViewAgenda
+                        },
+                        contentDescription = if (viewMode == CalendarViewMode.Agenda) {
+                            "Open month view"
+                        } else {
+                            "Open agenda view"
+                        },
                     )
                 }
                 IconButton(onClick = onToday) {
@@ -790,9 +1048,9 @@ private fun AgendaTopBar(
 @Composable
 private fun CalendarDrawer(
     state: CalendarUiState,
-    onSubscribeCalendar: () -> Unit,
-    onSyncSubscribedCalendars: () -> Unit,
-    onManageSubscriptions: () -> Unit,
+    onAddCalendar: () -> Unit,
+    onSyncCalendars: () -> Unit,
+    onCalendarLongPress: (Long) -> Unit,
 ) {
     ModalDrawerSheet {
         Column(
@@ -801,12 +1059,29 @@ private fun CalendarDrawer(
                 .padding(horizontal = 12.dp, vertical = 18.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            Text(
+            Row(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                text = "Calendars",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-            )
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = "Calendars",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                if (state.hasRemoteCalendars()) {
+                    IconButton(
+                        modifier = Modifier.size(40.dp),
+                        onClick = onSyncCalendars,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Sync,
+                            contentDescription = "Sync calendars",
+                        )
+                    }
+                }
+            }
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = state.agendaSubtitle(),
@@ -827,10 +1102,13 @@ private fun CalendarDrawer(
                     )
                 } else {
                     val subscriptionsByCalendarId = state.subscriptions.associateBy { it.calendarId }
+                    val calDavByCalendarId = state.calDavCalendars.associateBy { it.localCalendarId }
                     state.calendars.forEach { calendar ->
                         CalendarDrawerRow(
                             calendar = calendar,
                             subscription = subscriptionsByCalendarId[calendar.id],
+                            calDavCalendar = calDavByCalendarId[calendar.id],
+                            onLongPress = { onCalendarLongPress(calendar.id) },
                         )
                     }
                 }
@@ -839,7 +1117,7 @@ private fun CalendarDrawer(
                     color = MaterialTheme.colorScheme.outlineVariant,
                 )
                 NavigationDrawerItem(
-                    label = { Text("Add calendar from URL") },
+                    label = { Text("Add calendar") },
                     selected = false,
                     icon = {
                         Icon(
@@ -847,49 +1125,32 @@ private fun CalendarDrawer(
                             contentDescription = null,
                         )
                     },
-                    onClick = onSubscribeCalendar,
+                    onClick = onAddCalendar,
                 )
-                if (state.subscriptions.isNotEmpty()) {
-                    NavigationDrawerItem(
-                        label = { Text("Sync subscriptions") },
-                        selected = false,
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Sync,
-                                contentDescription = null,
-                            )
-                        },
-                        onClick = onSyncSubscribedCalendars,
-                    )
-                }
-                if (state.subscriptions.isNotEmpty()) {
-                    NavigationDrawerItem(
-                        label = { Text("Manage URL calendars") },
-                        selected = false,
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Link,
-                                contentDescription = null,
-                            )
-                        },
-                        onClick = onManageSubscriptions,
-                    )
-                }
             }
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CalendarDrawerRow(
     calendar: CalendarSource,
     subscription: CalendarSubscription?,
+    calDavCalendar: CalDavCalendar?,
+    onLongPress: () -> Unit,
 ) {
-    val secondaryText = calendar.drawerSecondaryText(subscription)
+    val secondaryText = calendar.drawerSecondaryText(subscription, calDavCalendar)
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .combinedClickable(
+                onClick = {},
+                onLongClick = onLongPress,
+                onLongClickLabel = "Calendar options",
+            )
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1018,6 +1279,56 @@ private fun AgendaMonthJunction(month: YearMonth) {
         HorizontalDivider(
             modifier = Modifier.weight(1f),
             color = MaterialTheme.colorScheme.outlineVariant,
+        )
+    }
+}
+
+@Composable
+private fun MonthCalendarView(
+    state: CalendarUiState,
+    month: YearMonth,
+    events: List<CalendarEvent>,
+    selectedDate: LocalDate,
+    onRequestPermission: () -> Unit,
+    onDateSelected: (LocalDate) -> Unit,
+    onEventClick: (CalendarEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val zone = ZoneId.systemDefault()
+    val selectedEvents = remember(events, selectedDate) {
+        events
+            .filter { event -> event.startDate(zone) == selectedDate }
+            .sortedBy { event -> event.startMillis }
+    }
+
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        if (!state.hasCalendarPermission) {
+            PermissionPanel(onRequestPermission = onRequestPermission)
+            return@Column
+        }
+
+        state.error?.let { message ->
+            CompactStatus(
+                title = "Calendar unavailable",
+                body = message,
+            )
+        }
+
+        MonthOverview(
+            month = month,
+            events = events,
+            selectedDate = selectedDate,
+            onDateSelected = onDateSelected,
+        )
+
+        AgendaDaySection(
+            section = AgendaSection(selectedDate, selectedEvents),
+            onEventClick = onEventClick,
         )
     }
 }
@@ -1157,12 +1468,39 @@ private fun AgendaDaySection(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            section.events.forEach { event ->
-                AgendaEventBlock(
-                    event = event,
-                    onClick = { onEventClick(event) },
-                )
+            if (section.events.isEmpty()) {
+                AgendaEmptyDayBlock()
+            } else {
+                section.events.forEach { event ->
+                    AgendaEventBlock(
+                        event = event,
+                        onClick = { onEventClick(event) },
+                    )
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun AgendaEmptyDayBlock() {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 58.dp),
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        shape = RoundedCornerShape(4.dp),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = "No events",
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium,
+            )
         }
     }
 }
@@ -1480,10 +1818,12 @@ private fun EventEditorDialog(
     title: String,
     calendars: List<CalendarSource>,
     initialState: EventFormState,
+    canChooseCalendar: Boolean,
     onDismiss: () -> Unit,
     onSave: (CalendarEventDraft) -> Unit,
 ) {
     var formState by remember(initialState) { mutableStateOf(initialState) }
+    val writableCalendars = remember(calendars) { calendars.writableEventCalendars() }
     val calendarName = calendars.calendarName(formState.calendarId)
 
     AlertDialog(
@@ -1508,11 +1848,21 @@ private fun EventEditorDialog(
                     )
                 }
 
-                Text(
-                    text = "Calendar: $calendarName",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                if (canChooseCalendar && writableCalendars.isNotEmpty()) {
+                    EventCalendarPicker(
+                        calendars = writableCalendars,
+                        selectedCalendarId = formState.calendarId,
+                        onSelected = { calendarId ->
+                            formState = formState.copy(calendarId = calendarId, error = null)
+                        },
+                    )
+                } else {
+                    Text(
+                        text = "Calendar: $calendarName",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
 
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -1612,12 +1962,92 @@ private fun EventEditorDialog(
 }
 
 @Composable
-private fun SubscribeCalendarDialog(
+private fun EventCalendarPicker(
+    calendars: List<CalendarSource>,
+    selectedCalendarId: Long,
+    onSelected: (Long) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(
+            text = "Calendar",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            calendars.forEach { calendar ->
+                CalendarPickerRow(
+                    calendar = calendar,
+                    selected = calendar.id == selectedCalendarId,
+                    onClick = { onSelected(calendar.id) },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun CalendarPickerRow(
+    calendar: CalendarSource,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick),
+        color = if (selected) {
+            MaterialTheme.colorScheme.secondaryContainer
+        } else {
+            MaterialTheme.colorScheme.surfaceContainer
+        },
+        contentColor = if (selected) {
+            MaterialTheme.colorScheme.onSecondaryContainer
+        } else {
+            MaterialTheme.colorScheme.onSurface
+        },
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(calendar.drawerColor()),
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = calendar.displayName,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+private enum class AddCalendarType {
+    Url,
+    CalDav,
+}
+
+@Composable
+private fun AddCalendarDialog(
     initialUrl: String,
     onDismiss: () -> Unit,
     onSubscribe: (String, String?) -> Unit,
+    onConnect: (String, String, String, String?) -> Unit,
 ) {
+    var selectedType by rememberSaveable(initialUrl) { mutableStateOf(AddCalendarType.Url) }
     var url by rememberSaveable(initialUrl) { mutableStateOf(initialUrl) }
+    var serverUrl by rememberSaveable { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
     var displayName by rememberSaveable { mutableStateOf("") }
     var error by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -1625,13 +2055,14 @@ private fun SubscribeCalendarDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Subscribe from URL",
+                text = "Add calendar",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
             )
         },
         text = {
             Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 error?.let { message ->
@@ -1641,28 +2072,96 @@ private fun SubscribeCalendarDialog(
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = url,
-                    onValueChange = {
-                        url = it
-                        error = null
-                    },
-                    label = { Text("Calendar URL") },
-                    placeholder = { Text("https://example.com/calendar.ics") },
-                    singleLine = true,
-                )
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = displayName,
-                    onValueChange = {
-                        displayName = it
-                        error = null
-                    },
-                    label = { Text("Name") },
-                    placeholder = { Text("Optional") },
-                    singleLine = true,
-                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(
+                        selected = selectedType == AddCalendarType.Url,
+                        onClick = {
+                            selectedType = AddCalendarType.Url
+                            error = null
+                        },
+                        label = { Text("URL") },
+                    )
+                    FilterChip(
+                        selected = selectedType == AddCalendarType.CalDav,
+                        onClick = {
+                            selectedType = AddCalendarType.CalDav
+                            error = null
+                        },
+                        label = { Text("CalDAV") },
+                    )
+                }
+                when (selectedType) {
+                    AddCalendarType.Url -> {
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = url,
+                            onValueChange = {
+                                url = it
+                                error = null
+                            },
+                            label = { Text("Calendar URL") },
+                            placeholder = { Text("http://example.com/calendar.ics") },
+                            singleLine = true,
+                        )
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = displayName,
+                            onValueChange = {
+                                displayName = it
+                                error = null
+                            },
+                            label = { Text("Name") },
+                            placeholder = { Text("Optional") },
+                            singleLine = true,
+                        )
+                    }
+
+                    AddCalendarType.CalDav -> {
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = serverUrl,
+                            onValueChange = {
+                                serverUrl = it
+                                error = null
+                            },
+                            label = { Text("Server URL") },
+                            placeholder = { Text("http://example.com/") },
+                            singleLine = true,
+                        )
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = username,
+                            onValueChange = {
+                                username = it
+                                error = null
+                            },
+                            label = { Text("Username") },
+                            singleLine = true,
+                        )
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = password,
+                            onValueChange = {
+                                password = it
+                                error = null
+                            },
+                            label = { Text("Password") },
+                            visualTransformation = PasswordVisualTransformation(),
+                            singleLine = true,
+                        )
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = displayName,
+                            onValueChange = {
+                                displayName = it
+                                error = null
+                            },
+                            label = { Text("Name") },
+                            placeholder = { Text("Optional") },
+                            singleLine = true,
+                        )
+                    }
+                }
             }
         },
         dismissButton = {
@@ -1673,131 +2172,186 @@ private fun SubscribeCalendarDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    val cleanedUrl = url.trim()
-                    if (cleanedUrl.isBlank()) {
-                        error = "Add a calendar URL."
-                    } else {
-                        onSubscribe(cleanedUrl, displayName.trim().takeIf { it.isNotBlank() })
+                    when (selectedType) {
+                        AddCalendarType.Url -> {
+                            val cleanedUrl = url.trim()
+                            if (cleanedUrl.isBlank()) {
+                                error = "Add a calendar URL."
+                            } else {
+                                onSubscribe(cleanedUrl, displayName.trim().takeIf { it.isNotBlank() })
+                            }
+                        }
+
+                        AddCalendarType.CalDav -> when {
+                            serverUrl.isBlank() -> error = "Add a CalDAV server URL."
+                            username.isBlank() -> error = "Add a username."
+                            password.isBlank() -> error = "Add a password or app password."
+                            else -> onConnect(
+                                serverUrl.trim(),
+                                username.trim(),
+                                password,
+                                displayName.trim().takeIf { it.isNotBlank() },
+                            )
+                        }
                     }
                 },
             ) {
-                Text("Subscribe")
+                Text(if (selectedType == AddCalendarType.Url) "Subscribe" else "Connect")
             }
         },
     )
 }
 
 @Composable
-private fun ManageSubscriptionsDialog(
-    subscriptions: List<CalendarSubscription>,
+private fun CalendarOptionsDialog(
+    calendar: CalendarSource,
+    subscription: CalendarSubscription?,
+    calDavCalendar: CalDavCalendar?,
+    calDavAccount: CalDavAccount?,
     onDismiss: () -> Unit,
-    onSync: () -> Unit,
+    onRenameSubscription: (String, String) -> Unit,
+    onRenameCalDavCalendar: (String, String) -> Unit,
     onUnsubscribe: (String) -> Unit,
+    onDisconnectCalDav: (String) -> Unit,
 ) {
+    var displayName by remember(calendar.id) { mutableStateOf(calendar.displayName) }
+    val cleanedDisplayName = displayName.trim()
+    val canRename = subscription != null || calDavCalendar != null
+    val canSave = canRename &&
+        cleanedDisplayName.isNotBlank() &&
+        cleanedDisplayName != calendar.displayName
+    val secondaryText = calendar.drawerSecondaryText(subscription, calDavCalendar)
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Calendar subscriptions",
+                text = "Calendar options",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
             )
         },
         text = {
             Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                if (subscriptions.isEmpty()) {
+                OutlinedTextField(
+                    value = displayName,
+                    onValueChange = { displayName = it },
+                    enabled = canRename,
+                    singleLine = true,
+                    label = { Text("Name") },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = when {
+                        subscription != null -> "URL calendar"
+                        calDavCalendar != null -> "CalDAV calendar"
+                        else -> "Android calendar"
+                    },
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                secondaryText?.let { text ->
                     Text(
-                        text = "No subscribed calendars.",
-                        style = MaterialTheme.typography.bodyMedium,
+                        text = text,
+                        style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                } else {
-                    subscriptions.forEach { subscription ->
-                        SubscriptionRow(
-                            subscription = subscription,
-                            onUnsubscribe = { onUnsubscribe(subscription.id) },
+                }
+                subscription?.let {
+                    Text(
+                        text = it.url,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                calDavAccount?.let { account ->
+                    Text(
+                        text = "${account.displayName} · ${account.baseUrl}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                if (!canRename) {
+                    Text(
+                        text = "This calendar is managed outside this app.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                when {
+                    subscription != null -> TextButton(
+                        onClick = { onUnsubscribe(subscription.id) },
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error,
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Delete,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
                         )
+                        Text("Unsubscribe")
+                    }
+
+                    calDavCalendar != null -> TextButton(
+                        onClick = { onDisconnectCalDav(calDavCalendar.accountId) },
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error,
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Delete,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Text("Disconnect")
+                    }
+
+                    else -> Box(modifier = Modifier.width(1.dp))
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text("Cancel")
+                    }
+                    Button(
+                        onClick = {
+                            when {
+                                subscription != null -> onRenameSubscription(
+                                    subscription.id,
+                                    cleanedDisplayName,
+                                )
+
+                                calDavCalendar != null -> onRenameCalDavCalendar(
+                                    calDavCalendar.id,
+                                    cleanedDisplayName,
+                                )
+                            }
+                        },
+                        enabled = canSave,
+                    ) {
+                        Text("Save")
                     }
                 }
             }
         },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Close")
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    onSync()
-                    onDismiss()
-                },
-                enabled = subscriptions.isNotEmpty(),
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Sync,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp),
-                )
-                Text("Sync")
-            }
-        },
     )
-}
-
-@Composable
-private fun SubscriptionRow(
-    subscription: CalendarSubscription,
-    onUnsubscribe: () -> Unit,
-) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surfaceContainer,
-        shape = RoundedCornerShape(8.dp),
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = subscription.displayName,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.SemiBold,
-            )
-            Text(
-                text = subscription.url,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            subscription.lastError?.let { error ->
-                Text(
-                    text = error,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
-                )
-            } ?: Text(
-                text = subscription.lastSyncLabel(),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            TextButton(
-                onClick = onUnsubscribe,
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error,
-                ),
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Delete,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp),
-                )
-                Text("Unsubscribe")
-            }
-        }
-    }
 }
 
 @Composable
@@ -1876,8 +2430,16 @@ private data class AgendaSection(
     val events: List<CalendarEvent>,
 )
 
+private enum class CalendarViewMode {
+    Agenda,
+    Month,
+}
+
 private sealed interface EventDialogState {
-    data class Create(val calendarId: Long) : EventDialogState
+    data class Create(
+        val calendarId: Long,
+        val date: LocalDate,
+    ) : EventDialogState
 
     data class Details(val event: CalendarEvent) : EventDialogState
 
@@ -1941,12 +2503,18 @@ private fun YearMonth.calendarCells(): List<LocalDate?> {
     return List(leadingEmptyCells) { null } + dates + List(trailingEmptyCells) { null }
 }
 
-private fun List<CalendarEvent>.agendaSections(): List<AgendaSection> {
+private fun List<CalendarEvent>.agendaSectionsWithToday(): List<AgendaSection> {
     val zone = ZoneId.systemDefault()
-    return groupBy { event -> event.startDate(zone) }
+    val sections = groupBy { event -> event.startDate(zone) }
         .mapValues { (_, events) -> events.sortedBy { it.startMillis } }
         .toSortedMap()
         .map { (date, events) -> AgendaSection(date, events) }
+    val today = LocalDate.now()
+
+    if (sections.any { it.date == today }) return sections
+
+    return (sections + AgendaSection(today, emptyList()))
+        .sortedBy { it.date }
 }
 
 private fun List<AgendaSection>.monthJunctionCountThrough(sectionIndex: Int): Int {
@@ -1963,6 +2531,10 @@ private fun CalendarUiState.agendaSubtitle(): String {
         isLoading -> "Refreshing agenda"
         else -> "Upcoming through ${rangeEndDate.compactDateLabel()}, ${calendars.size.calendarCountLabel()}"
     }
+}
+
+private fun CalendarUiState.hasRemoteCalendars(): Boolean {
+    return subscriptions.isNotEmpty() || calDavAccounts.isNotEmpty()
 }
 
 private fun LocalDate.compactDateLabel(): String {
@@ -1985,6 +2557,22 @@ private fun CalendarSubscription.lastSyncLabel(): String {
     return "Last synced $syncTime"
 }
 
+private fun CalDavCalendar.lastSyncLabel(): String {
+    val syncMillis = lastSyncMillis ?: return "Not synced yet"
+    val syncTime = Instant.ofEpochMilli(syncMillis)
+        .atZone(ZoneId.systemDefault())
+        .format(DateTimeFormatter.ofPattern("d MMM, HH:mm"))
+    return "Last synced $syncTime"
+}
+
+private fun CalDavAccount.lastSyncLabel(): String {
+    val syncMillis = lastSyncMillis ?: return "Not synced yet"
+    val syncTime = Instant.ofEpochMilli(syncMillis)
+        .atZone(ZoneId.systemDefault())
+        .format(DateTimeFormatter.ofPattern("d MMM, HH:mm"))
+    return "Last synced $syncTime"
+}
+
 @Composable
 private fun CalendarSource.drawerColor(): Color {
     return color?.let(::Color) ?: MaterialTheme.colorScheme.primary
@@ -1994,8 +2582,15 @@ private fun CalendarSource.isDrawerReadOnly(): Boolean {
     return isSubscribed || !isWritable
 }
 
-private fun CalendarSource.drawerSecondaryText(subscription: CalendarSubscription?): String? {
-    return if (isSubscribed) subscription?.lastSyncLabel() ?: "Not synced yet" else null
+private fun CalendarSource.drawerSecondaryText(
+    subscription: CalendarSubscription?,
+    calDavCalendar: CalDavCalendar?,
+): String? {
+    return when {
+        isSubscribed -> subscription?.lastSyncLabel() ?: "Not synced yet"
+        isCalDav -> calDavCalendar?.lastSyncLabel() ?: "Not synced yet"
+        else -> null
+    }
 }
 
 private fun String.toCalendarNoteText(): CharSequence {
@@ -2016,11 +2611,19 @@ private fun List<CalendarSource>.defaultWritableCalendar(): CalendarSource? {
     return firstOrNull { it.isVisible && it.isWritable } ?: firstOrNull { it.isWritable }
 }
 
+private fun List<CalendarSource>.writableEventCalendars(): List<CalendarSource> {
+    return filter { it.isVisible && it.isWritable }
+        .ifEmpty { filter { it.isWritable } }
+}
+
 private fun List<CalendarSource>.calendarName(calendarId: Long): String {
     return firstOrNull { it.id == calendarId }?.displayName ?: "Default calendar"
 }
 
-private fun newEventFormState(calendarId: Long): EventFormState {
+private fun newEventFormState(
+    calendarId: Long,
+    date: LocalDate,
+): EventFormState {
     val start = LocalTime.now()
         .plusHours(1)
         .truncatedTo(ChronoUnit.HOURS)
@@ -2029,7 +2632,7 @@ private fun newEventFormState(calendarId: Long): EventFormState {
     return EventFormState(
         calendarId = calendarId,
         title = "",
-        date = LocalDate.now().format(DateInputFormatter),
+        date = date.format(DateInputFormatter),
         startTime = start.format(TimeOutputFormatter),
         endTime = end.format(TimeOutputFormatter),
         allDay = false,
@@ -2040,8 +2643,9 @@ private fun newEventFormState(calendarId: Long): EventFormState {
 
 private fun CalendarEvent.toFormState(): EventFormState {
     val zone = ZoneId.systemDefault()
-    val start = Instant.ofEpochMilli(startMillis).atZone(zone)
-    val end = Instant.ofEpochMilli(endMillis).atZone(zone)
+    val dateZone = if (allDay) ZoneOffset.UTC else zone
+    val start = Instant.ofEpochMilli(startMillis).atZone(dateZone)
+    val end = Instant.ofEpochMilli(endMillis).atZone(dateZone)
 
     return EventFormState(
         calendarId = calendarId,
@@ -2074,10 +2678,12 @@ private fun EventFormState.toDraft(): CalendarEventDraft {
     val zone = ZoneId.systemDefault()
     val startMillis: Long
     val endMillis: Long
+    val eventTimeZone: String
 
     if (allDay) {
-        startMillis = eventDate.atStartOfDay(zone).toInstant().toEpochMilli()
-        endMillis = eventDate.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
+        startMillis = eventDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+        endMillis = eventDate.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+        eventTimeZone = ZoneOffset.UTC.id
     } else {
         val parsedStart = parseTime(startTime, "start")
         val parsedEnd = parseTime(endTime, "end")
@@ -2090,6 +2696,7 @@ private fun EventFormState.toDraft(): CalendarEventDraft {
 
         startMillis = start.toInstant().toEpochMilli()
         endMillis = end.toInstant().toEpochMilli()
+        eventTimeZone = zone.id
     }
 
     return CalendarEventDraft(
@@ -2100,7 +2707,7 @@ private fun EventFormState.toDraft(): CalendarEventDraft {
         startMillis = startMillis,
         endMillis = endMillis,
         allDay = allDay,
-        timeZone = zone.id,
+        timeZone = eventTimeZone,
         availability = EventAvailability.Busy,
     )
 }
@@ -2121,7 +2728,13 @@ private fun LocalDate.agendaTitle(): String {
 }
 
 private fun CalendarEvent.startDate(zone: ZoneId): LocalDate {
-    return Instant.ofEpochMilli(startMillis).atZone(zone).toLocalDate()
+    val dateZone = if (allDay) ZoneOffset.UTC else zone
+    return Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+}
+
+private fun CalendarEventDraft.startDate(zone: ZoneId): LocalDate {
+    val dateZone = if (allDay) ZoneOffset.UTC else zone
+    return Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
 }
 
 private fun CalendarEvent.timeRangeLabel(): String {
@@ -2135,8 +2748,9 @@ private fun CalendarEvent.timeRangeLabel(): String {
 
 private fun CalendarEvent.detailDateTimeLabel(): String {
     val zone = ZoneId.systemDefault()
-    val start = Instant.ofEpochMilli(startMillis).atZone(zone)
-    val end = Instant.ofEpochMilli(endMillis).atZone(zone)
+    val dateZone = if (allDay) ZoneOffset.UTC else zone
+    val start = Instant.ofEpochMilli(startMillis).atZone(dateZone)
+    val end = Instant.ofEpochMilli(endMillis).atZone(dateZone)
 
     return if (allDay) {
         "${start.toLocalDate().format(DateInputFormatter)} - All day"

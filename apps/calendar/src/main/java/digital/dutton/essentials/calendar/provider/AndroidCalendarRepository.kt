@@ -12,7 +12,9 @@ import digital.dutton.essentials.calendar.data.CalendarEventDraft
 import digital.dutton.essentials.calendar.data.CalendarRepository
 import digital.dutton.essentials.calendar.data.CalendarSource
 import digital.dutton.essentials.calendar.data.EventAvailability
+import digital.dutton.essentials.calendar.sync.CalDavAccountType
 import digital.dutton.essentials.calendar.sync.SubscriptionAccountType
+import java.util.UUID
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -71,7 +73,7 @@ class AndroidCalendarRepository(
 
         val uri = context.contentResolver.insert(
             CalendarContract.Events.CONTENT_URI,
-            event.toContentValues(),
+            event.toContentValues(includeUid = true),
         ) ?: throw IllegalStateException("Android Calendar Provider did not return a new event URI.")
 
         ContentUris.parseId(uri)
@@ -85,7 +87,7 @@ class AndroidCalendarRepository(
             requireCalendarWritePermission()
 
             val uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId)
-            val updatedRows = context.contentResolver.update(uri, event.toContentValues(), null, null)
+            val updatedRows = context.contentResolver.update(uri, event.toContentValues(includeUid = false), null, null)
             if (updatedRows == 0) {
                 throw IllegalStateException("Event was not updated.")
             }
@@ -116,7 +118,7 @@ class AndroidCalendarRepository(
         }
     }
 
-    private fun CalendarEventDraft.toContentValues(): ContentValues {
+    private fun CalendarEventDraft.toContentValues(includeUid: Boolean): ContentValues {
         return ContentValues().apply {
             put(CalendarContract.Events.CALENDAR_ID, calendarId)
             put(CalendarContract.Events.TITLE, title.ifBlank { "Untitled" })
@@ -128,6 +130,9 @@ class AndroidCalendarRepository(
             put(CalendarContract.Events.EVENT_TIMEZONE, timeZone)
             put(CalendarContract.Events.EVENT_END_TIMEZONE, timeZone)
             put(CalendarContract.Events.AVAILABILITY, availability.toProviderValue())
+            if (includeUid) {
+                put(CalendarContract.Events.UID_2445, UUID.randomUUID().toString())
+            }
         }
     }
 
@@ -145,6 +150,7 @@ class AndroidCalendarRepository(
         val accessLevel = optionalInt(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL)
             ?: CalendarContract.Calendars.CAL_ACCESS_NONE
         val isSubscribed = accountType == SubscriptionAccountType
+        val isCalDav = accountType == CalDavAccountType
 
         return CalendarSource(
             id = requireLong(CalendarContract.Calendars._ID),
@@ -158,6 +164,7 @@ class AndroidCalendarRepository(
             isVisible = optionalInt(CalendarContract.Calendars.VISIBLE) != 0,
             isWritable = !isSubscribed && accessLevel >= CalendarContract.Calendars.CAL_ACCESS_CONTRIBUTOR,
             isSubscribed = isSubscribed,
+            isCalDav = isCalDav,
         )
     }
 

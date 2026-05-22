@@ -10,6 +10,7 @@ data class CalendarSource(
     val isVisible: Boolean,
     val isWritable: Boolean,
     val isSubscribed: Boolean,
+    val isCalDav: Boolean,
 )
 
 data class CalendarEvent(
