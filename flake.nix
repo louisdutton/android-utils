@@ -121,6 +121,38 @@
             hash = "sha256-YDh67zrLl+ek7oJBQIfCHARa9yAzH8TsMLpGUtNQqjg=";
           };
         };
+        scoresOmrModelArchives = {
+          segnet = pkgs.fetchurl {
+            url = "https://github.com/liebharc/homr/releases/download/onnx_checkpoints/segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f_fp16.zip";
+            hash = "sha256-jQWjf+doKWc7yd7wp8rxaOWGCqTRqPesG2Ejqmn+PYI=";
+          };
+          encoder = pkgs.fetchurl {
+            url = "https://github.com/liebharc/homr/releases/download/onnx_checkpoints/encoder_pytorch_model_331-e10346542968cc71fbcce0c0696f3ac963f11ae1_fp16.zip";
+            hash = "sha256-E8Z69fGSQmcmBX9i5U9Gv/TvtHHkqKL0Yx7aEQefK/w=";
+          };
+          decoder = pkgs.fetchurl {
+            url = "https://github.com/liebharc/homr/releases/download/onnx_checkpoints/decoder_pytorch_model_331-e10346542968cc71fbcce0c0696f3ac963f11ae1.zip";
+            hash = "sha256-XRfbwW2yhop9w3ymziJlG4pIxPebWS/DmvsLoa0u6ag=";
+          };
+        };
+        scoresOmrAssets = pkgs.runCommand "scores-omr-assets-homr-onnx-2025-08-18" {
+          nativeBuildInputs = [pkgs.unzip];
+        } ''
+          mkdir -p "$out/omr"
+          unzip -p ${scoresOmrModelArchives.segnet} \
+            segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f_fp16.onnx \
+            > "$out/omr/segmentation.onnx"
+          unzip -p ${scoresOmrModelArchives.encoder} \
+            encoder_pytorch_model_331-e10346542968cc71fbcce0c0696f3ac963f11ae1_fp16.onnx \
+            > "$out/omr/encoder.onnx"
+          unzip -p ${scoresOmrModelArchives.decoder} \
+            decoder_pytorch_model_331-e10346542968cc71fbcce0c0696f3ac963f11ae1.onnx \
+            > "$out/omr/decoder.onnx"
+          cat > "$out/omr/README.txt" <<'EOF'
+HOMR ONNX checkpoint assets pinned from the upstream onnx_checkpoints release.
+These are packaged for the Scores app OMR integration path.
+EOF
+        '';
         systemImageType = "default";
         emulatorAbiVersion =
           if pkgs.stdenv.hostPlatform.isAarch64
@@ -224,6 +256,7 @@
             COMAPS_PROTOBUF_SRC = comapsThirdParty.protobuf;
             COMAPS_PUGIXML_SRC = comapsThirdParty.pugixml;
             COMAPS_VULKAN_HEADERS_SRC = comapsThirdParty.vulkanHeaders;
+            SCORES_OMR_ASSETS_DIR = scoresOmrAssets;
             RAIL_SCHEDULE_ASSET_ROOT = "/tmp/grapheneos-essentials-rail-assets";
             RAIL_SCHEDULE_CACHE_DIR = "/tmp/grapheneos-essentials-rail-cache";
 
