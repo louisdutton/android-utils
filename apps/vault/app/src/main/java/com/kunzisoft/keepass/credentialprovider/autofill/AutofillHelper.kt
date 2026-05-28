@@ -437,17 +437,14 @@ object AutofillHelper {
             }
         }
 
-        // Add inline suggestion for new IME and dataset
-        var numberInlineSuggestions = 0
+        // Add inline suggestions for new IME and dataset. Matched entries should
+        // always be offered before the manual selection fallback.
+        var maxInlineSuggestions = 0
+        var nextInlineSuggestionIndex = 0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             autofillComponent.compatInlineSuggestionsRequest
                 ?.inlineSuggestionsRequest?.let { inlineSuggestionsRequest ->
-                numberInlineSuggestions = minOf(inlineSuggestionsRequest.maxSuggestionCount, entriesInfo.size)
-                if (PreferencesUtil.isAutofillManualSelectionEnable(context)) {
-                    if (entriesInfo.size >= inlineSuggestionsRequest.maxSuggestionCount) {
-                        --numberInlineSuggestions
-                    }
-                }
+                maxInlineSuggestions = inlineSuggestionsRequest.maxSuggestionCount
             }
         }
 
@@ -456,13 +453,13 @@ object AutofillHelper {
                 // Build inline presentation for compatible keyboard
                 var inlinePresentation: InlinePresentation? = null
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
-                    && numberInlineSuggestions > 0
+                    && nextInlineSuggestionIndex < maxInlineSuggestions
                     && autofillComponent.compatInlineSuggestionsRequest != null) {
                     inlinePresentation = buildInlinePresentationForEntry(
                         context,
                         database,
                         autofillComponent.compatInlineSuggestionsRequest,
-                        numberInlineSuggestions--,
+                        nextInlineSuggestionIndex++,
                         entry
                     )
                 }
@@ -503,13 +500,19 @@ object AutofillHelper {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     autofillComponent.compatInlineSuggestionsRequest
                         ?.inlineSuggestionsRequest?.let { inlineSuggestionsRequest ->
-                            val inlinePresentationSpec =
-                                inlineSuggestionsRequest.inlinePresentationSpecs[0]
-                            inlinePresentation = buildInlinePresentationForManualSelection(
-                                context,
-                                inlinePresentationSpec,
-                                pendingIntent
-                            )
+                            val inlinePresentationSpecs =
+                                inlineSuggestionsRequest.inlinePresentationSpecs
+                            if (nextInlineSuggestionIndex < maxInlineSuggestions
+                                && inlinePresentationSpecs.isNotEmpty()) {
+                                val inlinePresentationSpec = inlinePresentationSpecs[
+                                    min(nextInlineSuggestionIndex, inlinePresentationSpecs.size - 1)
+                                ]
+                                inlinePresentation = buildInlinePresentationForManualSelection(
+                                    context,
+                                    inlinePresentationSpec,
+                                    pendingIntent
+                                )
+                            }
                         }
                 }
 

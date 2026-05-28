@@ -1,0 +1,119 @@
+package digital.dutton.essentials.scores
+
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+class HomrMusicXmlWriterTest {
+    @Test
+    fun writesValidMusicXmlForRecognizedSymbols() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Recognized",
+            symbols = listOf(
+                HomrSymbol("clef_G2", ".", ".", -1, "upper"),
+                HomrSymbol("keySignature_0", ".", ".", -1, "upper"),
+                HomrSymbol("timeSignature/4", ".", ".", -1, "upper"),
+                HomrSymbol("note_4", ".", "C4", -1, "upper"),
+                HomrSymbol("note_4", ".", "D4", -1, "upper"),
+                HomrSymbol("note_4", ".", "E4", -1, "upper"),
+                HomrSymbol("note_4", ".", "F4", -1, "upper"),
+            ),
+        )
+
+        assertEquals("Recognized", MusicXmlFiles.title(musicXml))
+        assertTrue("<!DOCTYPE" !in musicXml.decodeToString())
+        assertFalse(MusicXmlFiles.validate(musicXml).any { it.code == "musicxml_parse_failed" })
+        assertFalse(MusicXmlFiles.validate(musicXml).any { it.code == "measure_duration_mismatch" })
+    }
+
+    @Test
+    fun writesMultiplePartsWithoutInflatingPerPartMeasureCount() {
+        val part = listOf(
+            HomrSymbol("note_1", ".", "C4", -1, "upper"),
+            HomrSymbol("barline", ".", ".", -1, "upper"),
+            HomrSymbol("note_1", ".", "D4", -1, "upper"),
+        )
+
+        val musicXml = HomrMusicXmlWriter.writeParts(
+            title = "Recognized",
+            parts = listOf(
+                HomrPart("Voice", part),
+                HomrPart("Piano", part),
+            ),
+        )
+
+        assertEquals(4, MusicXmlFiles.measureCount(musicXml))
+        assertEquals(2, MusicXmlFiles.maxMeasureCountInPart(musicXml))
+    }
+
+    @Test
+    fun writesGrandStaffAsOneMultiStaffPart() {
+        val musicXml = HomrMusicXmlWriter.writeParts(
+            title = "Piano",
+            parts = listOf(
+                HomrPart(
+                    name = "Piano",
+                    symbols = listOf(HomrSymbol("note_1", ".", "C4", -1, "upper")),
+                    additionalStaves = listOf(
+                        listOf(HomrSymbol("note_1", ".", "C3", -1, "upper")),
+                    ),
+                ),
+            ),
+        ).decodeToString()
+
+        assertEquals(1, "<score-part id=".toRegex().findAll(musicXml).count())
+        assertTrue("<staves>2</staves>" in musicXml)
+        assertTrue("<staff>1</staff>" in musicXml)
+        assertTrue("<staff>2</staff>" in musicXml)
+    }
+
+    @Test
+    fun writesBeamsForAdjacentEighthNotes() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Beamed",
+            symbols = listOf(
+                HomrSymbol("note_8", ".", "C4", -1, "upper"),
+                HomrSymbol("note_8", ".", "D4", -1, "upper"),
+                HomrSymbol("note_8", ".", "E4", -1, "upper"),
+                HomrSymbol("note_8", ".", "F4", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        assertEquals(2, """<beam number="1">begin</beam>""".toRegex().findAll(musicXml).count())
+        assertEquals(2, """<beam number="1">end</beam>""".toRegex().findAll(musicXml).count())
+    }
+
+    @Test
+    fun writesExplicitAccidentals() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Accidentals",
+            symbols = listOf(
+                HomrSymbol("note_4", "#", "C4", -1, "upper"),
+                HomrSymbol("note_4", "N", "D4", -1, "upper"),
+                HomrSymbol("note_4", "b", "E4", -1, "upper"),
+                HomrSymbol("note_4", "##", "F4", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        assertTrue("<accidental>sharp</accidental>" in musicXml)
+        assertTrue("<accidental>natural</accidental>" in musicXml)
+        assertTrue("<accidental>flat</accidental>" in musicXml)
+        assertTrue("<accidental>double-sharp</accidental>" in musicXml)
+    }
+
+    @Test
+    fun decodesTransformerTokensUntilEndOfSequence() {
+        val symbols = HomrVocabulary.decode(
+            arrayOf(
+                longArrayOf(5, 3),
+                longArrayOf(1, 1),
+                longArrayOf(1, 1),
+                longArrayOf(1, 1),
+                longArrayOf(2, 1),
+            ),
+        )
+
+        assertEquals(listOf("barline"), symbols.map { it.rhythm })
+    }
+}

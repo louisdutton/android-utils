@@ -4,20 +4,12 @@ import android.content.Context
 import java.io.File
 import java.util.UUID
 
-enum class NoteKind {
-    Text,
-    Audio,
-}
-
 data class Note(
     val id: String,
-    val kind: NoteKind,
     val title: String,
     val body: String,
     val createdMillis: Long,
     val updatedMillis: Long,
-    val audioFileName: String? = null,
-    val audioDurationMillis: Long? = null,
 )
 
 class NotesStore(context: Context) {
@@ -33,14 +25,13 @@ class NotesStore(context: Context) {
             .sortedByDescending { it.updatedMillis }
     }
 
-    fun createTextNote(
+    fun createNote(
         title: String = "",
         body: String = "",
     ): Note {
         val now = System.currentTimeMillis()
         val note = Note(
             id = UUID.randomUUID().toString(),
-            kind = NoteKind.Text,
             title = title,
             body = body,
             createdMillis = now,
@@ -50,37 +41,8 @@ class NotesStore(context: Context) {
         return note
     }
 
-    fun createAudioNote(
-        title: String = "",
-    ): Note {
-        val now = System.currentTimeMillis()
-        val note = Note(
-            id = UUID.randomUUID().toString(),
-            kind = NoteKind.Audio,
-            title = title,
-            body = "",
-            createdMillis = now,
-            updatedMillis = now,
-        )
-        save(note)
-        return note
-    }
-
     fun save(note: Note): Note {
-        val updatedNote = when (note.kind) {
-            NoteKind.Text -> note.copy(
-                title = note.title,
-                body = note.body,
-                audioFileName = null,
-                audioDurationMillis = null,
-                updatedMillis = System.currentTimeMillis(),
-            )
-            NoteKind.Audio -> note.copy(
-                title = note.title,
-                body = "",
-                updatedMillis = System.currentTimeMillis(),
-            )
-        }
+        val updatedNote = note.copy(updatedMillis = System.currentTimeMillis())
         val directory = noteDirectory(updatedNote.id).apply { mkdirs() }
         File(directory, NoteFileName).writeText(updatedNote.toMarkdownDocument())
         return updatedNote
@@ -90,43 +52,21 @@ class NotesStore(context: Context) {
         noteDirectory(note.id).deleteRecursively()
     }
 
-    fun createAudioFile(note: Note): File {
-        return File(noteDirectory(note.id).apply { mkdirs() }, AudioFileName)
-    }
-
-    fun audioFile(note: Note): File? {
-        val fileName = note.audioFileName ?: return null
-        return File(noteDirectory(note.id), fileName).takeIf { it.exists() }
-    }
-
     private fun readNote(directory: File): Note? {
         val markdownFile = File(directory, NoteFileName)
         if (!markdownFile.exists()) return null
 
         val document = markdownFile.readText()
         val (metadata, body) = document.parseMarkdownDocument()
-        val now = markdownFile.lastModified().takeIf { it > 0 } ?: System.currentTimeMillis()
-        val audioFileName = metadata["audio"]?.takeIf { it.isNotBlank() }
-        val kind = metadata["kind"]?.toNoteKind()
-            ?: if (audioFileName != null && body.isBlank()) NoteKind.Audio else NoteKind.Text
-        val defaultTitle = when (kind) {
-            NoteKind.Text -> "Untitled note"
-            NoteKind.Audio -> "Audio note"
-        }
+        if (metadata["kind"] == "audio" || metadata["audio"] != null) return null
 
+        val now = markdownFile.lastModified().takeIf { it > 0 } ?: System.currentTimeMillis()
         return Note(
             id = metadata["id"] ?: directory.name,
-            kind = kind,
-            title = metadata["title"] ?: defaultTitle,
-            body = if (kind == NoteKind.Text) body else "",
+            title = metadata["title"] ?: "Untitled note",
+            body = body,
             createdMillis = metadata["created"]?.toLongOrNull() ?: now,
             updatedMillis = metadata["updated"]?.toLongOrNull() ?: now,
-            audioFileName = if (kind == NoteKind.Audio) audioFileName else null,
-            audioDurationMillis = if (kind == NoteKind.Audio) {
-                metadata["audioDurationMillis"]?.toLongOrNull()
-            } else {
-                null
-            },
         )
     }
 
@@ -137,7 +77,6 @@ class NotesStore(context: Context) {
     private companion object {
         const val NotesDirectoryName = "notes"
         const val NoteFileName = "note.md"
-        const val AudioFileName = "audio.m4a"
     }
 }
 
@@ -145,35 +84,14 @@ private fun Note.toMarkdownDocument(): String {
     return buildString {
         appendLine("---")
         appendLine("id: $id")
-        appendLine("kind: ${kind.toMetadataValue()}")
+        appendLine("kind: text")
         appendLine("title: ${title.toMetadataValue()}")
         appendLine("created: $createdMillis")
         appendLine("updated: $updatedMillis")
-        if (kind == NoteKind.Audio) {
-            audioFileName?.let { appendLine("audio: ${it.toMetadataValue()}") }
-            audioDurationMillis?.let { appendLine("audioDurationMillis: $it") }
-        }
         appendLine("---")
         appendLine()
-        if (kind == NoteKind.Text) {
-            append(body.trimEnd())
-        }
+        append(body.trimEnd())
         appendLine()
-    }
-}
-
-private fun String.toNoteKind(): NoteKind? {
-    return when (trim().lowercase()) {
-        "text" -> NoteKind.Text
-        "audio" -> NoteKind.Audio
-        else -> null
-    }
-}
-
-private fun NoteKind.toMetadataValue(): String {
-    return when (this) {
-        NoteKind.Text -> "text"
-        NoteKind.Audio -> "audio"
     }
 }
 
@@ -182,13 +100,15 @@ private fun String.toMetadataValue(): String {
 }
 
 private fun String.parseMarkdownDocument(): Pair<Map<String, String>, String> {
-    if (!startsWith("---\n")) return emptyMap<String, String>() to this
+    if (!startsWith("---")) return emptyMap<String, String>() to this
 
-    val endIndex = indexOf("\n---\n", startIndex = 4)
+    val lines = lines()
+    val endIndex = lines.drop(1).indexOfFirst { it == "---" }
     if (endIndex < 0) return emptyMap<String, String>() to this
 
-    val metadata = substring(4, endIndex)
-        .lineSequence()
+    val metadata = lines
+        .drop(1)
+        .take(endIndex)
         .mapNotNull { line ->
             val separatorIndex = line.indexOf(':')
             if (separatorIndex <= 0) return@mapNotNull null
@@ -197,8 +117,6 @@ private fun String.parseMarkdownDocument(): Pair<Map<String, String>, String> {
             key to value
         }
         .toMap()
-    val body = substring(endIndex + "\n---\n".length)
-        .trimStart('\n', '\r')
-
+    val body = lines.drop(endIndex + 3).joinToString("\n").trimEnd()
     return metadata to body
 }

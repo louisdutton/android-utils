@@ -1,6 +1,8 @@
 package digital.dutton.essentials.scores
 
 import android.content.Context
+import android.graphics.pdf.PdfRenderer
+import android.os.ParcelFileDescriptor
 import java.io.File
 import java.util.UUID
 import org.json.JSONArray
@@ -31,6 +33,57 @@ class ScoresStore private constructor(
 
     fun read(id: String): ScoreRecord? {
         return list().firstOrNull { it.id == id }
+    }
+
+    fun revalidateCompletedRecords(): List<ScoreRecord> {
+        val records = list()
+        var changed = false
+        val repaired = records.map { record ->
+            if (record.state == ScoreImportState.Queued || record.state == ScoreImportState.Processing) {
+                changed = true
+                return@map record.copy(
+                    state = ScoreImportState.Failed,
+                    warnings = record.warnings + ScoreWarning(
+                        pageIndex = null,
+                        code = "import_interrupted",
+                        message = "Import was interrupted before it could finish.",
+                    ),
+                    updatedAtMillis = System.currentTimeMillis(),
+                )
+            }
+
+            val path = record.musicXmlPath
+            if (record.state != ScoreImportState.Complete || path.isNullOrBlank()) {
+                return@map record
+            }
+
+            val musicXmlFile = File(path)
+            if (!musicXmlFile.exists()) return@map record
+
+            val musicXml = musicXmlFile.readBytes()
+            val keptWarnings = record.warnings.filterNot { it.isRecomputedWarning() }
+            val validationWarnings = MusicXmlFiles.validate(musicXml)
+            val sourcePageCount = record.sourcePageCount()
+            val qualityWarnings = sourcePageCount?.let { OmrQuality.lowConfidenceWarnings(musicXml, it) }.orEmpty()
+            val updated = record.copy(
+                state = if (qualityWarnings.isNotEmpty()) ScoreImportState.Failed else record.state,
+                pageCount = sourcePageCount ?: record.pageCount,
+                warnings = keptWarnings + qualityWarnings + validationWarnings,
+                updatedAtMillis = if (
+                    qualityWarnings.isNotEmpty() ||
+                    keptWarnings + qualityWarnings + validationWarnings != record.warnings ||
+                    sourcePageCount != null && sourcePageCount != record.pageCount
+                ) {
+                    System.currentTimeMillis()
+                } else {
+                    record.updatedAtMillis
+                },
+            )
+            if (updated != record) changed = true
+            updated
+        }
+        if (changed) writeRecords(repaired)
+        return repaired.sortedByDescending { it.updatedAtMillis }
     }
 
     fun createQueued(
@@ -104,6 +157,25 @@ class ScoresStore private constructor(
         private const val MusicXmlFileName = "score.musicxml"
         private const val RenderCacheDirectoryName = "rendered"
     }
+}
+
+private fun ScoreRecord.sourcePageCount(): Int? {
+    return when {
+        ScoreMimeTypes.isImage(sourceMime) -> 1
+        ScoreMimeTypes.isPdf(sourceMime) -> runCatching {
+            ParcelFileDescriptor.open(File(sourcePath), ParcelFileDescriptor.MODE_READ_ONLY).use { descriptor ->
+                PdfRenderer(descriptor).use { renderer -> renderer.pageCount.coerceAtLeast(1) }
+            }
+        }.getOrNull()
+        else -> null
+    }
+}
+
+private fun ScoreWarning.isRecomputedWarning(): Boolean {
+    return code.startsWith("musicxml_") ||
+        code == "measure_duration_mismatch" ||
+        code == "native_omr_review_required" ||
+        code == "omr_low_confidence"
 }
 
 private fun ScoreRecord.toJson(): JSONObject {

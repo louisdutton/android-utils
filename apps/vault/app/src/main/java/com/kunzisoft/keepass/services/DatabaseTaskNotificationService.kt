@@ -548,6 +548,11 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             mDatabase?.let { database ->
                 // Database is normally open
                 if (database.loaded) {
+                    if (PreferencesUtil.isVaultAvailableWhileDeviceUnlockedEnable(this)) {
+                        stopForegroundCompat()
+                        return
+                    }
+
                     // Build Intents for notification action
                     // Open the start of the database workflow
                     val pendingDatabaseIntent = buildActivityPendingIntent(

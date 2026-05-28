@@ -1,9 +1,11 @@
 package digital.dutton.essentials.scores
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import com.caverock.androidsvg.SVG
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
@@ -15,18 +17,24 @@ interface ScoreRenderer {
     ): List<RenderedScorePage>
 }
 
-class VerovioScoreRenderer : ScoreRenderer {
+class VerovioScoreRenderer(
+    private val context: Context,
+) : ScoreRenderer {
     override suspend fun render(
         musicXml: ByteArray,
         targetWidthPx: Int,
     ): List<RenderedScorePage> = withContext(Dispatchers.Default) {
-        val title = MusicXmlFiles.title(musicXml) ?: "Score"
-        val pageCount = MusicXmlFiles.estimatedPageCount(musicXml)
-        VerovioBridge.renderSvgPages(
-            title = title,
-            pageCount = pageCount,
+        val xmlText = musicXml.decodeToString()
+        val resourcePath = VerovioResources.ensure(context).absolutePath
+        val svgPages = VerovioBridge.renderSvgPages(
+            musicXml = xmlText,
+            resourcePath = resourcePath,
             targetWidthPx = targetWidthPx.coerceIn(320, 2400),
-        ).mapIndexed { index, svg ->
+        )
+        if (svgPages.isEmpty()) {
+            throw IllegalStateException(VerovioBridge.lastDiagnostic().ifBlank { "Verovio did not render any notation." })
+        }
+        svgPages.mapIndexed { index, svg ->
             renderSvgPage(index, svg, targetWidthPx.coerceIn(320, 2400))
         }
     }
@@ -59,69 +67,78 @@ class VerovioScoreRenderer : ScoreRenderer {
 
 object VerovioBridge {
     private val loaded = runCatching {
+        System.loadLibrary("verovio")
         System.loadLibrary("scores_verovio_bridge")
     }.isSuccess
 
-    private external fun renderPlaceholderSvgPages(
-        title: String,
-        pageCount: Int,
+    private external fun renderMusicXmlSvgPages(
+        musicXml: String,
+        resourcePath: String,
         targetWidthPx: Int,
     ): Array<String>
 
+    external fun lastRenderDiagnostic(): String
+
     fun renderSvgPages(
-        title: String,
-        pageCount: Int,
+        musicXml: String,
+        resourcePath: String,
         targetWidthPx: Int,
     ): List<String> {
-        return if (loaded) {
-            runCatching {
-                renderPlaceholderSvgPages(title, pageCount, targetWidthPx).toList()
-            }.getOrElse {
-                fallbackSvgPages(title, pageCount, targetWidthPx)
-            }
+        return if (!loaded) {
+            emptyList()
         } else {
-            fallbackSvgPages(title, pageCount, targetWidthPx)
+            runCatching {
+                renderMusicXmlSvgPages(musicXml, resourcePath, targetWidthPx).toList()
+            }.getOrDefault(emptyList())
         }
     }
 
-    private fun fallbackSvgPages(
-        title: String,
-        pageCount: Int,
-        targetWidthPx: Int,
-    ): List<String> {
-        val safePageCount = pageCount.coerceAtLeast(1)
-        val safeWidth = targetWidthPx.coerceAtLeast(320)
-        val height = safeWidth * 4 / 3
-        return (0 until safePageCount).map { pageIndex ->
-            """
-            <svg xmlns="http://www.w3.org/2000/svg" width="$safeWidth" height="$height" viewBox="0 0 $safeWidth $height">
-              <rect width="100%" height="100%" fill="#ffffff"/>
-              <text x="${safeWidth / 2}" y="64" text-anchor="middle" font-size="28" font-family="sans-serif" fill="#202124">${title.escapeXml()}</text>
-              <line x1="${safeWidth / 8}" y1="180" x2="${safeWidth - safeWidth / 8}" y2="180" stroke="#2b2b2b" stroke-width="2"/>
-              <line x1="${safeWidth / 8}" y1="198" x2="${safeWidth - safeWidth / 8}" y2="198" stroke="#2b2b2b" stroke-width="2"/>
-              <line x1="${safeWidth / 8}" y1="216" x2="${safeWidth - safeWidth / 8}" y2="216" stroke="#2b2b2b" stroke-width="2"/>
-              <line x1="${safeWidth / 8}" y1="234" x2="${safeWidth - safeWidth / 8}" y2="234" stroke="#2b2b2b" stroke-width="2"/>
-              <line x1="${safeWidth / 8}" y1="252" x2="${safeWidth - safeWidth / 8}" y2="252" stroke="#2b2b2b" stroke-width="2"/>
-              <text x="${safeWidth / 2}" y="${height - 56}" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#6b6b6b">Verovio bridge unavailable · page ${pageIndex + 1} of $safePageCount</text>
-            </svg>
-            """.trimIndent()
+    fun lastDiagnostic(): String {
+        return if (!loaded) {
+            "Verovio native libraries failed to load."
+        } else {
+            runCatching { lastRenderDiagnostic() }.getOrDefault("Verovio did not render any notation.")
         }
     }
 }
 
-private fun String.escapeXml(): String {
-    return buildString {
-        for (char in this@escapeXml) {
-            append(
-                when (char) {
-                    '&' -> "&amp;"
-                    '<' -> "&lt;"
-                    '>' -> "&gt;"
-                    '"' -> "&quot;"
-                    '\'' -> "&apos;"
-                    else -> char
-                },
-            )
+private object VerovioResources {
+    private const val AssetRoot = "verovio"
+    private const val Version = "8100cb39604d40102a9c2ce75719136f3fb52a77"
+
+    fun ensure(context: Context): File {
+        val directory = File(context.filesDir, "verovio-resources")
+        val marker = File(directory, ".version-$Version")
+        if (marker.exists()) return directory
+
+        directory.deleteRecursively()
+        directory.mkdirs()
+        val rootChildren = context.assets.list(AssetRoot).orEmpty()
+        require(rootChildren.isNotEmpty()) { "Verovio resources are not bundled in this build." }
+        rootChildren.forEach { child ->
+            copyAsset(context, "$AssetRoot/$child", File(directory, child))
+        }
+        marker.writeText(Version)
+        return directory
+    }
+
+    private fun copyAsset(
+        context: Context,
+        assetPath: String,
+        target: File,
+    ) {
+        val children = context.assets.list(assetPath).orEmpty()
+        if (children.isEmpty()) {
+            target.parentFile?.mkdirs()
+            context.assets.open(assetPath).use { input ->
+                target.outputStream().use { output -> input.copyTo(output) }
+            }
+            return
+        }
+
+        target.mkdirs()
+        children.forEach { child ->
+            copyAsset(context, "$assetPath/$child", File(target, child))
         }
     }
 }

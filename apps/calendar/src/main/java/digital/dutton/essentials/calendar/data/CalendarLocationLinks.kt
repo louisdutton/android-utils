@@ -11,10 +11,11 @@ fun CalendarEvent.locationLink(): EventLocationLink? {
         eventId = id,
         rawProviderLocation = providerLocation,
         location = MapLocation(
-            id = "calendar-event-$id-location",
-            name = providerLocation,
+            id = locationMapId?.takeIf { it.isNotBlank() } ?: "calendar-event-$id-location",
+            name = locationMapName?.takeIf { it.isNotBlank() } ?: providerLocation,
             address = providerLocation,
-            source = LocationSource.CalendarProvider,
+            point = locationPoint,
+            source = if (locationPoint == null) LocationSource.CalendarProvider else LocationSource.Search,
         ),
     )
 }

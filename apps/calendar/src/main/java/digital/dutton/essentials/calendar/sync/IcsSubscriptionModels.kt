@@ -1,5 +1,6 @@
 package digital.dutton.essentials.calendar.sync
 
+import digital.dutton.essentials.locations.GeoPoint
 import java.time.Duration
 
 internal const val SubscriptionAccountName = "Essentials subscribed calendars"
@@ -43,6 +44,9 @@ data class IcsCalendarEvent(
     val exceptionRule: String?,
     val exceptionDates: String?,
     val transparency: String?,
+    val geoPoint: GeoPoint?,
+    val locationMapName: String?,
+    val locationMapId: String?,
 )
 
 data class IcsEventDateTime(

@@ -21,6 +21,11 @@
     <PreferenceCategory
         android:title="@string/general">
         <SwitchPreferenceCompat
+            android:key="@string/vault_available_while_unlocked_key"
+            android:title="@string/vault_available_while_unlocked_title"
+            android:summary="@string/vault_available_while_unlocked_summary"
+            android:defaultValue="@bool/vault_available_while_unlocked_default"/>
+        <SwitchPreferenceCompat
             android:key="@string/autofill_close_database_key"
             android:title="@string/autofill_close_database_title"
             android:summary="@string/autofill_close_database_summary"

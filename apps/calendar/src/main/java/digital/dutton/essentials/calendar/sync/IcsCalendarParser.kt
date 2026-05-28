@@ -1,5 +1,6 @@
 package digital.dutton.essentials.calendar.sync
 
+import digital.dutton.essentials.locations.GeoPoint
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -74,6 +75,9 @@ class IcsCalendarParser {
             exceptionRule = properties.firstRawValue("EXRULE"),
             exceptionDates = properties.allRawValues("EXDATE").joinToString(",").ifBlank { null },
             transparency = properties.firstRawValue("TRANSP"),
+            geoPoint = properties.firstValue("GEO")?.toGeoPointOrNull(),
+            locationMapName = properties.firstValue("X-ESSENTIALS-MAP-NAME")?.ifBlank { null },
+            locationMapId = properties.firstValue("X-ESSENTIALS-MAP-ID")?.ifBlank { null },
         )
     }
 
@@ -259,6 +263,13 @@ private fun String.parseIcsDuration(): Duration? {
         .plusHours(hours * sign)
         .plusMinutes(minutes * sign)
         .plusSeconds(seconds * sign)
+}
+
+private fun String.toGeoPointOrNull(): GeoPoint? {
+    val separator = indexOf(';').takeIf { it >= 0 } ?: indexOf(',').takeIf { it >= 0 } ?: return null
+    val latitude = substring(0, separator).toDoubleOrNull() ?: return null
+    val longitude = substring(separator + 1).toDoubleOrNull() ?: return null
+    return runCatching { GeoPoint(latitude, longitude) }.getOrNull()
 }
 
 private val DateFormatter = DateTimeFormatter.BASIC_ISO_DATE

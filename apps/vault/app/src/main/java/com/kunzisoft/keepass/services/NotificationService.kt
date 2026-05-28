@@ -113,9 +113,14 @@ abstract class NotificationServiceParam<T> : Service() {
         }
     }
 
+    protected fun stopForegroundCompat() {
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        notificationManager?.cancel(notificationId)
+    }
+
     protected open fun stopService() {
         // Stop the service in all cases
-        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        stopForegroundCompat()
         stopSelf()
     }
 

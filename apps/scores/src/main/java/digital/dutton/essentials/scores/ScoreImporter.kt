@@ -32,7 +32,16 @@ class ScoreImporter(
                 store.sourceFile(record).outputStream().use { output -> input.copyTo(output) }
             } ?: error("Unable to open score source.")
 
-            record = store.save(record.copy(state = ScoreImportState.Processing))
+            val sourceTitle = ScoreSourceMetadata.title(
+                file = store.sourceFile(record),
+                mimeType = sourceMime,
+            ) ?: source.displayName.scoreTitleFromFileName()
+            record = store.save(
+                record.copy(
+                    title = sourceTitle,
+                    state = ScoreImportState.Processing,
+                ),
+            )
             coroutineContext.ensureActive()
 
             if (ScoreMimeTypes.isMusicXml(sourceMime) || ScoreMimeTypes.isCompressedMusicXml(sourceMime)) {
@@ -62,7 +71,11 @@ class ScoreImporter(
             progress(ImportProgress(stage = ImportStage.Rasterizing, message = "Preparing pages"))
             val pages = rasterizer.rasterize(store.sourceFile(record), sourceMime)
             try {
-                val omrResult = omrEngine.recognize(pages, progress)
+                val omrResult = omrEngine.recognize(
+                    title = sourceTitle,
+                    pages = pages,
+                    progress = progress,
+                )
                 val musicXml = omrResult.musicXml
                 if (musicXml == null) {
                     record = store.save(
@@ -72,7 +85,12 @@ class ScoreImporter(
                             warnings = omrResult.warnings,
                         ),
                     )
-                    progress(ImportProgress(stage = ImportStage.Failed, message = "OMR unavailable"))
+                    val message = if (omrResult.warnings.any { it.code == "omr_low_confidence" }) {
+                        "OMR result was too uncertain"
+                    } else {
+                        "OMR unavailable"
+                    }
+                    progress(ImportProgress(stage = ImportStage.Failed, message = message))
                     return@withContext ImportResult(record)
                 }
 
@@ -80,13 +98,13 @@ class ScoreImporter(
                 val warnings = omrResult.warnings + MusicXmlFiles.validate(musicXml)
                 val musicXmlFile = store.musicXmlFile(record)
                 musicXmlFile.writeBytes(musicXml)
-                val title = MusicXmlFiles.title(musicXml) ?: source.displayName.scoreTitleFromFileName()
+                val title = MusicXmlFiles.title(musicXml) ?: sourceTitle
                 record = store.save(
                     record.copy(
                         title = title,
                         musicXmlPath = musicXmlFile.absolutePath,
                         state = ScoreImportState.Complete,
-                        pageCount = MusicXmlFiles.estimatedPageCount(musicXml),
+                        pageCount = omrResult.pageCount,
                         warnings = warnings,
                     ),
                 )

@@ -7,6 +7,8 @@ license because the planned OMR implementation is derived from AGPL software.
 
 - HOMR: AGPL-3.0, https://github.com/liebharc/homr
 - Andromr: AGPL-3.0, https://github.com/aicelen/Andromr
+- HOMR/Andromr Android model assets: AGPL-3.0-compatible distribution from
+  Andromr v1.0 release.
 - OpenCV Android: Apache-2.0, https://opencv.org
 - Google AI Edge LiteRT: Apache-2.0, https://ai.google.dev/edge/litert
 - ONNX Runtime Android: MIT, https://github.com/microsoft/onnxruntime

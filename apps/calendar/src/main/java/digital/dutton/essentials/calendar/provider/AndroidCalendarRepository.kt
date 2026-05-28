@@ -23,6 +23,8 @@ class AndroidCalendarRepository(
     private val context: Context,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : CalendarRepository {
+    private val eventLocationStore = CalendarEventLocationStore(context)
+
     override suspend fun listCalendars(): List<CalendarSource> = withContext(dispatcher) {
         requireCalendarReadPermission()
 
@@ -53,7 +55,7 @@ class AndroidCalendarRepository(
             .appendPath(endMillis.toString())
             .build()
 
-        context.contentResolver.query(
+        val events = context.contentResolver.query(
             uri,
             EventProjection,
             null,
@@ -66,6 +68,16 @@ class AndroidCalendarRepository(
                 }
             }
         }.orEmpty()
+
+        val locationsByEventId = eventLocationStore.list(events.map { it.id }.toSet())
+        events.map { event ->
+            val linkedLocation = locationsByEventId[event.id] ?: return@map event
+            event.copy(
+                locationPoint = linkedLocation.point,
+                locationMapName = linkedLocation.name,
+                locationMapId = linkedLocation.mapId,
+            )
+        }
     }
 
     override suspend fun createEvent(event: CalendarEventDraft): Long = withContext(dispatcher) {
@@ -76,7 +88,9 @@ class AndroidCalendarRepository(
             event.toContentValues(includeUid = true),
         ) ?: throw IllegalStateException("Android Calendar Provider did not return a new event URI.")
 
-        ContentUris.parseId(uri)
+        val eventId = ContentUris.parseId(uri)
+        eventLocationStore.put(eventId, event.storedLocation())
+        eventId
     }
 
     override suspend fun updateEvent(
@@ -91,6 +105,7 @@ class AndroidCalendarRepository(
             if (updatedRows == 0) {
                 throw IllegalStateException("Event was not updated.")
             }
+            eventLocationStore.put(eventId, event.storedLocation())
         }
     }
 
@@ -143,6 +158,15 @@ class AndroidCalendarRepository(
             EventAvailability.Tentative -> CalendarContract.Events.AVAILABILITY_TENTATIVE
             EventAvailability.Unknown -> CalendarContract.Events.AVAILABILITY_BUSY
         }
+    }
+
+    private fun CalendarEventDraft.storedLocation(): StoredEventLocation? {
+        val point = locationPoint ?: return null
+        return StoredEventLocation(
+            point = point,
+            name = locationMapName?.takeIf { it.isNotBlank() } ?: location,
+            mapId = locationMapId?.takeIf { it.isNotBlank() },
+        )
     }
 
     private fun Cursor.toCalendarSource(): CalendarSource {

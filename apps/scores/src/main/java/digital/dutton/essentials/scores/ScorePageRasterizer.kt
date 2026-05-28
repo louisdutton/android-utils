@@ -35,13 +35,10 @@ class ScorePageRasterizer(
                 for (index in 0 until renderer.pageCount) {
                     val page = renderer.openPage(index)
                     try {
-                        val widthPx = page.width.coerceIn(320, MaxRasterWidthPx)
-                        val heightPx = (widthPx * (page.height.toFloat() / page.width.toFloat()))
-                            .roundToInt()
-                            .coerceAtLeast(1)
-                        val bitmap = Bitmap.createBitmap(widthPx, heightPx, Bitmap.Config.ARGB_8888)
+                        val size = targetOmrSize(page.width, page.height)
+                        val bitmap = Bitmap.createBitmap(size.width, size.height, Bitmap.Config.ARGB_8888)
                         bitmap.eraseColor(android.graphics.Color.WHITE)
-                        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+                        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_PRINT)
                         add(
                             ScorePageBitmap(
                                 index = index,
@@ -79,7 +76,7 @@ class ScorePageRasterizer(
             index = 0,
             widthPx = oriented.width,
             heightPx = oriented.height,
-            bitmap = oriented,
+            bitmap = oriented.scaledForOmr(),
         )
     }
 
@@ -117,14 +114,44 @@ class ScorePageRasterizer(
         height: Int,
     ): Int {
         var sampleSize = 1
-        while ((width / sampleSize) > MaxRasterWidthPx || (height / sampleSize) > MaxRasterHeightPx) {
+        while ((width / sampleSize) > MaxDecodeWidthPx || (height / sampleSize) > MaxDecodeHeightPx) {
             sampleSize *= 2
         }
         return sampleSize
     }
 
+    private fun Bitmap.scaledForOmr(): Bitmap {
+        val size = targetOmrSize(width, height)
+        if (width == size.width && height == size.height) return this
+        val scaled = Bitmap.createScaledBitmap(this, size.width, size.height, true)
+        recycle()
+        return scaled
+    }
+
+    private fun targetOmrSize(
+        sourceWidth: Int,
+        sourceHeight: Int,
+    ): RasterSize {
+        val safeWidth = sourceWidth.coerceAtLeast(1)
+        val safeHeight = sourceHeight.coerceAtLeast(1)
+        val targetHeightAtWidth = (TargetRasterWidthPx * safeHeight.toFloat() / safeWidth.toFloat()).roundToInt()
+        if (targetHeightAtWidth <= MaxRasterHeightPx) {
+            return RasterSize(TargetRasterWidthPx, targetHeightAtWidth.coerceAtLeast(1))
+        }
+
+        val targetWidthAtHeight = (MaxRasterHeightPx * safeWidth.toFloat() / safeHeight.toFloat()).roundToInt()
+        return RasterSize(targetWidthAtHeight.coerceAtLeast(1), MaxRasterHeightPx)
+    }
+
     private companion object {
-        const val MaxRasterWidthPx = 1800
-        const val MaxRasterHeightPx = 2400
+        const val TargetRasterWidthPx = 1920
+        const val MaxRasterHeightPx = 3200
+        const val MaxDecodeWidthPx = 3840
+        const val MaxDecodeHeightPx = 5400
     }
 }
+
+private data class RasterSize(
+    val width: Int,
+    val height: Int,
+)

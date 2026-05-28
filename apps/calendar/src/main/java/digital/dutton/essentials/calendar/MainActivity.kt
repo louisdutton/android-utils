@@ -1,6 +1,7 @@
 package digital.dutton.essentials.calendar
 
 import android.Manifest
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -123,6 +124,7 @@ import digital.dutton.essentials.calendar.sync.CalendarSubscriptionStore
 import digital.dutton.essentials.calendar.sync.IcsSubscriptionSyncWorker
 import digital.dutton.essentials.calendar.sync.IcsSubscriptionSyncer
 import digital.dutton.essentials.locations.EventLocationLink
+import digital.dutton.essentials.locations.GeoPoint
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -1825,6 +1827,19 @@ private fun EventEditorDialog(
     var formState by remember(initialState) { mutableStateOf(initialState) }
     val writableCalendars = remember(calendars) { calendars.writableEventCalendars() }
     val calendarName = calendars.calendarName(formState.calendarId)
+    val locationPickerLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+    ) { result ->
+        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
+        val selection = result.data?.toMapLocationSelection() ?: return@rememberLauncherForActivityResult
+        formState = formState.copy(
+            location = selection.name.ifBlank { formState.location },
+            locationPoint = selection.point,
+            locationMapName = selection.name,
+            locationMapId = selection.mapId,
+            error = null,
+        )
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -1921,10 +1936,49 @@ private fun EventEditorDialog(
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = formState.location,
-                    onValueChange = { formState = formState.copy(location = it, error = null) },
+                    onValueChange = {
+                        formState = formState.copy(
+                            location = it,
+                            locationPoint = null,
+                            locationMapName = null,
+                            locationMapId = null,
+                            error = null,
+                        )
+                    },
                     label = { Text("Location") },
                     singleLine = true,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                runCatching {
+                                    locationPickerLauncher.launch(formState.locationPickerIntent())
+                                }.onFailure {
+                                    formState = formState.copy(error = "Unable to open Maps.")
+                                }
+                            },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.LocationOn,
+                                contentDescription = "Pick location in Maps",
+                            )
+                        }
+                    },
                 )
+
+                formState.locationPoint?.let { point ->
+                    LinkedMapLocationRow(
+                        name = formState.locationMapName?.takeIf { it.isNotBlank() } ?: formState.location,
+                        point = point,
+                        onClear = {
+                            formState = formState.copy(
+                                locationPoint = null,
+                                locationMapName = null,
+                                locationMapId = null,
+                                error = null,
+                            )
+                        },
+                    )
+                }
 
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -1959,6 +2013,56 @@ private fun EventEditorDialog(
             }
         },
     )
+}
+
+@Composable
+private fun LinkedMapLocationRow(
+    name: String,
+    point: GeoPoint,
+    onClear: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .padding(start = 12.dp, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.LocationOn,
+            contentDescription = null,
+            modifier = Modifier.size(18.dp),
+            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            Text(
+                text = name.ifBlank { "Maps location" },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                text = "${point.latitude.formatCoordinate()}, ${point.longitude.formatCoordinate()}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        IconButton(onClick = onClear) {
+            Icon(
+                imageVector = Icons.Rounded.Close,
+                contentDescription = "Clear linked Maps location",
+                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+            )
+        }
+    }
 }
 
 @Composable
@@ -2457,7 +2561,16 @@ private data class EventFormState(
     val allDay: Boolean,
     val location: String,
     val description: String,
+    val locationPoint: GeoPoint? = null,
+    val locationMapName: String? = null,
+    val locationMapId: String? = null,
     val error: String? = null,
+)
+
+private data class MapLocationSelection(
+    val point: GeoPoint,
+    val name: String,
+    val mapId: String?,
 )
 
 private val WeekdayLabels = listOf("S", "M", "T", "W", "T", "F", "S")
@@ -2469,6 +2582,11 @@ private const val DefaultAgendaFutureDays = 30L
 private const val AgendaPageDays = 90L
 private const val AgendaSelectionPaddingDays = 14L
 private const val MapsPackageName = "digital.dutton.essentials.maps"
+private const val MapsApiExtraPickPoint = "app.organicmaps.api.extra.PICK_POINT"
+private const val MapsApiExtraPointName = "app.organicmaps.api.extra.POINT_NAME"
+private const val MapsApiExtraPointLat = "app.organicmaps.api.extra.POINT_LAT"
+private const val MapsApiExtraPointLon = "app.organicmaps.api.extra.POINT_LON"
+private const val MapsApiExtraPointId = "app.organicmaps.api.extra.POINT_ID"
 private const val LocationIntentExtraSource = "digital.dutton.essentials.locations.extra.SOURCE"
 private const val LocationIntentExtraCalendarEventId = "digital.dutton.essentials.locations.extra.CALENDAR_EVENT_ID"
 private const val LocationIntentExtraRawProviderLocation =
@@ -2655,6 +2773,9 @@ private fun CalendarEvent.toFormState(): EventFormState {
         endTime = end.toLocalTime().format(TimeOutputFormatter),
         allDay = allDay,
         location = location.orEmpty(),
+        locationPoint = locationPoint,
+        locationMapName = locationMapName,
+        locationMapId = locationMapId,
         description = description.orEmpty(),
     )
 }
@@ -2709,6 +2830,9 @@ private fun EventFormState.toDraft(): CalendarEventDraft {
         allDay = allDay,
         timeZone = eventTimeZone,
         availability = EventAvailability.Busy,
+        locationPoint = locationPoint,
+        locationMapName = locationMapName,
+        locationMapId = locationMapId,
     )
 }
 
@@ -2735,6 +2859,48 @@ private fun CalendarEvent.startDate(zone: ZoneId): LocalDate {
 private fun CalendarEventDraft.startDate(zone: ZoneId): LocalDate {
     val dateZone = if (allDay) ZoneOffset.UTC else zone
     return Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+}
+
+private fun EventFormState.locationPickerIntent(): Intent {
+    val query = location.trim()
+    val uri = if (query.isBlank()) {
+        Uri.Builder()
+            .scheme("cm")
+            .authority("crosshair")
+            .appendQueryParameter("appname", "Calendar")
+            .build()
+    } else {
+        Uri.Builder()
+            .scheme("cm")
+            .authority("search")
+            .appendQueryParameter("query", query)
+            .build()
+    }
+
+    return Intent(Intent.ACTION_VIEW, uri)
+        .setPackage(MapsPackageName)
+        .putExtra(MapsApiExtraPickPoint, true)
+}
+
+private fun Intent.toMapLocationSelection(): MapLocationSelection? {
+    val latitude = getDoubleExtra(MapsApiExtraPointLat, Double.NaN)
+    val longitude = getDoubleExtra(MapsApiExtraPointLon, Double.NaN)
+    if (latitude.isNaN() || longitude.isNaN()) return null
+
+    val point = runCatching { GeoPoint(latitude, longitude) }.getOrNull() ?: return null
+    val name = getStringExtra(MapsApiExtraPointName)
+        ?.takeIf { it.isNotBlank() }
+        ?: "${point.latitude.formatCoordinate()}, ${point.longitude.formatCoordinate()}"
+
+    return MapLocationSelection(
+        point = point,
+        name = name,
+        mapId = getStringExtra(MapsApiExtraPointId)?.takeIf { it.isNotBlank() },
+    )
+}
+
+private fun Double.formatCoordinate(): String {
+    return "%.6f".format(java.util.Locale.US, this)
 }
 
 private fun CalendarEvent.timeRangeLabel(): String {
@@ -2840,18 +3006,38 @@ private fun Context.openOnlineMeeting(uri: Uri) {
 
 private fun Context.openEventLocationInMaps(link: EventLocationLink) {
     val providerLocation = link.rawProviderLocation.takeIf { it.isNotBlank() } ?: return
+    val point = link.location.point
+    val exactLocationUri = point?.let {
+        Uri.Builder()
+            .scheme("cm")
+            .authority("map")
+            .appendQueryParameter("ll", "${it.latitude},${it.longitude}")
+            .appendQueryParameter("n", link.location.name)
+            .appendQueryParameter("id", link.location.id)
+            .appendQueryParameter("z", "17")
+            .build()
+    }
+    val exactGeoUri = point?.let {
+        Uri.parse(
+            "geo:${it.latitude},${it.longitude}?q=${it.latitude},${it.longitude}(${Uri.encode(link.location.name)})",
+        )
+    }
     val geoUri = Uri.parse("geo:0,0?q=${Uri.encode(providerLocation)}")
-    val mapsIntent = Intent(Intent.ACTION_VIEW, geoUri)
+    val mapsIntent = Intent(Intent.ACTION_VIEW, exactLocationUri ?: geoUri)
         .setPackage(MapsPackageName)
-        .putExtra(LocationIntentExtraSource, LocationIntentSourceCalendar)
-        .putExtra(LocationIntentExtraCalendarEventId, link.eventId)
-        .putExtra(LocationIntentExtraRawProviderLocation, providerLocation)
+        .apply {
+            if (point == null) {
+                putExtra(LocationIntentExtraSource, LocationIntentSourceCalendar)
+                putExtra(LocationIntentExtraCalendarEventId, link.eventId)
+                putExtra(LocationIntentExtraRawProviderLocation, providerLocation)
+            }
+        }
 
     runCatching {
         startActivity(mapsIntent)
     }.onFailure {
         runCatching {
-            startActivity(Intent(Intent.ACTION_VIEW, geoUri))
+            startActivity(Intent(Intent.ACTION_VIEW, exactGeoUri ?: geoUri))
         }
     }
 }

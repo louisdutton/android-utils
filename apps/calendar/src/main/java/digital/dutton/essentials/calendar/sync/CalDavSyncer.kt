@@ -9,6 +9,9 @@ import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
 import android.provider.CalendarContract
+import digital.dutton.essentials.calendar.provider.CalendarEventLocationStore
+import digital.dutton.essentials.calendar.provider.StoredEventLocation
+import digital.dutton.essentials.locations.GeoPoint
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -27,6 +30,8 @@ class CalDavSyncer(
     private val client: CalDavClient = CalDavClient(),
     private val parser: IcsCalendarParser = IcsCalendarParser(),
 ) {
+    private val eventLocationStore = CalendarEventLocationStore(context)
+
     suspend fun connect(
         baseUrl: String,
         username: String,
@@ -89,7 +94,7 @@ class CalDavSyncer(
         requireCalendarPermissions()
         val calendars = store.listCalendars(accountId)
         calendars.forEach { calendar ->
-            deleteCalendar(calendar.localCalendarId, accountId)
+            deleteCalendar(calendar)
             store.removeCalendar(calendar.id)
         }
         store.removeAccount(accountId)
@@ -115,9 +120,8 @@ class CalDavSyncer(
 
         val renamedCalendar = calendar.copy(displayName = cleanedDisplayName)
         updateCalDavCalendar(
-            calendarId = renamedCalendar.localCalendarId,
-            account = account,
-            calendar = CalDavDiscoveredCalendar(
+            localCalendar = renamedCalendar,
+            remoteCalendar = CalDavDiscoveredCalendar(
                 href = renamedCalendar.href,
                 displayName = renamedCalendar.displayName,
                 color = renamedCalendar.color,
@@ -129,10 +133,15 @@ class CalDavSyncer(
 
     suspend fun repairAccounts() = withContext(dispatcher) {
         requireCalendarPermissions()
+        val accountsToResync = mutableSetOf<String>()
         store.listCalendars().forEach { calendar ->
-            if (!calendarExists(calendar.localCalendarId)) {
+            if (!calendarExists(calendar)) {
                 store.removeCalendar(calendar.id)
+                accountsToResync += calendar.accountId
             }
+        }
+        accountsToResync.forEach { accountId ->
+            runCatching { syncAccount(accountId) }
         }
     }
 
@@ -219,13 +228,22 @@ class CalDavSyncer(
         store.listCalendars(account.id)
             .filter { it.href !in discoveredByHref }
             .forEach { staleCalendar ->
-                deleteCalendar(staleCalendar.localCalendarId, account.id)
+                deleteCalendar(staleCalendar)
                 store.removeCalendar(staleCalendar.id)
             }
 
         return discoveredCalendars.map { remote ->
-            val existing = store.findCalendar(account.id, remote.href)
-            val calendar = if (existing == null || !calendarExists(existing.localCalendarId)) {
+            val storedCalendars = store.listCalendars(account.id).filter { it.href == remote.href }
+            val validStoredCalendars = storedCalendars.filter(::calendarExists)
+            val existing = validStoredCalendars.preferredCalDavCalendar()
+            storedCalendars
+                .filter { it.id != existing?.id }
+                .forEach { duplicate ->
+                    deleteCalendar(duplicate)
+                    store.removeCalendar(duplicate.id)
+                }
+
+            val calendar = if (existing == null) {
                 CalDavCalendar(
                     id = UUID.randomUUID().toString(),
                     accountId = account.id,
@@ -236,7 +254,7 @@ class CalDavSyncer(
                     syncToken = remote.syncToken,
                 )
             } else {
-                updateCalDavCalendar(existing.localCalendarId, account, remote)
+                updateCalDavCalendar(existing, remote)
                 existing.copy(
                     displayName = remote.displayName,
                     color = remote.color,
@@ -336,7 +354,12 @@ class CalDavSyncer(
                     CalendarContract.Events.CONTENT_URI.asCalDavSyncAdapter(account.id),
                     values,
                 )
-                if (uri == null) skipped += 1 else created += 1
+                if (uri == null) {
+                    skipped += 1
+                } else {
+                    eventLocationStore.put(ContentUris.parseId(uri), remote.event.storedLocation())
+                    created += 1
+                }
             } else if (remote.remoteId in dirtyRemoteIds) {
                 skipped += 1
             } else {
@@ -347,7 +370,12 @@ class CalDavSyncer(
                     null,
                     null,
                 )
-                if (rows > 0) updated += 1 else skipped += 1
+                if (rows > 0) {
+                    eventLocationStore.put(existingId, remote.event.storedLocation())
+                    updated += 1
+                } else {
+                    skipped += 1
+                }
             }
         }
 
@@ -380,7 +408,7 @@ class CalDavSyncer(
     }
 
     private fun dirtyLocalEvents(calendar: CalDavCalendar): List<LocalCalDavEvent> {
-        return context.contentResolver.query(
+        val events = context.contentResolver.query(
             CalendarContract.Events.CONTENT_URI.asCalDavSyncAdapter(calendar.accountId),
             LocalEventProjection,
             "${CalendarContract.Events.CALENDAR_ID} = ? AND (${CalendarContract.Events.DIRTY} = 1 OR ${CalendarContract.Events.DELETED} = 1)",
@@ -393,6 +421,15 @@ class CalDavSyncer(
                 }
             }
         }.orEmpty()
+        val locationsByEventId = eventLocationStore.list(events.map { it.id }.toSet())
+        return events.map { event ->
+            val linkedLocation = locationsByEventId[event.id] ?: return@map event
+            event.copy(
+                geoPoint = linkedLocation.point,
+                locationMapName = linkedLocation.name,
+                locationMapId = linkedLocation.mapId,
+            )
+        }
     }
 
     private fun queryExistingRemoteEvents(calendar: CalDavCalendar): Map<String, Long> {
@@ -468,17 +505,18 @@ class CalDavSyncer(
     }
 
     private fun updateCalDavCalendar(
-        calendarId: Long,
-        account: CalDavAccount,
-        calendar: CalDavDiscoveredCalendar,
+        localCalendar: CalDavCalendar,
+        remoteCalendar: CalDavDiscoveredCalendar,
     ) {
+        if (!calendarExists(localCalendar)) return
+
         val values = ContentValues().apply {
-            put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, calendar.displayName)
-            put(CalendarContract.Calendars.CALENDAR_COLOR, calendar.color ?: DefaultCalDavCalendarColor)
+            put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, remoteCalendar.displayName)
+            put(CalendarContract.Calendars.CALENDAR_COLOR, remoteCalendar.color ?: DefaultCalDavCalendarColor)
         }
         context.contentResolver.update(
-            ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendarId)
-                .asCalDavSyncAdapter(account.id),
+            ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, localCalendar.localCalendarId)
+                .asCalDavSyncAdapter(localCalendar.accountId),
             values,
             null,
             null,
@@ -523,24 +561,25 @@ class CalDavSyncer(
         )
     }
 
-    private fun deleteCalendar(
-        calendarId: Long,
-        accountId: String,
-    ) {
+    private fun deleteCalendar(calendar: CalDavCalendar) {
+        if (!calendarExists(calendar)) return
+
         context.contentResolver.delete(
-            ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendarId)
-                .asCalDavSyncAdapter(accountId),
+            ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendar.localCalendarId)
+                .asCalDavSyncAdapter(calendar.accountId),
             null,
             null,
         )
     }
 
-    private fun calendarExists(calendarId: Long): Boolean {
+    private fun calendarExists(calendar: CalDavCalendar): Boolean {
         return context.contentResolver.query(
             CalendarContract.Calendars.CONTENT_URI,
             CalendarExistsProjection,
-            "${CalendarContract.Calendars._ID} = ?",
-            arrayOf(calendarId.toString()),
+            "${CalendarContract.Calendars._ID} = ? AND " +
+                "${CalendarContract.Calendars.ACCOUNT_NAME} = ? AND " +
+                "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?",
+            arrayOf(calendar.localCalendarId.toString(), calendar.accountId, CalDavAccountType),
             null,
         )?.use { it.moveToFirst() } ?: false
     }
@@ -640,6 +679,15 @@ class CalDavSyncer(
         }
     }
 
+    private fun IcsCalendarEvent.storedLocation(): StoredEventLocation? {
+        val point = geoPoint ?: return null
+        return StoredEventLocation(
+            point = point,
+            name = locationMapName?.takeIf { it.isNotBlank() } ?: location,
+            mapId = locationMapId?.takeIf { it.isNotBlank() },
+        )
+    }
+
     private fun LocalCalDavEvent.toIcs(uid: String): String {
         val now = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
             .withZone(ZoneOffset.UTC)
@@ -653,6 +701,13 @@ class CalDavSyncer(
             appendLine("DTSTAMP:$now")
             appendLine("SUMMARY:${title.escapeIcsText()}")
             location?.takeIf { it.isNotBlank() }?.let { appendLine("LOCATION:${it.escapeIcsText()}") }
+            geoPoint?.let { appendLine("GEO:${it.latitude};${it.longitude}") }
+            locationMapName?.takeIf { it.isNotBlank() }?.let {
+                appendLine("X-ESSENTIALS-MAP-NAME:${it.escapeIcsText()}")
+            }
+            locationMapId?.takeIf { it.isNotBlank() }?.let {
+                appendLine("X-ESSENTIALS-MAP-ID:${it.escapeIcsText()}")
+            }
             description?.takeIf { it.isNotBlank() }?.let { appendLine("DESCRIPTION:${it.escapeIcsText()}") }
             appendEventDate("DTSTART", startMillis, allDay, timeZone)
             appendEventDate("DTEND", endMillis, allDay, timeZone)
@@ -706,6 +761,9 @@ class CalDavSyncer(
             href = optionalString(CalendarContract.Events.SYNC_DATA2),
             etag = optionalString(CalendarContract.Events.SYNC_DATA3),
             deleted = optionalInt(CalendarContract.Events.DELETED) == 1,
+            geoPoint = null,
+            locationMapName = null,
+            locationMapId = null,
         )
     }
 
@@ -776,6 +834,9 @@ class CalDavSyncer(
         val href: String?,
         val etag: String?,
         val deleted: Boolean,
+        val geoPoint: GeoPoint?,
+        val locationMapName: String?,
+        val locationMapId: String?,
     )
 
     private companion object {
@@ -816,6 +877,13 @@ private fun ContentValues.putNullableString(
     } else {
         put(key, value)
     }
+}
+
+private fun List<CalDavCalendar>.preferredCalDavCalendar(): CalDavCalendar? {
+    return maxWithOrNull(
+        compareBy<CalDavCalendar> { it.lastSyncMillis ?: Long.MIN_VALUE }
+            .thenBy { it.id },
+    )
 }
 
 private fun Uri.asCalDavSyncAdapter(accountId: String): Uri {

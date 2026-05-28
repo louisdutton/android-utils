@@ -1,5 +1,7 @@
 package digital.dutton.essentials.calendar.data
 
+import digital.dutton.essentials.locations.GeoPoint
+
 data class CalendarSource(
     val id: Long,
     val displayName: String,
@@ -28,6 +30,9 @@ data class CalendarEvent(
     val recurrenceRule: String?,
     val availability: EventAvailability,
     val isReadOnly: Boolean,
+    val locationPoint: GeoPoint? = null,
+    val locationMapName: String? = null,
+    val locationMapId: String? = null,
 )
 
 data class CalendarEventDraft(
@@ -40,6 +45,9 @@ data class CalendarEventDraft(
     val allDay: Boolean,
     val timeZone: String,
     val availability: EventAvailability,
+    val locationPoint: GeoPoint? = null,
+    val locationMapName: String? = null,
+    val locationMapId: String? = null,
 )
 
 enum class EventAvailability {

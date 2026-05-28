@@ -29,10 +29,30 @@ class MusicXmlFilesTest {
     }
 
     @Test
+    fun ignoresMusicXmlDocumentTypeDuringValidation() {
+        val warnings = MusicXmlFiles.validate(
+            ValidMusicXml.replace(
+                "<score-partwise version=\"4.0\">",
+                """
+                <!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+                <score-partwise version="4.0">
+                """.trimIndent(),
+            ).encodeToByteArray(),
+        )
+
+        assertTrue(warnings.none { it.code == "musicxml_parse_failed" })
+    }
+
+    @Test
     fun reportsSingleVoiceMeasureDurationMismatch() {
         val warnings = MusicXmlFiles.validate(MismatchedDurationMusicXml.encodeToByteArray())
 
         assertTrue(warnings.any { it.code == "measure_duration_mismatch" })
+    }
+
+    @Test
+    fun countsMeasures() {
+        assertEquals(1, MusicXmlFiles.measureCount(ValidMusicXml.encodeToByteArray()))
     }
 
     private fun mxlArchive(

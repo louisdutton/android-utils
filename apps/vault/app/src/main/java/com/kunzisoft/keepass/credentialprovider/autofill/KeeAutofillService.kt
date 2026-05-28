@@ -47,23 +47,35 @@ import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.app.database.CipherDatabaseAction
+import com.kunzisoft.keepass.biometric.DeviceUnlockManager
 import com.kunzisoft.keepass.credentialprovider.TypeMode
 import com.kunzisoft.keepass.credentialprovider.activity.AutofillLauncherActivity
 import com.kunzisoft.keepass.credentialprovider.autofill.StructureParser.Companion.APPLICATION_ID_POPUP_WINDOW
 import com.kunzisoft.keepass.credentialprovider.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.DatabaseTaskProvider
+import com.kunzisoft.keepass.database.MainCredential
+import com.kunzisoft.keepass.database.ProgressMessage
 import com.kunzisoft.keepass.database.element.DateInstant
+import com.kunzisoft.keepass.database.element.Database.Companion.DEFAULT_PASSWORD_ENCODING
 import com.kunzisoft.keepass.database.helper.SearchHelper
+import com.kunzisoft.keepass.model.CipherEncryptDatabase
+import com.kunzisoft.keepass.model.CredentialStorage
 import com.kunzisoft.keepass.model.CreditCard
+import com.kunzisoft.keepass.model.EntryInfo
 import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.services.ClipboardEntryNotificationService
+import com.kunzisoft.keepass.services.DatabaseTaskNotificationService
 import com.kunzisoft.keepass.settings.AutofillSettingsActivity
 import com.kunzisoft.keepass.settings.PreferencesUtil
+import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.utils.AppUtil.randomRequestCode
+import com.kunzisoft.keepass.vault.VaultFile
 import org.joda.time.DateTime
 import org.joda.time.Instant
+import java.nio.ByteBuffer
 
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -77,15 +89,18 @@ class KeeAutofillService : AutofillService() {
     private var autofillInlineSuggestionsEnabled: Boolean = false
     private var autofillSharedToMagikeyboard: Boolean = false
     private var switchToMagikeyboard: Boolean = false
+    private var pendingAutofillRequest: PendingAutofillRequest? = null
 
     override fun onCreate() {
         super.onCreate()
 
         mDatabaseTaskProvider = DatabaseTaskProvider(this)
-        mDatabaseTaskProvider?.registerProgressTask()
+        mDatabaseTaskProvider?.actionTaskListener = autofillActionTaskListener
         mDatabaseTaskProvider?.onDatabaseRetrieved = { database ->
             this.mDatabase = database
+            completePendingAutofillRequest(database)
         }
+        mDatabaseTaskProvider?.registerProgressTask()
 
         getPreferences()
     }
@@ -104,6 +119,36 @@ class KeeAutofillService : AutofillService() {
         autofillSharedToMagikeyboard = PreferencesUtil.isAutofillSharedToMagikeyboardEnable(this)
         switchToMagikeyboard = PreferencesUtil.isAutoSwitchToMagikeyboardEnable(this)
     }
+
+    private val autofillActionTaskListener =
+        object : DatabaseTaskNotificationService.ActionTaskListener {
+            override fun onActionStarted(
+                database: ContextualDatabase,
+                progressMessage: ProgressMessage
+            ) {}
+
+            override fun onActionUpdated(
+                database: ContextualDatabase,
+                progressMessage: ProgressMessage
+            ) {}
+
+            override fun onActionStopped(database: ContextualDatabase?) {}
+
+            override fun onActionFinished(
+                database: ContextualDatabase,
+                actionTask: String,
+                result: ActionRunnable.Result
+            ) {
+                if (actionTask == DatabaseTaskNotificationService.ACTION_DATABASE_LOAD_TASK
+                    && pendingAutofillRequest != null) {
+                    if (result.isSuccess && database.loaded) {
+                        completePendingAutofillRequest(database)
+                    } else {
+                        fallbackPendingAutofillRequest()
+                    }
+                }
+            }
+        }
 
     override fun onFillRequest(
         request: FillRequest,
@@ -156,54 +201,213 @@ class KeeAutofillService : AutofillService() {
                         latestStructure,
                         inlineSuggestionsRequest
                     )
-                    SearchHelper.checkAutoSearchInfo(
-                        context = this,
+                    resolveAutofillRequest(
                         database = mDatabase,
+                        parseResult = parseResult,
                         searchInfo = searchInfo,
-                        onItemsFound = { openedDatabase, items ->
-                            // Add Autofill entries to Magic Keyboard #2024 #995
-                            if (autofillSharedToMagikeyboard) {
-                                MagikeyboardService.addEntries(
-                                    context = this,
-                                    entryList = items,
-                                    autoSwitchKeyboard = switchToMagikeyboard,
-                                    from = TypeMode.AUTOFILL
-                                )
-                            } else {
-                                // Add OTP to clipboard notification #1347
-                                ClipboardEntryNotificationService.launchOtpNotificationIfAllowed(
-                                    context = this,
-                                    entries = items
-                                )
-                            }
-                            callback.onSuccess(
-                                AutofillHelper.buildResponse(
-                                    context = this,
-                                    database = openedDatabase,
-                                    entriesInfo = items,
-                                    parseResult = parseResult,
-                                    autofillComponent = autofillComponent
-                                )
-                            )
-                        },
-                        onItemNotFound = { openedDatabase ->
-                            // Show UI if no search result
-                            showUIForEntrySelection(
-                                parseResult, openedDatabase,
-                                searchInfo, autofillComponent, callback
-                            )
-                        },
-                        onDatabaseClosed = {
-                            // Show UI if database not open
-                            showUIForEntrySelection(
-                                parseResult, null,
-                                searchInfo, autofillComponent, callback
-                            )
-                        }
+                        autofillComponent = autofillComponent,
+                        callback = callback,
+                        tryQuickUnlock = true
                     )
                 }
             }
         }
+    }
+
+    private fun resolveAutofillRequest(
+        database: ContextualDatabase?,
+        parseResult: StructureParser.Result,
+        searchInfo: SearchInfo,
+        autofillComponent: AutofillComponent,
+        callback: FillCallback,
+        tryQuickUnlock: Boolean
+    ) {
+        SearchHelper.checkAutoSearchInfo(
+            context = this,
+            database = database,
+            searchInfo = searchInfo,
+            onItemsFound = { openedDatabase, items ->
+                sendAutofillResponseForItems(
+                    openedDatabase = openedDatabase,
+                    items = items,
+                    parseResult = parseResult,
+                    autofillComponent = autofillComponent,
+                    callback = callback
+                )
+            },
+            onItemNotFound = { openedDatabase ->
+                showUIForEntrySelection(
+                    parseResult, openedDatabase,
+                    searchInfo, autofillComponent, callback
+                )
+            },
+            onDatabaseClosed = {
+                val quickUnlockStarted = tryQuickUnlock && startQuickUnlockForAutofill(
+                    parseResult = parseResult,
+                    searchInfo = searchInfo,
+                    autofillComponent = autofillComponent,
+                    callback = callback
+                )
+                if (!quickUnlockStarted) {
+                    showUIForEntrySelection(
+                        parseResult, null,
+                        searchInfo, autofillComponent, callback
+                    )
+                }
+            }
+        )
+    }
+
+    private fun sendAutofillResponseForItems(
+        openedDatabase: ContextualDatabase,
+        items: List<EntryInfo>,
+        parseResult: StructureParser.Result,
+        autofillComponent: AutofillComponent,
+        callback: FillCallback
+    ) {
+        // Add Autofill entries to Magic Keyboard #2024 #995
+        if (autofillSharedToMagikeyboard) {
+            MagikeyboardService.addEntries(
+                context = this,
+                entryList = items,
+                autoSwitchKeyboard = switchToMagikeyboard,
+                from = TypeMode.AUTOFILL
+            )
+        } else {
+            // Add OTP to clipboard notification #1347
+            ClipboardEntryNotificationService.launchOtpNotificationIfAllowed(
+                context = this,
+                entries = items
+            )
+        }
+        callback.onSuccess(
+            AutofillHelper.buildResponse(
+                context = this,
+                database = openedDatabase,
+                entriesInfo = items,
+                parseResult = parseResult,
+                autofillComponent = autofillComponent
+            )
+        )
+    }
+
+    private fun startQuickUnlockForAutofill(
+        parseResult: StructureParser.Result,
+        searchInfo: SearchInfo,
+        autofillComponent: AutofillComponent,
+        callback: FillCallback
+    ): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+            || !PreferencesUtil.isVaultAvailableWhileDeviceUnlockedEnable(this)
+            || !PreferencesUtil.isDeviceUnlockEnable(this)
+            || !VaultFile.exists(this)) {
+            return false
+        }
+
+        val databaseUri = VaultFile.uri(this)
+        pendingAutofillRequest = PendingAutofillRequest(
+            databaseUri = databaseUri,
+            parseResult = parseResult,
+            searchInfo = searchInfo,
+            autofillComponent = autofillComponent,
+            callback = callback
+        )
+
+        CipherDatabaseAction.getInstance(this).getCipherDatabase(databaseUri) { cipherDatabase ->
+            val pendingRequest = pendingAutofillRequest
+            if (pendingRequest == null || pendingRequest.databaseUri != databaseUri) {
+                return@getCipherDatabase
+            }
+            if (cipherDatabase == null) {
+                fallbackPendingAutofillRequest()
+            } else {
+                openVaultForPendingAutofill(databaseUri, cipherDatabase)
+            }
+        }
+        return true
+    }
+
+    private fun openVaultForPendingAutofill(
+        databaseUri: android.net.Uri,
+        cipherDatabase: CipherEncryptDatabase
+    ) {
+        try {
+            var decryptedCredential: ByteArray? = null
+            val decrypted = DeviceUnlockManager(this).decryptDataIfDeviceUnlocked(
+                encryptedValue = cipherDatabase.encryptedValue,
+                ivSpecValue = cipherDatabase.specParameters
+            ) { decryptedValue ->
+                decryptedCredential = decryptedValue
+            }
+            val credentialValue = decryptedCredential
+            if (!decrypted || credentialValue == null) {
+                fallbackPendingAutofillRequest()
+                return
+            }
+
+            val mainCredential = buildMainCredential(cipherDatabase, credentialValue)
+            credentialValue.fill(0)
+            if (mainCredential == null) {
+                fallbackPendingAutofillRequest()
+                return
+            }
+
+            mDatabaseTaskProvider?.startDatabaseLoad(
+                databaseUri = databaseUri,
+                mainCredential = mainCredential,
+                readOnly = false,
+                allowUserVerification = true,
+                cipherEncryptDatabase = null,
+                fixDuplicateUuid = false
+            ) ?: fallbackPendingAutofillRequest()
+        } catch (e: Exception) {
+            Log.d(TAG, "Unable to quick-open vault for autofill", e)
+            fallbackPendingAutofillRequest()
+        }
+    }
+
+    private fun buildMainCredential(
+        cipherDatabase: CipherEncryptDatabase,
+        decryptedValue: ByteArray
+    ): MainCredential? {
+        return when (cipherDatabase.credentialStorage) {
+            CredentialStorage.PASSWORD -> {
+                val charBuffer = DEFAULT_PASSWORD_ENCODING.decode(ByteBuffer.wrap(decryptedValue))
+                val password = CharArray(charBuffer.remaining())
+                charBuffer.get(password)
+                MainCredential(password = password)
+            }
+            CredentialStorage.KEY_FILE,
+            CredentialStorage.HARDWARE_KEY -> null
+        }
+    }
+
+    private fun completePendingAutofillRequest(database: ContextualDatabase?) {
+        val pendingRequest = pendingAutofillRequest ?: return
+        if (database?.loaded != true) {
+            return
+        }
+        pendingAutofillRequest = null
+        resolveAutofillRequest(
+            database = database,
+            parseResult = pendingRequest.parseResult,
+            searchInfo = pendingRequest.searchInfo,
+            autofillComponent = pendingRequest.autofillComponent,
+            callback = pendingRequest.callback,
+            tryQuickUnlock = false
+        )
+    }
+
+    private fun fallbackPendingAutofillRequest() {
+        val pendingRequest = pendingAutofillRequest ?: return
+        pendingAutofillRequest = null
+        showUIForEntrySelection(
+            pendingRequest.parseResult,
+            null,
+            pendingRequest.searchInfo,
+            pendingRequest.autofillComponent,
+            pendingRequest.callback
+        )
     }
 
     @SuppressLint("RestrictedApi")
@@ -473,6 +677,14 @@ class KeeAutofillService : AutofillService() {
     override fun onDisconnected() {
         Log.d(TAG, "onDisconnected")
     }
+
+    private data class PendingAutofillRequest(
+        val databaseUri: android.net.Uri,
+        val parseResult: StructureParser.Result,
+        val searchInfo: SearchInfo,
+        val autofillComponent: AutofillComponent,
+        val callback: FillCallback
+    )
 
     companion object {
         private val TAG = KeeAutofillService::class.java.name

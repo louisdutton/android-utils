@@ -80,6 +80,8 @@ object TimeoutHelper {
                         )
                     }
                 }
+            } else {
+                cancelLockTimer(context)
             }
         }
     }

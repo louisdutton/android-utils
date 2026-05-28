@@ -9,6 +9,8 @@ import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
 import android.provider.CalendarContract
+import digital.dutton.essentials.calendar.provider.CalendarEventLocationStore
+import digital.dutton.essentials.calendar.provider.StoredEventLocation
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -25,6 +27,8 @@ class IcsSubscriptionSyncer(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val parser: IcsCalendarParser = IcsCalendarParser(),
 ) {
+    private val eventLocationStore = CalendarEventLocationStore(context)
+
     suspend fun subscribe(
         rawUrl: String,
         requestedName: String?,
@@ -167,6 +171,9 @@ class IcsSubscriptionSyncer(
         requireCalendarPermissions()
         pruneDuplicateSubscriptions()
         val subscriptions = store.list()
+        subscriptions
+            .filter { calendarExists(it.calendarId) }
+            .forEach { updateSubscriptionCalendarName(it.calendarId, it.displayName) }
         pruneOrphanedProviderEvents(subscriptions)
         subscriptions.forEach(::pruneDuplicateProviderEvents)
         subscriptions
@@ -215,7 +222,10 @@ class IcsSubscriptionSyncer(
     }
 
     private fun ensureSubscriptionCalendar(subscription: CalendarSubscription): CalendarSubscription {
-        if (calendarExists(subscription.calendarId)) return subscription
+        if (calendarExists(subscription.calendarId)) {
+            updateSubscriptionCalendarName(subscription.calendarId, subscription.displayName)
+            return subscription
+        }
 
         val repairedSubscription = subscription.copy(
             calendarId = createSubscriptionCalendar(subscription.displayName),
@@ -250,6 +260,7 @@ class IcsSubscriptionSyncer(
                 if (uri == null) {
                     skipped += 1
                 } else {
+                    eventLocationStore.put(ContentUris.parseId(uri), event.storedLocation())
                     created += 1
                 }
             } else {
@@ -261,6 +272,7 @@ class IcsSubscriptionSyncer(
                     null,
                 )
                 if (rows > 0) {
+                    eventLocationStore.put(existingId, event.storedLocation())
                     updated += 1
                 } else {
                     skipped += 1
@@ -467,6 +479,15 @@ class IcsSubscriptionSyncer(
         }
     }
 
+    private fun IcsCalendarEvent.storedLocation(): StoredEventLocation? {
+        val point = geoPoint ?: return null
+        return StoredEventLocation(
+            point = point,
+            name = locationMapName?.takeIf { it.isNotBlank() } ?: location,
+            mapId = locationMapId?.takeIf { it.isNotBlank() },
+        )
+    }
+
     private fun createSubscriptionCalendar(displayName: String): Long {
         val values = ContentValues().apply {
             put(CalendarContract.Calendars.ACCOUNT_NAME, SubscriptionAccountName)
@@ -494,8 +515,10 @@ class IcsSubscriptionSyncer(
         return context.contentResolver.query(
             CalendarContract.Calendars.CONTENT_URI,
             CalendarExistsProjection,
-            "${CalendarContract.Calendars._ID} = ?",
-            arrayOf(calendarId.toString()),
+            "${CalendarContract.Calendars._ID} = ? AND " +
+                "${CalendarContract.Calendars.ACCOUNT_NAME} = ? AND " +
+                "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?",
+            arrayOf(calendarId.toString(), SubscriptionAccountName, SubscriptionAccountType),
             null,
         )?.use { it.moveToFirst() } ?: false
     }
@@ -511,6 +534,8 @@ class IcsSubscriptionSyncer(
     }
 
     private fun deleteCalendar(calendarId: Long) {
+        if (!calendarExists(calendarId)) return
+
         context.contentResolver.delete(
             ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendarId)
                 .asSubscriptionSyncAdapter(),

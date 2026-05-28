@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream
 import java.util.zip.ZipInputStream
 import javax.xml.XMLConstants
 import javax.xml.parsers.DocumentBuilderFactory
+import kotlin.math.max
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -66,6 +67,23 @@ object MusicXmlFiles {
         val document = runCatching { parseDocument(bytes) }.getOrNull() ?: return 1
         val measures = document.getElementsByTagName("measure").length.coerceAtLeast(1)
         return ((measures + 11) / 12).coerceIn(1, 100)
+    }
+
+    fun measureCount(bytes: ByteArray): Int? {
+        val document = runCatching { parseDocument(bytes) }.getOrNull() ?: return null
+        return document.getElementsByTagName("measure").length
+    }
+
+    fun maxMeasureCountInPart(bytes: ByteArray): Int? {
+        val document = runCatching { parseDocument(bytes) }.getOrNull() ?: return null
+        val parts = document.getElementsByTagName("part")
+        if (parts.length == 0) return document.getElementsByTagName("measure").length
+        var maxMeasures = 0
+        for (index in 0 until parts.length) {
+            val part = parts.item(index) as? Element ?: continue
+            maxMeasures = max(maxMeasures, part.directChildren("measure").size)
+        }
+        return maxMeasures
     }
 
     private fun readCompressedMusicXml(bytes: ByteArray): NormalizedMusicXml {
@@ -182,16 +200,27 @@ object MusicXmlFiles {
     private fun parseDocument(bytes: ByteArray): Document {
         val factory = DocumentBuilderFactory.newInstance().apply {
             isNamespaceAware = false
-            isXIncludeAware = false
-            isExpandEntityReferences = false
+            runCatching { isXIncludeAware = false }
+            runCatching { isExpandEntityReferences = false }
             setFeatureSafely(XMLConstants.FEATURE_SECURE_PROCESSING, true)
             setFeatureSafely("http://xml.org/sax/features/external-general-entities", false)
             setFeatureSafely("http://xml.org/sax/features/external-parameter-entities", false)
             setFeatureSafely("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
         }
-        return factory.newDocumentBuilder().parse(ByteArrayInputStream(bytes))
+        return factory.newDocumentBuilder().parse(ByteArrayInputStream(bytes.withoutDocumentType()))
     }
 }
+
+private fun ByteArray.withoutDocumentType(): ByteArray {
+    val text = decodeToString()
+    if (!text.contains("<!DOCTYPE", ignoreCase = true)) return this
+    return text.replace(DocumentTypePattern, "").encodeToByteArray()
+}
+
+private val DocumentTypePattern = Regex(
+    pattern = """<!DOCTYPE\s+[^>]*(?:\[[\s\S]*?]\s*)?>""",
+    options = setOf(RegexOption.IGNORE_CASE),
+)
 
 private fun ByteArray.looksLikeZip(): Boolean {
     return size >= 2 && this[0] == 'P'.code.toByte() && this[1] == 'K'.code.toByte()

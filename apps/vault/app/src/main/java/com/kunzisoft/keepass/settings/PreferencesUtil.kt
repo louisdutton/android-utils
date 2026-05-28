@@ -435,6 +435,9 @@ object PreferencesUtil {
      * App timeout selected in milliseconds
      */
     fun getAppTimeout(context: Context): Long {
+        if (isVaultAvailableWhileDeviceUnlockedEnable(context)) {
+            return NEVER
+        }
         return try {
             val timeout = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(context.getString(R.string.app_timeout_key),
@@ -464,6 +467,12 @@ object PreferencesUtil {
         return prefs.getString(context.getString(R.string.temp_device_unlock_timeout_key),
             context.getString(R.string.temp_device_unlock_timeout_default))?.toLong()
             ?: TimeoutHelper.DEFAULT_TIMEOUT
+    }
+
+    fun isVaultAvailableWhileDeviceUnlockedEnable(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(context.getString(R.string.vault_available_while_unlocked_key),
+            context.resources.getBoolean(R.bool.vault_available_while_unlocked_default))
     }
 
     fun isLockDatabaseWhenScreenShutOffEnable(context: Context): Boolean {
@@ -878,6 +887,7 @@ object PreferencesUtil {
                 context.getString(R.string.auto_focus_search_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.subdomain_search_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.app_timeout_key) -> editor.putString(name, value.toLong().toString())
+                context.getString(R.string.vault_available_while_unlocked_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.lock_database_screen_off_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.lock_database_back_root_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.lock_database_show_button_key) -> editor.putBoolean(name, value.toBoolean())

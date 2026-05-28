@@ -105,8 +105,8 @@ data class ScoresUiState(
 class ScoresViewModel(application: Application) : AndroidViewModel(application) {
     private val store = ScoresStore(application)
     private val importer = ScoreImporter(application, store)
-    private val renderer = VerovioScoreRenderer()
-    private val _state = MutableStateFlow(ScoresUiState(records = store.list()))
+    private val renderer = VerovioScoreRenderer(application)
+    private val _state = MutableStateFlow(ScoresUiState(records = store.revalidateCompletedRecords()))
     private var importJob: Job? = null
     private var lastIntentUri: Uri? = null
 
@@ -213,7 +213,7 @@ class ScoresViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun refresh() {
-        _state.update { it.copy(records = store.list()) }
+        _state.update { it.copy(records = store.revalidateCompletedRecords()) }
     }
 }
 

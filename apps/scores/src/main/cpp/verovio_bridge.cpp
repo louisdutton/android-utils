@@ -1,9 +1,24 @@
 #include <jni.h>
 
+#include <android/log.h>
+
 #include <sstream>
 #include <string>
+#include <utility>
+#include <vector>
+
+#ifdef HAVE_VEROVIO
+#include "c_wrapper.h"
+#endif
 
 namespace {
+std::string g_lastDiagnostic;
+
+void SetDiagnostic(std::string value) {
+  g_lastDiagnostic = std::move(value);
+  __android_log_write(ANDROID_LOG_WARN, "ScoresVerovio", g_lastDiagnostic.c_str());
+}
+
 std::string ToUtf8(JNIEnv * env, jstring value) {
   if (value == nullptr)
     return "";
@@ -14,71 +29,121 @@ std::string ToUtf8(JNIEnv * env, jstring value) {
   return result;
 }
 
-std::string EscapeXml(std::string const & value) {
-  std::string out;
-  out.reserve(value.size());
-  for (char c : value) {
-    switch (c) {
-      case '&': out += "&amp;"; break;
-      case '<': out += "&lt;"; break;
-      case '>': out += "&gt;"; break;
-      case '"': out += "&quot;"; break;
-      case '\'': out += "&apos;"; break;
-      default: out += c; break;
-    }
+jobjectArray ToJavaStringArray(JNIEnv * env, std::vector<std::string> const & values) {
+  jclass stringClass = env->FindClass("java/lang/String");
+  jobjectArray pages = env->NewObjectArray(static_cast<jsize>(values.size()), stringClass, nullptr);
+  for (jsize i = 0; i < static_cast<jsize>(values.size()); ++i) {
+    env->SetObjectArrayElement(pages, i, env->NewStringUTF(values[static_cast<size_t>(i)].c_str()));
   }
-  return out;
+  return pages;
 }
 
-std::string PlaceholderSvg(std::string const & title, int pageIndex, int pageCount, int width) {
-  int const safeWidth = width < 320 ? 320 : width;
-  int const height = safeWidth * 4 / 3;
-  std::ostringstream svg;
-  svg << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" << safeWidth
-      << "\" height=\"" << height << "\" viewBox=\"0 0 " << safeWidth << " " << height << "\">"
-      << "<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>"
-      << "<text x=\"" << safeWidth / 2 << "\" y=\"64\" text-anchor=\"middle\""
-      << " font-size=\"28\" font-family=\"sans-serif\" fill=\"#202124\">"
-      << EscapeXml(title.empty() ? "Score" : title) << "</text>";
-  int const left = safeWidth / 8;
-  int const right = safeWidth - left;
-  int const top = 150;
-  for (int system = 0; system < 3; ++system) {
-    int const y = top + system * 210;
-    for (int line = 0; line < 5; ++line) {
-      int const lineY = y + line * 18;
-      svg << "<line x1=\"" << left << "\" y1=\"" << lineY << "\" x2=\"" << right
-          << "\" y2=\"" << lineY << "\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>";
-    }
-    for (int note = 0; note < 7; ++note) {
-      int const cx = left + 76 + note * ((right - left - 120) / 7);
-      int const cy = y + 72 - ((note + system) % 5) * 9;
-      svg << "<ellipse cx=\"" << cx << "\" cy=\"" << cy
-          << "\" rx=\"12\" ry=\"8\" transform=\"rotate(-18 " << cx << " " << cy
-          << ")\" fill=\"#006b5c\"/>"
-          << "<line x1=\"" << (cx + 10) << "\" y1=\"" << (cy - 2) << "\" x2=\""
-          << (cx + 10) << "\" y2=\"" << (cy - 82)
-          << "\" stroke=\"#006b5c\" stroke-width=\"4\"/>";
-    }
-  }
-  svg << "<text x=\"" << safeWidth / 2 << "\" y=\"" << (height - 56)
-      << "\" text-anchor=\"middle\" font-size=\"20\" font-family=\"sans-serif\""
-      << " fill=\"#6b6b6b\">Verovio native bridge placeholder · page "
-      << (pageIndex + 1) << " of " << pageCount << "</text></svg>";
-  return svg.str();
+#ifdef HAVE_VEROVIO
+std::string ToolkitLog(void * toolkit) {
+  char const * log = vrvToolkit_getLog(toolkit);
+  return log == nullptr ? "" : log;
 }
+
+bool RenderWithInput(
+    std::string const & xml,
+    std::string const & resourcePath,
+    jint targetWidthPx,
+    char const * inputFrom,
+    std::vector<std::string> * pages) {
+  if (resourcePath.empty()) {
+    SetDiagnostic("Verovio resource path was empty.");
+    return false;
+  }
+
+  void * toolkit = vrvToolkit_constructorResourcePath(resourcePath.c_str());
+  if (toolkit == nullptr) {
+    SetDiagnostic("Verovio toolkit construction failed.");
+    return false;
+  }
+
+  bool ok = false;
+  try {
+    enableLogToBuffer(true);
+    enableLog(true);
+    if (!vrvToolkit_setInputFrom(toolkit, inputFrom)) {
+      SetDiagnostic(std::string("Verovio rejected input format '") + inputFrom + "'.");
+      vrvToolkit_destructor(toolkit);
+      return false;
+    }
+
+    std::ostringstream options;
+    options << "{"
+            << "\"adjustPageHeight\":true,"
+            << "\"breaks\":\"auto\","
+            << "\"footer\":\"none\","
+            << "\"header\":\"none\","
+            << "\"pageMarginBottom\":20,"
+            << "\"pageMarginLeft\":20,"
+            << "\"pageMarginRight\":20,"
+            << "\"pageMarginTop\":20,"
+            << "\"pageWidth\":" << (targetWidthPx < 320 ? 320 : targetWidthPx)
+            << "}";
+    if (!vrvToolkit_setOptions(toolkit, options.str().c_str())) {
+      SetDiagnostic(std::string("Verovio rejected render options for input '") + inputFrom + "'.");
+      vrvToolkit_destructor(toolkit);
+      return false;
+    }
+
+    if (!vrvToolkit_loadData(toolkit, xml.c_str())) {
+      std::string log = ToolkitLog(toolkit);
+      SetDiagnostic(
+          std::string("Verovio failed to load MusicXML as '") + inputFrom + "'." +
+          (log.empty() ? "" : " " + log));
+      vrvToolkit_destructor(toolkit);
+      return false;
+    }
+
+    int const pageCount = vrvToolkit_getPageCount(toolkit);
+    for (int page = 1; page <= pageCount; ++page) {
+      char const * rendered = vrvToolkit_renderToSVG(toolkit, page, false);
+      if (rendered != nullptr && rendered[0] != '\0')
+        pages->emplace_back(rendered);
+    }
+    ok = !pages->empty();
+    if (!ok)
+      SetDiagnostic(std::string("Verovio loaded MusicXML as '") + inputFrom + "' but returned no SVG pages.");
+  } catch (...) {
+    SetDiagnostic(std::string("Verovio threw while rendering MusicXML as '") + inputFrom + "'.");
+    pages->clear();
+    ok = false;
+  }
+  vrvToolkit_destructor(toolkit);
+  return ok;
+}
+#endif
 }  // namespace
 
 extern "C" JNIEXPORT jobjectArray JNICALL
-Java_digital_dutton_essentials_scores_VerovioBridge_renderPlaceholderSvgPages(
-    JNIEnv * env, jobject, jstring title, jint pageCount, jint targetWidthPx) {
-  int const safePageCount = pageCount < 1 ? 1 : pageCount;
-  jclass stringClass = env->FindClass("java/lang/String");
-  jobjectArray pages = env->NewObjectArray(safePageCount, stringClass, nullptr);
-  std::string const titleUtf8 = ToUtf8(env, title);
-  for (int i = 0; i < safePageCount; ++i) {
-    std::string page = PlaceholderSvg(titleUtf8, i, safePageCount, targetWidthPx);
-    env->SetObjectArrayElement(pages, i, env->NewStringUTF(page.c_str()));
+Java_digital_dutton_essentials_scores_VerovioBridge_renderMusicXmlSvgPages(
+    JNIEnv * env, jobject, jstring musicXml, jstring resourcePath, jint targetWidthPx) {
+#ifdef HAVE_VEROVIO
+  std::string const xml = ToUtf8(env, musicXml);
+  std::string const resources = ToUtf8(env, resourcePath);
+  g_lastDiagnostic.clear();
+  if (xml.empty()) {
+    SetDiagnostic("MusicXML input was empty.");
+    return ToJavaStringArray(env, {});
   }
-  return pages;
+
+  std::vector<std::string> pages;
+  if (!RenderWithInput(xml, resources, targetWidthPx, "xml", &pages)) {
+    pages.clear();
+    RenderWithInput(xml, resources, targetWidthPx, "musicxml-hum", &pages);
+  }
+  return ToJavaStringArray(env, pages);
+#else
+  SetDiagnostic("Verovio was not compiled into this build.");
+  return ToJavaStringArray(env, {});
+#endif
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_digital_dutton_essentials_scores_VerovioBridge_lastRenderDiagnostic(
+    JNIEnv * env, jobject) {
+  return env->NewStringUTF(g_lastDiagnostic.c_str());
 }

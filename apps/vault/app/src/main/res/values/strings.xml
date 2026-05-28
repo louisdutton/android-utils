@@ -452,6 +452,8 @@
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_warning">If automatic deletion of clipboard fails, delete its history manually.</string>
     <string name="lock">Lock</string>
+    <string name="vault_available_while_unlocked_title">Available while unlocked</string>
+    <string name="vault_available_while_unlocked_summary">Keep the vault ready for app and website autofill until the device screen is locked</string>
     <string name="lock_database_screen_off_title">Screen lock</string>
     <string name="lock_database_screen_off_summary">Lock the database after a few seconds once the screen is off</string>
     <string name="lock_database_back_root_title">Press \'Back\' to lock</string>

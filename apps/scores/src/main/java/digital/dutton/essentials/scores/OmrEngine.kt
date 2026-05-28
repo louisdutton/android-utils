@@ -8,6 +8,7 @@ import kotlin.coroutines.coroutineContext
 
 interface OmrEngine {
     suspend fun recognize(
+        title: String,
         pages: List<ScorePageBitmap>,
         progress: ImportProgressCallback,
     ): OmrResult
@@ -17,6 +18,7 @@ class OnDeviceOmrEngine(
     private val context: Context,
 ) : OmrEngine {
     override suspend fun recognize(
+        title: String,
         pages: List<ScorePageBitmap>,
         progress: ImportProgressCallback,
     ): OmrResult = withContext(Dispatchers.Default) {
@@ -47,17 +49,19 @@ class OnDeviceOmrEngine(
             )
         }
 
-        OmrResult(
-            musicXml = null,
-            pageCount = pages.size,
-            warnings = listOf(
-                ScoreWarning(
-                    pageIndex = null,
-                    code = "omr_runner_unavailable",
-                    message = "HOMR model assets are present, but the native HOMR inference runner is not wired yet.",
+        NativeScoreOmr(context).recognize(
+            title = title,
+            pages = pages,
+        ) { pageIndex, pageCount, message ->
+            progress(
+                ImportProgress(
+                    stage = ImportStage.Recognizing,
+                    pageIndex = pageIndex,
+                    pageCount = pageCount,
+                    message = message,
                 ),
-            ),
-        )
+            )
+        }
     }
 
     private fun assetExists(path: String): Boolean {
@@ -68,8 +72,8 @@ class OnDeviceOmrEngine(
 
     private companion object {
         val RequiredModelAssets = listOf(
-            "omr/segmentation.onnx",
-            "omr/encoder.onnx",
+            "omr/segmentation.tflite",
+            "omr/encoder.tflite",
             "omr/decoder.onnx",
         )
     }

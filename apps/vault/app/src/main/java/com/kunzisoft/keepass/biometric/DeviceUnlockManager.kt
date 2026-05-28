@@ -114,7 +114,7 @@ class DeviceUnlockManager(private var appContext: Context) {
                                             // define a validity duration to fix "At least one biometric must be enrolled"
                                             // if no biometric enrolled
                                             setUserAuthenticationParameters(
-                                                0,
+                                                getAuthenticationValidityDuration(0),
                                                 KeyProperties.AUTH_BIOMETRIC_STRONG or
                                                         KeyProperties.AUTH_DEVICE_CREDENTIAL
                                             )
@@ -122,7 +122,13 @@ class DeviceUnlockManager(private var appContext: Context) {
                                             // Authent with device credential on Legacy Android M-Q
                                             // duration required for PIN/Pattern on older APIs
                                             @Suppress("DEPRECATION")
-                                            setUserAuthenticationValidityDurationSeconds(5)
+                                            setUserAuthenticationValidityDurationSeconds(
+                                                getAuthenticationValidityDuration(5)
+                                            )
+                                        }
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+                                            && PreferencesUtil.isVaultAvailableWhileDeviceUnlockedEnable(appContext)) {
+                                            setUnlockedDeviceRequired(true)
                                         }
                                         // To store in the security chip
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
@@ -145,6 +151,15 @@ class DeviceUnlockManager(private var appContext: Context) {
             throw e
         }
         return null
+    }
+
+    private fun getAuthenticationValidityDuration(promptAuthenticationDuration: Int): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+            && PreferencesUtil.isVaultAvailableWhileDeviceUnlockedEnable(appContext)) {
+            DEVICE_UNLOCK_AVAILABLE_AUTH_VALIDITY_SECONDS
+        } else {
+            promptAuthenticationDuration
+        }
     }
 
     @Synchronized fun initEncryptData(
@@ -318,6 +333,28 @@ class DeviceUnlockManager(private var appContext: Context) {
         }
     }
 
+    @Synchronized fun decryptDataIfDeviceUnlocked(
+        encryptedValue: ByteArray,
+        ivSpecValue: ByteArray,
+        handleDecryptedResult: (decryptedValue: ByteArray) -> Unit
+    ): Boolean {
+        return try {
+            val spec = IvParameterSpec(ivSpecValue)
+            getSecretKey()?.let { secretKey ->
+                cipher?.let { cipher ->
+                    cipher.init(Cipher.DECRYPT_MODE, secretKey, spec)
+                    cipher.doFinal(encryptedValue)?.let { decrypted ->
+                        handleDecryptedResult.invoke(decrypted)
+                    }
+                    true
+                } ?: false
+            } ?: false
+        } catch (e: Exception) {
+            Log.d(TAG, "Device unlock key is not currently available without prompt", e)
+            false
+        }
+    }
+
     @Synchronized fun deleteKeystoreKey() {
         try {
             keyStore?.load(null)
@@ -337,6 +374,7 @@ class DeviceUnlockManager(private var appContext: Context) {
         private const val DEVICE_UNLOCK_KEY_ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
         private const val DEVICE_UNLOCK_BLOCKS_MODES = KeyProperties.BLOCK_MODE_CBC
         private const val DEVICE_UNLOCK_ENCRYPTION_PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
+        private const val DEVICE_UNLOCK_AVAILABLE_AUTH_VALIDITY_SECONDS = 24 * 60 * 60
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         fun canAuthenticate(context: Context): Int {
