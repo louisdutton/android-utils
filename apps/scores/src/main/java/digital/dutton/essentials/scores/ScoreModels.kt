@@ -93,6 +93,24 @@ data class ScorePageBitmap(
     val bitmap: Bitmap,
 )
 
+data class ScorePageGeometry(
+    val index: Int,
+    val widthPx: Int,
+    val heightPx: Int,
+)
+
+data class ScoreLyricText(
+    val pageIndex: Int,
+    val xPx: Float,
+    val yPx: Float,
+    val text: String,
+)
+
+data class ScoreScannedText(
+    val title: String? = null,
+    val lyrics: List<ScoreLyricText> = emptyList(),
+)
+
 data class ImportProgress(
     val stage: ImportStage,
     val pageIndex: Int? = null,

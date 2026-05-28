@@ -6,6 +6,12 @@ data class HomrSymbol(
     val pitch: String,
     val articulationIndex: Int,
     val position: String,
+    val lyric: HomrLyric? = null,
+)
+
+data class HomrLyric(
+    val text: String,
+    val syllabic: String = "single",
 )
 
 object HomrVocabulary {

@@ -81,6 +81,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.material3:material3")
     implementation("com.caverock:androidsvg:1.4")
+    implementation("com.google.mlkit:text-recognition:16.0.1")
     implementation("com.google.ai.edge.litert:litert:2.1.4")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.23.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")

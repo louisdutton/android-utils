@@ -25,6 +25,7 @@ class NativeScoreOmr(
     suspend fun recognize(
         title: String,
         pages: List<ScorePageBitmap>,
+        lyricText: List<ScoreLyricText>,
         progress: suspend (pageIndex: Int, pageCount: Int, message: String) -> Unit,
     ): OmrResult {
         val modelFiles = copyModelAssets()
@@ -52,6 +53,7 @@ class NativeScoreOmr(
             )
 
             for (page in pages) {
+                val pageLyricText = lyricText.filter { it.pageIndex == page.index }
                 progress(page.index, pages.size, "Segmenting page ${page.index + 1}")
                 val omrBitmap = page.bitmap.enhancedForOmr()
                 val cropResult = try {
@@ -69,8 +71,8 @@ class NativeScoreOmr(
 
                 progress(page.index, pages.size, "Finding staves on page ${page.index + 1}")
                 val crops = cropResult.crops
-                if (inferredStaffsPerSystem == null) {
-                    inferredStaffsPerSystem = inferStaffsPerSystem(crops.size)
+                val staffsPerSystem = inferredStaffsPerSystem ?: inferStaffsPerSystem(crops.size).also {
+                    inferredStaffsPerSystem = it
                 }
                 if (crops.isEmpty()) {
                     warnings += ScoreWarning(
@@ -98,8 +100,18 @@ class NativeScoreOmr(
                         crop.bitmap.recycle()
                         return@forEachIndexed
                     }
-                    val symbols = HomrVocabulary.decode(tokens)
+                    val decodedSymbols = HomrVocabulary.decode(tokens)
                         .filterNot { it.position == "lower" }
+                    val symbols = if (shouldAttachLyrics(staffIndex, staffsPerSystem)) {
+                        decodedSymbols.withLyrics(
+                            pageLyricText.lyricsForStaff(
+                                crop = crop,
+                                nextCrop = crops.getOrNull(staffIndex + 1),
+                            ),
+                        )
+                    } else {
+                        decodedSymbols
+                    }
                     if (symbols.none { it.rhythm.startsWith("note") || it.rhythm.startsWith("rest") }) {
                         warnings += ScoreWarning(
                             pageIndex = page.index,
@@ -229,6 +241,93 @@ class NativeScoreOmr(
         return listOf(
             HomrPart(name = "Score", symbols = recognizedStaves.flatten()),
         )
+    }
+
+    private fun shouldAttachLyrics(
+        staffIndex: Int,
+        staffsPerSystem: Int,
+    ): Boolean {
+        return staffsPerSystem == 1 || (staffsPerSystem >= 3 && staffIndex % staffsPerSystem == 0)
+    }
+
+    private fun List<ScoreLyricText>.lyricsForStaff(
+        crop: StaffCrop,
+        nextCrop: StaffCrop?,
+    ): List<HomrLyric> {
+        if (isEmpty()) return emptyList()
+        val source = crop.source
+        val lower = source.top + source.height() * 0.52f
+        val upper = nextCrop?.source?.top?.toFloat()
+            ?: (source.bottom + source.height() * 0.8f)
+        val horizontalMargin = source.height() * 0.35f
+        val candidates = filter { text ->
+            text.yPx >= lower &&
+                text.yPx <= upper &&
+                text.xPx >= source.left - horizontalMargin &&
+                text.xPx <= source.right + horizontalMargin
+        }
+        if (candidates.isEmpty()) return emptyList()
+
+        val grouped = candidates.sortedBy { it.yPx }.fold(mutableListOf<MutableList<ScoreLyricText>>()) { groups, item ->
+            val current = groups.lastOrNull()
+            if (current == null || kotlin.math.abs(current.map { it.yPx }.average() - item.yPx) > source.height() * 0.12f) {
+                groups += mutableListOf(item)
+            } else {
+                current += item
+            }
+            groups
+        }
+        val lyricLine = grouped.maxByOrNull { it.size }.orEmpty().sortedBy { it.xPx }
+        return lyricLine.flatMap { it.toLyrics() }
+    }
+
+    private fun List<HomrSymbol>.withLyrics(lyrics: List<HomrLyric>): List<HomrSymbol> {
+        if (lyrics.isEmpty()) return this
+        var lyricIndex = 0
+        var chordNext = false
+        return map { symbol ->
+            if (symbol.rhythm == "chord") {
+                chordNext = true
+                return@map symbol
+            }
+            val isChordNote = chordNext
+            val withLyric = if (symbol.isLyricNote() && !isChordNote && lyricIndex < lyrics.size) {
+                symbol.copy(lyric = lyrics[lyricIndex++])
+            } else {
+                symbol
+            }
+            if (symbol.rhythm.startsWith("note") || symbol.rhythm.startsWith("rest")) {
+                chordNext = false
+            }
+            withLyric
+        }
+    }
+
+    private fun HomrSymbol.isLyricNote(): Boolean {
+        return rhythm.startsWith("note") && pitch != "." && pitch != "_"
+    }
+
+    private fun ScoreLyricText.toLyrics(): List<HomrLyric> {
+        return text
+            .split(Regex("""\s+"""))
+            .filter { it.isNotBlank() }
+            .flatMap { token ->
+                val parts = token.split('-').filter { it.isNotBlank() }
+                if (parts.size <= 1) {
+                    listOf(HomrLyric(token))
+                } else {
+                    parts.mapIndexed { index, part ->
+                        HomrLyric(
+                            text = part,
+                            syllabic = when (index) {
+                                0 -> "begin"
+                                parts.lastIndex -> "end"
+                                else -> "middle"
+                            },
+                        )
+                    }
+                }
+            }
     }
 }
 
@@ -409,6 +508,7 @@ private object StaffCropper {
                 )
                 StaffCrop(
                     index = index,
+                    source = source,
                     bitmap = bitmap.cropToWhiteCanvas(source),
                 )
             },
@@ -614,6 +714,7 @@ private object StaffCropper {
 
 private data class StaffCrop(
     val index: Int,
+    val source: Rect,
     val bitmap: Bitmap,
 ) {
     fun toTransformerInput(): java.nio.FloatBuffer {

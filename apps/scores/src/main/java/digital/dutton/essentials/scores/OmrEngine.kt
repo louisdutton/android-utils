@@ -10,6 +10,7 @@ interface OmrEngine {
     suspend fun recognize(
         title: String,
         pages: List<ScorePageBitmap>,
+        lyricText: List<ScoreLyricText>,
         progress: ImportProgressCallback,
     ): OmrResult
 }
@@ -20,6 +21,7 @@ class OnDeviceOmrEngine(
     override suspend fun recognize(
         title: String,
         pages: List<ScorePageBitmap>,
+        lyricText: List<ScoreLyricText>,
         progress: ImportProgressCallback,
     ): OmrResult = withContext(Dispatchers.Default) {
         for (page in pages) {
@@ -52,6 +54,7 @@ class OnDeviceOmrEngine(
         NativeScoreOmr(context).recognize(
             title = title,
             pages = pages,
+            lyricText = lyricText,
         ) { pageIndex, pageCount, message ->
             progress(
                 ImportProgress(

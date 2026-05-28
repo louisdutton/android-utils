@@ -90,7 +90,7 @@ class HomrMusicXmlWriterTest {
             title = "Accidentals",
             symbols = listOf(
                 HomrSymbol("note_4", "#", "C4", -1, "upper"),
-                HomrSymbol("note_4", "N", "D4", -1, "upper"),
+                HomrSymbol("note_4", "N", "C4", -1, "upper"),
                 HomrSymbol("note_4", "b", "E4", -1, "upper"),
                 HomrSymbol("note_4", "##", "F4", -1, "upper"),
             ),
@@ -100,6 +100,60 @@ class HomrMusicXmlWriterTest {
         assertTrue("<accidental>natural</accidental>" in musicXml)
         assertTrue("<accidental>flat</accidental>" in musicXml)
         assertTrue("<accidental>double-sharp</accidental>" in musicXml)
+    }
+
+    @Test
+    fun suppressesRepeatedVisibleAccidentalsWithinMeasure() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Repeated accidentals",
+            symbols = listOf(
+                HomrSymbol("note_4", "#", "F4", -1, "upper"),
+                HomrSymbol("note_4", "#", "F4", -1, "upper"),
+                HomrSymbol("note_4", "N", "F4", -1, "upper"),
+                HomrSymbol("note_4", "N", "F4", -1, "upper"),
+                HomrSymbol("barline", ".", ".", -1, "upper"),
+                HomrSymbol("note_1", "#", "F4", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        assertEquals(3, "<alter>1</alter>".toRegex().findAll(musicXml).count())
+        assertEquals(2, "<alter>0</alter>".toRegex().findAll(musicXml).count())
+        assertEquals(2, "<accidental>sharp</accidental>".toRegex().findAll(musicXml).count())
+        assertEquals(1, "<accidental>natural</accidental>".toRegex().findAll(musicXml).count())
+    }
+
+    @Test
+    fun suppressesAccidentalsAlreadyImpliedByKeySignature() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Key accidentals",
+            symbols = listOf(
+                HomrSymbol("keySignature_1", ".", ".", -1, "upper"),
+                HomrSymbol("note_4", "#", "F4", -1, "upper"),
+                HomrSymbol("note_4", "#", "F4", -1, "upper"),
+                HomrSymbol("note_4", "N", "F4", -1, "upper"),
+                HomrSymbol("note_4", "N", "F4", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        assertEquals(0, "<accidental>sharp</accidental>".toRegex().findAll(musicXml).count())
+        assertEquals(1, "<accidental>natural</accidental>".toRegex().findAll(musicXml).count())
+    }
+
+    @Test
+    fun writesLyricsOnNotes() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Lyrics",
+            symbols = listOf(
+                HomrSymbol("note_4", ".", "C4", -1, "upper", HomrLyric("Fron", "begin")),
+                HomrSymbol("note_4", ".", "D4", -1, "upper", HomrLyric("di", "end")),
+            ),
+        ).decodeToString()
+
+        assertTrue("<lyric>" in musicXml)
+        assertTrue("<syllabic>begin</syllabic>" in musicXml)
+        assertTrue("<text>Fron</text>" in musicXml)
+        assertTrue("<syllabic>end</syllabic>" in musicXml)
+        assertTrue("<text>di</text>" in musicXml)
     }
 
     @Test

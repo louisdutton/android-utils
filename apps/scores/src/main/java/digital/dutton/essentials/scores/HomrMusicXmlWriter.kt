@@ -58,6 +58,7 @@ object HomrMusicXmlWriter {
         var fifths = 0
         var beatType = 4
         var beats = 4
+        var accidentalTracker = AccidentalTracker(fifths)
         val beamer = BeamBuffer { event ->
             out.append(
                 event.symbol.toMusicXmlNote(
@@ -65,6 +66,7 @@ object HomrMusicXmlWriter {
                     isChord = event.isChord,
                     staffNumber = event.staffNumber,
                     voice = event.voice,
+                    accidental = event.accidental,
                     beam = event.beam,
                 ),
             )
@@ -97,6 +99,7 @@ object HomrMusicXmlWriter {
             measureOpen = false
             measureDuration = 0
             measureNumber += 1
+            accidentalTracker = AccidentalTracker(fifths)
         }
 
         openMeasure(forceAttributes = true)
@@ -122,6 +125,7 @@ object HomrMusicXmlWriter {
                 }
                 symbol.rhythm.startsWith("keySignature") -> {
                     fifths = symbol.rhythm.substringAfter('_').toIntOrNull() ?: fifths
+                    accidentalTracker = AccidentalTracker(fifths)
                     openMeasure(forceAttributes = true)
                     out.appendLine("      <attributes><key><fifths>$fifths</fifths></key></attributes>")
                 }
@@ -145,6 +149,7 @@ object HomrMusicXmlWriter {
                             isChord = pendingChord,
                             staffNumber = null,
                             voice = 1,
+                            accidental = accidentalTracker.visibleAccidental(symbol),
                         ),
                     )
                     if (!pendingChord) {
@@ -226,6 +231,7 @@ object HomrMusicXmlWriter {
     ) {
         var measureDuration = 0
         var pendingChord = false
+        val accidentalTracker = AccidentalTracker(fifths = 0)
         val beamer = BeamBuffer { event ->
             out.append(
                 event.symbol.toMusicXmlNote(
@@ -233,6 +239,7 @@ object HomrMusicXmlWriter {
                     isChord = event.isChord,
                     staffNumber = event.staffNumber,
                     voice = event.voice,
+                    accidental = event.accidental,
                     beam = event.beam,
                 ),
             )
@@ -251,6 +258,7 @@ object HomrMusicXmlWriter {
                             isChord = pendingChord,
                             staffNumber = staffNumber,
                             voice = voice,
+                            accidental = accidentalTracker.visibleAccidental(symbol),
                         ),
                     )
                     if (!pendingChord) {
@@ -279,6 +287,7 @@ object HomrMusicXmlWriter {
         isChord: Boolean,
         staffNumber: Int? = null,
         voice: Int = 1,
+        accidental: String? = null,
         beam: String? = null,
     ): String = buildString {
         val isRest = rhythm.startsWith("rest") || pitch == "." || pitch == "_"
@@ -301,11 +310,15 @@ object HomrMusicXmlWriter {
         appendLine("        <voice>$voice</voice>")
         appendLine("        <type>${duration.type}</type>")
         repeat(duration.dots) { appendLine("        <dot/>") }
-        if (!isRest) {
-            lift.toAccidental()?.let { appendLine("        <accidental>$it</accidental>") }
-        }
+        accidental?.let { appendLine("        <accidental>$it</accidental>") }
         staffNumber?.let { appendLine("        <staff>$it</staff>") }
         beam?.let { appendLine("""        <beam number="1">$it</beam>""") }
+        lyric?.let { lyric ->
+            appendLine("        <lyric>")
+            appendLine("          <syllabic>${lyric.syllabic.escapeXml()}</syllabic>")
+            appendLine("          <text>${lyric.text.escapeXml()}</text>")
+            appendLine("        </lyric>")
+        }
         appendLine("      </note>")
     }
 
@@ -384,6 +397,52 @@ object HomrMusicXmlWriter {
         }
     }
 
+    private class AccidentalTracker(
+        private val fifths: Int,
+    ) {
+        private val active = mutableMapOf<PitchKey, Int>()
+
+        fun visibleAccidental(symbol: HomrSymbol): String? {
+            if (!symbol.rhythm.startsWith("note") || symbol.pitch == "." || symbol.pitch == "_") return null
+            val step = symbol.pitch.firstOrNull()?.takeIf { it in 'A'..'G' } ?: return null
+            val octave = symbol.pitch.drop(1).toIntOrNull() ?: 4
+            val alter = symbol.lift.toAlter() ?: keyAlter(step, fifths)
+            val key = PitchKey(step = step, octave = octave)
+            val current = active[key] ?: keyAlter(step, fifths)
+            active[key] = alter
+            return if (alter != current) symbol.lift.toAccidental() ?: alter.toAccidental() else null
+        }
+    }
+
+    private data class PitchKey(
+        val step: Char,
+        val octave: Int,
+    )
+
+    private fun keyAlter(
+        step: Char,
+        fifths: Int,
+    ): Int {
+        val sharps = listOf('F', 'C', 'G', 'D', 'A', 'E', 'B')
+        val flats = listOf('B', 'E', 'A', 'D', 'G', 'C', 'F')
+        return when {
+            fifths > 0 && step in sharps.take(fifths.coerceAtMost(sharps.size)) -> 1
+            fifths < 0 && step in flats.take((-fifths).coerceAtMost(flats.size)) -> -1
+            else -> 0
+        }
+    }
+
+    private fun Int.toAccidental(): String? {
+        return when (this) {
+            -2 -> "flat-flat"
+            -1 -> "flat"
+            0 -> "natural"
+            1 -> "sharp"
+            2 -> "double-sharp"
+            else -> null
+        }
+    }
+
     private class BeamBuffer(
         private val emit: (NoteEvent) -> Unit,
     ) {
@@ -430,6 +489,7 @@ object HomrMusicXmlWriter {
         val isChord: Boolean,
         val staffNumber: Int?,
         val voice: Int,
+        val accidental: String?,
         val beam: String? = null,
     ) {
         val isBeamable: Boolean

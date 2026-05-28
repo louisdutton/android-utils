@@ -12,6 +12,7 @@ class ScoreImporter(
     private val store: ScoresStore = ScoresStore(context),
     private val rasterizer: ScorePageRasterizer = ScorePageRasterizer(context),
     private val omrEngine: OmrEngine = OnDeviceOmrEngine(context),
+    private val imageTextRecognizer: ScoreImageTextRecognizer = ScoreImageTextRecognizer(),
 ) {
     suspend fun `import`(
         source: ScoreSource,
@@ -32,10 +33,11 @@ class ScoreImporter(
                 store.sourceFile(record).outputStream().use { output -> input.copyTo(output) }
             } ?: error("Unable to open score source.")
 
-            val sourceTitle = ScoreSourceMetadata.title(
+            val fallbackTitle = ScoreSourceMetadata.title(
                 file = store.sourceFile(record),
                 mimeType = sourceMime,
             ) ?: source.displayName.scoreTitleFromFileName()
+            var sourceTitle = fallbackTitle
             record = store.save(
                 record.copy(
                     title = sourceTitle,
@@ -71,9 +73,40 @@ class ScoreImporter(
             progress(ImportProgress(stage = ImportStage.Rasterizing, message = "Preparing pages"))
             val pages = rasterizer.rasterize(store.sourceFile(record), sourceMime)
             try {
+                progress(ImportProgress(stage = ImportStage.Recognizing, message = "Scanning text"))
+                val textWarnings = mutableListOf<ScoreWarning>()
+                val scannedText = runCatching {
+                    imageTextRecognizer.recognize(pages)
+                }.getOrElse { error ->
+                    textWarnings += ScoreWarning(
+                        pageIndex = null,
+                        code = "text_ocr_failed",
+                        message = error.message ?: "Text OCR failed.",
+                    )
+                    ScoreScannedText()
+                }
+                sourceTitle = scannedText.title ?: fallbackTitle
+                if (sourceTitle != record.title) {
+                    record = store.save(record.copy(title = sourceTitle))
+                }
+                val pageGeometry = pages.map {
+                    ScorePageGeometry(
+                        index = it.index,
+                        widthPx = it.widthPx,
+                        heightPx = it.heightPx,
+                    )
+                }
+                val lyricText = scannedText.lyrics.ifEmpty {
+                    ScoreSourceLyrics.extract(
+                        file = store.sourceFile(record),
+                        mimeType = sourceMime,
+                        pages = pageGeometry,
+                    )
+                }
                 val omrResult = omrEngine.recognize(
                     title = sourceTitle,
                     pages = pages,
+                    lyricText = lyricText,
                     progress = progress,
                 )
                 val musicXml = omrResult.musicXml
@@ -95,7 +128,7 @@ class ScoreImporter(
                 }
 
                 progress(ImportProgress(stage = ImportStage.Validating, message = "Validating MusicXML"))
-                val warnings = omrResult.warnings + MusicXmlFiles.validate(musicXml)
+                val warnings = textWarnings + omrResult.warnings + MusicXmlFiles.validate(musicXml)
                 val musicXmlFile = store.musicXmlFile(record)
                 musicXmlFile.writeBytes(musicXml)
                 val title = MusicXmlFiles.title(musicXml) ?: sourceTitle

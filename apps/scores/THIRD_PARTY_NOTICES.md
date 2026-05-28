@@ -13,6 +13,10 @@ license because the planned OMR implementation is derived from AGPL software.
 - Google AI Edge LiteRT: Apache-2.0, https://ai.google.dev/edge/litert
 - ONNX Runtime Android: MIT, https://github.com/microsoft/onnxruntime
 
+## Text recognition
+
+- Google ML Kit Text Recognition: Google ML Kit terms, https://developers.google.com/ml-kit
+
 ## Score rendering
 
 - Verovio: LGPL-3.0/GPL-3.0, https://github.com/rism-digital/verovio
