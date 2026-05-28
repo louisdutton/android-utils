@@ -17,6 +17,9 @@
   `nix develop --no-write-lock-file --command ./scripts/build-documents-android.sh`
 - `apps/recorder` is the local audio recorder app. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-recorder-android.sh`
+- `apps/trainer` is the local music theory, sight-reading, and dictation
+  trainer app. Build it with:
+  `nix develop --no-write-lock-file --command ./scripts/build-trainer-android.sh`
 - `apps/keyboard` is the hard-forked FUTO Keyboard-derived production Keyboard
   app, imported as normal source with its own Gradle project. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-keyboard-android.sh`

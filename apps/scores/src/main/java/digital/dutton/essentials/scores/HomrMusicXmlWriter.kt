@@ -150,6 +150,11 @@ object HomrMusicXmlWriter {
                             staffNumber = null,
                             voice = 1,
                             accidental = accidentalTracker.visibleAccidental(symbol),
+                            startInMeasure = if (pendingChord) {
+                                (measureDuration - note.duration).coerceAtLeast(0)
+                            } else {
+                                measureDuration
+                            },
                         ),
                     )
                     if (!pendingChord) {
@@ -259,6 +264,11 @@ object HomrMusicXmlWriter {
                             staffNumber = staffNumber,
                             voice = voice,
                             accidental = accidentalTracker.visibleAccidental(symbol),
+                            startInMeasure = if (pendingChord) {
+                                (measureDuration - note.duration).coerceAtLeast(0)
+                            } else {
+                                measureDuration
+                            },
                         ),
                     )
                     if (!pendingChord) {
@@ -447,26 +457,30 @@ object HomrMusicXmlWriter {
         private val emit: (NoteEvent) -> Unit,
     ) {
         private val pending = mutableListOf<NoteEvent>()
-        private var duration = 0
+        private var pendingBeat: Int? = null
 
         fun append(event: NoteEvent) {
-            if (!event.isBeamable) {
+            if (!event.isBeamCandidate) {
                 flush()
                 emit(event)
                 return
             }
 
-            pending += event
-            if (!event.isChord) {
-                duration += event.duration.duration
+            val eventBeat = event.startInMeasure / Divisions
+            if (pending.isNotEmpty() && pendingBeat != eventBeat) {
+                flush()
             }
-            if (duration >= Divisions) {
+            if (pending.isEmpty()) {
+                pendingBeat = eventBeat
+            }
+            pending += event
+            if (!event.isChord && event.endInMeasure % Divisions == 0) {
                 flush()
             }
         }
 
         fun flush() {
-            if (pending.size < 2) {
+            if (pending.count { it.isBeamAnchor } < 2) {
                 pending.forEach(emit)
             } else {
                 pending.forEachIndexed { index, event ->
@@ -479,7 +493,7 @@ object HomrMusicXmlWriter {
                 }
             }
             pending.clear()
-            duration = 0
+            pendingBeat = null
         }
     }
 
@@ -490,13 +504,24 @@ object HomrMusicXmlWriter {
         val staffNumber: Int?,
         val voice: Int,
         val accidental: String?,
+        val startInMeasure: Int,
         val beam: String? = null,
     ) {
-        val isBeamable: Boolean
-            get() = !symbol.rhythm.startsWith("rest") &&
+        val isBeamCandidate: Boolean
+            get() = duration.type in BeamableTypes &&
+                !symbol.rhythm.startsWith("rest") &&
+                symbol.pitch != "." &&
+                symbol.pitch != "_"
+
+        val isBeamAnchor: Boolean
+            get() = !isChord &&
+                !symbol.rhythm.startsWith("rest") &&
                 symbol.pitch != "." &&
                 symbol.pitch != "_" &&
                 duration.type in BeamableTypes
+
+        val endInMeasure: Int
+            get() = startInMeasure + duration.duration
     }
 
     private data class NoteDuration(

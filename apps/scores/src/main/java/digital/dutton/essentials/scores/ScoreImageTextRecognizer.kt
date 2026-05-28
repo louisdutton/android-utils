@@ -44,6 +44,8 @@ class ScoreImageTextRecognizer {
                                 xPx = box.centerX().toFloat(),
                                 yPx = box.centerY().toFloat(),
                                 text = text,
+                                leftPx = box.left.toFloat(),
+                                rightPx = box.right.toFloat(),
                             )
                         }
                     }

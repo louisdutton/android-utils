@@ -85,6 +85,30 @@ class HomrMusicXmlWriterTest {
     }
 
     @Test
+    fun doesNotBeamAcrossRestsOrBeatBoundaries() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Rest separated beams",
+            symbols = listOf(
+                HomrSymbol("note_8", ".", "G4", -1, "upper"),
+                HomrSymbol("rest_16", ".", ".", -1, "upper"),
+                HomrSymbol("note_16", ".", "A4", -1, "upper"),
+                HomrSymbol("note_8", ".", "B4", -1, "upper"),
+                HomrSymbol("note_8", ".", "C5", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        val noteBlocks = Regex("""<note>.*?</note>""", RegexOption.DOT_MATCHES_ALL)
+            .findAll(musicXml)
+            .map { it.value }
+            .toList()
+        assertFalse("<beam" in noteBlocks[0])
+        assertFalse("<beam" in noteBlocks[1])
+        assertFalse("<beam" in noteBlocks[2])
+        assertTrue("""<beam number="1">begin</beam>""" in noteBlocks[3])
+        assertTrue("""<beam number="1">end</beam>""" in noteBlocks[4])
+    }
+
+    @Test
     fun writesExplicitAccidentals() {
         val musicXml = HomrMusicXmlWriter.write(
             title = "Accidentals",

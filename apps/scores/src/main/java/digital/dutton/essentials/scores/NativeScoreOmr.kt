@@ -108,6 +108,7 @@ class NativeScoreOmr(
                                 crop = crop,
                                 nextCrop = crops.getOrNull(staffIndex + 1),
                             ),
+                            crop = crop,
                         )
                     } else {
                         decodedSymbols
@@ -253,7 +254,7 @@ class NativeScoreOmr(
     private fun List<ScoreLyricText>.lyricsForStaff(
         crop: StaffCrop,
         nextCrop: StaffCrop?,
-    ): List<HomrLyric> {
+    ): List<PositionedLyric> {
         if (isEmpty()) return emptyList()
         val source = crop.source
         val lower = source.top + source.height() * 0.52f
@@ -278,11 +279,34 @@ class NativeScoreOmr(
             groups
         }
         val lyricLine = grouped.maxByOrNull { it.size }.orEmpty().sortedBy { it.xPx }
-        return lyricLine.flatMap { it.toLyrics() }
+        return lyricLine.flatMap { it.toPositionedLyrics() }
     }
 
-    private fun List<HomrSymbol>.withLyrics(lyrics: List<HomrLyric>): List<HomrSymbol> {
+    private fun List<HomrSymbol>.withLyrics(
+        lyrics: List<PositionedLyric>,
+        crop: StaffCrop,
+    ): List<HomrSymbol> {
         if (lyrics.isEmpty()) return this
+        val assignments = lyricAssignments(
+            lyrics = lyrics,
+            anchors = lyricNoteAnchors(crop),
+            staffWidth = crop.source.width().toFloat(),
+        )
+        val lyricNoteCount = lyricNoteSymbolIndices().size
+        val expectedAssignments = min(lyrics.size, lyricNoteCount)
+        if (expectedAssignments > 0 && assignments.size >= max(2, (expectedAssignments * 0.65f).roundToInt())) {
+            return mapIndexed { index, symbol ->
+                assignments[index]?.let { symbol.copy(lyric = it) } ?: symbol
+            }
+        }
+
+        val proportionalAssignments = proportionalLyricAssignments(lyrics)
+        if (proportionalAssignments.isNotEmpty()) {
+            return mapIndexed { index, symbol ->
+                proportionalAssignments[index]?.let { symbol.copy(lyric = it) } ?: symbol
+            }
+        }
+
         var lyricIndex = 0
         var chordNext = false
         return map { symbol ->
@@ -292,7 +316,7 @@ class NativeScoreOmr(
             }
             val isChordNote = chordNext
             val withLyric = if (symbol.isLyricNote() && !isChordNote && lyricIndex < lyrics.size) {
-                symbol.copy(lyric = lyrics[lyricIndex++])
+                symbol.copy(lyric = lyrics[lyricIndex++].lyric)
             } else {
                 symbol
             }
@@ -307,29 +331,301 @@ class NativeScoreOmr(
         return rhythm.startsWith("note") && pitch != "." && pitch != "_"
     }
 
-    private fun ScoreLyricText.toLyrics(): List<HomrLyric> {
-        return text
+    private fun List<HomrSymbol>.lyricAssignments(
+        lyrics: List<PositionedLyric>,
+        anchors: List<LyricNoteAnchor>,
+        staffWidth: Float,
+    ): Map<Int, HomrLyric> {
+        if (anchors.isEmpty()) return emptyMap()
+        val lookaheadDistance = (staffWidth * 0.08f).coerceAtLeast(24f)
+        val sortedLyrics = lyrics.sortedBy { it.xPx }
+        val assignments = mutableMapOf<Int, HomrLyric>()
+        var searchStart = 0
+
+        for (lyric in sortedLyrics) {
+            var bestIndex = -1
+            var bestDistance = Float.MAX_VALUE
+            for (anchorIndex in searchStart until anchors.size) {
+                val anchor = anchors[anchorIndex]
+                if (assignments.containsKey(anchor.symbolIndex)) continue
+                val distance = abs(anchor.xPx - lyric.xPx)
+                if (distance < bestDistance) {
+                    bestDistance = distance
+                    bestIndex = anchorIndex
+                }
+                if (anchor.xPx > lyric.xPx && distance > bestDistance + lookaheadDistance * 0.25f) {
+                    break
+                }
+            }
+            if (bestIndex >= 0) {
+                val anchor = anchors[bestIndex]
+                assignments[anchor.symbolIndex] = lyric.lyric
+                searchStart = bestIndex + 1
+            }
+        }
+        return assignments
+    }
+
+    private fun List<HomrSymbol>.proportionalLyricAssignments(
+        lyrics: List<PositionedLyric>,
+    ): Map<Int, HomrLyric> {
+        val noteIndices = lyricNoteSymbolIndices()
+        if (noteIndices.isEmpty() || lyrics.isEmpty()) return emptyMap()
+        val sortedLyrics = lyrics.sortedBy { it.xPx }.take(noteIndices.size)
+        val minX = sortedLyrics.minOf { it.xPx }
+        val maxX = sortedLyrics.maxOf { it.xPx }
+        val span = max(maxX - minX, 1f)
+        val assignments = mutableMapOf<Int, HomrLyric>()
+        var cursor = 0
+        sortedLyrics.forEachIndexed { lyricIndex, lyric ->
+            val remainingLyrics = sortedLyrics.lastIndex - lyricIndex
+            val lastAvailable = (noteIndices.lastIndex - remainingLyrics).coerceAtLeast(cursor)
+            val target = (((lyric.xPx - minX) / span) * noteIndices.lastIndex).roundToInt()
+            val notePosition = target.coerceIn(cursor, lastAvailable.coerceAtMost(noteIndices.lastIndex))
+            assignments[noteIndices[notePosition]] = lyric.lyric
+            cursor = notePosition + 1
+        }
+        return assignments
+    }
+
+    private fun List<HomrSymbol>.lyricNoteSymbolIndices(): List<Int> {
+        val indices = mutableListOf<Int>()
+        var chordNext = false
+        forEachIndexed { index, symbol ->
+            if (symbol.rhythm == "chord") {
+                chordNext = true
+                return@forEachIndexed
+            }
+            if (symbol.isLyricNote() && !chordNext) {
+                indices += index
+            }
+            if (symbol.rhythm.startsWith("note") || symbol.rhythm.startsWith("rest")) {
+                chordNext = false
+            }
+        }
+        return indices
+    }
+
+    private fun List<HomrSymbol>.lyricNoteAnchors(crop: StaffCrop): List<LyricNoteAnchor> {
+        val measures = lyricMeasureSlices()
+        if (measures.isEmpty()) return emptyList()
+
+        val barlines = crop.detectBarlines()
+        val lineStart = crop.source.left + crop.source.width() * 0.1f
+        val lineEnd = crop.source.right - crop.source.width() * 0.02f
+        val measureBoundaries = buildMeasureBoundaries(
+            lineStart = lineStart,
+            lineEnd = lineEnd,
+            barlines = barlines,
+            measureCount = measures.size,
+        )
+
+        val anchors = mutableListOf<LyricNoteAnchor>()
+        measures.forEachIndexed { measureIndex, slice ->
+            val left = measureBoundaries.getOrNull(measureIndex) ?: lineStart
+            val right = measureBoundaries.getOrNull(measureIndex + 1) ?: lineEnd
+            val totalDuration = slice.totalPrimaryDuration().takeIf { it > 0 } ?: MeasureDuration
+            var elapsed = 0
+            var chordNext = false
+            for (entry in slice.symbols) {
+                val symbol = entry.symbol
+                if (symbol.rhythm == "chord") {
+                    chordNext = true
+                    continue
+                }
+                if (!symbol.rhythm.startsWith("note") && !symbol.rhythm.startsWith("rest")) {
+                    chordNext = false
+                    continue
+                }
+                val duration = symbol.omrDuration()
+                if (symbol.isLyricNote() && !chordNext) {
+                    val center = elapsed + duration / 2f
+                    val x = left + (center / totalDuration) * (right - left)
+                    anchors += LyricNoteAnchor(
+                        symbolIndex = entry.symbolIndex,
+                        xPx = x.coerceIn(crop.source.left.toFloat(), crop.source.right.toFloat()),
+                    )
+                }
+                if (!chordNext) {
+                    elapsed += duration
+                }
+                chordNext = false
+            }
+        }
+        return anchors.sortedBy { it.xPx }
+    }
+
+    private fun List<HomrSymbol>.lyricMeasureSlices(): List<SymbolSlice> {
+        val measures = mutableListOf<SymbolSlice>()
+        val current = mutableListOf<SymbolEntry>()
+        forEachIndexed { index, symbol ->
+            if (symbol.rhythm.contains("barline") || symbol.rhythm.startsWith("repeatEnd") || symbol.rhythm.startsWith("repeatStart")) {
+                if (current.isNotEmpty()) {
+                    measures += SymbolSlice(current.toList())
+                    current.clear()
+                }
+            } else {
+                current += SymbolEntry(index, symbol)
+            }
+        }
+        if (current.isNotEmpty()) measures += SymbolSlice(current.toList())
+        return measures
+    }
+
+    private fun SymbolSlice.totalPrimaryDuration(): Int {
+        var duration = 0
+        var chordNext = false
+        for (entry in symbols) {
+            val symbol = entry.symbol
+            if (symbol.rhythm == "chord") {
+                chordNext = true
+                continue
+            }
+            if (symbol.rhythm.startsWith("note") || symbol.rhythm.startsWith("rest")) {
+                if (!chordNext) duration += symbol.omrDuration()
+                chordNext = false
+            } else {
+                chordNext = false
+            }
+        }
+        return duration
+    }
+
+    private fun buildMeasureBoundaries(
+        lineStart: Float,
+        lineEnd: Float,
+        barlines: List<Float>,
+        measureCount: Int,
+    ): List<Float> {
+        if (measureCount <= 0) return emptyList()
+        val usableBarlines = barlines
+            .filter { it > lineStart + 12f && it < lineEnd - 4f }
+            .distinctSorted(minDistance = 12f)
+        if (usableBarlines.size >= measureCount) {
+            return (listOf(lineStart) + usableBarlines.take(measureCount)).monotonicBoundaries(lineEnd, measureCount)
+        }
+        if (usableBarlines.isNotEmpty()) {
+            return (listOf(lineStart) + usableBarlines + listOf(lineEnd)).monotonicBoundaries(lineEnd, measureCount)
+        }
+        return List(measureCount + 1) { index ->
+            lineStart + (lineEnd - lineStart) * index / measureCount
+        }
+    }
+
+    private fun List<Float>.monotonicBoundaries(
+        lineEnd: Float,
+        measureCount: Int,
+    ): List<Float> {
+        val result = mutableListOf<Float>()
+        for (value in this) {
+            if (result.isEmpty() || value > result.last() + 8f) {
+                result += value
+            }
+        }
+        while (result.size < measureCount + 1) {
+            val start = result.lastOrNull() ?: 0f
+            val remaining = measureCount + 1 - result.size
+            result += start + (lineEnd - start) / remaining
+        }
+        if (result.size > measureCount + 1) {
+            return result.take(measureCount + 1)
+        }
+        return result
+    }
+
+    private fun List<Float>.distinctSorted(minDistance: Float): List<Float> {
+        val result = mutableListOf<Float>()
+        for (value in sorted()) {
+            if (result.isEmpty() || value - result.last() >= minDistance) {
+                result += value
+            }
+        }
+        return result
+    }
+
+    private fun ScoreLyricText.toPositionedLyrics(): List<PositionedLyric> {
+        val tokens = text
             .split(Regex("""\s+"""))
             .filter { it.isNotBlank() }
-            .flatMap { token ->
-                val parts = token.split('-').filter { it.isNotBlank() }
-                if (parts.size <= 1) {
-                    listOf(HomrLyric(token))
-                } else {
-                    parts.mapIndexed { index, part ->
-                        HomrLyric(
+        if (tokens.isEmpty()) return emptyList()
+        val spanLeft = min(leftPx, rightPx).takeIf { it.isFinite() } ?: xPx
+        val spanRight = max(leftPx, rightPx).takeIf { it.isFinite() } ?: xPx
+        return tokens.flatMapIndexed { tokenIndex, token ->
+            val tokenLeft = spanLeft + (spanRight - spanLeft) * tokenIndex / tokens.size
+            val tokenRight = spanLeft + (spanRight - spanLeft) * (tokenIndex + 1) / tokens.size
+            val parts = token.split('-').filter { it.isNotBlank() }
+            if (parts.size <= 1) {
+                listOf(PositionedLyric((tokenLeft + tokenRight) / 2f, HomrLyric(token)))
+            } else {
+                parts.mapIndexed { index, part ->
+                    PositionedLyric(
+                        xPx = tokenLeft + (tokenRight - tokenLeft) * (index + 0.5f) / parts.size,
+                        lyric = HomrLyric(
                             text = part,
                             syllabic = when (index) {
                                 0 -> "begin"
                                 parts.lastIndex -> "end"
                                 else -> "middle"
                             },
-                        )
-                    }
+                        ),
+                    )
                 }
             }
+        }
+    }
+
+    private fun HomrSymbol.omrDuration(): Int {
+        val raw = rhythm.substringAfter('_', "4").removeSuffix("m")
+        val numeric = raw.takeWhile { it.isDigit() }.toIntOrNull() ?: 4
+        val dots = raw.count { it == '.' }.coerceIn(0, 2)
+        val base = when (numeric) {
+            0 -> MeasureDuration
+            1 -> MeasureDuration
+            2 -> Divisions * 2
+            3 -> MeasureDuration / 3
+            4 -> Divisions
+            5, 6 -> (MeasureDuration.toFloat() / numeric).roundToInt().coerceAtLeast(1)
+            8 -> Divisions / 2
+            10, 12 -> (MeasureDuration.toFloat() / numeric).roundToInt().coerceAtLeast(1)
+            16 -> Divisions / 4
+            32 -> Divisions / 8
+            64 -> Divisions / 16
+            128 -> (Divisions / 32).coerceAtLeast(1)
+            else -> (MeasureDuration.toFloat() / numeric).roundToInt().coerceAtLeast(1)
+        }
+        var duration = base
+        var add = base / 2
+        repeat(dots) {
+            duration += add
+            add /= 2
+        }
+        return duration.coerceAtLeast(1)
+    }
+
+    private companion object {
+        const val Divisions = 24
+        const val MeasureDuration = Divisions * 4
     }
 }
+
+private data class PositionedLyric(
+    val xPx: Float,
+    val lyric: HomrLyric,
+)
+
+private data class LyricNoteAnchor(
+    val symbolIndex: Int,
+    val xPx: Float,
+)
+
+private data class SymbolEntry(
+    val symbolIndex: Int,
+    val symbol: HomrSymbol,
+)
+
+private data class SymbolSlice(
+    val symbols: List<SymbolEntry>,
+)
 
 private class SegmentationModel(
     modelFile: File,
@@ -509,6 +805,7 @@ private object StaffCropper {
                 StaffCrop(
                     index = index,
                     source = source,
+                    staffLines = group,
                     bitmap = bitmap.cropToWhiteCanvas(source),
                 )
             },
@@ -715,6 +1012,7 @@ private object StaffCropper {
 private data class StaffCrop(
     val index: Int,
     val source: Rect,
+    val staffLines: List<Int>,
     val bitmap: Bitmap,
 ) {
     fun toTransformerInput(): java.nio.FloatBuffer {
@@ -731,6 +1029,66 @@ private data class StaffCrop(
         buffer.rewind()
         return buffer
     }
+
+    fun detectBarlines(): List<Float> {
+        if (staffLines.size < 5) return emptyList()
+        val gray = bitmap.toGray()
+        val lineYs = staffLines.map(::sourceToCropY).sorted()
+        val spacing = lineYs.zipWithNext { a, b -> b - a }.average().takeIf { it.isFinite() } ?: return emptyList()
+        val top = (lineYs.first() - spacing * 0.8f).roundToInt().coerceAtLeast(0)
+        val bottom = (lineYs.last() + spacing * 0.8f).roundToInt().coerceAtMost(bitmap.height - 1)
+        if (bottom <= top) return emptyList()
+
+        val threshold = max(4, ((bottom - top + 1) * 0.58f).roundToInt())
+        val counts = IntArray(bitmap.width)
+        for (x in 0 until bitmap.width) {
+            var count = 0
+            for (y in top..bottom) {
+                if (gray[y * bitmap.width + x] < 150) count++
+            }
+            counts[x] = count
+        }
+
+        val centers = mutableListOf<Float>()
+        var x = 0
+        while (x < counts.size) {
+            if (counts[x] < threshold) {
+                x++
+                continue
+            }
+            val start = x
+            var weighted = 0L
+            var total = 0L
+            while (x < counts.size && counts[x] >= threshold) {
+                weighted += x.toLong() * counts[x]
+                total += counts[x]
+                x++
+            }
+            val width = x - start
+            if (width <= max(10.0, spacing * 0.7)) {
+                val center = if (total > 0L) weighted / total.toFloat() else (start + x) / 2f
+                centers += cropToSourceX(center)
+            }
+        }
+        return centers
+    }
+
+    private fun sourceToCropY(sourceY: Int): Float {
+        return contentTop + (sourceY - source.top) * contentScale
+    }
+
+    private fun cropToSourceX(cropX: Float): Float {
+        return source.left + cropX / contentScale
+    }
+
+    private val contentScale: Float
+        get() = min(bitmap.width / source.width().toFloat(), bitmap.height / source.height().toFloat())
+
+    private val contentTop: Float
+        get() {
+            val scaledHeight = (source.height() * contentScale).roundToInt().coerceIn(1, bitmap.height)
+            return (bitmap.height - scaledHeight) / 2f
+        }
 }
 
 private data class StaffCropResult(

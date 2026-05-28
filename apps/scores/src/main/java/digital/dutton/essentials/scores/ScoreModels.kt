@@ -104,6 +104,8 @@ data class ScoreLyricText(
     val xPx: Float,
     val yPx: Float,
     val text: String,
+    val leftPx: Float = xPx,
+    val rightPx: Float = xPx,
 )
 
 data class ScoreScannedText(
