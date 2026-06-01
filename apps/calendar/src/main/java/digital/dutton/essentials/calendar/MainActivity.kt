@@ -1840,6 +1840,9 @@ private fun EventDetailsDialog(
                         label = "Time",
                         value = event.detailDateTimeLabel(),
                     )
+                    event.recurrenceRule?.repeatLabel()?.let { repeat ->
+                        DetailLine(label = "Repeat", value = repeat)
+                    }
                     locationAction?.let { action ->
                         ActionDetailLine(
                             label = "Location",
@@ -1952,6 +1955,9 @@ private fun TaskDetailsDialog(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     DetailLine(label = "Due", value = task.detailDueLabel())
+                    task.recurrenceRule?.repeatLabel()?.let { repeat ->
+                        DetailLine(label = "Repeat", value = repeat)
+                    }
                     task.listName?.takeIf { it.isNotBlank() }?.let { listName ->
                         DetailLine(label = "List", value = listName)
                     }
@@ -2270,6 +2276,13 @@ private fun EventEditorDialog(
                     )
                 }
 
+                RepeatPicker(
+                    recurrenceRule = formState.recurrenceRule,
+                    onSelected = { recurrenceRule ->
+                        formState = formState.copy(recurrenceRule = recurrenceRule, error = null)
+                    },
+                )
+
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = formState.location,
@@ -2447,6 +2460,13 @@ private fun TaskEditorDialog(
                     placeholder = { Text("09:00") },
                     singleLine = true,
                     enabled = !formState.allDay,
+                )
+
+                RepeatPicker(
+                    recurrenceRule = formState.recurrenceRule,
+                    onSelected = { recurrenceRule ->
+                        formState = formState.copy(recurrenceRule = recurrenceRule, error = null)
+                    },
                 )
 
                 OutlinedTextField(
@@ -2671,6 +2691,35 @@ private fun CalendarPickerRow(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
+        }
+    }
+}
+
+@Composable
+private fun RepeatPicker(
+    recurrenceRule: String?,
+    onSelected: (String?) -> Unit,
+) {
+    val selectedOption = RepeatOption.fromRule(recurrenceRule)
+
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(
+            text = "Repeat",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            RepeatOptions.chunked(3).forEach { rowOptions ->
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    rowOptions.forEach { option ->
+                        FilterChip(
+                            selected = option == selectedOption,
+                            onClick = { onSelected(option.rule) },
+                            label = { Text(option.label) },
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -3096,6 +3145,26 @@ private enum class CalendarViewMode {
     Month,
 }
 
+private enum class RepeatOption(
+    val label: String,
+    val rule: String?,
+) {
+    None("None", null),
+    Daily("Daily", "FREQ=DAILY"),
+    Weekly("Weekly", "FREQ=WEEKLY"),
+    Monthly("Monthly", "FREQ=MONTHLY"),
+    Yearly("Yearly", "FREQ=YEARLY");
+
+    companion object {
+        fun fromRule(rule: String?): RepeatOption {
+            val normalizedRule = rule?.uppercase().orEmpty()
+            return entries.firstOrNull { option ->
+                option.rule != null && normalizedRule.startsWith(option.rule)
+            } ?: None
+        }
+    }
+}
+
 private sealed interface EventDialogState {
     data class CreateChoice(
         val calendarId: Long,
@@ -3125,6 +3194,7 @@ private data class EventFormState(
     val startTime: String,
     val endTime: String,
     val allDay: Boolean,
+    val recurrenceRule: String?,
     val location: String,
     val description: String,
     val locationPoint: GeoPoint? = null,
@@ -3139,6 +3209,7 @@ private data class TaskFormState(
     val date: String,
     val dueTime: String,
     val allDay: Boolean,
+    val recurrenceRule: String?,
     val description: String,
     val error: String? = null,
 )
@@ -3150,6 +3221,13 @@ private data class MapLocationSelection(
 )
 
 private val WeekdayLabels = listOf("S", "M", "T", "W", "T", "F", "S")
+private val RepeatOptions = listOf(
+    RepeatOption.None,
+    RepeatOption.Daily,
+    RepeatOption.Weekly,
+    RepeatOption.Monthly,
+    RepeatOption.Yearly,
+)
 
 private val DateInputFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 private val TimeInputFormatter = DateTimeFormatter.ofPattern("H:mm")
@@ -3308,6 +3386,10 @@ private fun Int.taskCountLabel(): String {
     }
 }
 
+private fun String.repeatLabel(): String? {
+    return RepeatOption.fromRule(this).takeUnless { it == RepeatOption.None }?.label
+}
+
 private fun CalendarSubscription.lastSyncLabel(): String {
     val syncMillis = lastSyncMillis ?: return "Not synced yet"
     val syncTime = Instant.ofEpochMilli(syncMillis)
@@ -3400,6 +3482,7 @@ private fun newEventFormState(
         startTime = start.format(TimeOutputFormatter),
         endTime = end.format(TimeOutputFormatter),
         allDay = false,
+        recurrenceRule = null,
         location = "",
         description = "",
     )
@@ -3419,6 +3502,7 @@ private fun newTaskFormState(
         date = date.format(DateInputFormatter),
         dueTime = dueTime.format(TimeOutputFormatter),
         allDay = true,
+        recurrenceRule = null,
         description = "",
     )
 }
@@ -3436,6 +3520,7 @@ private fun CalendarEvent.toFormState(): EventFormState {
         startTime = start.toLocalTime().format(TimeOutputFormatter),
         endTime = end.toLocalTime().format(TimeOutputFormatter),
         allDay = allDay,
+        recurrenceRule = recurrenceRule,
         location = location.orEmpty(),
         locationPoint = locationPoint,
         locationMapName = locationMapName,
@@ -3476,6 +3561,7 @@ private fun TaskFormState.toDraft(): CalendarTaskDraft {
         dueMillis = dueMillis,
         dueAllDay = allDay,
         timeZone = taskTimeZone,
+        recurrenceRule = recurrenceRule,
         priority = null,
     )
 }
@@ -3529,6 +3615,7 @@ private fun EventFormState.toDraft(): CalendarEventDraft {
         endMillis = endMillis,
         allDay = allDay,
         timeZone = eventTimeZone,
+        recurrenceRule = recurrenceRule,
         availability = EventAvailability.Busy,
         locationPoint = locationPoint,
         locationMapName = locationMapName,

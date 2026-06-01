@@ -20,6 +20,7 @@ data class CalendarTask(
     val completedMillis: Long?,
     val createdMillis: Long?,
     val lastModifiedMillis: Long?,
+    val recurrenceRule: String?,
     val priority: Int?,
     val isReadOnly: Boolean,
 )

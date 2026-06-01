@@ -181,6 +181,7 @@ class CalDavSyncer(
             completedMillis = null,
             createdMillis = now,
             lastModifiedMillis = now,
+            recurrenceRule = draft.recurrenceRule,
             priority = draft.priority,
             isReadOnly = false,
         )
@@ -882,6 +883,7 @@ class CalDavSyncer(
             description?.takeIf { it.isNotBlank() }?.let { appendLine("DESCRIPTION:${it.escapeIcsText()}") }
             appendEventDate("DTSTART", startMillis, allDay, timeZone)
             appendEventDate("DTEND", endMillis, allDay, timeZone)
+            recurrenceRule?.takeIf { it.isNotBlank() }?.let { appendLine("RRULE:$it") }
             appendLine("TRANSP:${if (availability == CalendarContract.Events.AVAILABILITY_FREE) "TRANSPARENT" else "OPAQUE"}")
             appendLine("END:VEVENT")
             appendLine("END:VCALENDAR")
@@ -908,6 +910,7 @@ class CalDavSyncer(
             }
             priority?.let { appendLine("PRIORITY:$it") }
             appendTaskDate("DUE", dueMillis, dueAllDay, timeZone)
+            recurrenceRule?.takeIf { it.isNotBlank() }?.let { appendLine("RRULE:$it") }
             appendLine("END:VTODO")
             appendLine("END:VCALENDAR")
         }
@@ -973,6 +976,7 @@ class CalDavSyncer(
             timeZone = optionalString(CalendarContract.Events.EVENT_TIMEZONE),
             availability = optionalInt(CalendarContract.Events.AVAILABILITY)
                 ?: CalendarContract.Events.AVAILABILITY_BUSY,
+            recurrenceRule = optionalString(CalendarContract.Events.RRULE),
             uid = optionalString(CalendarContract.Events.UID_2445),
             href = optionalString(CalendarContract.Events.SYNC_DATA2),
             etag = optionalString(CalendarContract.Events.SYNC_DATA3),
@@ -1046,6 +1050,7 @@ class CalDavSyncer(
         val allDay: Boolean,
         val timeZone: String?,
         val availability: Int,
+        val recurrenceRule: String?,
         val uid: String?,
         val href: String?,
         val etag: String?,
@@ -1071,6 +1076,7 @@ class CalDavSyncer(
             CalendarContract.Events.ALL_DAY,
             CalendarContract.Events.EVENT_TIMEZONE,
             CalendarContract.Events.AVAILABILITY,
+            CalendarContract.Events.RRULE,
             CalendarContract.Events.UID_2445,
             CalendarContract.Events.SYNC_DATA2,
             CalendarContract.Events.SYNC_DATA3,

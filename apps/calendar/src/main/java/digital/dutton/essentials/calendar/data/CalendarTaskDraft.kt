@@ -7,5 +7,6 @@ data class CalendarTaskDraft(
     val dueMillis: Long,
     val dueAllDay: Boolean,
     val timeZone: String,
+    val recurrenceRule: String?,
     val priority: Int?,
 )

@@ -15,6 +15,7 @@ import digital.dutton.essentials.calendar.data.EventAvailability
 import digital.dutton.essentials.calendar.sync.CalDavAccountType
 import digital.dutton.essentials.calendar.sync.SubscriptionAccountType
 import java.util.UUID
+import java.time.Duration
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -140,14 +141,38 @@ class AndroidCalendarRepository(
             put(CalendarContract.Events.EVENT_LOCATION, location?.takeIf { it.isNotBlank() })
             put(CalendarContract.Events.DESCRIPTION, description?.takeIf { it.isNotBlank() })
             put(CalendarContract.Events.DTSTART, startMillis)
-            put(CalendarContract.Events.DTEND, endMillis)
             put(CalendarContract.Events.ALL_DAY, if (allDay) 1 else 0)
             put(CalendarContract.Events.EVENT_TIMEZONE, timeZone)
             put(CalendarContract.Events.EVENT_END_TIMEZONE, timeZone)
+            put(CalendarContract.Events.RRULE, recurrenceRule)
+            if (recurrenceRule == null) {
+                put(CalendarContract.Events.DTEND, endMillis)
+                putNull(CalendarContract.Events.DURATION)
+            } else {
+                putNull(CalendarContract.Events.DTEND)
+                put(CalendarContract.Events.DURATION, recurrenceDuration())
+            }
             put(CalendarContract.Events.AVAILABILITY, availability.toProviderValue())
             if (includeUid) {
                 put(CalendarContract.Events.UID_2445, UUID.randomUUID().toString())
             }
+        }
+    }
+
+    private fun CalendarEventDraft.recurrenceDuration(): String {
+        val seconds = Duration.ofMillis(endMillis - startMillis).seconds.coerceAtLeast(0)
+        if (allDay && seconds % SecondsPerDay == 0L) {
+            return "P${seconds / SecondsPerDay}D"
+        }
+        val hours = seconds / SecondsPerHour
+        val minutes = (seconds % SecondsPerHour) / SecondsPerMinute
+        val remainingSeconds = seconds % SecondsPerMinute
+        return buildString {
+            append("P")
+            append("T")
+            if (hours > 0) append(hours).append("H")
+            if (minutes > 0) append(minutes).append("M")
+            if (remainingSeconds > 0 || (hours == 0L && minutes == 0L)) append(remainingSeconds).append("S")
         }
     }
 
@@ -257,6 +282,10 @@ class AndroidCalendarRepository(
     }
 
     private companion object {
+        const val SecondsPerMinute = 60L
+        const val SecondsPerHour = 60L * SecondsPerMinute
+        const val SecondsPerDay = 24L * SecondsPerHour
+
         val CalendarProjection = arrayOf(
             CalendarContract.Calendars._ID,
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,

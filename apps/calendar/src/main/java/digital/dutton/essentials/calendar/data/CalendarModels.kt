@@ -44,6 +44,7 @@ data class CalendarEventDraft(
     val endMillis: Long,
     val allDay: Boolean,
     val timeZone: String,
+    val recurrenceRule: String?,
     val availability: EventAvailability,
     val locationPoint: GeoPoint? = null,
     val locationMapName: String? = null,

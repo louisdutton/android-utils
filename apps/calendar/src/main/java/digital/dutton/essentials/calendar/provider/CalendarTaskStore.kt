@@ -10,6 +10,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.util.UUID
 
 class CalendarTaskStore(context: Context) {
@@ -27,11 +28,7 @@ class CalendarTaskStore(context: Context) {
         return allTasks()
             .asSequence()
             .filter { task -> task.status != CalendarTaskStatus.Completed && task.status != CalendarTaskStatus.Cancelled }
-            .filter { task ->
-                val displayMillis = task.agendaMillis(today, zone) ?: return@filter false
-                displayMillis in startMillis until endMillis ||
-                    (rangeIncludesToday && task.isOverdue(today, zone))
-            }
+            .flatMap { task -> task.agendaOccurrences(startMillis, endMillis, today, zone, rangeIncludesToday) }
             .sortedWith(
                 compareBy<CalendarTask> { it.agendaMillis(today, zone) ?: Long.MAX_VALUE }
                     .thenBy { it.priority ?: Int.MAX_VALUE }
@@ -85,6 +82,7 @@ class CalendarTaskStore(context: Context) {
             completedMillis = task.completed?.epochMillis,
             createdMillis = task.created?.epochMillis,
             lastModifiedMillis = task.lastModified?.epochMillis,
+            recurrenceRule = task.recurrenceRule,
             priority = task.priority,
             isReadOnly = false,
         )
@@ -165,6 +163,7 @@ class CalendarTaskStore(context: Context) {
             completedMillis = preferences.getNullableLong(prefix + KeyCompletedMillis),
             createdMillis = preferences.getNullableLong(prefix + KeyCreatedMillis),
             lastModifiedMillis = preferences.getNullableLong(prefix + KeyLastModifiedMillis),
+            recurrenceRule = preferences.getString(prefix + KeyRecurrenceRule, null),
             priority = preferences.getNullableInt(prefix + KeyPriority),
             isReadOnly = preferences.getBoolean(prefix + KeyReadOnly, false),
         )
@@ -213,8 +212,62 @@ class CalendarTaskStore(context: Context) {
             .putNullableLong(prefix + KeyCompletedMillis, task.completedMillis)
             .putNullableLong(prefix + KeyCreatedMillis, task.createdMillis)
             .putNullableLong(prefix + KeyLastModifiedMillis, task.lastModifiedMillis)
+            .putNullableString(prefix + KeyRecurrenceRule, task.recurrenceRule)
             .putNullableInt(prefix + KeyPriority, task.priority)
             .putBoolean(prefix + KeyReadOnly, task.isReadOnly)
+    }
+
+    private fun CalendarTask.agendaOccurrences(
+        rangeStartMillis: Long,
+        rangeEndMillis: Long,
+        today: LocalDate,
+        zone: ZoneId,
+        rangeIncludesToday: Boolean,
+    ): Sequence<CalendarTask> {
+        val recurrence = recurrenceRule?.toRecurrenceStep()
+        if (recurrence == null) {
+            val displayMillis = agendaMillis(today, zone) ?: return emptySequence()
+            return if (
+                displayMillis in rangeStartMillis until rangeEndMillis ||
+                (rangeIncludesToday && isOverdue(today, zone))
+            ) {
+                sequenceOf(this)
+            } else {
+                emptySequence()
+            }
+        }
+
+        val sourceMillis = dueMillis ?: startMillis ?: return emptySequence()
+        val allDay = if (dueMillis != null) dueAllDay else startAllDay
+        val dateZone = if (allDay) ZoneOffset.UTC else zone
+        var occurrence = Instant.ofEpochMilli(sourceMillis).atZone(dateZone)
+        var iterations = 0
+        while (occurrence.toInstant().toEpochMilli() < rangeStartMillis && iterations < MaxRecurrenceSearchIterations) {
+            occurrence = occurrence.plusRecurrence(recurrence)
+            iterations += 1
+        }
+
+        return sequence {
+            var current = occurrence
+            var count = 0
+            while (count < MaxRecurrenceOccurrences) {
+                val currentMillis = current.toInstant().toEpochMilli()
+                if (currentMillis >= rangeEndMillis) break
+                if (currentMillis >= rangeStartMillis) {
+                    yield(copyWithOccurrenceMillis(currentMillis))
+                }
+                current = current.plusRecurrence(recurrence)
+                count += 1
+            }
+        }
+    }
+
+    private fun CalendarTask.copyWithOccurrenceMillis(millis: Long): CalendarTask {
+        return if (dueMillis != null) {
+            copy(id = "$id@$millis", dueMillis = millis)
+        } else {
+            copy(id = "$id@$millis", startMillis = millis)
+        }
     }
 
     private fun SharedPreferences.Editor.removeTask(id: String): SharedPreferences.Editor {
@@ -247,10 +300,13 @@ class CalendarTaskStore(context: Context) {
         const val KeyCompletedMillis = "completedMillis"
         const val KeyCreatedMillis = "createdMillis"
         const val KeyLastModifiedMillis = "lastModifiedMillis"
+        const val KeyRecurrenceRule = "recurrenceRule"
         const val KeyPriority = "priority"
         const val KeyReadOnly = "readOnly"
         const val MissingLong = Long.MIN_VALUE
         const val MissingInt = Int.MIN_VALUE
+        const val MaxRecurrenceOccurrences = 500
+        const val MaxRecurrenceSearchIterations = 5000
 
         val TaskKeys = listOf(
             KeyAccountId,
@@ -271,9 +327,39 @@ class CalendarTaskStore(context: Context) {
             KeyCompletedMillis,
             KeyCreatedMillis,
             KeyLastModifiedMillis,
+            KeyRecurrenceRule,
             KeyPriority,
             KeyReadOnly,
         )
+    }
+}
+
+private data class RecurrenceStep(
+    val frequency: String,
+    val interval: Long,
+)
+
+private fun String.toRecurrenceStep(): RecurrenceStep? {
+    val parts = split(';')
+        .mapNotNull { part ->
+            val key = part.substringBefore('=', missingDelimiterValue = "").uppercase()
+            val value = part.substringAfter('=', missingDelimiterValue = "")
+            if (key.isBlank() || value.isBlank()) null else key to value.uppercase()
+        }
+        .toMap()
+    val frequency = parts["FREQ"] ?: return null
+    if (frequency !in setOf("DAILY", "WEEKLY", "MONTHLY", "YEARLY")) return null
+    val interval = parts["INTERVAL"]?.toLongOrNull()?.coerceAtLeast(1L) ?: 1L
+    return RecurrenceStep(frequency, interval)
+}
+
+private fun ZonedDateTime.plusRecurrence(step: RecurrenceStep): ZonedDateTime {
+    return when (step.frequency) {
+        "DAILY" -> plusDays(step.interval)
+        "WEEKLY" -> plusWeeks(step.interval)
+        "MONTHLY" -> plusMonths(step.interval)
+        "YEARLY" -> plusYears(step.interval)
+        else -> this
     }
 }
 
