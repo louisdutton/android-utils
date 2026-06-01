@@ -128,6 +128,7 @@ import digital.dutton.essentials.calendar.sync.CalendarSubscription
 import digital.dutton.essentials.calendar.sync.CalendarSubscriptionStore
 import digital.dutton.essentials.calendar.sync.IcsSubscriptionSyncWorker
 import digital.dutton.essentials.calendar.sync.IcsSubscriptionSyncer
+import digital.dutton.essentials.calendar.widget.AgendaWidgetProvider
 import digital.dutton.essentials.locations.EventLocationLink
 import digital.dutton.essentials.locations.GeoPoint
 import java.time.Instant
@@ -251,6 +252,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                     error = null,
                 )
             }
+            AgendaWidgetProvider.updateAll(getApplication<Application>().applicationContext)
             return
         }
 
@@ -297,6 +299,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                         calDavCalendars = snapshot.calDavCalendars,
                     )
                 }
+                AgendaWidgetProvider.updateAll(getApplication<Application>().applicationContext)
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(

@@ -12,6 +12,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.Data
 import androidx.work.workDataOf
+import digital.dutton.essentials.calendar.widget.AgendaWidgetProvider
 import java.util.concurrent.TimeUnit
 
 class IcsSubscriptionSyncWorker(
@@ -29,7 +30,10 @@ class IcsSubscriptionSyncWorker(
                 syncer.syncSubscription(subscriptionId)
             }
         }.fold(
-            onSuccess = { Result.success() },
+            onSuccess = {
+                AgendaWidgetProvider.updateAll(applicationContext)
+                Result.success()
+            },
             onFailure = {
                 if (runAttemptCount < MaxAttempts) {
                     Result.retry()
