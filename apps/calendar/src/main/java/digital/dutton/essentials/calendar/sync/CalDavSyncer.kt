@@ -9,6 +9,9 @@ import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
 import android.provider.CalendarContract
+import digital.dutton.essentials.calendar.data.CalendarTask
+import digital.dutton.essentials.calendar.data.CalendarTaskDraft
+import digital.dutton.essentials.calendar.data.CalendarTaskStatus
 import digital.dutton.essentials.calendar.provider.CalendarEventLocationStore
 import digital.dutton.essentials.calendar.provider.CalendarTaskStore
 import digital.dutton.essentials.calendar.provider.StoredEventLocation
@@ -133,6 +136,59 @@ class CalDavSyncer(
             ),
         )
         store.upsertCalendar(renamedCalendar)
+    }
+
+    suspend fun createTask(draft: CalendarTaskDraft): CalendarTask = withContext(dispatcher) {
+        requireCalendarPermissions()
+        val cleanedTitle = draft.title.trim()
+        require(cleanedTitle.isNotBlank()) { "Add a task title." }
+
+        val account = store.listAccounts().firstOrNull()
+            ?: throw IllegalStateException("Connect a CalDAV account before creating tasks.")
+        val taskList = draft.collectionId
+            ?.let { store.getCalendar(it) }
+            ?.takeIf { it.accountId == account.id && it.supportsTasks }
+            ?: store.listCalendars(account.id).firstOrNull { it.supportsTasks }
+            ?: createDefaultTaskList(account)
+
+        val uid = UUID.randomUUID().toString()
+        val href = taskList.href.trimEnd('/') + "/" + Uri.encode(uid, "@._-") + ".ics"
+        val etag = client.putEvent(
+            endpoint = account.endpoint(),
+            calendarHref = taskList.href,
+            eventHref = href,
+            etag = null,
+            body = draft.toTaskIcs(uid),
+        )
+        val now = System.currentTimeMillis()
+        val task = CalendarTask(
+            id = UUID.nameUUIDFromBytes("${taskList.id}|$uid".toByteArray()).toString(),
+            accountId = account.id,
+            collectionId = taskList.id,
+            collectionHref = taskList.href,
+            href = href,
+            etag = etag,
+            uid = uid,
+            listName = taskList.displayName,
+            listColor = taskList.color,
+            title = cleanedTitle,
+            description = draft.description,
+            status = CalendarTaskStatus.NeedsAction,
+            dueMillis = draft.dueMillis,
+            dueAllDay = draft.dueAllDay,
+            startMillis = null,
+            startAllDay = false,
+            completedMillis = null,
+            createdMillis = now,
+            lastModifiedMillis = now,
+            priority = draft.priority,
+            isReadOnly = false,
+        )
+
+        taskStore.upsertTask(task)
+        store.upsertCalendar(taskList.copy(lastSyncMillis = now, lastError = null))
+        store.upsertAccount(account.copy(lastSyncMillis = now, lastError = null))
+        task
     }
 
     suspend fun repairAccounts() = withContext(dispatcher) {
@@ -490,6 +546,29 @@ class CalDavSyncer(
         )
     }
 
+    private fun createDefaultTaskList(account: CalDavAccount): CalDavCalendar {
+        val discovery = client.discover(account.endpoint())
+        val remote = client.createCalendar(
+            endpoint = account.endpoint(),
+            homeUrl = discovery.homeUrl,
+            displayName = "Tasks",
+            components = setOf("VTODO"),
+        )
+        val calendar = CalDavCalendar(
+            id = UUID.randomUUID().toString(),
+            accountId = account.id,
+            localCalendarId = null,
+            href = remote.href,
+            displayName = remote.displayName,
+            color = remote.color ?: DefaultTaskListColor,
+            supportsEvents = false,
+            supportsTasks = true,
+            syncToken = remote.syncToken,
+        )
+        store.upsertCalendar(calendar)
+        return calendar
+    }
+
     private fun dirtyLocalEvents(calendar: CalDavCalendar): List<LocalCalDavEvent> {
         val localCalendarId = calendar.localCalendarId ?: return emptyList()
         val events = context.contentResolver.query(
@@ -809,6 +888,51 @@ class CalDavSyncer(
         }
     }
 
+    private fun CalendarTaskDraft.toTaskIcs(uid: String): String {
+        val now = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
+            .withZone(ZoneOffset.UTC)
+            .format(Instant.now())
+        return buildString {
+            appendLine("BEGIN:VCALENDAR")
+            appendLine("VERSION:2.0")
+            appendLine("PRODID:-//Essentials Calendar//Android//EN")
+            appendLine("BEGIN:VTODO")
+            appendLine("UID:${uid.escapeIcsText()}")
+            appendLine("DTSTAMP:$now")
+            appendLine("CREATED:$now")
+            appendLine("LAST-MODIFIED:$now")
+            appendLine("STATUS:NEEDS-ACTION")
+            appendLine("SUMMARY:${title.trim().escapeIcsText()}")
+            description?.takeIf { it.isNotBlank() }?.let {
+                appendLine("DESCRIPTION:${it.escapeIcsText()}")
+            }
+            priority?.let { appendLine("PRIORITY:$it") }
+            appendTaskDate("DUE", dueMillis, dueAllDay, timeZone)
+            appendLine("END:VTODO")
+            appendLine("END:VCALENDAR")
+        }
+    }
+
+    private fun StringBuilder.appendTaskDate(
+        property: String,
+        epochMillis: Long,
+        allDay: Boolean,
+        timeZone: String,
+    ) {
+        if (allDay) {
+            val date = Instant.ofEpochMilli(epochMillis)
+                .atZone(ZoneOffset.UTC)
+                .toLocalDate()
+            appendLine("$property;VALUE=DATE:${date.format(DateTimeFormatter.BASIC_ISO_DATE)}")
+        } else {
+            val zone = runCatching { ZoneId.of(timeZone) }.getOrNull() ?: ZoneId.systemDefault()
+            val dateTime = Instant.ofEpochMilli(epochMillis)
+                .atZone(zone)
+                .format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss"))
+            appendLine("$property;TZID=${zone.id}:$dateTime")
+        }
+    }
+
     private fun StringBuilder.appendEventDate(
         property: String,
         epochMillis: Long,
@@ -957,6 +1081,7 @@ class CalDavSyncer(
         const val SecondsPerHour = 60L * SecondsPerMinute
         const val SecondsPerDay = 24L * SecondsPerHour
         val DefaultCalDavCalendarColor: Int = Color.rgb(0x1E, 0x88, 0xE5)
+        val DefaultTaskListColor: Int = Color.rgb(0x7E, 0x57, 0xC2)
     }
 }
 

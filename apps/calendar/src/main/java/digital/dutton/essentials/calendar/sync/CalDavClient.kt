@@ -81,6 +81,7 @@ class CalDavClient(
         endpoint: CalDavEndpoint,
         homeUrl: String?,
         displayName: String,
+        components: Set<String> = setOf("VEVENT"),
     ): CalDavDiscoveredCalendar {
         val calendarHomeUrl = homeUrl
             ?: throw IllegalStateException("Unable to locate CalDAV calendar home.")
@@ -93,7 +94,7 @@ class CalDavClient(
             .header("User-Agent", UserAgent)
             .method(
                 "MKCALENDAR",
-                mkcalendarRequest(displayName)
+                mkcalendarRequest(displayName, components)
                     .toRequestBody(XmlContentType.toMediaType()),
             )
             .build()
@@ -102,19 +103,25 @@ class CalDavClient(
             response.requireSuccessful("CalDAV calendar creation failed")
         }
 
+        val supportsEvents = "VEVENT" in components
+        val supportsTasks = "VTODO" in components
         return propfind(
             url = calendarUrl,
             auth = auth,
             depth = "0",
             body = calendarCollectionRequest(),
         ).calendarCollections(calendarHomeUrl).firstOrNull()
+            ?.copy(
+                supportsEvents = supportsEvents,
+                supportsTasks = supportsTasks,
+            )
             ?: CalDavDiscoveredCalendar(
                 href = calendarUrl,
                 displayName = displayName,
                 color = null,
                 syncToken = null,
-                supportsEvents = true,
-                supportsTasks = false,
+                supportsEvents = supportsEvents,
+                supportsTasks = supportsTasks,
             )
     }
 
@@ -542,7 +549,16 @@ class CalDavClient(
         """.trimIndent()
     }
 
-    private fun mkcalendarRequest(displayName: String): String {
+    private fun mkcalendarRequest(
+        displayName: String,
+        components: Set<String>,
+    ): String {
+        val componentXml = components
+            .map { it.uppercase() }
+            .distinct()
+            .joinToString(separator = "\n") { component ->
+                """                    <C:comp name="$component" />"""
+            }
         return """
             <?xml version="1.0" encoding="utf-8" ?>
             <C:mkcalendar xmlns:D="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav">
@@ -550,7 +566,7 @@ class CalDavClient(
                 <D:prop>
                   <D:displayname>${displayName.xmlEscaped()}</D:displayname>
                   <C:supported-calendar-component-set>
-                    <C:comp name="VEVENT" />
+$componentXml
                   </C:supported-calendar-component-set>
                 </D:prop>
               </D:set>

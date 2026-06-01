@@ -113,6 +113,7 @@ import digital.dutton.essentials.calendar.data.CalendarEvent
 import digital.dutton.essentials.calendar.data.CalendarEventDraft
 import digital.dutton.essentials.calendar.data.CalendarSource
 import digital.dutton.essentials.calendar.data.CalendarTask
+import digital.dutton.essentials.calendar.data.CalendarTaskDraft
 import digital.dutton.essentials.calendar.data.CalendarTaskStatus
 import digital.dutton.essentials.calendar.data.EventAvailability
 import digital.dutton.essentials.calendar.data.locationLink
@@ -310,6 +311,12 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     fun createEvent(event: CalendarEventDraft) {
         mutateEvent(reloadDate = event.startDate(ZoneId.systemDefault())) {
             repository.createEvent(event)
+        }
+    }
+
+    fun createTask(task: CalendarTaskDraft) {
+        mutateEvent(reloadDate = task.dueDate(ZoneId.systemDefault())) {
+            calDavSyncer.createTask(task)
         }
     }
 
@@ -602,6 +609,7 @@ private fun CalendarApp(
                 onEnsureDateVisible = viewModel::ensureDateVisible,
                 onEnsureDateRangeVisible = viewModel::ensureDateRangeVisible,
                 onCreateEvent = viewModel::createEvent,
+                onCreateTask = viewModel::createTask,
                 onUpdateEvent = viewModel::updateEvent,
                 onDeleteEvent = viewModel::deleteEvent,
                 onSubscribeCalendar = viewModel::subscribeCalendar,
@@ -640,6 +648,7 @@ private fun CalendarScreen(
     onEnsureDateVisible: (LocalDate) -> Unit,
     onEnsureDateRangeVisible: (LocalDate, LocalDate) -> Unit,
     onCreateEvent: (CalendarEventDraft) -> Unit,
+    onCreateTask: (CalendarTaskDraft) -> Unit,
     onUpdateEvent: (Long, CalendarEventDraft) -> Unit,
     onDeleteEvent: (Long) -> Unit,
     onSubscribeCalendar: (String, String?) -> Unit,
@@ -797,12 +806,12 @@ private fun CalendarScreen(
                 if (state.hasCalendarPermission && defaultCalendar != null) {
                     FloatingActionButton(
                         onClick = {
-                            eventDialog = EventDialogState.Create(defaultCalendar.id, selectedDate)
+                            eventDialog = EventDialogState.CreateChoice(defaultCalendar.id, selectedDate)
                         },
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Add,
-                            contentDescription = "Create event",
+                            contentDescription = "Create event or task",
                         )
                     }
                 }
@@ -887,7 +896,14 @@ private fun CalendarScreen(
     }
 
     when (val dialog = eventDialog) {
-        is EventDialogState.Create -> EventEditorDialog(
+        is EventDialogState.CreateChoice -> CreateItemDialog(
+            canCreateTasks = state.calDavAccounts.isNotEmpty(),
+            onDismiss = { eventDialog = null },
+            onCreateEvent = { eventDialog = EventDialogState.CreateEvent(dialog.calendarId, dialog.date) },
+            onCreateTask = { eventDialog = EventDialogState.CreateTask(dialog.date) },
+        )
+
+        is EventDialogState.CreateEvent -> EventEditorDialog(
             title = "New event",
             calendars = state.calendars,
             initialState = newEventFormState(dialog.calendarId, dialog.date),
@@ -901,6 +917,23 @@ private fun CalendarScreen(
                 pendingScrollRequiresExactDate = draft.endMillis > System.currentTimeMillis()
                 onEnsureDateVisible(eventDate)
                 onCreateEvent(draft)
+                eventDialog = null
+            },
+        )
+
+        is EventDialogState.CreateTask -> TaskEditorDialog(
+            taskLists = state.calDavCalendars.taskLists(),
+            hasCalDavAccount = state.calDavAccounts.isNotEmpty(),
+            initialState = newTaskFormState(dialog.date, state.calDavCalendars.taskLists().firstOrNull()?.id),
+            onDismiss = { eventDialog = null },
+            onSave = { draft ->
+                val taskDate = draft.dueDate(ZoneId.systemDefault())
+                selectedDateText = taskDate.toString()
+                visibleMonthText = YearMonth.from(taskDate).toString()
+                pendingScrollDateText = taskDate.toString()
+                pendingScrollRequiresExactDate = true
+                onEnsureDateVisible(taskDate)
+                onCreateTask(draft)
                 eventDialog = null
             },
         )
@@ -1138,6 +1171,12 @@ private fun CalendarDrawer(
                             onLongPress = { onCalendarLongPress(calendar.id) },
                         )
                     }
+                    state.calDavCalendars
+                        .filter { it.localCalendarId == null && it.supportsTasks }
+                        .sortedBy { it.displayName.lowercase() }
+                        .forEach { taskList ->
+                            TaskListDrawerRow(taskList = taskList)
+                        }
                 }
                 HorizontalDivider(
                     modifier = Modifier.padding(vertical = 8.dp),
@@ -1155,6 +1194,41 @@ private fun CalendarDrawer(
                     onClick = onAddCalendar,
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun TaskListDrawerRow(taskList: CalDavCalendar) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(14.dp)
+                .clip(CircleShape)
+                .background(taskList.color?.let(::Color) ?: MaterialTheme.colorScheme.tertiary),
+        )
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            Text(
+                text = taskList.displayName,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                text = taskList.lastSyncLabel(),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
@@ -1996,6 +2070,89 @@ private fun RichNotesLine(
 }
 
 @Composable
+private fun CreateItemDialog(
+    canCreateTasks: Boolean,
+    onDismiss: () -> Unit,
+    onCreateEvent: () -> Unit,
+    onCreateTask: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "Create",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                CreateItemRow(
+                    title = "Event",
+                    body = "Scheduled time, place, and calendar availability.",
+                    enabled = true,
+                    onClick = onCreateEvent,
+                )
+                CreateItemRow(
+                    title = "Task",
+                    body = if (canCreateTasks) {
+                        "Due date, optional time, and CalDAV sync."
+                    } else {
+                        "Connect a CalDAV account before creating tasks."
+                    },
+                    enabled = canCreateTasks,
+                    onClick = onCreateTask,
+                )
+            }
+        },
+        confirmButton = {},
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+    )
+}
+
+@Composable
+private fun CreateItemRow(
+    title: String,
+    body: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(enabled = enabled, onClick = onClick),
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        contentColor = if (enabled) {
+            MaterialTheme.colorScheme.onSurface
+        } else {
+            MaterialTheme.colorScheme.onSurfaceVariant
+        },
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
 private fun EventEditorDialog(
     title: String,
     calendars: List<CalendarSource>,
@@ -2193,6 +2350,209 @@ private fun EventEditorDialog(
             }
         },
     )
+}
+
+@Composable
+private fun TaskEditorDialog(
+    taskLists: List<CalDavCalendar>,
+    hasCalDavAccount: Boolean,
+    initialState: TaskFormState,
+    onDismiss: () -> Unit,
+    onSave: (CalendarTaskDraft) -> Unit,
+) {
+    var formState by remember(initialState) { mutableStateOf(initialState) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "New task",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                formState.error?.let { error ->
+                    Text(
+                        text = error,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+
+                when {
+                    taskLists.isNotEmpty() -> TaskListPicker(
+                        taskLists = taskLists,
+                        selectedCollectionId = formState.collectionId,
+                        onSelected = { collectionId ->
+                            formState = formState.copy(collectionId = collectionId, error = null)
+                        },
+                    )
+
+                    hasCalDavAccount -> Text(
+                        text = "List: Tasks will be created on save",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+
+                    else -> Text(
+                        text = "Connect a CalDAV account before creating tasks.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.title,
+                    onValueChange = { formState = formState.copy(title = it, error = null) },
+                    label = { Text("Title") },
+                    singleLine = true,
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.date,
+                    onValueChange = { formState = formState.copy(date = it, error = null) },
+                    label = { Text("Due date") },
+                    placeholder = { Text("YYYY-MM-DD") },
+                    singleLine = true,
+                )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Checkbox(
+                        checked = formState.allDay,
+                        onCheckedChange = {
+                            formState = formState.copy(allDay = it, error = null)
+                        },
+                    )
+                    Text(
+                        text = "All day",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.dueTime,
+                    onValueChange = { formState = formState.copy(dueTime = it, error = null) },
+                    label = { Text("Time") },
+                    placeholder = { Text("09:00") },
+                    singleLine = true,
+                    enabled = !formState.allDay,
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = formState.description,
+                    onValueChange = { formState = formState.copy(description = it, error = null) },
+                    label = { Text("Notes") },
+                    minLines = 2,
+                    maxLines = 4,
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+        confirmButton = {
+            Button(
+                enabled = hasCalDavAccount,
+                onClick = {
+                    runCatching {
+                        formState.toDraft()
+                    }.onSuccess { draft ->
+                        onSave(draft)
+                    }.onFailure { error ->
+                        formState = formState.copy(
+                            error = error.message ?: "Check the task details.",
+                        )
+                    }
+                },
+            ) {
+                Text("Save")
+            }
+        },
+    )
+}
+
+@Composable
+private fun TaskListPicker(
+    taskLists: List<CalDavCalendar>,
+    selectedCollectionId: String?,
+    onSelected: (String) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(
+            text = "List",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            taskLists.forEach { taskList ->
+                TaskListPickerRow(
+                    taskList = taskList,
+                    selected = taskList.id == selectedCollectionId,
+                    onClick = { onSelected(taskList.id) },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun TaskListPickerRow(
+    taskList: CalDavCalendar,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick),
+        color = if (selected) {
+            MaterialTheme.colorScheme.secondaryContainer
+        } else {
+            MaterialTheme.colorScheme.surfaceContainer
+        },
+        contentColor = if (selected) {
+            MaterialTheme.colorScheme.onSecondaryContainer
+        } else {
+            MaterialTheme.colorScheme.onSurface
+        },
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(taskList.color?.let(::Color) ?: MaterialTheme.colorScheme.tertiary),
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = taskList.displayName,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
 }
 
 @Composable
@@ -2737,10 +3097,17 @@ private enum class CalendarViewMode {
 }
 
 private sealed interface EventDialogState {
-    data class Create(
+    data class CreateChoice(
         val calendarId: Long,
         val date: LocalDate,
     ) : EventDialogState
+
+    data class CreateEvent(
+        val calendarId: Long,
+        val date: LocalDate,
+    ) : EventDialogState
+
+    data class CreateTask(val date: LocalDate) : EventDialogState
 
     data class Details(val event: CalendarEvent) : EventDialogState
 
@@ -2763,6 +3130,16 @@ private data class EventFormState(
     val locationPoint: GeoPoint? = null,
     val locationMapName: String? = null,
     val locationMapId: String? = null,
+    val error: String? = null,
+)
+
+private data class TaskFormState(
+    val collectionId: String?,
+    val title: String,
+    val date: String,
+    val dueTime: String,
+    val allDay: Boolean,
+    val description: String,
     val error: String? = null,
 )
 
@@ -3002,6 +3379,11 @@ private fun List<CalendarSource>.calendarName(calendarId: Long): String {
     return firstOrNull { it.id == calendarId }?.displayName ?: "Default calendar"
 }
 
+private fun List<CalDavCalendar>.taskLists(): List<CalDavCalendar> {
+    return filter { it.supportsTasks }
+        .sortedBy { it.displayName.lowercase() }
+}
+
 private fun newEventFormState(
     calendarId: Long,
     date: LocalDate,
@@ -3019,6 +3401,24 @@ private fun newEventFormState(
         endTime = end.format(TimeOutputFormatter),
         allDay = false,
         location = "",
+        description = "",
+    )
+}
+
+private fun newTaskFormState(
+    date: LocalDate,
+    collectionId: String?,
+): TaskFormState {
+    val dueTime = LocalTime.now()
+        .plusHours(1)
+        .truncatedTo(ChronoUnit.HOURS)
+
+    return TaskFormState(
+        collectionId = collectionId,
+        title = "",
+        date = date.format(DateInputFormatter),
+        dueTime = dueTime.format(TimeOutputFormatter),
+        allDay = true,
         description = "",
     )
 }
@@ -3041,6 +3441,42 @@ private fun CalendarEvent.toFormState(): EventFormState {
         locationMapName = locationMapName,
         locationMapId = locationMapId,
         description = description.orEmpty(),
+    )
+}
+
+private fun TaskFormState.toDraft(): CalendarTaskDraft {
+    val cleanedTitle = title.trim()
+    if (cleanedTitle.isBlank()) {
+        throw IllegalArgumentException("Add a title.")
+    }
+
+    val taskDate = runCatching {
+        LocalDate.parse(date.trim(), DateInputFormatter)
+    }.getOrElse {
+        throw IllegalArgumentException("Use a due date in YYYY-MM-DD format.")
+    }
+
+    val zone = ZoneId.systemDefault()
+    val dueMillis: Long
+    val taskTimeZone: String
+
+    if (allDay) {
+        dueMillis = taskDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+        taskTimeZone = ZoneOffset.UTC.id
+    } else {
+        val parsedTime = parseTime(dueTime, "task")
+        dueMillis = taskDate.atTime(parsedTime).atZone(zone).toInstant().toEpochMilli()
+        taskTimeZone = zone.id
+    }
+
+    return CalendarTaskDraft(
+        collectionId = collectionId,
+        title = cleanedTitle,
+        description = description.trim().takeIf { it.isNotBlank() },
+        dueMillis = dueMillis,
+        dueAllDay = allDay,
+        timeZone = taskTimeZone,
+        priority = null,
     )
 }
 
@@ -3123,6 +3559,11 @@ private fun CalendarEvent.startDate(zone: ZoneId): LocalDate {
 private fun CalendarEventDraft.startDate(zone: ZoneId): LocalDate {
     val dateZone = if (allDay) ZoneOffset.UTC else zone
     return Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+}
+
+private fun CalendarTaskDraft.dueDate(zone: ZoneId): LocalDate {
+    val dateZone = if (dueAllDay) ZoneOffset.UTC else zone
+    return Instant.ofEpochMilli(dueMillis).atZone(dateZone).toLocalDate()
 }
 
 private fun CalendarTask.agendaDate(zone: ZoneId): LocalDate? {

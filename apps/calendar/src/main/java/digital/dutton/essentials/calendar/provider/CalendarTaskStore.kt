@@ -40,6 +40,20 @@ class CalendarTaskStore(context: Context) {
             .toList()
     }
 
+    fun upsertTask(task: CalendarTask): TaskStoreChange {
+        val previous = getTask(task.id)
+        preferences.edit()
+            .putStringSet(KeyTaskIds, taskIds() + task.id)
+            .putTask(task)
+            .apply()
+
+        return when {
+            previous == null -> TaskStoreChange.Created
+            previous == task -> TaskStoreChange.Unchanged
+            else -> TaskStoreChange.Updated
+        }
+    }
+
     fun upsertRemoteTask(
         accountId: String,
         collectionId: String,
