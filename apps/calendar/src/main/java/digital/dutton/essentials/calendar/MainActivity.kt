@@ -18,6 +18,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -111,9 +112,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import digital.dutton.essentials.calendar.data.CalendarEvent
 import digital.dutton.essentials.calendar.data.CalendarEventDraft
 import digital.dutton.essentials.calendar.data.CalendarSource
+import digital.dutton.essentials.calendar.data.CalendarTask
+import digital.dutton.essentials.calendar.data.CalendarTaskStatus
 import digital.dutton.essentials.calendar.data.EventAvailability
 import digital.dutton.essentials.calendar.data.locationLink
 import digital.dutton.essentials.calendar.provider.AndroidCalendarRepository
+import digital.dutton.essentials.calendar.provider.CalendarTaskStore
 import digital.dutton.essentials.calendar.sync.CalDavAccount
 import digital.dutton.essentials.calendar.sync.CalDavAccountStore
 import digital.dutton.essentials.calendar.sync.CalDavCalendar
@@ -159,6 +163,7 @@ data class CalendarUiState(
     val rangeEndDate: LocalDate = LocalDate.now().plusDays(DefaultAgendaFutureDays),
     val calendars: List<CalendarSource> = emptyList(),
     val events: List<CalendarEvent> = emptyList(),
+    val tasks: List<CalendarTask> = emptyList(),
     val subscriptions: List<CalendarSubscription> = emptyList(),
     val calDavAccounts: List<CalDavAccount> = emptyList(),
     val calDavCalendars: List<CalDavCalendar> = emptyList(),
@@ -167,6 +172,7 @@ data class CalendarUiState(
 
 class CalendarViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AndroidCalendarRepository(application.applicationContext)
+    private val taskStore = CalendarTaskStore(application.applicationContext)
     private val subscriptionStore = CalendarSubscriptionStore(application.applicationContext)
     private val subscriptionSyncer = IcsSubscriptionSyncer(application.applicationContext)
     private val calDavStore = CalDavAccountStore(application.applicationContext)
@@ -237,6 +243,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                     isLoading = false,
                     calendars = emptyList(),
                     events = emptyList(),
+                    tasks = emptyList(),
                     subscriptions = emptyList(),
                     calDavAccounts = emptyList(),
                     calDavCalendars = emptyList(),
@@ -272,6 +279,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                 CalendarSnapshot(
                     calendars = repository.listCalendars(),
                     events = repository.listEvents(start, end),
+                    tasks = taskStore.listAgendaTasks(start, end),
                     subscriptions = subscriptionStore.list(),
                     calDavAccounts = calDavStore.listAccounts(),
                     calDavCalendars = calDavStore.listCalendars(),
@@ -282,6 +290,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                         isLoading = false,
                         calendars = snapshot.calendars,
                         events = snapshot.events,
+                        tasks = snapshot.tasks,
                         subscriptions = snapshot.subscriptions,
                         calDavAccounts = snapshot.calDavAccounts,
                         calDavCalendars = snapshot.calDavCalendars,
@@ -558,6 +567,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
 private data class CalendarSnapshot(
     val calendars: List<CalendarSource>,
     val events: List<CalendarEvent>,
+    val tasks: List<CalendarTask>,
     val subscriptions: List<CalendarSubscription>,
     val calDavAccounts: List<CalDavAccount>,
     val calDavCalendars: List<CalDavCalendar>,
@@ -658,13 +668,16 @@ private fun CalendarScreen(
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val nowMillis = remember(state.events, state.rangeStartDate, state.rangeEndDate) {
+    val nowMillis = remember(state.events, state.tasks, state.rangeStartDate, state.rangeEndDate) {
         System.currentTimeMillis()
     }
-    val agendaEvents = remember(state.events, nowMillis) {
-        state.events.filter { event -> event.endMillis > nowMillis }
+    val sections = remember(state.events, state.tasks, nowMillis) {
+        agendaSectionsWithToday(
+            events = state.events.filter { event -> event.endMillis > nowMillis },
+            tasks = state.tasks,
+            nowMillis = nowMillis,
+        )
     }
-    val sections = agendaEvents.agendaSectionsWithToday()
 
     fun scrollToAgendaDate(date: LocalDate) {
         if (sections.isEmpty()) return
@@ -836,6 +849,9 @@ private fun CalendarScreen(
                                 onEventClick = { event ->
                                     eventDialog = EventDialogState.Details(event)
                                 },
+                                onTaskClick = { task ->
+                                    eventDialog = EventDialogState.TaskDetails(task)
+                                },
                             )
                         }
                     }
@@ -852,11 +868,15 @@ private fun CalendarScreen(
                     state = state,
                     month = visibleMonth,
                     events = state.events,
+                    tasks = state.tasks,
                     selectedDate = selectedDate,
                     onRequestPermission = onRequestPermission,
                     onDateSelected = ::selectMonthDate,
                     onEventClick = { event ->
                         eventDialog = EventDialogState.Details(event)
+                    },
+                    onTaskClick = { task ->
+                        eventDialog = EventDialogState.TaskDetails(task)
                     },
                     modifier = Modifier
                         .fillMaxSize()
@@ -912,6 +932,11 @@ private fun CalendarScreen(
                 onDeleteEvent(dialog.event.id)
                 eventDialog = null
             },
+        )
+
+        is EventDialogState.TaskDetails -> TaskDetailsDialog(
+            task = dialog.task,
+            onDismiss = { eventDialog = null },
         )
 
         null -> Unit
@@ -1290,17 +1315,22 @@ private fun MonthCalendarView(
     state: CalendarUiState,
     month: YearMonth,
     events: List<CalendarEvent>,
+    tasks: List<CalendarTask>,
     selectedDate: LocalDate,
     onRequestPermission: () -> Unit,
     onDateSelected: (LocalDate) -> Unit,
     onEventClick: (CalendarEvent) -> Unit,
+    onTaskClick: (CalendarTask) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val zone = ZoneId.systemDefault()
-    val selectedEvents = remember(events, selectedDate) {
-        events
-            .filter { event -> event.startDate(zone) == selectedDate }
-            .sortedBy { event -> event.startMillis }
+    val selectedItems = remember(events, tasks, selectedDate) {
+        agendaItemsForDate(
+            date = selectedDate,
+            events = events.filter { event -> event.startDate(zone) == selectedDate },
+            tasks = tasks.filter { task -> task.agendaDate(zone) == selectedDate },
+            nowMillis = System.currentTimeMillis(),
+        )
     }
 
     Column(
@@ -1324,13 +1354,15 @@ private fun MonthCalendarView(
         MonthOverview(
             month = month,
             events = events,
+            tasks = tasks,
             selectedDate = selectedDate,
             onDateSelected = onDateSelected,
         )
 
         AgendaDaySection(
-            section = AgendaSection(selectedDate, selectedEvents),
+            section = AgendaSection(selectedDate, selectedItems),
             onEventClick = onEventClick,
+            onTaskClick = onTaskClick,
         )
     }
 }
@@ -1339,12 +1371,13 @@ private fun MonthCalendarView(
 private fun MonthOverview(
     month: YearMonth,
     events: List<CalendarEvent>,
+    tasks: List<CalendarTask>,
     selectedDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit,
 ) {
     val today = LocalDate.now()
     val zone = ZoneId.systemDefault()
-    val eventDates = events.map { event -> event.startDate(zone) }.toSet()
+    val eventDates = (events.map { event -> event.startDate(zone) } + tasks.mapNotNull { task -> task.agendaDate(zone) }).toSet()
     val cells = month.calendarCells()
 
     Column(
@@ -1455,6 +1488,7 @@ private fun MonthDayCell(
 private fun AgendaDaySection(
     section: AgendaSection,
     onEventClick: (CalendarEvent) -> Unit,
+    onTaskClick: (CalendarTask) -> Unit,
 ) {
     val today = LocalDate.now()
     val isToday = section.date == today
@@ -1470,14 +1504,21 @@ private fun AgendaDaySection(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            if (section.events.isEmpty()) {
+            if (section.items.isEmpty()) {
                 AgendaEmptyDayBlock()
             } else {
-                section.events.forEach { event ->
-                    AgendaEventBlock(
-                        event = event,
-                        onClick = { onEventClick(event) },
-                    )
+                section.items.forEach { item ->
+                    when (item) {
+                        is AgendaItem.Event -> AgendaEventBlock(
+                            event = item.event,
+                            onClick = { onEventClick(item.event) },
+                        )
+
+                        is AgendaItem.Task -> AgendaTaskBlock(
+                            task = item.task,
+                            onClick = { onTaskClick(item.task) },
+                        )
+                    }
                 }
             }
         }
@@ -1499,7 +1540,7 @@ private fun AgendaEmptyDayBlock() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "No events",
+                text = "No events or tasks",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium,
             )
@@ -1595,6 +1636,72 @@ private fun AgendaEventBlock(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AgendaTaskBlock(
+    task: CalendarTask,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 58.dp)
+            .clickable(onClick = onClick),
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        shape = RoundedCornerShape(4.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(4.dp)
+                    .fillMaxHeight()
+                    .background(task.accentColor()),
+            )
+
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 12.dp, vertical = 9.dp),
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .padding(top = 3.dp)
+                        .size(16.dp)
+                        .border(
+                            width = 2.dp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            shape = CircleShape,
+                        ),
+                )
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                ) {
+                    Text(
+                        text = task.title,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = task.agendaMeta(),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
     }
@@ -1714,6 +1821,79 @@ private fun EventDetailsDialog(
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TaskDetailsDialog(
+    task: CalendarTask,
+    onDismiss: () -> Unit,
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(28.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            tonalElevation = 6.dp,
+        ) {
+            Column(
+                modifier = Modifier.padding(start = 24.dp, top = 18.dp, end = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(16.dp)
+                            .border(
+                                width = 2.dp,
+                                color = task.accentColor(),
+                                shape = CircleShape,
+                            ),
+                    )
+                    Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 12.dp),
+                        text = task.title,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            imageVector = Icons.Rounded.Close,
+                            contentDescription = "Close task details",
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.padding(end = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    DetailLine(label = "Due", value = task.detailDueLabel())
+                    task.listName?.takeIf { it.isNotBlank() }?.let { listName ->
+                        DetailLine(label = "List", value = listName)
+                    }
+                    DetailLine(label = "Status", value = task.status.displayLabel())
+                    task.description?.takeIf { it.isNotBlank() }?.let { description ->
+                        RichNotesLine(label = "Notes", value = description)
+                    }
+                }
+
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+                Text(
+                    text = "Synced CalDAV task",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
     }
@@ -2505,12 +2685,12 @@ private fun EmptyAgenda(state: CalendarUiState) {
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Text(
-                text = "No events in this range",
+                text = "No events or tasks in this range",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
-                text = "Showing upcoming events through ${state.rangeEndDate.compactDateLabel()}. Load newer events to extend the agenda.",
+                text = "Showing agenda items through ${state.rangeEndDate.compactDateLabel()}. Load newer events to extend the agenda.",
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
@@ -2531,8 +2711,25 @@ private fun Intent.subscriptionUrl(): String? {
 
 private data class AgendaSection(
     val date: LocalDate,
-    val events: List<CalendarEvent>,
+    val items: List<AgendaItem>,
 )
+
+private sealed interface AgendaItem {
+    val sortMillis: Long
+    val sortRank: Int
+
+    data class Event(
+        val event: CalendarEvent,
+        override val sortMillis: Long,
+        override val sortRank: Int,
+    ) : AgendaItem
+
+    data class Task(
+        val task: CalendarTask,
+        override val sortMillis: Long,
+        override val sortRank: Int,
+    ) : AgendaItem
+}
 
 private enum class CalendarViewMode {
     Agenda,
@@ -2550,6 +2747,8 @@ private sealed interface EventDialogState {
     data class Edit(val event: CalendarEvent) : EventDialogState
 
     data class Delete(val event: CalendarEvent) : EventDialogState
+
+    data class TaskDetails(val task: CalendarTask) : EventDialogState
 }
 
 private data class EventFormState(
@@ -2621,18 +2820,75 @@ private fun YearMonth.calendarCells(): List<LocalDate?> {
     return List(leadingEmptyCells) { null } + dates + List(trailingEmptyCells) { null }
 }
 
-private fun List<CalendarEvent>.agendaSectionsWithToday(): List<AgendaSection> {
+private fun agendaSectionsWithToday(
+    events: List<CalendarEvent>,
+    tasks: List<CalendarTask>,
+    nowMillis: Long,
+): List<AgendaSection> {
     val zone = ZoneId.systemDefault()
-    val sections = groupBy { event -> event.startDate(zone) }
-        .mapValues { (_, events) -> events.sortedBy { it.startMillis } }
-        .toSortedMap()
-        .map { (date, events) -> AgendaSection(date, events) }
+    val eventDates = events.map { event -> event.startDate(zone) }
+    val taskDates = tasks.mapNotNull { task -> task.agendaDate(zone) }
+    val sections = (eventDates + taskDates)
+        .distinct()
+        .sorted()
+        .map { date ->
+            AgendaSection(
+                date = date,
+                items = agendaItemsForDate(
+                    date = date,
+                    events = events.filter { event -> event.startDate(zone) == date },
+                    tasks = tasks.filter { task -> task.agendaDate(zone) == date },
+                    nowMillis = nowMillis,
+                ),
+            )
+        }
     val today = LocalDate.now()
 
     if (sections.any { it.date == today }) return sections
 
     return (sections + AgendaSection(today, emptyList()))
         .sortedBy { it.date }
+}
+
+private fun agendaItemsForDate(
+    date: LocalDate,
+    events: List<CalendarEvent>,
+    tasks: List<CalendarTask>,
+    nowMillis: Long,
+): List<AgendaItem> {
+    val zone = ZoneId.systemDefault()
+    val dayStartMillis = date.atStartOfDay(zone).toInstant().toEpochMilli()
+    return (
+        events.map { event ->
+            AgendaItem.Event(
+                event = event,
+                sortMillis = if (event.allDay) dayStartMillis else event.startMillis,
+                sortRank = if (event.allDay) 0 else 2,
+            )
+        } +
+            tasks.map { task ->
+                val taskSortMillis = task.dueMillis ?: task.startMillis ?: dayStartMillis
+                AgendaItem.Task(
+                    task = task,
+                    sortMillis = if (taskSortMillis < nowMillis && task.agendaDate(zone) == LocalDate.now(zone)) {
+                        dayStartMillis
+                    } else {
+                        taskSortMillis
+                    },
+                    sortRank = if (task.dueAllDay || task.dueMillis == null) 1 else 3,
+                )
+            }
+        )
+        .sortedWith(
+            compareBy<AgendaItem> { it.sortMillis }
+                .thenBy { it.sortRank }
+                .thenBy {
+                    when (it) {
+                        is AgendaItem.Event -> it.event.title.lowercase()
+                        is AgendaItem.Task -> it.task.title.lowercase()
+                    }
+                },
+        )
 }
 
 private fun List<AgendaSection>.monthJunctionCountThrough(sectionIndex: Int): Int {
@@ -2647,7 +2903,7 @@ private fun CalendarUiState.agendaSubtitle(): String {
     return when {
         !hasCalendarPermission -> "Calendar access needed"
         isLoading -> "Refreshing agenda"
-        else -> "Upcoming through ${rangeEndDate.compactDateLabel()}, ${calendars.size.calendarCountLabel()}"
+        else -> "Upcoming through ${rangeEndDate.compactDateLabel()}, ${calendars.size.calendarCountLabel()}, ${tasks.size.taskCountLabel()}"
     }
 }
 
@@ -2664,6 +2920,14 @@ private fun Int.calendarCountLabel(): String {
         0 -> "No calendars"
         1 -> "1 calendar"
         else -> "$this calendars"
+    }
+}
+
+private fun Int.taskCountLabel(): String {
+    return when (this) {
+        0 -> "no tasks"
+        1 -> "1 task"
+        else -> "$this tasks"
     }
 }
 
@@ -2859,6 +3123,87 @@ private fun CalendarEvent.startDate(zone: ZoneId): LocalDate {
 private fun CalendarEventDraft.startDate(zone: ZoneId): LocalDate {
     val dateZone = if (allDay) ZoneOffset.UTC else zone
     return Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+}
+
+private fun CalendarTask.agendaDate(zone: ZoneId): LocalDate? {
+    val millis = dueMillis ?: startMillis ?: return null
+    val dateZone = if (dueMillis != null && dueAllDay || dueMillis == null && startAllDay) {
+        ZoneOffset.UTC
+    } else {
+        zone
+    }
+    val date = Instant.ofEpochMilli(millis).atZone(dateZone).toLocalDate()
+    val today = LocalDate.now(zone)
+    return if (
+        status != CalendarTaskStatus.Completed &&
+        status != CalendarTaskStatus.Cancelled &&
+        dueMillis != null &&
+        date.isBefore(today)
+    ) {
+        today
+    } else {
+        date
+    }
+}
+
+@Composable
+private fun CalendarTask.accentColor(): Color {
+    return listColor?.let(::Color) ?: MaterialTheme.colorScheme.tertiary
+}
+
+private fun CalendarTask.agendaMeta(): String {
+    return listOfNotNull(
+        dueSummaryLabel(),
+        listName?.takeIf { it.isNotBlank() },
+    ).joinToString(" - ")
+}
+
+private fun CalendarTask.detailDueLabel(): String {
+    return dueDetailLabel() ?: startDetailLabel() ?: "No due date"
+}
+
+private fun CalendarTask.dueSummaryLabel(): String? {
+    val due = dueMillis ?: return startMillis?.let { "Starts ${taskDateTimeLabel(it, startAllDay)}" }
+    val zone = ZoneId.systemDefault()
+    val dueDate = Instant.ofEpochMilli(due).atZone(if (dueAllDay) ZoneOffset.UTC else zone).toLocalDate()
+    val today = LocalDate.now(zone)
+    return when {
+        dueDate.isBefore(today) -> "Overdue"
+        dueDate == today && dueAllDay -> "Due today"
+        dueDate == today -> "Due ${taskDateTimeLabel(due, allDay = false)}"
+        else -> "Due ${taskDateTimeLabel(due, dueAllDay)}"
+    }
+}
+
+private fun CalendarTask.dueDetailLabel(): String? {
+    return dueMillis?.let { "Due ${taskDateTimeLabel(it, dueAllDay)}" }
+}
+
+private fun CalendarTask.startDetailLabel(): String? {
+    return startMillis?.let { "Starts ${taskDateTimeLabel(it, startAllDay)}" }
+}
+
+private fun CalendarTaskStatus.displayLabel(): String {
+    return when (this) {
+        CalendarTaskStatus.NeedsAction -> "Needs action"
+        CalendarTaskStatus.InProcess -> "In progress"
+        CalendarTaskStatus.Completed -> "Completed"
+        CalendarTaskStatus.Cancelled -> "Cancelled"
+        CalendarTaskStatus.Unknown -> "Unknown"
+    }
+}
+
+private fun taskDateTimeLabel(
+    millis: Long,
+    allDay: Boolean,
+): String {
+    val zone = if (allDay) ZoneOffset.UTC else ZoneId.systemDefault()
+    val value = Instant.ofEpochMilli(millis).atZone(zone)
+    return if (allDay) {
+        value.toLocalDate().format(DateTimeFormatter.ofPattern("d MMM"))
+    } else {
+        value.format(DateTimeFormatter.ofPattern("d MMM, HH:mm"))
+    }
 }
 
 private fun EventFormState.locationPickerIntent(): Intent {

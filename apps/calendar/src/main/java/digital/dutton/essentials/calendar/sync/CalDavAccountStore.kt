@@ -100,20 +100,20 @@ class CalDavAccountStore(context: Context) {
     fun getCalendar(id: String): CalDavCalendar? {
         val prefix = "$KeyCalendarPrefix$id."
         val accountId = preferences.getString(prefix + KeyAccountId, null) ?: return null
-        val localCalendarId = preferences.getLong(prefix + KeyLocalCalendarId, MissingCalendarId)
-            .takeUnless { it == MissingCalendarId }
-            ?: return null
         val href = preferences.getString(prefix + KeyHref, null) ?: return null
         val displayName = preferences.getString(prefix + KeyDisplayName, null) ?: return null
 
         return CalDavCalendar(
             id = id,
             accountId = accountId,
-            localCalendarId = localCalendarId,
+            localCalendarId = preferences.getLong(prefix + KeyLocalCalendarId, MissingCalendarId)
+                .takeUnless { it == MissingCalendarId },
             href = href,
             displayName = displayName,
             color = preferences.getInt(prefix + KeyColor, MissingColor)
                 .takeUnless { it == MissingColor },
+            supportsEvents = preferences.getBoolean(prefix + KeySupportsEvents, true),
+            supportsTasks = preferences.getBoolean(prefix + KeySupportsTasks, false),
             syncToken = preferences.getString(prefix + KeySyncToken, null),
             lastSyncMillis = preferences.getLong(prefix + KeyLastSyncMillis, MissingTimestamp)
                 .takeUnless { it == MissingTimestamp },
@@ -137,10 +137,12 @@ class CalDavAccountStore(context: Context) {
         preferences.edit()
             .putStringSet(KeyCalendarIds, currentIds + calendar.id)
             .putString(prefix + KeyAccountId, calendar.accountId)
-            .putLong(prefix + KeyLocalCalendarId, calendar.localCalendarId)
+            .putNullableLong(prefix + KeyLocalCalendarId, calendar.localCalendarId)
             .putString(prefix + KeyHref, calendar.href)
             .putString(prefix + KeyDisplayName, calendar.displayName)
             .putNullableInt(prefix + KeyColor, calendar.color)
+            .putBoolean(prefix + KeySupportsEvents, calendar.supportsEvents)
+            .putBoolean(prefix + KeySupportsTasks, calendar.supportsTasks)
             .putNullableString(prefix + KeySyncToken, calendar.syncToken)
             .putNullableLong(prefix + KeyLastSyncMillis, calendar.lastSyncMillis)
             .putNullableString(prefix + KeyLastError, calendar.lastError)
@@ -158,6 +160,8 @@ class CalDavAccountStore(context: Context) {
             .remove(prefix + KeyHref)
             .remove(prefix + KeyDisplayName)
             .remove(prefix + KeyColor)
+            .remove(prefix + KeySupportsEvents)
+            .remove(prefix + KeySupportsTasks)
             .remove(prefix + KeySyncToken)
             .remove(prefix + KeyLastSyncMillis)
             .remove(prefix + KeyLastError)
@@ -199,6 +203,8 @@ class CalDavAccountStore(context: Context) {
         const val KeyLocalCalendarId = "localCalendarId"
         const val KeyHref = "href"
         const val KeyColor = "color"
+        const val KeySupportsEvents = "supportsEvents"
+        const val KeySupportsTasks = "supportsTasks"
         const val KeySyncToken = "syncToken"
         const val KeyLastSyncMillis = "lastSyncMillis"
         const val KeyLastError = "lastError"

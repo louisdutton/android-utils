@@ -23,10 +23,12 @@ data class CalDavAccount(
 data class CalDavCalendar(
     val id: String,
     val accountId: String,
-    val localCalendarId: Long,
+    val localCalendarId: Long?,
     val href: String,
     val displayName: String,
     val color: Int? = null,
+    val supportsEvents: Boolean = true,
+    val supportsTasks: Boolean = false,
     val syncToken: String? = null,
     val lastSyncMillis: Long? = null,
     val lastError: String? = null,
@@ -45,4 +47,6 @@ data class CalDavDiscoveredCalendar(
     val displayName: String,
     val color: Int?,
     val syncToken: String?,
+    val supportsEvents: Boolean = true,
+    val supportsTasks: Boolean = false,
 )

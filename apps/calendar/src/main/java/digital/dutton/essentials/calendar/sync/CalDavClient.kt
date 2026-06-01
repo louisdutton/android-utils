@@ -113,6 +113,8 @@ class CalDavClient(
                 displayName = displayName,
                 color = null,
                 syncToken = null,
+                supportsEvents = true,
+                supportsTasks = false,
             )
     }
 
@@ -149,6 +151,31 @@ class CalDavClient(
             url = calendarUrl,
             auth = Credentials.basic(endpoint.username, endpoint.password),
             body = calendarQueryRequest(),
+        )
+
+        return responses.mapNotNull { response ->
+            val prop = response.okProp ?: return@mapNotNull null
+            val calendarData = prop.descendantText("calendar-data")
+                ?.takeIf { it.isNotBlank() }
+                ?: return@mapNotNull null
+            CalDavRemoteEvent(
+                href = calendarUrl.resolveHref(response.href),
+                etag = prop.childText("getetag"),
+                calendarData = calendarData,
+            )
+        }
+    }
+
+    fun fetchTasks(
+        endpoint: CalDavEndpoint,
+        calendarHref: String,
+    ): List<CalDavRemoteEvent> {
+        val baseUrl = endpoint.baseUrl.normalizedCalDavUrl()
+        val calendarUrl = baseUrl.resolveHref(calendarHref)
+        val responses = report(
+            url = calendarUrl,
+            auth = Credentials.basic(endpoint.username, endpoint.password),
+            body = calendarQueryRequest(componentName = "VTODO"),
         )
 
         return responses.mapNotNull { response ->
@@ -303,9 +330,10 @@ class CalDavClient(
         return mapNotNull { response ->
             val prop = response.okProp ?: return@mapNotNull null
             if (!prop.hasDescendant("calendar")) return@mapNotNull null
-            if (prop.supportedEventComponents().let { it.isNotEmpty() && "VEVENT" !in it }) {
-                return@mapNotNull null
-            }
+            val supportedComponents = prop.supportedCalendarComponents()
+            val supportsEvents = supportedComponents.isEmpty() || "VEVENT" in supportedComponents
+            val supportsTasks = "VTODO" in supportedComponents
+            if (!supportsEvents && !supportsTasks) return@mapNotNull null
 
             val href = baseUrl.resolveHref(response.href)
             val name = prop.childText("displayname")
@@ -318,11 +346,13 @@ class CalDavClient(
                 color = prop.descendantText("calendar-color")?.toCalendarColor(),
                 syncToken = prop.childText("sync-token")
                     ?: prop.childText("getctag"),
+                supportsEvents = supportsEvents,
+                supportsTasks = supportsTasks,
             )
         }
     }
 
-    private fun Element.supportedEventComponents(): Set<String> {
+    private fun Element.supportedCalendarComponents(): Set<String> {
         val components = getElementsByTagNameNS("*", "comp")
         return buildSet {
             for (index in 0 until components.length) {
@@ -495,7 +525,7 @@ class CalDavClient(
         """.trimIndent()
     }
 
-    private fun calendarQueryRequest(): String {
+    private fun calendarQueryRequest(componentName: String = "VEVENT"): String {
         return """
             <?xml version="1.0" encoding="utf-8" ?>
             <C:calendar-query xmlns:D="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav">
@@ -505,7 +535,7 @@ class CalDavClient(
               </D:prop>
               <C:filter>
                 <C:comp-filter name="VCALENDAR">
-                  <C:comp-filter name="VEVENT" />
+                  <C:comp-filter name="$componentName" />
                 </C:comp-filter>
               </C:filter>
             </C:calendar-query>

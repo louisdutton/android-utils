@@ -28,6 +28,7 @@ data class IcsSubscriptionSyncSummary(
 data class IcsCalendarFeed(
     val displayName: String?,
     val events: List<IcsCalendarEvent>,
+    val tasks: List<IcsCalendarTask>,
 )
 
 data class IcsCalendarEvent(
@@ -59,3 +60,17 @@ internal val IcsCalendarEvent.remoteId: String
     get() = listOf(uid, recurrenceId)
         .filterNotNull()
         .joinToString("|")
+
+data class IcsCalendarTask(
+    val uid: String,
+    val title: String,
+    val description: String?,
+    val status: String,
+    val due: IcsEventDateTime?,
+    val start: IcsEventDateTime?,
+    val completed: IcsEventDateTime?,
+    val created: IcsEventDateTime?,
+    val lastModified: IcsEventDateTime?,
+    val priority: Int?,
+    val recurrenceRule: String?,
+)

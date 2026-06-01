@@ -41,10 +41,30 @@ class IcsCalendarParser {
                 }
             }
         }
+        val tasks = buildList {
+            var inTask = false
+            val taskLines = mutableListOf<String>()
+
+            lines.forEach { line ->
+                when {
+                    line.equals("BEGIN:VTODO", ignoreCase = true) -> {
+                        inTask = true
+                        taskLines.clear()
+                    }
+                    line.equals("END:VTODO", ignoreCase = true) && inTask -> {
+                        parseTask(taskLines)?.let(::add)
+                        inTask = false
+                        taskLines.clear()
+                    }
+                    inTask -> taskLines += line
+                }
+            }
+        }
 
         return IcsCalendarFeed(
             displayName = displayName?.takeIf { it.isNotBlank() },
             events = events,
+            tasks = tasks,
         )
     }
 
@@ -78,6 +98,30 @@ class IcsCalendarParser {
             geoPoint = properties.firstValue("GEO")?.toGeoPointOrNull(),
             locationMapName = properties.firstValue("X-ESSENTIALS-MAP-NAME")?.ifBlank { null },
             locationMapId = properties.firstValue("X-ESSENTIALS-MAP-ID")?.ifBlank { null },
+        )
+    }
+
+    private fun parseTask(lines: List<String>): IcsCalendarTask? {
+        val properties = lines.mapNotNull(::parseProperty)
+        val uid = properties.firstValue("UID")
+            ?: properties.firstValue("URL")
+            ?: return null
+        val title = properties.firstValue("SUMMARY")
+            ?.ifBlank { null }
+            ?: "Untitled"
+
+        return IcsCalendarTask(
+            uid = uid,
+            title = title,
+            description = properties.firstValue("DESCRIPTION")?.ifBlank { null },
+            status = properties.firstRawValue("STATUS")?.ifBlank { null } ?: "NEEDS-ACTION",
+            due = properties.firstProperty("DUE")?.toEventDateTime(),
+            start = properties.firstProperty("DTSTART")?.toEventDateTime(),
+            completed = properties.firstProperty("COMPLETED")?.toEventDateTime(),
+            created = properties.firstProperty("CREATED")?.toEventDateTime(),
+            lastModified = properties.firstProperty("LAST-MODIFIED")?.toEventDateTime(),
+            priority = properties.firstValue("PRIORITY")?.toIntOrNull(),
+            recurrenceRule = properties.firstRawValue("RRULE"),
         )
     }
 

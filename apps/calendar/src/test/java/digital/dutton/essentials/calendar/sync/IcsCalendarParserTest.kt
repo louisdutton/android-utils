@@ -67,6 +67,39 @@ class IcsCalendarParserTest {
         assertNull(event.description)
     }
 
+    @Test
+    fun parsesTodoWithDueStatusAndPriority() {
+        val feed = parser.parse(
+            """
+            BEGIN:VCALENDAR
+            BEGIN:VTODO
+            UID:task-1@example.com
+            SUMMARY:File VAT return
+            DESCRIPTION:Submit before the deadline
+            DUE:20260605T170000Z
+            STATUS:NEEDS-ACTION
+            PRIORITY:3
+            CREATED:20260601T090000Z
+            LAST-MODIFIED:20260601T100000Z
+            END:VTODO
+            END:VCALENDAR
+            """.trimIndent(),
+        )
+
+        assertEquals(0, feed.events.size)
+        assertEquals(1, feed.tasks.size)
+
+        val task = feed.tasks.single()
+        assertEquals("task-1@example.com", task.uid)
+        assertEquals("File VAT return", task.title)
+        assertEquals("Submit before the deadline", task.description)
+        assertEquals("NEEDS-ACTION", task.status)
+        assertEquals(3, task.priority)
+        assertEquals(Instant.parse("2026-06-05T17:00:00Z").toEpochMilli(), task.due?.epochMillis)
+        assertEquals(Instant.parse("2026-06-01T09:00:00Z").toEpochMilli(), task.created?.epochMillis)
+        assertEquals(Instant.parse("2026-06-01T10:00:00Z").toEpochMilli(), task.lastModified?.epochMillis)
+    }
+
     @Test(expected = IllegalArgumentException::class)
     fun rejectsNonCalendarContent() {
         parser.parse("<html>Not a calendar</html>")
