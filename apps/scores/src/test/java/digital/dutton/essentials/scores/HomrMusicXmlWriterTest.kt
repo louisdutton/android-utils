@@ -69,6 +69,61 @@ class HomrMusicXmlWriterTest {
     }
 
     @Test
+    fun suppressesRepeatedUnchangedAttributes() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Repeated attributes",
+            symbols = listOf(
+                HomrSymbol("clef_G2", ".", ".", -1, "upper"),
+                HomrSymbol("keySignature_0", ".", ".", -1, "upper"),
+                HomrSymbol("timeSignature/4", ".", ".", -1, "upper"),
+                HomrSymbol("note_1", ".", "C4", -1, "upper"),
+                HomrSymbol("barline", ".", ".", -1, "upper"),
+                HomrSymbol("clef_G2", ".", ".", -1, "upper"),
+                HomrSymbol("keySignature_0", ".", ".", -1, "upper"),
+                HomrSymbol("timeSignature/4", ".", ".", -1, "upper"),
+                HomrSymbol("note_1", ".", "D4", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        assertEquals(1, "<clef>".toRegex().findAll(musicXml).count())
+        assertEquals(1, "<key>".toRegex().findAll(musicXml).count())
+        assertEquals(1, "<time>".toRegex().findAll(musicXml).count())
+    }
+
+    @Test
+    fun ignoresEmptyMeasuresFromDuplicateBarlines() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Duplicate barlines",
+            symbols = listOf(
+                HomrSymbol("note_1", ".", "C4", -1, "upper"),
+                HomrSymbol("barline", ".", ".", -1, "upper"),
+                HomrSymbol("clef_G2", ".", ".", -1, "upper"),
+                HomrSymbol("keySignature_0", ".", ".", -1, "upper"),
+                HomrSymbol("timeSignature/4", ".", ".", -1, "upper"),
+                HomrSymbol("barline", ".", ".", -1, "upper"),
+                HomrSymbol("note_1", ".", "D4", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        assertEquals(2, """<measure number="""".toRegex().findAll(musicXml).count())
+        assertEquals(0, """<rest measure="yes"/>""".toRegex().findAll(musicXml).count())
+    }
+
+    @Test
+    fun ignoresEmptyMeasureAfterTrailingBarline() {
+        val musicXml = HomrMusicXmlWriter.write(
+            title = "Trailing barline",
+            symbols = listOf(
+                HomrSymbol("note_1", ".", "C4", -1, "upper"),
+                HomrSymbol("barline", ".", ".", -1, "upper"),
+            ),
+        ).decodeToString()
+
+        assertEquals(1, """<measure number="""".toRegex().findAll(musicXml).count())
+        assertEquals(0, """<rest measure="yes"/>""".toRegex().findAll(musicXml).count())
+    }
+
+    @Test
     fun writesBeamsForAdjacentEighthNotes() {
         val musicXml = HomrMusicXmlWriter.write(
             title = "Beamed",

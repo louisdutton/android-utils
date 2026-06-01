@@ -247,11 +247,13 @@ EOF
               nixd
               alejandra
               optipng
+              poppler-utils
               pkg-config
               protobuf_21
               qt6.qtbase
               qt6.qtpositioning
               qt6.qtsvg
+              uv
               wget
             ];
 

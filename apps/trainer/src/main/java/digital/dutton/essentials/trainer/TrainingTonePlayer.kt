@@ -13,9 +13,33 @@ class TrainingTonePlayer {
     private val lock = Any()
     private var activePlayback: ActivePlayback? = null
 
+    fun playNote(
+        midiNumber: Int,
+        durationMillis: Long,
+    ) {
+        playSequence(
+            midiNumbers = listOf(midiNumber),
+            noteDurationMillis = durationMillis,
+            gapDurationMillis = 0L,
+        )
+    }
+
     fun playSequence(
         midiNumbers: List<Int>,
         tempoBpm: Int,
+    ) {
+        val beatMillis = 60_000L / tempoBpm.coerceAtLeast(40)
+        playSequence(
+            midiNumbers = midiNumbers,
+            noteDurationMillis = (beatMillis * 0.82f).toLong(),
+            gapDurationMillis = beatMillis - (beatMillis * 0.82f).toLong(),
+        )
+    }
+
+    private fun playSequence(
+        midiNumbers: List<Int>,
+        noteDurationMillis: Long,
+        gapDurationMillis: Long,
     ) {
         if (midiNumbers.isEmpty()) return
 
@@ -27,7 +51,7 @@ class TrainingTonePlayer {
 
         Thread {
             try {
-                renderSequence(midiNumbers, tempoBpm, playback)
+                renderSequence(midiNumbers, noteDurationMillis, gapDurationMillis, playback)
             } finally {
                 synchronized(lock) {
                     if (activePlayback === playback) {
@@ -51,7 +75,8 @@ class TrainingTonePlayer {
 
     private fun renderSequence(
         midiNumbers: List<Int>,
-        tempoBpm: Int,
+        noteDurationMillis: Long,
+        gapDurationMillis: Long,
         playback: ActivePlayback,
     ) {
         if (playback.stopSignal.get()) return
@@ -80,9 +105,8 @@ class TrainingTonePlayer {
             .build()
 
         playback.track = track
-        val beatSamples = SampleRate * 60 / tempoBpm.coerceAtLeast(40)
-        val toneSamples = (beatSamples * 0.82f).toInt()
-        val gapSamples = beatSamples - toneSamples
+        val toneSamples = (SampleRate * noteDurationMillis / MillisPerSecond).toInt()
+        val gapSamples = (SampleRate * gapDurationMillis / MillisPerSecond).toInt()
 
         try {
             track.play()
@@ -187,5 +211,6 @@ class TrainingTonePlayer {
         const val ChunkSamples = 384
         const val FadeSamples = SampleRate / 80
         const val OutputDrainMillis = 60L
+        const val MillisPerSecond = 1_000L
     }
 }

@@ -255,30 +255,15 @@ class NativeScoreOmr(
         crop: StaffCrop,
         nextCrop: StaffCrop?,
     ): List<PositionedLyric> {
-        if (isEmpty()) return emptyList()
         val source = crop.source
-        val lower = source.top + source.height() * 0.52f
-        val upper = nextCrop?.source?.top?.toFloat()
-            ?: (source.bottom + source.height() * 0.8f)
-        val horizontalMargin = source.height() * 0.35f
-        val candidates = filter { text ->
-            text.yPx >= lower &&
-                text.yPx <= upper &&
-                text.xPx >= source.left - horizontalMargin &&
-                text.xPx <= source.right + horizontalMargin
-        }
-        if (candidates.isEmpty()) return emptyList()
-
-        val grouped = candidates.sortedBy { it.yPx }.fold(mutableListOf<MutableList<ScoreLyricText>>()) { groups, item ->
-            val current = groups.lastOrNull()
-            if (current == null || kotlin.math.abs(current.map { it.yPx }.average() - item.yPx) > source.height() * 0.12f) {
-                groups += mutableListOf(item)
-            } else {
-                current += item
-            }
-            groups
-        }
-        val lyricLine = grouped.maxByOrNull { it.size }.orEmpty().sortedBy { it.xPx }
+        val lyricLine = ScoreLyricLineSelector.selectForStaff(
+            text = this,
+            sourceLeft = source.left.toFloat(),
+            sourceTop = source.top.toFloat(),
+            sourceRight = source.right.toFloat(),
+            sourceBottom = source.bottom.toFloat(),
+            nextStaffTop = nextCrop?.source?.top?.toFloat(),
+        )
         return lyricLine.flatMap { it.toPositionedLyrics() }
     }
 

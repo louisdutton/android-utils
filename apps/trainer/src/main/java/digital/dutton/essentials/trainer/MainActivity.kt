@@ -1,21 +1,23 @@
 package digital.dutton.essentials.trainer
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,24 +27,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Mic
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -55,8 +58,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlin.math.abs
+import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -71,24 +77,27 @@ class MainActivity : ComponentActivity() {
 }
 
 data class TrainerUiState(
-    val selectedMode: PracticeMode = PracticeMode.Theory,
-    val theoryChallenge: TheoryChallenge = TrainingChallengeFactory.nextTheory(),
-    val theoryResult: AnswerResult? = null,
-    val staffNoteChallenge: StaffNoteChallenge = TrainingChallengeFactory.nextStaffNote(),
-    val staffNoteResult: AnswerResult? = null,
-    val dictationChallenge: DictationChallenge = TrainingChallengeFactory.nextDictation(),
-    val dictationInput: List<NoteName> = emptyList(),
-    val dictationResult: AnswerResult? = null,
-    val stats: PracticeStats = PracticeStats(),
+    val challenge: SightSingingChallenge = SightSingingChallengeFactory.next(),
+    val referencePitch: NaturalPitch = ReferencePitch,
+    val isListening: Boolean = false,
+    val detectedPitchLabel: String? = null,
+    val detectedFrequencyHz: Double? = null,
+    val centsOff: Double? = null,
+    val confidence: Double = 0.0,
+    val signalLevel: Float = 0f,
+    val result: SingingResult? = null,
+    val error: String? = null,
+    val stats: SingingStats = SingingStats(),
 )
 
-data class AnswerResult(
+data class SingingResult(
     val correct: Boolean,
-    val selected: String,
     val expected: String,
+    val detected: String?,
+    val centsOff: Double?,
 )
 
-data class PracticeStats(
+data class SingingStats(
     val attempts: Int = 0,
     val correct: Int = 0,
     val streak: Int = 0,
@@ -96,7 +105,7 @@ data class PracticeStats(
     val accuracy: Int
         get() = if (attempts == 0) 0 else correct * 100 / attempts
 
-    fun record(correctAnswer: Boolean): PracticeStats {
+    fun record(correctAnswer: Boolean): SingingStats {
         return copy(
             attempts = attempts + 1,
             correct = correct + if (correctAnswer) 1 else 0,
@@ -107,137 +116,186 @@ data class PracticeStats(
 
 class TrainerViewModel : ViewModel() {
     private val tonePlayer = TrainingTonePlayer()
+    private val pitchRecorder = SingingPitchRecorder(
+        onObservation = ::handlePitchObservation,
+        onError = ::handlePitchError,
+    )
     private val _uiState = MutableStateFlow(TrainerUiState())
     val uiState: StateFlow<TrainerUiState> = _uiState.asStateFlow()
+    private var consecutiveCorrectFrames = 0
 
-    fun selectMode(mode: PracticeMode) {
-        _uiState.update { it.copy(selectedMode = mode) }
-    }
-
-    fun answerTheory(answer: String) {
-        val state = _uiState.value
-        if (state.theoryResult != null) return
-        val correct = answer == state.theoryChallenge.correctAnswer
-        _uiState.update {
-            it.copy(
-                theoryResult = AnswerResult(
-                    correct = correct,
-                    selected = answer,
-                    expected = state.theoryChallenge.correctAnswer,
-                ),
-                stats = it.stats.record(correct),
-            )
-        }
-    }
-
-    fun nextTheory() {
-        _uiState.update {
-            it.copy(
-                theoryChallenge = TrainingChallengeFactory.nextTheory(),
-                theoryResult = null,
-            )
-        }
-    }
-
-    fun answerStaffNote(answer: NoteName) {
-        val state = _uiState.value
-        if (state.staffNoteResult != null) return
-        val correct = answer == state.staffNoteChallenge.correctAnswer
-        _uiState.update {
-            it.copy(
-                staffNoteResult = AnswerResult(
-                    correct = correct,
-                    selected = answer.label,
-                    expected = state.staffNoteChallenge.correctAnswer.label,
-                ),
-                stats = it.stats.record(correct),
-            )
-        }
-    }
-
-    fun nextStaffNote() {
-        _uiState.update {
-            it.copy(
-                staffNoteChallenge = TrainingChallengeFactory.nextStaffNote(),
-                staffNoteResult = null,
-            )
-        }
-    }
-
-    fun playDictation() {
-        val challenge = _uiState.value.dictationChallenge
-        tonePlayer.playSequence(
-            midiNumbers = challenge.notes.map { it.midiNumber },
-            tempoBpm = challenge.tempoBpm,
+    fun playReference() {
+        tonePlayer.playNote(
+            midiNumber = _uiState.value.referencePitch.midiNumber,
+            durationMillis = ReferenceToneMillis,
         )
     }
 
-    fun addDictationNote(note: NoteName) {
-        _uiState.update { state ->
-            if (state.dictationResult != null ||
-                state.dictationInput.size >= state.dictationChallenge.notes.size
-            ) {
-                state
-            } else {
-                state.copy(dictationInput = state.dictationInput + note)
-            }
-        }
-    }
-
-    fun removeDictationNote() {
-        _uiState.update { state ->
-            if (state.dictationResult != null || state.dictationInput.isEmpty()) {
-                state
-            } else {
-                state.copy(dictationInput = state.dictationInput.dropLast(1))
-            }
-        }
-    }
-
-    fun clearDictationInput() {
-        _uiState.update { state ->
-            if (state.dictationResult != null) {
-                state
-            } else {
-                state.copy(dictationInput = emptyList())
-            }
-        }
-    }
-
-    fun submitDictation() {
-        val state = _uiState.value
-        if (state.dictationResult != null ||
-            state.dictationInput.size != state.dictationChallenge.notes.size
-        ) {
-            return
-        }
-        val correct = state.dictationInput == state.dictationChallenge.correctAnswer
+    fun startListening() {
+        if (_uiState.value.isListening) return
+        consecutiveCorrectFrames = 0
         _uiState.update {
             it.copy(
-                dictationResult = AnswerResult(
-                    correct = correct,
-                    selected = state.dictationInput.joinToString(" ") { note -> note.label },
-                    expected = state.dictationChallenge.answerLabel,
-                ),
-                stats = it.stats.record(correct),
+                isListening = true,
+                detectedPitchLabel = null,
+                detectedFrequencyHz = null,
+                centsOff = null,
+                confidence = 0.0,
+                signalLevel = 0f,
+                result = null,
+                error = null,
+            )
+        }
+        if (!pitchRecorder.start()) {
+            _uiState.update {
+                it.copy(
+                    isListening = false,
+                    error = "Unable to start microphone capture.",
+                )
+            }
+        }
+    }
+
+    fun stopListening(recordAttempt: Boolean = true) {
+        pitchRecorder.stop()
+        consecutiveCorrectFrames = 0
+        _uiState.update { state ->
+            if (!state.isListening) return@update state
+            if (!recordAttempt || state.result != null) {
+                state.copy(isListening = false)
+            } else {
+                state.copy(
+                    isListening = false,
+                    result = SingingResult(
+                        correct = false,
+                        expected = state.challenge.pitch.label,
+                        detected = state.detectedPitchLabel,
+                        centsOff = state.centsOff,
+                    ),
+                    stats = state.stats.record(correctAnswer = false),
+                )
+            }
+        }
+    }
+
+    fun retryChallenge() {
+        stopListening(recordAttempt = false)
+        consecutiveCorrectFrames = 0
+        _uiState.update {
+            it.copy(
+                detectedPitchLabel = null,
+                detectedFrequencyHz = null,
+                centsOff = null,
+                confidence = 0.0,
+                signalLevel = 0f,
+                result = null,
+                error = null,
             )
         }
     }
 
-    fun nextDictation() {
-        tonePlayer.stop()
+    fun nextChallenge() {
+        stopListening(recordAttempt = false)
+        consecutiveCorrectFrames = 0
         _uiState.update {
             it.copy(
-                dictationChallenge = TrainingChallengeFactory.nextDictation(),
-                dictationInput = emptyList(),
-                dictationResult = null,
+                challenge = SightSingingChallengeFactory.next(),
+                detectedPitchLabel = null,
+                detectedFrequencyHz = null,
+                centsOff = null,
+                confidence = 0.0,
+                signalLevel = 0f,
+                result = null,
+                error = null,
+            )
+        }
+    }
+
+    private fun handlePitchObservation(observation: PitchObservation) {
+        val frequencyHz = observation.frequencyHz
+        if (frequencyHz == null) {
+            consecutiveCorrectFrames = 0
+            _uiState.update {
+                if (!it.isListening) return@update it
+                it.copy(
+                    detectedPitchLabel = null,
+                    detectedFrequencyHz = null,
+                    centsOff = null,
+                    confidence = observation.confidence,
+                    signalLevel = observation.level,
+                )
+            }
+            return
+        }
+
+        _uiState.update { state ->
+            if (!state.isListening) return@update state
+            val target = state.challenge.pitch
+            val centsOff = centsBetween(
+                frequencyHz = frequencyHz,
+                targetFrequencyHz = target.frequencyHz,
+            )
+            val detectedPitch = nearestPitchLabel(frequencyHz)
+            val inTune = abs(centsOff) <= CorrectToleranceCents
+
+            if (state.result == null) {
+                consecutiveCorrectFrames = if (inTune) {
+                    consecutiveCorrectFrames + 1
+                } else {
+                    0
+                }
+            }
+
+            val result = if (
+                state.result == null &&
+                consecutiveCorrectFrames >= StableCorrectFrames
+            ) {
+                SingingResult(
+                    correct = true,
+                    expected = target.label,
+                    detected = detectedPitch,
+                    centsOff = centsOff,
+                )
+            } else {
+                state.result
+            }
+            val stats = if (state.result == null && result?.correct == true) {
+                state.stats.record(correctAnswer = true)
+            } else {
+                state.stats
+            }
+
+            state.copy(
+                detectedPitchLabel = detectedPitch,
+                detectedFrequencyHz = frequencyHz,
+                centsOff = centsOff,
+                confidence = observation.confidence,
+                signalLevel = observation.level,
+                result = result,
+                stats = stats,
+            )
+        }
+    }
+
+    private fun handlePitchError(message: String) {
+        _uiState.update {
+            it.copy(
+                isListening = false,
+                error = message,
             )
         }
     }
 
     override fun onCleared() {
+        stopListening(recordAttempt = false)
         tonePlayer.stop()
         super.onCleared()
+    }
+
+    private companion object {
+        const val ReferenceToneMillis = 1_200L
+        const val CorrectToleranceCents = 50.0
+        const val StableCorrectFrames = 5
     }
 }
 
@@ -245,6 +303,15 @@ class TrainerViewModel : ViewModel() {
 private fun TrainerApp(viewModel: TrainerViewModel = viewModel()) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    var microphoneGranted by remember { mutableStateOf(isMicrophoneGranted(context)) }
+    var microphoneDenied by remember { mutableStateOf(false) }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        microphoneGranted = granted
+        microphoneDenied = !granted
+        if (granted) viewModel.startListening()
+    }
     val colorScheme = if (isSystemInDarkTheme()) {
         dynamicDarkColorScheme(context)
     } else {
@@ -258,17 +325,21 @@ private fun TrainerApp(viewModel: TrainerViewModel = viewModel()) {
         ) {
             TrainerScreen(
                 state = state,
-                onModeSelected = viewModel::selectMode,
-                onTheoryAnswer = viewModel::answerTheory,
-                onNextTheory = viewModel::nextTheory,
-                onStaffAnswer = viewModel::answerStaffNote,
-                onNextStaff = viewModel::nextStaffNote,
-                onPlayDictation = viewModel::playDictation,
-                onDictationNote = viewModel::addDictationNote,
-                onDeleteDictationNote = viewModel::removeDictationNote,
-                onClearDictation = viewModel::clearDictationInput,
-                onSubmitDictation = viewModel::submitDictation,
-                onNextDictation = viewModel::nextDictation,
+                microphoneGranted = microphoneGranted,
+                microphoneDenied = microphoneDenied,
+                onPlayReference = viewModel::playReference,
+                onStartListening = {
+                    if (isMicrophoneGranted(context)) {
+                        microphoneGranted = true
+                        microphoneDenied = false
+                        viewModel.startListening()
+                    } else {
+                        permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                    }
+                },
+                onStopListening = viewModel::stopListening,
+                onRetry = viewModel::retryChallenge,
+                onNext = viewModel::nextChallenge,
             )
         }
     }
@@ -277,17 +348,13 @@ private fun TrainerApp(viewModel: TrainerViewModel = viewModel()) {
 @Composable
 private fun TrainerScreen(
     state: TrainerUiState,
-    onModeSelected: (PracticeMode) -> Unit,
-    onTheoryAnswer: (String) -> Unit,
-    onNextTheory: () -> Unit,
-    onStaffAnswer: (NoteName) -> Unit,
-    onNextStaff: () -> Unit,
-    onPlayDictation: () -> Unit,
-    onDictationNote: (NoteName) -> Unit,
-    onDeleteDictationNote: () -> Unit,
-    onClearDictation: () -> Unit,
-    onSubmitDictation: () -> Unit,
-    onNextDictation: () -> Unit,
+    microphoneGranted: Boolean,
+    microphoneDenied: Boolean,
+    onPlayReference: () -> Unit,
+    onStartListening: () -> Unit,
+    onStopListening: () -> Unit,
+    onRetry: () -> Unit,
+    onNext: () -> Unit,
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -298,51 +365,34 @@ private fun TrainerScreen(
                 .padding(padding)
                 .statusBarsPadding()
                 .navigationBarsPadding()
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             AppHeader(stats = state.stats)
-            ModeTabs(
-                selectedMode = state.selectedMode,
-                onModeSelected = onModeSelected,
+            StaffPanel(challenge = state.challenge)
+            ReferencePanel(
+                referencePitch = state.referencePitch,
+                onPlayReference = onPlayReference,
             )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-            ) {
-                when (state.selectedMode) {
-                    PracticeMode.Theory -> TheoryScreen(
-                        challenge = state.theoryChallenge,
-                        result = state.theoryResult,
-                        onAnswer = onTheoryAnswer,
-                        onNext = onNextTheory,
-                    )
-                    PracticeMode.SightReading -> SightReadingScreen(
-                        challenge = state.staffNoteChallenge,
-                        result = state.staffNoteResult,
-                        onAnswer = onStaffAnswer,
-                        onNext = onNextStaff,
-                    )
-                    PracticeMode.Dictation -> DictationScreen(
-                        challenge = state.dictationChallenge,
-                        input = state.dictationInput,
-                        result = state.dictationResult,
-                        onPlay = onPlayDictation,
-                        onNote = onDictationNote,
-                        onDeleteNote = onDeleteDictationNote,
-                        onClear = onClearDictation,
-                        onSubmit = onSubmitDictation,
-                        onNext = onNextDictation,
-                    )
-                }
-            }
+            PitchReadout(
+                state = state,
+                microphoneDenied = microphoneDenied,
+            )
+            SingingControls(
+                state = state,
+                microphoneGranted = microphoneGranted,
+                onStartListening = onStartListening,
+                onStopListening = onStopListening,
+                onRetry = onRetry,
+                onNext = onNext,
+            )
         }
     }
 }
 
 @Composable
-private fun AppHeader(stats: PracticeStats) {
+private fun AppHeader(stats: SingingStats) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -352,7 +402,7 @@ private fun AppHeader(stats: PracticeStats) {
             modifier = Modifier.weight(1f),
         ) {
             Text(
-                text = "Music Trainer",
+                text = "Sight Singing",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.SemiBold,
             )
@@ -396,384 +446,7 @@ private fun StatPill(
 }
 
 @Composable
-private fun ModeTabs(
-    selectedMode: PracticeMode,
-    onModeSelected: (PracticeMode) -> Unit,
-) {
-    PrimaryTabRow(
-        selectedTabIndex = selectedMode.ordinal,
-        containerColor = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.primary,
-    ) {
-        PracticeMode.entries.forEach { mode ->
-            Tab(
-                selected = mode == selectedMode,
-                onClick = { onModeSelected(mode) },
-                text = {
-                    Text(
-                        text = mode.label,
-                        maxLines = 1,
-                    )
-                },
-            )
-        }
-    }
-}
-
-@Composable
-private fun TheoryScreen(
-    challenge: TheoryChallenge,
-    result: AnswerResult?,
-    onAnswer: (String) -> Unit,
-    onNext: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        ChallengePanel(
-            label = challenge.category,
-            primary = challenge.question,
-            secondary = challenge.detail,
-        )
-        ChoiceList(
-            options = challenge.options,
-            selected = result?.selected,
-            correct = result?.expected,
-            enabled = result == null,
-            onSelected = onAnswer,
-        )
-        ResultBlock(result = result)
-        if (result != null) {
-            NextButton(
-                text = "Next question",
-                onClick = onNext,
-            )
-        }
-    }
-}
-
-@Composable
-private fun SightReadingScreen(
-    challenge: StaffNoteChallenge,
-    result: AnswerResult?,
-    onAnswer: (NoteName) -> Unit,
-    onNext: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        StaffPanel(challenge = challenge)
-        ChoiceList(
-            options = NoteName.entries.map { it.label },
-            selected = result?.selected,
-            correct = result?.expected,
-            enabled = result == null,
-            onSelected = { label ->
-                NoteName.entries.firstOrNull { it.label == label }?.let(onAnswer)
-            },
-        )
-        ResultBlock(result = result)
-        if (result != null) {
-            NextButton(
-                text = "Next note",
-                onClick = onNext,
-            )
-        }
-    }
-}
-
-@Composable
-private fun DictationScreen(
-    challenge: DictationChallenge,
-    input: List<NoteName>,
-    result: AnswerResult?,
-    onPlay: () -> Unit,
-    onNote: (NoteName) -> Unit,
-    onDeleteNote: () -> Unit,
-    onClear: () -> Unit,
-    onSubmit: () -> Unit,
-    onNext: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
-        ) {
-            Row(
-                modifier = Modifier.padding(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                ChallengeSummary(
-                    label = challenge.keyLabel,
-                    primary = "${challenge.notes.size} notes",
-                    secondary = "${challenge.tempoBpm} bpm",
-                    modifier = Modifier.weight(1f),
-                )
-                Button(
-                    onClick = onPlay,
-                    contentPadding = PaddingValues(horizontal = 14.dp, vertical = 10.dp),
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.PlayArrow,
-                        contentDescription = "Play dictation",
-                        modifier = Modifier.size(18.dp),
-                    )
-                    Text(
-                        text = "Play",
-                        modifier = Modifier.padding(start = 8.dp),
-                    )
-                }
-            }
-        }
-
-        DictationSlots(
-            targetLength = challenge.notes.size,
-            input = input,
-            result = result,
-        )
-        NoteNameGrid(
-            enabled = result == null && input.size < challenge.notes.size,
-            onSelected = onNote,
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            TextButton(
-                onClick = onDeleteNote,
-                enabled = result == null && input.isNotEmpty(),
-                modifier = Modifier.weight(1f),
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Close,
-                    contentDescription = "Remove note",
-                    modifier = Modifier.size(18.dp),
-                )
-                Text(
-                    text = "Undo",
-                    modifier = Modifier.padding(start = 8.dp),
-                )
-            }
-            TextButton(
-                onClick = onClear,
-                enabled = result == null && input.isNotEmpty(),
-                modifier = Modifier.weight(1f),
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Delete,
-                    contentDescription = "Clear notes",
-                    modifier = Modifier.size(18.dp),
-                )
-                Text(
-                    text = "Clear",
-                    modifier = Modifier.padding(start = 8.dp),
-                )
-            }
-            Button(
-                onClick = onSubmit,
-                enabled = result == null && input.size == challenge.notes.size,
-                modifier = Modifier.weight(1.2f),
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.CheckCircle,
-                    contentDescription = "Check answer",
-                    modifier = Modifier.size(18.dp),
-                )
-                Text(
-                    text = "Check",
-                    modifier = Modifier.padding(start = 8.dp),
-                )
-            }
-        }
-        ResultBlock(result = result)
-        if (result != null) {
-            NextButton(
-                text = "Next melody",
-                onClick = onNext,
-            )
-        }
-    }
-}
-
-@Composable
-private fun ChallengePanel(
-    label: String,
-    primary: String,
-    secondary: String,
-) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
-    ) {
-        ChallengeSummary(
-            label = label,
-            primary = primary,
-            secondary = secondary,
-            modifier = Modifier.padding(18.dp),
-        )
-    }
-}
-
-@Composable
-private fun ChallengeSummary(
-    label: String,
-    primary: String,
-    secondary: String,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.SemiBold,
-        )
-        Text(
-            text = primary,
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.SemiBold,
-        )
-        Text(
-            text = secondary,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
-}
-
-@Composable
-private fun ChoiceList(
-    options: List<String>,
-    selected: String?,
-    correct: String?,
-    enabled: Boolean,
-    onSelected: (String) -> Unit,
-) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        options.forEach { option ->
-            val isSelected = option == selected
-            val isCorrect = option == correct
-            val colorScheme = MaterialTheme.colorScheme
-            val containerColor = when {
-                correct != null && isCorrect -> colorScheme.primaryContainer
-                correct != null && isSelected && !isCorrect -> colorScheme.errorContainer
-                else -> colorScheme.surfaceContainerHigh
-            }
-            val contentColor = when {
-                correct != null && isCorrect -> colorScheme.onPrimaryContainer
-                correct != null && isSelected && !isCorrect -> colorScheme.onErrorContainer
-                else -> colorScheme.onSurface
-            }
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 54.dp)
-                    .clickable(enabled = enabled) { onSelected(option) },
-                shape = RoundedCornerShape(8.dp),
-                color = containerColor,
-                contentColor = contentColor,
-            ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = option,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Medium,
-                    )
-                    if (correct != null && isCorrect) {
-                        Icon(
-                            imageVector = Icons.Rounded.CheckCircle,
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp),
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ResultBlock(result: AnswerResult?) {
-    if (result == null) return
-
-    val colorScheme = MaterialTheme.colorScheme
-    val containerColor = if (result.correct) {
-        colorScheme.primaryContainer
-    } else {
-        colorScheme.errorContainer
-    }
-    val contentColor = if (result.correct) {
-        colorScheme.onPrimaryContainer
-    } else {
-        colorScheme.onErrorContainer
-    }
-    val message = if (result.correct) {
-        "Correct"
-    } else {
-        "Answer: ${result.expected}"
-    }
-
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        color = containerColor,
-        contentColor = contentColor,
-    ) {
-        Text(
-            text = message,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold,
-        )
-    }
-}
-
-@Composable
-private fun NextButton(
-    text: String,
-    onClick: () -> Unit,
-) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Icon(
-            imageVector = Icons.Rounded.Sync,
-            contentDescription = null,
-            modifier = Modifier.size(18.dp),
-        )
-        Text(
-            text = text,
-            modifier = Modifier.padding(start = 8.dp),
-        )
-    }
-}
-
-@Composable
-private fun StaffPanel(challenge: StaffNoteChallenge) {
+private fun StaffPanel(challenge: SightSingingChallenge) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
@@ -795,7 +468,7 @@ private fun StaffPanel(challenge: StaffNoteChallenge) {
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
-                    text = "Name the note",
+                    text = "C major",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -806,7 +479,7 @@ private fun StaffPanel(challenge: StaffNoteChallenge) {
 }
 
 @Composable
-private fun StaffCanvas(challenge: StaffNoteChallenge) {
+private fun StaffCanvas(challenge: SightSingingChallenge) {
     val lineColor = MaterialTheme.colorScheme.onSurface
     val noteColor = MaterialTheme.colorScheme.primary
     val backgroundColor = MaterialTheme.colorScheme.surface
@@ -814,7 +487,7 @@ private fun StaffCanvas(challenge: StaffNoteChallenge) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(210.dp),
+            .height(230.dp),
         shape = RoundedCornerShape(8.dp),
         color = backgroundColor,
     ) {
@@ -840,7 +513,16 @@ private fun StaffCanvas(challenge: StaffNoteChallenge) {
                 )
             }
 
-            val noteX = staffLeft + staffWidth * 0.56f
+            val clefX = staffLeft + staffWidth * 0.10f
+            drawTrebleClefHint(
+                x = clefX,
+                centerY = topLineY + lineSpacing * 2f,
+                lineSpacing = lineSpacing,
+                color = lineColor,
+                strokeWidth = strokeWidth,
+            )
+
+            val noteX = staffLeft + staffWidth * 0.60f
             val noteY = bottomLineY - challenge.staffStepsFromBottomLine * lineSpacing / 2f
             drawLedgerLines(
                 noteY = noteY,
@@ -894,6 +576,35 @@ private fun StaffCanvas(challenge: StaffNoteChallenge) {
     }
 }
 
+private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawTrebleClefHint(
+    x: Float,
+    centerY: Float,
+    lineSpacing: Float,
+    color: Color,
+    strokeWidth: Float,
+) {
+    drawCircle(
+        color = color,
+        radius = lineSpacing * 0.62f,
+        center = Offset(x, centerY + lineSpacing * 0.70f),
+        style = Stroke(width = strokeWidth),
+    )
+    drawLine(
+        color = color,
+        start = Offset(x, centerY + lineSpacing * 1.45f),
+        end = Offset(x, centerY - lineSpacing * 2.35f),
+        strokeWidth = strokeWidth,
+        cap = StrokeCap.Round,
+    )
+    drawLine(
+        color = color,
+        start = Offset(x, centerY - lineSpacing * 2.35f),
+        end = Offset(x + lineSpacing * 0.65f, centerY - lineSpacing * 1.55f),
+        strokeWidth = strokeWidth,
+        cap = StrokeCap.Round,
+    )
+}
+
 private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawLedgerLines(
     noteY: Float,
     topLineY: Float,
@@ -930,100 +641,245 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawLedgerLines(
 }
 
 @Composable
-private fun DictationSlots(
-    targetLength: Int,
-    input: List<NoteName>,
-    result: AnswerResult?,
+private fun ReferencePanel(
+    referencePitch: NaturalPitch,
+    onPlayReference: () -> Unit,
 ) {
-    Row(
+    Surface(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        shape = RoundedCornerShape(8.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
-        repeat(targetLength) { index ->
-            val note = input.getOrNull(index)
-            val colorScheme = MaterialTheme.colorScheme
-            val containerColor = when {
-                result?.correct == true -> colorScheme.primaryContainer
-                result?.correct == false -> colorScheme.errorContainer
-                note != null -> colorScheme.secondaryContainer
-                else -> colorScheme.surfaceContainerHigh
-            }
-            val contentColor = when {
-                result?.correct == true -> colorScheme.onPrimaryContainer
-                result?.correct == false -> colorScheme.onErrorContainer
-                note != null -> colorScheme.onSecondaryContainer
-                else -> colorScheme.onSurface
-            }
-            Surface(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(64.dp),
-                shape = RoundedCornerShape(8.dp),
-                color = containerColor,
-                contentColor = contentColor,
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = note?.label ?: "",
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                Text(
+                    text = "Reference",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = referencePitch.label,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Button(onClick = onPlayReference) {
+                Icon(
+                    imageVector = Icons.Rounded.PlayArrow,
+                    contentDescription = "Play reference",
+                    modifier = Modifier.size(18.dp),
+                )
+                Text(
+                    text = "Play",
+                    modifier = Modifier.padding(start = 8.dp),
+                )
             }
         }
     }
 }
 
 @Composable
-private fun NoteNameGrid(
-    enabled: Boolean,
-    onSelected: (NoteName) -> Unit,
+private fun PitchReadout(
+    state: TrainerUiState,
+    microphoneDenied: Boolean,
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+    val colorScheme = MaterialTheme.colorScheme
+    val result = state.result
+    val statusText = when {
+        microphoneDenied -> "Microphone permission denied"
+        state.error != null -> state.error
+        result?.correct == true -> "Correct: ${result.expected}"
+        result?.correct == false -> "Expected ${result.expected}"
+        state.isListening && state.detectedPitchLabel == null -> "Listening"
+        state.detectedPitchLabel != null -> buildPitchText(state.detectedPitchLabel, state.centsOff)
+        else -> "Ready"
+    }
+    val statusColor = when {
+        result?.correct == true -> colorScheme.primary
+        result?.correct == false || microphoneDenied || state.error != null -> colorScheme.error
+        else -> colorScheme.onSurface
+    }
+
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(8.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
     ) {
-        NoteName.entries.chunked(4).forEach { row ->
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                row.forEach { note ->
-                    Surface(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp)
-                            .clickable(enabled = enabled) { onSelected(note) },
-                        shape = RoundedCornerShape(8.dp),
-                        color = if (enabled) {
-                            MaterialTheme.colorScheme.surfaceContainerHigh
-                        } else {
-                            MaterialTheme.colorScheme.surfaceContainer
-                        },
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text(
-                                text = note.label,
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.SemiBold,
-                            )
-                        }
-                    }
-                }
-                repeat(4 - row.size) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                    )
-                }
+                Text(
+                    text = statusText,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = statusColor,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = "${(state.signalLevel * 100).roundToInt()}%",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
+            PitchMeter(
+                centsOff = state.centsOff,
+                inTune = result?.correct == true ||
+                    (state.centsOff?.let { abs(it) <= CorrectToleranceCents } == true),
+            )
         }
     }
 }
+
+@Composable
+private fun PitchMeter(
+    centsOff: Double?,
+    inTune: Boolean,
+) {
+    val colorScheme = MaterialTheme.colorScheme
+    val trackColor = colorScheme.onSurfaceVariant.copy(alpha = 0.42f)
+    val markerColor = if (inTune) colorScheme.primary else colorScheme.error
+
+    Canvas(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp),
+    ) {
+        val y = size.height / 2f
+        val startX = 18.dp.toPx()
+        val endX = size.width - 18.dp.toPx()
+        val centerX = (startX + endX) / 2f
+
+        drawLine(
+            color = trackColor,
+            start = Offset(startX, y),
+            end = Offset(endX, y),
+            strokeWidth = 4.dp.toPx(),
+            cap = StrokeCap.Round,
+        )
+        listOf(-50f, 0f, 50f).forEach { cents ->
+            val x = centerX + (endX - startX) * cents / 200f
+            drawLine(
+                color = trackColor,
+                start = Offset(x, y - 9.dp.toPx()),
+                end = Offset(x, y + 9.dp.toPx()),
+                strokeWidth = 2.dp.toPx(),
+                cap = StrokeCap.Round,
+            )
+        }
+        centsOff?.let { cents ->
+            val clamped = cents.coerceIn(-100.0, 100.0).toFloat()
+            val x = centerX + (endX - startX) * clamped / 200f
+            drawCircle(
+                color = markerColor,
+                radius = 8.dp.toPx(),
+                center = Offset(x, y),
+            )
+        }
+    }
+}
+
+@Composable
+private fun SingingControls(
+    state: TrainerUiState,
+    microphoneGranted: Boolean,
+    onStartListening: () -> Unit,
+    onStopListening: () -> Unit,
+    onRetry: () -> Unit,
+    onNext: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        FilledTonalButton(
+            onClick = onRetry,
+            enabled = !state.isListening && (state.result != null || state.detectedPitchLabel != null),
+            modifier = Modifier.weight(1f),
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Sync,
+                contentDescription = "Retry",
+                modifier = Modifier.size(18.dp),
+            )
+            Text(
+                text = "Retry",
+                modifier = Modifier.padding(start = 8.dp),
+            )
+        }
+        Button(
+            onClick = if (state.isListening) onStopListening else onStartListening,
+            enabled = state.isListening || state.result?.correct != true,
+            modifier = Modifier.weight(1.25f),
+        ) {
+            Icon(
+                imageVector = if (state.isListening) Icons.Rounded.Stop else Icons.Rounded.Mic,
+                contentDescription = if (state.isListening) "Stop listening" else "Start singing",
+                modifier = Modifier.size(18.dp),
+            )
+            Text(
+                text = when {
+                    state.isListening -> "Stop"
+                    microphoneGranted -> "Sing"
+                    else -> "Enable mic"
+                },
+                modifier = Modifier.padding(start = 8.dp),
+            )
+        }
+        FilledTonalButton(
+            onClick = onNext,
+            enabled = !state.isListening || state.result?.correct == true,
+            modifier = Modifier.weight(1f),
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.CheckCircle,
+                contentDescription = "Next note",
+                modifier = Modifier.size(18.dp),
+            )
+            Text(
+                text = "Next",
+                modifier = Modifier.padding(start = 8.dp),
+            )
+        }
+    }
+}
+
+private fun buildPitchText(
+    pitchLabel: String?,
+    centsOff: Double?,
+): String {
+    if (pitchLabel == null || centsOff == null) return "Listening"
+    val roundedCents = abs(centsOff).roundToInt()
+    val direction = when {
+        centsOff > 4.0 -> "sharp"
+        centsOff < -4.0 -> "flat"
+        else -> "centered"
+    }
+    return if (direction == "centered") {
+        "$pitchLabel centered"
+    } else {
+        "$pitchLabel $roundedCents cents $direction"
+    }
+}
+
+private fun isMicrophoneGranted(context: Context): Boolean {
+    return ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.RECORD_AUDIO,
+    ) == PackageManager.PERMISSION_GRANTED
+}
+
+private const val CorrectToleranceCents = 50.0

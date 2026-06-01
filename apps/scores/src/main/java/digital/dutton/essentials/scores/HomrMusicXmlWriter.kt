@@ -109,29 +109,44 @@ object HomrMusicXmlWriter {
                     pendingChord = true
                 }
                 symbol.rhythm.contains("barline") || symbol.rhythm.startsWith("repeatEnd") -> {
+                    if (measureDuration == 0) {
+                        beamer.flush()
+                        pendingChord = false
+                        continue
+                    }
                     closeMeasure()
-                    openMeasure()
                 }
                 symbol.rhythm.startsWith("repeatStart") -> {
+                    if (measureDuration == 0) {
+                        beamer.flush()
+                        pendingChord = false
+                        continue
+                    }
                     closeMeasure()
-                    openMeasure()
                 }
                 symbol.rhythm.startsWith("clef") -> {
-                    clef = symbol.toClef() ?: clef
+                    val nextClef = symbol.toClef() ?: clef
+                    if (nextClef == clef) continue
+                    clef = nextClef
                     openMeasure(forceAttributes = true)
                     out.appendLine("      <attributes>")
                     out.appendLine("        <clef><sign>${clef.sign}</sign><line>${clef.line}</line></clef>")
                     out.appendLine("      </attributes>")
                 }
                 symbol.rhythm.startsWith("keySignature") -> {
-                    fifths = symbol.rhythm.substringAfter('_').toIntOrNull() ?: fifths
+                    val nextFifths = symbol.rhythm.substringAfter('_').toIntOrNull() ?: fifths
+                    if (nextFifths == fifths) continue
+                    fifths = nextFifths
                     accidentalTracker = AccidentalTracker(fifths)
                     openMeasure(forceAttributes = true)
                     out.appendLine("      <attributes><key><fifths>$fifths</fifths></key></attributes>")
                 }
                 symbol.rhythm.startsWith("timeSignature") -> {
-                    beatType = symbol.rhythm.substringAfter('/').toIntOrNull()?.takeIf { it > 0 } ?: beatType
-                    beats = 4
+                    val nextBeatType = symbol.rhythm.substringAfter('/').toIntOrNull()?.takeIf { it > 0 } ?: beatType
+                    val nextBeats = 4
+                    if (nextBeatType == beatType && nextBeats == beats) continue
+                    beatType = nextBeatType
+                    beats = nextBeats
                     openMeasure(forceAttributes = true)
                     out.appendLine("      <attributes><time><beats>$beats</beats><beat-type>$beatType</beat-type></time></attributes>")
                 }
@@ -212,7 +227,9 @@ object HomrMusicXmlWriter {
         val measures = mutableListOf<MutableList<HomrSymbol>>()
         var current = mutableListOf<HomrSymbol>()
         fun closeCurrent() {
-            measures += current
+            if (current.isNotEmpty()) {
+                measures += current
+            }
             current = mutableListOf()
         }
 
@@ -224,7 +241,8 @@ object HomrMusicXmlWriter {
                 else -> current += symbol
             }
         }
-        if (current.isNotEmpty() || measures.isEmpty()) closeCurrent()
+        if (current.isNotEmpty()) closeCurrent()
+        if (measures.isEmpty()) measures.add(mutableListOf())
         return measures
     }
 

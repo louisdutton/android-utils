@@ -16,7 +16,10 @@ own APK with a distinct application id.
 - `pitch`: simple musical pitch keyboard and reference tone app.
 - `scores`: offline-first music score reader and importer for MusicXML/MXL
   files, with on-device OMR entry points for PDF and image score imports.
-- `trainer`: music theory, sight-reading, and melodic dictation trainer.
+  Local OMR/debug iteration can be run without an Android device with
+  `nix develop --no-write-lock-file --command ./scripts/scores-local-import.sh <pdf-or-image>`.
+- `trainer`: sight-singing trainer with reference tones and on-device pitch
+  detection.
 - `keyboard`: hard-forked FUTO Keyboard-derived input method replacement with
   its own Android Gradle project under `apps/keyboard`.
 - `vault`: hard-forked KeePassDX-derived local KeePass/KeePassXC-compatible
