@@ -449,9 +449,25 @@ class CalDavSyncer(
         remoteSyncToken: String?,
     ): CalDavSyncSummary {
         val localCalendarId = calendar.localCalendarId ?: return CalDavSyncSummary(account.id, 0, 0, 0, 0)
-        val remoteEvents = client.fetchEvents(account.endpoint(), calendar.href)
+        val incrementalChanges = calendar.incrementalSyncToken()?.let { syncToken ->
+            runCatching {
+                client.fetchEventChanges(
+                    endpoint = account.endpoint(),
+                    calendarHref = calendar.href,
+                    syncToken = syncToken,
+                )
+            }.getOrNull()
+        }
+        val isFullSync = incrementalChanges == null
+        val remoteEvents = incrementalChanges?.changed
+            ?: client.fetchEvents(account.endpoint(), calendar.href)
+        val changedHrefsWithoutEvents = mutableSetOf<String>()
         val incoming = remoteEvents.flatMap { remote ->
-            parser.parse(remote.calendarData).events.map { event ->
+            val parsedEvents = parser.parse(remote.calendarData).events
+            if (!isFullSync && parsedEvents.isEmpty()) {
+                changedHrefsWithoutEvents += remote.href
+            }
+            parsedEvents.map { event ->
                 RemoteParsedEvent(
                     event = event,
                     href = remote.href,
@@ -462,6 +478,7 @@ class CalDavSyncer(
 
         val existing = queryExistingRemoteEvents(calendar)
         val dirtyRemoteIds = queryDirtyRemoteIds(calendar)
+        val dirtyRemoteHrefs = queryDirtyRemoteHrefs(calendar)
         val incomingIds = incoming.map { it.remoteId }.toSet()
         var created = 0
         var updated = 0
@@ -506,20 +523,36 @@ class CalDavSyncer(
         }
 
         var deleted = 0
-        existing
-            .filterKeys { it !in incomingIds && it !in dirtyRemoteIds }
-            .values
-            .forEach { eventId ->
-                deleted += context.contentResolver.delete(
-                    ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId)
-                        .asCalDavSyncAdapter(account.id),
-                    null,
-                    null,
-                )
+        if (isFullSync) {
+            existing
+                .filterKeys { it !in incomingIds && it !in dirtyRemoteIds }
+                .values
+                .forEach { eventId ->
+                    deleted += context.contentResolver.delete(
+                        ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId)
+                            .asCalDavSyncAdapter(account.id),
+                        null,
+                        null,
+                    )
+                }
+        } else {
+            val existingByHref = queryExistingRemoteEventHrefs(calendar)
+            (incrementalChanges.deletedHrefs + changedHrefsWithoutEvents)
+                .filter { href -> href !in dirtyRemoteHrefs }
+                .forEach { href ->
+                    existingByHref[href]?.let { eventId ->
+                        deleted += context.contentResolver.delete(
+                            ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId)
+                                .asCalDavSyncAdapter(account.id),
+                            null,
+                            null,
+                        )
+                    }
+                }
             }
 
         val syncedCalendar = calendar.copy(
-            syncToken = remoteSyncToken ?: calendar.syncToken,
+            syncToken = incrementalChanges?.syncToken ?: remoteSyncToken ?: calendar.syncToken,
             lastSyncMillis = System.currentTimeMillis(),
             lastError = null,
         )
@@ -539,13 +572,29 @@ class CalDavSyncer(
         calendar: CalDavCalendar,
         remoteSyncToken: String?,
     ): CalDavSyncSummary {
-        val remoteTasks = client.fetchTasks(account.endpoint(), calendar.href)
+        val incrementalChanges = calendar.incrementalSyncToken()?.let { syncToken ->
+            runCatching {
+                client.fetchTaskChanges(
+                    endpoint = account.endpoint(),
+                    calendarHref = calendar.href,
+                    syncToken = syncToken,
+                )
+            }.getOrNull()
+        }
+        val isFullSync = incrementalChanges == null
+        val remoteTasks = incrementalChanges?.changed
+            ?: client.fetchTasks(account.endpoint(), calendar.href)
         val incomingHrefs = remoteTasks.map { it.href }.toSet()
+        val changedHrefsWithoutTasks = mutableSetOf<String>()
         var created = 0
         var updated = 0
 
         remoteTasks.forEach { remote ->
-            parser.parse(remote.calendarData).tasks.forEach { task ->
+            val tasks = parser.parse(remote.calendarData).tasks
+            if (!isFullSync && tasks.isEmpty()) {
+                changedHrefsWithoutTasks += remote.href
+            }
+            tasks.forEach { task ->
                 when (
                     taskStore.upsertRemoteTask(
                         accountId = account.id,
@@ -565,10 +614,17 @@ class CalDavSyncer(
             }
         }
 
-        val deleted = taskStore.deleteRemoteTasksNotIn(calendar.id, incomingHrefs)
+        val deleted = if (isFullSync) {
+            taskStore.deleteRemoteTasksNotIn(calendar.id, incomingHrefs)
+        } else {
+            taskStore.deleteRemoteTasksByHref(
+                collectionId = calendar.id,
+                deletedHrefs = incrementalChanges.deletedHrefs + changedHrefsWithoutTasks,
+            )
+        }
         store.upsertCalendar(
             calendar.copy(
-                syncToken = remoteSyncToken ?: calendar.syncToken,
+                syncToken = incrementalChanges?.syncToken ?: remoteSyncToken ?: calendar.syncToken,
                 lastSyncMillis = System.currentTimeMillis(),
                 lastError = null,
             ),
@@ -676,6 +732,33 @@ class CalDavSyncer(
             }
     }
 
+    private fun queryExistingRemoteEventHrefs(calendar: CalDavCalendar): Map<String, Long> {
+        val localCalendarId = calendar.localCalendarId ?: return emptyMap()
+        val existingEvents = context.contentResolver.query(
+            CalendarContract.Events.CONTENT_URI.asCalDavSyncAdapter(calendar.accountId),
+            ExistingEventProjection,
+            "${CalendarContract.Events.CALENDAR_ID} = ? AND ${CalendarContract.Events.DELETED} = 0",
+            arrayOf(localCalendarId.toString()),
+            null,
+        )?.use { cursor ->
+            buildMap {
+                while (cursor.moveToNext()) {
+                    val eventId = cursor.requireLong(CalendarContract.Events._ID)
+                    val href = cursor.optionalString(CalendarContract.Events.SYNC_DATA2)
+                    if (href != null) put(eventId, href)
+                }
+            }
+        }.orEmpty()
+
+        return existingEvents
+            .entries
+            .groupBy({ it.value }, { it.key })
+            .mapValues { (_, eventIds) ->
+                eventIds.maxOrNull()
+                    ?: throw IllegalArgumentException("No CalDAV event hrefs to compare.")
+            }
+    }
+
     private fun queryDirtyRemoteIds(calendar: CalDavCalendar): Set<String> {
         val localCalendarId = calendar.localCalendarId ?: return emptySet()
         return context.contentResolver.query(
@@ -688,6 +771,23 @@ class CalDavSyncer(
             buildSet {
                 while (cursor.moveToNext()) {
                     cursor.optionalString(CalendarContract.Events._SYNC_ID)?.let(::add)
+                }
+            }
+        }.orEmpty()
+    }
+
+    private fun queryDirtyRemoteHrefs(calendar: CalDavCalendar): Set<String> {
+        val localCalendarId = calendar.localCalendarId ?: return emptySet()
+        return context.contentResolver.query(
+            CalendarContract.Events.CONTENT_URI.asCalDavSyncAdapter(calendar.accountId),
+            DirtyEventProjection,
+            "${CalendarContract.Events.CALENDAR_ID} = ? AND ${CalendarContract.Events.DIRTY} = 1",
+            arrayOf(localCalendarId.toString()),
+            null,
+        )?.use { cursor ->
+            buildSet {
+                while (cursor.moveToNext()) {
+                    cursor.optionalString(CalendarContract.Events.SYNC_DATA2)?.let(::add)
                 }
             }
         }.orEmpty()
@@ -1115,6 +1215,7 @@ class CalDavSyncer(
         val ExistingEventProjection = arrayOf(
             CalendarContract.Events._ID,
             CalendarContract.Events._SYNC_ID,
+            CalendarContract.Events.SYNC_DATA2,
         )
         val LocalEventProjection = arrayOf(
             CalendarContract.Events._ID,
@@ -1132,7 +1233,10 @@ class CalDavSyncer(
             CalendarContract.Events.SYNC_DATA3,
             CalendarContract.Events.DELETED,
         )
-        val DirtyEventProjection = arrayOf(CalendarContract.Events._SYNC_ID)
+        val DirtyEventProjection = arrayOf(
+            CalendarContract.Events._SYNC_ID,
+            CalendarContract.Events.SYNC_DATA2,
+        )
         const val SecondsPerMinute = 60L
         const val SecondsPerHour = 60L * SecondsPerMinute
         const val SecondsPerDay = 24L * SecondsPerHour
@@ -1161,6 +1265,11 @@ private fun List<CalDavCalendar>.preferredCalDavCalendar(): CalDavCalendar? {
 
 private fun CalDavSyncSummary.hasChanges(): Boolean {
     return created > 0 || updated > 0 || deleted > 0 || conflicts > 0
+}
+
+private fun CalDavCalendar.incrementalSyncToken(): String? {
+    if (lastSyncMillis == null) return null
+    return syncToken?.takeIf { it.isNotBlank() }
 }
 
 private fun calDavCalendarId(

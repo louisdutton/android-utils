@@ -86,6 +86,7 @@ import androidx.compose.material.icons.rounded.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -734,6 +735,22 @@ private fun CalendarScreen(
             nowMillis = nowMillis,
         )
     }
+    var lastAgendaAutoLoadAnchorIndex by rememberSaveable { mutableStateOf(-1) }
+    val agendaAutoLoadAnchorIndex by remember {
+        derivedStateOf {
+            val layoutInfo = listState.layoutInfo
+            val lastVisibleItemIndex = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf null
+
+            if (
+                layoutInfo.totalItemsCount > 0 &&
+                lastVisibleItemIndex >= layoutInfo.totalItemsCount - AgendaLoadAheadItems
+            ) {
+                lastVisibleItemIndex
+            } else {
+                null
+            }
+        }
+    }
 
     fun scrollToAgendaDate(date: LocalDate) {
         if (sections.isEmpty()) return
@@ -814,6 +831,26 @@ private fun CalendarScreen(
             scrollToAgendaDate(targetDate)
             pendingScrollDateText = null
             pendingScrollRequiresExactDate = false
+        }
+    }
+
+    LaunchedEffect(
+        viewMode,
+        state.hasCalendarPermission,
+        state.isLoading,
+        sections.size,
+        agendaAutoLoadAnchorIndex,
+    ) {
+        val anchorIndex = agendaAutoLoadAnchorIndex ?: return@LaunchedEffect
+        if (
+            viewMode == CalendarViewMode.Agenda &&
+            state.hasCalendarPermission &&
+            !state.isLoading &&
+            sections.isNotEmpty() &&
+            anchorIndex > lastAgendaAutoLoadAnchorIndex
+        ) {
+            lastAgendaAutoLoadAnchorIndex = anchorIndex
+            onLoadNewerEvents()
         }
     }
 
@@ -912,12 +949,6 @@ private fun CalendarScreen(
                         }
                     }
 
-                    item(key = "range-end") {
-                        AgendaRangeEnd(
-                            isLoading = state.isLoading,
-                            onLoadNewerEvents = onLoadNewerEvents,
-                        )
-                    }
                 }
             } else {
                 MonthCalendarView(
@@ -1372,24 +1403,6 @@ private fun CompactStatus(
                 text = body,
                 style = MaterialTheme.typography.bodySmall,
             )
-        }
-    }
-}
-
-@Composable
-private fun AgendaRangeEnd(
-    isLoading: Boolean,
-    onLoadNewerEvents: () -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        TextButton(
-            enabled = !isLoading,
-            onClick = onLoadNewerEvents,
-        ) {
-            Text("Load newer events")
         }
     }
 }
@@ -3149,7 +3162,7 @@ private fun EmptyAgenda(state: CalendarUiState) {
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
-                text = "Showing agenda items through ${state.rangeEndDate.compactDateLabel()}. Load newer events to extend the agenda.",
+                text = "More agenda items load automatically as you scroll.",
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
@@ -3284,6 +3297,7 @@ private val TimeInputFormatter = DateTimeFormatter.ofPattern("H:mm")
 private val TimeOutputFormatter = DateTimeFormatter.ofPattern("HH:mm")
 private const val DefaultAgendaFutureDays = 30L
 private const val AgendaPageDays = 90L
+private const val AgendaLoadAheadItems = 4
 private const val AgendaSelectionPaddingDays = 14L
 private const val MapsPackageName = "digital.dutton.essentials.maps"
 private const val MapsApiExtraPickPoint = "app.organicmaps.api.extra.PICK_POINT"
@@ -3409,7 +3423,7 @@ private fun CalendarUiState.agendaSubtitle(): String {
         !hasCalendarPermission -> "Calendar access needed"
         isSyncing -> "Syncing calendars"
         isLoading -> "Refreshing agenda"
-        else -> "Upcoming through ${rangeEndDate.compactDateLabel()}, ${drawerCalendarItems().size.calendarCountLabel()}, ${tasks.size.taskCountLabel()}"
+        else -> "${drawerCalendarItems().size.calendarCountLabel()}, ${tasks.size.taskCountLabel()}"
     }
 }
 

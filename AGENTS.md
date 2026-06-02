@@ -37,3 +37,28 @@
 - Use a cold boot only when no usable emulator is already running or when a clean device state is specifically needed.
 - Store emulator screenshots and temporary test captures outside the project, for example under `/tmp`, not in the repository.
 - Launcher icons for Essentials apps must follow `docs/launcher-icons.md`.
+
+## UI/UX
+
+- Build Android UI around Material 3 / Material You conventions unless an imported
+  upstream app already has a stronger local design system.
+- Prefer polished, ergonomic product UI over decorative screens: clear hierarchy,
+  predictable navigation, minimal friction, and controls placed where users expect
+  them.
+- Match the app's existing visual language before adding new patterns. Reuse local
+  components, spacing, typography, colors, shapes, icons, and interaction states.
+- Keep interfaces clean and focused. Avoid redundant labels, dense secondary text,
+  nested cards, marketing-style layouts, and visible instructional copy when the
+  control itself can be made obvious.
+- Use Material-appropriate controls: icons for common actions, FABs for primary
+  creation flows, bottom sheets or dialogs for focused edits, navigation drawers or
+  tabs for major destinations, switches/checkboxes for binary settings, and menus
+  for compact option sets.
+- Design for real device ergonomics: touch targets must be comfortable, text must
+  not clip or overlap, lists must scroll smoothly, loading states must avoid layout
+  shift, and empty/error states must be useful without being noisy.
+- Prefer true black backgrounds for OLED-focused dark UI where consistent with the
+  app, while preserving accessible contrast and clear state differences.
+- Before considering UI work complete, verify important screens on device or with
+  screenshots when feasible, including portrait/landscape and narrow widths where
+  relevant.

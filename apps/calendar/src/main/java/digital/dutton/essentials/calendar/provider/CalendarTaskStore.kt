@@ -134,6 +134,28 @@ class CalendarTaskStore(context: Context) {
         return idsToDelete.size
     }
 
+    fun deleteRemoteTasksByHref(
+        collectionId: String,
+        deletedHrefs: Set<String>,
+    ): Int {
+        if (deletedHrefs.isEmpty()) return 0
+
+        val idsToDelete = allTasks()
+            .filter { task ->
+                task.collectionId == collectionId &&
+                    task.href != null &&
+                    task.href in deletedHrefs
+            }
+            .map { it.id }
+            .toSet()
+        if (idsToDelete.isEmpty()) return 0
+
+        val editor = preferences.edit().putStringSet(KeyTaskIds, taskIds() - idsToDelete)
+        idsToDelete.forEach { id -> editor.removeTask(id) }
+        editor.apply()
+        return idsToDelete.size
+    }
+
     fun deleteCollectionTasks(collectionId: String): Int {
         val idsToDelete = allTasks()
             .filter { it.collectionId == collectionId }

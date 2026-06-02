@@ -173,6 +173,18 @@ class CalDavClient(
         }
     }
 
+    fun fetchEventChanges(
+        endpoint: CalDavEndpoint,
+        calendarHref: String,
+        syncToken: String,
+    ): CalDavRemoteChanges {
+        return fetchChanges(
+            endpoint = endpoint,
+            calendarHref = calendarHref,
+            syncToken = syncToken,
+        )
+    }
+
     fun fetchTasks(
         endpoint: CalDavEndpoint,
         calendarHref: String,
@@ -196,6 +208,58 @@ class CalDavClient(
                 calendarData = calendarData,
             )
         }
+    }
+
+    fun fetchTaskChanges(
+        endpoint: CalDavEndpoint,
+        calendarHref: String,
+        syncToken: String,
+    ): CalDavRemoteChanges {
+        return fetchChanges(
+            endpoint = endpoint,
+            calendarHref = calendarHref,
+            syncToken = syncToken,
+        )
+    }
+
+    private fun fetchChanges(
+        endpoint: CalDavEndpoint,
+        calendarHref: String,
+        syncToken: String,
+    ): CalDavRemoteChanges {
+        val baseUrl = endpoint.baseUrl.normalizedCalDavUrl()
+        val calendarUrl = baseUrl.resolveHref(calendarHref)
+        val multistatus = reportMultistatus(
+            url = calendarUrl,
+            auth = Credentials.basic(endpoint.username, endpoint.password),
+            body = syncCollectionRequest(syncToken),
+        )
+
+        val changed = mutableListOf<CalDavRemoteEvent>()
+        val deleted = mutableSetOf<String>()
+        multistatus.responses.forEach { response ->
+            val href = calendarUrl.resolveHref(response.href)
+            if (response.statusCode == 404 || response.statusCode == 410) {
+                deleted += href
+                return@forEach
+            }
+
+            val prop = response.okProp ?: return@forEach
+            val calendarData = prop.descendantText("calendar-data")
+                ?.takeIf { it.isNotBlank() }
+                ?: return@forEach
+            changed += CalDavRemoteEvent(
+                href = href,
+                etag = prop.childText("getetag"),
+                calendarData = calendarData,
+            )
+        }
+
+        return CalDavRemoteChanges(
+            changed = changed,
+            deletedHrefs = deleted,
+            syncToken = multistatus.syncToken,
+        )
     }
 
     fun putEvent(
@@ -311,6 +375,20 @@ class CalDavClient(
         )
     }
 
+    private fun reportMultistatus(
+        url: String,
+        auth: String,
+        body: String,
+    ): DavMultistatus {
+        return requestDav(
+            method = "REPORT",
+            url = url,
+            auth = auth,
+            depth = "1",
+            body = body,
+        )
+    }
+
     private fun requestXml(
         method: String,
         url: String,
@@ -318,6 +396,22 @@ class CalDavClient(
         depth: String,
         body: String,
     ): List<DavResponse> {
+        return requestDav(
+            method = method,
+            url = url,
+            auth = auth,
+            depth = depth,
+            body = body,
+        ).responses
+    }
+
+    private fun requestDav(
+        method: String,
+        url: String,
+        auth: String,
+        depth: String,
+        body: String,
+    ): DavMultistatus {
         val request = Request.Builder()
             .url(url)
             .header("Authorization", auth)
@@ -329,7 +423,7 @@ class CalDavClient(
         httpClient.newCall(request).execute().use { response ->
             response.requireSuccessful("$method failed")
             val responseBody = response.body?.string().orEmpty()
-            return responseBody.parseDavResponses()
+            return responseBody.parseDavMultistatus()
         }
     }
 
@@ -376,7 +470,7 @@ class CalDavClient(
         return firstNotNullOfOrNull { it.okProp }
     }
 
-    private fun String.parseDavResponses(): List<DavResponse> {
+    private fun String.parseDavMultistatus(): DavMultistatus {
         val document = DocumentBuilderFactory.newInstance()
             .apply {
                 isNamespaceAware = true
@@ -386,7 +480,10 @@ class CalDavClient(
             }
             .newDocumentBuilder()
             .parse(InputSource(StringReader(this)))
-        return document.responses()
+        return DavMultistatus(
+            responses = document.responses(),
+            syncToken = document.documentElement.childText("sync-token"),
+        )
     }
 
     private fun Document.responses(): List<DavResponse> {
@@ -396,9 +493,33 @@ class CalDavClient(
                 val response = responseNodes.item(index) as? Element ?: continue
                 val href = response.childText("href") ?: continue
                 val okProp = response.okProp()
-                add(DavResponse(href = href, okProp = okProp))
+                add(
+                    DavResponse(
+                        href = href,
+                        okProp = okProp,
+                        statusCode = response.childText("status")?.httpStatusCode()
+                            ?: response.firstPropstatStatusCode(),
+                    ),
+                )
             }
         }
+    }
+
+    private fun Element.firstPropstatStatusCode(): Int? {
+        val propstats = getElementsByTagNameNS("*", "propstat")
+        for (index in 0 until propstats.length) {
+            val propstat = propstats.item(index) as? Element ?: continue
+            propstat.childText("status")?.httpStatusCode()?.let { return it }
+        }
+        return null
+    }
+
+    private fun String.httpStatusCode(): Int? {
+        return Regex("""HTTP/\S+\s+(\d{3})""")
+            .find(this)
+            ?.groupValues
+            ?.getOrNull(1)
+            ?.toIntOrNull()
     }
 
     private fun Element.okProp(): Element? {
@@ -549,6 +670,20 @@ class CalDavClient(
         """.trimIndent()
     }
 
+    private fun syncCollectionRequest(syncToken: String): String {
+        return """
+            <?xml version="1.0" encoding="utf-8" ?>
+            <D:sync-collection xmlns:D="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav">
+              <D:sync-token>${syncToken.xmlEscaped()}</D:sync-token>
+              <D:sync-level>1</D:sync-level>
+              <D:prop>
+                <D:getetag />
+                <C:calendar-data />
+              </D:prop>
+            </D:sync-collection>
+        """.trimIndent()
+    }
+
     private fun mkcalendarRequest(
         displayName: String,
         components: Set<String>,
@@ -615,6 +750,12 @@ $componentXml
     private data class DavResponse(
         val href: String,
         val okProp: Element?,
+        val statusCode: Int?,
+    )
+
+    private data class DavMultistatus(
+        val responses: List<DavResponse>,
+        val syncToken: String?,
     )
 
     private companion object {
@@ -629,6 +770,12 @@ data class CalDavRemoteEvent(
     val href: String,
     val etag: String?,
     val calendarData: String,
+)
+
+data class CalDavRemoteChanges(
+    val changed: List<CalDavRemoteEvent>,
+    val deletedHrefs: Set<String>,
+    val syncToken: String?,
 )
 
 data class CalDavDiscovery(
