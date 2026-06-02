@@ -1835,28 +1835,145 @@ private fun AgendaDaySection(
 
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (section.items.isEmpty()) {
                 AgendaEmptyDayBlock()
             } else {
-                section.items.forEach { item ->
-                    when (item) {
-                        is AgendaItem.Event -> AgendaEventBlock(
-                            event = item.event,
-                            onClick = { onEventClick(item.event) },
-                        )
+                AgendaGroupedItemsBlock(
+                    items = section.items,
+                    onEventClick = onEventClick,
+                    onTaskClick = onTaskClick,
+                    onSetTaskCompleted = onSetTaskCompleted,
+                )
+            }
+        }
+    }
+}
 
-                        is AgendaItem.Task -> AgendaTaskBlock(
-                            task = item.task,
-                            onClick = { onTaskClick(item.task) },
-                            onSetCompleted = { completed ->
-                                onSetTaskCompleted(item.task, completed)
-                            },
-                        )
-                    }
+@Composable
+private fun AgendaGroupedItemsBlock(
+    items: List<AgendaItem>,
+    onEventClick: (CalendarEvent) -> Unit,
+    onTaskClick: (CalendarTask) -> Unit,
+    onSetTaskCompleted: (CalendarTask, Boolean) -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(AgendaGroupShape),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        shape = AgendaGroupShape,
+    ) {
+        Column {
+            items.forEachIndexed { index, item ->
+                when (item) {
+                    is AgendaItem.Event -> AgendaGroupedEventRow(
+                        event = item.event,
+                        onClick = { onEventClick(item.event) },
+                    )
+
+                    is AgendaItem.Task -> AgendaGroupedTaskRow(
+                        task = item.task,
+                        onClick = { onTaskClick(item.task) },
+                        onSetCompleted = { completed ->
+                            onSetTaskCompleted(item.task, completed)
+                        },
+                    )
+                }
+
+                if (index < items.lastIndex) {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(start = 16.dp, end = 12.dp),
+                        color = MaterialTheme.colorScheme.outlineVariant,
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun AgendaGroupedEventRow(
+    event: CalendarEvent,
+    onClick: () -> Unit,
+) {
+    AgendaGroupedRow(
+        accentColor = event.accentColor(),
+        title = event.title,
+        meta = event.agendaMeta(),
+        onClick = onClick,
+    )
+}
+
+@Composable
+private fun AgendaGroupedTaskRow(
+    task: CalendarTask,
+    onClick: () -> Unit,
+    onSetCompleted: (Boolean) -> Unit,
+) {
+    AgendaGroupedRow(
+        accentColor = task.accentColor(),
+        title = task.title,
+        meta = task.agendaMeta(),
+        onClick = onClick,
+        trailing = {
+            TaskCompletionButton(
+                completed = task.isCompleted(),
+                onSetCompleted = onSetCompleted,
+            )
+        },
+    )
+}
+
+@Composable
+private fun AgendaGroupedRow(
+    accentColor: Color,
+    title: String,
+    meta: String,
+    onClick: () -> Unit,
+    trailing: (@Composable () -> Unit)? = null,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 58.dp)
+            .height(IntrinsicSize.Min)
+            .clickable(onClick = onClick),
+    ) {
+        Box(
+            modifier = Modifier
+                .width(4.dp)
+                .fillMaxHeight()
+                .background(accentColor),
+        )
+
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 12.dp, vertical = 9.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    text = meta,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            trailing?.invoke()
         }
     }
 }
@@ -1869,7 +1986,7 @@ private fun AgendaEmptyDayBlock() {
             .heightIn(min = 58.dp),
         color = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        shape = RoundedCornerShape(4.dp),
+        shape = AgendaGroupShape,
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
@@ -1939,7 +2056,7 @@ private fun AgendaEventBlock(
             .clickable(onClick = onClick),
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         contentColor = MaterialTheme.colorScheme.onSurface,
-        shape = RoundedCornerShape(4.dp),
+        shape = AgendaGroupShape,
     ) {
         Row(
             modifier = Modifier
@@ -1990,7 +2107,7 @@ private fun AgendaTaskBlock(
             .clickable(onClick = onClick),
         color = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.onSurface,
-        shape = RoundedCornerShape(4.dp),
+        shape = AgendaGroupShape,
     ) {
         Row(
             modifier = Modifier
