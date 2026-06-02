@@ -4,6 +4,7 @@ import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
 import android.os.Bundle
+import android.os.Process
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -42,7 +43,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.cos
 import kotlin.math.PI
 import kotlin.math.pow
@@ -80,7 +80,7 @@ private fun PitchScreen() {
     val player = remember { PitchTonePlayer() }
 
     DisposableEffect(Unit) {
-        onDispose { player.stopAll() }
+        onDispose { player.release() }
     }
 
     Scaffold(
@@ -219,74 +219,79 @@ private fun Modifier.pitchPress(
 
 private class PitchTonePlayer {
     private val lock = Any()
-    private val activeTones = LinkedHashMap<Int, ActiveTone>()
+    private val voices = mutableListOf<PianoVoice>()
+    @Volatile private var isRunning = true
+    @Volatile private var audioTrack: AudioTrack? = null
+
+    private val audioThread = Thread(::runAudio).apply {
+        name = "Piano audio mixer"
+        isDaemon = true
+        priority = Thread.MAX_PRIORITY
+        start()
+    }
 
     fun play(
         noteId: Int,
         frequencyHz: Double,
     ) {
-        val stopSignal = AtomicBoolean(false)
-        val tonesToStop = synchronized(lock) {
-            buildList {
-                activeTones.remove(noteId)?.let(::add)
-                while (activeTones.size >= MaxVoices) {
-                    val oldestNoteId = activeTones.keys.first()
-                    activeTones.remove(oldestNoteId)?.let(::add)
-                }
-                activeTones[noteId] = ActiveTone(stopSignal)
-            }
-        }
-        tonesToStop.forEach { it.stopSignal.set(true) }
-
-        Thread {
-            try {
-                renderTone(frequencyHz, stopSignal)
-            } finally {
-                synchronized(lock) {
-                    if (activeTones[noteId]?.stopSignal === stopSignal) {
-                        activeTones.remove(noteId)
+        synchronized(lock) {
+            while (activeVoiceCount() >= MaxVoices) {
+                var releasedVoice = false
+                for (index in voices.indices) {
+                    val voice = voices[index]
+                    if (!voice.isReleasing) {
+                        voice.beginRelease(VoiceStealReleaseSamples)
+                        releasedVoice = true
+                        break
                     }
                 }
+                if (!releasedVoice) {
+                    break
+                }
             }
-        }.apply {
-            name = "Pitch tone $noteId"
-            isDaemon = true
-            start()
+            voices += PianoVoice(noteId, frequencyHz)
         }
     }
 
     fun stop(noteId: Int) {
-        val tone = synchronized(lock) {
-            activeTones.remove(noteId)
+        synchronized(lock) {
+            for (index in voices.indices) {
+                val voice = voices[index]
+                if (voice.noteId == noteId && !voice.isReleasing) {
+                    voice.beginRelease(ReleaseSamples)
+                }
+            }
         }
-        tone?.stopSignal?.set(true)
     }
 
     fun stopAll() {
-        val tones = synchronized(lock) {
-            activeTones.values.toList().also { activeTones.clear() }
+        synchronized(lock) {
+            for (index in voices.indices) {
+                val voice = voices[index]
+                if (!voice.isReleasing) {
+                    voice.beginRelease(ReleaseSamples)
+                }
+            }
         }
-        tones.forEach { it.stopSignal.set(true) }
     }
 
-    private fun renderTone(
-        frequencyHz: Double,
-        stopSignal: AtomicBoolean,
-    ) {
+    fun release() {
+        isRunning = false
+        synchronized(lock) { voices.clear() }
+        runCatching { audioTrack?.pause() }
+        runCatching { audioTrack?.flush() }
+        runCatching { audioThread.join(AudioThreadJoinMillis) }
+    }
+
+    private fun runAudio() {
+        runCatching { Process.setThreadPriority(Process.THREAD_PRIORITY_AUDIO) }
+
         val minBufferSize = AudioTrack.getMinBufferSize(
             SampleRate,
             AudioFormat.CHANNEL_OUT_MONO,
             AudioFormat.ENCODING_PCM_16BIT,
         )
         val buffer = ShortArray(ChunkSamples)
-        val amplitude = Short.MAX_VALUE * 0.22
-        val phaseIncrement = 2.0 * PI * frequencyHz / SampleRate
-        var phase = 0.0
-        var sampleIndex = 0L
-        var envelope = 0.0
-        var releasing = false
-        var releaseIndex = 0
-        var releaseStartEnvelope = 0.0
 
         val track = AudioTrack.Builder()
             .setAudioAttributes(
@@ -303,73 +308,151 @@ private class PitchTonePlayer {
                     .build(),
             )
             .setTransferMode(AudioTrack.MODE_STREAM)
-            .setBufferSizeInBytes(maxOf(minBufferSize, ChunkSamples * ShortBytes * 4))
+            .setPerformanceMode(AudioTrack.PERFORMANCE_MODE_LOW_LATENCY)
+            .setBufferSizeInBytes(maxOf(minBufferSize, StableBufferFrames * ShortBytes))
             .build()
 
         try {
+            audioTrack = track
+            runCatching { track.setBufferSizeInFrames(LowLatencyBufferFrames) }
             track.play()
 
-            while (true) {
-                var writtenSamples = 0
-
-                while (writtenSamples < buffer.size) {
-                    if (!releasing && stopSignal.get()) {
-                        releasing = true
-                        releaseIndex = 0
-                        releaseStartEnvelope = envelope
+            while (isRunning) {
+                synchronized(lock) {
+                    for (sampleIndex in buffer.indices) {
+                        var mixed = 0.0
+                        for (voiceIndex in voices.indices) {
+                            mixed += voices[voiceIndex].nextSample()
+                        }
+                        buffer[sampleIndex] = toPcm16(mixed)
                     }
-
-                    if (releasing) {
-                        envelope = releaseStartEnvelope * cosineFadeOut(
-                            releaseIndex.toDouble() / ReleaseSamples,
-                        )
-                        releaseIndex += 1
-                        if (releaseIndex > ReleaseSamples) break
-                    } else {
-                        envelope = cosineFadeIn(
-                            (sampleIndex.toDouble() / AttackSamples).coerceIn(0.0, 1.0),
-                        )
+                    for (index in voices.lastIndex downTo 0) {
+                        if (voices[index].isFinished) {
+                            voices.removeAt(index)
+                        }
                     }
-
-                    buffer[writtenSamples] = (sin(phase) * amplitude * envelope).toInt().toShort()
-                    phase += phaseIncrement
-                    if (phase >= 2.0 * PI) phase -= 2.0 * PI
-                    sampleIndex += 1
-                    writtenSamples += 1
                 }
 
-                if (writtenSamples <= 0) break
-                track.write(buffer, 0, writtenSamples, AudioTrack.WRITE_BLOCKING)
-
-                if (releasing && releaseIndex > ReleaseSamples) break
+                var offset = 0
+                while (offset < buffer.size && isRunning) {
+                    val written = track.write(
+                        buffer,
+                        offset,
+                        buffer.size - offset,
+                        AudioTrack.WRITE_BLOCKING,
+                    )
+                    if (written <= 0) break
+                    offset += written
+                }
             }
         } finally {
-            runCatching { Thread.sleep(OutputDrainMillis) }
-            runCatching { track.stop() }
+            audioTrack = null
+            runCatching { track.pause() }
+            runCatching { track.flush() }
             track.release()
         }
     }
 
-    private fun cosineFadeIn(progress: Double): Double {
-        return 0.5 - 0.5 * cos(PI * progress.coerceIn(0.0, 1.0))
+    private fun activeVoiceCount(): Int {
+        var count = 0
+        for (index in voices.indices) {
+            if (!voices[index].isReleasing) {
+                count += 1
+            }
+        }
+        return count
     }
 
-    private fun cosineFadeOut(progress: Double): Double {
-        return 0.5 + 0.5 * cos(PI * progress.coerceIn(0.0, 1.0))
+    private fun toPcm16(sample: Double): Short {
+        val guarded = (sample * MasterGain).coerceIn(-1.0, 1.0)
+        return (guarded * Short.MAX_VALUE).toInt().toShort()
     }
 
-    private data class ActiveTone(
-        val stopSignal: AtomicBoolean,
-    )
+    private class PianoVoice(
+        val noteId: Int,
+        frequencyHz: Double,
+    ) {
+        private val phaseIncrement = 2.0 * PI * frequencyHz / SampleRate
+        private var phase = 0.0
+        private var ageSamples = 0
+        private var releaseAgeSamples = 0
+        private var releaseSamples = ReleaseSamples
+        private var releaseStartEnvelope = 0.0
+
+        var isReleasing = false
+            private set
+        var isFinished = false
+            private set
+
+        fun beginRelease(samples: Int) {
+            if (isReleasing) return
+            releaseStartEnvelope = pressEnvelope()
+            releaseSamples = samples
+            releaseAgeSamples = 0
+            isReleasing = true
+        }
+
+        fun nextSample(): Double {
+            if (isFinished) return 0.0
+
+            val envelope = if (isReleasing) {
+                val progress = releaseAgeSamples.toDouble() / releaseSamples
+                releaseStartEnvelope * cosineFadeOut(progress)
+            } else {
+                pressEnvelope()
+            }
+            val sample = sin(phase) + sin(phase * 2.0) * SecondHarmonicLevel
+            phase += phaseIncrement
+            if (phase >= 2.0 * PI) phase -= 2.0 * PI
+
+            ageSamples += 1
+            if (isReleasing) {
+                releaseAgeSamples += 1
+                if (releaseAgeSamples >= releaseSamples) isFinished = true
+            }
+
+            return sample * envelope
+        }
+
+        private fun pressEnvelope(): Double {
+            val age = ageSamples.toDouble()
+            return when {
+                age < AttackSamples -> {
+                    val progress = (age / AttackSamples).coerceIn(0.0, 1.0)
+                    progress
+                }
+                age < AttackSamples + DecaySamples -> {
+                    val progress = ((age - AttackSamples) / DecaySamples).coerceIn(0.0, 1.0)
+                    SustainLevel + (1.0 - SustainLevel) * cosineFadeOut(progress)
+                }
+                else -> {
+                    val sustainAge = age - AttackSamples - DecaySamples
+                    SustainLevel * SustainDampingPerSecond.pow(sustainAge / SampleRate)
+                }
+            }
+        }
+    }
 
     private companion object {
+        fun cosineFadeOut(progress: Double): Double {
+            return 0.5 + 0.5 * cos(PI * progress.coerceIn(0.0, 1.0))
+        }
+
         const val SampleRate = 48_000
         const val ShortBytes = 2
-        const val AttackSamples = SampleRate / 60
-        const val ReleaseSamples = SampleRate / 16
-        const val ChunkSamples = 384
-        const val OutputDrainMillis = 80L
-        const val MaxVoices = 8
+        const val AttackSamples = SampleRate / 220
+        const val DecaySamples = SampleRate / 2
+        const val ReleaseSamples = SampleRate / 5
+        const val VoiceStealReleaseSamples = SampleRate / 80
+        const val ChunkSamples = 256
+        const val StableBufferFrames = 2048
+        const val LowLatencyBufferFrames = 1024
+        const val MaxVoices = 10
+        const val AudioThreadJoinMillis = 200L
+        const val MasterGain = 0.16
+        const val SecondHarmonicLevel = 0.06
+        const val SustainLevel = 0.18
+        const val SustainDampingPerSecond = 0.86
     }
 }
 
