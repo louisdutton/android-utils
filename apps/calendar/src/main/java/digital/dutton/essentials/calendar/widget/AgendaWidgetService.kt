@@ -45,38 +45,43 @@ private class AgendaWidgetFactory(
     override fun getCount(): Int = rows.size
 
     override fun getViewAt(position: Int): RemoteViews {
-        val row = rows.getOrNull(position) ?: WidgetAgendaRow.status("Calendar unavailable")
-        return RemoteViews(context.packageName, R.layout.widget_agenda_item).apply {
-            setTextViewText(R.id.widget_month_label, row.monthLabel)
-            setViewVisibility(R.id.widget_month_label, if (row.monthLabel == null) View.GONE else View.VISIBLE)
-            setTextViewText(R.id.widget_date_day, row.date.dayOfMonth.toString())
-            setTextViewText(R.id.widget_date_dow, row.date.format(DayFormatter))
-            setViewVisibility(R.id.widget_date_rail, if (row.showDateRail) View.VISIBLE else View.INVISIBLE)
-            setInt(
-                R.id.widget_date_rail,
-                "setBackgroundResource",
-                if (row.isToday) R.drawable.widget_date_rail_today else R.drawable.widget_date_rail,
-            )
-            setTextColor(
-                R.id.widget_date_day,
-                if (row.isToday) WidgetTodayTextColor else WidgetPrimaryTextColor,
-            )
-            setTextColor(
-                R.id.widget_date_dow,
-                if (row.isToday) WidgetTodayTextColor else WidgetSecondaryTextColor,
-            )
-            setTextViewText(R.id.widget_item_title, row.title)
-            setTextViewText(R.id.widget_item_meta, row.meta)
-            setViewVisibility(R.id.widget_item_meta, if (row.meta.isBlank()) View.GONE else View.VISIBLE)
-            setInt(R.id.widget_accent, "setBackgroundColor", row.accentColor ?: WidgetAccentColor)
-            setViewVisibility(R.id.widget_accent, if (row.accentColor == null) View.INVISIBLE else View.VISIBLE)
-            setOnClickFillInIntent(R.id.widget_item_root, Intent())
+        return when (val row = rows.getOrNull(position) ?: WidgetAgendaRow.status("Calendar unavailable")) {
+            is WidgetAgendaRow.Month -> RemoteViews(context.packageName, R.layout.widget_agenda_month_junction).apply {
+                setTextViewText(R.id.widget_month_label, row.label)
+            }
+
+            is WidgetAgendaRow.Item -> RemoteViews(context.packageName, R.layout.widget_agenda_item).apply {
+                setTextViewText(R.id.widget_date_day, row.date.dayOfMonth.toString())
+                setTextViewText(R.id.widget_date_dow, row.date.format(DayFormatter))
+                setViewVisibility(R.id.widget_date_rail, if (row.showDateRail) View.VISIBLE else View.INVISIBLE)
+                setInt(
+                    R.id.widget_date_rail,
+                    "setBackgroundResource",
+                    if (row.isToday) R.drawable.widget_date_rail_today else R.drawable.widget_date_rail,
+                )
+                setTextColor(
+                    R.id.widget_date_day,
+                    if (row.isToday) WidgetTodayTextColor else WidgetPrimaryTextColor,
+                )
+                setTextColor(
+                    R.id.widget_date_dow,
+                    if (row.isToday) WidgetTodayTextColor else WidgetSecondaryTextColor,
+                )
+                setInt(R.id.widget_card, "setBackgroundResource", row.cardBackground)
+                setTextViewText(R.id.widget_item_title, row.title)
+                setTextViewText(R.id.widget_item_meta, row.meta)
+                setViewVisibility(R.id.widget_item_meta, if (row.meta.isBlank()) View.GONE else View.VISIBLE)
+                setViewVisibility(R.id.widget_task_indicator, if (row.isTask) View.VISIBLE else View.GONE)
+                setInt(R.id.widget_accent, "setBackgroundColor", row.accentColor ?: WidgetAccentColor)
+                setViewVisibility(R.id.widget_accent, if (row.accentColor == null) View.INVISIBLE else View.VISIBLE)
+                setOnClickFillInIntent(R.id.widget_item_root, Intent())
+            }
         }
     }
 
     override fun getLoadingView(): RemoteViews? = null
 
-    override fun getViewTypeCount(): Int = 1
+    override fun getViewTypeCount(): Int = 2
 
     override fun getItemId(position: Int): Long = rows.getOrNull(position)?.stableId ?: position.toLong()
 
@@ -105,44 +110,52 @@ private fun loadAgendaRows(context: Context): List<WidgetAgendaRow> {
         .sorted()
     var previousMonth: YearMonth? = null
 
-    return dates.flatMap { date ->
-        val month = YearMonth.from(date)
-        val monthLabel = if (month != previousMonth) {
-            month.format(MonthFormatter)
-        } else {
-            null
-        }
-        previousMonth = month
-        val items = agendaItemsForDate(
-            date = date,
-            events = events.filter { it.startDate(zone) == date },
-            tasks = tasks.filter { it.agendaDate(zone) == date },
-            nowMillis = nowMillis,
-            zone = zone,
-        )
-
-        if (items.isEmpty()) {
-            listOf(
-                WidgetAgendaRow(
-                    stableId = date.toEpochDay(),
-                    date = date,
-                    monthLabel = monthLabel,
-                    showDateRail = true,
-                    isToday = date == today,
-                    title = "No events or tasks",
-                    meta = "",
-                    accentColor = null,
-                ),
-            )
-        } else {
-            items.mapIndexed { index, item ->
-                item.toWidgetRow(
-                    date = date,
-                    monthLabel = if (index == 0) monthLabel else null,
-                    showDateRail = index == 0,
-                    isToday = date == today,
-                    zone = zone,
+    return buildList {
+        dates.forEach { date ->
+            val month = YearMonth.from(date)
+            if (month != previousMonth) {
+                add(
+                    WidgetAgendaRow.Month(
+                        stableId = -month.atDay(1).toEpochDay(),
+                        label = month.format(MonthFormatter),
+                    ),
                 )
+            }
+            previousMonth = month
+
+            val items = agendaItemsForDate(
+                date = date,
+                events = events.filter { it.startDate(zone) == date },
+                tasks = tasks.filter { it.agendaDate(zone) == date },
+                nowMillis = nowMillis,
+                zone = zone,
+            )
+
+            if (items.isEmpty()) {
+                add(
+                    WidgetAgendaRow.Item(
+                        stableId = date.toEpochDay(),
+                        date = date,
+                        showDateRail = true,
+                        isToday = date == today,
+                        title = "No events or tasks",
+                        meta = "",
+                        isTask = false,
+                        cardBackground = R.drawable.widget_card_base_background,
+                        accentColor = null,
+                    ),
+                )
+            } else {
+                items.forEachIndexed { index, item ->
+                    add(
+                        item.toWidgetRow(
+                            date = date,
+                            showDateRail = index == 0,
+                            isToday = date == today,
+                            zone = zone,
+                        ),
+                    )
+                }
             }
         }
     }.take(MaxWidgetRows)
@@ -214,31 +227,32 @@ private fun agendaItemsForDate(
 
 private fun WidgetAgendaItem.toWidgetRow(
     date: LocalDate,
-    monthLabel: String?,
     showDateRail: Boolean,
     isToday: Boolean,
     zone: ZoneId,
 ): WidgetAgendaRow {
     return when (this) {
-        is WidgetAgendaItem.Event -> WidgetAgendaRow(
+        is WidgetAgendaItem.Event -> WidgetAgendaRow.Item(
             stableId = event.id * 31 + sortMillis,
             date = date,
-            monthLabel = monthLabel,
             showDateRail = showDateRail,
             isToday = isToday,
             title = event.title,
             meta = event.meta(zone),
+            isTask = false,
+            cardBackground = R.drawable.widget_card_background,
             accentColor = event.calendarColor ?: WidgetAccentColor,
         )
 
-        is WidgetAgendaItem.Task -> WidgetAgendaRow(
+        is WidgetAgendaItem.Task -> WidgetAgendaRow.Item(
             stableId = task.id.hashCode().toLong(),
             date = date,
-            monthLabel = monthLabel,
             showDateRail = showDateRail,
             isToday = isToday,
             title = task.title,
             meta = task.meta(zone),
+            isTask = true,
+            cardBackground = R.drawable.widget_card_base_background,
             accentColor = task.listColor ?: WidgetTaskAccentColor,
         )
     }
@@ -306,15 +320,11 @@ private fun WidgetEvent.meta(zone: ZoneId): String {
     return listOfNotNull(
         timeLabel,
         location?.takeIf { it.isNotBlank() },
-        calendarName?.takeIf { it.isNotBlank() },
     ).joinToString(" - ")
 }
 
 private fun CalendarTask.meta(zone: ZoneId): String {
-    return listOfNotNull(
-        dueLabel(zone),
-        listName?.takeIf { it.isNotBlank() },
-    ).joinToString(" - ")
+    return dueLabel(zone).orEmpty()
 }
 
 private fun CalendarTask.dueLabel(zone: ZoneId): String? {
@@ -363,27 +373,38 @@ private data class WidgetEvent(
     val allDay: Boolean,
 )
 
-private data class WidgetAgendaRow(
-    val stableId: Long,
-    val date: LocalDate,
-    val monthLabel: String?,
-    val showDateRail: Boolean,
-    val isToday: Boolean,
-    val title: String,
-    val meta: String,
-    val accentColor: Int?,
-) {
+private sealed interface WidgetAgendaRow {
+    val stableId: Long
+
+    data class Month(
+        override val stableId: Long,
+        val label: String,
+    ) : WidgetAgendaRow
+
+    data class Item(
+        override val stableId: Long,
+        val date: LocalDate,
+        val showDateRail: Boolean,
+        val isToday: Boolean,
+        val title: String,
+        val meta: String,
+        val isTask: Boolean,
+        val cardBackground: Int,
+        val accentColor: Int?,
+    ) : WidgetAgendaRow
+
     companion object {
         fun status(title: String): WidgetAgendaRow {
             val today = LocalDate.now()
-            return WidgetAgendaRow(
+            return Item(
                 stableId = today.toEpochDay(),
                 date = today,
-                monthLabel = today.format(MonthFormatter),
                 showDateRail = true,
                 isToday = true,
                 title = title,
                 meta = "",
+                isTask = false,
+                cardBackground = R.drawable.widget_card_base_background,
                 accentColor = null,
             )
         }
@@ -428,4 +449,4 @@ private const val WidgetPrimaryTextColor = 0xFFEDEDED.toInt()
 private const val WidgetSecondaryTextColor = 0xFFB8B8B8.toInt()
 private const val WidgetTodayTextColor = 0xFF202124.toInt()
 private const val WidgetAccentColor = 0xFF2E8E70.toInt()
-private const val WidgetTaskAccentColor = 0xFF7E57C2.toInt()
+private const val WidgetTaskAccentColor = 0xFFEDEDED.toInt()

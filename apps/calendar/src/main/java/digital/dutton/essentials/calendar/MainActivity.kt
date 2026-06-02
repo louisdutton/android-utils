@@ -631,7 +631,16 @@ private fun CalendarApp(
 private fun CalendarTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val colorScheme = if (isSystemInDarkTheme()) {
-        dynamicDarkColorScheme(context)
+        dynamicDarkColorScheme(context).copy(
+            background = Color.Black,
+            surface = Color.Black,
+            surfaceDim = Color.Black,
+            surfaceContainerLowest = Color.Black,
+            surfaceContainerLow = Color(0xFF080808),
+            surfaceContainer = Color(0xFF101010),
+            surfaceContainerHigh = Color(0xFF171717),
+            surfaceContainerHighest = Color(0xFF202020),
+        )
     } else {
         dynamicLightColorScheme(context)
     }
@@ -3683,10 +3692,7 @@ private fun CalendarTask.accentColor(): Color {
 }
 
 private fun CalendarTask.agendaMeta(): String {
-    return listOfNotNull(
-        dueSummaryLabel(),
-        listName?.takeIf { it.isNotBlank() },
-    ).joinToString(" - ")
+    return dueSummaryLabel().orEmpty()
 }
 
 private fun CalendarTask.detailDueLabel(): String {

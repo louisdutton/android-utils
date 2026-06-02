@@ -16,6 +16,7 @@ import digital.dutton.essentials.calendar.provider.CalendarEventLocationStore
 import digital.dutton.essentials.calendar.provider.CalendarTaskStore
 import digital.dutton.essentials.calendar.provider.StoredEventLocation
 import digital.dutton.essentials.calendar.provider.TaskStoreChange
+import digital.dutton.essentials.calendar.provider.remoteCalendarTaskId
 import digital.dutton.essentials.locations.GeoPoint
 import java.time.Duration
 import java.time.Instant
@@ -162,7 +163,7 @@ class CalDavSyncer(
         )
         val now = System.currentTimeMillis()
         val task = CalendarTask(
-            id = UUID.nameUUIDFromBytes("${taskList.id}|$uid".toByteArray()).toString(),
+            id = remoteCalendarTaskId(account.id, taskList.href, uid),
             accountId = account.id,
             collectionId = taskList.id,
             collectionHref = taskList.href,
@@ -248,7 +249,7 @@ class CalDavSyncer(
         val activeCalendars = reconcileCalendars(account, discoveredCalendars)
         var created = 0
         var updated = 0
-        var deleted = 0
+        var deleted = taskStore.deleteTasksOutsideCollections(activeCalendars.map { it.id }.toSet())
         var conflicts = 0
 
         activeCalendars.forEach { calendar ->
@@ -327,7 +328,7 @@ class CalDavSyncer(
 
             val calendar = if (existing == null) {
                 CalDavCalendar(
-                    id = UUID.randomUUID().toString(),
+                    id = calDavCalendarId(account.id, remote.href),
                     accountId = account.id,
                     localCalendarId = localCalendarId,
                     href = remote.href,
@@ -556,7 +557,7 @@ class CalDavSyncer(
             components = setOf("VTODO"),
         )
         val calendar = CalDavCalendar(
-            id = UUID.randomUUID().toString(),
+            id = calDavCalendarId(account.id, remote.href),
             accountId = account.id,
             localCalendarId = null,
             href = remote.href,
@@ -1107,6 +1108,15 @@ private fun List<CalDavCalendar>.preferredCalDavCalendar(): CalDavCalendar? {
         compareBy<CalDavCalendar> { it.lastSyncMillis ?: Long.MIN_VALUE }
             .thenBy { it.id },
     )
+}
+
+private fun calDavCalendarId(
+    accountId: String,
+    href: String,
+): String {
+    return UUID.nameUUIDFromBytes(
+        "$accountId|${href.trimEnd('/')}".toByteArray(Charsets.UTF_8),
+    ).toString()
 }
 
 private fun Uri.asCalDavSyncAdapter(accountId: String): Uri {

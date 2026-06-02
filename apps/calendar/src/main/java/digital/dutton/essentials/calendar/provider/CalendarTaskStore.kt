@@ -61,7 +61,7 @@ class CalendarTaskStore(context: Context) {
         etag: String?,
         task: IcsCalendarTask,
     ): TaskStoreChange {
-        val id = remoteTaskId(collectionId, task.uid)
+        val id = remoteCalendarTaskId(accountId, collectionHref, task.uid)
         val storedTask = CalendarTask(
             id = id,
             accountId = accountId,
@@ -88,10 +88,24 @@ class CalendarTaskStore(context: Context) {
         )
 
         val previous = getTask(id)
-        preferences.edit()
-            .putStringSet(KeyTaskIds, taskIds() + id)
+        val duplicateIds = allTasks()
+            .filter { existing ->
+                existing.id != id &&
+                    existing.matchesRemoteTask(
+                        accountId = accountId,
+                        collectionHref = collectionHref,
+                        href = href,
+                        uid = task.uid,
+                    )
+            }
+            .map { it.id }
+            .toSet()
+
+        val editor = preferences.edit()
+            .putStringSet(KeyTaskIds, taskIds() + id - duplicateIds)
             .putTask(storedTask)
-            .apply()
+        duplicateIds.forEach { duplicateId -> editor.removeTask(duplicateId) }
+        editor.apply()
 
         return when {
             previous == null -> TaskStoreChange.Created
@@ -133,8 +147,34 @@ class CalendarTaskStore(context: Context) {
         return idsToDelete.size
     }
 
+    fun deleteTasksOutsideCollections(activeCollectionIds: Set<String>): Int {
+        val idsToDelete = allTasks()
+            .filter { task -> task.collectionId != null && task.collectionId !in activeCollectionIds }
+            .map { it.id }
+            .toSet()
+        if (idsToDelete.isEmpty()) return 0
+
+        val editor = preferences.edit().putStringSet(KeyTaskIds, taskIds() - idsToDelete)
+        idsToDelete.forEach { id -> editor.removeTask(id) }
+        editor.apply()
+        return idsToDelete.size
+    }
+
     private fun allTasks(): List<CalendarTask> {
         return taskIds().mapNotNull(::getTask)
+    }
+
+    private fun CalendarTask.matchesRemoteTask(
+        accountId: String,
+        collectionHref: String,
+        href: String,
+        uid: String,
+    ): Boolean {
+        return this.accountId == accountId &&
+            (
+                this.href == href ||
+                    (this.collectionHref == collectionHref && this.uid == uid)
+                )
     }
 
     private fun getTask(id: String): CalendarTask? {
@@ -379,11 +419,14 @@ private fun String.toCalendarTaskStatus(): CalendarTaskStatus {
     }
 }
 
-private fun remoteTaskId(
-    collectionId: String,
+internal fun remoteCalendarTaskId(
+    accountId: String,
+    collectionHref: String,
     uid: String,
 ): String {
-    return UUID.nameUUIDFromBytes("$collectionId|$uid".toByteArray(StandardCharsets.UTF_8)).toString()
+    return UUID.nameUUIDFromBytes(
+        "$accountId|${collectionHref.trimEnd('/')}|$uid".toByteArray(StandardCharsets.UTF_8),
+    ).toString()
 }
 
 private fun SharedPreferences.getNullableLong(key: String): Long? {
