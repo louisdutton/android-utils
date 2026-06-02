@@ -68,6 +68,7 @@ class CalDavSyncer(
             lastError = null,
         )
         store.upsertAccount(account)
+        CalendarProviderAccountRegistrar.ensureCalDavAccount(context, account.id)
 
         syncAccount(account.id, createDefaultCalendar = true)
     }
@@ -96,6 +97,16 @@ class CalDavSyncer(
 
     suspend fun syncAccount(accountId: String): CalDavSyncSummary =
         syncAccount(accountId, createDefaultCalendar = false)
+
+    suspend fun hasMissingProviderCalendars(): Boolean = withContext(dispatcher) {
+        requireCalendarPermissions()
+        store.listAccounts().forEach { account ->
+            CalendarProviderAccountRegistrar.ensureCalDavAccount(context, account.id)
+        }
+        store.listCalendars().any { calendar ->
+            calendar.supportsEvents && !calendarExists(calendar)
+        }
+    }
 
     suspend fun disconnect(accountId: String) = withContext(dispatcher) {
         requireCalendarPermissions()
@@ -197,7 +208,7 @@ class CalDavSyncer(
         requireCalendarPermissions()
         val accountsToResync = mutableSetOf<String>()
         store.listCalendars().forEach { calendar ->
-            if (!calendarExists(calendar)) {
+            if (calendar.supportsEvents && !calendarExists(calendar)) {
                 store.removeCalendar(calendar.id)
                 accountsToResync += calendar.accountId
             }
@@ -214,6 +225,7 @@ class CalDavSyncer(
         requireCalendarPermissions()
         val account = store.getAccount(accountId)
             ?: throw IllegalArgumentException("CalDAV account was not found.")
+        CalendarProviderAccountRegistrar.ensureCalDavAccount(context, account.id)
 
         runCatching {
             syncAccountInternal(account, createDefaultCalendar)
@@ -227,6 +239,7 @@ class CalDavSyncer(
         account: CalDavAccount,
         createDefaultCalendar: Boolean,
     ): CalDavSyncSummary {
+        CalendarProviderAccountRegistrar.ensureCalDavAccount(context, account.id)
         val endpoint = account.endpoint()
         val discovery = client.discover(endpoint)
         val discoveredCalendars = discovery.calendars.ifEmpty {
@@ -247,34 +260,52 @@ class CalDavSyncer(
         }
 
         val activeCalendars = reconcileCalendars(account, discoveredCalendars)
+        val discoveredByHref = discoveredCalendars.associateBy { it.href }
         var created = 0
         var updated = 0
-        var deleted = taskStore.deleteTasksOutsideCollections(activeCalendars.map { it.id }.toSet())
+        var deleted = 0
         var conflicts = 0
 
         activeCalendars.forEach { calendar ->
+            val remoteSyncToken = discoveredByHref[calendar.href]?.syncToken
+            val remoteUnchanged = calendar.lastSyncMillis != null &&
+                remoteSyncToken != null &&
+                calendar.syncToken == remoteSyncToken
+            var hasLocalChanges = false
+
             if (calendar.supportsEvents && calendar.localCalendarId != null) {
                 val localChanges = uploadLocalChanges(account, calendar)
+                hasLocalChanges = localChanges.hasChanges()
                 created += localChanges.created
                 updated += localChanges.updated
                 deleted += localChanges.deleted
                 conflicts += localChanges.conflicts
 
-                val remoteChanges = downloadRemoteEvents(account, calendar)
-                created += remoteChanges.created
-                updated += remoteChanges.updated
-                deleted += remoteChanges.deleted
-                conflicts += remoteChanges.conflicts
+                if (remoteUnchanged && !hasLocalChanges) {
+                    markCalendarSynced(calendar, remoteSyncToken)
+                } else {
+                    val remoteChanges = downloadRemoteEvents(account, calendar, remoteSyncToken)
+                    created += remoteChanges.created
+                    updated += remoteChanges.updated
+                    deleted += remoteChanges.deleted
+                    conflicts += remoteChanges.conflicts
+                }
             }
 
             if (calendar.supportsTasks) {
-                val taskChanges = downloadRemoteTasks(account, calendar)
-                created += taskChanges.created
-                updated += taskChanges.updated
-                deleted += taskChanges.deleted
-                conflicts += taskChanges.conflicts
+                if (remoteUnchanged && !hasLocalChanges) {
+                    if (!calendar.supportsEvents) markCalendarSynced(calendar, remoteSyncToken)
+                } else {
+                    val taskChanges = downloadRemoteTasks(account, calendar, remoteSyncToken)
+                    created += taskChanges.created
+                    updated += taskChanges.updated
+                    deleted += taskChanges.deleted
+                    conflicts += taskChanges.conflicts
+                }
             }
         }
+
+        deleted += taskStore.deleteTasksOutsideCollections(activeCalendars.map { it.id }.toSet())
 
         store.upsertAccount(
             account.copy(
@@ -351,7 +382,7 @@ class CalDavSyncer(
                     color = remote.color,
                     supportsEvents = remote.supportsEvents,
                     supportsTasks = remote.supportsTasks,
-                    syncToken = remote.syncToken ?: existing.syncToken,
+                    syncToken = existing.syncToken,
                 )
             }
             store.upsertCalendar(calendar)
@@ -415,6 +446,7 @@ class CalDavSyncer(
     private fun downloadRemoteEvents(
         account: CalDavAccount,
         calendar: CalDavCalendar,
+        remoteSyncToken: String?,
     ): CalDavSyncSummary {
         val localCalendarId = calendar.localCalendarId ?: return CalDavSyncSummary(account.id, 0, 0, 0, 0)
         val remoteEvents = client.fetchEvents(account.endpoint(), calendar.href)
@@ -487,6 +519,7 @@ class CalDavSyncer(
             }
 
         val syncedCalendar = calendar.copy(
+            syncToken = remoteSyncToken ?: calendar.syncToken,
             lastSyncMillis = System.currentTimeMillis(),
             lastError = null,
         )
@@ -504,6 +537,7 @@ class CalDavSyncer(
     private fun downloadRemoteTasks(
         account: CalDavAccount,
         calendar: CalDavCalendar,
+        remoteSyncToken: String?,
     ): CalDavSyncSummary {
         val remoteTasks = client.fetchTasks(account.endpoint(), calendar.href)
         val incomingHrefs = remoteTasks.map { it.href }.toSet()
@@ -534,6 +568,7 @@ class CalDavSyncer(
         val deleted = taskStore.deleteRemoteTasksNotIn(calendar.id, incomingHrefs)
         store.upsertCalendar(
             calendar.copy(
+                syncToken = remoteSyncToken ?: calendar.syncToken,
                 lastSyncMillis = System.currentTimeMillis(),
                 lastError = null,
             ),
@@ -545,6 +580,19 @@ class CalDavSyncer(
             updated = updated,
             deleted = deleted,
             conflicts = 0,
+        )
+    }
+
+    private fun markCalendarSynced(
+        calendar: CalDavCalendar,
+        remoteSyncToken: String?,
+    ) {
+        store.upsertCalendar(
+            calendar.copy(
+                syncToken = remoteSyncToken ?: calendar.syncToken,
+                lastSyncMillis = System.currentTimeMillis(),
+                lastError = null,
+            ),
         )
     }
 
@@ -649,6 +697,7 @@ class CalDavSyncer(
         account: CalDavAccount,
         calendar: CalDavDiscoveredCalendar,
     ): Long {
+        CalendarProviderAccountRegistrar.ensureCalDavAccount(context, account.id)
         val values = ContentValues().apply {
             put(CalendarContract.Calendars.ACCOUNT_NAME, account.id)
             put(CalendarContract.Calendars.ACCOUNT_TYPE, CalDavAccountType)
@@ -1108,6 +1157,10 @@ private fun List<CalDavCalendar>.preferredCalDavCalendar(): CalDavCalendar? {
         compareBy<CalDavCalendar> { it.lastSyncMillis ?: Long.MIN_VALUE }
             .thenBy { it.id },
     )
+}
+
+private fun CalDavSyncSummary.hasChanges(): Boolean {
+    return created > 0 || updated > 0 || deleted > 0 || conflicts > 0
 }
 
 private fun calDavCalendarId(

@@ -55,6 +55,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -104,6 +105,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.AndroidViewModel
@@ -161,6 +163,7 @@ class MainActivity : ComponentActivity() {
 data class CalendarUiState(
     val hasCalendarPermission: Boolean = false,
     val isLoading: Boolean = false,
+    val isSyncing: Boolean = false,
     val rangeStartDate: LocalDate = LocalDate.now(),
     val rangeEndDate: LocalDate = LocalDate.now().plusDays(DefaultAgendaFutureDays),
     val calendars: List<CalendarSource> = emptyList(),
@@ -179,7 +182,11 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     private val subscriptionSyncer = IcsSubscriptionSyncer(application.applicationContext)
     private val calDavStore = CalDavAccountStore(application.applicationContext)
     private val calDavSyncer = CalDavSyncer(application.applicationContext)
-    private val _uiState = MutableStateFlow(CalendarUiState())
+    private val _uiState = MutableStateFlow(
+        CalendarUiState(
+            hasCalendarPermission = application.applicationContext.hasCalendarPermissions(),
+        ),
+    )
     val uiState: StateFlow<CalendarUiState> = _uiState.asStateFlow()
 
     fun refreshPermissionState() {
@@ -192,6 +199,21 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
             IcsSubscriptionSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
             CalDavSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
             loadUpcomingEvents()
+            recoverMissingProviderCalendars()
+        }
+    }
+
+    private fun recoverMissingProviderCalendars() {
+        viewModelScope.launch {
+            val context = getApplication<Application>().applicationContext
+            runCatching {
+                if (subscriptionSyncer.hasMissingProviderCalendars()) {
+                    IcsSubscriptionSyncWorker.enqueueOneTime(context)
+                }
+                if (calDavSyncer.hasMissingProviderCalendars()) {
+                    CalDavSyncWorker.enqueueOneTime(context)
+                }
+            }
         }
     }
 
@@ -277,8 +299,6 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
             val end = normalizedEndDate.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
 
             runCatching {
-                subscriptionSyncer.repairSubscriptions()
-                calDavSyncer.repairAccounts()
                 CalendarSnapshot(
                     calendars = repository.listCalendars(),
                     events = repository.listEvents(start, end),
@@ -361,16 +381,17 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
 
     fun syncSubscribedCalendars() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update { it.copy(isSyncing = true, error = null) }
             runCatching {
                 subscriptionSyncer.syncAll()
             }.onSuccess {
                 IcsSubscriptionSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+                _uiState.update { it.copy(isSyncing = false) }
                 loadUpcomingEvents()
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
+                        isSyncing = false,
                         error = error.message ?: "Unable to sync subscribed calendars.",
                     )
                 }
@@ -412,16 +433,17 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
 
     fun syncCalDavAccounts() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update { it.copy(isSyncing = true, error = null) }
             runCatching {
                 calDavSyncer.syncAll()
             }.onSuccess {
                 CalDavSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+                _uiState.update { it.copy(isSyncing = false) }
                 loadUpcomingEvents()
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
+                        isSyncing = false,
                         error = error.message ?: "Unable to sync CalDAV accounts.",
                     )
                 }
@@ -431,7 +453,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
 
     fun syncRemoteCalendars() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update { it.copy(isSyncing = true, error = null) }
             runCatching {
                 val failures = mutableListOf<Throwable>()
                 runCatching { subscriptionSyncer.syncAll() }.onFailure(failures::add)
@@ -440,11 +462,12 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
             }.onSuccess {
                 IcsSubscriptionSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
                 CalDavSyncWorker.enqueuePeriodicForAll(getApplication<Application>().applicationContext)
+                _uiState.update { it.copy(isSyncing = false) }
                 loadUpcomingEvents()
             }.onFailure { error ->
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
+                        isSyncing = false,
                         error = error.message ?: "Unable to sync calendars.",
                     )
                 }
@@ -583,6 +606,18 @@ private data class CalendarSnapshot(
     val calDavCalendars: List<CalDavCalendar>,
 )
 
+private data class DrawerCalendarItem(
+    val key: String,
+    val displayName: String,
+    val color: Int?,
+    val isReadOnly: Boolean,
+    val secondaryText: String?,
+    val calendar: CalendarSource? = null,
+    val subscription: CalendarSubscription? = null,
+    val calDavCalendar: CalDavCalendar? = null,
+    val calDavAccount: CalDavAccount? = null,
+)
+
 @Composable
 private fun CalendarApp(
     viewModel: CalendarViewModel = viewModel(),
@@ -675,13 +710,13 @@ private fun CalendarScreen(
     var viewModeText by rememberSaveable { mutableStateOf(CalendarViewMode.Agenda.name) }
     var selectedDateText by rememberSaveable { mutableStateOf(LocalDate.now().toString()) }
     var visibleMonthText by rememberSaveable { mutableStateOf(YearMonth.now().toString()) }
-    var pendingScrollDateText by rememberSaveable { mutableStateOf<String?>(LocalDate.now().toString()) }
+    var pendingScrollDateText by rememberSaveable { mutableStateOf<String?>(null) }
     var pendingScrollRequiresExactDate by rememberSaveable { mutableStateOf(false) }
     var eventDialog by remember { mutableStateOf<EventDialogState?>(null) }
     var addCalendarDialogInitialUrl by rememberSaveable(initialSubscriptionUrl) {
         mutableStateOf(initialSubscriptionUrl)
     }
-    var selectedDrawerCalendarId by remember { mutableStateOf<Long?>(null) }
+    var selectedDrawerItemKey by remember { mutableStateOf<String?>(null) }
     val defaultCalendar = state.calendars.defaultWritableCalendar()
     val viewMode = remember(viewModeText) { CalendarViewMode.valueOf(viewModeText) }
     val selectedDate = remember(selectedDateText) { LocalDate.parse(selectedDateText) }
@@ -793,7 +828,7 @@ private fun CalendarScreen(
                 onSyncCalendars = {
                     runDrawerAction(onSyncRemoteCalendars)
                 },
-                onCalendarLongPress = { calendarId -> selectedDrawerCalendarId = calendarId },
+                onCalendarLongPress = { itemKey -> selectedDrawerItemKey = itemKey },
             )
         },
     ) {
@@ -1002,34 +1037,27 @@ private fun CalendarScreen(
         )
     }
 
-    selectedDrawerCalendarId
-        ?.let { calendarId -> state.calendars.firstOrNull { it.id == calendarId } }
-        ?.let { calendar ->
-            val subscription = state.subscriptions.firstOrNull { it.calendarId == calendar.id }
-            val calDavCalendar = state.calDavCalendars.firstOrNull { it.localCalendarId == calendar.id }
-            val calDavAccount = calDavCalendar
-                ?.let { remote -> state.calDavAccounts.firstOrNull { it.id == remote.accountId } }
+    selectedDrawerItemKey
+        ?.let { itemKey -> state.drawerCalendarItems().firstOrNull { it.key == itemKey } }
+        ?.let { item ->
             CalendarOptionsDialog(
-                calendar = calendar,
-                subscription = subscription,
-                calDavCalendar = calDavCalendar,
-                calDavAccount = calDavAccount,
-                onDismiss = { selectedDrawerCalendarId = null },
+                item = item,
+                onDismiss = { selectedDrawerItemKey = null },
                 onRenameSubscription = { subscriptionId, displayName ->
                     onRenameSubscription(subscriptionId, displayName)
-                    selectedDrawerCalendarId = null
+                    selectedDrawerItemKey = null
                 },
                 onRenameCalDavCalendar = { calendarId, displayName ->
                     onRenameCalDavCalendar(calendarId, displayName)
-                    selectedDrawerCalendarId = null
+                    selectedDrawerItemKey = null
                 },
                 onUnsubscribe = { subscriptionId ->
                     onUnsubscribeCalendar(subscriptionId)
-                    selectedDrawerCalendarId = null
+                    selectedDrawerItemKey = null
                 },
                 onDisconnectCalDav = { accountId ->
                     onDisconnectCalDav(accountId)
-                    selectedDrawerCalendarId = null
+                    selectedDrawerItemKey = null
                 },
             )
     }
@@ -1122,8 +1150,12 @@ private fun CalendarDrawer(
     state: CalendarUiState,
     onAddCalendar: () -> Unit,
     onSyncCalendars: () -> Unit,
-    onCalendarLongPress: (Long) -> Unit,
+    onCalendarLongPress: (String) -> Unit,
 ) {
+    val drawerItems = remember(state.calendars, state.subscriptions, state.calDavAccounts, state.calDavCalendars) {
+        state.drawerCalendarItems()
+    }
+
     ModalDrawerSheet {
         Column(
             modifier = Modifier
@@ -1165,7 +1197,7 @@ private fun CalendarDrawer(
                 color = MaterialTheme.colorScheme.outlineVariant,
             )
             if (state.hasCalendarPermission) {
-                if (state.calendars.isEmpty()) {
+                if (drawerItems.isEmpty()) {
                     Text(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                         text = "No calendars connected.",
@@ -1173,22 +1205,12 @@ private fun CalendarDrawer(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 } else {
-                    val subscriptionsByCalendarId = state.subscriptions.associateBy { it.calendarId }
-                    val calDavByCalendarId = state.calDavCalendars.associateBy { it.localCalendarId }
-                    state.calendars.forEach { calendar ->
+                    drawerItems.forEach { item ->
                         CalendarDrawerRow(
-                            calendar = calendar,
-                            subscription = subscriptionsByCalendarId[calendar.id],
-                            calDavCalendar = calDavByCalendarId[calendar.id],
-                            onLongPress = { onCalendarLongPress(calendar.id) },
+                            item = item,
+                            onLongPress = { onCalendarLongPress(item.key) },
                         )
                     }
-                    state.calDavCalendars
-                        .filter { it.localCalendarId == null && it.supportsTasks }
-                        .sortedBy { it.displayName.lowercase() }
-                        .forEach { taskList ->
-                            TaskListDrawerRow(taskList = taskList)
-                        }
                 }
                 HorizontalDivider(
                     modifier = Modifier.padding(vertical = 8.dp),
@@ -1248,13 +1270,9 @@ private fun TaskListDrawerRow(taskList: CalDavCalendar) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CalendarDrawerRow(
-    calendar: CalendarSource,
-    subscription: CalendarSubscription?,
-    calDavCalendar: CalDavCalendar?,
+    item: DrawerCalendarItem,
     onLongPress: () -> Unit,
 ) {
-    val secondaryText = calendar.drawerSecondaryText(subscription, calDavCalendar)
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -1272,27 +1290,29 @@ private fun CalendarDrawerRow(
             modifier = Modifier
                 .size(14.dp)
                 .clip(CircleShape)
-                .background(calendar.drawerColor()),
+                .background(item.drawerColor()),
         )
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             Text(
-                text = calendar.displayName,
+                text = item.displayName,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
-            secondaryText?.let { text ->
+            item.secondaryText?.let { text ->
                 Text(
                     text = text,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
-        if (calendar.isDrawerReadOnly()) {
+        if (item.isReadOnly) {
             Icon(
                 imageVector = Icons.Rounded.Lock,
                 contentDescription = "Read-only calendar",
@@ -1793,6 +1813,7 @@ private fun AgendaTaskBlock(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EventDetailsDialog(
     event: CalendarEvent,
@@ -1803,110 +1824,107 @@ private fun EventDetailsDialog(
 ) {
     val locationAction = event.locationAction()
 
-    Dialog(
+    ModalBottomSheet(
         onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
     ) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(28.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-            tonalElevation = 6.dp,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(start = 24.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(
-                modifier = Modifier.padding(start = 24.dp, top = 18.dp, end = 16.dp, bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
+                Box(
+                    modifier = Modifier
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(event.accentColor()),
+                )
+                Text(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 12.dp),
+                    text = event.title,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                IconButton(onClick = onDismiss) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "Close event details",
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier.padding(end = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                DetailLine(
+                    label = "Time",
+                    value = event.detailDateTimeLabel(),
+                )
+                event.recurrenceRule?.repeatLabel()?.let { repeat ->
+                    DetailLine(label = "Repeat", value = repeat)
+                }
+                locationAction?.let { action ->
+                    ActionDetailLine(
+                        label = "Location",
+                        value = action.displayLabel,
+                        onClick = { onOpenLocation(action) },
+                    )
+                }
+                event.description?.takeIf { it.isNotBlank() }?.let { description ->
+                    RichNotesLine(label = "Notes", value = description)
+                }
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            if (event.isReadOnly) {
+                Text(
+                    text = "Read-only subscribed event",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(12.dp)
-                            .clip(CircleShape)
-                            .background(event.accentColor()),
-                    )
-                    Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(start = 12.dp),
-                        text = event.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    IconButton(onClick = onDismiss) {
+                    TextButton(
+                        onClick = onDelete,
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error,
+                        ),
+                    ) {
                         Icon(
-                            imageVector = Icons.Rounded.Close,
-                            contentDescription = "Close event details",
+                            imageVector = Icons.Rounded.Delete,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
                         )
+                        Text("Delete")
                     }
-                }
 
-                Column(
-                    modifier = Modifier.padding(end = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    DetailLine(
-                        label = "Time",
-                        value = event.detailDateTimeLabel(),
-                    )
-                    event.recurrenceRule?.repeatLabel()?.let { repeat ->
-                        DetailLine(label = "Repeat", value = repeat)
-                    }
-                    locationAction?.let { action ->
-                        ActionDetailLine(
-                            label = "Location",
-                            value = action.displayLabel,
-                            onClick = { onOpenLocation(action) },
-                        )
-                    }
-                    event.description?.takeIf { it.isNotBlank() }?.let { description ->
-                        RichNotesLine(label = "Notes", value = description)
-                    }
-                }
-
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-
-                if (event.isReadOnly) {
-                    Text(
-                        text = "Read-only subscribed event",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                } else {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        TextButton(
-                            onClick = onDelete,
-                            colors = ButtonDefaults.textButtonColors(
-                                contentColor = MaterialTheme.colorScheme.error,
-                            ),
-                        ) {
+                        Button(onClick = onEdit) {
                             Icon(
-                                imageVector = Icons.Rounded.Delete,
+                                imageVector = Icons.Rounded.Edit,
                                 contentDescription = null,
                                 modifier = Modifier.size(18.dp),
                             )
-                            Text("Delete")
-                        }
-
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Button(onClick = onEdit) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Edit,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                                Text("Edit")
-                            }
+                            Text("Edit")
                         }
                     }
                 }
@@ -1915,78 +1933,78 @@ private fun EventDetailsDialog(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TaskDetailsDialog(
     task: CalendarTask,
     onDismiss: () -> Unit,
 ) {
-    Dialog(onDismissRequest = onDismiss) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(28.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-            tonalElevation = 6.dp,
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(start = 24.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(
-                modifier = Modifier.padding(start = 24.dp, top = 18.dp, end = 16.dp, bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(16.dp)
-                            .border(
-                                width = 2.dp,
-                                color = task.accentColor(),
-                                shape = CircleShape,
-                            ),
-                    )
-                    Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(start = 12.dp),
-                        text = task.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    IconButton(onClick = onDismiss) {
-                        Icon(
-                            imageVector = Icons.Rounded.Close,
-                            contentDescription = "Close task details",
-                        )
-                    }
-                }
-
-                Column(
-                    modifier = Modifier.padding(end = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    DetailLine(label = "Due", value = task.detailDueLabel())
-                    task.recurrenceRule?.repeatLabel()?.let { repeat ->
-                        DetailLine(label = "Repeat", value = repeat)
-                    }
-                    task.listName?.takeIf { it.isNotBlank() }?.let { listName ->
-                        DetailLine(label = "List", value = listName)
-                    }
-                    DetailLine(label = "Status", value = task.status.displayLabel())
-                    task.description?.takeIf { it.isNotBlank() }?.let { description ->
-                        RichNotesLine(label = "Notes", value = description)
-                    }
-                }
-
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-
-                Text(
-                    text = "Synced CalDAV task",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                Box(
+                    modifier = Modifier
+                        .size(16.dp)
+                        .border(
+                            width = 2.dp,
+                            color = task.accentColor(),
+                            shape = CircleShape,
+                        ),
                 )
+                Text(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 12.dp),
+                    text = task.title,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                IconButton(onClick = onDismiss) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "Close task details",
+                    )
+                }
             }
+
+            Column(
+                modifier = Modifier.padding(end = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                DetailLine(label = "Due", value = task.detailDueLabel())
+                task.recurrenceRule?.repeatLabel()?.let { repeat ->
+                    DetailLine(label = "Repeat", value = repeat)
+                }
+                task.listName?.takeIf { it.isNotBlank() }?.let { listName ->
+                    DetailLine(label = "List", value = listName)
+                }
+                DetailLine(label = "Status", value = task.status.displayLabel())
+                task.description?.takeIf { it.isNotBlank() }?.let { description ->
+                    RichNotesLine(label = "Notes", value = description)
+                }
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            Text(
+                text = "Synced CalDAV task",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
@@ -2087,6 +2105,7 @@ private fun RichNotesLine(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CreateItemDialog(
     canCreateTasks: Boolean,
@@ -2094,16 +2113,20 @@ private fun CreateItemDialog(
     onCreateEvent: () -> Unit,
     onCreateTask: () -> Unit,
 ) {
-    AlertDialog(
+    ModalBottomSheet(
         onDismissRequest = onDismiss,
-        title = {
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+    ) {
+        Column(
+            modifier = Modifier.padding(start = 24.dp, top = 4.dp, end = 24.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
             Text(
                 text = "Create",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
             )
-        },
-        text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 CreateItemRow(
                     title = "Event",
@@ -2122,14 +2145,8 @@ private fun CreateItemDialog(
                     onClick = onCreateTask,
                 )
             }
-        },
-        confirmButton = {},
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
-        },
-    )
+        }
+    }
 }
 
 @Composable
@@ -2170,6 +2187,75 @@ private fun CreateItemRow(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun CalendarEditorDialogFrame(
+    title: String,
+    saveLabel: String = "Save",
+    saveEnabled: Boolean = true,
+    onDismiss: () -> Unit,
+    onSave: () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+        ) {
+            Scaffold(
+                containerColor = MaterialTheme.colorScheme.surface,
+                topBar = {
+                    TopAppBar(
+                        navigationIcon = {
+                            IconButton(onClick = onDismiss) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Close,
+                                    contentDescription = "Close editor",
+                                )
+                            }
+                        },
+                        title = {
+                            Text(
+                                text = title,
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        },
+                        actions = {
+                            TextButton(
+                                enabled = saveEnabled,
+                                onClick = onSave,
+                            ) {
+                                Text(saveLabel)
+                            }
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            titleContentColor = MaterialTheme.colorScheme.onSurface,
+                            actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        ),
+                    )
+                },
+            ) { padding ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                        .verticalScroll(rememberScrollState())
+                        .padding(start = 20.dp, top = 12.dp, end = 20.dp, bottom = 32.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    content()
+                }
+            }
+        }
+    }
+}
+
 @Composable
 private fun EventEditorDialog(
     title: String,
@@ -2196,185 +2282,162 @@ private fun EventEditorDialog(
         )
     }
 
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-            )
+    CalendarEditorDialogFrame(
+        title = title,
+        onDismiss = onDismiss,
+        onSave = {
+            runCatching {
+                formState.toDraft()
+            }.onSuccess { draft ->
+                onSave(draft)
+            }.onFailure { error ->
+                formState = formState.copy(
+                    error = error.message ?: "Check the event details.",
+                )
+            }
         },
-        text = {
-            Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                formState.error?.let { error ->
-                    Text(
-                        text = error,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                }
+    ) {
+        formState.error?.let { error ->
+            Text(
+                text = error,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+            )
+        }
 
-                if (canChooseCalendar && writableCalendars.isNotEmpty()) {
-                    EventCalendarPicker(
-                        calendars = writableCalendars,
-                        selectedCalendarId = formState.calendarId,
-                        onSelected = { calendarId ->
-                            formState = formState.copy(calendarId = calendarId, error = null)
-                        },
-                    )
-                } else {
-                    Text(
-                        text = "Calendar: $calendarName",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+        if (canChooseCalendar && writableCalendars.isNotEmpty()) {
+            EventCalendarPicker(
+                calendars = writableCalendars,
+                selectedCalendarId = formState.calendarId,
+                onSelected = { calendarId ->
+                    formState = formState.copy(calendarId = calendarId, error = null)
+                },
+            )
+        } else {
+            Text(
+                text = "Calendar: $calendarName",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
 
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.title,
-                    onValueChange = { formState = formState.copy(title = it, error = null) },
-                    label = { Text("Title") },
-                    singleLine = true,
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.title,
+            onValueChange = { formState = formState.copy(title = it, error = null) },
+            label = { Text("Title") },
+            singleLine = true,
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.date,
+            onValueChange = { formState = formState.copy(date = it, error = null) },
+            label = { Text("Date") },
+            placeholder = { Text("YYYY-MM-DD") },
+            singleLine = true,
+        )
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Checkbox(
+                checked = formState.allDay,
+                onCheckedChange = {
+                    formState = formState.copy(allDay = it, error = null)
+                },
+            )
+            Text(
+                text = "All day",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedTextField(
+                modifier = Modifier.weight(1f),
+                value = formState.startTime,
+                onValueChange = { formState = formState.copy(startTime = it, error = null) },
+                label = { Text("Start") },
+                placeholder = { Text("09:00") },
+                singleLine = true,
+                enabled = !formState.allDay,
+            )
+            OutlinedTextField(
+                modifier = Modifier.weight(1f),
+                value = formState.endTime,
+                onValueChange = { formState = formState.copy(endTime = it, error = null) },
+                label = { Text("End") },
+                placeholder = { Text("10:00") },
+                singleLine = true,
+                enabled = !formState.allDay,
+            )
+        }
+
+        RepeatPicker(
+            recurrenceRule = formState.recurrenceRule,
+            onSelected = { recurrenceRule ->
+                formState = formState.copy(recurrenceRule = recurrenceRule, error = null)
+            },
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.location,
+            onValueChange = {
+                formState = formState.copy(
+                    location = it,
+                    locationPoint = null,
+                    locationMapName = null,
+                    locationMapId = null,
+                    error = null,
                 )
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.date,
-                    onValueChange = { formState = formState.copy(date = it, error = null) },
-                    label = { Text("Date") },
-                    placeholder = { Text("YYYY-MM-DD") },
-                    singleLine = true,
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Checkbox(
-                        checked = formState.allDay,
-                        onCheckedChange = {
-                            formState = formState.copy(allDay = it, error = null)
-                        },
-                    )
-                    Text(
-                        text = "All day",
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(
-                        modifier = Modifier.weight(1f),
-                        value = formState.startTime,
-                        onValueChange = { formState = formState.copy(startTime = it, error = null) },
-                        label = { Text("Start") },
-                        placeholder = { Text("09:00") },
-                        singleLine = true,
-                        enabled = !formState.allDay,
-                    )
-                    OutlinedTextField(
-                        modifier = Modifier.weight(1f),
-                        value = formState.endTime,
-                        onValueChange = { formState = formState.copy(endTime = it, error = null) },
-                        label = { Text("End") },
-                        placeholder = { Text("10:00") },
-                        singleLine = true,
-                        enabled = !formState.allDay,
-                    )
-                }
-
-                RepeatPicker(
-                    recurrenceRule = formState.recurrenceRule,
-                    onSelected = { recurrenceRule ->
-                        formState = formState.copy(recurrenceRule = recurrenceRule, error = null)
-                    },
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.location,
-                    onValueChange = {
-                        formState = formState.copy(
-                            location = it,
-                            locationPoint = null,
-                            locationMapName = null,
-                            locationMapId = null,
-                            error = null,
-                        )
-                    },
-                    label = { Text("Location") },
-                    singleLine = true,
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                runCatching {
-                                    locationPickerLauncher.launch(formState.locationPickerIntent())
-                                }.onFailure {
-                                    formState = formState.copy(error = "Unable to open Maps.")
-                                }
-                            },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.LocationOn,
-                                contentDescription = "Pick location in Maps",
-                            )
+            },
+            label = { Text("Location") },
+            singleLine = true,
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        runCatching {
+                            locationPickerLauncher.launch(formState.locationPickerIntent())
+                        }.onFailure {
+                            formState = formState.copy(error = "Unable to open Maps.")
                         }
                     },
-                )
-
-                formState.locationPoint?.let { point ->
-                    LinkedMapLocationRow(
-                        name = formState.locationMapName?.takeIf { it.isNotBlank() } ?: formState.location,
-                        point = point,
-                        onClear = {
-                            formState = formState.copy(
-                                locationPoint = null,
-                                locationMapName = null,
-                                locationMapId = null,
-                                error = null,
-                            )
-                        },
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.LocationOn,
+                        contentDescription = "Pick location in Maps",
                     )
                 }
+            },
+        )
 
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.description,
-                    onValueChange = { formState = formState.copy(description = it, error = null) },
-                    label = { Text("Notes") },
-                    minLines = 2,
-                    maxLines = 4,
-                )
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    runCatching {
-                        formState.toDraft()
-                    }.onSuccess { draft ->
-                        onSave(draft)
-                    }.onFailure { error ->
-                        formState = formState.copy(
-                            error = error.message ?: "Check the event details.",
-                        )
-                    }
+        formState.locationPoint?.let { point ->
+            LinkedMapLocationRow(
+                name = formState.locationMapName?.takeIf { it.isNotBlank() } ?: formState.location,
+                point = point,
+                onClear = {
+                    formState = formState.copy(
+                        locationPoint = null,
+                        locationMapName = null,
+                        locationMapId = null,
+                        error = null,
+                    )
                 },
-            ) {
-                Text("Save")
-            }
-        },
-    )
+            )
+        }
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.description,
+            onValueChange = { formState = formState.copy(description = it, error = null) },
+            label = { Text("Notes") },
+            minLines = 3,
+            maxLines = 6,
+        )
+    }
 }
 
 @Composable
@@ -2387,134 +2450,111 @@ private fun TaskEditorDialog(
 ) {
     var formState by remember(initialState) { mutableStateOf(initialState) }
 
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
+    CalendarEditorDialogFrame(
+        title = "New task",
+        saveEnabled = hasCalDavAccount,
+        onDismiss = onDismiss,
+        onSave = {
+            runCatching {
+                formState.toDraft()
+            }.onSuccess { draft ->
+                onSave(draft)
+            }.onFailure { error ->
+                formState = formState.copy(
+                    error = error.message ?: "Check the task details.",
+                )
+            }
+        },
+    ) {
+        formState.error?.let { error ->
             Text(
-                text = "New task",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
+                text = error,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
             )
-        },
-        text = {
-            Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                formState.error?.let { error ->
-                    Text(
-                        text = error,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                }
+        }
 
-                when {
-                    taskLists.isNotEmpty() -> TaskListPicker(
-                        taskLists = taskLists,
-                        selectedCollectionId = formState.collectionId,
-                        onSelected = { collectionId ->
-                            formState = formState.copy(collectionId = collectionId, error = null)
-                        },
-                    )
-
-                    hasCalDavAccount -> Text(
-                        text = "List: Tasks will be created on save",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-
-                    else -> Text(
-                        text = "Connect a CalDAV account before creating tasks.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                }
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.title,
-                    onValueChange = { formState = formState.copy(title = it, error = null) },
-                    label = { Text("Title") },
-                    singleLine = true,
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.date,
-                    onValueChange = { formState = formState.copy(date = it, error = null) },
-                    label = { Text("Due date") },
-                    placeholder = { Text("YYYY-MM-DD") },
-                    singleLine = true,
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Checkbox(
-                        checked = formState.allDay,
-                        onCheckedChange = {
-                            formState = formState.copy(allDay = it, error = null)
-                        },
-                    )
-                    Text(
-                        text = "All day",
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.dueTime,
-                    onValueChange = { formState = formState.copy(dueTime = it, error = null) },
-                    label = { Text("Time") },
-                    placeholder = { Text("09:00") },
-                    singleLine = true,
-                    enabled = !formState.allDay,
-                )
-
-                RepeatPicker(
-                    recurrenceRule = formState.recurrenceRule,
-                    onSelected = { recurrenceRule ->
-                        formState = formState.copy(recurrenceRule = recurrenceRule, error = null)
-                    },
-                )
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = formState.description,
-                    onValueChange = { formState = formState.copy(description = it, error = null) },
-                    label = { Text("Notes") },
-                    minLines = 2,
-                    maxLines = 4,
-                )
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
-        },
-        confirmButton = {
-            Button(
-                enabled = hasCalDavAccount,
-                onClick = {
-                    runCatching {
-                        formState.toDraft()
-                    }.onSuccess { draft ->
-                        onSave(draft)
-                    }.onFailure { error ->
-                        formState = formState.copy(
-                            error = error.message ?: "Check the task details.",
-                        )
-                    }
+        when {
+            taskLists.isNotEmpty() -> TaskListPicker(
+                taskLists = taskLists,
+                selectedCollectionId = formState.collectionId,
+                onSelected = { collectionId ->
+                    formState = formState.copy(collectionId = collectionId, error = null)
                 },
-            ) {
-                Text("Save")
-            }
-        },
-    )
+            )
+
+            hasCalDavAccount -> Text(
+                text = "List: Tasks will be created on save",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            else -> Text(
+                text = "Connect a CalDAV account before creating tasks.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+            )
+        }
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.title,
+            onValueChange = { formState = formState.copy(title = it, error = null) },
+            label = { Text("Title") },
+            singleLine = true,
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.date,
+            onValueChange = { formState = formState.copy(date = it, error = null) },
+            label = { Text("Due date") },
+            placeholder = { Text("YYYY-MM-DD") },
+            singleLine = true,
+        )
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Checkbox(
+                checked = formState.allDay,
+                onCheckedChange = {
+                    formState = formState.copy(allDay = it, error = null)
+                },
+            )
+            Text(
+                text = "All day",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.dueTime,
+            onValueChange = { formState = formState.copy(dueTime = it, error = null) },
+            label = { Text("Time") },
+            placeholder = { Text("09:00") },
+            singleLine = true,
+            enabled = !formState.allDay,
+        )
+
+        RepeatPicker(
+            recurrenceRule = formState.recurrenceRule,
+            onSelected = { recurrenceRule ->
+                formState = formState.copy(recurrenceRule = recurrenceRule, error = null)
+            },
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = formState.description,
+            onValueChange = { formState = formState.copy(description = it, error = null) },
+            label = { Text("Notes") },
+            minLines = 3,
+            maxLines = 6,
+        )
+    }
 }
 
 @Composable
@@ -2756,202 +2796,205 @@ private fun AddCalendarDialog(
     var displayName by rememberSaveable { mutableStateOf("") }
     var error by rememberSaveable { mutableStateOf<String?>(null) }
 
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
+    fun submit() {
+        when (selectedType) {
+            AddCalendarType.Url -> {
+                val cleanedUrl = url.trim()
+                if (cleanedUrl.isBlank()) {
+                    error = "Add a calendar URL."
+                } else {
+                    onSubscribe(cleanedUrl, displayName.trim().takeIf { it.isNotBlank() })
+                }
+            }
+
+            AddCalendarType.CalDav -> when {
+                serverUrl.isBlank() -> error = "Add a CalDAV server URL."
+                username.isBlank() -> error = "Add a username."
+                password.isBlank() -> error = "Add a password or app password."
+                else -> onConnect(
+                    serverUrl.trim(),
+                    username.trim(),
+                    password,
+                    displayName.trim().takeIf { it.isNotBlank() },
+                )
+            }
+        }
+    }
+
+    CalendarEditorDialogFrame(
+        title = "Add calendar",
+        saveLabel = if (selectedType == AddCalendarType.Url) "Subscribe" else "Connect",
+        onDismiss = onDismiss,
+        onSave = ::submit,
+    ) {
+        error?.let { message ->
             Text(
-                text = "Add calendar",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
+                text = message,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
             )
-        },
-        text = {
-            Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                error?.let { message ->
-                    Text(
-                        text = message,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(
-                        selected = selectedType == AddCalendarType.Url,
-                        onClick = {
-                            selectedType = AddCalendarType.Url
-                            error = null
-                        },
-                        label = { Text("URL") },
-                    )
-                    FilterChip(
-                        selected = selectedType == AddCalendarType.CalDav,
-                        onClick = {
-                            selectedType = AddCalendarType.CalDav
-                            error = null
-                        },
-                        label = { Text("CalDAV") },
-                    )
-                }
-                when (selectedType) {
-                    AddCalendarType.Url -> {
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = url,
-                            onValueChange = {
-                                url = it
-                                error = null
-                            },
-                            label = { Text("Calendar URL") },
-                            placeholder = { Text("http://example.com/calendar.ics") },
-                            singleLine = true,
-                        )
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = displayName,
-                            onValueChange = {
-                                displayName = it
-                                error = null
-                            },
-                            label = { Text("Name") },
-                            placeholder = { Text("Optional") },
-                            singleLine = true,
-                        )
-                    }
-
-                    AddCalendarType.CalDav -> {
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = serverUrl,
-                            onValueChange = {
-                                serverUrl = it
-                                error = null
-                            },
-                            label = { Text("Server URL") },
-                            placeholder = { Text("http://example.com/") },
-                            singleLine = true,
-                        )
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = username,
-                            onValueChange = {
-                                username = it
-                                error = null
-                            },
-                            label = { Text("Username") },
-                            singleLine = true,
-                        )
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = password,
-                            onValueChange = {
-                                password = it
-                                error = null
-                            },
-                            label = { Text("Password") },
-                            visualTransformation = PasswordVisualTransformation(),
-                            singleLine = true,
-                        )
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = displayName,
-                            onValueChange = {
-                                displayName = it
-                                error = null
-                            },
-                            label = { Text("Name") },
-                            placeholder = { Text("Optional") },
-                            singleLine = true,
-                        )
-                    }
-                }
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
-        },
-        confirmButton = {
-            Button(
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(
+                selected = selectedType == AddCalendarType.Url,
                 onClick = {
-                    when (selectedType) {
-                        AddCalendarType.Url -> {
-                            val cleanedUrl = url.trim()
-                            if (cleanedUrl.isBlank()) {
-                                error = "Add a calendar URL."
-                            } else {
-                                onSubscribe(cleanedUrl, displayName.trim().takeIf { it.isNotBlank() })
-                            }
-                        }
-
-                        AddCalendarType.CalDav -> when {
-                            serverUrl.isBlank() -> error = "Add a CalDAV server URL."
-                            username.isBlank() -> error = "Add a username."
-                            password.isBlank() -> error = "Add a password or app password."
-                            else -> onConnect(
-                                serverUrl.trim(),
-                                username.trim(),
-                                password,
-                                displayName.trim().takeIf { it.isNotBlank() },
-                            )
-                        }
-                    }
+                    selectedType = AddCalendarType.Url
+                    error = null
                 },
-            ) {
-                Text(if (selectedType == AddCalendarType.Url) "Subscribe" else "Connect")
+                label = { Text("URL") },
+            )
+            FilterChip(
+                selected = selectedType == AddCalendarType.CalDav,
+                onClick = {
+                    selectedType = AddCalendarType.CalDav
+                    error = null
+                },
+                label = { Text("CalDAV") },
+            )
+        }
+        when (selectedType) {
+            AddCalendarType.Url -> {
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = url,
+                    onValueChange = {
+                        url = it
+                        error = null
+                    },
+                    label = { Text("Calendar URL") },
+                    placeholder = { Text("http://example.com/calendar.ics") },
+                    singleLine = true,
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = displayName,
+                    onValueChange = {
+                        displayName = it
+                        error = null
+                    },
+                    label = { Text("Name") },
+                    placeholder = { Text("Optional") },
+                    singleLine = true,
+                )
             }
-        },
-    )
+
+            AddCalendarType.CalDav -> {
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = serverUrl,
+                    onValueChange = {
+                        serverUrl = it
+                        error = null
+                    },
+                    label = { Text("Server URL") },
+                    placeholder = { Text("http://example.com/") },
+                    singleLine = true,
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = username,
+                    onValueChange = {
+                        username = it
+                        error = null
+                    },
+                    label = { Text("Username") },
+                    singleLine = true,
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = password,
+                    onValueChange = {
+                        password = it
+                        error = null
+                    },
+                    label = { Text("Password") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    singleLine = true,
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = displayName,
+                    onValueChange = {
+                        displayName = it
+                        error = null
+                    },
+                    label = { Text("Name") },
+                    placeholder = { Text("Optional") },
+                    singleLine = true,
+                )
+            }
+        }
+    }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CalendarOptionsDialog(
-    calendar: CalendarSource,
-    subscription: CalendarSubscription?,
-    calDavCalendar: CalDavCalendar?,
-    calDavAccount: CalDavAccount?,
+    item: DrawerCalendarItem,
     onDismiss: () -> Unit,
     onRenameSubscription: (String, String) -> Unit,
     onRenameCalDavCalendar: (String, String) -> Unit,
     onUnsubscribe: (String) -> Unit,
     onDisconnectCalDav: (String) -> Unit,
 ) {
-    var displayName by remember(calendar.id) { mutableStateOf(calendar.displayName) }
+    val subscription = item.subscription
+    val calDavCalendar = item.calDavCalendar
+    val calDavAccount = item.calDavAccount
+    var displayName by remember(item.key) { mutableStateOf(item.displayName) }
     val cleanedDisplayName = displayName.trim()
     val canRename = subscription != null || calDavCalendar != null
     val canSave = canRename &&
         cleanedDisplayName.isNotBlank() &&
-        cleanedDisplayName != calendar.displayName
-    val secondaryText = calendar.drawerSecondaryText(subscription, calDavCalendar)
+        cleanedDisplayName != item.displayName
+    val secondaryText = item.secondaryText
 
-    AlertDialog(
+    ModalBottomSheet(
         onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = "Calendar options",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-            )
-        },
-        text = {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(start = 24.dp, top = 4.dp, end = 24.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                OutlinedTextField(
-                    value = displayName,
-                    onValueChange = { displayName = it },
-                    enabled = canRename,
-                    singleLine = true,
-                    label = { Text("Name") },
-                    modifier = Modifier.fillMaxWidth(),
+                Text(
+                    text = "Calendar options",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
                 )
+                IconButton(onClick = onDismiss) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "Close calendar options",
+                    )
+                }
+            }
+
+            OutlinedTextField(
+                value = displayName,
+                onValueChange = { displayName = it },
+                enabled = canRename,
+                singleLine = true,
+                label = { Text("Name") },
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
                 Text(
                     text = when {
                         subscription != null -> "URL calendar"
-                        calDavCalendar != null -> "CalDAV calendar"
+                        calDavCalendar?.supportsEvents == true -> "CalDAV calendar"
+                        calDavCalendar?.supportsTasks == true -> "CalDAV task list"
                         else -> "Android calendar"
                     },
                     style = MaterialTheme.typography.labelLarge,
@@ -2990,73 +3033,68 @@ private fun CalendarOptionsDialog(
                     )
                 }
             }
-        },
-        confirmButton = {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                when {
-                    subscription != null -> TextButton(
-                        onClick = { onUnsubscribe(subscription.id) },
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.error,
-                        ),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Delete,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Text("Unsubscribe")
-                    }
 
-                    calDavCalendar != null -> TextButton(
-                        onClick = { onDisconnectCalDav(calDavCalendar.accountId) },
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.error,
-                        ),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Delete,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Text("Disconnect")
-                    }
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
-                    else -> Box(modifier = Modifier.width(1.dp))
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
+            when {
+                subscription != null -> TextButton(
+                    onClick = { onUnsubscribe(subscription.id) },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
                 ) {
-                    TextButton(onClick = onDismiss) {
-                        Text("Cancel")
-                    }
-                    Button(
-                        onClick = {
-                            when {
-                                subscription != null -> onRenameSubscription(
-                                    subscription.id,
-                                    cleanedDisplayName,
-                                )
+                    Icon(
+                        imageVector = Icons.Rounded.Delete,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Text("Unsubscribe")
+                }
 
-                                calDavCalendar != null -> onRenameCalDavCalendar(
-                                    calDavCalendar.id,
-                                    cleanedDisplayName,
-                                )
-                            }
-                        },
-                        enabled = canSave,
-                    ) {
-                        Text("Save")
-                    }
+                calDavCalendar != null -> TextButton(
+                    onClick = { onDisconnectCalDav(calDavCalendar.accountId) },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Delete,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Text("Disconnect")
                 }
             }
-        },
-    )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TextButton(onClick = onDismiss) {
+                    Text("Cancel")
+                }
+                Button(
+                    onClick = {
+                        when {
+                            subscription != null -> onRenameSubscription(
+                                subscription.id,
+                                cleanedDisplayName,
+                            )
+
+                            calDavCalendar != null -> onRenameCalDavCalendar(
+                                calDavCalendar.id,
+                                cleanedDisplayName,
+                            )
+                        }
+                    },
+                    enabled = canSave,
+                ) {
+                    Text("Save")
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -3369,8 +3407,9 @@ private fun List<AgendaSection>.monthJunctionCountThrough(sectionIndex: Int): In
 private fun CalendarUiState.agendaSubtitle(): String {
     return when {
         !hasCalendarPermission -> "Calendar access needed"
+        isSyncing -> "Syncing calendars"
         isLoading -> "Refreshing agenda"
-        else -> "Upcoming through ${rangeEndDate.compactDateLabel()}, ${calendars.size.calendarCountLabel()}, ${tasks.size.taskCountLabel()}"
+        else -> "Upcoming through ${rangeEndDate.compactDateLabel()}, ${drawerCalendarItems().size.calendarCountLabel()}, ${tasks.size.taskCountLabel()}"
     }
 }
 
@@ -3431,20 +3470,97 @@ private fun CalendarSource.drawerColor(): Color {
     return color?.let(::Color) ?: MaterialTheme.colorScheme.primary
 }
 
+@Composable
+private fun DrawerCalendarItem.drawerColor(): Color {
+    return color?.let(::Color) ?: MaterialTheme.colorScheme.primary
+}
+
+private fun CalendarUiState.drawerCalendarItems(): List<DrawerCalendarItem> {
+    val calendarsById = calendars.associateBy { it.id }
+    val accountsById = calDavAccounts.associateBy { it.id }
+    val managedProviderIds = buildSet {
+        subscriptions.forEach { add(it.calendarId) }
+        calDavCalendars.mapNotNullTo(this) { it.localCalendarId }
+    }
+
+    val subscriptionItems = subscriptions.map { subscription ->
+        val providerCalendar = calendarsById[subscription.calendarId]
+        DrawerCalendarItem(
+            key = "subscription:${subscription.id}",
+            displayName = subscription.displayName,
+            color = providerCalendar?.color ?: UrlCalendarFallbackColor,
+            isReadOnly = true,
+            secondaryText = subscription.drawerStatusLabel(providerCalendar),
+            calendar = providerCalendar,
+            subscription = subscription,
+        )
+    }
+
+    val calDavItems = calDavCalendars.map { calDavCalendar ->
+        val providerCalendar = calDavCalendar.localCalendarId?.let(calendarsById::get)
+        val account = accountsById[calDavCalendar.accountId]
+        DrawerCalendarItem(
+            key = "caldav:${calDavCalendar.id}",
+            displayName = calDavCalendar.displayName,
+            color = providerCalendar?.color
+                ?: calDavCalendar.color
+                ?: if (calDavCalendar.supportsTasks && !calDavCalendar.supportsEvents) {
+                    TaskListFallbackColor
+                } else {
+                    CalDavCalendarFallbackColor
+                },
+            isReadOnly = false,
+            secondaryText = calDavCalendar.drawerStatusLabel(account, providerCalendar),
+            calendar = providerCalendar,
+            calDavCalendar = calDavCalendar,
+            calDavAccount = account,
+        )
+    }
+
+    val unmanagedProviderItems = calendars
+        .filter { it.id !in managedProviderIds }
+        .map { calendar ->
+            DrawerCalendarItem(
+                key = "provider:${calendar.id}",
+                displayName = calendar.displayName,
+                color = calendar.color,
+                isReadOnly = calendar.isDrawerReadOnly(),
+                secondaryText = null,
+                calendar = calendar,
+            )
+        }
+
+    return subscriptionItems + calDavItems + unmanagedProviderItems
+}
+
 private fun CalendarSource.isDrawerReadOnly(): Boolean {
     return isSubscribed || !isWritable
 }
 
-private fun CalendarSource.drawerSecondaryText(
-    subscription: CalendarSubscription?,
-    calDavCalendar: CalDavCalendar?,
-): String? {
+private fun CalendarSubscription.drawerStatusLabel(providerCalendar: CalendarSource?): String {
     return when {
-        isSubscribed -> subscription?.lastSyncLabel() ?: "Not synced yet"
-        isCalDav -> calDavCalendar?.lastSyncLabel() ?: "Not synced yet"
-        else -> null
+        !lastError.isNullOrBlank() -> "Sync error: $lastError"
+        providerCalendar == null -> "Restoring calendar"
+        else -> lastSyncLabel()
     }
 }
+
+private fun CalDavCalendar.drawerStatusLabel(
+    account: CalDavAccount?,
+    providerCalendar: CalendarSource?,
+): String {
+    val accountError = account?.lastError
+    return when {
+        !lastError.isNullOrBlank() -> "Sync error: $lastError"
+        !accountError.isNullOrBlank() -> "Sync error: $accountError"
+        supportsEvents && localCalendarId != null && providerCalendar == null -> "Restoring calendar"
+        else -> lastSyncLabel()
+    }
+}
+
+private const val UrlCalendarFallbackColor: Int = 0xFF2E7D62.toInt()
+private const val CalDavCalendarFallbackColor: Int = 0xFF1E88E5.toInt()
+private const val TaskListFallbackColor: Int = 0xFF7E57C2.toInt()
 
 private fun String.toCalendarNoteText(): CharSequence {
     val note = trim()

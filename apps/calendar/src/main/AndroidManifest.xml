@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
     <queries>
         <package android:name="digital.dutton.essentials.maps" />
@@ -54,5 +55,53 @@
             android:name=".widget.AgendaWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <service
+            android:name=".sync.CalDavAccountAuthenticatorService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCOUNT_AUTHENTICATOR">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/caldav_account_authenticator" />
+        </service>
+
+        <service
+            android:name=".sync.SubscriptionAccountAuthenticatorService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCOUNT_AUTHENTICATOR">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/subscription_account_authenticator" />
+        </service>
+
+        <service
+            android:name=".sync.CalDavCalendarSyncAdapterService"
+            android:exported="true"
+            android:permission="android.permission.BIND_SYNC_ADAPTER">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/caldav_sync_adapter" />
+        </service>
+
+        <service
+            android:name=".sync.SubscriptionCalendarSyncAdapterService"
+            android:exported="true"
+            android:permission="android.permission.BIND_SYNC_ADAPTER">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/subscription_sync_adapter" />
+        </service>
     </application>
 </manifest>

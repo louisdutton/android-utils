@@ -34,6 +34,7 @@ class IcsSubscriptionSyncer(
         requestedName: String?,
     ): IcsSubscriptionSyncSummary = withContext(dispatcher) {
         requireCalendarPermissions()
+        CalendarProviderAccountRegistrar.ensureSubscriptionAccount(context)
         val url = normalizeSubscriptionUrl(rawUrl)
         pruneDuplicateSubscriptions()
         val existingSubscription = findExistingSubscription(url)
@@ -77,6 +78,7 @@ class IcsSubscriptionSyncer(
 
     suspend fun syncSubscription(subscriptionId: String): IcsSubscriptionSyncSummary = withContext(dispatcher) {
         requireCalendarPermissions()
+        CalendarProviderAccountRegistrar.ensureSubscriptionAccount(context)
         val storedSubscription = store.get(subscriptionId)
             ?: throw IllegalArgumentException("Calendar subscription was not found.")
         var activeSubscription = storedSubscription
@@ -144,6 +146,12 @@ class IcsSubscriptionSyncer(
         summaries
     }
 
+    suspend fun hasMissingProviderCalendars(): Boolean = withContext(dispatcher) {
+        requireCalendarPermissions()
+        CalendarProviderAccountRegistrar.ensureSubscriptionAccount(context)
+        store.list().any { !calendarExists(it.calendarId) }
+    }
+
     suspend fun unsubscribe(subscriptionId: String) = withContext(dispatcher) {
         requireCalendarPermissions()
         val subscription = store.get(subscriptionId)
@@ -169,6 +177,7 @@ class IcsSubscriptionSyncer(
 
     suspend fun repairSubscriptions() = withContext(dispatcher) {
         requireCalendarPermissions()
+        CalendarProviderAccountRegistrar.ensureSubscriptionAccount(context)
         pruneDuplicateSubscriptions()
         val subscriptions = store.list()
         subscriptions
@@ -489,6 +498,7 @@ class IcsSubscriptionSyncer(
     }
 
     private fun createSubscriptionCalendar(displayName: String): Long {
+        CalendarProviderAccountRegistrar.ensureSubscriptionAccount(context)
         val values = ContentValues().apply {
             put(CalendarContract.Calendars.ACCOUNT_NAME, SubscriptionAccountName)
             put(CalendarContract.Calendars.ACCOUNT_TYPE, SubscriptionAccountType)
