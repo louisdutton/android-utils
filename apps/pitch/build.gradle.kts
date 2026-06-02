@@ -3,10 +3,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-val appId = "digital.dutton.essentials.pitch"
+val namespaceId = "digital.dutton.essentials.pitch"
+val appId = "digital.dutton.essentials.piano"
 
 android {
-    namespace = appId
+    namespace = namespaceId
     compileSdk = 36
     buildToolsVersion = "36.0.0"
 

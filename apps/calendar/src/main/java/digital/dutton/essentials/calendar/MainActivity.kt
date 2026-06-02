@@ -102,6 +102,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -1161,6 +1162,14 @@ private fun CalendarTopBar(
     onNextMonth: () -> Unit,
     onToday: () -> Unit,
 ) {
+    fun selectViewMode(mode: CalendarViewMode) {
+        when (mode) {
+            CalendarViewMode.Agenda -> onOpenAgenda()
+            CalendarViewMode.Month -> onOpenMonth()
+            CalendarViewMode.Tasks -> onOpenTasks()
+        }
+    }
+
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = onOpenNavigation) {
@@ -1171,14 +1180,14 @@ private fun CalendarTopBar(
             }
         },
         title = {
-            Text(
-                text = when (viewMode) {
+            CalendarViewTitleMenu(
+                viewMode = viewMode,
+                title = when (viewMode) {
                     CalendarViewMode.Agenda -> "Agenda"
                     CalendarViewMode.Month -> month.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
                     CalendarViewMode.Tasks -> "Tasks"
                 },
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
+                onModeSelected = ::selectViewMode,
             )
         },
         actions = {
@@ -1205,16 +1214,6 @@ private fun CalendarTopBar(
                         )
                     }
                 }
-                ViewModeSwitcher(
-                    selectedMode = viewMode,
-                    onModeSelected = { mode ->
-                        when (mode) {
-                            CalendarViewMode.Agenda -> onOpenAgenda()
-                            CalendarViewMode.Month -> onOpenMonth()
-                            CalendarViewMode.Tasks -> onOpenTasks()
-                        }
-                    },
-                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -1227,41 +1226,83 @@ private fun CalendarTopBar(
 }
 
 @Composable
-private fun ViewModeSwitcher(
-    selectedMode: CalendarViewMode,
+private fun CalendarViewTitleMenu(
+    viewMode: CalendarViewMode,
+    title: String,
     onModeSelected: (CalendarViewMode) -> Unit,
 ) {
-    SingleChoiceSegmentedButtonRow(
-        modifier = Modifier.padding(end = 4.dp),
-    ) {
-        CalendarViewMode.entries.forEachIndexed { index, mode ->
-            SegmentedButton(
-                modifier = Modifier.width(42.dp),
-                selected = mode == selectedMode,
-                onClick = { onModeSelected(mode) },
-                shape = SegmentedButtonDefaults.itemShape(
-                    index = index,
-                    count = CalendarViewMode.entries.size,
-                ),
-                contentPadding = PaddingValues(horizontal = 0.dp),
-                icon = {},
-            ) {
-                Icon(
-                    imageVector = when (mode) {
-                        CalendarViewMode.Agenda -> Icons.Rounded.ViewAgenda
-                        CalendarViewMode.Month -> Icons.Rounded.CalendarMonth
-                        CalendarViewMode.Tasks -> Icons.Rounded.CheckCircle
+    var expanded by remember { mutableStateOf(false) }
+
+    Box {
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .clickable { expanded = true }
+                .padding(end = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Icon(
+                imageVector = Icons.Rounded.ArrowDropDown,
+                contentDescription = "Change view",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            CalendarViewMode.entries.forEach { mode ->
+                DropdownMenuItem(
+                    text = { Text(mode.label) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = mode.icon(),
+                            contentDescription = null,
+                        )
                     },
-                    contentDescription = when (mode) {
-                        CalendarViewMode.Agenda -> "Open agenda view"
-                        CalendarViewMode.Month -> "Open month view"
-                        CalendarViewMode.Tasks -> "Open tasks"
+                    trailingIcon = if (mode == viewMode) {
+                        {
+                            Icon(
+                                imageVector = Icons.Rounded.CheckCircle,
+                                contentDescription = null,
+                            )
+                        }
+                    } else {
+                        null
+                    },
+                    onClick = {
+                        expanded = false
+                        onModeSelected(mode)
                     },
                 )
             }
         }
     }
 }
+
+@Composable
+private fun CalendarViewMode.icon(): ImageVector {
+    return when (this) {
+        CalendarViewMode.Agenda -> Icons.Rounded.ViewAgenda
+        CalendarViewMode.Month -> Icons.Rounded.CalendarMonth
+        CalendarViewMode.Tasks -> Icons.Rounded.CheckCircle
+    }
+}
+
+private val CalendarViewMode.label: String
+    get() = when (this) {
+        CalendarViewMode.Agenda -> "Agenda"
+        CalendarViewMode.Month -> "Month"
+        CalendarViewMode.Tasks -> "Tasks"
+    }
 
 @Composable
 private fun CalendarDrawer(
