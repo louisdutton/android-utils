@@ -37,6 +37,14 @@ class CalendarTaskStore(context: Context) {
             .toList()
     }
 
+    fun listTasks(): List<CalendarTask> {
+        return allTasks().sortedWith(
+            compareBy<CalendarTask> { it.dueMillis ?: it.startMillis ?: Long.MAX_VALUE }
+                .thenBy { it.priority ?: Int.MAX_VALUE }
+                .thenBy { it.title.lowercase() },
+        )
+    }
+
     fun upsertTask(task: CalendarTask): TaskStoreChange {
         val previous = getTask(task.id)
         preferences.edit()
@@ -199,7 +207,7 @@ class CalendarTaskStore(context: Context) {
                 )
     }
 
-    private fun getTask(id: String): CalendarTask? {
+    fun getTask(id: String): CalendarTask? {
         val prefix = id.prefix()
         val uid = preferences.getString(prefix + KeyUid, null) ?: return null
         val title = preferences.getString(prefix + KeyTitle, null) ?: return null

@@ -204,6 +204,51 @@ class CalDavSyncer(
         task
     }
 
+    suspend fun setTaskCompleted(
+        task: CalendarTask,
+        completed: Boolean,
+    ): CalendarTask = withContext(dispatcher) {
+        requireCalendarPermissions()
+        val storedTask = taskStore.getTask(task.id.substringBeforeLast("@"))
+            ?: taskStore.getTask(task.id)
+            ?: task
+        val accountId = storedTask.accountId
+            ?: throw IllegalStateException("Only synced CalDAV tasks can be updated.")
+        val account = store.getAccount(accountId)
+            ?: throw IllegalStateException("CalDAV account was not found.")
+        val calendar = storedTask.collectionId
+            ?.let(store::getCalendar)
+            ?: storedTask.collectionHref?.let { store.findCalendar(accountId, it) }
+            ?: throw IllegalStateException("CalDAV task list was not found.")
+        val href = storedTask.href
+            ?: throw IllegalStateException("CalDAV task does not have a remote href.")
+        val now = System.currentTimeMillis()
+        val updatedTask = storedTask.copy(
+            id = remoteCalendarTaskId(account.id, calendar.href, storedTask.uid),
+            accountId = account.id,
+            collectionId = calendar.id,
+            collectionHref = calendar.href,
+            listName = calendar.displayName,
+            listColor = calendar.color,
+            status = if (completed) CalendarTaskStatus.Completed else CalendarTaskStatus.NeedsAction,
+            completedMillis = if (completed) now else null,
+            lastModifiedMillis = now,
+        )
+        val etag = client.putEvent(
+            endpoint = account.endpoint(),
+            calendarHref = calendar.href,
+            eventHref = href,
+            etag = storedTask.etag,
+            body = updatedTask.toTaskIcs(),
+        ) ?: storedTask.etag
+        val savedTask = updatedTask.copy(etag = etag)
+
+        taskStore.upsertTask(savedTask)
+        store.upsertCalendar(calendar.copy(lastSyncMillis = now, lastError = null))
+        store.upsertAccount(account.copy(lastSyncMillis = now, lastError = null))
+        savedTask
+    }
+
     suspend fun repairAccounts() = withContext(dispatcher) {
         requireCalendarPermissions()
         val accountsToResync = mutableSetOf<String>()
@@ -1066,6 +1111,34 @@ class CalDavSyncer(
         }
     }
 
+    private fun CalendarTask.toTaskIcs(): String {
+        val now = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
+            .withZone(ZoneOffset.UTC)
+            .format(Instant.now())
+        return buildString {
+            appendLine("BEGIN:VCALENDAR")
+            appendLine("VERSION:2.0")
+            appendLine("PRODID:-//Essentials Calendar//Android//EN")
+            appendLine("BEGIN:VTODO")
+            appendLine("UID:${uid.escapeIcsText()}")
+            appendLine("DTSTAMP:$now")
+            appendLine("CREATED:${formatUtcIcsDateTime(createdMillis ?: lastModifiedMillis ?: System.currentTimeMillis())}")
+            appendLine("LAST-MODIFIED:$now")
+            appendLine("STATUS:${status.toIcsStatus()}")
+            completedMillis?.let { appendLine("COMPLETED:${formatUtcIcsDateTime(it)}") }
+            appendLine("SUMMARY:${title.trim().escapeIcsText()}")
+            description?.takeIf { it.isNotBlank() }?.let {
+                appendLine("DESCRIPTION:${it.escapeIcsText()}")
+            }
+            priority?.let { appendLine("PRIORITY:$it") }
+            dueMillis?.let { appendTaskDate("DUE", it, dueAllDay, ZoneId.systemDefault().id) }
+            startMillis?.let { appendTaskDate("DTSTART", it, startAllDay, ZoneId.systemDefault().id) }
+            recurrenceRule?.takeIf { it.isNotBlank() }?.let { appendLine("RRULE:$it") }
+            appendLine("END:VTODO")
+            appendLine("END:VCALENDAR")
+        }
+    }
+
     private fun StringBuilder.appendTaskDate(
         property: String,
         epochMillis: Long,
@@ -1111,6 +1184,22 @@ class CalDavSyncer(
             .replace("\n", "\\n")
             .replace(";", "\\;")
             .replace(",", "\\,")
+    }
+
+    private fun CalendarTaskStatus.toIcsStatus(): String {
+        return when (this) {
+            CalendarTaskStatus.NeedsAction -> "NEEDS-ACTION"
+            CalendarTaskStatus.InProcess -> "IN-PROCESS"
+            CalendarTaskStatus.Completed -> "COMPLETED"
+            CalendarTaskStatus.Cancelled -> "CANCELLED"
+            CalendarTaskStatus.Unknown -> "NEEDS-ACTION"
+        }
+    }
+
+    private fun formatUtcIcsDateTime(epochMillis: Long): String {
+        return DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
+            .withZone(ZoneOffset.UTC)
+            .format(Instant.ofEpochMilli(epochMillis))
     }
 
     private fun Cursor.toLocalCalDavEvent(): LocalCalDavEvent {

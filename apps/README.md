@@ -13,7 +13,7 @@ own APK with a distinct application id.
 - `documents`: native PDF-first document viewer for legal documents, forms,
   music scores, and other local files.
 - `notes`: markdown-backed text and audio notes app.
-- `pitch`: simple musical pitch keyboard and reference tone app.
+- `pitch`: simple piano keyboard and reference tone app.
 - `scores`: offline-first music score reader and importer for MusicXML/MXL
   files, with on-device OMR entry points for PDF and image score imports.
   Local OMR/debug iteration can be run without an Android device with

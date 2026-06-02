@@ -46,6 +46,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -73,13 +75,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.ViewAgenda
@@ -170,6 +175,7 @@ data class CalendarUiState(
     val calendars: List<CalendarSource> = emptyList(),
     val events: List<CalendarEvent> = emptyList(),
     val tasks: List<CalendarTask> = emptyList(),
+    val allTasks: List<CalendarTask> = emptyList(),
     val subscriptions: List<CalendarSubscription> = emptyList(),
     val calDavAccounts: List<CalDavAccount> = emptyList(),
     val calDavCalendars: List<CalDavCalendar> = emptyList(),
@@ -269,6 +275,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                     calendars = emptyList(),
                     events = emptyList(),
                     tasks = emptyList(),
+                    allTasks = emptyList(),
                     subscriptions = emptyList(),
                     calDavAccounts = emptyList(),
                     calDavCalendars = emptyList(),
@@ -304,6 +311,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                     calendars = repository.listCalendars(),
                     events = repository.listEvents(start, end),
                     tasks = taskStore.listAgendaTasks(start, end),
+                    allTasks = taskStore.listTasks(),
                     subscriptions = subscriptionStore.list(),
                     calDavAccounts = calDavStore.listAccounts(),
                     calDavCalendars = calDavStore.listCalendars(),
@@ -315,6 +323,7 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                         calendars = snapshot.calendars,
                         events = snapshot.events,
                         tasks = snapshot.tasks,
+                        allTasks = snapshot.allTasks,
                         subscriptions = snapshot.subscriptions,
                         calDavAccounts = snapshot.calDavAccounts,
                         calDavCalendars = snapshot.calDavCalendars,
@@ -341,6 +350,15 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     fun createTask(task: CalendarTaskDraft) {
         mutateEvent(reloadDate = task.dueDate(ZoneId.systemDefault())) {
             calDavSyncer.createTask(task)
+        }
+    }
+
+    fun setTaskCompleted(
+        task: CalendarTask,
+        completed: Boolean,
+    ) {
+        mutateEvent(reloadDate = task.agendaDate(ZoneId.systemDefault())) {
+            calDavSyncer.setTaskCompleted(task, completed)
         }
     }
 
@@ -602,6 +620,7 @@ private data class CalendarSnapshot(
     val calendars: List<CalendarSource>,
     val events: List<CalendarEvent>,
     val tasks: List<CalendarTask>,
+    val allTasks: List<CalendarTask>,
     val subscriptions: List<CalendarSubscription>,
     val calDavAccounts: List<CalDavAccount>,
     val calDavCalendars: List<CalDavCalendar>,
@@ -649,6 +668,7 @@ private fun CalendarApp(
                 onEnsureDateRangeVisible = viewModel::ensureDateRangeVisible,
                 onCreateEvent = viewModel::createEvent,
                 onCreateTask = viewModel::createTask,
+                onSetTaskCompleted = viewModel::setTaskCompleted,
                 onUpdateEvent = viewModel::updateEvent,
                 onDeleteEvent = viewModel::deleteEvent,
                 onSubscribeCalendar = viewModel::subscribeCalendar,
@@ -697,6 +717,7 @@ private fun CalendarScreen(
     onEnsureDateRangeVisible: (LocalDate, LocalDate) -> Unit,
     onCreateEvent: (CalendarEventDraft) -> Unit,
     onCreateTask: (CalendarTaskDraft) -> Unit,
+    onSetTaskCompleted: (CalendarTask, Boolean) -> Unit,
     onUpdateEvent: (Long, CalendarEventDraft) -> Unit,
     onDeleteEvent: (Long) -> Unit,
     onSubscribeCalendar: (String, String?) -> Unit,
@@ -709,6 +730,7 @@ private fun CalendarScreen(
 ) {
     val context = LocalContext.current
     var viewModeText by rememberSaveable { mutableStateOf(CalendarViewMode.Agenda.name) }
+    var taskFilterText by rememberSaveable { mutableStateOf(TaskFilter.Active.name) }
     var selectedDateText by rememberSaveable { mutableStateOf(LocalDate.now().toString()) }
     var visibleMonthText by rememberSaveable { mutableStateOf(YearMonth.now().toString()) }
     var pendingScrollDateText by rememberSaveable { mutableStateOf<String?>(null) }
@@ -720,6 +742,7 @@ private fun CalendarScreen(
     var selectedDrawerItemKey by remember { mutableStateOf<String?>(null) }
     val defaultCalendar = state.calendars.defaultWritableCalendar()
     val viewMode = remember(viewModeText) { CalendarViewMode.valueOf(viewModeText) }
+    val taskFilter = remember(taskFilterText) { TaskFilter.valueOf(taskFilterText) }
     val selectedDate = remember(selectedDateText) { LocalDate.parse(selectedDateText) }
     val visibleMonth = remember(visibleMonthText) { YearMonth.parse(visibleMonthText) }
     val listState = rememberLazyListState()
@@ -795,6 +818,10 @@ private fun CalendarScreen(
     fun openMonthView() {
         viewModeText = CalendarViewMode.Month.name
         onEnsureDateRangeVisible(visibleMonth.atDay(1), visibleMonth.atEndOfMonth())
+    }
+
+    fun openTasksView() {
+        viewModeText = CalendarViewMode.Tasks.name
     }
 
     fun goToToday() {
@@ -881,6 +908,7 @@ private fun CalendarScreen(
                     },
                     onOpenAgenda = ::openAgenda,
                     onOpenMonth = ::openMonthView,
+                    onOpenTasks = ::openTasksView,
                     onPreviousMonth = { moveVisibleMonth(-1) },
                     onNextMonth = { moveVisibleMonth(1) },
                     onToday = ::goToToday,
@@ -901,74 +929,95 @@ private fun CalendarScreen(
                 }
             },
         ) { padding ->
-            if (viewMode == CalendarViewMode.Agenda) {
-                LazyColumn(
-                    state = listState,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
-                ) {
-                    if (!state.hasCalendarPermission) {
-                        item {
-                            PermissionPanel(onRequestPermission = onRequestPermission)
+            when (viewMode) {
+                CalendarViewMode.Agenda -> {
+                    LazyColumn(
+                        state = listState,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(14.dp),
+                    ) {
+                        if (!state.hasCalendarPermission) {
+                            item {
+                                PermissionPanel(onRequestPermission = onRequestPermission)
+                            }
+                            return@LazyColumn
                         }
-                        return@LazyColumn
-                    }
 
-                    state.error?.let { message ->
-                        item {
-                            CompactStatus(
-                                title = "Calendar unavailable",
-                                body = message,
-                            )
-                        }
-                    }
-
-                    var previousSectionMonth: YearMonth? = null
-                    sections.forEach { section ->
-                        val sectionMonth = YearMonth.from(section.date)
-                        if (sectionMonth != previousSectionMonth) {
-                            item(key = "month-$sectionMonth") {
-                                AgendaMonthJunction(month = sectionMonth)
+                        state.error?.let { message ->
+                            item {
+                                CompactStatus(
+                                    title = "Calendar unavailable",
+                                    body = message,
+                                )
                             }
                         }
-                        previousSectionMonth = sectionMonth
 
-                        item(key = "date-${section.date}") {
-                            AgendaDaySection(
-                                section = section,
-                                onEventClick = { event ->
-                                    eventDialog = EventDialogState.Details(event)
-                                },
-                                onTaskClick = { task ->
-                                    eventDialog = EventDialogState.TaskDetails(task)
-                                },
-                            )
+                        var previousSectionMonth: YearMonth? = null
+                        sections.forEach { section ->
+                            val sectionMonth = YearMonth.from(section.date)
+                            if (sectionMonth != previousSectionMonth) {
+                                item(key = "month-$sectionMonth") {
+                                    AgendaMonthJunction(month = sectionMonth)
+                                }
+                            }
+                            previousSectionMonth = sectionMonth
+
+                            item(key = "date-${section.date}") {
+                                AgendaDaySection(
+                                    section = section,
+                                    onEventClick = { event ->
+                                        eventDialog = EventDialogState.Details(event)
+                                    },
+                                    onTaskClick = { task ->
+                                        eventDialog = EventDialogState.TaskDetails(task)
+                                    },
+                                    onSetTaskCompleted = onSetTaskCompleted,
+                                )
+                            }
                         }
                     }
-
                 }
-            } else {
-                MonthCalendarView(
-                    state = state,
-                    month = visibleMonth,
-                    events = state.events,
-                    tasks = state.tasks,
-                    selectedDate = selectedDate,
-                    onRequestPermission = onRequestPermission,
-                    onDateSelected = ::selectMonthDate,
-                    onEventClick = { event ->
-                        eventDialog = EventDialogState.Details(event)
-                    },
-                    onTaskClick = { task ->
-                        eventDialog = EventDialogState.TaskDetails(task)
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                )
+
+                CalendarViewMode.Month -> {
+                    MonthCalendarView(
+                        state = state,
+                        month = visibleMonth,
+                        events = state.events,
+                        tasks = state.tasks,
+                        selectedDate = selectedDate,
+                        onRequestPermission = onRequestPermission,
+                        onDateSelected = ::selectMonthDate,
+                        onEventClick = { event ->
+                            eventDialog = EventDialogState.Details(event)
+                        },
+                        onTaskClick = { task ->
+                            eventDialog = EventDialogState.TaskDetails(task)
+                        },
+                        onSetTaskCompleted = onSetTaskCompleted,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                    )
+                }
+
+                CalendarViewMode.Tasks -> {
+                    TasksView(
+                        state = state,
+                        filter = taskFilter,
+                        onFilterChange = { taskFilterText = it.name },
+                        onRequestPermission = onRequestPermission,
+                        onTaskClick = { task ->
+                            eventDialog = EventDialogState.TaskDetails(task)
+                        },
+                        onSetTaskCompleted = onSetTaskCompleted,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                    )
+                }
             }
         }
     }
@@ -1048,6 +1097,10 @@ private fun CalendarScreen(
         is EventDialogState.TaskDetails -> TaskDetailsDialog(
             task = dialog.task,
             onDismiss = { eventDialog = null },
+            onSetCompleted = { completed ->
+                onSetTaskCompleted(dialog.task, completed)
+                eventDialog = null
+            },
         )
 
         null -> Unit
@@ -1103,6 +1156,7 @@ private fun CalendarTopBar(
     onOpenNavigation: () -> Unit,
     onOpenAgenda: () -> Unit,
     onOpenMonth: () -> Unit,
+    onOpenTasks: () -> Unit,
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
     onToday: () -> Unit,
@@ -1118,10 +1172,10 @@ private fun CalendarTopBar(
         },
         title = {
             Text(
-                text = if (viewMode == CalendarViewMode.Agenda) {
-                    "Agenda"
-                } else {
-                    month.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                text = when (viewMode) {
+                    CalendarViewMode.Agenda -> "Agenda"
+                    CalendarViewMode.Month -> month.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                    CalendarViewMode.Tasks -> "Tasks"
                 },
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
@@ -1143,28 +1197,24 @@ private fun CalendarTopBar(
                         )
                     }
                 }
-                IconButton(
-                    onClick = if (viewMode == CalendarViewMode.Agenda) onOpenMonth else onOpenAgenda,
-                ) {
-                    Icon(
-                        imageVector = if (viewMode == CalendarViewMode.Agenda) {
-                            Icons.Rounded.CalendarMonth
-                        } else {
-                            Icons.Rounded.ViewAgenda
-                        },
-                        contentDescription = if (viewMode == CalendarViewMode.Agenda) {
-                            "Open month view"
-                        } else {
-                            "Open agenda view"
-                        },
-                    )
+                if (viewMode != CalendarViewMode.Tasks) {
+                    IconButton(onClick = onToday) {
+                        Icon(
+                            imageVector = Icons.Rounded.Today,
+                            contentDescription = "Go to today",
+                        )
+                    }
                 }
-                IconButton(onClick = onToday) {
-                    Icon(
-                        imageVector = Icons.Rounded.Today,
-                        contentDescription = "Go to today",
-                    )
-                }
+                ViewModeSwitcher(
+                    selectedMode = viewMode,
+                    onModeSelected = { mode ->
+                        when (mode) {
+                            CalendarViewMode.Agenda -> onOpenAgenda()
+                            CalendarViewMode.Month -> onOpenMonth()
+                            CalendarViewMode.Tasks -> onOpenTasks()
+                        }
+                    },
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -1174,6 +1224,43 @@ private fun CalendarTopBar(
             actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         ),
     )
+}
+
+@Composable
+private fun ViewModeSwitcher(
+    selectedMode: CalendarViewMode,
+    onModeSelected: (CalendarViewMode) -> Unit,
+) {
+    SingleChoiceSegmentedButtonRow(
+        modifier = Modifier.padding(end = 4.dp),
+    ) {
+        CalendarViewMode.entries.forEachIndexed { index, mode ->
+            SegmentedButton(
+                modifier = Modifier.width(42.dp),
+                selected = mode == selectedMode,
+                onClick = { onModeSelected(mode) },
+                shape = SegmentedButtonDefaults.itemShape(
+                    index = index,
+                    count = CalendarViewMode.entries.size,
+                ),
+                contentPadding = PaddingValues(horizontal = 0.dp),
+                icon = {},
+            ) {
+                Icon(
+                    imageVector = when (mode) {
+                        CalendarViewMode.Agenda -> Icons.Rounded.ViewAgenda
+                        CalendarViewMode.Month -> Icons.Rounded.CalendarMonth
+                        CalendarViewMode.Tasks -> Icons.Rounded.CheckCircle
+                    },
+                    contentDescription = when (mode) {
+                        CalendarViewMode.Agenda -> "Open agenda view"
+                        CalendarViewMode.Month -> "Open month view"
+                        CalendarViewMode.Tasks -> "Open tasks"
+                    },
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -1430,6 +1517,89 @@ private fun AgendaMonthJunction(month: YearMonth) {
 }
 
 @Composable
+private fun TasksView(
+    state: CalendarUiState,
+    filter: TaskFilter,
+    onFilterChange: (TaskFilter) -> Unit,
+    onRequestPermission: () -> Unit,
+    onTaskClick: (CalendarTask) -> Unit,
+    onSetTaskCompleted: (CalendarTask, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val filteredTasks = remember(state.allTasks, filter) {
+        state.allTasks.filter { task ->
+            when (filter) {
+                TaskFilter.Active -> task.isActive()
+                TaskFilter.Completed -> task.status == CalendarTaskStatus.Completed
+                TaskFilter.All -> true
+            }
+        }
+    }
+
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        if (!state.hasCalendarPermission) {
+            item {
+                PermissionPanel(onRequestPermission = onRequestPermission)
+            }
+            return@LazyColumn
+        }
+
+        state.error?.let { message ->
+            item {
+                CompactStatus(
+                    title = "Tasks unavailable",
+                    body = message,
+                )
+            }
+        }
+
+        item {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TaskFilter.entries.forEach { option ->
+                    FilterChip(
+                        selected = filter == option,
+                        onClick = { onFilterChange(option) },
+                        label = { Text(option.label) },
+                    )
+                }
+            }
+        }
+
+        if (filteredTasks.isEmpty()) {
+            item {
+                CompactStatus(
+                    title = "No ${filter.label.lowercase()} tasks",
+                    body = if (filter == TaskFilter.Completed) {
+                        "Completed tasks will appear here."
+                    } else {
+                        "Tasks created from CalDAV lists will appear here."
+                    },
+                )
+            }
+        } else {
+            filteredTasks.forEach { task ->
+                item(key = "task-${task.id}") {
+                    AgendaTaskBlock(
+                        task = task,
+                        onClick = { onTaskClick(task) },
+                        onSetCompleted = { completed ->
+                            onSetTaskCompleted(task, completed)
+                        },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
 private fun MonthCalendarView(
     state: CalendarUiState,
     month: YearMonth,
@@ -1440,6 +1610,7 @@ private fun MonthCalendarView(
     onDateSelected: (LocalDate) -> Unit,
     onEventClick: (CalendarEvent) -> Unit,
     onTaskClick: (CalendarTask) -> Unit,
+    onSetTaskCompleted: (CalendarTask, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val zone = ZoneId.systemDefault()
@@ -1482,6 +1653,7 @@ private fun MonthCalendarView(
             section = AgendaSection(selectedDate, selectedItems),
             onEventClick = onEventClick,
             onTaskClick = onTaskClick,
+            onSetTaskCompleted = onSetTaskCompleted,
         )
     }
 }
@@ -1608,6 +1780,7 @@ private fun AgendaDaySection(
     section: AgendaSection,
     onEventClick: (CalendarEvent) -> Unit,
     onTaskClick: (CalendarTask) -> Unit,
+    onSetTaskCompleted: (CalendarTask, Boolean) -> Unit,
 ) {
     val today = LocalDate.now()
     val isToday = section.date == today
@@ -1636,6 +1809,9 @@ private fun AgendaDaySection(
                         is AgendaItem.Task -> AgendaTaskBlock(
                             task = item.task,
                             onClick = { onTaskClick(item.task) },
+                            onSetCompleted = { completed ->
+                                onSetTaskCompleted(item.task, completed)
+                            },
                         )
                     }
                 }
@@ -1764,6 +1940,7 @@ private fun AgendaEventBlock(
 private fun AgendaTaskBlock(
     task: CalendarTask,
     onClick: () -> Unit,
+    onSetCompleted: (Boolean) -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -1790,19 +1967,9 @@ private fun AgendaTaskBlock(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 12.dp, vertical = 9.dp),
-                verticalAlignment = Alignment.Top,
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                Box(
-                    modifier = Modifier
-                        .padding(top = 3.dp)
-                        .size(16.dp)
-                        .border(
-                            width = 2.dp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            shape = CircleShape,
-                        ),
-                )
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(2.dp),
@@ -1821,8 +1988,42 @@ private fun AgendaTaskBlock(
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
+                TaskCompletionButton(
+                    completed = task.isCompleted(),
+                    onSetCompleted = onSetCompleted,
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun TaskCompletionButton(
+    completed: Boolean,
+    onSetCompleted: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        modifier = modifier.size(40.dp),
+        onClick = { onSetCompleted(!completed) },
+    ) {
+        Icon(
+            imageVector = if (completed) {
+                Icons.Rounded.CheckCircle
+            } else {
+                Icons.Rounded.RadioButtonUnchecked
+            },
+            contentDescription = if (completed) {
+                "Reopen task"
+            } else {
+                "Mark task done"
+            },
+            tint = if (completed) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
+        )
     }
 }
 
@@ -1951,6 +2152,7 @@ private fun EventDetailsDialog(
 private fun TaskDetailsDialog(
     task: CalendarTask,
     onDismiss: () -> Unit,
+    onSetCompleted: (Boolean) -> Unit,
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -2012,6 +2214,24 @@ private fun TaskDetailsDialog(
             }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            Button(
+                enabled = !task.isReadOnly,
+                onClick = { onSetCompleted(!task.isCompleted()) },
+            ) {
+                Icon(
+                    imageVector = if (task.isCompleted()) {
+                        Icons.Rounded.RadioButtonUnchecked
+                    } else {
+                        Icons.Rounded.CheckCircle
+                    },
+                    contentDescription = null,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = if (task.isCompleted()) "Reopen" else "Mark done",
+                )
+            }
 
             Text(
                 text = "Synced CalDAV task",
@@ -3206,6 +3426,15 @@ private sealed interface AgendaItem {
 private enum class CalendarViewMode {
     Agenda,
     Month,
+    Tasks,
+}
+
+private enum class TaskFilter(
+    val label: String,
+) {
+    Active("Active"),
+    Completed("Completed"),
+    All("All"),
 }
 
 private enum class RepeatOption(
@@ -3814,6 +4043,14 @@ private fun CalendarTask.agendaDate(zone: ZoneId): LocalDate? {
     } else {
         date
     }
+}
+
+private fun CalendarTask.isActive(): Boolean {
+    return status != CalendarTaskStatus.Completed && status != CalendarTaskStatus.Cancelled
+}
+
+private fun CalendarTask.isCompleted(): Boolean {
+    return status == CalendarTaskStatus.Completed
 }
 
 @Composable
