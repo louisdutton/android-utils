@@ -109,6 +109,10 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.notifications -> navigator.showNotificationSettings()
 
+                        R.id.blocking -> navigator.showBlockedConversations()
+
+                        R.id.messageUtils -> navigator.showMessageUtils()
+
                         R.id.swipeActions -> view.showSwipeActions()
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())

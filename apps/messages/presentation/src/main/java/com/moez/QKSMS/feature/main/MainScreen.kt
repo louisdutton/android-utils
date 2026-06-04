@@ -553,19 +553,6 @@ private fun MessagesDrawer(
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             NavigationDrawerItem(
-                label = { Text("Blocking") },
-                icon = { Icon(Icons.Rounded.Block, contentDescription = null) },
-                selected = false,
-                onClick = { onNavigate(NavItem.BLOCKING) },
-            )
-            NavigationDrawerItem(
-                label = { Text("Message tools") },
-                icon = { Icon(Icons.Rounded.Sms, contentDescription = null) },
-                selected = false,
-                onClick = { onNavigate(NavItem.MESSAGE_UTILS) },
-            )
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            NavigationDrawerItem(
                 label = { Text("Settings") },
                 icon = { Icon(Icons.Rounded.Settings, contentDescription = null) },
                 selected = false,

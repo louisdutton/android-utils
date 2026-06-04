@@ -263,8 +263,6 @@ class MainViewModel @Inject constructor(
                             else -> newState { copy(hasError = true) }
                         }
                         NavItem.BACKUP -> navigator.showBackup()
-                        NavItem.BLOCKING -> navigator.showBlockedConversations()
-                        NavItem.MESSAGE_UTILS -> navigator.showMessageUtils()
                         NavItem.SETTINGS -> navigator.showSettings()
                         else -> Unit
                     }

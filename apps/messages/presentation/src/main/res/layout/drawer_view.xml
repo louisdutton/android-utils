@@ -85,36 +85,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/blocking"
-            style="@style/DrawerRow">
-
-            <ImageView
-                style="@style/DrawerIcon"
-                android:src="@drawable/ic_block_white_24dp"
-                app:tint="?android:attr/textColorSecondary" />
-
-            <dev.octoshrimpy.quik.common.widget.QkTextView
-                style="@style/DrawerText"
-                android:text="@string/drawer_blocking" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/messageUtils"
-            style="@style/DrawerRow">
-
-            <ImageView
-                style="@style/DrawerIcon"
-                android:src="@drawable/dashboard_2_gear"
-                app:tint="?android:attr/textColorSecondary" />
-
-            <dev.octoshrimpy.quik.common.widget.QkTextView
-                style="@style/DrawerText"
-                android:text="@string/message_management_title" />
-
-        </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

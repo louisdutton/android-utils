@@ -45,6 +45,20 @@
             app:title="@string/settings_notifications_title" />
 
         <dev.octoshrimpy.quik.common.widget.PreferenceView
+            android:id="@+id/blocking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_block_white_24dp"
+            app:title="@string/blocking_title" />
+
+        <dev.octoshrimpy.quik.common.widget.PreferenceView
+            android:id="@+id/messageUtils"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/dashboard_2_gear"
+            app:title="@string/message_management_title" />
+
+        <dev.octoshrimpy.quik.common.widget.PreferenceView
             android:id="@+id/autoEmoji"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
