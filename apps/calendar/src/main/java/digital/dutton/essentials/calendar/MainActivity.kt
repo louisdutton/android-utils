@@ -520,11 +520,12 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     fun renameCalDavCalendar(
         calendarId: String,
         displayName: String,
+        color: Int,
     ) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             runCatching {
-                calDavSyncer.renameCalendar(calendarId, displayName)
+                calDavSyncer.renameCalendar(calendarId, displayName, color)
             }.onSuccess {
                 loadUpcomingEvents()
             }.onFailure { error ->
@@ -563,11 +564,12 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     fun renameSubscription(
         subscriptionId: String,
         displayName: String,
+        color: Int,
     ) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             runCatching {
-                subscriptionSyncer.renameSubscription(subscriptionId, displayName)
+                subscriptionSyncer.renameSubscription(subscriptionId, displayName, color)
             }.onSuccess {
                 loadUpcomingEvents()
             }.onFailure { error ->
@@ -726,8 +728,8 @@ private fun CalendarScreen(
     onConnectCalDav: (String, String, String, String?) -> Unit,
     onSyncRemoteCalendars: () -> Unit,
     onDisconnectCalDav: (String) -> Unit,
-    onRenameSubscription: (String, String) -> Unit,
-    onRenameCalDavCalendar: (String, String) -> Unit,
+    onRenameSubscription: (String, String, Int) -> Unit,
+    onRenameCalDavCalendar: (String, String, Int) -> Unit,
 ) {
     val context = LocalContext.current
     var viewModeText by rememberSaveable { mutableStateOf(CalendarViewMode.Agenda.name) }
@@ -1128,12 +1130,12 @@ private fun CalendarScreen(
             CalendarOptionsDialog(
                 item = item,
                 onDismiss = { selectedDrawerItemKey = null },
-                onRenameSubscription = { subscriptionId, displayName ->
-                    onRenameSubscription(subscriptionId, displayName)
+                onRenameSubscription = { subscriptionId, displayName, color ->
+                    onRenameSubscription(subscriptionId, displayName, color)
                     selectedDrawerItemKey = null
                 },
-                onRenameCalDavCalendar = { calendarId, displayName ->
-                    onRenameCalDavCalendar(calendarId, displayName)
+                onRenameCalDavCalendar = { calendarId, displayName, color ->
+                    onRenameCalDavCalendar(calendarId, displayName, color)
                     selectedDrawerItemKey = null
                 },
                 onUnsubscribe = { subscriptionId ->
@@ -3206,20 +3208,25 @@ private fun AddCalendarDialog(
 private fun CalendarOptionsDialog(
     item: DrawerCalendarItem,
     onDismiss: () -> Unit,
-    onRenameSubscription: (String, String) -> Unit,
-    onRenameCalDavCalendar: (String, String) -> Unit,
+    onRenameSubscription: (String, String, Int) -> Unit,
+    onRenameCalDavCalendar: (String, String, Int) -> Unit,
     onUnsubscribe: (String) -> Unit,
     onDisconnectCalDav: (String) -> Unit,
 ) {
     val subscription = item.subscription
     val calDavCalendar = item.calDavCalendar
     val calDavAccount = item.calDavAccount
+    val initialColor = item.color ?: CalendarOptionColors.first()
+    val colorOptions = remember(initialColor) {
+        (listOf(initialColor) + CalendarOptionColors).distinct()
+    }
     var displayName by remember(item.key) { mutableStateOf(item.displayName) }
+    var selectedColor by remember(item.key) { mutableStateOf(initialColor) }
     val cleanedDisplayName = displayName.trim()
-    val canRename = subscription != null || calDavCalendar != null
-    val canSave = canRename &&
+    val canEdit = subscription != null || calDavCalendar != null
+    val canSave = canEdit &&
         cleanedDisplayName.isNotBlank() &&
-        cleanedDisplayName != item.displayName
+        (cleanedDisplayName != item.displayName || selectedColor != initialColor)
     val secondaryText = item.secondaryText
 
     ModalBottomSheet(
@@ -3255,10 +3262,17 @@ private fun CalendarOptionsDialog(
             OutlinedTextField(
                 value = displayName,
                 onValueChange = { displayName = it },
-                enabled = canRename,
+                enabled = canEdit,
                 singleLine = true,
                 label = { Text("Name") },
                 modifier = Modifier.fillMaxWidth(),
+            )
+
+            CalendarColorPicker(
+                colors = colorOptions,
+                selectedColor = selectedColor,
+                enabled = canEdit,
+                onSelected = { selectedColor = it },
             )
 
             Column(
@@ -3299,7 +3313,7 @@ private fun CalendarOptionsDialog(
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
-                if (!canRename) {
+                if (!canEdit) {
                     Text(
                         text = "This calendar is managed outside this app.",
                         style = MaterialTheme.typography.bodySmall,
@@ -3354,17 +3368,70 @@ private fun CalendarOptionsDialog(
                             subscription != null -> onRenameSubscription(
                                 subscription.id,
                                 cleanedDisplayName,
+                                selectedColor,
                             )
 
                             calDavCalendar != null -> onRenameCalDavCalendar(
                                 calDavCalendar.id,
                                 cleanedDisplayName,
+                                selectedColor,
                             )
                         }
                     },
                     enabled = canSave,
                 ) {
                     Text("Save")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CalendarColorPicker(
+    colors: List<Int>,
+    selectedColor: Int,
+    enabled: Boolean,
+    onSelected: (Int) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = "Color",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            colors.chunked(6).forEach { rowColors ->
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    rowColors.forEach { color ->
+                        val isSelected = color == selectedColor
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(Color(color))
+                                .border(
+                                    width = if (isSelected) 3.dp else 1.dp,
+                                    color = if (isSelected) {
+                                        MaterialTheme.colorScheme.onSurface
+                                    } else {
+                                        MaterialTheme.colorScheme.outline
+                                    },
+                                    shape = CircleShape,
+                                )
+                                .clickable(enabled = enabled) { onSelected(color) },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            if (isSelected) {
+                                Icon(
+                                    imageVector = Icons.Rounded.CheckCircle,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier.size(18.dp),
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -3772,7 +3839,7 @@ private fun CalendarUiState.drawerCalendarItems(): List<DrawerCalendarItem> {
         DrawerCalendarItem(
             key = "subscription:${subscription.id}",
             displayName = subscription.displayName,
-            color = providerCalendar?.color ?: UrlCalendarFallbackColor,
+            color = providerCalendar?.color ?: subscription.color ?: UrlCalendarFallbackColor,
             isReadOnly = true,
             secondaryText = subscription.drawerStatusLabel(providerCalendar),
             calendar = providerCalendar,
@@ -3845,6 +3912,20 @@ private fun CalDavCalendar.drawerStatusLabel(
 private const val UrlCalendarFallbackColor: Int = 0xFF2E7D62.toInt()
 private const val CalDavCalendarFallbackColor: Int = 0xFF1E88E5.toInt()
 private const val TaskListFallbackColor: Int = 0xFF7E57C2.toInt()
+private val CalendarOptionColors = listOf(
+    0xFFE53935.toInt(),
+    0xFFD81B60.toInt(),
+    0xFF8E24AA.toInt(),
+    0xFF5E35B1.toInt(),
+    0xFF3949AB.toInt(),
+    0xFF1E88E5.toInt(),
+    0xFF00897B.toInt(),
+    0xFF43A047.toInt(),
+    0xFF7CB342.toInt(),
+    0xFFFDD835.toInt(),
+    0xFFFB8C00.toInt(),
+    0xFF6D4C41.toInt(),
+)
 
 private fun String.toCalendarNoteText(): CharSequence {
     val note = trim()

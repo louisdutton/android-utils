@@ -1,4 +1,4 @@
-package digital.dutton.essentials.trainer
+package digital.dutton.essentials.voice
 
 import android.media.AudioAttributes
 import android.media.AudioFormat
@@ -60,7 +60,7 @@ class TrainingTonePlayer {
                 }
             }
         }.apply {
-            name = "Music trainer playback"
+            name = "Voice reference playback"
             isDaemon = true
             start()
         }

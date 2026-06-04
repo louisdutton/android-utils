@@ -51,10 +51,7 @@ class MigratePreferences @Inject constructor(
                         autoNight -> nightModeManager.updateNightMode(Preferences.NIGHT_MODE_AUTO)
                         background == "light" -> nightModeManager.updateNightMode(Preferences.NIGHT_MODE_OFF)
                         background == "grey" -> nightModeManager.updateNightMode(Preferences.NIGHT_MODE_ON)
-                        background == "black" -> {
-                            nightModeManager.updateNightMode(Preferences.NIGHT_MODE_ON)
-                            prefs.black.set(true)
-                        }
+                        background == "black" -> nightModeManager.updateNightMode(Preferences.NIGHT_MODE_ON)
                     }
 
                     // Delivery
@@ -63,9 +60,6 @@ class MigratePreferences @Inject constructor(
                     // Quickreply
                     prefs.qkreply.set(rxPrefs.getBoolean("pref_key_quickreply_enabled", prefs.qkreply.get()).get())
                     prefs.qkreplyTapDismiss.set(rxPrefs.getBoolean("pref_key_quickreply_dismiss", prefs.qkreplyTapDismiss.get()).get())
-
-                    // Font size
-                    prefs.textSize.set(rxPrefs.getString("pref_key_font_size", "${prefs.textSize.get()}").get().toInt())
 
                     // Unicode
                     prefs.unicode.set(rxPrefs.getBoolean("pref_key_strip_unicode", prefs.unicode.get()).get())

@@ -77,7 +77,7 @@
 
   <!-- App icons background and foreground colors -->
   <color name="bg_app_icon_release">#FFFFFFFF</color>
-  <color name="bg_app_icon_test">#588157</color>
+  <color name="bg_app_icon_test">#FFFFFFFF</color>
 
   <color name="fg_app_icon_white">#fefdf6</color>
   <color name="fg_app_icon_release">#ccdfca</color>

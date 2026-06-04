@@ -1,4 +1,4 @@
-package digital.dutton.essentials.trainer
+package digital.dutton.essentials.voice
 
 import android.annotation.SuppressLint
 import android.media.AudioFormat

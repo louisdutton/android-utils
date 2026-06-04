@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -112,7 +112,6 @@ fun MessagesMainScreen(
     state: MainState,
     conversationRows: List<ConversationRowModel>,
     query: String,
-    blackTheme: Boolean,
     swipeRightAction: Int,
     swipeLeftAction: Int,
     selectedConversationIds: Set<Long>,
@@ -142,7 +141,7 @@ fun MessagesMainScreen(
 ) {
     val context = LocalContext.current
     val darkTheme = isSystemInDarkTheme()
-    val colorScheme = messagesColorScheme(context, darkTheme, blackTheme)
+    val colorScheme = messagesColorScheme(context, darkTheme)
 
     MaterialTheme(colorScheme = colorScheme) {
         Surface(color = MaterialTheme.colorScheme.background) {
@@ -184,7 +183,6 @@ fun MessagesMainScreen(
 private fun messagesColorScheme(
     context: Context,
     darkTheme: Boolean,
-    blackTheme: Boolean,
 ): ColorScheme {
     val scheme = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && darkTheme -> dynamicDarkColorScheme(context)
@@ -214,7 +212,7 @@ private fun messagesColorScheme(
         outlineVariant = context.materialColor(MaterialR.attr.colorOutlineVariant, scheme.outlineVariant),
     )
 
-    return if (blackTheme && darkTheme) {
+    return if (darkTheme) {
         base.copy(
             background = Color.Black,
             surface = Color.Black,
@@ -648,7 +646,7 @@ private fun SearchResults(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 8.dp),
         ) {
-            items(page.data, key = { it.conversation.id }) { result ->
+            itemsIndexed(page.data, key = { index, result -> "search-${result.conversation.id}-$index" }) { _, result ->
                 SearchResultRow(
                     result = result,
                     dateFormatter = dateFormatter,
@@ -680,7 +678,7 @@ private fun ConversationList(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 8.dp),
     ) {
-        items(rows, key = { it.id }) { row ->
+        itemsIndexed(rows, key = { index, row -> "conversation-${row.id}-$index" }) { _, row ->
             ConversationRow(
                 row = row,
                 selected = row.id in selectedConversationIds,

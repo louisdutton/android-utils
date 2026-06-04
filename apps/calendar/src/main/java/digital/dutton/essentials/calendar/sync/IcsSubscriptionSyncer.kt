@@ -53,12 +53,13 @@ class IcsSubscriptionSyncer(
         var calendarId: Long? = null
 
         try {
-            calendarId = createSubscriptionCalendar(displayName)
+            calendarId = createSubscriptionCalendar(displayName, SubscriptionCalendarColor)
             val subscription = CalendarSubscription(
                 id = UUID.randomUUID().toString(),
                 url = url,
                 displayName = displayName,
                 calendarId = calendarId,
+                color = SubscriptionCalendarColor,
                 lastEtag = fetch.etag,
                 lastModified = fetch.lastModified,
             )
@@ -164,6 +165,7 @@ class IcsSubscriptionSyncer(
     suspend fun renameSubscription(
         subscriptionId: String,
         displayName: String,
+        color: Int,
     ) = withContext(dispatcher) {
         requireCalendarPermissions()
         val cleanedDisplayName = displayName.trim()
@@ -171,8 +173,8 @@ class IcsSubscriptionSyncer(
         val subscription = store.get(subscriptionId)
             ?: throw IllegalArgumentException("Calendar subscription was not found.")
 
-        updateSubscriptionCalendarName(subscription.calendarId, cleanedDisplayName)
-        store.upsert(subscription.copy(displayName = cleanedDisplayName))
+        updateSubscriptionCalendar(subscription.calendarId, cleanedDisplayName, color)
+        store.upsert(subscription.copy(displayName = cleanedDisplayName, color = color))
     }
 
     suspend fun repairSubscriptions() = withContext(dispatcher) {
@@ -182,7 +184,7 @@ class IcsSubscriptionSyncer(
         val subscriptions = store.list()
         subscriptions
             .filter { calendarExists(it.calendarId) }
-            .forEach { updateSubscriptionCalendarName(it.calendarId, it.displayName) }
+            .forEach { updateSubscriptionCalendar(it.calendarId, it.displayName, it.color ?: SubscriptionCalendarColor) }
         pruneOrphanedProviderEvents(subscriptions)
         subscriptions.forEach(::pruneDuplicateProviderEvents)
         subscriptions
@@ -232,12 +234,19 @@ class IcsSubscriptionSyncer(
 
     private fun ensureSubscriptionCalendar(subscription: CalendarSubscription): CalendarSubscription {
         if (calendarExists(subscription.calendarId)) {
-            updateSubscriptionCalendarName(subscription.calendarId, subscription.displayName)
+            updateSubscriptionCalendar(
+                subscription.calendarId,
+                subscription.displayName,
+                subscription.color ?: SubscriptionCalendarColor,
+            )
             return subscription
         }
 
         val repairedSubscription = subscription.copy(
-            calendarId = createSubscriptionCalendar(subscription.displayName),
+            calendarId = createSubscriptionCalendar(
+                subscription.displayName,
+                subscription.color ?: SubscriptionCalendarColor,
+            ),
             lastEtag = null,
             lastModified = null,
             lastSyncMillis = null,
@@ -497,7 +506,10 @@ class IcsSubscriptionSyncer(
         )
     }
 
-    private fun createSubscriptionCalendar(displayName: String): Long {
+    private fun createSubscriptionCalendar(
+        displayName: String,
+        color: Int,
+    ): Long {
         CalendarProviderAccountRegistrar.ensureSubscriptionAccount(context)
         val values = ContentValues().apply {
             put(CalendarContract.Calendars.ACCOUNT_NAME, SubscriptionAccountName)
@@ -505,7 +517,7 @@ class IcsSubscriptionSyncer(
             put(CalendarContract.Calendars.NAME, displayName)
             put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, displayName)
             put(CalendarContract.Calendars.OWNER_ACCOUNT, SubscriptionAccountName)
-            put(CalendarContract.Calendars.CALENDAR_COLOR, SubscriptionCalendarColor)
+            put(CalendarContract.Calendars.CALENDAR_COLOR, color)
             put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_READ)
             put(CalendarContract.Calendars.VISIBLE, 1)
             put(CalendarContract.Calendars.SYNC_EVENTS, 1)
@@ -554,13 +566,15 @@ class IcsSubscriptionSyncer(
         )
     }
 
-    private fun updateSubscriptionCalendarName(
+    private fun updateSubscriptionCalendar(
         calendarId: Long,
         displayName: String,
+        color: Int,
     ) {
         val values = ContentValues().apply {
             put(CalendarContract.Calendars.NAME, displayName)
             put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, displayName)
+            put(CalendarContract.Calendars.CALENDAR_COLOR, color)
         }
         context.contentResolver.update(
             ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, calendarId)

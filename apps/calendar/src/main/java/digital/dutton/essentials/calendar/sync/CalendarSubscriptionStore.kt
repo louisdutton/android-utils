@@ -31,6 +31,8 @@ class CalendarSubscriptionStore(context: Context) {
             url = url,
             displayName = displayName,
             calendarId = calendarId,
+            color = preferences.getInt(prefix + KeyColor, MissingColor)
+                .takeUnless { it == MissingColor },
             lastEtag = preferences.getString(prefix + KeyLastEtag, null),
             lastModified = preferences.getString(prefix + KeyLastModified, null),
             lastSyncMillis = preferences.getLong(prefix + KeyLastSyncMillis, MissingTimestamp)
@@ -48,6 +50,7 @@ class CalendarSubscriptionStore(context: Context) {
             .putString(prefix + KeyUrl, subscription.url)
             .putString(prefix + KeyDisplayName, subscription.displayName)
             .putLong(prefix + KeyCalendarId, subscription.calendarId)
+            .putNullableInt(prefix + KeyColor, subscription.color)
             .putNullableString(prefix + KeyLastEtag, subscription.lastEtag)
             .putNullableString(prefix + KeyLastModified, subscription.lastModified)
             .putNullableLong(prefix + KeyLastSyncMillis, subscription.lastSyncMillis)
@@ -64,6 +67,7 @@ class CalendarSubscriptionStore(context: Context) {
             .remove(prefix + KeyUrl)
             .remove(prefix + KeyDisplayName)
             .remove(prefix + KeyCalendarId)
+            .remove(prefix + KeyColor)
             .remove(prefix + KeyLastEtag)
             .remove(prefix + KeyLastModified)
             .remove(prefix + KeyLastSyncMillis)
@@ -85,6 +89,13 @@ class CalendarSubscriptionStore(context: Context) {
         return if (value == null) remove(key) else putLong(key, value)
     }
 
+    private fun android.content.SharedPreferences.Editor.putNullableInt(
+        key: String,
+        value: Int?,
+    ): android.content.SharedPreferences.Editor {
+        return if (value == null) remove(key) else putInt(key, value)
+    }
+
     private companion object {
         const val PreferencesName = "calendar_subscriptions"
         const val KeyIds = "ids"
@@ -92,11 +103,13 @@ class CalendarSubscriptionStore(context: Context) {
         const val KeyUrl = "url"
         const val KeyDisplayName = "displayName"
         const val KeyCalendarId = "calendarId"
+        const val KeyColor = "color"
         const val KeyLastEtag = "lastEtag"
         const val KeyLastModified = "lastModified"
         const val KeyLastSyncMillis = "lastSyncMillis"
         const val KeyLastError = "lastError"
         const val MissingCalendarId = -1L
         const val MissingTimestamp = -1L
+        const val MissingColor = Int.MIN_VALUE
     }
 }

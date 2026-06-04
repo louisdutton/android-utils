@@ -43,12 +43,6 @@ class Preferences @Inject constructor(
         const val NIGHT_MODE_ON = 2
         const val NIGHT_MODE_AUTO = 3
 
-        const val TEXT_SIZE_SMALL = 0
-        const val TEXT_SIZE_NORMAL = 1
-        const val TEXT_SIZE_LARGE = 2
-        const val TEXT_SIZE_LARGER = 3
-        const val TEXT_SIZE_SUPER = 4
-
         const val NOTIFICATION_PREVIEWS_ALL = 0
         const val NOTIFICATION_PREVIEWS_NAME = 1
         const val NOTIFICATION_PREVIEWS_NONE = 2
@@ -104,12 +98,6 @@ class Preferences @Inject constructor(
     })
     val nightStart = rxPrefs.getString("nightStart", "18:00")
     val nightEnd = rxPrefs.getString("nightEnd", "6:00")
-    val black = rxPrefs.getBoolean("black", false)
-    val systemFont = rxPrefs.getBoolean("systemFont", false)
-    val showStt = rxPrefs.getBoolean("showStt", true)
-    val showSttOffsetX = rxPrefs.getFloat("showSttOffsetX", Float.MIN_VALUE)
-    val showSttOffsetY = rxPrefs.getFloat("showSttOffsetY", Float.MIN_VALUE)
-    val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
     val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
     val drop = rxPrefs.getBoolean("drop", false)
     val silentNotContact = rxPrefs.getBoolean("silentNotContact", false)

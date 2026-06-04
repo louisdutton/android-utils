@@ -114,7 +114,6 @@ class MainActivity : QkThemedActivity(), MainView {
                 state = uiState,
                 conversationRows = conversationRows,
                 query = searchQuery,
-                blackTheme = prefs.black.get(),
                 swipeRightAction = swipeRightAction,
                 swipeLeftAction = swipeLeftAction,
                 selectedConversationIds = selectedConversationIds.toSet(),

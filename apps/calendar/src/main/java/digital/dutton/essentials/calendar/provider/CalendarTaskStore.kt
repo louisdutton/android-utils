@@ -177,6 +177,21 @@ class CalendarTaskStore(context: Context) {
         return idsToDelete.size
     }
 
+    fun updateCollectionDetails(
+        collectionId: String,
+        listName: String,
+        listColor: Int?,
+    ) {
+        val tasks = allTasks().filter { it.collectionId == collectionId }
+        if (tasks.isEmpty()) return
+
+        val editor = preferences.edit()
+        tasks.forEach { task ->
+            editor.putTask(task.copy(listName = listName, listColor = listColor))
+        }
+        editor.apply()
+    }
+
     fun deleteTasksOutsideCollections(activeCollectionIds: Set<String>): Int {
         val idsToDelete = allTasks()
             .filter { task -> task.collectionId != null && task.collectionId !in activeCollectionIds }

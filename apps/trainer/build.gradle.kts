@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-val appId = "digital.dutton.essentials.trainer"
+val appId = "digital.dutton.essentials.voice"
 
 android {
     namespace = appId

@@ -114,9 +114,12 @@ class ConversationRepositoryImpl @Inject constructor(
             }
             .sortedByDescending { result -> result.messages }
 
-        return conversations
+        val conversationMatches = conversations
             .filter { conversation -> conversationFilter.filter(conversation, searchQuery) }
-            .map { conversation -> SearchResult(searchQuery, conversation, 0) } + messagesByConversation
+            .map { conversation -> SearchResult(searchQuery, conversation, 0) }
+
+        return (messagesByConversation + conversationMatches)
+            .distinctBy { result -> result.conversation.id }
     }
 
     override fun getBlockedConversations(): List<Conversation> =

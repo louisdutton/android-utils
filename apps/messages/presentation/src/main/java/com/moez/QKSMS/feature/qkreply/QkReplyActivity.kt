@@ -18,21 +18,12 @@
  */
 package dev.octoshrimpy.quik.feature.qkreply
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.speech.RecognizerIntent
-import android.view.GestureDetector
-import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
-import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import androidx.activity.result.contract.ActivityResultContracts
 import dev.octoshrimpy.quik.common.ViewModelFactory
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
@@ -43,8 +34,6 @@ import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkThemedActivity
 import dev.octoshrimpy.quik.common.util.extensions.autoScrollToStart
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.util.extensions.showKeyboard
-import dev.octoshrimpy.quik.common.widget.QkEditText
 import dev.octoshrimpy.quik.databinding.QkreplyActivityBinding
 import dev.octoshrimpy.quik.feature.compose.MessagesAdapter
 import io.reactivex.subjects.PublishSubject
@@ -64,26 +53,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
     override val sendIntent by lazy { binding.send.clicks() }
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[QkReplyViewModel::class.java] }
-
-    private val speechResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode != Activity.RESULT_OK)
-            return@registerForActivityResult
-
-        // check returned results are good
-        val match = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-        if ((match === null) || (match.size < 1) || (match[0].isNullOrEmpty()))
-            return@registerForActivityResult
-
-        // get the edit text view
-        val message = findViewById<QkEditText>(R.id.message)
-        if (message === null)
-            return@registerForActivityResult
-
-        // populate message box with data returned by STT, set cursor to end, and focus
-        message.setText(match[0])
-        message.setSelection(message.text?.length ?: 0)
-        message.requestFocus()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -106,34 +75,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             override fun onChanged() = binding.messages.scrollToPosition(adapter.itemCount - 1)
         })
 
-        binding.message.setOnTouchListener(object : OnTouchListener {
-            private val gestureDetector =
-                GestureDetector(this@QkReplyActivity, object : SimpleOnGestureListener() {
-                    override fun onDoubleTap(e: MotionEvent): Boolean {
-                        val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                            .putExtra(
-                                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                            )
-                            // include if want a custom message that the STT can (optionally) display   .putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak your message")
-                        speechResultLauncher.launch(speechRecognizerIntent)
-                        return true
-                    }
-
-                    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                        binding.message.showKeyboard()
-                        return true
-                    }
-
-                    override fun onSingleTapUp(e: MotionEvent): Boolean {
-                        return true     // don't show soft keyboard on this event
-                    }
-                })
-
-            override fun onTouch(v: View, e: MotionEvent): Boolean {
-                return gestureDetector.onTouchEvent(e)
-            }
-        })
     }
 
     override fun render(state: QkReplyState) {

@@ -64,7 +64,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     @Inject lateinit var context: Context
     @Inject lateinit var colors: Colors
     @Inject lateinit var nightModeDialog: QkDialog
-    @Inject lateinit var textSizeDialog: QkDialog
     @Inject lateinit var sendDelayDialog: QkDialog
     @Inject lateinit var mmsSizeDialog: QkDialog
     @Inject lateinit var messageLinkHandlingDialog: QkDialog
@@ -99,7 +98,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
                     .mapIndexed { index, title -> MenuItem(title, index) }
                     .drop(1)
         }
-        textSizeDialog.adapter.setData(R.array.text_sizes)
         sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
         messageLinkHandlingDialog.adapter.setData(R.array.messageLinkHandlings, R.array.messageLinkHandling_ids)
@@ -125,8 +123,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun nightEndSelected(): Observable<Pair<Int, Int>> = endTimeSelectedSubject
 
-    override fun textSizeSelected(): Observable<Int> = textSizeDialog.adapter.menuItemClicks
-
     override fun sendDelaySelected(): Observable<Int> = sendDelayDialog.adapter.menuItemClicks
 
     override fun signatureChanged(): Observable<String> = signatureSubject
@@ -145,9 +141,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         binding.nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
         binding.nightEnd.summary = state.nightEnd
 
-        binding.black.setVisible(state.nightModeId != Preferences.NIGHT_MODE_OFF)
-        binding.black.checkbox?.isChecked = state.black
-
         binding.autoEmoji.checkbox?.isChecked = state.autoEmojiEnabled
 
         binding.delayed.summary = state.sendDelaySummary
@@ -159,13 +152,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
         binding.signature.summary = state.signature.takeIf { it.isNotBlank() }
                 ?: context.getString(R.string.settings_signature_summary)
-
-        binding.textSize.summary = state.textSizeSummary
-        textSizeDialog.adapter.selectedItem = state.textSizeId
-
-        binding.systemFont.checkbox?.isChecked = state.systemFontEnabled
-
-        binding.showStt.checkbox?.isChecked = state.showStt
 
         binding.unicode.checkbox?.isChecked = state.stripUnicodeEnabled
         binding.mobileOnly.checkbox?.isChecked = state.mobileOnly
@@ -213,8 +199,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
             endTimeSelectedSubject.onNext(Pair(newHour, newMinute))
         }, hour, minute, DateFormat.is24HourFormat(activity)).show()
     }
-
-    override fun showTextSizePicker() = textSizeDialog.show(activity!!)
 
     override fun showDelayDurationDialog() = sendDelayDialog.show(activity!!)
 

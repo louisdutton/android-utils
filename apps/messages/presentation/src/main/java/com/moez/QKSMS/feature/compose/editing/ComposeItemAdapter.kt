@@ -35,6 +35,7 @@ import dev.octoshrimpy.quik.model.ContactGroup
 import dev.octoshrimpy.quik.model.Conversation
 import dev.octoshrimpy.quik.model.Recipient
 import dev.octoshrimpy.quik.repository.ConversationRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import dev.octoshrimpy.quik.databinding.ContactListItemBinding
@@ -197,6 +198,7 @@ class ComposeItemAdapter @Inject constructor(
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         disposables += conversationRepo.getUnmanagedRecipients()
                 .map { recipients -> recipients.associateByNotNull { recipient -> recipient.contact?.lookupKey } }
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { recipients -> this@ComposeItemAdapter.recipients = recipients }
     }
 

@@ -23,29 +23,21 @@ import android.animation.LayoutTransition
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.provider.ContactsContract
 import android.provider.MediaStore
-import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
 import android.text.format.DateFormat
 import android.view.ContextMenu
-import android.view.DragEvent.ACTION_DRAG_ENDED
-import android.view.DragEvent.ACTION_DRAG_EXITED
-import android.view.DragEvent.ACTION_DROP
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.enableEdgeToEdge
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
@@ -71,7 +63,6 @@ import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.autoScrollToStart
 import dev.octoshrimpy.quik.common.util.extensions.dpToPx
 import dev.octoshrimpy.quik.common.util.extensions.hideKeyboard
-import dev.octoshrimpy.quik.common.util.extensions.makeToast
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.scrapViews
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
@@ -146,7 +137,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val clearCurrentMessageIntent: Subject<Boolean> = PublishSubject.create()
     override val messageLinkAskIntent: Subject<Uri> by lazy { messageAdapter.messageLinkClicks }
     override val reactionClickIntent: Subject<Long> by lazy { messageAdapter.reactionClicks }
-    override val speechRecogniserIntent by lazy { binding.speechToTextIcon.clicks() }
     override val shadeIntent by lazy { binding.shadeBackground.clicks() }
     override val recordAudioStartStopRecording: Subject<Boolean> = PublishSubject.create()
     override val recordAnAudioMessage: Observable<Unit> by lazy {
@@ -174,10 +164,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(scope())
-    }
-
-    private fun isSpeechRecognitionAvailable(): Boolean {
-        return SpeechRecognizer.isRecognitionAvailable(this)
     }
 
     private fun applySystemBarInsets() {
@@ -268,11 +254,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                         label.setTextColor(onSurface)
                     }
 
-                    // speech to text floating button
-                    binding.speechToTextIconBorder.setBackgroundTint(primaryContainer)
-                    binding.speechToTextIcon.setBackgroundTint(surfaceContainerHigh)
-                    binding.speechToTextIcon.setTint(primary)
-
                     // audio message recording
                     binding.audioMsgRecord.setColor(primary)
                     binding.audioMsgPlayerBackground.setBackgroundTint(surfaceContainerHigh)
@@ -294,33 +275,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .mapNotNull { it }
                 .autoDispose(scope())
                 .subscribe { registerForContextMenu(it) }
-
-            // drag drop handlers for speech-to-text icon
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.speechToTextIcon.setOnLongClickListener {
-                    it.startDragAndDrop(null, View.DragShadowBuilder(binding.speechToTextFrame), null, 0)
-                    binding.speechToTextFrame.isVisible = false
-
-                    binding.contentView.setOnDragListener { _, event ->
-                        when (event.action) {
-                            ACTION_DROP -> {
-                                binding.speechToTextFrame.x = (event.x - (binding.speechToTextFrame.width / 2))
-                                binding.speechToTextFrame.y = (event.y - (binding.speechToTextFrame.height / 2))
-
-                                // get offset from root view as a percentage of root view for saving
-                                prefs.showSttOffsetX.set((binding.speechToTextFrame.x - binding.contentView.x) / binding.contentView.width)
-                                prefs.showSttOffsetY.set((binding.speechToTextFrame.y - binding.contentView.y) / binding.contentView.height)
-                            }
-
-                            ACTION_DRAG_ENDED, ACTION_DRAG_EXITED -> {
-                                binding.speechToTextFrame.isVisible = true
-                            }
-                        }
-                        true
-                    }
-                    true
-                }
-            }
 
             // start/stop audio message recording
             binding.audioMsgRecord.setOnClickListener {
@@ -420,16 +374,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun onStart() {
         super.onStart()
         activityVisibleIntent.onNext(true)
-
-        // if first time stt icon is shown (since setting reset), pop up an instruction toast
-        if (prefs.showStt.get() &&
-            (prefs.showSttOffsetX.get() == Float.MIN_VALUE) &&
-            (prefs.showSttOffsetX.get() == Float.MIN_VALUE)) {
-            makeToast(R.string.compose_toast_drag_stt, Toast.LENGTH_LONG)
-            // reset to new flag value that indicates 'not first time through, but not customised'
-            prefs.showSttOffsetX.set(Float.MAX_VALUE)
-            prefs.showSttOffsetY.set(Float.MAX_VALUE)
-        }
     }
 
     override fun onPause() {
@@ -573,19 +517,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         if (state.scheduling)
             scheduleAction.onNext(true)
 
-        // if stt is available and preference is set to show stt button
-        if (isSpeechRecognitionAvailable() && prefs.showStt.get()) {
-            binding.speechToTextFrame.isVisible = true
-
-            val xPercent = prefs.showSttOffsetX.get()
-            val yPercent = prefs.showSttOffsetY.get()
-
-            // if the stt icon has a custom position, move it
-            if ((xPercent != Float.MAX_VALUE) && (yPercent != Float.MAX_VALUE)) {
-                binding.speechToTextFrame.x = (binding.contentView.x + (xPercent * binding.contentView.width))
-                binding.speechToTextFrame.y = (binding.contentView.y + (yPercent * binding.contentView.height))
-            }
-        }
     }
 
     override fun clearSelection() = messageAdapter.clearSelection()
@@ -673,19 +604,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             .putExtra(ContactsActivity.SHARING_KEY, sharing)
             .putExtra(ContactsActivity.CHIPS_KEY, serialized)
         startActivityForResult(intent, ComposeView.SELECT_CONTACT_REQUEST_CODE)
-    }
-
-    override fun startSpeechRecognition() {
-        if (isSpeechRecognitionAvailable()) {
-            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            }
-            try {
-                startActivityForResult(intent, ComposeView.SPEECH_RECOGNITION_REQUEST_CODE)
-            } catch (e: ActivityNotFoundException) {
-                Toast.makeText(this, getString(R.string.error_stt_toast), Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     override fun themeChanged() {
@@ -812,17 +730,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
             ComposeView.ATTACH_CONTACT_REQUEST_CODE -> {
                 data?.data?.let(contactSelectedIntent::onNext)
-            }
-
-            ComposeView.SPEECH_RECOGNITION_REQUEST_CODE -> {
-                // check returned results are good
-                val match = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                if ((match !== null) && (match.size > 0) && (!match[0].isNullOrEmpty())) {
-                    // populate message box with data returned by STT, set cursor to end, and focus
-                    binding.message.append(match[0])
-                    binding.message.setSelection(binding.message.text?.length ?: 0)
-                    binding.message.requestFocus()
-                }
             }
 
             else -> super.onActivityResult(requestCode, resultCode, data)

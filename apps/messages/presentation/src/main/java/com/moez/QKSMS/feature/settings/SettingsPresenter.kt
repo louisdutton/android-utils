@@ -71,9 +71,6 @@ class SettingsPresenter @Inject constructor(
                 .map { millis -> dateFormatter.getTimestamp(millis) }
                 .subscribe { nightEnd -> newState { copy(nightEnd = nightEnd) } }
 
-        disposables += prefs.black.asObservable()
-                .subscribe { black -> newState { copy(black = black) } }
-
         disposables += prefs.notifications().asObservable()
                 .subscribe { enabled -> newState { copy(notificationsEnabled = enabled) } }
 
@@ -92,18 +89,6 @@ class SettingsPresenter @Inject constructor(
 
         disposables += prefs.signature.asObservable()
                 .subscribe { signature -> newState { copy(signature = signature) } }
-
-        val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
-        disposables += prefs.textSize.asObservable()
-                .subscribe { textSize ->
-                    newState { copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
-                }
-
-        disposables += prefs.systemFont.asObservable()
-            .subscribe { enabled -> newState { copy(systemFontEnabled = enabled) } }
-
-        disposables += prefs.showStt.asObservable()
-            .subscribe { enabled -> newState { copy(showStt = enabled) } }
 
         disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { copy(stripUnicodeEnabled = enabled) } }
@@ -168,8 +153,6 @@ class SettingsPresenter @Inject constructor(
                             view.showEndTimePicker(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE))
                         }
 
-                        R.id.black -> prefs.black.set(!prefs.black.get())
-
                         R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
 
                         R.id.notifications -> navigator.showNotificationSettings()
@@ -183,16 +166,6 @@ class SettingsPresenter @Inject constructor(
                         R.id.unreadAtTop -> prefs.unreadAtTop.set(!prefs.unreadAtTop.get())
 
                         R.id.signature -> view.showSignatureDialog(prefs.signature.get())
-
-                        R.id.textSize -> view.showTextSizePicker()
-
-                        R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
-
-                        R.id.showStt -> {
-                            prefs.showStt.set(!prefs.showStt.get())
-                            prefs.showSttOffsetX.set(Float.MIN_VALUE)
-                            prefs.showSttOffsetY.set(Float.MIN_VALUE)
-                        }
 
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 
@@ -222,10 +195,6 @@ class SettingsPresenter @Inject constructor(
         view.nightEndSelected()
                 .autoDispose(view.scope())
                 .subscribe { nightModeManager.setNightEnd(it.first, it.second) }
-
-        view.textSizeSelected()
-                .autoDispose(view.scope())
-                .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
                 .doOnNext(prefs.sendDelay::set)

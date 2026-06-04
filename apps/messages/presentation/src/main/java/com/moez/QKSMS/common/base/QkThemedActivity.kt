@@ -96,12 +96,12 @@ abstract class QkThemedActivity : QkActivity() {
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(getActivityThemeRes(prefs.black.get()))
+        setTheme(getActivityThemeRes(true))
         DynamicColors.applyToActivityIfAvailable(this)
         super.onCreate(savedInstanceState)
 
         // When certain preferences change, we need to recreate the activity
-        val triggers = listOf(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont)
+        val triggers = listOf(prefs.nightMode, prefs.night)
         Observable.merge(triggers.map { it.asObservable().skip(1) })
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -145,7 +145,10 @@ abstract class QkThemedActivity : QkActivity() {
 
                 menuItem.icon = menuItem.icon?.apply { setTint(tint) }
             }
-        }.autoDispose(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
+        }
+            .observeOn(AndroidSchedulers.mainThread())
+            .autoDispose(scope(Lifecycle.Event.ON_DESTROY))
+            .subscribe()
     }
 
     open fun getColoredMenuItems(): List<Int> {

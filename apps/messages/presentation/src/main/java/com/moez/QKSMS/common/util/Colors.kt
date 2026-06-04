@@ -83,7 +83,6 @@ class Colors @Inject constructor(
     fun themeObservable(recipient: Recipient? = null): Observable<Theme> {
         return Observable.merge(
             prefs.theme().asObservable().map { Unit },
-            prefs.black.asObservable().map { Unit },
             prefs.night.asObservable().map { Unit },
             prefs.nightMode.asObservable().map { Unit }
         ).map { theme(recipient) }
@@ -92,7 +91,7 @@ class Colors @Inject constructor(
     private fun materialPrimary(): Int {
         val baseContext = ContextThemeWrapper(
             context,
-            if (prefs.black.get()) R.style.AppTheme_Black else R.style.AppTheme
+            R.style.AppTheme_Black
         )
         val themedContext = DynamicColors.wrapContextIfAvailable(baseContext)
         return themedContext.resolveThemeColor(

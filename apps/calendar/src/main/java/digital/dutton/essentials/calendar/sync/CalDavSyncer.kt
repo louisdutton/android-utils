@@ -122,6 +122,7 @@ class CalDavSyncer(
     suspend fun renameCalendar(
         calendarId: String,
         displayName: String,
+        color: Int,
     ) = withContext(dispatcher) {
         requireCalendarPermissions()
         val cleanedDisplayName = displayName.trim()
@@ -131,23 +132,39 @@ class CalDavSyncer(
         val account = store.getAccount(calendar.accountId)
             ?: throw IllegalArgumentException("CalDAV account was not found.")
 
-        client.renameCalendar(
-            endpoint = account.endpoint(),
-            calendarHref = calendar.href,
-            displayName = cleanedDisplayName,
-        )
+        runCatching {
+            client.updateCalendarProperties(
+                endpoint = account.endpoint(),
+                calendarHref = calendar.href,
+                displayName = cleanedDisplayName,
+                color = color,
+            )
+        }.getOrElse {
+            client.renameCalendar(
+                endpoint = account.endpoint(),
+                calendarHref = calendar.href,
+                displayName = cleanedDisplayName,
+            )
+        }
 
-        val renamedCalendar = calendar.copy(displayName = cleanedDisplayName)
+        val renamedCalendar = calendar.copy(displayName = cleanedDisplayName, color = color)
         updateCalDavCalendar(
             localCalendar = renamedCalendar,
             remoteCalendar = CalDavDiscoveredCalendar(
                 href = renamedCalendar.href,
                 displayName = renamedCalendar.displayName,
-                color = renamedCalendar.color,
+                color = color,
                 syncToken = renamedCalendar.syncToken,
+                supportsEvents = renamedCalendar.supportsEvents,
+                supportsTasks = renamedCalendar.supportsTasks,
             ),
         )
         store.upsertCalendar(renamedCalendar)
+        taskStore.updateCollectionDetails(
+            collectionId = renamedCalendar.id,
+            listName = renamedCalendar.displayName,
+            listColor = renamedCalendar.color,
+        )
     }
 
     suspend fun createTask(draft: CalendarTaskDraft): CalendarTask = withContext(dispatcher) {
@@ -420,11 +437,12 @@ class CalDavSyncer(
                     supportsEvents = remote.supportsEvents,
                     supportsTasks = remote.supportsTasks,
                 )
-                updateCalDavCalendar(updatedCalendar, remote)
+                val calendarColor = existing.color ?: remote.color
+                updateCalDavCalendar(updatedCalendar, remote.copy(color = calendarColor))
                 existing.copy(
                     localCalendarId = localCalendarId,
                     displayName = remote.displayName,
-                    color = remote.color,
+                    color = calendarColor,
                     supportsEvents = remote.supportsEvents,
                     supportsTasks = remote.supportsTasks,
                     syncToken = existing.syncToken,

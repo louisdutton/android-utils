@@ -18,7 +18,6 @@
  */
 package dev.octoshrimpy.quik.common.util
 
-import android.graphics.Typeface
 import android.os.Build
 import android.util.AttributeSet
 import android.widget.EditText
@@ -32,16 +31,13 @@ import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.widget.QkEditText
 import dev.octoshrimpy.quik.common.widget.QkTextView
-import dev.octoshrimpy.quik.util.Preferences
 import com.google.android.material.R as MaterialR
 import javax.inject.Inject
 
 
 
 class TextViewStyler @Inject constructor(
-    private val prefs: Preferences,
-    private val colors: Colors,
-    private val fontProvider: FontProvider
+    private val colors: Colors
 ) {
 
     companion object {
@@ -102,12 +98,6 @@ class TextViewStyler @Inject constructor(
         var colorAttr = 0
         var textSizeAttr = 0
 
-        if (!prefs.systemFont.get()) {
-            fontProvider.getLato { lato ->
-                textView.setTypeface(lato, textView.typeface?.style ?: Typeface.NORMAL)
-            }
-        }
-
         when (textView) {
             is QkTextView -> textView.context.obtainStyledAttributes(attrs, R.styleable.QkTextView).run {
                 colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
@@ -151,61 +141,13 @@ class TextViewStyler @Inject constructor(
      * @see SIZE_TOOLBAR
      */
     fun setTextSize(textView: TextView, textSizeAttr: Int) {
-        val textSizePref = prefs.textSize.get()
         when (textSizeAttr) {
-            SIZE_PRIMARY -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 14f
-                Preferences.TEXT_SIZE_NORMAL -> 16f
-                Preferences.TEXT_SIZE_LARGE -> 18f
-                Preferences.TEXT_SIZE_LARGER -> 20f
-                Preferences.TEXT_SIZE_SUPER -> 40f
-                else -> 16f
-            }
-
-            SIZE_SECONDARY -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 12f
-                Preferences.TEXT_SIZE_NORMAL -> 14f
-                Preferences.TEXT_SIZE_LARGE -> 16f
-                Preferences.TEXT_SIZE_LARGER -> 18f
-                Preferences.TEXT_SIZE_SUPER -> 36f
-                else -> 14f
-            }
-
-            SIZE_TERTIARY -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 10f
-                Preferences.TEXT_SIZE_NORMAL -> 12f
-                Preferences.TEXT_SIZE_LARGE -> 14f
-                Preferences.TEXT_SIZE_LARGER -> 16f
-                Preferences.TEXT_SIZE_SUPER -> 32f
-                else -> 12f
-            }
-
-            SIZE_TOOLBAR -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 18f
-                Preferences.TEXT_SIZE_NORMAL -> 20f
-                Preferences.TEXT_SIZE_LARGE -> 22f
-                Preferences.TEXT_SIZE_LARGER -> 26f
-                Preferences.TEXT_SIZE_SUPER -> 52f
-                else -> 20f
-            }
-
-            SIZE_DIALOG -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 16f
-                Preferences.TEXT_SIZE_NORMAL -> 18f
-                Preferences.TEXT_SIZE_LARGE -> 20f
-                Preferences.TEXT_SIZE_LARGER -> 24f
-                Preferences.TEXT_SIZE_SUPER -> 48f
-                else -> 18f
-            }
-
-            SIZE_EMOJI -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 28f
-                Preferences.TEXT_SIZE_NORMAL -> 32f
-                Preferences.TEXT_SIZE_LARGE -> 36f
-                Preferences.TEXT_SIZE_LARGER -> 40f
-                Preferences.TEXT_SIZE_SUPER -> 80f
-                else -> 32f
-            }
+            SIZE_PRIMARY -> textView.textSize = 16f
+            SIZE_SECONDARY -> textView.textSize = 14f
+            SIZE_TERTIARY -> textView.textSize = 12f
+            SIZE_TOOLBAR -> textView.textSize = 20f
+            SIZE_DIALOG -> textView.textSize = 18f
+            SIZE_EMOJI -> textView.textSize = 32f
         }
     }
 

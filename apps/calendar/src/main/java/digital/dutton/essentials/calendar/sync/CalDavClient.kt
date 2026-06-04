@@ -148,6 +148,30 @@ class CalDavClient(
         }
     }
 
+    fun updateCalendarProperties(
+        endpoint: CalDavEndpoint,
+        calendarHref: String,
+        displayName: String,
+        color: Int,
+    ) {
+        val baseUrl = endpoint.baseUrl.normalizedCalDavUrl()
+        val calendarUrl = baseUrl.resolveHref(calendarHref)
+        val request = Request.Builder()
+            .url(calendarUrl)
+            .header("Authorization", Credentials.basic(endpoint.username, endpoint.password))
+            .header("User-Agent", UserAgent)
+            .method(
+                "PROPPATCH",
+                setCalendarPropertiesRequest(displayName, color)
+                    .toRequestBody(XmlContentType.toMediaType()),
+            )
+            .build()
+
+        httpClient.newCall(request).execute().use { response ->
+            response.requireSuccessful("CalDAV calendar update failed")
+        }
+    }
+
     fun fetchEvents(
         endpoint: CalDavEndpoint,
         calendarHref: String,
@@ -597,6 +621,17 @@ class CalDavClient(
 
     private fun String.toCalendarColor(): Int? {
         val cleaned = trim().takeIf { it.isNotBlank() } ?: return null
+        val hex = cleaned.removePrefix("#")
+        if (hex.length == 8) {
+            return runCatching {
+                Color.argb(
+                    hex.substring(6, 8).toInt(16),
+                    hex.substring(0, 2).toInt(16),
+                    hex.substring(2, 4).toInt(16),
+                    hex.substring(4, 6).toInt(16),
+                )
+            }.getOrNull()
+        }
         return runCatching {
             Color.parseColor(cleaned)
         }.getOrNull()
@@ -720,6 +755,27 @@ $componentXml
               </D:set>
             </D:propertyupdate>
         """.trimIndent()
+    }
+
+    private fun setCalendarPropertiesRequest(
+        displayName: String,
+        color: Int,
+    ): String {
+        return """
+            <?xml version="1.0" encoding="utf-8" ?>
+            <D:propertyupdate xmlns:D="DAV:" xmlns:A="http://apple.com/ns/ical/">
+              <D:set>
+                <D:prop>
+                  <D:displayname>${displayName.xmlEscaped()}</D:displayname>
+                  <A:calendar-color>${color.toCalendarColorHex().xmlEscaped()}</A:calendar-color>
+                </D:prop>
+              </D:set>
+            </D:propertyupdate>
+        """.trimIndent()
+    }
+
+    private fun Int.toCalendarColorHex(): String {
+        return "#%06XFF".format(this and 0x00FFFFFF)
     }
 
     private fun String.toCollectionName(): String {

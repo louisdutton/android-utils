@@ -11,6 +11,7 @@ data class CalendarSubscription(
     val url: String,
     val displayName: String,
     val calendarId: Long,
+    val color: Int? = null,
     val lastEtag: String? = null,
     val lastModified: String? = null,
     val lastSyncMillis: Long? = null,

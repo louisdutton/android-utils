@@ -55,14 +55,6 @@
             tools:summary="Automatic" />
 
         <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:title="@string/settings_black_title"
-            app:widget="@layout/settings_switch_widget" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
             android:id="@+id/nightStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,29 +69,6 @@
             android:visibility="gone"
             app:title="@string/settings_night_end_title"
             tools:summary="9:00AM" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/textSize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_format_size_black_24dp"
-            app:title="@string/settings_text_size_title" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/systemFont"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_title_black_24dp"
-            app:title="@string/settings_system_font_title"
-            app:widget="@layout/settings_switch_widget" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/showStt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_speech_to_text_black"
-            app:title="@string/settings_system_show_stt_title"
-            app:widget="@layout/settings_switch_widget" />
 
         <View
             android:layout_width="match_parent"

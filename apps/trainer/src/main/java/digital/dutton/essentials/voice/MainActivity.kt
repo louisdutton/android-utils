@@ -1,4 +1,4 @@
-package digital.dutton.essentials.trainer
+package digital.dutton.essentials.voice
 
 import android.Manifest
 import android.content.Context
@@ -402,7 +402,7 @@ private fun AppHeader(stats: SingingStats) {
             modifier = Modifier.weight(1f),
         ) {
             Text(
-                text = "Sight Singing",
+                text = "Voice",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.SemiBold,
             )
