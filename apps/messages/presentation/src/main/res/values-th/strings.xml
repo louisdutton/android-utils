@@ -63,7 +63,6 @@
     <string name="main_permission_allow">อนุญาต</string>
     <string name="drawer_inbox">กล่องขาเข้า</string>
     <string name="drawer_archived">จัดเก็บ</string>
-    <string name="drawer_scheduled">กำหนดเวลา</string>
     <string name="drawer_blocking">บล็อก</string>
     <string name="drawer_more">เพิ่มเติม</string>
     <string name="drawer_settings">การตั้งค่า</string>
@@ -86,9 +85,6 @@
     <string name="compose_send_group_summary">ผู้รับและการตอบกลับจะแสดงให้ทุกคนเห็นทุกคน</string>
     <string name="compose_messages_empty">การเริ่มต้นของการสนทนาของคุณ บอกกล่าวบางอย่างที่นี่</string>
     <string name="compose_vcard_label">นามบัตร</string>
-    <string name="compose_scheduled_for">กำหนดการ</string>
-    <string name="compose_scheduled_future">เลือกเวลาที่ต้องเป็นเวลาในอนาคต</string>
-    <string name="compose_scheduled_toast">เพิ่มข้อความที่กำหนดเวลา</string>
     <string name="compose_hint">เขียนข้อความ...</string>
     <string name="compose_menu_copy">คัดลอกข้อความ</string>
     <string name="compose_menu_forward">ส่งต่อ</string>
@@ -110,7 +106,6 @@
     <string name="compose_attach_cd">เพิ่มสิ่งที่แนบ</string>
     <string name="compose_gallery_cd">แนบรูปภาพ</string>
     <string name="compose_camera_cd">ถ่ายภาพ</string>
-    <string name="compose_schedule_cd">กำหนดเวลาของข้อความ</string>
     <string name="compose_contact_cd">Attach a contact</string>
     <string name="compose_contact_error">Error reading contact</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -162,20 +157,7 @@
     <string name="backup_progress_syncing">Syncing messages…</string>
     <string name="backup_progress_finished">Finished!</string>
     <string name="backup_notification_channel_name">Backup and restore</string>
-    <string name="scheduled_title">กำหนดการ</string>
-    <string name="scheduled_empty_description">ส่งข้อความ โดยอัตโนมัติที่คุณต้องการ</string>
-    <string name="scheduled_empty_message_1">วันเกิดของคุณอีกครั้งเมื่อไหร่</string>
-    <string name="scheduled_empty_message_2">วันที่ 23 นี้ธันวาคม</string>
-    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
-    <string name="scheduled_options_title">Scheduled message</string>
-    <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Copy text</item>
-        <item>Delete</item>
-    </string-array>
     <string name="settings_category_appearance">ลักษณะที่ปรากฏ</string>
     <string name="settings_category_general">ทั่วไป</string>
     <string name="settings_category_qkreply">QK ตอบกลับ</string>
@@ -202,7 +184,6 @@
     <string name="settings_qkreply_summary">ป๊อปอัพข้อความใหม่</string>
     <string name="settings_qkreply_tap_dismiss_title">แตะเพื่อยกเลิก</string>
     <string name="settings_qkreply_tap_dismiss_summary">แตะนอกป๊อปอัพเพื่อปิด</string>
-    <string name="settings_delayed_title">การส่งแบบล่าช้า</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
     <string name="settings_swipe_actions_right">Right swipe</string>
@@ -241,7 +222,6 @@
     <string name="settings_sync_summary">ซิงค์ข้อความของคุณกับฐานข้อมูลของ Android SMS</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">ระยะเวลาการป้อน (วินาที)</string>
     <string name="blocking_title">Blocking</string>
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
@@ -313,12 +293,6 @@
         <item>ปกติ</item>
         <item>ขนาดใหญ่</item>
         <item>ขนาดใหญ่มาก</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>ไม่ล่าช้า</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>

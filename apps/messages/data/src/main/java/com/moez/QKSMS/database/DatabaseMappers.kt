@@ -10,8 +10,6 @@ import dev.octoshrimpy.quik.model.MessageContentFilter
 import dev.octoshrimpy.quik.model.MmsPart
 import dev.octoshrimpy.quik.model.PhoneNumber
 import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.model.ScheduledMessage
-import org.json.JSONArray
 
 fun Message.toEntity(): MessageEntity = MessageEntity(
     id = id,
@@ -203,28 +201,6 @@ fun MessageContentFilterEntity.toModel(): MessageContentFilter = MessageContentF
     includeContacts = includeContacts
 )
 
-fun ScheduledMessage.toEntity(): ScheduledMessageEntity = ScheduledMessageEntity(
-    id = id,
-    date = date,
-    subId = subId,
-    recipients = recipients.toJsonArrayString(),
-    sendAsGroup = sendAsGroup,
-    body = body,
-    attachments = attachments.toJsonArrayString(),
-    conversationId = conversationId
-)
-
-fun ScheduledMessageEntity.toModel(): ScheduledMessage = ScheduledMessage(
-    id = id,
-    date = date,
-    subId = subId,
-    recipients = recipients.fromJsonArrayString().toMutableList(),
-    sendAsGroup = sendAsGroup,
-    body = body,
-    attachments = attachments.fromJsonArrayString().toMutableList(),
-    conversationId = conversationId
-)
-
 fun EmojiReaction.toEntity(targetMessageId: Long = this.targetMessageId): EmojiReactionEntity = EmojiReactionEntity(
     id = id,
     reactionMessageId = reactionMessageId,
@@ -243,16 +219,4 @@ fun EmojiReactionEntity.toModel(): EmojiReaction = EmojiReaction().also { reacti
     reaction.emoji = emoji
     reaction.originalMessageText = originalMessageText
     reaction.threadId = threadId
-}
-
-private fun Collection<String>.toJsonArrayString(): String {
-    val array = JSONArray()
-    forEach(array::put)
-    return array.toString()
-}
-
-private fun String.fromJsonArrayString(): List<String> {
-    if (isBlank()) return emptyList()
-    val array = JSONArray(this)
-    return List(array.length()) { index -> array.getString(index) }
 }

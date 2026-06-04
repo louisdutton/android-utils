@@ -79,6 +79,7 @@ class MainActivity : QkThemedActivity(), MainView {
     private val snackbarButtonSubject: Subject<Unit> = PublishSubject.create()
 
     private val selectedConversationIds = mutableStateListOf<Long>()
+    private var selectedConversationIdSet by mutableStateOf<Set<Long>>(emptySet())
     private var visibleConversationIds: List<Long> = emptyList()
     private var uiState by mutableStateOf(MainState())
     private var conversationRows by mutableStateOf<List<ConversationRowModel>>(emptyList())
@@ -118,7 +119,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 query = searchQuery,
                 swipeRightAction = swipeRightAction,
                 swipeLeftAction = swipeLeftAction,
-                selectedConversationIds = selectedConversationIds.toSet(),
+                selectedConversationIds = selectedConversationIdSet,
                 dateFormatter = dateFormatter,
                 onQueryChanged = { query ->
                     searchQuery = query
@@ -218,10 +219,6 @@ class MainActivity : QkThemedActivity(), MainView {
         updateSelection(nextSelection)
     }
 
-    override fun themeChanged() {
-        refreshConversationRows(uiState.page, force = true)
-    }
-
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
         blockingDialog.show(conversations, block)
     }
@@ -295,6 +292,7 @@ class MainActivity : QkThemedActivity(), MainView {
     private fun updateSelection(selection: List<Long>) {
         selectedConversationIds.clear()
         selectedConversationIds.addAll(selection)
+        selectedConversationIdSet = selection.toSet()
         conversationsSelectedSubject.onNext(selection)
     }
 
@@ -358,6 +356,7 @@ class MainActivity : QkThemedActivity(), MainView {
             timestamp = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp),
             unread = conversation.unread,
             pinned = conversation.pinned,
+            recipients = conversation.recipients.toList(),
         )
     }
 

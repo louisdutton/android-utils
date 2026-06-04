@@ -63,7 +63,6 @@
     <string name="main_permission_allow">سماح</string>
     <string name="drawer_inbox">صندوق الوارد</string>
     <string name="drawer_archived">المؤرشفة</string>
-    <string name="drawer_scheduled">المجدولة</string>
     <string name="drawer_blocking">الحظر</string>
     <string name="drawer_more">المزيد</string>
     <string name="drawer_settings">الإعدادات</string>
@@ -91,9 +90,6 @@
     <string name="compose_send_group_summary">المتلقون والردود سيكونان مرئيين للجميع</string>
     <string name="compose_messages_empty">هذا أول المحادثة. قل شيئا لطيفاً!</string>
     <string name="compose_vcard_label">بطاقة جهة الاتصال</string>
-    <string name="compose_scheduled_for">الموعد المحدد:</string>
-    <string name="compose_scheduled_future">الوقت المحدّد يجب أن يكون مستقبلاً!</string>
-    <string name="compose_scheduled_toast">أضيفت إلى الرسائل المجدولة</string>
     <string name="compose_hint">كتابة رسالة…</string>
     <string name="compose_menu_copy">نسخ النص</string>
     <string name="compose_menu_forward">إعادة توجيه</string>
@@ -115,7 +111,6 @@
     <string name="compose_attach_cd">إضافة مرفق</string>
     <string name="compose_gallery_cd">إرفاق صورة</string>
     <string name="compose_camera_cd">التقاط صورة</string>
-    <string name="compose_schedule_cd">جدوِل الرسالة</string>
     <string name="compose_contact_cd">إرفاق جهة اتصال</string>
     <string name="compose_contact_error">خطأ في قراءة جهة الاتصال</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -167,20 +162,7 @@
     <string name="backup_progress_syncing">مزامنة الرسائل جارية…</string>
     <string name="backup_progress_finished">تم!</string>
     <string name="backup_notification_channel_name">النسخ الاحتياطي والاستعادة</string>
-    <string name="scheduled_title">مجدولة</string>
-    <string name="scheduled_empty_description">الإرسال الآلي لأي رسالة في الوقت الذي ترغب بالضبط</string>
-    <string name="scheduled_empty_message_1">مهلاً..متى عيد ميلادك؟</string>
-    <string name="scheduled_empty_message_2">إنه في 23 ديسمبر</string>
-    <string name="scheduled_empty_message_3">عيد ميلاد سعيد! انظر كم أنا صديق رائع، أتذكر عيد ميلادك</string>
     <!--&#x200A; is a special character required at the end of this string to fix its formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">الإرسال في 23 ديسمبر</string>
-    <string name="scheduled_compose_cd">جدولة رسالة</string>
-    <string name="scheduled_options_title">الرسالة المجدولة</string>
-    <string-array name="scheduled_options">
-        <item>أرسل الآن</item>
-        <item>نسخ النص</item>
-        <item>حذف</item>
-    </string-array>
     <string name="settings_category_appearance">المظهر</string>
     <string name="settings_category_general">عام</string>
     <string name="settings_category_qkreply">رد QK</string>
@@ -207,7 +189,6 @@
     <string name="settings_qkreply_summary">نافذة منبثقة للرسائل الجديدة</string>
     <string name="settings_qkreply_tap_dismiss_title">إلمس للاستبعاد</string>
     <string name="settings_qkreply_tap_dismiss_summary">إلمس خارج المنبثقة لإغلاقها</string>
-    <string name="settings_delayed_title">الإرسال المؤخَّر</string>
     <string name="settings_swipe_actions">إجراءات السَّحْب</string>
     <string name="settings_swipe_actions_summary">ضبط إجراءات السحب بالنسبة للمحادثات</string>
     <string name="settings_swipe_actions_right">سحب لليمين</string>
@@ -251,7 +232,6 @@
     <string name="settings_sync_summary">إعادة مزامنة رسائلك مع قاعدة البيانات الأصلية للرسائل في النظام</string>
     <string name="settings_logging_enabled">تسجيل التصحيح مفعَّل</string>
     <string name="settings_logging_disabled">تسجيل التصحيح معطَّل</string>
-    <string name="settings_delay_duration_hint">أدخل المدة (ثوان)</string>
     <string name="blocking_title">المحظورات</string>
     <string name="blocking_drop_title">مسح الرسائل</string>
     <string name="blocking_drop_summary">قم بحذف الرسائل الواردة من المرسلين المحظورين بدلاً من إخفائها</string>
@@ -339,12 +319,6 @@
         <item>كبير</item>
         <item>أكبر</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>دون تأخير</item>
-        <item>ثلاث ثوان</item>
-        <item>خمس ثوان</item>
-        <item>عشر ثوان</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>تلقائي</item>
         <item>100كيلوبايت</item>
@@ -378,8 +352,6 @@
     <string name="main_sync_emojis">تحليل ردود فعل الرموز التعبيرية…</string>
     <string name="main_sender_draft">مسودة: %s</string>
     <string name="menu_mms_part_open">افتح خارجياً</string>
-    <string name="scheduled_menu_send_now">أرسل الآن</string>
-    <string name="scheduled_menu_edit_message">تعديل الرسالة</string>
     <string name="message_management_title">إدارة الرسائل</string>
     <plurals name="dialog_delete_chat">
         <item quantity="zero">هل أنت متأكد من رغبتك في حذف هذه الرسالة؟</item>
@@ -397,26 +369,19 @@
         <item quantity="many">هل أنت متأكد من رغبتك في إرسال %d رسالة الآن؟</item>
         <item quantity="other">هل أنت متأكد من رغبتك في إرسال %d رسالة الآن؟</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">تعديل الرسالة</string>
-    <string name="dialog_edit_scheduled_message">سيؤدي تعديل هذه الرسالة إلى حذفها من الجدول.\n\nتأكد من إعادة إرسالها في الشاشة التالية، وإلا ستُفقد.\n\nهل تريد المتابعة؟</string>
-    <string name="dialog_edit_scheduled_message_positive_button">نعم، عدّل الرسالة</string>
     <string name="dialog_clear_compose">هل تريد مسح الرسالة؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="dialog_clear_compose_title">امسح الرسالة</string>
     <string name="compose_send_group_summary_on">ستكون أسماء المستلمين والردود مرئية للجميع</string>
     <string name="compose_send_group_summary_off">سيتم إرسال الرسائل بشكل منفصل إلى جميع المستلمين</string>
-    <string name="compose_scheduled_view">الرسائل المجدولة لهذه المحادثة</string>
     <string name="compose_no_valid_recipients">لا يمكن إرسالها إلى المشاركين الآخرين</string>
     <string name="compose_menu_show_status">عرض الحالة</string>
     <string name="compose_reactions_title">الردود</string>
     <string name="compose_attach_file_cd">أرفق أي ملف</string>
     <string name="compose_audio_message_cd">سجل الرسالة الصوتية</string>
-    <string name="compose_schedule_cancel_cd">إلغاء الرسائل المجدولة</string>
     <string name="compose_record_audio_msg_cd">سجل رسالة صوتية</string>
     <string name="compose_record_audio_msg_abort_cd">ألغي الرسالة الصوتية</string>
     <string name="compose_record_audio_msg_attach_cd">إرفاق رسائل صوتية</string>
     <string name="compose_record_audio_msg_play_pause_cd">تشغيل أو إيقاف الرسالة الصوتية مؤقتًا</string>
-    <string name="compose_message_cancel">إلغاء</string>
-    <string name="compose_message_send_now">أرسل الآن</string>
     <string name="compose_message_sim">رقم الشريحة</string>
     <string name="compose_message_item">بند الرسالة</string>
     <string name="compose_message_attachment">الملحق</string>
@@ -424,7 +389,6 @@
     <string name="message_body_too_long_to_display">⚠ الرسالة طويلة. انسخها أو احفظها لعرض النص الكامل</string>
     <string name="clipboard_too_large_to_copy">حجم البيانات يتجاوز الحد المسموح به في الحافظة</string>
     <string name="clipboard_unable_to_copy_to">تعذر النسخ إلى الحافظة</string>
-    <string name="scheduled_send_cd">تمت جدولة هذه الرسائل</string>
     <string name="attachment_missing">مفقود</string>
     <string name="settings_system_show_stt_title">إظهار زر تحويل الكلام إلى نص</string>
     <string name="settings_notification_previews_summary">إظهار الاسم والرسالة</string>

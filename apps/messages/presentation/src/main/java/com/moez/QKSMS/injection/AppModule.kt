@@ -46,13 +46,10 @@ import dev.octoshrimpy.quik.database.RecipientDao
 import dev.octoshrimpy.quik.database.ScheduledMessageDao
 import dev.octoshrimpy.quik.database.SyncStateDao
 import dev.octoshrimpy.quik.feature.conversationinfo.injection.ConversationInfoComponent
-import dev.octoshrimpy.quik.feature.themepicker.injection.ThemePickerComponent
 import dev.octoshrimpy.quik.listener.ContactAddedListener
 import dev.octoshrimpy.quik.listener.ContactAddedListenerImpl
 import dev.octoshrimpy.quik.manager.ActiveConversationManager
 import dev.octoshrimpy.quik.manager.ActiveConversationManagerImpl
-import dev.octoshrimpy.quik.manager.AlarmManager
-import dev.octoshrimpy.quik.manager.AlarmManagerImpl
 import dev.octoshrimpy.quik.manager.KeyManager
 import dev.octoshrimpy.quik.manager.KeyManagerImpl
 import dev.octoshrimpy.quik.manager.NotificationManager
@@ -89,16 +86,13 @@ import dev.octoshrimpy.quik.repository.MessageContentFilterRepository
 import dev.octoshrimpy.quik.repository.MessageContentFilterRepositoryImpl
 import dev.octoshrimpy.quik.repository.MessageRepository
 import dev.octoshrimpy.quik.repository.MessageRepositoryImpl
-import dev.octoshrimpy.quik.repository.ScheduledMessageRepository
-import dev.octoshrimpy.quik.repository.ScheduledMessageRepositoryImpl
 import dev.octoshrimpy.quik.repository.SyncRepository
 import dev.octoshrimpy.quik.repository.SyncRepositoryImpl
 import dev.octoshrimpy.quik.worker.InjectionWorkerFactory
 import javax.inject.Singleton
 
 @Module(subcomponents = [
-    ConversationInfoComponent::class,
-    ThemePickerComponent::class])
+    ConversationInfoComponent::class])
 class AppModule(private var application: Application) {
 
     @Provides
@@ -157,10 +151,10 @@ class AppModule(private var application: Application) {
     fun provideMessageContentFilterDao(database: MessagesDatabase): MessageContentFilterDao = database.messageContentFilters()
 
     @Provides
-    fun provideScheduledMessageDao(database: MessagesDatabase): ScheduledMessageDao = database.scheduledMessages()
+    fun provideEmojiReactionDao(database: MessagesDatabase): EmojiReactionDao = database.emojiReactions()
 
     @Provides
-    fun provideEmojiReactionDao(database: MessagesDatabase): EmojiReactionDao = database.emojiReactions()
+    fun provideScheduledMessageDao(database: MessagesDatabase): ScheduledMessageDao = database.scheduledMessages()
 
     @Provides
     @Singleton
@@ -179,9 +173,6 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideActiveConversationManager(manager: ActiveConversationManagerImpl): ActiveConversationManager = manager
-
-    @Provides
-    fun provideAlarmManager(manager: AlarmManagerImpl): AlarmManager = manager
 
     @Provides
     fun blockingClient(client: QksmsBlockingClient): BlockingClient = client
@@ -243,9 +234,6 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideMessageRepository(repository: MessageRepositoryImpl): MessageRepository = repository
-
-    @Provides
-    fun provideScheduledMessagesRepository(repository: ScheduledMessageRepositoryImpl): ScheduledMessageRepository = repository
 
     @Provides
     fun provideSyncRepository(repository: SyncRepositoryImpl): SyncRepository = repository

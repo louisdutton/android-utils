@@ -34,7 +34,6 @@ import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeBoolean
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.extensions.Optional
-import dev.octoshrimpy.quik.extensions.asObservable
 import dev.octoshrimpy.quik.model.Recipient
 import dev.octoshrimpy.quik.repository.ConversationRepository
 import dev.octoshrimpy.quik.repository.MessageRepository
@@ -45,7 +44,6 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import com.google.android.material.R as MaterialR
 
@@ -99,14 +97,6 @@ abstract class QkThemedActivity : QkActivity() {
         setTheme(getActivityThemeRes(true))
         DynamicColors.applyToActivityIfAvailable(this)
         super.onCreate(savedInstanceState)
-
-        // When certain preferences change, we need to recreate the activity
-        val triggers = listOf(prefs.nightMode, prefs.night)
-        Observable.merge(triggers.map { it.asObservable().skip(1) })
-                .debounce(400, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .autoDispose(scope())
-                .subscribe { recreate() }
 
         // We can only set light nav bar on API 27 in attrs, but we can do it in API 26 here
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {

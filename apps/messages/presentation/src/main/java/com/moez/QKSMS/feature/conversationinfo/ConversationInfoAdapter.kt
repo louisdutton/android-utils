@@ -8,8 +8,6 @@ import com.jakewharton.rxbinding2.view.clicks
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkAdapter
 import dev.octoshrimpy.quik.common.base.QkViewHolder
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.databinding.ConversationInfoSettingsBinding
 import dev.octoshrimpy.quik.databinding.ConversationMediaListItemBinding
@@ -22,13 +20,11 @@ import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 class ConversationInfoAdapter @Inject constructor(
-    private val context: Context,
-    private val colors: Colors
+    private val context: Context
 ) : QkAdapter<ConversationInfoItem, QkViewHolder>() {
 
     val recipientClicks: Subject<Long> = PublishSubject.create()
     val recipientLongClicks: Subject<Long> = PublishSubject.create()
-    val themeClicks: Subject<Long> = PublishSubject.create()
     val nameClicks: Subject<Unit> = PublishSubject.create()
     val notificationClicks: Subject<Unit> = PublishSubject.create()
     val markUnreadClicks: Subject<Unit> = PublishSubject.create()
@@ -54,10 +50,6 @@ class ConversationInfoAdapter @Inject constructor(
                         true
                     }
 
-                    binding.theme.setOnClickListener {
-                        val item = getItem(adapterPosition) as? ConversationInfoRecipient
-                        item?.value?.id?.run(themeClicks::onNext)
-                    }
                 }
             }
 
@@ -100,9 +92,6 @@ class ConversationInfoAdapter @Inject constructor(
                 binding.address.setVisible(recipient.contact != null)
 
                 binding.add.setVisible(recipient.contact == null)
-
-                val theme = colors.theme(recipient)
-                binding.theme.setTint(theme.theme)
             }
 
             is ConversationInfoSettings -> {

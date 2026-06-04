@@ -39,9 +39,6 @@ class Preferences @Inject constructor(
 
     companion object {
         const val NIGHT_MODE_SYSTEM = 0
-        const val NIGHT_MODE_OFF = 1
-        const val NIGHT_MODE_ON = 2
-        const val NIGHT_MODE_AUTO = 3
 
         const val NOTIFICATION_PREVIEWS_ALL = 0
         const val NOTIFICATION_PREVIEWS_NAME = 1
@@ -55,11 +52,6 @@ class Preferences @Inject constructor(
         const val NOTIFICATION_ACTION_READ = 5
         const val NOTIFICATION_ACTION_REPLY = 6
         const val NOTIFICATION_ACTION_SPEAK = 7
-
-        const val SEND_DELAY_NONE = 0
-        const val SEND_DELAY_SHORT = 1
-        const val SEND_DELAY_MEDIUM = 2
-        const val SEND_DELAY_LONG = 3
 
         const val SWIPE_ACTION_NONE = 0
         const val SWIPE_ACTION_ARCHIVE = 1
@@ -77,19 +69,13 @@ class Preferences @Inject constructor(
 
     // Internal
     val didSetReferrer = rxPrefs.getBoolean("didSetReferrer", false)
-    val night = rxPrefs.getBoolean("night", false)
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
     val version = rxPrefs.getInteger("version", context.versionCode)
     val hasAskedForNotificationPermission = rxPrefs.getBoolean("hasAskedForNotificationPermission", false)
     val backupDirectory = rxPrefs.getObject("backupDirectory", Uri.EMPTY, UriPreferenceConverter())
     // User configurable
     val sendAsGroup = rxPrefs.getBoolean("sendAsGroup", true)
-    val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
-        true -> NIGHT_MODE_SYSTEM
-        false -> NIGHT_MODE_OFF
-    })
-    val nightStart = rxPrefs.getString("nightStart", "18:00")
-    val nightEnd = rxPrefs.getString("nightEnd", "6:00")
+    val nightMode = rxPrefs.getInteger("nightMode", NIGHT_MODE_SYSTEM)
     val drop = rxPrefs.getBoolean("drop", false)
     val silentNotContact = rxPrefs.getBoolean("silentNotContact", false)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)
@@ -97,7 +83,6 @@ class Preferences @Inject constructor(
     val notifAction3 = rxPrefs.getInteger("notifAction3", NOTIFICATION_ACTION_NONE)
     val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
     val qkreplyTapDismiss = rxPrefs.getBoolean("qkreplyTapDismiss", true)
-    val sendDelay = rxPrefs.getInteger("sendDelay", SEND_DELAY_NONE)
     val swipeRight = rxPrefs.getInteger("swipeRight", SWIPE_ACTION_ARCHIVE)
     val swipeLeft = rxPrefs.getInteger("swipeLeft", SWIPE_ACTION_ARCHIVE)
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
@@ -116,15 +101,11 @@ class Preferences @Inject constructor(
     val autoDeduplicate = rxPrefs.getBoolean("autoDeduplicateMessages", false)
 
     init {
-        // Migrate from old night mode preference to new one, now that we support android Q night mode
+        nightMode.set(NIGHT_MODE_SYSTEM)
+
+        // Drop the legacy night mode summary once seen.
         val nightModeSummary = rxPrefs.getInteger("nightModeSummary")
         if (nightModeSummary.isSet) {
-            nightMode.set(when (nightModeSummary.get()) {
-                0 -> NIGHT_MODE_OFF
-                1 -> NIGHT_MODE_ON
-                2 -> NIGHT_MODE_AUTO
-                else -> NIGHT_MODE_OFF
-            })
             nightModeSummary.delete()
         }
     }

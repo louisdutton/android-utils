@@ -42,7 +42,6 @@ class SendNewMessage @Inject constructor(
         val body: String,
         val sendAsGroup: Boolean,
         val attachments: Collection<Attachment> = listOf(),
-        val delay: Int = 0
     )
 
     override fun buildObservable(params: Params): Flowable<*> = Flowable.just(Unit)
@@ -64,7 +63,7 @@ class SendNewMessage @Inject constructor(
         .map { conversation ->
             // send the message
             messageRepo.sendNewMessages(params.subId, conversation.recipients.map { it.address },
-                params.body, params.attachments, params.sendAsGroup, params.delay)
+                params.body, params.attachments, params.sendAsGroup)
         }
         .map { messages -> messages.map { it.threadId } }
         .doOnNext { threadIds ->

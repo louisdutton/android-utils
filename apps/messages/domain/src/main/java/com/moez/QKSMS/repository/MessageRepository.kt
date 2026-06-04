@@ -89,14 +89,12 @@ interface MessageRepository {
 
     fun sendNewMessages(
         subId: Int, toAddresses: Collection<String>, body: String,
-        attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int = 0
+        attachments: Collection<Attachment>, sendAsGroup: Boolean
     ): Collection<Message>
 
     fun sendMessage(message: Message): Collection<Message>
 
     fun sendMessage(messageId: Long): Collection<Message>
-
-    fun cancelDelayedSmsAlarm(messageId: Long)
 
     fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message
 

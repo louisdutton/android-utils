@@ -35,7 +35,6 @@ import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.databinding.ConversationListItemBinding
 import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.repository.ScheduledMessageRepository
 import dev.octoshrimpy.quik.util.PhoneNumberUtils
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -44,7 +43,6 @@ class ConversationsAdapter @Inject constructor(
     private val colors: Colors,
     private val context: Context,
     private val dateFormatter: DateFormatter,
-    private val scheduledMessageRepo: ScheduledMessageRepository,
     private val navigator: Navigator,
     private val phoneNumberUtils: PhoneNumberUtils
 ) : QkListAdapter<Conversation, QkBindingViewHolder<ConversationListItemBinding>>() {
@@ -121,10 +119,6 @@ class ConversationsAdapter @Inject constructor(
 
         // Make the preview in italics if draft
         if (conversation.draft.isNotEmpty()) binding.snippet.setTypeface(null, Typeface.ITALIC)
-
-        // Get Scheduled Messages
-        binding.scheduled.isVisible =
-            scheduledMessageRepo.getScheduledMessagesForConversation(conversation.id).isNotEmpty()
 
         binding.pinned.isVisible = conversation.pinned
         binding.unread.setTint(theme)

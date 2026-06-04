@@ -6,6 +6,9 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -31,7 +35,6 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.DoneAll
 import androidx.compose.material.icons.rounded.Inbox
 import androidx.compose.material.icons.rounded.MarkEmailRead
 import androidx.compose.material.icons.rounded.MarkEmailUnread
@@ -64,8 +67,6 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -77,10 +78,11 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -91,19 +93,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.recyclerview.widget.ItemTouchHelper
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.model.Conversation
+import dev.octoshrimpy.quik.model.Recipient
 import dev.octoshrimpy.quik.model.SearchResult
 import dev.octoshrimpy.quik.repository.SyncRepository
 import dev.octoshrimpy.quik.util.Preferences
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlin.math.roundToInt
 import com.google.android.material.R as MaterialR
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -548,12 +553,6 @@ private fun MessagesDrawer(
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             NavigationDrawerItem(
-                label = { Text("Scheduled") },
-                icon = { Icon(Icons.Rounded.DoneAll, contentDescription = null) },
-                selected = false,
-                onClick = { onNavigate(NavItem.SCHEDULED) },
-            )
-            NavigationDrawerItem(
                 label = { Text("Blocking") },
                 icon = { Icon(Icons.Rounded.Block, contentDescription = null) },
                 selected = false,
@@ -678,27 +677,16 @@ private fun ConversationList(
         return
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 8.dp),
-    ) {
-        items(
-            items = rows,
-            key = { row -> row.id },
-            contentType = { "conversation" },
-        ) { row ->
-            ConversationRow(
-                row = row,
-                selected = row.id in selectedConversationIds,
-                swipeRightAction = swipeRightAction,
-                swipeLeftAction = swipeLeftAction,
-                swipesEnabled = swipesEnabled,
-                onClick = { onConversationClick(row.id) },
-                onLongClick = { onConversationLongClick(row.id) },
-                onSwipe = { direction -> onConversationSwipe(row.id, direction) },
-            )
-        }
-    }
+    ConversationRecyclerList(
+        rows = rows,
+        selectedConversationIds = selectedConversationIds,
+        swipeRightAction = swipeRightAction,
+        swipeLeftAction = swipeLeftAction,
+        swipesEnabled = swipesEnabled,
+        onConversationClick = onConversationClick,
+        onConversationLongClick = onConversationLongClick,
+        onConversationSwipe = onConversationSwipe,
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -713,109 +701,140 @@ private fun ConversationRow(
     onLongClick: () -> Unit,
     onSwipe: (Int) -> Unit,
 ) {
+    val swipeEnabled = swipesEnabled &&
+        (swipeRightAction != Preferences.SWIPE_ACTION_NONE ||
+            swipeLeftAction != Preferences.SWIPE_ACTION_NONE)
+    val density = LocalDensity.current
+    val maxSwipePx = with(density) { 96.dp.toPx() }
+    val thresholdPx = with(density) { 56.dp.toPx() }
+    val minOffset = if (swipeLeftAction != Preferences.SWIPE_ACTION_NONE) -maxSwipePx else 0f
+    val maxOffset = if (swipeRightAction != Preferences.SWIPE_ACTION_NONE) maxSwipePx else 0f
+    var offsetX by remember(row.id) { mutableFloatStateOf(0f) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .draggable(
+                enabled = swipeEnabled,
+                orientation = Orientation.Horizontal,
+                state = rememberDraggableState { delta ->
+                    offsetX = (offsetX + delta).coerceIn(minOffset, maxOffset)
+                },
+                onDragStopped = {
+                    when {
+                        offsetX >= thresholdPx -> onSwipe(ItemTouchHelper.RIGHT)
+                        offsetX <= -thresholdPx -> onSwipe(ItemTouchHelper.LEFT)
+                    }
+                    offsetX = 0f
+                },
+            ),
+    ) {
+        if (offsetX != 0f) {
+            SwipeActionBackground(
+                direction = if (offsetX > 0) ItemTouchHelper.RIGHT else ItemTouchHelper.LEFT,
+                swipeRightAction = swipeRightAction,
+                swipeLeftAction = swipeLeftAction,
+            )
+        }
+
+        ConversationRowContent(
+            row = row,
+            selected = selected,
+            onClick = onClick,
+            onLongClick = onLongClick,
+            modifier = Modifier.offset { IntOffset(offsetX.roundToInt(), 0) },
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun ConversationRowContent(
+    row: ConversationRowModel,
+    selected: Boolean,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val rowColor = when {
         selected -> MaterialTheme.colorScheme.surfaceContainerHigh
         else -> MaterialTheme.colorScheme.background
     }
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            when (value) {
-                SwipeToDismissBoxValue.StartToEnd -> onSwipe(ItemTouchHelper.RIGHT)
-                SwipeToDismissBoxValue.EndToStart -> onSwipe(ItemTouchHelper.LEFT)
-                SwipeToDismissBoxValue.Settled -> Unit
-            }
-            false
-        },
-        positionalThreshold = { distance -> distance * 0.4f },
-    )
 
-    SwipeToDismissBox(
-        state = dismissState,
-        enableDismissFromStartToEnd = swipesEnabled && swipeRightAction != Preferences.SWIPE_ACTION_NONE,
-        enableDismissFromEndToStart = swipesEnabled && swipeLeftAction != Preferences.SWIPE_ACTION_NONE,
-        backgroundContent = {
-            SwipeActionBackground(
-                direction = dismissState.dismissDirection,
-                swipeRightAction = swipeRightAction,
-                swipeLeftAction = swipeLeftAction,
-            )
-        },
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick,
+            ),
+        color = rowColor,
     ) {
-        Surface(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .combinedClickable(
-                    onClick = onClick,
-                    onLongClick = onLongClick,
-                ),
-            color = rowColor,
+                .heightIn(min = 72.dp)
+                .padding(horizontal = 16.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 72.dp)
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
+            Avatar(text = row.avatarText, unread = row.unread)
+            Spacer(modifier = Modifier.width(14.dp))
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center,
             ) {
-                Avatar(text = row.avatarText, unread = row.unread)
-                Spacer(modifier = Modifier.width(14.dp))
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = row.title,
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Medium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    row.timestamp?.let {
                         Text(
-                            text = row.title,
-                            modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Medium,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
+                            text = it,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        row.timestamp?.let {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
                     }
-                    Row(
-                        modifier = Modifier.padding(top = 3.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = row.snippet,
-                            modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = if (row.unread) {
-                                MaterialTheme.colorScheme.onSurface
-                            } else {
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                            },
-                            fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Normal,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
+                }
+                Row(
+                    modifier = Modifier.padding(top = 3.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = row.snippet,
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = if (row.unread) {
+                            MaterialTheme.colorScheme.onSurface
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
+                        fontWeight = if (row.unread) FontWeight.SemiBold else FontWeight.Normal,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    if (row.pinned) {
+                        Icon(
+                            Icons.Rounded.PushPin,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(16.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        if (row.pinned) {
-                            Icon(
-                                Icons.Rounded.PushPin,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .size(16.dp),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        if (row.unread) {
-                            Box(
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .size(8.dp)
-                                    .clip(CircleShape)
-                                    .background(MaterialTheme.colorScheme.primary),
-                            )
-                        }
+                    }
+                    if (row.unread) {
+                        Box(
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(8.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.primary),
+                        )
                     }
                 }
             }
@@ -825,18 +844,18 @@ private fun ConversationRow(
 
 @Composable
 private fun SwipeActionBackground(
-    direction: SwipeToDismissBoxValue,
+    direction: Int,
     swipeRightAction: Int,
     swipeLeftAction: Int,
 ) {
     val action = when (direction) {
-        SwipeToDismissBoxValue.StartToEnd -> swipeRightAction
-        SwipeToDismissBoxValue.EndToStart -> swipeLeftAction
-        SwipeToDismissBoxValue.Settled -> Preferences.SWIPE_ACTION_NONE
+        ItemTouchHelper.RIGHT -> swipeRightAction
+        ItemTouchHelper.LEFT -> swipeLeftAction
+        else -> Preferences.SWIPE_ACTION_NONE
     }
     val icon = swipeActionIcon(action)
     val alignment = when (direction) {
-        SwipeToDismissBoxValue.EndToStart -> Alignment.CenterEnd
+        ItemTouchHelper.LEFT -> Alignment.CenterEnd
         else -> Alignment.CenterStart
     }
 
@@ -893,6 +912,7 @@ private fun SearchResultRow(
             timestamp = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp),
             unread = conversation.unread,
             pinned = conversation.pinned,
+            recipients = conversation.recipients,
         ),
         selected = false,
         swipeRightAction = Preferences.SWIPE_ACTION_NONE,
@@ -933,6 +953,7 @@ private fun Avatar(text: String, unread: Boolean) {
     }
 }
 
+@Immutable
 data class ConversationRowModel(
     val id: Long,
     val title: String,
@@ -941,6 +962,7 @@ data class ConversationRowModel(
     val timestamp: String?,
     val unread: Boolean,
     val pinned: Boolean,
+    val recipients: List<Recipient>,
 )
 
 @Composable

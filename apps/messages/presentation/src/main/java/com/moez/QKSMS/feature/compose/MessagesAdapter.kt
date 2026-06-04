@@ -18,7 +18,6 @@
  */
 package dev.octoshrimpy.quik.feature.compose
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
@@ -36,7 +35,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import com.jakewharton.rxbinding2.view.clicks
@@ -107,8 +105,6 @@ class MessagesAdapter @Inject constructor(
     // click events passed back to compose view model
     val partClicks: Subject<Long> = PublishSubject.create()
     val messageLinkClicks: Subject<Uri> = PublishSubject.create()
-    val cancelSendingClicks: Subject<Long> = PublishSubject.create()
-    val sendNowClicks: Subject<Long> = PublishSubject.create()
     val resendClicks: Subject<Long> = PublishSubject.create()
     val partContextMenuRegistrar: Subject<View> = PublishSubject.create()
     val reactionClicks: Subject<Long> = PublishSubject.create()
@@ -154,11 +150,6 @@ class MessagesAdapter @Inject constructor(
             body = binding.body
             parts = binding.parts
             status = binding.status
-            binding.cancelIcon.setTint(primary)
-            binding.cancel.setTint(primary)
-            binding.cancel.setBackgroundTint(surfaceContainerHigh)
-            binding.sendNowIcon.setTint(primary)
-            binding.sendNowIcon.setBackgroundTint(surfaceContainerHigh)
             binding.resendIcon.setTint(primary)
             binding.resendIcon.setBackgroundTint(surfaceContainerHigh)
         } else {
@@ -237,45 +228,8 @@ class MessagesAdapter @Inject constructor(
             reactionText = binding.reactionText
             status = binding.status
 
-            binding.cancel.setBackgroundTint(surfaceContainerHigh)
-            binding.cancel.setTint(primary)
-            binding.cancelIcon.setTint(primary)
-            binding.sendNowIcon.setBackgroundTint(surfaceContainerHigh)
-            binding.sendNowIcon.setTint(primary)
             binding.resendIcon.setBackgroundTint(surfaceContainerHigh)
             binding.resendIcon.setTint(primary)
-
-            // bind the cancelFrame (cancel button) and send now button
-            val isCancellable = message.isSending() && message.date > System.currentTimeMillis()
-
-            if (isCancellable) {
-                binding.cancelFrame.visibility = View.VISIBLE
-                binding.sendNowIcon.visibility = View.VISIBLE
-
-                binding.cancelFrame.setOnClickListener { cancelSendingClicks.onNext(message.id) }
-                binding.sendNowIcon.setOnClickListener { sendNowClicks.onNext(message.id) }
-
-                binding.cancel.progress = 2
-
-                val delay = when (prefs.sendDelay.get()) {
-                    Preferences.SEND_DELAY_SHORT -> 3000
-                    Preferences.SEND_DELAY_MEDIUM -> 5000
-                    Preferences.SEND_DELAY_LONG -> 10000
-                    else -> 0
-                }
-                val progress =
-                    (1 - (message.date - System.currentTimeMillis()) / delay.toFloat()) * 100
-
-                ObjectAnimator.ofInt(binding.cancel, "progress", progress.toInt(), 100)
-                    .setDuration(message.date - System.currentTimeMillis())
-                    .start()
-            } else {
-                binding.cancelFrame.visibility = View.GONE
-                binding.sendNowIcon.visibility = View.GONE
-
-                binding.cancelFrame.setOnClickListener(null)
-                binding.sendNowIcon.setOnClickListener(null)
-            }
 
             // bind the resend icon view
             if (message.isFailedMessage()) {

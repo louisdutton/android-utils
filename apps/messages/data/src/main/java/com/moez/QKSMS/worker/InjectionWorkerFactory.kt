@@ -32,7 +32,6 @@ import dev.octoshrimpy.quik.repository.ContactRepository
 import dev.octoshrimpy.quik.repository.ConversationRepository
 import dev.octoshrimpy.quik.repository.MessageContentFilterRepository
 import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.repository.ScheduledMessageRepository
 import dev.octoshrimpy.quik.repository.SyncRepository
 import dev.octoshrimpy.quik.util.Preferences
 import javax.inject.Inject
@@ -44,7 +43,6 @@ class InjectionWorkerFactory @Inject constructor(
     private val messageRepo: MessageRepository,
     private val updateBadge: UpdateBadge,
     private val shortcutManager: ShortcutManager,
-    private val scheduledMessageRepository: ScheduledMessageRepository,
     private val notificationManager: NotificationManager,
     private val activeConversationManager: ActiveConversationManager,
     private val syncRepo: SyncRepository,
@@ -64,8 +62,6 @@ class InjectionWorkerFactory @Inject constructor(
             .newInstance(appContext, workerParameters)
 
         when (instance) {
-            is HousekeepingWorker ->
-                instance.scheduledMessageRepository = scheduledMessageRepository
             is ReceiveSmsWorker -> {
                 instance.conversationRepo  = conversationRepo
                 instance.blockingClient = blockingClient

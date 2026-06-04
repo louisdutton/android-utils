@@ -88,7 +88,7 @@ class MainViewModel @Inject constructor(
 
         // Show the syncing UI
         disposables += syncRepository.syncProgress
-                .sample(16, TimeUnit.MILLISECONDS)
+                .sample(250, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { copy(syncing = syncing) } }
 
@@ -223,19 +223,6 @@ class MainViewModel @Inject constructor(
                 .autoDispose(view.scope())
                 .subscribe { data -> newState { copy(page = Searching(loading = false, data = data)) } }
 
-        view.activityResumedIntent
-                .filter { resumed -> !resumed }
-                .switchMap {
-                    // Take until the activity is resumed
-                    prefs.keyChanges
-                            .filter { key -> key.contains("theme") }
-                            .map { true }
-                            .doOnNext { view.themeChanged() }
-                            .takeUntil(view.activityResumedIntent.filter { resumed -> resumed })
-                }
-                .autoDispose(view.scope())
-                .subscribe()
-
         view.composeIntent
                 .autoDispose(view.scope())
                 .subscribe { navigator.showCompose() }
@@ -276,7 +263,6 @@ class MainViewModel @Inject constructor(
                             else -> newState { copy(hasError = true) }
                         }
                         NavItem.BACKUP -> navigator.showBackup()
-                        NavItem.SCHEDULED -> navigator.showScheduled(null)
                         NavItem.BLOCKING -> navigator.showBlockedConversations()
                         NavItem.MESSAGE_UTILS -> navigator.showMessageUtils()
                         NavItem.SETTINGS -> navigator.showSettings()

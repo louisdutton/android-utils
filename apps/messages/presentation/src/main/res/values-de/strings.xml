@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Zulassen</string>
     <string name="drawer_inbox">Posteingang</string>
     <string name="drawer_archived">Archiviert</string>
-    <string name="drawer_scheduled">Geplant</string>
     <string name="drawer_blocking">Blockiert</string>
     <string name="drawer_more">Mehr</string>
     <string name="drawer_settings">Einstellungen</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Empfänger und Antworten werden für jeden sichtbar sein</string>
     <string name="compose_messages_empty">Das ist der Beginn der Unterhaltung. Sag\' etwas Nettes!</string>
     <string name="compose_vcard_label">Kontaktkarte</string>
-    <string name="compose_scheduled_for">Geplante Zeit:</string>
-    <string name="compose_scheduled_future">Gewählte Zeit muss in der Zukunft liegen!</string>
-    <string name="compose_scheduled_toast">Zu den geplanten Nachrichten hinzugefügt</string>
     <string name="compose_hint">Schreibe eine Nachricht…</string>
     <string name="compose_menu_copy">Text kopieren</string>
     <string name="compose_menu_forward">Weiterleiten</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Anhang hinzufügen</string>
     <string name="compose_gallery_cd">Foto anhängen</string>
     <string name="compose_camera_cd">Foto aufnehmen</string>
-    <string name="compose_schedule_cd">Nachricht planen</string>
     <string name="compose_contact_cd">Kontakt anhängen</string>
     <string name="compose_contact_error">Fehler beim Lesen des Kontaktes</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Synchronisiere Nachrichten…</string>
     <string name="backup_progress_finished">Fertig!</string>
     <string name="backup_notification_channel_name">Sicherung und Wiederherstellung</string>
-    <string name="scheduled_title">Geplant</string>
-    <string name="scheduled_empty_description">Nachricht genau dann senden, wenn du magst</string>
-    <string name="scheduled_empty_message_1">Hey! Wann war dein Geburtstag nochmal?</string>
-    <string name="scheduled_empty_message_2">Er ist am 23. Dezember</string>
-    <string name="scheduled_empty_message_3">Alles Gute zum Geburtstag! Schau, was für ein großartiger Freund ich bin, dass ich an deinen Geburtstag denke</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Am 23. Dezember senden </string>
-    <string name="scheduled_compose_cd">Eine Nachricht planen</string>
-    <string name="scheduled_options_title">Geplante Nachricht</string>
-    <string-array name="scheduled_options">
-        <item>Sofort senden</item>
-        <item>Text kopieren</item>
-        <item>Löschen</item>
-    </string-array>
     <string name="settings_category_appearance">Aussehen</string>
     <string name="settings_category_general">Allgemein</string>
     <string name="settings_category_qkreply">Schnellantwort</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Popup für neue Nachrichten</string>
     <string name="settings_qkreply_tap_dismiss_title">Zum Verwerfen tippen</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tippe außerhalb des Popups, um es zu schließen</string>
-    <string name="settings_delayed_title">Verzögertes Senden</string>
     <string name="settings_swipe_actions">Wischgesten</string>
     <string name="settings_swipe_actions_summary">Konfiguriere Wischgesten für Unterhaltungen</string>
     <string name="settings_swipe_actions_right">Nach rechts wischen</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Nachrichten mit der Android-SMS-Datenbank abgleichen</string>
     <string name="settings_logging_enabled">Protokollierung zur Fehlerbehebung aktiviert</string>
     <string name="settings_logging_disabled">Protokollierung zur Fehlerbehebung deaktiviert</string>
-    <string name="settings_delay_duration_hint">Dauer eingeben (in Sekunden)</string>
     <string name="blocking_title">Blockieren</string>
     <string name="blocking_drop_title">Nachrichten verwerfen</string>
     <string name="blocking_drop_summary">Eingehende Nachrichten von blockierten Absendern verwerfen, anstatt sie auszublenden</string>
@@ -319,12 +299,6 @@
         <item>Groß</item>
         <item>Größer</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Keine Verzögerung</item>
-        <item>3 Sekunden</item>
-        <item>5 Sekunden</item>
-        <item>10 Sekunden</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Automatisch</item>
         <item>100KB</item>
@@ -357,8 +331,6 @@
     <string name="main_menu_edit_message">Nachricht bearbeiten</string>
     <string name="main_menu_rename_conversation">Unterhaltung umbenennen</string>
     <string name="main_sender_draft">Entwurf: %s</string>
-    <string name="scheduled_menu_send_now">Jetzt senden</string>
-    <string name="scheduled_menu_edit_message">Nachricht bearbeiten</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Bist du sicher, dass du diese Nachricht löschen möchtest?</item>
         <item quantity="other">Bist du sicher, dass du %d Nachrichten löschen möchtest?</item>
@@ -367,23 +339,16 @@
         <item quantity="one">Bist du sicher, dass du diese Nachricht jetzt senden möchtest?</item>
         <item quantity="other">Bist du sicher, dass du %d Nachrichten jetzt senden möchtest?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Nachricht bearbeiten</string>
-    <string name="dialog_edit_scheduled_message">Das Bearbeiten dieser Nachricht entfernt sie aus dem Zeitplan.\n\nStelle sicher, dass du sie auf dem nächsten Bildschirm erneut abschickst, sonst geht sie verloren.\n\nWillst du weitermachen?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Ja, Nachricht bearbeiten</string>
     <string name="dialog_clear_compose_title">Nachricht löschen</string>
     <string name="dialog_clear_compose">Die Nachricht löschen? Diese Aktion kann nicht rückgängig gemacht werden.</string>
-    <string name="compose_scheduled_view">Geplante Nachrichten für diese Unterhaltung</string>
     <string name="compose_no_valid_recipients">Kann sie nicht an andere Empfänger senden</string>
     <string name="compose_menu_show_status">Status anzeigen</string>
     <string name="compose_attach_file_cd">Beliebige Datei anhängen</string>
     <string name="compose_audio_message_cd">Audio-Nachricht aufnehmen</string>
-    <string name="compose_schedule_cancel_cd">Geplante Nachricht abbrechen</string>
     <string name="compose_record_audio_msg_cd">Audio-Nachricht aufnehmen</string>
     <string name="compose_record_audio_msg_abort_cd">Audio-Nachricht abbrechen</string>
     <string name="compose_record_audio_msg_attach_cd">Audio-Nachricht anhängen</string>
     <string name="compose_record_audio_msg_play_pause_cd">Audio-Nachricht abspielen oder pausieren</string>
-    <string name="compose_message_cancel">Abbrechen</string>
-    <string name="compose_message_send_now">Jetzt senden</string>
     <string name="compose_message_sim">SIM-Nummer</string>
     <string name="compose_message_item">Nachrichtenelement</string>
     <string name="compose_message_attachment">Anhang</string>
@@ -391,7 +356,6 @@
     <string name="message_body_too_long_to_display">⚠ Die Nachricht ist lang. Kopieren oder Speichern für den vollständigen Text</string>
     <string name="clipboard_too_large_to_copy">Datengröße überschreitet Zwischenablagegrenze</string>
     <string name="clipboard_unable_to_copy_to">In die Zwischenablage kopieren nicht möglich</string>
-    <string name="scheduled_send_cd">Diese Nachricht planen</string>
     <string name="attachment_missing">Fehlt</string>
     <string name="settings_system_show_stt_title">„Sprache zu Text“-Knopf anzeigen</string>
     <string name="settings_notification_previews_summary">Name und Nachricht anzeigen</string>

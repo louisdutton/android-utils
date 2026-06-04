@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Dopusti</string>
     <string name="drawer_inbox">Poruke</string>
     <string name="drawer_archived">Arhivirano</string>
-    <string name="drawer_scheduled">Zakazano</string>
     <string name="drawer_blocking">Blokiranje</string>
     <string name="drawer_more"> Više</string>
     <string name="drawer_settings">Postavke</string>
@@ -88,9 +87,6 @@
     <string name="compose_send_group_summary">Primatelji i odgovori bit će vidljivi svima</string>
     <string name="compose_messages_empty">Ovo je početak vašeg razgovora. Recite nešto lijepo!</string>
     <string name="compose_vcard_label">Kartica kontakta</string>
-    <string name="compose_scheduled_for">Zakazano za</string>
-    <string name="compose_scheduled_future">Odabrano vrijeme mora biti u budućnosti!</string>
-    <string name="compose_scheduled_toast">Dodano u zakazane poruke</string>
     <string name="compose_hint">Napiši poruku…</string>
     <string name="compose_menu_copy">Kopiraj tekst</string>
     <string name="compose_menu_forward">Proslijedi</string>
@@ -112,7 +108,6 @@
     <string name="compose_attach_cd">Dodaj privitak</string>
     <string name="compose_gallery_cd">Priloži fotografiju</string>
     <string name="compose_camera_cd">Snimi fotografiju</string>
-    <string name="compose_schedule_cd">Zakaži poruku</string>
     <string name="compose_contact_cd">Priloži kontakt</string>
     <string name="compose_contact_error">Greška kod čitanja kontakta</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -164,20 +159,7 @@
     <string name="backup_progress_syncing">Sinkronizacija poruka…</string>
     <string name="backup_progress_finished">Dovršeno!</string>
     <string name="backup_notification_channel_name">Sig. kopiranje i vraćanje</string>
-    <string name="scheduled_title">Zakazano</string>
-    <string name="scheduled_empty_description">Automatski šaljite poruku u točno određeno vrijeme</string>
-    <string name="scheduled_empty_message_1">Bok! Kad ti je bio rođendan?</string>
-    <string name="scheduled_empty_message_2">23. prosinca</string>
-    <string name="scheduled_empty_message_3">Sretan rođendan! Vidi kako sam dobra prijateljica, zapamtila tvoj rođendan</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Slanje 23. prosinca</string>
-    <string name="scheduled_compose_cd">Zakaži poruku</string>
-    <string name="scheduled_options_title">Zakazana poruka</string>
-    <string-array name="scheduled_options">
-        <item>Pošalji sada</item>
-        <item>Kopiraj tekst</item>
-        <item>Izbriši</item>
-    </string-array>
     <string name="settings_category_appearance">Izgled</string>
     <string name="settings_category_general">Općenito</string>
     <string name="settings_category_qkreply">QK odgovor</string>
@@ -204,7 +186,6 @@
     <string name="settings_qkreply_summary">Skočni prozor za nove poruke</string>
     <string name="settings_qkreply_tap_dismiss_title">Dodirnite za odbacivanje</string>
     <string name="settings_qkreply_tap_dismiss_summary">Dodirnite izvan skočnog prozora za zatvaranje</string>
-    <string name="settings_delayed_title">Odgođeno slanje</string>
     <string name="settings_swipe_actions">Radnje poteza</string>
     <string name="settings_swipe_actions_summary">Konfigurirajte radnje poteza za razgovore</string>
     <string name="settings_swipe_actions_right">Desni potez</string>
@@ -245,7 +226,6 @@
     <string name="settings_sync_summary">Ponovno uskladite svoje poruke s Androidovom nativnom bazom SMS-ova</string>
     <string name="settings_logging_enabled">Omogućen zapisnik za ispravljanje grešaka</string>
     <string name="settings_logging_disabled">Onemogućen zapisnik za ispravljanje grešaka</string>
-    <string name="settings_delay_duration_hint">Unesite trajanje (sekunde)</string>
     <string name="blocking_title">Blokiranje</string>
     <string name="blocking_drop_title">Odbaci poruke</string>
     <string name="blocking_drop_summary">Odbacite dolazne poruke od blokiranih pošiljatelja umjesto da ih samo sakrivate</string>
@@ -323,12 +303,6 @@
         <item>Normalno</item>
         <item>Veliko</item>
         <item>Veće</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Bez odgode</item>
-        <item>3 sekunde</item>
-        <item>5 sekundi</item>
-        <item>10 sekundi</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automatski</item>

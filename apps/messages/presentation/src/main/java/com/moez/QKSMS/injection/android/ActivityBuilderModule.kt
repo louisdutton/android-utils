@@ -36,8 +36,6 @@ import dev.octoshrimpy.quik.feature.notificationprefs.NotificationPrefsActivity
 import dev.octoshrimpy.quik.feature.notificationprefs.NotificationPrefsActivityModule
 import dev.octoshrimpy.quik.feature.qkreply.QkReplyActivity
 import dev.octoshrimpy.quik.feature.qkreply.QkReplyActivityModule
-import dev.octoshrimpy.quik.feature.scheduled.ScheduledActivity
-import dev.octoshrimpy.quik.feature.scheduled.ScheduledActivityModule
 import dev.octoshrimpy.quik.feature.settings.SettingsActivity
 import dev.octoshrimpy.quik.injection.scope.ActivityScope
 
@@ -75,10 +73,6 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [QkReplyActivityModule::class])
     abstract fun bindQkReplyActivity(): QkReplyActivity
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [ScheduledActivityModule::class])
-    abstract fun bindScheduledActivity(): ScheduledActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [])

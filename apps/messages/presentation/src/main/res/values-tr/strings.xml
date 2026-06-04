@@ -63,7 +63,6 @@
     <string name="main_permission_allow">İzin ver</string>
     <string name="drawer_inbox">Gelen Kutusu</string>
     <string name="drawer_archived">Arşivle</string>
-    <string name="drawer_scheduled">Zamanlanmış</string>
     <string name="drawer_blocking">Engellenmiş</string>
     <string name="drawer_more">Daha fazla</string>
     <string name="drawer_settings">Ayarlar</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Alıcılar ve yanıtlar herkese görünür olacak</string>
     <string name="compose_messages_empty">Senin konuşma başlıyor. Güzel bir şey söyle!</string>
     <string name="compose_vcard_label">Kişi Kartı</string>
-    <string name="compose_scheduled_for">Planlanan zaman:</string>
-    <string name="compose_scheduled_future">Seçilen zaman gelecekte olmalı!</string>
-    <string name="compose_scheduled_toast">Zamanlanmış iletilere eklendi</string>
     <string name="compose_hint">İleti yaz…</string>
     <string name="compose_menu_copy">Metni kopyala</string>
     <string name="compose_menu_forward">Yönlendir</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Dosya Ekle</string>
     <string name="compose_gallery_cd">Bir fotoğraf ekle</string>
     <string name="compose_camera_cd">Fotoğraf Çek</string>
-    <string name="compose_schedule_cd">İleti zamanla</string>
     <string name="compose_contact_cd">Bir kişi ekle</string>
     <string name="compose_contact_error">Kişi okunurken hata oluştu</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">İletiler senkronize ediliyor…</string>
     <string name="backup_progress_finished">Tamamlandı!</string>
     <string name="backup_notification_channel_name">Yedekleme ve geri yükleme</string>
-    <string name="scheduled_title">Zamanlanmış</string>
-    <string name="scheduled_empty_description">İstediğiniz bir anda otomatik olarak bir ileti gönderin</string>
-    <string name="scheduled_empty_message_1">Hey! Doğum günün ne zamandı?</string>
-    <string name="scheduled_empty_message_2">23 Aralık\'ta</string>
-    <string name="scheduled_empty_message_3">Doğum günün kutlu olsun! Doğum gününü hatırladığım harika arkadaşım</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">23  Aralık\'ta gönder</string>
-    <string name="scheduled_compose_cd">Bir ileti zamanla</string>
-    <string name="scheduled_options_title">Zamanlanmış ileti</string>
-    <string-array name="scheduled_options">
-        <item>Şimdi gönder</item>
-        <item>Metni kopyala</item>
-        <item>Sil</item>
-    </string-array>
     <string name="settings_category_appearance">Görünüm</string>
     <string name="settings_category_general">Genel</string>
     <string name="settings_category_qkreply">QK Yanıt</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Yeni iletiler için açılan menü</string>
     <string name="settings_qkreply_tap_dismiss_title">Kapatmak için dokunun</string>
     <string name="settings_qkreply_tap_dismiss_summary">Açılır pencereyi kapatmak için pencere dışındaki herhangi bir yere dokunun</string>
-    <string name="settings_delayed_title">Gecikmeli gönderme</string>
     <string name="settings_swipe_actions">Kaydırma eylemleri</string>
     <string name="settings_swipe_actions_summary">Konuşmalar için kaydırma eylemlerini yapılandırma</string>
     <string name="settings_swipe_actions_right">Sağa kaydır</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">İletilerinizi  Android SMS veritabanı ile yeniden senkronize edin</string>
     <string name="settings_logging_enabled">Hata ayıklama günlüğü etkin</string>
     <string name="settings_logging_disabled">Hata ayıklama günlüğü devre dışı</string>
-    <string name="settings_delay_duration_hint">Süre (saniye olarak) girin</string>
     <string name="blocking_title">Engelleyici</string>
     <string name="blocking_drop_title">Havadan atılan iletiler</string>
     <string name="blocking_drop_summary">Engellenen gönderenlerden gelen iletileri gizlemek yerine iptal edin</string>
@@ -319,12 +299,6 @@
         <item>Büyük</item>
         <item>Daha büyük</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Gecikme yok</item>
-        <item>3 saniye</item>
-        <item>5 saniye</item>
-        <item>10 saniye</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Otomatik</item>
         <item>100KB</item>
@@ -357,8 +331,6 @@
     <string name="main_menu_edit_message">İletiyi düzenle</string>
     <string name="main_menu_rename_conversation">Konuşmayı yeniden adlandır</string>
     <string name="main_sender_draft">Taslak: %s</string>
-    <string name="scheduled_menu_send_now">Şimdi gönder</string>
-    <string name="scheduled_menu_edit_message">İletiyi düzenle</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Bu iletiyi silmek istediğinizden emin misiniz?</item>
         <item quantity="other">%d iletiyi silmek istediğinizden emin misiniz?</item>
@@ -367,22 +339,15 @@
         <item quantity="one">Bu iletiyi şimdi göndermek istediğinizden emin misiniz?</item>
         <item quantity="other">%d iletiyi şimdi göndermek istediğinizden emin misiniz?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">İletiyi düzenle</string>
-    <string name="dialog_edit_scheduled_message">Bu iletiyi düzenlemek onu takvimden silecektir.\n\nSonraki ekranda tekrardan gönderdiğinizden emin olun yoksa silinecektir.\n\nDevam etmek istiyor musunuz?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Evet, iletiyi düzenle</string>
     <string name="dialog_clear_compose_title">İletiyi temizle</string>
     <string name="dialog_clear_compose">İleti silinsin mi? Bu işlem geri alınamaz.</string>
-    <string name="compose_scheduled_view">Bu sohbet için planlanmış iletiler</string>
     <string name="compose_menu_show_status">Durumu göster</string>
     <string name="compose_attach_file_cd">Herhangi bir dosya ekleyin</string>
     <string name="compose_audio_message_cd">Bir sesli ileti kaydedin</string>
-    <string name="compose_schedule_cancel_cd">Zamanlanmış iletiyi iptal et</string>
     <string name="compose_record_audio_msg_cd">Sesli ileti kaydet</string>
     <string name="compose_record_audio_msg_abort_cd">Sesli iletiyi iptal et</string>
     <string name="compose_record_audio_msg_attach_cd">Sesli ileti ekleyin</string>
     <string name="compose_record_audio_msg_play_pause_cd">Sesli iletiyi oynat veya durdur</string>
-    <string name="compose_message_cancel">İptal et</string>
-    <string name="compose_message_send_now">Şimdi gönder</string>
     <string name="compose_message_sim">SIM numarası</string>
     <string name="compose_message_attachment">Ek</string>
     <string name="compose_toast_drag_stt">Sesle yazma butonunu istediğiniz yere taşıyın</string>
@@ -391,7 +356,6 @@
     <string name="compose_message_item">İleti öğesi</string>
     <string name="clipboard_too_large_to_copy">Veri boyutu pano sınırını aşıyor</string>
     <string name="clipboard_unable_to_copy_to">Panoya kopyalanamıyor</string>
-    <string name="scheduled_send_cd">Bu iletiyi planla</string>
     <string name="attachment_missing">Eksik</string>
     <string name="settings_system_show_stt_title">Konuşmadan metne düğmesini göster</string>
     <string name="settings_notification_previews_summary">İsim ve ileti göster</string>

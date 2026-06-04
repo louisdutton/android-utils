@@ -63,7 +63,6 @@
     <string name="main_permission_allow">মঞ্জুর করো</string>
     <string name="drawer_inbox">ইনবক্স</string>
     <string name="drawer_archived">আর্কাইভকৃত</string>
-    <string name="drawer_scheduled">পরিকল্পিত</string>
     <string name="drawer_blocking">অবরুদ্ধ</string>
     <string name="drawer_more">আরো</string>
     <string name="drawer_settings">সেটিংস</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">প্রাপক এবং উত্তর সবার চোখে পড়বে</string>
     <string name="compose_messages_empty">এখানে তোমার আলাপ শুরু হয়। সুন্দর কিছু বলো!</string>
     <string name="compose_vcard_label">পরিচিতি কার্ড</string>
-    <string name="compose_scheduled_for">জন্য পরিকল্পিত</string>
-    <string name="compose_scheduled_future">নির্বাচিত সময় অবশ্য ভবিষ্যতে হতে হবে!</string>
-    <string name="compose_scheduled_toast">পূর্বসূচিত বার্তাগুলোতে যোগ করা হয়েছে</string>
     <string name="compose_hint">একটি বার্তা লিখো…</string>
     <string name="compose_menu_copy">পাঠ্য অনুলিপি করুন</string>
     <string name="compose_menu_forward">সামনে পাঠান</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">সংযুক্তি যোগ করুন</string>
     <string name="compose_gallery_cd">ছবি সংযুক্ত করুন</string>
     <string name="compose_camera_cd">একটি ছবি নিন</string>
-    <string name="compose_schedule_cd">বার্তা পাঠানোর সময়সূচি নির্ধারণ করো</string>
     <string name="compose_contact_cd">একটি পরিচিতি সংযুক্ত করুন</string>
     <string name="compose_contact_error">পরিচিতি পড়তে ত্রুটি</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">বার্তাগুলো সিঙ্ক করা হচ্ছে…</string>
     <string name="backup_progress_finished">শেষ হয়েছে!</string>
     <string name="backup_notification_channel_name">ব্যাকআপ ও পুনরুদ্ধার</string>
-    <string name="scheduled_title">পরিকল্পিত</string>
-    <string name="scheduled_empty_description">স্বয়ংক্রিয়ভাবে একটি বার্তা পাঠাও, ঠিক যে মুহূর্তে তুমি চাও</string>
-    <string name="scheduled_empty_message_1">ওই! তোমার জন্মদিন যেন কবে?</string>
-    <string name="scheduled_empty_message_2">ওটা ২৩শে ডিসেম্বরে</string>
-    <string name="scheduled_empty_message_3">শুভ জন্মদিন! দেখো তোমার জন্মদিন মনে রাখায় আমি কতো ভালো একটা বন্ধু</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">২৩শে ডিসেম্বর পাঠানো হচ্ছে </string>
-    <string name="scheduled_compose_cd">পরবর্তীতে পাঠানোর জন্য একটি বার্তা পরিকল্পনা করো</string>
-    <string name="scheduled_options_title">পরিকল্পিত বার্তা</string>
-    <string-array name="scheduled_options">
-        <item>এখন পাঠাও</item>
-        <item>লেখা অনুলিপি করো</item>
-        <item>মুছো</item>
-    </string-array>
     <string name="settings_category_appearance">উপস্থিতি</string>
     <string name="settings_category_general">সাধারণ</string>
     <string name="settings_category_qkreply">QK উত্তর</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">নতুন বার্তার জন্য পপ-আপ</string>
     <string name="settings_qkreply_tap_dismiss_title">সরিয়ে দিতে ট্যাপ করুন</string>
     <string name="settings_qkreply_tap_dismiss_summary">এটি বন্ধ করার জন্য পপআপের বাইরে ট্যাপ করুন</string>
-    <string name="settings_delayed_title">বিলম্বে পাঠাও</string>
     <string name="settings_swipe_actions">সোয়াইপের জন্য অ্যাকশনগুলি</string>
     <string name="settings_swipe_actions_summary">আলাপের জন্য সোয়াইপ সংকেতগুলো পরিবর্তন করো</string>
     <string name="settings_swipe_actions_right">ডানে সোয়াইপ করুন</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">তোমার বার্তাগুলি অ্যান্ড্রয়েডের নিজস্ব এসএমএস এর ডাটাবেসের সাথে পুনরায় সিঙ্ক করো</string>
     <string name="settings_logging_enabled">ডিবাগ লগিং চালু করা হয়ছে</string>
     <string name="settings_logging_disabled">ডিবাগ লগিং বন্ধ করা হয়ছে</string>
-    <string name="settings_delay_duration_hint">দৈর্ঘ্য (সেকেন্ডে) লিখুন</string>
     <string name="blocking_title">অবরুদ্ধ হচ্ছে</string>
     <string name="blocking_drop_title">বার্তা ফেলে দাও</string>
     <string name="blocking_drop_summary">অবরোধকৃত প্রেরকদের বার্তা লুকানোর জায়গায় ফেলে দাও</string>
@@ -318,12 +298,6 @@
         <item>স্বাভাবিক</item>
         <item>বড়</item>
         <item>বড়</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>কোনো বিলম্ব নেই</item>
-        <item>৩ সেকেন্ড</item>
-        <item>৫ সেকেন্ড</item>
-        <item>১০ সেকেন্ড</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>স্বয়ংক্রিয়</item>

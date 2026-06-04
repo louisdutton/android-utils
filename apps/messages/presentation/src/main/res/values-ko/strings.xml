@@ -63,7 +63,6 @@
     <string name="main_permission_allow">허용</string>
     <string name="drawer_inbox">수신함</string>
     <string name="drawer_archived">보관됨</string>
-    <string name="drawer_scheduled">예약됨</string>
     <string name="drawer_blocking">차단</string>
     <string name="drawer_more">더 보기</string>
     <string name="drawer_settings">설정</string>
@@ -86,9 +85,6 @@
     <string name="compose_send_group_summary">받는 사람 및 답장이 모든 사람에게 표시됩니다.</string>
     <string name="compose_messages_empty">새로운 대화가 시작되었어요! 대화를 해보세요!</string>
     <string name="compose_vcard_label">연락처</string>
-    <string name="compose_scheduled_for">예정</string>
-    <string name="compose_scheduled_future">선택한 시간은 반드시 현재 이후의 시간으로 설정해야 합니다</string>
-    <string name="compose_scheduled_toast">예약된 메시지에 저장됨</string>
     <string name="compose_hint">메시지 작성 중...</string>
     <string name="compose_menu_copy">문자 복사하기</string>
     <string name="compose_menu_forward">전달</string>
@@ -110,7 +106,6 @@
     <string name="compose_attach_cd">첨부 파일 추가</string>
     <string name="compose_gallery_cd">사진 첨부</string>
     <string name="compose_camera_cd">사진 찍기</string>
-    <string name="compose_schedule_cd">예약 전송 메시지</string>
     <string name="compose_contact_cd">연락처 첨부</string>
     <string name="compose_contact_error">연락처를 불러오는 중에 문제가 발생했습니다</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -162,20 +157,7 @@
     <string name="backup_progress_syncing">동기화 중...</string>
     <string name="backup_progress_finished">끝!</string>
     <string name="backup_notification_channel_name">백업과 복원</string>
-    <string name="scheduled_title">예약됨</string>
-    <string name="scheduled_empty_description">원하는 시간에 자동으로 메시지를 보냅니다.</string>
-    <string name="scheduled_empty_message_1">잠깐만! 생일이 언제였더라..?</string>
-    <string name="scheduled_empty_message_2">12월 23일이야</string>
-    <string name="scheduled_empty_message_3">생일 축하해! 너의 생일까지 기억해주는 이렇게 좋은 친구가 어디있겠어</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">12월 23일에 보냅니다.</string>
-    <string name="scheduled_compose_cd">메시지 예약 전송하기</string>
-    <string name="scheduled_options_title">예약된 메시지</string>
-    <string-array name="scheduled_options">
-        <item>지금 보내기</item>
-        <item>텍스트 복사하기</item>
-        <item>삭제</item>
-    </string-array>
     <string name="settings_category_appearance">디자인</string>
     <string name="settings_category_general">일반 설정</string>
     <string name="settings_category_qkreply">빠른 응답</string>
@@ -202,7 +184,6 @@
     <string name="settings_qkreply_summary">새로운 메시지에 대한 팝업</string>
     <string name="settings_qkreply_tap_dismiss_title">탭해서 닫기</string>
     <string name="settings_qkreply_tap_dismiss_summary">아무데나 탭하면 팝업이 닫힙니다.</string>
-    <string name="settings_delayed_title">전송 지연</string>
     <string name="settings_swipe_actions">쓸어넘기기 설정</string>
     <string name="settings_swipe_actions_summary">대화를 쓸어넘겼을 때 할 작업</string>
     <string name="settings_swipe_actions_right">오른쪽으로 쓸어넘기기</string>
@@ -241,7 +222,6 @@
     <string name="settings_sync_summary">기본 안드로이드 SMS 데이터베이스에 다시 동기화하기</string>
     <string name="settings_logging_enabled">디버그 로깅 설정됨</string>
     <string name="settings_logging_disabled">디버그 로깅 해제됨</string>
-    <string name="settings_delay_duration_hint">기간 (초)을 입력</string>
     <string name="blocking_title">차단</string>
     <string name="blocking_drop_title">메시지 자동 삭제</string>
     <string name="blocking_drop_summary">차단된 사람으로부터 오는 메시지를 가리는 대신 삭제합니다</string>
@@ -315,12 +295,6 @@
         <item>보통</item>
         <item>크게</item>
         <item>더 크게</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>지연 없음</item>
-        <item>3초</item>
-        <item>5초</item>
-        <item>10초</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>자동</item>

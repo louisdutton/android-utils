@@ -63,7 +63,6 @@
     <string name="main_permission_allow">許可</string>
     <string name="drawer_inbox">受信トレイ</string>
     <string name="drawer_archived">アーカイブ済み</string>
-    <string name="drawer_scheduled">送信予約済み</string>
     <string name="drawer_blocking">ブロック</string>
     <string name="drawer_more">もっと</string>
     <string name="drawer_settings">設定</string>
@@ -86,9 +85,6 @@
     <string name="compose_send_group_summary">宛先と返信は全員に表示されます</string>
     <string name="compose_messages_empty">これが会話の始まりです。何か素敵なことを言ってください！</string>
     <string name="compose_vcard_label">連絡先カード</string>
-    <string name="compose_scheduled_for">送信予約</string>
-    <string name="compose_scheduled_future">今より先の時間を選択してください！</string>
-    <string name="compose_scheduled_toast">送信予約メッセージに追加されました</string>
     <string name="compose_hint">メッセージを書いてください…</string>
     <string name="compose_menu_copy">テキストをコピー</string>
     <string name="compose_menu_forward">転送</string>
@@ -110,7 +106,6 @@
     <string name="compose_attach_cd">添付ファイルを追加</string>
     <string name="compose_gallery_cd">写真を添付</string>
     <string name="compose_camera_cd">写真を撮る</string>
-    <string name="compose_schedule_cd">メッセージの送信を予約</string>
     <string name="compose_contact_cd">連絡先を添付</string>
     <string name="compose_contact_error">連絡先の読み取りエラー</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -162,20 +157,7 @@
     <string name="backup_progress_syncing">メッセージを同期しています...</string>
     <string name="backup_progress_finished">終了しました！</string>
     <string name="backup_notification_channel_name">バックアップと復元</string>
-    <string name="scheduled_title">予約</string>
-    <string name="scheduled_empty_description">希望する瞬間に自動的にメッセージを送信</string>
-    <string name="scheduled_empty_message_1">ちょっと！あなたの誕生日はいつでしたか？</string>
-    <string name="scheduled_empty_message_2">12 月 23 日です</string>
-    <string name="scheduled_empty_message_3">お誕生日おめでとうございます！ 私はあなたの誕生日を覚えている、素敵な友達でしょ？</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">12 月 23 日に送信</string>
-    <string name="scheduled_compose_cd">メッセージを送信予約</string>
-    <string name="scheduled_options_title">送信予約されたメッセージ</string>
-    <string-array name="scheduled_options">
-        <item>今すぐ送る</item>
-        <item>テキストをコピー</item>
-        <item>削除</item>
-    </string-array>
     <string name="settings_category_appearance">外観</string>
     <string name="settings_category_general">全般</string>
     <string name="settings_category_qkreply">QK Reply</string>
@@ -202,7 +184,6 @@
     <string name="settings_qkreply_summary">新しいメッセージをポップアップ</string>
     <string name="settings_qkreply_tap_dismiss_title">タップして閉じる</string>
     <string name="settings_qkreply_tap_dismiss_summary">ポップアップの外側をタップすると閉じます</string>
-    <string name="settings_delayed_title">遅延送信</string>
     <string name="settings_swipe_actions">スワイプアクション</string>
     <string name="settings_swipe_actions_summary">会話のスワイプアクションを設定</string>
     <string name="settings_swipe_actions_right">右スワイプ</string>
@@ -241,7 +222,6 @@
     <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
     <string name="settings_logging_enabled">デバッグログが有効</string>
     <string name="settings_logging_disabled">デバッグログが無効</string>
-    <string name="settings_delay_duration_hint">期間を入力してください (秒)</string>
     <string name="blocking_title">ブロック</string>
     <string name="blocking_drop_title">メッセージをドロップ</string>
     <string name="blocking_drop_summary">ブロックした送信者からの受信メッセージを非表示にする代わりにドロップします</string>
@@ -313,12 +293,6 @@
         <item>標準</item>
         <item>大</item>
         <item>最大</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>遅延なし</item>
-        <item>3 秒</item>
-        <item>5 秒</item>
-        <item>10 秒</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>自動</item>

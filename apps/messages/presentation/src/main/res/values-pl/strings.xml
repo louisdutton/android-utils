@@ -67,11 +67,8 @@
     <string name="main_permission_contacts">QUIK wymaga uprawnień do przeglądania kontaktów</string>
     <string name="main_permission_notifications">QUIK potrzebuje uprawnień do wyświetlania powiadomień</string>
     <string name="main_permission_allow">Zezwól</string>
-    <string name="scheduled_menu_send_now">Wyślij teraz</string>
-    <string name="scheduled_menu_edit_message">Edytuj wiadomość</string>
     <string name="drawer_inbox">Odebrane</string>
     <string name="drawer_archived">Zarchiwizowane</string>
-    <string name="drawer_scheduled">Zaplanowane</string>
     <string name="drawer_blocking">Blokowane</string>
     <string name="drawer_more">Więcej</string>
     <string name="drawer_settings">Ustawienia</string>
@@ -94,9 +91,6 @@
         <item quantity="many">Czy na pewno chcesz wysłać te %d wiadomości teraz?</item>
         <item quantity="other">Czy na pewno chcesz wysłać te %d wiadomości teraz?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Edytuj wiadomość</string>
-    <string name="dialog_edit_scheduled_message">Edycja tej wiadomości spowoduje usunięcie jej z harmonogramu.\n\nUpewnij się, że prześlesz ją ponownie na następnym ekranie, w przeciwnym razie zostanie ona utracona!\n\nCzy chcesz kontynuować?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Tak, edytuj wiadomość</string>
     <string name="dialog_clear_compose_title">Wyczyść wiadomość</string>
     <string name="dialog_clear_compose">Wyczyścić wiadomość? Tej akcji nie można cofnąć.</string>
     <string-array name="message_options">
@@ -114,9 +108,6 @@
     <string name="compose_send_group_summary">Odbiorcy i odpowiedzi będą widoczne dla wszystkich</string>
     <string name="compose_messages_empty">To jest początek rozmowy. Powiedz coś miłego!</string>
     <string name="compose_vcard_label">Karta kontaktu</string>
-    <string name="compose_scheduled_for">Zaplanowane na:</string>
-    <string name="compose_scheduled_future">Wybrany czas musi być w przyszłości!</string>
-    <string name="compose_scheduled_toast">Dodano do zaplanowanych wiadomości</string>
     <string name="compose_hint">Napisz wiadomość…</string>
     <string name="compose_no_valid_recipients">Nie można wysyłać do innych uczestników</string>
     <string name="compose_menu_copy">Kopiuj tekst</string>
@@ -142,8 +133,6 @@
     <string name="compose_gallery_cd">Załącz zdjęcie</string>
     <string name="compose_audio_message_cd">Nagraj wiadomość głosową</string>
     <string name="compose_camera_cd">Zrób zdjęcie</string>
-    <string name="compose_schedule_cd">Zaplanuj wiadomość</string>
-    <string name="compose_schedule_cancel_cd">Anuluj zaplanowaną wiadomość</string>
     <string name="compose_contact_cd">Załącz kontakt</string>
     <string name="compose_contact_error">Nie można odczytać kontaktu</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -154,8 +143,6 @@
     <string name="compose_record_audio_msg_abort_cd">Anuluj wiadomość głosową</string>
     <string name="compose_record_audio_msg_attach_cd">Załącz wiadomość głosową</string>
     <string name="compose_record_audio_msg_play_pause_cd">Odtwórz lub wstrzymaj wiadomość głosową</string>
-    <string name="compose_message_cancel">Anuluj</string>
-    <string name="compose_message_send_now">Wyślij teraz</string>
     <string name="compose_message_sim">Numer karty SIM</string>
     <string name="compose_message_item">Element wiadomości</string>
     <string name="compose_message_attachment">Załącznik</string>
@@ -205,15 +192,7 @@
     <string name="backup_progress_syncing">Synchronizowanie wiadomości…</string>
     <string name="backup_progress_finished">Zakończono!</string>
     <string name="backup_notification_channel_name">Kopia zapasowa i przywracanie</string>
-    <string name="scheduled_title">Zaplanowane</string>
-    <string name="scheduled_empty_description">Automatyczne wysyłanie wiadomości, w dowolnym wybranym przez Ciebie momencie</string>
-    <string name="scheduled_empty_message_1">Cześć! Możesz powtórzyć kiedy były Twoje urodziny?</string>
-    <string name="scheduled_empty_message_2">23-go grudnia</string>
-    <string name="scheduled_empty_message_3">Wszystkiego najlepszego z okazji urodzin! Spójrz, jakim jestem wspaniałym przyjacielem, pamiętając o twoich urodzinach</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Do wysłania 23-go grudnia</string>
-    <string name="scheduled_compose_cd">Zaplanuj wiadomość</string>
-    <string name="scheduled_options_title">Zaplanowana wiadomość</string>
     <string name="attachment_missing">Brak załącznika</string>
     <string name="settings_category_appearance">Wygląd</string>
     <string name="settings_category_general">Ogólne</string>
@@ -245,7 +224,6 @@
     <string name="settings_qkreply_summary">Powiadomienia o nowych wiadomościach</string>
     <string name="settings_qkreply_tap_dismiss_title">Dotknij, aby odrzucić</string>
     <string name="settings_qkreply_tap_dismiss_summary">Dotknij gdziekolwiek poza okienkiem, aby zamknąć</string>
-    <string name="settings_delayed_title">Opóźnione wysyłanie</string>
     <string name="settings_swipe_actions">Akcje po przeciągnięciu</string>
     <string name="settings_swipe_actions_summary">Ustaw akcje dla rozmów po przeciągnięciu</string>
     <string name="settings_swipe_actions_right">Przeciągnięcie w prawo</string>
@@ -291,7 +269,6 @@
     <string name="settings_sync_summary">Ponowna synchronizacja wiadomości z natywną bazą danych SMS systemu Android</string>
     <string name="settings_logging_enabled">Logi włączone</string>
     <string name="settings_logging_disabled">Logi wyłączone</string>
-    <string name="settings_delay_duration_hint">Wprowadź czas (w sekundach)</string>
     <string name="blocking_title">Blokowanie</string>
     <string name="blocking_drop_title">Odrzuć wiadomości</string>
     <string name="blocking_drop_summary">Odrzuć przychodzące wiadomości od zablokowanych nadawców zamiast ich ukrywać</string>
@@ -382,12 +359,6 @@
         <item>Bardzo duży</item>
         <item>Wielki</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Bez opóźnienia</item>
-        <item>3 sekundy</item>
-        <item>5 sekund</item>
-        <item>10 sekund</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Automatyczna</item>
         <item>100 KB</item>
@@ -442,11 +413,9 @@
     <string name="stt_toast_extra_prompt">Wypowiedz swoją wiadomość</string>
     <string name="main_sender_draft">Szkic: %s</string>
     <string name="compose_menu_share">Udostępnij tekst</string>
-    <string name="compose_scheduled_view">Zaplanowane wiadomości dla tej rozmowy</string>
     <string name="message_body_too_long_to_display">⚠ Wiadomość jest za długa. Kopiuj lub zapisz pełną treść</string>
     <string name="clipboard_too_large_to_copy">Długość tekstu przekracza limit schowka</string>
     <string name="clipboard_unable_to_copy_to">Nie można skopiować do schowka</string>
-    <string name="scheduled_send_cd">Zaplanuj tę wiadomość</string>
     <string name="settings_disable_screenshots_title">Wyłącz zrzuty ekranu</string>
     <string name="settings_diable_screenshots_summary">Zapobiega robieniu zrzutów ekranu z aplikacji przez system oraz inne aplikacje.</string>
     <string name="message_content_filters_title">Filtry treści wiadomości</string>

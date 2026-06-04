@@ -67,11 +67,8 @@
     <string name="main_permission_contacts">QUIK are nevoie de permisiunea de a vizualiza contactele</string>
     <string name="main_permission_notifications">QUIK are nevoie de permisiuni pentru a afișa notificări</string>
     <string name="main_permission_allow">Permite</string>
-    <string name="scheduled_menu_send_now">Trimite acum</string>
-    <string name="scheduled_menu_edit_message">Modifică mesajul</string>
     <string name="drawer_inbox">Mesaje primite</string>
     <string name="drawer_archived">Arhivate</string>
-    <string name="drawer_scheduled">Programate</string>
     <string name="drawer_blocking">Blocate</string>
     <string name="drawer_more">Mai multe</string>
     <string name="drawer_settings">Setări</string>
@@ -91,9 +88,6 @@
         <item quantity="few">Ești sigur că vrei să trimiți %d mesaje acum?</item>
         <item quantity="other">Ești sigur că vrei să trimiți %d mesaje acum?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Modifică mesajul</string>
-    <string name="dialog_edit_scheduled_message">Editarea acestui mesaj îl va elimina din program.\n\nAsigură-te că îl retrimiți pe ecranul următor, sau va fi pierdut.\n\nDorești să continui?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Da, editează mesajul</string>
     <string name="dialog_clear_compose_title">Șterge mesajul</string>
     <string name="dialog_clear_compose">Ștergi mesajul? Această acțiune nu poate fi anulată.</string>
     <string-array name="message_options">
@@ -111,9 +105,6 @@
     <string name="compose_send_group_summary">Destinatarii si răspunsurile vor fi vizibile tuturor</string>
     <string name="compose_messages_empty">Acesta este începutul conversației tale. Spune ceva drăguț!</string>
     <string name="compose_vcard_label">Carte de contact</string>
-    <string name="compose_scheduled_for">Programat pentru</string>
-    <string name="compose_scheduled_future">Timpul selectat trebuie să fie în viitor!</string>
-    <string name="compose_scheduled_toast">Adăugat la mesajele programate</string>
     <string name="compose_hint">Scrie un mesaj…</string>
     <string name="compose_no_valid_recipients">Nu se poate trimite altor participanți</string>
     <string name="compose_menu_copy">Copiază textul</string>
@@ -139,8 +130,6 @@
     <string name="compose_gallery_cd">Atașează o fotografie</string>
     <string name="compose_audio_message_cd">Înregistrează un mesaj audio</string>
     <string name="compose_camera_cd">Realizează o fotografie</string>
-    <string name="compose_schedule_cd">Programează mesajul</string>
-    <string name="compose_schedule_cancel_cd">Anulează programarea mesajului</string>
     <string name="compose_contact_cd">Atașează un contact</string>
     <string name="compose_contact_error">Eroare la citirea contactului</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -151,8 +140,6 @@
     <string name="compose_record_audio_msg_abort_cd">Anulează mesajul audio</string>
     <string name="compose_record_audio_msg_attach_cd">Atașează mesaj audio</string>
     <string name="compose_record_audio_msg_play_pause_cd">Redă sau întrerupe mesajul audio</string>
-    <string name="compose_message_cancel">Anulează</string>
-    <string name="compose_message_send_now">Trimite acum</string>
     <string name="compose_message_sim">Număr SIM</string>
     <string name="compose_message_item">Elementul mesajului</string>
     <string name="compose_message_attachment">Atașament</string>
@@ -202,15 +189,7 @@
     <string name="backup_progress_syncing">Se sincronizează mesajele…</string>
     <string name="backup_progress_finished">Finalizat!</string>
     <string name="backup_notification_channel_name">Copie de rezervă și restaurare</string>
-    <string name="scheduled_title">Planificare</string>
-    <string name="scheduled_empty_description">Trimite automat un mesaj, exact în momentul în care dorești</string>
-    <string name="scheduled_empty_message_1">Hei! Când a fost ziua ta de naștere?</string>
-    <string name="scheduled_empty_message_2">Este pe 23 decembrie</string>
-    <string name="scheduled_empty_message_3">La mulți ani! Uită-te la ce prieten grozav sunt, amintindu-ți ziua ta de naștere</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Trimite pe 23 decembrie </string>
-    <string name="scheduled_compose_cd">Programează un mesaj</string>
-    <string name="scheduled_options_title">Mesaj programat</string>
     <string name="attachment_missing">Lipsește</string>
     <string name="settings_category_appearance">Aspect</string>
     <string name="settings_category_general">General</string>
@@ -242,7 +221,6 @@
     <string name="settings_qkreply_summary">Popup pentru mesaje noi</string>
     <string name="settings_qkreply_tap_dismiss_title">Atinge pentru a respinge</string>
     <string name="settings_qkreply_tap_dismiss_summary">Atinge în afara ferestrei pop-up pentru a o închide</string>
-    <string name="settings_delayed_title">Trimitere întârziată</string>
     <string name="settings_swipe_actions">Acțiuni la glisare</string>
     <string name="settings_swipe_actions_summary">Configurează acțiunile de glisare pentru conversații</string>
     <string name="settings_swipe_actions_right">Glisare la dreapta</string>
@@ -287,7 +265,6 @@
     <string name="settings_sync_summary">Re-sincronizează mesajele cu baza de date Android SMS</string>
     <string name="settings_logging_enabled">Jurnalizare pentru depanare activată</string>
     <string name="settings_logging_disabled">Jurnalizare pentru depanare dezactivată</string>
-    <string name="settings_delay_duration_hint">Introdu durata (secunde)</string>
     <string name="blocking_title">Blocare</string>
     <string name="blocking_drop_title">Șterge mesajele</string>
     <string name="blocking_drop_summary">Șterge mesajele primite de la expeditorii blocați în loc să le ascunzi</string>
@@ -372,12 +349,6 @@
         <item>Mare</item>
         <item>Mai mare</item>
         <item>Super</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Fără întârziere</item>
-        <item>3 secunde</item>
-        <item>5 secunde</item>
-        <item>10 secunde</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automat</item>

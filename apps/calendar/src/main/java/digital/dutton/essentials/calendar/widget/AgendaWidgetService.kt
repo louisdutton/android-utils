@@ -105,7 +105,7 @@ private fun loadAgendaRows(context: Context): List<WidgetAgendaRow> {
         .filter { it.endMillis > nowMillis }
     val tasks = CalendarTaskStore(context).listAgendaTasks(startMillis, endMillis)
 
-    val dates = (events.map { it.startDate(zone) } + tasks.mapNotNull { it.agendaDate(zone) } + today)
+    val dates = (events.flatMap { it.agendaDates(zone) } + tasks.mapNotNull { it.agendaDate(zone) } + today)
         .distinct()
         .sorted()
     var previousMonth: YearMonth? = null
@@ -125,7 +125,7 @@ private fun loadAgendaRows(context: Context): List<WidgetAgendaRow> {
 
             val items = agendaItemsForDate(
                 date = date,
-                events = events.filter { it.startDate(zone) == date },
+                events = events.filter { date in it.agendaDates(zone) },
                 tasks = tasks.filter { it.agendaDate(zone) == date },
                 nowMillis = nowMillis,
                 zone = zone,
@@ -197,7 +197,7 @@ private fun agendaItemsForDate(
         events.map { event ->
             WidgetAgendaItem.Event(
                 event = event,
-                sortMillis = if (event.allDay) dayStartMillis else event.startMillis,
+                sortMillis = if (event.allDay) dayStartMillis else maxOf(event.startMillis, dayStartMillis),
                 sortRank = if (event.allDay) 0 else 2,
             )
         } +
@@ -285,9 +285,27 @@ private fun Cursor.optionalString(columnName: String): String? {
     return if (index >= 0 && !isNull(index)) getString(index) else null
 }
 
-private fun WidgetEvent.startDate(zone: ZoneId): LocalDate {
+private fun WidgetEvent.agendaDates(zone: ZoneId): List<LocalDate> {
     val dateZone = if (allDay) ZoneOffset.UTC else zone
-    return Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+    val startDate = Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+    val effectiveEndMillis = (endMillis - 1).coerceAtLeast(startMillis)
+    val endDate = Instant.ofEpochMilli(effectiveEndMillis).atZone(dateZone).toLocalDate()
+    return datesBetweenInclusive(startDate, endDate)
+}
+
+private fun datesBetweenInclusive(
+    startDate: LocalDate,
+    endDate: LocalDate,
+): List<LocalDate> {
+    if (endDate.isBefore(startDate)) return listOf(startDate)
+
+    val dates = mutableListOf<LocalDate>()
+    var date = startDate
+    while (!date.isAfter(endDate)) {
+        dates += date
+        date = date.plusDays(1)
+    }
+    return dates
 }
 
 private fun CalendarTask.agendaDate(zone: ZoneId): LocalDate? {

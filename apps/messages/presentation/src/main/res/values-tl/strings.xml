@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Payagan</string>
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Nakatabi</string>
-    <string name="drawer_scheduled">Iskedyul</string>
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">Higit pa</string>
     <string name="drawer_settings">Settings</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Ang mga tatanggap at tugon ay makikita ng lahat</string>
     <string name="compose_messages_empty">Ito ang simula ng iyong pag-uusap. Magsabi ka ng maganda!</string>
     <string name="compose_vcard_label">Contact card</string>
-    <string name="compose_scheduled_for">Naka-iskedyul para sa</string>
-    <string name="compose_scheduled_future">Ang napiling oras ay dapat na sa hinaharap!</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
     <string name="compose_hint">Write a message…</string>
     <string name="compose_menu_copy">Copy text</string>
     <string name="compose_menu_forward">Forward</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Add an attachment</string>
     <string name="compose_gallery_cd">Attach a photo</string>
     <string name="compose_camera_cd">Take a photo</string>
-    <string name="compose_schedule_cd">Schedule message</string>
     <string name="compose_contact_cd">Attach a contact</string>
     <string name="compose_contact_error">Error reading contact</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Syncing messages…</string>
     <string name="backup_progress_finished">Finished!</string>
     <string name="backup_notification_channel_name">Backup and restore</string>
-    <string name="scheduled_title">Scheduled</string>
-    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
-    <string name="scheduled_options_title">Scheduled message</string>
-    <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Copy text</item>
-        <item>Delete</item>
-    </string-array>
     <string name="settings_category_appearance">Appearance</string>
     <string name="settings_category_general">General</string>
     <string name="settings_category_qkreply">QK Reply</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Popup for new messages</string>
     <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-    <string name="settings_delayed_title">Delayed sending</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
     <string name="settings_swipe_actions_right">Right swipe</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
     <string name="blocking_title">Blocking</string>
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
@@ -318,12 +298,6 @@
         <item>Normal</item>
         <item>Large</item>
         <item>Larger</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>No delay</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>

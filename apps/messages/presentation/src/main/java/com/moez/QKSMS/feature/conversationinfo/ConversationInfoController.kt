@@ -23,19 +23,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bluelinelabs.conductor.RouterTransaction
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDispose
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.QkChangeHandler
 import dev.octoshrimpy.quik.common.base.QkController
 import dev.octoshrimpy.quik.common.util.extensions.scrapViews
 import dev.octoshrimpy.quik.common.widget.TextInputDialog
 import dev.octoshrimpy.quik.databinding.ConversationInfoControllerBinding
 import dev.octoshrimpy.quik.feature.blocking.BlockingDialog
 import dev.octoshrimpy.quik.feature.conversationinfo.injection.ConversationInfoModule
-import dev.octoshrimpy.quik.feature.themepicker.ThemePickerController
 import dev.octoshrimpy.quik.injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -101,7 +98,6 @@ class ConversationInfoController(
 
     override fun recipientClicks(): Observable<Long> = adapter.recipientClicks
     override fun recipientLongClicks(): Observable<Long> = adapter.recipientLongClicks
-    override fun themeClicks(): Observable<Long> = adapter.themeClicks
     override fun nameClicks(): Observable<*> = adapter.nameClicks
     override fun nameChanges(): Observable<String> = nameChangeSubject
     override fun notificationClicks(): Observable<*> = adapter.notificationClicks
@@ -113,12 +109,6 @@ class ConversationInfoController(
     override fun mediaClicks(): Observable<Long> = adapter.mediaClicks
 
     override fun showNameDialog(name: String) = nameDialog.setText(name).show()
-
-    override fun showThemePicker(recipientId: Long) {
-        router.pushController(RouterTransaction.with(ThemePickerController(recipientId))
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
-    }
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
         blockingDialog.show(conversations, block)

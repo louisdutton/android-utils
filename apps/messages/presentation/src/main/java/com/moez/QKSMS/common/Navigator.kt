@@ -27,7 +27,6 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
-import dev.octoshrimpy.quik.compat.TelephonyCompat
 import dev.octoshrimpy.quik.extensions.resourceExists
 import dev.octoshrimpy.quik.feature.backup.BackupActivity
 import dev.octoshrimpy.quik.feature.blocking.BlockingActivity
@@ -37,11 +36,9 @@ import dev.octoshrimpy.quik.feature.gallery.GalleryActivity
 import dev.octoshrimpy.quik.feature.main.MainActivity
 import dev.octoshrimpy.quik.feature.messageutils.MessageUtilsActivity
 import dev.octoshrimpy.quik.feature.notificationprefs.NotificationPrefsActivity
-import dev.octoshrimpy.quik.feature.scheduled.ScheduledActivity
 import dev.octoshrimpy.quik.feature.settings.SettingsActivity
 import dev.octoshrimpy.quik.manager.NotificationManager
 import dev.octoshrimpy.quik.manager.PermissionManager
-import dev.octoshrimpy.quik.model.ScheduledMessage
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -85,44 +82,14 @@ class Navigator @Inject constructor(
         startActivity(intent)
     }
 
-    fun showCompose(body: String? = null, attachments: List<Uri>? = null, mode: String? = null) {
+    fun showCompose(body: String? = null, attachments: List<Uri>? = null) {
         val intent = Intent(context, ComposeActivity::class.java)
         intent.putExtra(Intent.EXTRA_TEXT, body)
-        intent.putExtra("mode", mode)
 
         attachments
             ?.takeIf { it.isNotEmpty() }
             ?.mapNotNull {
                 if (it.resourceExists(context)) it
-                else null
-            }
-            ?.let { intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(it)) }
-
-        startActivity(intent)
-    }
-
-    fun showCompose(scheduledMessage: ScheduledMessage) {
-        val scheduledThreadId = TelephonyCompat.getOrCreateThreadId(
-            context,
-            scheduledMessage.recipients
-        )
-
-        val intent = Intent(context, ComposeActivity::class.java)
-        intent.putExtra(Intent.EXTRA_TEXT, scheduledMessage.body)
-        intent.putExtra("threadId", scheduledThreadId)
-        intent.putExtra("subscriptionId", scheduledMessage.subId)
-        intent.putExtra("sendAsGroup", scheduledMessage.sendAsGroup)
-        intent.putExtra("scheduleDateTime", scheduledMessage.date)
-
-        scheduledMessage.recipients
-            .takeIf { it.isNotEmpty() }
-            ?.let { intent.putStringArrayListExtra("addresses", ArrayList(it)) }
-
-        scheduledMessage.attachments
-            .takeIf { it.isNotEmpty() }
-            ?.mapNotNull {
-                val uri = Uri.parse(it)
-                if (uri.resourceExists(context)) uri
                 else null
             }
             ?.let { intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(it)) }
@@ -151,12 +118,6 @@ class Navigator @Inject constructor(
 
     fun showBackup() {
         startActivity(Intent(context, BackupActivity::class.java))
-    }
-
-    fun showScheduled(conversationId: Long?) {
-        val intent = Intent(context, ScheduledActivity::class.java)
-        conversationId?.let { intent.putExtra("conversationId", it) }
-        startActivity(intent)
     }
 
     fun showMessageUtils() {
@@ -238,14 +199,6 @@ class Navigator @Inject constructor(
             val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-            startActivity(intent)
-        }
-    }
-
-    fun showExactAlarmsSettings() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                    .setData(Uri.parse("package:${context.packageName}"))
             startActivity(intent)
         }
     }

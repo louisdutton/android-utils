@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Разрешить</string>
     <string name="drawer_inbox">Входящие</string>
     <string name="drawer_archived">Архив</string>
-    <string name="drawer_scheduled">Планировщик</string>
     <string name="drawer_blocking">Блокировка</string>
     <string name="drawer_more">Ещё</string>
     <string name="drawer_settings">Настройки</string>
@@ -89,9 +88,6 @@
     <string name="compose_send_group_summary">Получатели и ответы будут видны всем</string>
     <string name="compose_messages_empty">Это начало вашей беседы. Скажите что-нибудь приятное!</string>
     <string name="compose_vcard_label">Карточка контакта</string>
-    <string name="compose_scheduled_for">Запланировано на:</string>
-    <string name="compose_scheduled_future">Выбранное время должно быть в будущем!</string>
-    <string name="compose_scheduled_toast">Добавлено в планировщик сообщений</string>
     <string name="compose_hint">Написать сообщение…</string>
     <string name="compose_menu_copy">Скопировать текст</string>
     <string name="compose_menu_forward">Переслать</string>
@@ -113,7 +109,6 @@
     <string name="compose_attach_cd">Добавить вложение</string>
     <string name="compose_gallery_cd">Прикрепить фото</string>
     <string name="compose_camera_cd">Сделать снимок</string>
-    <string name="compose_schedule_cd">Запланировать сообщение</string>
     <string name="compose_contact_cd">Прикрепить контакт</string>
     <string name="compose_contact_error">Ошибка чтения контакта</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -165,20 +160,7 @@
     <string name="backup_progress_syncing">Синхронизация сообщений…</string>
     <string name="backup_progress_finished">Завершено!</string>
     <string name="backup_notification_channel_name">Резервирование</string>
-    <string name="scheduled_title">Планировщик</string>
-    <string name="scheduled_empty_description">Автоматически отправить сообщение когда пожелаете</string>
-    <string name="scheduled_empty_message_1">Привет! Когда у вас был день рождения?</string>
-    <string name="scheduled_empty_message_2">Он был 23 декабря</string>
-    <string name="scheduled_empty_message_3">С днём рождения! Посмотрите, какой я отличный друг, помнящий о вашем дне рождения</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Отправка 23 декабря </string>
-    <string name="scheduled_compose_cd">Запланировать сообщение</string>
-    <string name="scheduled_options_title">Запланированное сообщение</string>
-    <string-array name="scheduled_options">
-        <item>Отправить сейчас</item>
-        <item>Копировать текст</item>
-        <item>Удалить</item>
-    </string-array>
     <string name="settings_category_appearance">Внешний вид</string>
     <string name="settings_category_general">Общее</string>
     <string name="settings_category_qkreply">QK-ответ</string>
@@ -205,7 +187,6 @@
     <string name="settings_qkreply_summary">Всплывающее окно для новых сообщений</string>
     <string name="settings_qkreply_tap_dismiss_title">Нажмите, чтобы отклонить</string>
     <string name="settings_qkreply_tap_dismiss_summary">Нажмите за пределами всплывающего окна, чтобы закрыть его</string>
-    <string name="settings_delayed_title">Задержка перед отправкой</string>
     <string name="settings_swipe_actions">Действия жестами</string>
     <string name="settings_swipe_actions_summary">Настройка действий жестами для бесед</string>
     <string name="settings_swipe_actions_right">Жест вправо</string>
@@ -247,7 +228,6 @@
     <string name="settings_sync_summary">Принудительная синхронизация сообщений с собственной базой данных SMS Android</string>
     <string name="settings_logging_enabled">Ведение журнала отладки включено</string>
     <string name="settings_logging_disabled">Ведение журнала отладки отключено</string>
-    <string name="settings_delay_duration_hint">Введите продолжительность (в секундах)</string>
     <string name="blocking_title">Блокировка</string>
     <string name="blocking_drop_title">Удалять сообщения</string>
     <string name="blocking_drop_summary">Удалять входящие сообщения от заблокированных отправителей, а не скрывать их</string>
@@ -329,12 +309,6 @@
         <item>Крупный</item>
         <item>Большой</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Без задержки</item>
-        <item>3 секунды</item>
-        <item>5 секунд</item>
-        <item>10 секунд</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Автоматически</item>
         <item>100 Кб</item>
@@ -364,8 +338,6 @@
     <string name="main_menu_edit_message">Редактировать сообщение</string>
     <string name="main_menu_rename_conversation">Переименовать разговор</string>
     <string name="main_sender_draft">Черновик: %s</string>
-    <string name="scheduled_menu_send_now">Отправить сейчас</string>
-    <string name="scheduled_menu_edit_message">Редактировать сообщение</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Вы уверены, что хотите удалить %d сообщение?</item>
         <item quantity="few">Вы уверены, что хотите удалить %d сообщения?</item>
@@ -378,23 +350,16 @@
         <item quantity="many">Вы уверены, что хотите отправить прямо сейчас %d сообщений?</item>
         <item quantity="other">Вы уверены, что хотите отправить прямо сейчас %d сообщений?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Редактировать сообщение</string>
-    <string name="dialog_edit_scheduled_message">Редактирование этого сообщения удалит его из планировщика.\n\nУбедитесь, что вы повторно отправите его на следующем экране, иначе оно будет потеряно.\n\nХотите продолжить?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Да, редактировать сообщение</string>
     <string name="dialog_clear_compose_title">Стереть сообщение</string>
     <string name="dialog_clear_compose">Стереть сообщение? Эта операция не может быть отменена.</string>
-    <string name="compose_scheduled_view">Запланированные сообщения для этого разговора</string>
     <string name="compose_no_valid_recipients">Не могу отправить другим участникам</string>
     <string name="compose_menu_show_status">Показать статус</string>
     <string name="compose_attach_file_cd">Прикрепить файл</string>
     <string name="compose_audio_message_cd">Записать аудиосообщение</string>
-    <string name="compose_schedule_cancel_cd">Отменить запланированное сообщение</string>
     <string name="compose_record_audio_msg_cd">Записать аудиосообщение</string>
     <string name="compose_record_audio_msg_abort_cd">Отменить аудиосообщение</string>
     <string name="compose_record_audio_msg_attach_cd">Прикрепить аудиосообщение</string>
     <string name="compose_record_audio_msg_play_pause_cd">Проиграть или поставить на паузу аудиосообщение</string>
-    <string name="compose_message_cancel">Отменить</string>
-    <string name="compose_message_send_now">Отправить сейчас</string>
     <string name="compose_message_sim">Номер SIM-карты</string>
     <string name="compose_message_item">Элемент сообщения</string>
     <string name="compose_message_attachment">Прикреплено</string>
@@ -402,7 +367,6 @@
     <string name="message_body_too_long_to_display">⚠ Сообщение длинное. Скопируйте или сохраните для полного текста</string>
     <string name="clipboard_too_large_to_copy">Размер данных превышает лимит буфера обмена</string>
     <string name="clipboard_unable_to_copy_to">Не удалось скопировать в буфер обмена</string>
-    <string name="scheduled_send_cd">Запланировать это сообщение</string>
     <string name="menu_mms_part_share">Поделиться</string>
     <string name="menu_mms_part_forward">Переслать</string>
     <string name="menu_mms_part_open">Открыть снаружи</string>

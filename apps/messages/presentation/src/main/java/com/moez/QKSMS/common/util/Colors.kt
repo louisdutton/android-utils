@@ -27,7 +27,6 @@ import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,8 +34,7 @@ import kotlin.math.pow
 
 @Singleton
 class Colors @Inject constructor(
-    private val context: Context,
-    private val prefs: Preferences
+    private val context: Context
 ) {
 
     data class Theme(val theme: Int, private val colors: Colors) {
@@ -81,11 +79,7 @@ class Colors @Inject constructor(
     }
 
     fun themeObservable(recipient: Recipient? = null): Observable<Theme> {
-        return Observable.merge(
-            prefs.theme().asObservable().map { Unit },
-            prefs.night.asObservable().map { Unit },
-            prefs.nightMode.asObservable().map { Unit }
-        ).map { theme(recipient) }
+        return Observable.just(theme(recipient))
     }
 
     private fun materialPrimary(): Int {

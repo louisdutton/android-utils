@@ -63,7 +63,6 @@
     <string name="main_permission_allow">अनुमति दे</string>
     <string name="drawer_inbox">इनबॉक्स</string>
     <string name="drawer_archived">संग्रहीत</string>
-    <string name="drawer_scheduled">अनुसूचित</string>
     <string name="drawer_blocking">अवरुद्ध</string>
     <string name="drawer_more">और</string>
     <string name="drawer_settings">सेटिंग्स</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">प्राप्तकर्ता और उत्तर सभी को दिखाई देंगे</string>
     <string name="compose_messages_empty">यह आपकी बातचीत की शुरुआत है । कुछ अच्छा कहिये!</string>
     <string name="compose_vcard_label">संपर्क कार्ड</string>
-    <string name="compose_scheduled_for">निर्धारित समय:</string>
-    <string name="compose_scheduled_future">चयनित समय भविष्य में होना चाहिए!</string>
-    <string name="compose_scheduled_toast">अनुसूचित संदेशों में जोड़ा गया</string>
     <string name="compose_hint">संदेश लिखें</string>
     <string name="compose_menu_copy">पाठ की प्रतिलिपि बनाएं</string>
     <string name="compose_menu_forward">आगे</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">एक अटैचमेंट संलग्न करें</string>
     <string name="compose_gallery_cd">चित्र संलग्न करें</string>
     <string name="compose_camera_cd">चित्र खिंचे</string>
-    <string name="compose_schedule_cd">संदेश अनुसूचित करें</string>
     <string name="compose_contact_cd">एक संपर्क संलग्न करें</string>
     <string name="compose_contact_error">संपर्क पढ़ने में त्रुटि</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">संदेश सिंक्रनाइज़ हो रहा है...</string>
     <string name="backup_progress_finished">समाप्त!</string>
     <string name="backup_notification_channel_name">बैकअप और पुनर्स्थापना</string>
-    <string name="scheduled_title">अनुसूचित</string>
-    <string name="scheduled_empty_description">स्वचालित रूप से एक संदेश भेजें, जिस समय आप चाहते हैं</string>
-    <string name="scheduled_empty_message_1">सुनो! आपका जन्मदिन कब था?</string>
-    <string name="scheduled_empty_message_2">यह 23 दिसंबर को था</string>
-    <string name="scheduled_empty_message_3">जन्मदिन की शुभकामनाएं! देखो, मैं कौन सा मित्र हूं, तुम्हारा जन्मदिन याद कर रहा हूं</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">23 दिसंबर को भेजा जा रहा है </string>
-    <string name="scheduled_compose_cd">एक संदेश अनुसूचित करें</string>
-    <string name="scheduled_options_title">निर्धारित संदेश</string>
-    <string-array name="scheduled_options">
-        <item>अभी भेजें</item>
-        <item>टेक्स्ट कॉपी करें</item>
-        <item>मिटाएँ</item>
-    </string-array>
     <string name="settings_category_appearance">दिखावट</string>
     <string name="settings_category_general">सामान्य</string>
     <string name="settings_category_qkreply">QK उत्तर</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">नए संदेशों के लिए पॉपअप</string>
     <string name="settings_qkreply_tap_dismiss_title">खारिज करने के लिए टैप करें</string>
     <string name="settings_qkreply_tap_dismiss_summary">पॉपअप को बंद करने के लिए उसके बाहर टैप करें</string>
-    <string name="settings_delayed_title">विलंबित भेजें</string>
     <string name="settings_swipe_actions">स्वाइप क्रिया</string>
     <string name="settings_swipe_actions_summary">बातचीत के लिए स्वाइप कार्रवाइयां कॉन्फ़िगर करें</string>
     <string name="settings_swipe_actions_right">दाहिने तरफ से खींचे</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">अपने संदेशों को मूल एंड्रॉइड एसएमएस डेटाबेस के साथ पुन: समन्वयित करें</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">अवधि दर्ज करें (सेकंड)</string>
     <string name="blocking_title">अवरुद्ध</string>
     <string name="blocking_drop_title">संदेश छोड़ें</string>
     <string name="blocking_drop_summary">आने वाले संदेशों को छिपाने के बजाय अवरुद्ध प्रेषकों से ड्रॉप करें</string>
@@ -319,12 +299,6 @@
         <item>बड़ा</item>
         <item>और बड़ा</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>कोइ विलम्ब नही</item>
-        <item>3 सेकंड</item>
-        <item>5 सेकंड</item>
-        <item>10 सेकंड</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>स्वचालित</item>
         <item>100केबी</item>
@@ -358,8 +332,6 @@
     <string name="main_menu_rename_conversation">वार्तालाप का नाम बदलें</string>
     <string name="main_sync_emojis">इमोजी प्रतिक्रियाएँ पार्स की जा रही हैं</string>
     <string name="main_sender_draft">ड्राफ्ट: %s</string>
-    <string name="scheduled_menu_send_now">अभी भेजें</string>
-    <string name="scheduled_menu_edit_message">संदेश संपादित करें</string>
     <string name="message_management_title">संदेश प्रबंधन</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">क्या आप वाकई इस संदेश को हटाना चाहते हैं?</item>
@@ -369,26 +341,19 @@
         <item quantity="one">क्या आप वाकई इस संदेश को अभी भेजना चाहते हैं?</item>
         <item quantity="other">क्या आप वाकई %d संदेश अभी भेजना चाहते हैं?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">संदेश संपादित करें</string>
-    <string name="dialog_edit_scheduled_message">इस संदेश को संपादित करने से यह शेड्यूल से हट जाएगा।\n\nअगली स्क्रीन पर इसे दोबारा सबमिट करना सुनिश्चित करें, नहीं तो यह खो जाएगा।\n\nक्या आप जारी रखना चाहते हैं?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">हाँ, संदेश संपादित करें</string>
     <string name="dialog_clear_compose_title">संदेश साफ़ करें</string>
     <string name="dialog_clear_compose">संदेश साफ़ करें? यह कार्रवाई वापस नहीं ली जा सकती।</string>
     <string name="compose_send_group_summary_on">प्राप्तकर्ता और जवाब सभी को दिखाई देंगे</string>
     <string name="compose_send_group_summary_off">सभी प्राप्तकर्ताओं को संदेश अलग-अलग भेजे जाएंगे</string>
-    <string name="compose_scheduled_view">इस वार्तालाप के लिए निर्धारित संदेश</string>
     <string name="compose_no_valid_recipients">अन्य प्रतिभागियों को नहीं भेजा जा सकता</string>
     <string name="compose_menu_show_status">स्थिति दिखाएँ</string>
     <string name="compose_reactions_title">प्रतिक्रियाएँ</string>
     <string name="compose_attach_file_cd">कोई भी फ़ाइल संलग्न करें</string>
     <string name="compose_audio_message_cd">ऑडियो संदेश रिकॉर्ड करें</string>
-    <string name="compose_schedule_cancel_cd">संदेश का शेड्यूल रद्द करें</string>
     <string name="compose_record_audio_msg_cd">ऑडियो संदेश रिकॉर्ड करें</string>
     <string name="compose_record_audio_msg_abort_cd">ऑडियो संदेश रद्द करें</string>
     <string name="compose_record_audio_msg_attach_cd">ऑडियो संदेश संलग्न करें</string>
     <string name="compose_record_audio_msg_play_pause_cd">ऑडियो संदेश चलाएँ या रोकें</string>
-    <string name="compose_message_cancel">रद्द करें</string>
-    <string name="compose_message_send_now">अभी भेजें</string>
     <string name="compose_message_sim">SIM नंबर</string>
     <string name="compose_message_item">संदेश आइटम</string>
     <string name="compose_message_attachment">संलग्नक</string>
@@ -396,7 +361,6 @@
     <string name="message_body_too_long_to_display">⚠ संदेश लंबा है। पूरा टेक्स्ट देखने के लिए कॉपी करें या सेव करें</string>
     <string name="clipboard_too_large_to_copy">डेटा साइज क्लिपबोर्ड सीमा से अधिक है</string>
     <string name="clipboard_unable_to_copy_to">क्लिपबोर्ड पर कॉपी नहीं किया जा सका</string>
-    <string name="scheduled_send_cd">इस संदेश को शेड्यूल करें</string>
     <string name="attachment_missing">अनुपस्थित</string>
     <string name="settings_system_show_stt_title">स्पीच-टू-टेक्स्ट बटन दिखाएँ</string>
     <string name="settings_notification_previews_summary">नाम और संदेश दिखाएँ</string>

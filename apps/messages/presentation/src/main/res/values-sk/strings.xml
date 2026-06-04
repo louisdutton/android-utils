@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Povoliť</string>
     <string name="drawer_inbox">Doručené</string>
     <string name="drawer_archived">Archivované</string>
-    <string name="drawer_scheduled">Naplánované</string>
     <string name="drawer_blocking">Blokovanie</string>
     <string name="drawer_more">Viac</string>
     <string name="drawer_settings">Nastavenia</string>
@@ -89,9 +88,6 @@
     <string name="compose_send_group_summary">Príjemcovia a odpovede budú viditeľné všetkým</string>
     <string name="compose_messages_empty">Toto je začiatok vašej konverzácie. Napíšte niečo pekného!</string>
     <string name="compose_vcard_label">Karta kontaktu</string>
-    <string name="compose_scheduled_for">Naplánované na</string>
-    <string name="compose_scheduled_future">Vybraný čas musí ešte len nastať!</string>
-    <string name="compose_scheduled_toast">Pridané do naplánovaných správ</string>
     <string name="compose_hint">Napíšte správu…</string>
     <string name="compose_menu_copy">Kopírovať text</string>
     <string name="compose_menu_forward">Preposlať</string>
@@ -113,7 +109,6 @@
     <string name="compose_attach_cd">Pridať prílohu</string>
     <string name="compose_gallery_cd">Priložiť fotografiu</string>
     <string name="compose_camera_cd">Urobiť fotografiu</string>
-    <string name="compose_schedule_cd">Naplánovať správu</string>
     <string name="compose_contact_cd">Pripojiť kontakt</string>
     <string name="compose_contact_error">Chyba čítania kontaktu</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -165,20 +160,7 @@
     <string name="backup_progress_syncing">Synchronizácia správ…</string>
     <string name="backup_progress_finished">Dokončené!</string>
     <string name="backup_notification_channel_name">Zálohovanie a obnovenie</string>
-    <string name="scheduled_title">Naplánované</string>
-    <string name="scheduled_empty_description">Automaticky odošle správu v presnom okamihu, ktorý si prajete</string>
-    <string name="scheduled_empty_message_1">Nazdar! Kedy máš narodeniny?</string>
-    <string name="scheduled_empty_message_2">23. decembra</string>
-    <string name="scheduled_empty_message_3">Všetko najlepšie! Vidíš akého máš dobrého kamaráta, pamätám si tvoje narodeniny.</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Pošle sa 23. decembra</string>
-    <string name="scheduled_compose_cd">Naplánovať správu</string>
-    <string name="scheduled_options_title">Naplánovaná správa</string>
-    <string-array name="scheduled_options">
-        <item>Odoslať teraz</item>
-        <item>Kopírovať text</item>
-        <item>Odstrániť</item>
-    </string-array>
     <string name="settings_category_appearance">Vzhľad</string>
     <string name="settings_category_general">Všeobecné</string>
     <string name="settings_category_qkreply">Rýchla odpoveď</string>
@@ -205,7 +187,6 @@
     <string name="settings_qkreply_summary">Vyskakovacie okno pre nové správy</string>
     <string name="settings_qkreply_tap_dismiss_title">Klepnutím zavriete</string>
     <string name="settings_qkreply_tap_dismiss_summary">Zavriete klepnutím mimo vyskakovacie okno</string>
-    <string name="settings_delayed_title">Oneskorené odoslanie</string>
     <string name="settings_swipe_actions">Akcie potiahnutím</string>
     <string name="settings_swipe_actions_summary">Nastavenie akcií potiahnutím pre konverzácie</string>
     <string name="settings_swipe_actions_right">Potiahnutie doprava</string>
@@ -247,7 +228,6 @@
     <string name="settings_sync_summary">Opätovne synchronizovať vaše správy s natívnou SMS databázou</string>
     <string name="settings_logging_enabled">Ladiace záznamy povolené</string>
     <string name="settings_logging_disabled">Ladiace záznamy vypnuté</string>
-    <string name="settings_delay_duration_hint">Zadajte trvanie v sekundách</string>
     <string name="blocking_title">Blokovanie</string>
     <string name="blocking_drop_title">Zahodiť správy</string>
     <string name="blocking_drop_summary">Zahodiť prichádzajúce správy od blokovaných odosielateľov namiesto ich skrytia.</string>
@@ -328,12 +308,6 @@
         <item>Stredný</item>
         <item>Veľký</item>
         <item>Najväčší</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Bez oneskorenia</item>
-        <item>3 sekundy</item>
-        <item>5 sekúnd</item>
-        <item>10 sekúnd</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automaticky</item>

@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Дозволити</string>
     <string name="drawer_inbox">Вхідні</string>
     <string name="drawer_archived">Архівні</string>
-    <string name="drawer_scheduled">Заплановані</string>
     <string name="drawer_blocking">Блокування</string>
     <string name="drawer_more">Більше</string>
     <string name="drawer_settings">Налаштування</string>
@@ -89,9 +88,6 @@
     <string name="compose_send_group_summary">Отримувачі та відповіді будуть видимі для всіх</string>
     <string name="compose_messages_empty">Це початок вашої бесіди. Скажіть, що-небудь приємне!</string>
     <string name="compose_vcard_label">Картка контакту</string>
-    <string name="compose_scheduled_for">Заплановано на</string>
-    <string name="compose_scheduled_future">Обраний час повинен бути в майбутньому!</string>
-    <string name="compose_scheduled_toast">Додано до запланованих повідомлень</string>
     <string name="compose_hint">Написати повідомлення…</string>
     <string name="compose_menu_copy">Скопіювати текст</string>
     <string name="compose_menu_forward">Переслати</string>
@@ -113,7 +109,6 @@
     <string name="compose_attach_cd">Додати вкладення</string>
     <string name="compose_gallery_cd">Прикріпити фотографію</string>
     <string name="compose_camera_cd">Сфотографувати</string>
-    <string name="compose_schedule_cd">Запланувати повідомлення</string>
     <string name="compose_contact_cd">Прикріпити контакт</string>
     <string name="compose_contact_error">Помилка читання контакту</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -165,20 +160,7 @@
     <string name="backup_progress_syncing">Синхронізація повідомлень…</string>
     <string name="backup_progress_finished">Готово!</string>
     <string name="backup_notification_channel_name">Резервне копіювання</string>
-    <string name="scheduled_title">Заплановані</string>
-    <string name="scheduled_empty_description">Автоматично надсилайте повідомлення саме в той час, який ви захочете</string>
-    <string name="scheduled_empty_message_1">Агов! Коли в тебе день народження?</string>
-    <string name="scheduled_empty_message_2">23-го грудня</string>
-    <string name="scheduled_empty_message_3">З Днем народження! Дивись, який я чудовий друг, згадав про твій день народження</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Надіслано: 23 грудня </string>
-    <string name="scheduled_compose_cd">Запланувати повідомлення</string>
-    <string name="scheduled_options_title">Заплановане повідомлення</string>
-    <string-array name="scheduled_options">
-        <item>Надіслати зараз</item>
-        <item>Копіювати текст</item>
-        <item>Видалити</item>
-    </string-array>
     <string name="settings_category_appearance">Зовнішній вигляд</string>
     <string name="settings_category_general">Загальні</string>
     <string name="settings_category_qkreply">Швидка відповідь</string>
@@ -205,7 +187,6 @@
     <string name="settings_qkreply_summary">Виринаюче вікно для нових повідомлень</string>
     <string name="settings_qkreply_tap_dismiss_title">Торкніться, щоб вимкнути</string>
     <string name="settings_qkreply_tap_dismiss_summary">Торкніться за межами виринаючого вікна, щоб закрити його</string>
-    <string name="settings_delayed_title">Затримка надсилання</string>
     <string name="settings_swipe_actions">Дії жестів</string>
     <string name="settings_swipe_actions_summary">Налаштуйте використання жестів для розмови</string>
     <string name="settings_swipe_actions_right">Провести праворуч</string>
@@ -247,7 +228,6 @@
     <string name="settings_sync_summary">Повторна синхронізація ваших повідомлень з власною базою даних SMS Android</string>
     <string name="settings_logging_enabled">Ведення журналу зневаження увімкнуте</string>
     <string name="settings_logging_disabled">Ведення журналу зневаження вимкнуте</string>
-    <string name="settings_delay_duration_hint">Введіть тривалість (у секундах)</string>
     <string name="blocking_title">Блокування</string>
     <string name="blocking_drop_title">Видалити повідомлення</string>
     <string name="blocking_drop_summary">Видаляти вхідні повідомлення від заблокованих відправників, а не приховувати їх</string>
@@ -329,12 +309,6 @@
         <item>Великий</item>
         <item>Більший</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Без затримок</item>
-        <item>3 секунди</item>
-        <item>5 секунд</item>
-        <item>10 секунд</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Автоматично</item>
         <item>100 кБ</item>
@@ -368,8 +342,6 @@
     <string name="main_menu_rename_conversation">Перейменувати розмову</string>
     <string name="main_sync_emojis">Розбір реакцій емодзі…</string>
     <string name="main_sender_draft">Чернетка: %s</string>
-    <string name="scheduled_menu_send_now">Надіслати зараз</string>
-    <string name="scheduled_menu_edit_message">Редагувати повідомлення</string>
     <string name="message_management_title">Керування повідомленнями</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Ви впевнені, що хочете видалити %d повідомлення?</item>
@@ -383,26 +355,19 @@
         <item quantity="many">Ви впевнені, що хочете надіслати %d повідомлень зараз?</item>
         <item quantity="other">Ви впевнені, що хочете надіслати %d повідомлень зараз?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Редагувати повідомлення</string>
-    <string name="dialog_edit_scheduled_message">Редагування цього повідомлення видалить його з розкладу.\n\nОбов’язково надішліть його повторно на наступному екрані, інакше воно буде втрачено.\n\nХочете продовжити?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Так, редагувати повідомлення</string>
     <string name="dialog_clear_compose_title">Очистити повідомлення</string>
     <string name="dialog_clear_compose">Очистити повідомлення? Ця дія не може бути скасована.</string>
     <string name="compose_send_group_summary_on">Одержувачі та відповіді будуть видимі для всіх</string>
     <string name="compose_send_group_summary_off">Повідомлення будуть надсилатися окремо всім одержувачам</string>
-    <string name="compose_scheduled_view">Заплановані повідомлення для цієї розмови</string>
     <string name="compose_no_valid_recipients">Неможливо надіслати іншим учасникам</string>
     <string name="compose_menu_show_status">Подивитись статус</string>
     <string name="compose_reactions_title">Реакції</string>
     <string name="compose_attach_file_cd">Прикріпити будь-який файл</string>
     <string name="compose_audio_message_cd">Записати аудіо-повідомлення</string>
-    <string name="compose_schedule_cancel_cd">Скасувати розклад повідомлення</string>
     <string name="compose_record_audio_msg_cd">Записати аудіо-повідомлення</string>
     <string name="compose_record_audio_msg_abort_cd">Скасувати аудіо-повідомлення</string>
     <string name="compose_record_audio_msg_attach_cd">Прикріпити аудіо-повідомлення</string>
     <string name="compose_record_audio_msg_play_pause_cd">Відтворити чи зупинити аудіо-повідомлення</string>
-    <string name="compose_message_cancel">Скасувати</string>
-    <string name="compose_message_send_now">Надіслати зараз</string>
     <string name="compose_message_sim">Номер SIM</string>
     <string name="compose_message_item">Частина повідомлення</string>
     <string name="compose_message_attachment">Прикріплення</string>
@@ -410,7 +375,6 @@
     <string name="message_body_too_long_to_display">⚠ Повідомлення довге. Скопіювати або Зберегти для повного тексту</string>
     <string name="clipboard_too_large_to_copy">Розмір даних перевищує ліміт буфера обміну</string>
     <string name="clipboard_unable_to_copy_to">Неможливо скопіювати в буфер обміну</string>
-    <string name="scheduled_send_cd">Розклад цього повідомлення</string>
     <string name="attachment_missing">Пропущено</string>
     <string name="settings_system_show_stt_title">Показати кнопку перетворення мови в текст</string>
     <string name="settings_notification_previews_summary">Показати ім\'я і повідомлення</string>

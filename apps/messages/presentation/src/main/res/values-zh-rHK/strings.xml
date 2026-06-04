@@ -63,7 +63,6 @@
     <string name="main_permission_allow">允許</string>
     <string name="drawer_inbox">收件箱</string>
     <string name="drawer_archived">已存檔</string>
-    <string name="drawer_scheduled">已計劃</string>
     <string name="drawer_blocking">封鎖</string>
     <string name="drawer_more">更多</string>
     <string name="drawer_settings">設定</string>
@@ -86,9 +85,6 @@
     <string name="compose_send_group_summary">收件人和回復對每個人都是可見的</string>
     <string name="compose_messages_empty">這是您談話的開始。說點好聽的吧！</string>
     <string name="compose_vcard_label">連絡人卡片</string>
-    <string name="compose_scheduled_for">排程於</string>
-    <string name="compose_scheduled_future">所選時間必須是未來時間</string>
-    <string name="compose_scheduled_toast">已新增至排程訊息</string>
     <string name="compose_hint">寫一條訊息…</string>
     <string name="compose_menu_copy">複製文本</string>
     <string name="compose_menu_forward">轉寄</string>
@@ -110,7 +106,6 @@
     <string name="compose_attach_cd">添加附件</string>
     <string name="compose_gallery_cd">附加照片</string>
     <string name="compose_camera_cd">拍攝照片</string>
-    <string name="compose_schedule_cd">排程訊息</string>
     <string name="compose_contact_cd">附加聯絡人</string>
     <string name="compose_contact_error">讀取聯絡人時出錯</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -162,20 +157,7 @@
     <string name="backup_progress_syncing">正在同步訊息…</string>
     <string name="backup_progress_finished">完成！</string>
     <string name="backup_notification_channel_name">備份和還原</string>
-    <string name="scheduled_title">排程</string>
-    <string name="scheduled_empty_description">在您指定的時間自動傳送訊息</string>
-    <string name="scheduled_empty_message_1">嘿，您的生日是什麼時候？</string>
-    <string name="scheduled_empty_message_2">是 12 月 23 日</string>
-    <string name="scheduled_empty_message_3">生日快樂！看看我是一個多麼棒的朋友，我還記着你的生日！</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">在 12 月 23 日傳送</string>
-    <string name="scheduled_compose_cd">新增排程訊息</string>
-    <string name="scheduled_options_title">排程訊息</string>
-    <string-array name="scheduled_options">
-        <item>立即發送</item>
-        <item>複製文字</item>
-        <item>刪除</item>
-    </string-array>
     <string name="settings_category_appearance">外觀</string>
     <string name="settings_category_general">通用</string>
     <string name="settings_category_qkreply">快速答覆</string>
@@ -202,7 +184,6 @@
     <string name="settings_qkreply_summary">彈出新訊息</string>
     <string name="settings_qkreply_tap_dismiss_title">點擊忽略</string>
     <string name="settings_qkreply_tap_dismiss_summary">在快顯視窗外點擊以關閉它</string>
-    <string name="settings_delayed_title">延遲發送</string>
     <string name="settings_swipe_actions">滑動操作</string>
     <string name="settings_swipe_actions_summary">配置對話的滑動操作</string>
     <string name="settings_swipe_actions_right">向右滑動</string>
@@ -241,7 +222,6 @@
     <string name="settings_sync_summary">重新與安卓原生訊息數據庫進行同步</string>
     <string name="settings_logging_enabled">除錯日誌已啓用</string>
     <string name="settings_logging_disabled">出錯日誌已停用</string>
-    <string name="settings_delay_duration_hint">輸入時長 (秒)</string>
     <string name="blocking_title">封鎖</string>
     <string name="blocking_drop_title">直接刪除</string>
     <string name="blocking_drop_summary">直接刪除封鎖的簡訊，而非只有隱藏簡訊</string>
@@ -313,12 +293,6 @@
         <item>一般</item>
         <item>大</item>
         <item>更大</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>無延遲</item>
-        <item>3 秒</item>
-        <item>5 秒</item>
-        <item>10 秒</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>自動</item>

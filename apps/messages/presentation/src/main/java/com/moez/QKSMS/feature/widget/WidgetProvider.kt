@@ -113,8 +113,8 @@ class WidgetProvider : AppWidgetProvider() {
         val nightModeFlags = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         val isNightMode = nightModeFlags == Configuration.UI_MODE_NIGHT_YES
 
-        // Apply colors from theme
-        val night = prefs.night.get() || isNightMode
+        // Apply system theme colors
+        val night = isNightMode
 
         remoteViews.setInt(R.id.background, "setColorFilter", context.getColorCompat(when {
             night -> R.color.black

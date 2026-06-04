@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Izinkan</string>
     <string name="drawer_inbox">Kotak masuk</string>
     <string name="drawer_archived">Diarsipkan</string>
-    <string name="drawer_scheduled">Terjadwal</string>
     <string name="drawer_blocking">Pemblokiran</string>
     <string name="drawer_more">Lainnya</string>
     <string name="drawer_settings">Setelan</string>
@@ -86,9 +85,6 @@
     <string name="compose_send_group_summary">Penerima dan balasan akan ditampilkan ke semua orang</string>
     <string name="compose_messages_empty">Ini adalah awal percakapan anda. Katakan sesuatu yang baik!</string>
     <string name="compose_vcard_label">Kartu nama</string>
-    <string name="compose_scheduled_for">Jadwalkan pada</string>
-    <string name="compose_scheduled_future">Waktu yang dipilih harus berada di masa depan!</string>
-    <string name="compose_scheduled_toast">Ditambahkan ke pesan terjadwal</string>
     <string name="compose_hint">Tulis pesan…</string>
     <string name="compose_menu_copy">Salin teks</string>
     <string name="compose_menu_forward">Teruskan</string>
@@ -110,7 +106,6 @@
     <string name="compose_attach_cd">Tambah lampiran</string>
     <string name="compose_gallery_cd">Lampirkan foto</string>
     <string name="compose_camera_cd">Ambil foto</string>
-    <string name="compose_schedule_cd">Jadwalkan pesan</string>
     <string name="compose_contact_cd">Lampirkan kontak</string>
     <string name="compose_contact_error">Galat membaca kontak</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -162,20 +157,7 @@
     <string name="backup_progress_syncing">Menyinkronkan pesan…</string>
     <string name="backup_progress_finished">Selesai!</string>
     <string name="backup_notification_channel_name">Cadangan dan pemulihan</string>
-    <string name="scheduled_title">Terjadwal</string>
-    <string name="scheduled_empty_description">Otomatis mengirim pesan pada waktu yang anda inginkan</string>
-    <string name="scheduled_empty_message_1">Hai! Kapan kamu ulang tahun?</string>
-    <string name="scheduled_empty_message_2">23 Desember</string>
-    <string name="scheduled_empty_message_3">Selamat ulang tahun! Aku teman yang baik kan?, selalu ingat ulang tahunmu.</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Mengirim pada tanggal 23 Desember</string>
-    <string name="scheduled_compose_cd">Jadwalkan pesan</string>
-    <string name="scheduled_options_title">Pesan terjadwal</string>
-    <string-array name="scheduled_options">
-        <item>Kirim sekarang</item>
-        <item>Salin teks</item>
-        <item>Hapus</item>
-    </string-array>
     <string name="settings_category_appearance">Tampilan</string>
     <string name="settings_category_general">Umum</string>
     <string name="settings_category_qkreply">Balasan cepat</string>
@@ -202,7 +184,6 @@
     <string name="settings_qkreply_summary">Popup untuk pesan baru</string>
     <string name="settings_qkreply_tap_dismiss_title">Ketuk untuk mengabaikan</string>
     <string name="settings_qkreply_tap_dismiss_summary">Ketuk di luar popup untuk menutupnya</string>
-    <string name="settings_delayed_title">Pengiriman tertunda</string>
     <string name="settings_swipe_actions">Tindakan geser</string>
     <string name="settings_swipe_actions_summary">Atur tindakan geser untuk percakapan</string>
     <string name="settings_swipe_actions_right">Geser ke kanan</string>
@@ -241,7 +222,6 @@
     <string name="settings_sync_summary">Sinkronisasi ulang pesan anda dengan basis data aplikasi SMS Android bawaan</string>
     <string name="settings_logging_enabled">Log awakutu diaktifkan</string>
     <string name="settings_logging_disabled">Log awakutu dinonaktifkan</string>
-    <string name="settings_delay_duration_hint">Masukkan durasi (detik)</string>
     <string name="blocking_title">Pemblokiran</string>
     <string name="blocking_drop_title">Tolak pesan</string>
     <string name="blocking_drop_summary">Tolak pesan masuk dari pengirim yang diblokir</string>
@@ -313,12 +293,6 @@
         <item>Normal</item>
         <item>Besar</item>
         <item>Lebih besar</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Tanpa tundaan</item>
-        <item>3 detik</item>
-        <item>5 detik</item>
-        <item>10 detik</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Otomatis</item>

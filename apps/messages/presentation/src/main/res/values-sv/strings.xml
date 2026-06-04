@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Tillåt</string>
     <string name="drawer_inbox">Inkorg</string>
     <string name="drawer_archived">Arkiverat</string>
-    <string name="drawer_scheduled">Schemalagt</string>
     <string name="drawer_blocking">Blockerar</string>
     <string name="drawer_more">Mer</string>
     <string name="drawer_settings">Inställningar</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Mottagare och svar kommer att vara synligt för alla</string>
     <string name="compose_messages_empty">Det här är början på din konversation. Säg något snällt!</string>
     <string name="compose_vcard_label">Kontaktkort</string>
-    <string name="compose_scheduled_for">Schemalagd tid:</string>
-    <string name="compose_scheduled_future">Den valda tiden måste vara i framtiden!</string>
-    <string name="compose_scheduled_toast">Lades till i schemalagda meddelanden</string>
     <string name="compose_hint">Skriv ett meddelande…</string>
     <string name="compose_menu_copy">Kopiera text</string>
     <string name="compose_menu_forward">Vidarebefordra</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Lägg till en bilaga</string>
     <string name="compose_gallery_cd">Bifoga en bild</string>
     <string name="compose_camera_cd">Ta en bild</string>
-    <string name="compose_schedule_cd">Schemalägg meddelande</string>
     <string name="compose_contact_cd">Bifoga en kontakt</string>
     <string name="compose_contact_error">Fel uppstod när kontakt lästes in</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Synkroniserar meddelandena…</string>
     <string name="backup_progress_finished">Avslutad!</string>
     <string name="backup_notification_channel_name">Säkerhetskopiera och återställ</string>
-    <string name="scheduled_title">Schemalagda</string>
-    <string name="scheduled_empty_description">Skicka ett meddelande automatiskt i det exakta ögonblicket som du önskar</string>
-    <string name="scheduled_empty_message_1">Hi! När var din födelsedag igen?</string>
-    <string name="scheduled_empty_message_2">Den är den 23:e December</string>
-    <string name="scheduled_empty_message_3">Grattis på födelsedagen! Se vilken fin vän jag är som kommer ihåg din födelsedag</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Skickar den 23:e December </string>
-    <string name="scheduled_compose_cd">Schemalägg ett meddelande</string>
-    <string name="scheduled_options_title">Schemalagt meddelande</string>
-    <string-array name="scheduled_options">
-        <item>Skicka nu</item>
-        <item>Kopiera text</item>
-        <item>Radera</item>
-    </string-array>
     <string name="settings_category_appearance">Utseende</string>
     <string name="settings_category_general">Generellt</string>
     <string name="settings_category_qkreply">QK svar</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Popup för nya meddelanden</string>
     <string name="settings_qkreply_tap_dismiss_title">Tryck för att avfärda</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tryck var som helst utanför popupen för att stänga den</string>
-    <string name="settings_delayed_title">Fördröj skickande av meddelanden</string>
     <string name="settings_swipe_actions">Svepåtgärder</string>
     <string name="settings_swipe_actions_summary">Ställ in svep-åtgärder för konversationer</string>
     <string name="settings_swipe_actions_right">Svepning till höger</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Synkronisera dina meddelanden med telefonens SMS-databas</string>
     <string name="settings_logging_enabled">Felsökningsloggning aktiverades</string>
     <string name="settings_logging_disabled">Felsökningsloggning inaktiverad</string>
-    <string name="settings_delay_duration_hint">Fyll i varaktighet (sekunder)</string>
     <string name="blocking_title">Blockerar</string>
     <string name="blocking_drop_title">Avvisa meddelanden</string>
     <string name="blocking_drop_summary">Avvisa inkommande meddelanden från blockerade avsändare istället för att dölja dem</string>
@@ -319,12 +299,6 @@
         <item>Stort</item>
         <item>Större</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Ingen fördröjning</item>
-        <item>3 sekunder</item>
-        <item>5 sekunder</item>
-        <item>10 sekunder</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Automatisk</item>
         <item>100KB</item>
@@ -356,8 +330,6 @@
     <string name="main_menu_send_now">Skicka nu</string>
     <string name="main_menu_edit_message">Redigera meddelande</string>
     <string name="main_menu_rename_conversation">Byt namn på konversation</string>
-    <string name="scheduled_menu_send_now">Skicka nu</string>
-    <string name="scheduled_menu_edit_message">Redigera meddelande</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Är du säker på att du vill ta bort detta meddelande?</item>
         <item quantity="other">Är du säker på att du vill ta bort %d meddelanden?</item>
@@ -366,8 +338,6 @@
         <item quantity="one">Är du säker på att du vill skicka detta meddelande nu?</item>
         <item quantity="other">Är du säker på att du vill skicka %d meddelanden nu?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Redigera meddelande</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Ja, redigera meddelandet</string>
     <string name="dialog_clear_compose_title">Rensa meddelande</string>
     <string name="dialog_clear_compose">Rensa meddelandet? Denna åtgärd kan inte ångras.</string>
     <string name="notification_message_failed_action">Skicka igen</string>

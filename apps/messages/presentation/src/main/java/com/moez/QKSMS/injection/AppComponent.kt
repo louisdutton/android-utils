@@ -40,7 +40,6 @@ import dev.octoshrimpy.quik.feature.conversationinfo.injection.ConversationInfoC
 import dev.octoshrimpy.quik.feature.messageutils.MessageUtilsController
 import dev.octoshrimpy.quik.feature.settings.SettingsController
 import dev.octoshrimpy.quik.feature.settings.swipe.SwipeActionsController
-import dev.octoshrimpy.quik.feature.themepicker.injection.ThemePickerComponent
 import dev.octoshrimpy.quik.feature.widget.WidgetAdapter
 import dev.octoshrimpy.quik.injection.android.ActivityBuilderModule
 import dev.octoshrimpy.quik.injection.android.BroadcastReceiverBuilderModule
@@ -57,7 +56,6 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun conversationInfoBuilder(): ConversationInfoComponent.Builder
-    fun themePickerBuilder(): ThemePickerComponent.Builder
 
     fun inject(application: QKApplication)
 

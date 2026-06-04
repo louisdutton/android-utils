@@ -95,50 +95,10 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false">
 
-            <FrameLayout
-                android:id="@+id/cancelFrame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/bodyBox"
-                android:layout_alignParentStart="true"
-                android:layout_marginEnd="12dp"
-                android:clipToPadding="false"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <ProgressBar
-                    android:id="@+id/cancel"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/circle"
-                    android:backgroundTint="?attr/colorSurfaceContainerHigh"
-                    android:clickable="false"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:indeterminate="false"
-                    android:progressDrawable="@drawable/circular_progress_bar"
-                    tools:progress="45"
-                    tools:progressTint="@color/tools_theme"
-                    tools:visibility="visible" />
-
-                <ImageView
-                    android:id="@+id/cancelIcon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:clickable="false"
-                    android:contentDescription="@string/compose_message_cancel"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_stop_black_24dp"
-                    tools:tint="@color/tools_theme" />
-
-            </FrameLayout>
-
             <LinearLayout
                 android:id="@+id/bodyBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/sendNowIcon"
-                android:layout_toEndOf="@id/cancelFrame"
                 android:orientation="horizontal"
                 android:clipChildren="false"
                 android:clipToPadding="false">
@@ -199,23 +159,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/sendNowIcon"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_alignBottom="@id/bodyBox"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/circle"
-                android:backgroundTint="?attr/colorSurfaceContainerHigh"
-                android:baselineAlignBottom="true"
-                android:contentDescription="@string/compose_message_send_now"
-                android:padding="6dp"
-                android:src="@drawable/ic_send_black_24dp"
-                android:visibility="gone"
-                tools:tint="@color/tools_theme"
-                tools:visibility="visible" />
-
         </RelativeLayout>
 
         <LinearLayout
@@ -242,7 +185,7 @@
                 android:background="@drawable/circle"
                 android:backgroundTint="?attr/colorSurfaceContainerHigh"
                 android:baselineAlignBottom="false"
-                android:contentDescription="@string/compose_message_send_now"
+                android:contentDescription="@string/notification_message_failed_action"
                 android:padding="6dp"
                 android:src="@drawable/ic_sync_black_24dp"
                 android:visibility="gone"

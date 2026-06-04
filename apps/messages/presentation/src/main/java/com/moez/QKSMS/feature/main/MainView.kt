@@ -44,7 +44,6 @@ interface MainView : QkView<MainState> {
     fun clearSearch()
     fun clearSelection()
     fun toggleSelectAll()
-    fun themeChanged()
     fun showBlockingDialog(conversations: List<Long>, block: Boolean)
     fun showDeleteDialog(conversations: List<Long>)
     fun showRenameDialog(conversationName: String)
@@ -52,4 +51,4 @@ interface MainView : QkView<MainState> {
     fun drawerToggled(opened: Boolean)
 }
 
-enum class NavItem { BACK, INBOX, ARCHIVED, BACKUP, SCHEDULED, BLOCKING, MESSAGE_UTILS, SETTINGS }
+enum class NavItem { BACK, INBOX, ARCHIVED, BACKUP, BLOCKING, MESSAGE_UTILS, SETTINGS }

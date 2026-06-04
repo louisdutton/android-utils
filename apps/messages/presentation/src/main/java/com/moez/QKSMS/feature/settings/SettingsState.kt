@@ -19,18 +19,10 @@
 package dev.octoshrimpy.quik.feature.settings
 
 import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.Preferences
 
 data class SettingsState(
-    val theme: Int = 0,
-    val nightModeSummary: String = "",
-    val nightModeId: Int = Preferences.NIGHT_MODE_OFF,
-    val nightStart: String = "",
-    val nightEnd: String = "",
     val autoEmojiEnabled: Boolean = true,
     val notificationsEnabled: Boolean = true,
-    val sendDelaySummary: String = "",
-    val sendDelayId: Int = 0,
     val deliveryEnabled: Boolean = false,
     val unreadAtTopEnabled: Boolean = false,
     val signature: String = "",

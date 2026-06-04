@@ -33,10 +33,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -119,17 +117,9 @@
             android:taskAffinity=""
             android:theme="@style/AppThemeDialog"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".feature.scheduled.ScheduledActivity" />
         <activity android:name=".feature.backup.BackupActivity" />
         <activity android:name=".feature.contacts.ContactsActivity" />
 
-        <receiver
-            android:name=".receiver.BootReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
         <receiver
             android:name=".receiver.DefaultSmsChangedReceiver"
             android:exported="true">
@@ -159,8 +149,6 @@
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
         <receiver android:name=".receiver.MessageSentReceiver" />
         <receiver android:name=".receiver.MessageDeliveredReceiver" />
-        <receiver android:name=".receiver.SendScheduledMessageReceiver" />
-        <receiver android:name=".receiver.SendDelayedMessageReceiver" />
         <receiver android:name=".receiver.DeleteMessagesReceiver" />
         <receiver android:name=".receiver.BlockThreadReceiver" />
         <receiver android:name=".receiver.MessageMarkReceiver" />
@@ -172,7 +160,6 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".receiver.RemoteMessagingReceiver" />
-        <receiver android:name=".receiver.NightModeReceiver" />
         <receiver
             android:name=".receiver.SmsProviderChangedReceiver"
             android:exported="true">

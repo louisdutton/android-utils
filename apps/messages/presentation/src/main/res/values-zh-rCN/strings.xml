@@ -63,7 +63,6 @@
     <string name="main_permission_allow">允许</string>
     <string name="drawer_inbox">收件箱</string>
     <string name="drawer_archived">已存档</string>
-    <string name="drawer_scheduled">已计划</string>
     <string name="drawer_blocking">拦截</string>
     <string name="drawer_more">更多</string>
     <string name="drawer_settings">设置</string>
@@ -86,9 +85,6 @@
     <string name="compose_send_group_summary">收件人和回复将对所有人可见</string>
     <string name="compose_messages_empty">对话从这里开始，说些什么吧！</string>
     <string name="compose_vcard_label">联系人卡片</string>
-    <string name="compose_scheduled_for">计划于：</string>
-    <string name="compose_scheduled_future">所选时间必须是未来！</string>
-    <string name="compose_scheduled_toast">已添加到预约短信队列</string>
     <string name="compose_hint">写一条消息...</string>
     <string name="compose_menu_copy">复制文本</string>
     <string name="compose_menu_forward">转发</string>
@@ -110,7 +106,6 @@
     <string name="compose_attach_cd">添加附件</string>
     <string name="compose_gallery_cd">添加照片</string>
     <string name="compose_camera_cd">拍照</string>
-    <string name="compose_schedule_cd">定时消息</string>
     <string name="compose_contact_cd">附加联系人</string>
     <string name="compose_contact_error">读取联系人时出错</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -162,20 +157,7 @@
     <string name="backup_progress_syncing">正在同步信息…</string>
     <string name="backup_progress_finished">完成！</string>
     <string name="backup_notification_channel_name">备份和还原</string>
-    <string name="scheduled_title">预约</string>
-    <string name="scheduled_empty_description">在指定时间自动发送消息</string>
-    <string name="scheduled_empty_message_1">嘿！你的生日是什么时候？</string>
-    <string name="scheduled_empty_message_2">是12月23日</string>
-    <string name="scheduled_empty_message_3">生日快乐！我够朋友吧，还记得你的生日</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">在12月23日发送 </string>
-    <string name="scheduled_compose_cd">创建预约短信</string>
-    <string name="scheduled_options_title">预约短信</string>
-    <string-array name="scheduled_options">
-        <item>现在发送</item>
-        <item>复制文本</item>
-        <item>删除</item>
-    </string-array>
     <string name="settings_category_appearance">外观</string>
     <string name="settings_category_general">通用</string>
     <string name="settings_category_qkreply">快速回复</string>
@@ -202,7 +184,6 @@
     <string name="settings_qkreply_summary">弹出新消息</string>
     <string name="settings_qkreply_tap_dismiss_title">点击忽略</string>
     <string name="settings_qkreply_tap_dismiss_summary">点击弹窗外部以关闭</string>
-    <string name="settings_delayed_title">延迟发送</string>
     <string name="settings_swipe_actions">滑动操作</string>
     <string name="settings_swipe_actions_summary">配置对话的滑动操作</string>
     <string name="settings_swipe_actions_right">右划</string>
@@ -241,7 +222,6 @@
     <string name="settings_sync_summary">重新与安卓原生短信数据库进行同步</string>
     <string name="settings_logging_enabled">调试日志记录已启用</string>
     <string name="settings_logging_disabled">调试日志记录已禁用</string>
-    <string name="settings_delay_duration_hint">输入时长 (秒)</string>
     <string name="blocking_title">屏蔽</string>
     <string name="blocking_drop_title">丢弃信息</string>
     <string name="blocking_drop_summary">丢弃屏蔽的发件人所发送的信息</string>
@@ -314,12 +294,6 @@
         <item>大</item>
         <item>更大</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>无延迟</item>
-        <item>3 秒</item>
-        <item>5 秒</item>
-        <item>10 秒</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>自动</item>
         <item>100KB</item>
@@ -352,17 +326,12 @@
     <string name="main_menu_edit_message">编辑短信</string>
     <string name="main_menu_rename_conversation">对话重命名</string>
     <string name="main_sender_draft">草稿：%s个</string>
-    <string name="scheduled_menu_send_now">立即发送</string>
-    <string name="scheduled_menu_edit_message">编辑短信</string>
     <plurals name="dialog_delete_chat">
         <item quantity="other">确定删除所选的%d条短信吗？</item>
     </plurals>
     <plurals name="dialog_send_now">
         <item quantity="other">确定发送%d条短信吗？</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">编辑短信</string>
-    <string name="dialog_edit_scheduled_message">编辑此短信，将使其从日程表中移除。\n\n请确保在下一页重新提交，否则短信将会丢失。\n\n确定要继续吗？</string>
-    <string name="dialog_edit_scheduled_message_positive_button">是的，确定编辑</string>
     <string name="dialog_clear_compose_title">清除短信内容</string>
     <string name="dialog_clear_compose">确定清除短信内容吗？本操作不可撤回。</string>
 </resources>

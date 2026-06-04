@@ -21,6 +21,7 @@ package dev.octoshrimpy.quik.feature.widget
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.RemoteViews
@@ -62,7 +63,9 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
     private var conversations: List<Conversation> = listOf()
     private val appWidgetManager by lazy { AppWidgetManager.getInstance(context) }
 
-    private val night get() = prefs.night.get()
+    private val night
+        get() = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+                Configuration.UI_MODE_NIGHT_YES
     private val theme get() = colors.theme()
     private val background
         get() = context.getColorCompat(when {

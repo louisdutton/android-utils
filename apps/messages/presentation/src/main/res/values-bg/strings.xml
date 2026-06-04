@@ -52,13 +52,8 @@
     <string name="main_permission_contacts">QUIK се нуждае от разрешение за преглед на контактите</string>
     <string name="main_permission_notifications">QUIK се нуждае от разрешение за показване на известия</string>
     <string name="main_permission_allow">Разрешаване</string>
-    <string name="scheduled_menu_send_now">Изпращане сега</string>
-    <string name="compose_message_send_now">Изпращане сега</string>
-    <string name="scheduled_menu_edit_message">Променяне на съобщението</string>
-    <string name="dialog_edit_scheduled_message_title">Променяне на съобщението</string>
     <string name="drawer_inbox">Входящи</string>
     <string name="drawer_archived">Архив</string>
-    <string name="drawer_scheduled">Планиране</string>
     <string name="drawer_blocking">Забраняване</string>
     <string name="blocking_title">Забраняване</string>
     <string name="drawer_more">Повече</string>
@@ -80,8 +75,6 @@
         <item quantity="one">Желаете ли това съобщение да бъде изпратено сега?</item>
         <item quantity="other">Желаете ли тези %d съобщения да бъдат изпратени сега?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message">При промяна съобщението ще бъде премахнато от планираните.\n\nУверете се, че ще го изпратите на следващия екран, в противен случай ще бъде загубено.\n\nЖелаете ли да продължите?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Да, променяне на съобщение</string>
     <string name="dialog_clear_compose_title">Изчистване на съобщението</string>
     <string name="dialog_clear_compose">Премахване на съобщението? Действието е необратимо.</string>
     <string name="compose_number_picker_title">Избиране на телефонен номер</string>
@@ -95,10 +88,6 @@
     <string name="compose_send_group_summary_off">Съобщенията ще бъдат изпратени до всеки получател поотделно</string>
     <string name="compose_messages_empty">Това е началото на разговора. Кажете нещо мило!</string>
     <string name="compose_vcard_label">Визитна картичка</string>
-    <string name="compose_scheduled_for">Планирано за:</string>
-    <string name="compose_scheduled_future">Времето трябва да е в бъдещето!</string>
-    <string name="compose_scheduled_toast">Добавяне към планираните съобщения</string>
-    <string name="compose_scheduled_view">Планирани съобщения към този разговор</string>
     <string name="compose_hint">Напишете съобщение…</string>
     <string name="compose_no_valid_recipients">Не може да бъде изпратено до другите получатели</string>
     <string name="compose_menu_copy">Копиране</string>
@@ -122,8 +111,6 @@
     <string name="compose_gallery_cd">Прикачане на снимка</string>
     <string name="compose_audio_message_cd">Записване на гласово съобщение</string>
     <string name="compose_camera_cd">Снимане</string>
-    <string name="compose_schedule_cd">Планиране на съобщение</string>
-    <string name="compose_schedule_cancel_cd">Без планиране на съобщението</string>
     <string name="compose_contact_cd">Прикачане на контакт</string>
     <string name="compose_contact_error">Грешка при четене на контакт</string>
     <string name="compose_sim_changed_toast">Избрана е SIM-карта %1$d (%2$s)</string>
@@ -133,7 +120,6 @@
     <string name="compose_record_audio_msg_abort_cd">Отказ на гласово съобщение</string>
     <string name="compose_record_audio_msg_attach_cd">Прикачане на гласово съобщение</string>
     <string name="compose_record_audio_msg_play_pause_cd">Възпроизвеждане или пауза на гласовото съобщение</string>
-    <string name="compose_message_cancel">Отказ</string>
     <string name="compose_message_sim">Номер на SIM-картата</string>
     <string name="compose_message_item">Елемент на съобщението</string>
     <string name="compose_message_attachment">Прикачен файл</string>
@@ -189,15 +175,6 @@
     <string name="backup_notification_channel_name">Резервно копие и възстановяване</string>
     <string name="clipboard_too_large_to_copy">Размерът на данните надхвърля ограничението при копиране</string>
     <string name="clipboard_unable_to_copy_to">Грешка при копиране</string>
-    <string name="scheduled_title">Планиране</string>
-    <string name="scheduled_empty_description">Изпращане на съобщении в точно определено време</string>
-    <string name="scheduled_empty_message_1">Здравейте! Кога беше рождения ви ден?</string>
-    <string name="scheduled_empty_message_2">На 23-ти декември е</string>
-    <string name="scheduled_empty_message_3">Честит рожден ден! Виждате ли колко добър приятел съм, че помня рождения ви ден?</string>
-    <string name="scheduled_empty_message_3_timestamp">Изпращане на 23-ти декември</string>
-    <string name="scheduled_compose_cd">Планиране на съобщение</string>
-    <string name="scheduled_send_cd">Планиране на това съобщение</string>
-    <string name="scheduled_options_title">Планирано съобщение</string>
     <string name="attachment_missing">Липсва</string>
     <string name="settings_category_appearance">Външен вид</string>
     <string name="settings_category_general">Общи</string>
@@ -230,9 +207,7 @@
     <string name="settings_qkreply_summary">Изскачащ прозорец за ново съобщение</string>
     <string name="settings_qkreply_tap_dismiss_title">Докоснете за отказ</string>
     <string name="settings_qkreply_tap_dismiss_summary">Докосване извън прозореца за затваряне</string>
-    <string name="settings_delayed_title">Изчакване преди изпращане</string>
     <string name="settings_swipe_actions">Действия с жестове</string>
-    <string name="settings_delay_duration_hint">Въведете продължителност (в секунди)</string>
     <string name="compose_menu_previous">Назад</string>
     <string name="compose_menu_next">Напред</string>
     <string name="settings_swipe_actions_summary">Настройване на действията с жестове в разговорите</string>

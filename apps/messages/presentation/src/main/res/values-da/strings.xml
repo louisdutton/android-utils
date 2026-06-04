@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Tillad</string>
     <string name="drawer_inbox">Indbakke</string>
     <string name="drawer_archived">Arkiveret</string>
-    <string name="drawer_scheduled">Planlagte</string>
     <string name="drawer_blocking">Blokering</string>
     <string name="drawer_more">Flere</string>
     <string name="drawer_settings">Indstillinger</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Modtagere og besvarelser vil være synlige for alle</string>
     <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
     <string name="compose_vcard_label">Kontaktkort</string>
-    <string name="compose_scheduled_for">Planlagt til</string>
-    <string name="compose_scheduled_future">Valgte tidspunkt skal være i fremtiden!</string>
-    <string name="compose_scheduled_toast">Føjet til planlagte beskeder</string>
     <string name="compose_hint">Skriv en besked…</string>
     <string name="compose_menu_copy">Kopier tekst</string>
     <string name="compose_menu_forward">Videresend</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Tilføj en vedhæftning</string>
     <string name="compose_gallery_cd">Vedhæft et foto</string>
     <string name="compose_camera_cd">Tag et foto</string>
-    <string name="compose_schedule_cd">Planlæg besked</string>
     <string name="compose_contact_cd">Vedhæft en kontakt</string>
     <string name="compose_contact_error">Fejl ved læsning af kontakt</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Synkroniserer beskeder…</string>
     <string name="backup_progress_finished">Færdig!</string>
     <string name="backup_notification_channel_name">Sikkerhedskopiering og gendannelse</string>
-    <string name="scheduled_title">Planlagt</string>
-    <string name="scheduled_empty_description">Send automatisk en meddelelse på præcist det tidspunkt, du vil</string>
-    <string name="scheduled_empty_message_1">Hej! Hvornår var det, at du har fødselsdag?</string>
-    <string name="scheduled_empty_message_2">Det er d. 23. december</string>
-    <string name="scheduled_empty_message_3">Tillykke med fødselsdagen! Se hvor god en ven jeg er, at huske din fødselsdag</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Sender d. 23. december </string>
-    <string name="scheduled_compose_cd">Planlæg en besked</string>
-    <string name="scheduled_options_title">Planlagt besked</string>
-    <string-array name="scheduled_options">
-        <item>Send nu</item>
-        <item>Kopiér tekst</item>
-        <item>Slet</item>
-    </string-array>
     <string name="settings_category_appearance">Udseende</string>
     <string name="settings_category_general">Generelt</string>
     <string name="settings_category_qkreply">QK-svar</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Popup ved nye SMS\'er</string>
     <string name="settings_qkreply_tap_dismiss_title">Tryk for at afvise</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tryk udenfor popup-vinduet for at lukke det</string>
-    <string name="settings_delayed_title">Forsinket afsendelse</string>
     <string name="settings_swipe_actions">Strygehandlinger</string>
     <string name="settings_swipe_actions_summary">Opsæt strygehandlinger for samtaler</string>
     <string name="settings_swipe_actions_right">Højrestryg</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Gen-synkroniéer beskeder med den indbyggede Android SMS-database</string>
     <string name="settings_logging_enabled">Fejlfindingslogning aktiveret</string>
     <string name="settings_logging_disabled">Fejlfindingslogning deaktiveret</string>
-    <string name="settings_delay_duration_hint">Angiv varighed (sekunder)</string>
     <string name="blocking_title">Blokering</string>
     <string name="blocking_drop_title">Drop beskeder</string>
     <string name="blocking_drop_summary">Drop indgående beskeder fra blokerede afsendere i stedet for at skjule dem</string>
@@ -318,12 +298,6 @@
         <item>Normal</item>
         <item>Stor</item>
         <item>Større</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Ingen forsinkelse</item>
-        <item>3 sekunder</item>
-        <item>5 sekunder</item>
-        <item>10 sekunder</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automatisk</item>

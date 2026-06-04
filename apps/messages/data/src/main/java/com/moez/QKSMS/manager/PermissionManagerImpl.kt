@@ -19,7 +19,6 @@
 package dev.octoshrimpy.quik.manager
 
 import android.Manifest
-import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.role.RoleManager
 import android.content.Context
@@ -74,15 +73,6 @@ class PermissionManagerImpl @Inject constructor(private val context: Context) : 
 
     override fun hasRecordAudio(): Boolean {
         return hasPermission(Manifest.permission.RECORD_AUDIO)
-    }
-
-    override fun hasExactAlarms(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            return true
-        }
-
-        val alarmManager = context.getSystemService(AlarmManager::class.java)
-        return alarmManager.canScheduleExactAlarms()
     }
 
     private fun hasPermission(permission: String): Boolean {

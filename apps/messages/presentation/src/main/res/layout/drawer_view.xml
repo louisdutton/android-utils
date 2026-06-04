@@ -86,21 +86,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/scheduled"
-            style="@style/DrawerRow">
-
-            <ImageView
-                style="@style/DrawerIcon"
-                android:src="@drawable/ic_event_black_24dp"
-                app:tint="?android:attr/textColorSecondary" />
-
-            <dev.octoshrimpy.quik.common.widget.QkTextView
-                style="@style/DrawerText"
-                android:text="@string/drawer_scheduled" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/blocking"
             style="@style/DrawerRow">
 

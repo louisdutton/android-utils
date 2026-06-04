@@ -23,21 +23,17 @@ import dagger.android.ContributesAndroidInjector
 import dev.octoshrimpy.quik.feature.widget.WidgetProvider
 import dev.octoshrimpy.quik.injection.scope.ActivityScope
 import dev.octoshrimpy.quik.receiver.BlockThreadReceiver
-import dev.octoshrimpy.quik.receiver.BootReceiver
 import dev.octoshrimpy.quik.receiver.DefaultSmsChangedReceiver
 import dev.octoshrimpy.quik.receiver.DeleteMessagesReceiver
 import dev.octoshrimpy.quik.receiver.MmsReceivedReceiver
 import dev.octoshrimpy.quik.receiver.MmsWapPushReceiver
-import dev.octoshrimpy.quik.receiver.NightModeReceiver
 import dev.octoshrimpy.quik.receiver.RemoteMessagingReceiver
-import dev.octoshrimpy.quik.receiver.SendScheduledMessageReceiver
 import dev.octoshrimpy.quik.receiver.MessageDeliveredReceiver
 import dev.octoshrimpy.quik.receiver.SmsProviderChangedReceiver
 import dev.octoshrimpy.quik.receiver.SmsReceivedReceiver
 import dev.octoshrimpy.quik.receiver.MessageMarkReceiver
 import dev.octoshrimpy.quik.receiver.MessageSentReceiver
 import dev.octoshrimpy.quik.receiver.ResendMessageReceiver
-import dev.octoshrimpy.quik.receiver.SendDelayedMessageReceiver
 import dev.octoshrimpy.quik.receiver.SpeakThreadsReceiver
 import dev.octoshrimpy.quik.receiver.StartActivityFromWidgetReceiver
 
@@ -47,10 +43,6 @@ abstract class BroadcastReceiverBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun bindBlockThreadReceiver(): BlockThreadReceiver
-
-    @ActivityScope
-    @ContributesAndroidInjector
-    abstract fun bindBootReceiver(): BootReceiver
 
     @ActivityScope
     @ContributesAndroidInjector
@@ -78,23 +70,11 @@ abstract class BroadcastReceiverBuilderModule {
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun bindNightModeReceiver(): NightModeReceiver
-
-    @ActivityScope
-    @ContributesAndroidInjector
     abstract fun bindRemoteMessagingReceiver(): RemoteMessagingReceiver
 
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun bindResendMessageReceiver(): ResendMessageReceiver
-
-    @ActivityScope
-    @ContributesAndroidInjector
-    abstract fun bindSendScheduledMessageReceiver(): SendScheduledMessageReceiver
-
-    @ActivityScope
-    @ContributesAndroidInjector
-    abstract fun bindSendDelayedMessageReceiver(): SendDelayedMessageReceiver
 
     @ActivityScope
     @ContributesAndroidInjector

@@ -27,7 +27,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -940,7 +939,7 @@ private fun CalendarScreen(
                             .fillMaxSize()
                             .padding(padding),
                         contentPadding = PaddingValues(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp),
-                        verticalArrangement = Arrangement.spacedBy(14.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         if (!state.hasCalendarPermission) {
                             item {
@@ -1660,7 +1659,7 @@ private fun MonthCalendarView(
     val selectedItems = remember(events, tasks, selectedDate) {
         agendaItemsForDate(
             date = selectedDate,
-            events = events.filter { event -> event.startDate(zone) == selectedDate },
+            events = events.filter { event -> selectedDate in event.agendaDates(zone) },
             tasks = tasks.filter { task -> task.agendaDate(zone) == selectedDate },
             nowMillis = System.currentTimeMillis(),
         )
@@ -1711,7 +1710,7 @@ private fun MonthOverview(
 ) {
     val today = LocalDate.now()
     val zone = ZoneId.systemDefault()
-    val eventDates = (events.map { event -> event.startDate(zone) } + tasks.mapNotNull { task -> task.agendaDate(zone) }).toSet()
+    val eventDates = (events.flatMap { event -> event.agendaDates(zone) } + tasks.mapNotNull { task -> task.agendaDate(zone) }).toSet()
     val cells = month.calendarCells()
 
     Column(
@@ -1868,7 +1867,7 @@ private fun AgendaEmptyDayBlock() {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 58.dp),
+            .height(58.dp),
         color = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         shape = RoundedCornerShape(4.dp),
@@ -1937,7 +1936,7 @@ private fun AgendaEventBlock(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 58.dp)
+            .height(58.dp)
             .clickable(onClick = onClick),
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         contentColor = MaterialTheme.colorScheme.onSurface,
@@ -1946,7 +1945,7 @@ private fun AgendaEventBlock(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min),
+                .fillMaxHeight(),
         ) {
             Box(
                 modifier = Modifier
@@ -1966,6 +1965,8 @@ private fun AgendaEventBlock(
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = event.agendaMeta(),
@@ -1988,7 +1989,7 @@ private fun AgendaTaskBlock(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 58.dp)
+            .height(58.dp)
             .clickable(onClick = onClick),
         color = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.onSurface,
@@ -1997,7 +1998,7 @@ private fun AgendaTaskBlock(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min),
+                .fillMaxHeight(),
         ) {
             Box(
                 modifier = Modifier
@@ -2022,6 +2023,8 @@ private fun AgendaTaskBlock(
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     Text(
                         text = task.agendaMeta(),
@@ -3682,7 +3685,7 @@ private fun agendaSectionsWithToday(
     nowMillis: Long,
 ): List<AgendaSection> {
     val zone = ZoneId.systemDefault()
-    val eventDates = events.map { event -> event.startDate(zone) }
+    val eventDates = events.flatMap { event -> event.agendaDates(zone) }
     val taskDates = tasks.mapNotNull { task -> task.agendaDate(zone) }
     val sections = (eventDates + taskDates)
         .distinct()
@@ -3692,7 +3695,7 @@ private fun agendaSectionsWithToday(
                 date = date,
                 items = agendaItemsForDate(
                     date = date,
-                    events = events.filter { event -> event.startDate(zone) == date },
+                    events = events.filter { event -> date in event.agendaDates(zone) },
                     tasks = tasks.filter { task -> task.agendaDate(zone) == date },
                     nowMillis = nowMillis,
                 ),
@@ -3718,7 +3721,7 @@ private fun agendaItemsForDate(
         events.map { event ->
             AgendaItem.Event(
                 event = event,
-                sortMillis = if (event.allDay) dayStartMillis else event.startMillis,
+                sortMillis = if (event.allDay) dayStartMillis else maxOf(event.startMillis, dayStartMillis),
                 sortRank = if (event.allDay) 0 else 2,
             )
         } +
@@ -4134,6 +4137,29 @@ private fun LocalDate.agendaTitle(): String {
 private fun CalendarEvent.startDate(zone: ZoneId): LocalDate {
     val dateZone = if (allDay) ZoneOffset.UTC else zone
     return Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+}
+
+private fun CalendarEvent.agendaDates(zone: ZoneId): List<LocalDate> {
+    val dateZone = if (allDay) ZoneOffset.UTC else zone
+    val startDate = Instant.ofEpochMilli(startMillis).atZone(dateZone).toLocalDate()
+    val effectiveEndMillis = (endMillis - 1).coerceAtLeast(startMillis)
+    val endDate = Instant.ofEpochMilli(effectiveEndMillis).atZone(dateZone).toLocalDate()
+    return datesBetweenInclusive(startDate, endDate)
+}
+
+private fun datesBetweenInclusive(
+    startDate: LocalDate,
+    endDate: LocalDate,
+): List<LocalDate> {
+    if (endDate.isBefore(startDate)) return listOf(startDate)
+
+    val dates = mutableListOf<LocalDate>()
+    var date = startDate
+    while (!date.isAfter(endDate)) {
+        dates += date
+        date = date.plusDays(1)
+    }
+    return dates
 }
 
 private fun CalendarEventDraft.startDate(zone: ZoneId): LocalDate {

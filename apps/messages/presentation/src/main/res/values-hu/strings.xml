@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Engedélyezés</string>
     <string name="drawer_inbox">Bejövő üzenetek</string>
     <string name="drawer_archived">Archivált</string>
-    <string name="drawer_scheduled">Ütemezett</string>
     <string name="drawer_blocking">Tiltás</string>
     <string name="drawer_more">Továbbiak</string>
     <string name="drawer_settings">Beállítások</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">A címzettek és a válaszok mindenkinek láthatóak lesznek</string>
     <string name="compose_messages_empty">Ez a társalgás kezdete. Írjon valami kedveset!</string>
     <string name="compose_vcard_label">Névjegy</string>
-    <string name="compose_scheduled_for">Ütemezett idő:</string>
-    <string name="compose_scheduled_future">A kiválasztott időpontnak a jövőben kell lennie!</string>
-    <string name="compose_scheduled_toast">Hozzáadva az ütemezett üzenetekhez</string>
     <string name="compose_hint">Írjon egy üzenetet…</string>
     <string name="compose_menu_copy">Szöveg másolása</string>
     <string name="compose_menu_forward">Továbbítás</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Melléklet hozzáadása</string>
     <string name="compose_gallery_cd">Fénykép mellékelése</string>
     <string name="compose_camera_cd">Fénykép készítése</string>
-    <string name="compose_schedule_cd">Ütemezett küldés</string>
     <string name="compose_contact_cd">Névjegy hozzáadása</string>
     <string name="compose_contact_error">Hiba a névjegy olvasásakor</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Üzenetek szinkronizálása…</string>
     <string name="backup_progress_finished">Kész!</string>
     <string name="backup_notification_channel_name">Biztonsági mentés és visszaállítás</string>
-    <string name="scheduled_title">Ütemezett</string>
-    <string name="scheduled_empty_description">Automatikusan küldendő üzenet egy megadott időpontban</string>
-    <string name="scheduled_empty_message_1">Szia! Mikor is van a szülinapod?</string>
-    <string name="scheduled_empty_message_2">December 23-án</string>
-    <string name="scheduled_empty_message_3">Boldog születésnapot! Látod milyen jó barát vagyok, hogy emlékszem a születésnapodra</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Küldés december 23-án</string>
-    <string name="scheduled_compose_cd">Üzenet ütemezése</string>
-    <string name="scheduled_options_title">Ütemezett üzenet</string>
-    <string-array name="scheduled_options">
-        <item>Küldés most</item>
-        <item>Szöveg másolása</item>
-        <item>Törlés</item>
-    </string-array>
     <string name="settings_category_appearance">Megjelenés</string>
     <string name="settings_category_general">Általános</string>
     <string name="settings_category_qkreply">QK válasz</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Felugró ablak az új üzenetekhez</string>
     <string name="settings_qkreply_tap_dismiss_title">Koppintson az eltüntetéshez</string>
     <string name="settings_qkreply_tap_dismiss_summary">Koppintson a felugró ablakon kívülre a bezáráshoz</string>
-    <string name="settings_delayed_title">Késleltetett küldés</string>
     <string name="settings_swipe_actions">Elhúzásos funkciók</string>
     <string name="settings_swipe_actions_summary">A beszélgetésekhez tartozó elhúzások beállítása</string>
     <string name="settings_swipe_actions_right">Jobbra húzás</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Üzenetek újraszinkronizálása az Android natív SMS-adatbázisával</string>
     <string name="settings_logging_enabled">Hibanaplózás engedélyezve</string>
     <string name="settings_logging_disabled">Hibanaplózás letiltva</string>
-    <string name="settings_delay_duration_hint">Nyomva tartás ideje (másodpercben)</string>
     <string name="blocking_title">Tiltás</string>
     <string name="blocking_drop_title">Üzenetek eldobása</string>
     <string name="blocking_drop_summary">Üzenetek eldobása a tiltott küldőktől az elrejtésük helyett</string>
@@ -319,12 +299,6 @@
         <item>Nagy</item>
         <item>Nagyobb</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Nincs késleltetés</item>
-        <item>3 másodperc</item>
-        <item>5 másodperc</item>
-        <item>10 másodperc</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Automatikus</item>
         <item>100 KB</item>
@@ -357,8 +331,6 @@
     <string name="main_menu_edit_message">Üzenet szerkesztése</string>
     <string name="main_menu_rename_conversation">Beszélgetés átnevezése</string>
     <string name="main_sender_draft">Vázlat: %s</string>
-    <string name="scheduled_menu_send_now">Küldés most</string>
-    <string name="scheduled_menu_edit_message">Üzenet szerkesztése</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Biztosan törölni szeretné ezt az üzenetet?</item>
         <item quantity="other">Biztosan törölni szeretné a(z) %d üzenetet?</item>
@@ -367,23 +339,16 @@
         <item quantity="one">Biztosan el szeretné küldeni ezt az üzenetet most?</item>
         <item quantity="other">Biztosan el szeretné küldeni a(z) %d üzenetet most?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Üzenet szerkesztése</string>
-    <string name="dialog_edit_scheduled_message">Ennek az üzenetnek a szerkesztése eltávolítja az ütemezésből.\n\nÜgyeljen arra, hogy a következő képernyőn újra küldje el, különben elveszik.\n\nSzeretné folytatni?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Igen, az üzenet szerkesztése</string>
     <string name="dialog_clear_compose_title">Üzenet törlése</string>
     <string name="dialog_clear_compose">Törli az üzenetet? Ez a művelet nem visszavonható.</string>
-    <string name="compose_scheduled_view">Ütemezett üzenetek ehhez a beszélgetéshez</string>
     <string name="compose_no_valid_recipients">Nem küldhető a többi résztvevőnek</string>
     <string name="compose_menu_show_status">Állapot megjelenítése</string>
     <string name="compose_attach_file_cd">Fájl mellékelése</string>
     <string name="compose_audio_message_cd">Hangüzenet rögzítése</string>
-    <string name="compose_schedule_cancel_cd">Ütemezett üzenet megszakítása</string>
     <string name="compose_record_audio_msg_cd">Hangüzenet rögzítése</string>
     <string name="compose_record_audio_msg_abort_cd">Hangüzenet megszakítása</string>
     <string name="compose_record_audio_msg_attach_cd">Hangüzenet mellékelése</string>
     <string name="compose_record_audio_msg_play_pause_cd">Hangüzenet lejátszása vagy szüneteltetése</string>
-    <string name="compose_message_cancel">Megszakítás</string>
-    <string name="compose_message_send_now">Küldés most</string>
     <string name="compose_message_sim">SIM-szám</string>
     <string name="compose_message_item">Üzenetelem</string>
     <string name="compose_message_attachment">Melléklet</string>
@@ -391,7 +356,6 @@
     <string name="message_body_too_long_to_display">⚠ Az üzenet hosszú. Másolja vagy mentse el a teljes szöveget</string>
     <string name="clipboard_too_large_to_copy">Az adatméret meghaladja a vágólap korlátait</string>
     <string name="clipboard_unable_to_copy_to">Nem lehet a vágólapra másolni</string>
-    <string name="scheduled_send_cd">Ezen üzenet ütemezése</string>
     <string name="attachment_missing">Hiányzik</string>
     <string name="settings_system_show_stt_title">Beszédfelismerés gomb megjelenítése</string>
     <string name="settings_notification_previews_summary">Név és üzenet megjelenítése</string>

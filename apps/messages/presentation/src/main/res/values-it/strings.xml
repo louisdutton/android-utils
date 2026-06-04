@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Consenti</string>
     <string name="drawer_inbox">Ricevuti</string>
     <string name="drawer_archived">Archiviati</string>
-    <string name="drawer_scheduled">Pianificati</string>
     <string name="drawer_blocking">Indesiderati</string>
     <string name="drawer_more">Altro</string>
     <string name="drawer_settings">Impostazioni</string>
@@ -88,9 +87,6 @@
     <string name="compose_send_group_summary">I destinatari e le risposte saranno visibili a tutti</string>
     <string name="compose_messages_empty">Questo è l\'inizio della tua conversazione. Dì qualcosa di carino!</string>
     <string name="compose_vcard_label">Scheda contatto</string>
-    <string name="compose_scheduled_for">Orario programmato:</string>
-    <string name="compose_scheduled_future">L\'ora selezionata deve essere nel futuro!</string>
-    <string name="compose_scheduled_toast">Aggiunto ai messaggi pianificati</string>
     <string name="compose_hint">Scrivi un messaggio…</string>
     <string name="compose_menu_copy">Copia testo</string>
     <string name="compose_menu_forward">Inoltra</string>
@@ -112,7 +108,6 @@
     <string name="compose_attach_cd">Aggiungi un allegato</string>
     <string name="compose_gallery_cd">Allega una foto</string>
     <string name="compose_camera_cd">Scatta una foto</string>
-    <string name="compose_schedule_cd">Pianifica messaggio</string>
     <string name="compose_contact_cd">Collegare un contatto</string>
     <string name="compose_contact_error">Errore nella lettura del contatto</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -164,20 +159,7 @@
     <string name="backup_progress_syncing">Sincronizzazione messaggi…</string>
     <string name="backup_progress_finished">Terminato!</string>
     <string name="backup_notification_channel_name">Backup e ripristino</string>
-    <string name="scheduled_title">Messaggi pianificati</string>
-    <string name="scheduled_empty_description">Invia un messaggio automatico, nel momento desiderato</string>
-    <string name="scheduled_empty_message_1">Ehi! Quand\'è il tuo compleanno?</string>
-    <string name="scheduled_empty_message_2">È il 23 dicembre</string>
-    <string name="scheduled_empty_message_3">Buon Compleanno! Solo un grande amico si ricorda il tuo compleanno</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Invio il 23 dicembre </string>
-    <string name="scheduled_compose_cd">Schedula un messaggio</string>
-    <string name="scheduled_options_title">Messaggio pianificato</string>
-    <string-array name="scheduled_options">
-        <item>Invia ora</item>
-        <item>Copia testo</item>
-        <item>Cancella</item>
-    </string-array>
     <string name="settings_category_appearance">Aspetto</string>
     <string name="settings_category_general">Generale</string>
     <string name="settings_category_qkreply">Risposta QK</string>
@@ -204,7 +186,6 @@
     <string name="settings_qkreply_summary">Popup per i nuovi messaggi</string>
     <string name="settings_qkreply_tap_dismiss_title">Tocca per archiviare</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tocca al di fuori del popup per chiuderlo</string>
-    <string name="settings_delayed_title">Invio posticipato</string>
     <string name="settings_swipe_actions">Azioni di scorrimento</string>
     <string name="settings_swipe_actions_summary">Configura le azioni di scorrimento per le conversazioni</string>
     <string name="settings_swipe_actions_right">Scorrimento a destra</string>
@@ -244,7 +225,6 @@
     <string name="settings_sync_summary">Risincronizza i tuoi messaggi con il database SMS Android nativo</string>
     <string name="settings_logging_enabled">Registrazione del debug attivata</string>
     <string name="settings_logging_disabled">Registrazione del debug disattivata</string>
-    <string name="settings_delay_duration_hint">Inserisci la durata (in secondi)</string>
     <string name="blocking_title">Bloccare</string>
     <string name="blocking_drop_title">Elimina messaggi</string>
     <string name="blocking_drop_summary">Elimina i messaggi in arrivo dai mittenti bloccati invece di nasconderli</string>
@@ -321,12 +301,6 @@
         <item>Grande</item>
         <item>Enorme</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Nessun ritardo</item>
-        <item>3 secondi</item>
-        <item>5 secondi</item>
-        <item>10 secondi</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Automatico</item>
         <item>100KB</item>
@@ -352,7 +326,6 @@
         <item>Va bene</item>
     </string-array>
     <string name="menu_mms_part_share">Condividi</string>
-    <string name="compose_message_cancel">Annulla</string>
     <string name="compose_message_attachment">Allegato</string>
     <string name="message_content_filters_dialog_regex_switch">Espressione regolare</string>
     <string name="messageLinkHandling_dialog_negative">No</string>
@@ -370,13 +343,8 @@
     <string name="attachment_missing">Mancante</string>
     <string name="message_content_filters_dialog_case_switch">Sensibile alle maiuscole</string>
     <string name="main_menu_send_now">Invia ora</string>
-    <string name="scheduled_menu_send_now">Invia ora</string>
-    <string name="compose_message_send_now">Invia ora</string>
     <string name="notification_message_failed_action">Reinvia</string>
     <string name="main_menu_edit_message">Modifica messaggio</string>
-    <string name="scheduled_menu_edit_message">Modifica messaggio</string>
-    <string name="dialog_edit_scheduled_message_title">Modifica messaggio</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Sì, modifica il messaggio</string>
     <string name="speak_no_messages">Nessun messaggio</string>
     <string name="dialog_clear_compose">Azzerare il messaggio? Questa azione non può essere annullata.</string>
     <string name="compose_menu_show_status">Mostra stato</string>
@@ -415,7 +383,6 @@
     <string name="message_content_filters_add_cd">Crea un nuovo filtro</string>
     <string name="stt_toast_extra_prompt">Pronuncia il tuo messaggio</string>
     <string name="message_content_filters_dialog_title">Elimina i messaggi corrispondenti</string>
-    <string name="dialog_edit_scheduled_message">Modificando questo messaggio, verrà rimosso dalla pianificazione.\n\nAssicurati di inviarlo nuovamente nella schermata successiva, altrimenti andrà perso.\n\nVuoi continuare?</string>
     <string name="messageLinkHandling_dialog_body">Alcuni link potrebbero essere non sicuri o reindirizzarti in modo imprevisto. Controlla il link qui sotto prima di procedere:\n\n%1$s\n\nVuoi continuare?</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Sei sicuro di voler eliminare questo messaggio?</item>
@@ -428,9 +395,6 @@
         <item quantity="other">Sei sicuro di voler inviare %d messaggi adesso?</item>
     </plurals>
     <string name="compose_record_audio_msg_abort_cd">Cancella il messaggio audio</string>
-    <string name="scheduled_send_cd">Pianifica questo messaggio</string>
-    <string name="compose_schedule_cancel_cd">Annulla messaggio pianificato</string>
-    <string name="compose_scheduled_view">Messaggi pianifici per questa conversazione</string>
     <string name="compose_toast_drag_stt">Sposta il pulsante di dettatura vocale dove preferisci</string>
     <string name="settings_system_show_stt_title">Mostra il pulsante di dettatura vocale</string>
     <string name="error_stt_toast">Spiacenti, si è verificato un errore durante il caricamento del provider di dettatura vocale.</string>

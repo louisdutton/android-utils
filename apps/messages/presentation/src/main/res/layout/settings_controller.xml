@@ -35,50 +35,6 @@
 
         <dev.octoshrimpy.quik.common.widget.QkTextView
             style="@style/PreferenceCategory"
-            android:text="@string/settings_category_appearance" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/theme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:icon="@drawable/ic_color_lens_black_24dp"
-            app:title="@string/settings_theme_title"
-            app:widget="@layout/settings_theme_widget" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/night"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_invert_colors_black_24dp"
-            app:title="@string/settings_night_title"
-            tools:summary="Automatic" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/nightStart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:title="@string/settings_night_start_title"
-            tools:summary="6:00PM" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/nightEnd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:title="@string/settings_night_end_title"
-            tools:summary="9:00AM" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/divider" />
-
-        <dev.octoshrimpy.quik.common.widget.QkTextView
-            style="@style/PreferenceCategory"
             android:text="@string/settings_category_general" />
 
         <dev.octoshrimpy.quik.common.widget.PreferenceView
@@ -95,14 +51,6 @@
             android:visibility="gone"
             app:title="@string/settings_auto_emoji_title"
             app:widget="@layout/settings_switch_widget" />
-
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/delayed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_av_timer_black_24dp"
-            app:title="@string/settings_delayed_title"
-            tools:summary="No delay" />
 
         <dev.octoshrimpy.quik.common.widget.PreferenceView
             android:id="@+id/swipeActions"

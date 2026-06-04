@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Permitir</string>
     <string name="drawer_inbox">Caixa de entrada</string>
     <string name="drawer_archived">Arquivadas</string>
-    <string name="drawer_scheduled">Agendadas</string>
     <string name="drawer_blocking">Bloqueadas</string>
     <string name="drawer_more">Mais</string>
     <string name="drawer_settings">Configurações</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Destinatários e respostas serão visíveis para todos</string>
     <string name="compose_messages_empty">Este é o início da sua conversa. Diga algo legal!</string>
     <string name="compose_vcard_label">Cartão de contato</string>
-    <string name="compose_scheduled_for">Agendada para</string>
-    <string name="compose_scheduled_future">O tempo selecionado deve ser no futuro!</string>
-    <string name="compose_scheduled_toast">Adicionada às mensagens agendadas</string>
     <string name="compose_hint">Escrever uma mensagem…</string>
     <string name="compose_menu_copy">Copiar texto</string>
     <string name="compose_menu_forward">Encaminhar</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Adicionar anexo</string>
     <string name="compose_gallery_cd">Anexar foto</string>
     <string name="compose_camera_cd">Tirar foto</string>
-    <string name="compose_schedule_cd">Agendar mensagem</string>
     <string name="compose_contact_cd">Anexar contato</string>
     <string name="compose_contact_error">Erro ao ler contato</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Sincronizando mensagens…</string>
     <string name="backup_progress_finished">Concluído!</string>
     <string name="backup_notification_channel_name">Backup e recuperação</string>
-    <string name="scheduled_title">Agendada</string>
-    <string name="scheduled_empty_description">Enviar automaticamente uma mensagem no momento exato que você gostaria</string>
-    <string name="scheduled_empty_message_1">Ei! Quando é o seu aniversário de novo?</string>
-    <string name="scheduled_empty_message_2">É no dia 23 de dezembro</string>
-    <string name="scheduled_empty_message_3">Feliz aniversário! Veja que grande amigo eu sou, lembrando do seu aniversário</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Enviar no dia 23 de dezembro</string>
-    <string name="scheduled_compose_cd">Agendar mensagem</string>
-    <string name="scheduled_options_title">Mensagem agendada</string>
-    <string-array name="scheduled_options">
-        <item>Enviar agora</item>
-        <item>Copiar texto</item>
-        <item>Excluir</item>
-    </string-array>
     <string name="settings_category_appearance">Aparência</string>
     <string name="settings_category_general">Geral</string>
     <string name="settings_category_qkreply">Responder via QUIK</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Popup para novas mensagens</string>
     <string name="settings_qkreply_tap_dismiss_title">Toque para descartar</string>
     <string name="settings_qkreply_tap_dismiss_summary">Toque fora do popup para fechá-lo</string>
-    <string name="settings_delayed_title">Atraso de envio</string>
     <string name="settings_swipe_actions">Ações de deslize</string>
     <string name="settings_swipe_actions_summary">Configurar ações de deslize para conversas</string>
     <string name="settings_swipe_actions_right">Deslizar para direita</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Re-sincronizar suas mensagens com o banco de dados de SMS nativo do Android</string>
     <string name="settings_logging_enabled">Log de depuração ativado</string>
     <string name="settings_logging_disabled">Log de depuração desativado</string>
-    <string name="settings_delay_duration_hint">Digite a duração (segundos)</string>
     <string name="blocking_title">Bloqueio</string>
     <string name="blocking_drop_title">Excluir mensagens</string>
     <string name="blocking_drop_summary">Excluir mensagens de remetentes bloqueados em vez de escondê-las</string>
@@ -318,12 +298,6 @@
         <item>Normal</item>
         <item>Grande</item>
         <item>Enorme</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Sem atraso</item>
-        <item>3 segundos</item>
-        <item>5 segundos</item>
-        <item>10 segundos</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automático</item>

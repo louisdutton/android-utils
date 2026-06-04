@@ -63,7 +63,6 @@
     <string name="main_permission_allow">אפשר</string>
     <string name="drawer_inbox">דואר נכנס</string>
     <string name="drawer_archived">בארכיון</string>
-    <string name="drawer_scheduled">מתוזמן</string>
     <string name="drawer_blocking">חסימה</string>
     <string name="drawer_more">עוד</string>
     <string name="drawer_settings">הגדרות</string>
@@ -89,9 +88,6 @@
     <string name="compose_send_group_summary">הנמענים והתגובות יהיו חשופים בפני כולם</string>
     <string name="compose_messages_empty">זאת תחילת ההתכתבות שלך. כדאי לפתוח במשהו נחמד!</string>
     <string name="compose_vcard_label">כרטיס קשר</string>
-    <string name="compose_scheduled_for">מתוזמן למועד</string>
-    <string name="compose_scheduled_future">הזמן הנבחר חייב להיות בעתיד!</string>
-    <string name="compose_scheduled_toast">הוספה להודעות המתוזמנות</string>
     <string name="compose_hint">כתוב הודעה…</string>
     <string name="compose_menu_copy">העתק טקסט</string>
     <string name="compose_menu_forward">העבר</string>
@@ -113,7 +109,6 @@
     <string name="compose_attach_cd">הוסף קובץ מצורף</string>
     <string name="compose_gallery_cd">צרף תמונה</string>
     <string name="compose_camera_cd">צלם תמונה</string>
-    <string name="compose_schedule_cd">תזמון הודעה</string>
     <string name="compose_contact_cd">צרף איש קשר</string>
     <string name="compose_contact_error">שגיאה בקריאת איש קשר</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -165,20 +160,7 @@
     <string name="backup_progress_syncing">מסנכרן הודעות…</string>
     <string name="backup_progress_finished">הסתיים!</string>
     <string name="backup_notification_channel_name">גיבוי ושחזור</string>
-    <string name="scheduled_title">מתוזמן</string>
-    <string name="scheduled_empty_description">שלח הודעה אוטומטית, ברגע המדויק שמתאים לך</string>
-    <string name="scheduled_empty_message_1">היי! מתי יום ההולדת שלך שוב?</string>
-    <string name="scheduled_empty_message_2">ב־23 בדצמבר</string>
-    <string name="scheduled_empty_message_3">מזל טוב! תראה איך החברות בינינו פורחת, זכרתי את יום ההולדת שלך</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">לשליחה ב־23 בדצמבר</string>
-    <string name="scheduled_compose_cd">תזמון הודעה</string>
-    <string name="scheduled_options_title">הודעה מתוזמנת</string>
-    <string-array name="scheduled_options">
-        <item>שלח כעת</item>
-        <item>העתק טקסט</item>
-        <item>מחק</item>
-    </string-array>
     <string name="settings_category_appearance">מראה</string>
     <string name="settings_category_general">כללי</string>
     <string name="settings_category_qkreply">תגובה מהירה</string>
@@ -205,7 +187,6 @@
     <string name="settings_qkreply_summary">חלונית קופצת להודעות חדשות</string>
     <string name="settings_qkreply_tap_dismiss_title">הקש כדי להתעלם</string>
     <string name="settings_qkreply_tap_dismiss_summary">הקש מחוץ לחלונית הקופצת כדי לסגור אותה</string>
-    <string name="settings_delayed_title">שליחה בעיכוב</string>
     <string name="settings_swipe_actions">פעולות ניגוב</string>
     <string name="settings_swipe_actions_summary">הגדר פעולות ניגוב להתכתבויות</string>
     <string name="settings_swipe_actions_right">ניגוב ימינה</string>
@@ -247,7 +228,6 @@
     <string name="settings_sync_summary">סנכרון ההודעות שלך מחדש עם מסד הנתונים המובנה של Android</string>
     <string name="settings_logging_enabled">תיעוד ניפוי שגיאות פעיל</string>
     <string name="settings_logging_disabled">תיעוד ניפוי שגיאות כבוי</string>
-    <string name="settings_delay_duration_hint">משך הזמן (בשניות)</string>
     <string name="blocking_title">חסימה</string>
     <string name="blocking_drop_title">השמטת הודעות</string>
     <string name="blocking_drop_summary">להשמיט הודעות נכנסות משולחים חסומים במקום להסתיר אותן</string>
@@ -328,12 +308,6 @@
         <item>רגיל</item>
         <item>גדול</item>
         <item>גדול יותר</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>ללא השהיה</item>
-        <item>3 שניות</item>
-        <item>5 שניות</item>
-        <item>10 שניות</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>אוטומטי</item>

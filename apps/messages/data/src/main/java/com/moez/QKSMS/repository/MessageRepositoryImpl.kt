@@ -19,8 +19,6 @@
 package dev.octoshrimpy.quik.repository
 
 import com.moez.QKSMS.manager.QkTransaction
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -61,8 +59,6 @@ import dev.octoshrimpy.quik.model.Message.Companion.TYPE_SMS
 import dev.octoshrimpy.quik.model.MmsPart
 import dev.octoshrimpy.quik.receiver.MessageDeliveredReceiver
 import dev.octoshrimpy.quik.receiver.MessageSentReceiver
-import dev.octoshrimpy.quik.receiver.SendDelayedMessageReceiver
-import dev.octoshrimpy.quik.receiver.SendDelayedMessageReceiver.Companion.MESSAGE_ID_EXTRA
 import dev.octoshrimpy.quik.util.ImageUtils
 import dev.octoshrimpy.quik.util.PhoneNumberUtils
 import dev.octoshrimpy.quik.util.Preferences
@@ -367,7 +363,7 @@ open class MessageRepositoryImpl @Inject constructor(
 
     override fun sendNewMessages(
         subId: Int, toAddresses: Collection<String>, body: String,
-        attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int
+        attachments: Collection<Attachment>, sendAsGroup: Boolean
     ): Collection<Message> {
         Timber.v("sending message(s)")
 
@@ -535,23 +531,6 @@ open class MessageRepositoryImpl @Inject constructor(
 
         Timber.v("created message id ${message.id} from uri $messageUri")
 
-        if (delayMs > 0) {  // if delaying
-            val sendTime = (now() + delayMs)
-
-            message.date = sendTime
-            messageDao.upsert(message.toEntity())
-
-            // create alarm that will trigger sending the message
-            (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
-                .setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP, sendTime, getIntentForDelayedSms(message.id)
-                )
-
-            Timber.v("set ${delayMs}ms delay for message id ${message.id}")
-
-            return listOf(message)
-        }
-
         // send now (message will be exploded, as required, and all sent)
         return sendMessage(message)
     }
@@ -607,19 +586,6 @@ open class MessageRepositoryImpl @Inject constructor(
         getMessage(messageId)
             ?.let { message -> sendMessage(message) }
             ?: listOf()
-
-    override fun cancelDelayedSmsAlarm(messageId: Long) =
-        (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
-            .cancel(getIntentForDelayedSms(messageId))
-
-    private fun getIntentForDelayedSms(messageId: Long) =
-        PendingIntent.getBroadcast(
-            context,
-            messageId.toInt(),
-            Intent(context, SendDelayedMessageReceiver::class.java)
-                .putExtra(MESSAGE_ID_EXTRA, messageId),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
 
     override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long)
     : Message {

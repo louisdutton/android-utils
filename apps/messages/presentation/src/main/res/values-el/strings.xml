@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Να επιτραπεί</string>
     <string name="drawer_inbox">Εισερχόμενα</string>
     <string name="drawer_archived">Αρχείο</string>
-    <string name="drawer_scheduled">Προγραμματισμένα</string>
     <string name="drawer_blocking">Με φραγή</string>
     <string name="drawer_more">Περισσότερα</string>
     <string name="drawer_settings">Ρυθμίσεις</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Οι παραλήπτες και απαντήσεις θα είναι ορατοί σε όλους</string>
     <string name="compose_messages_empty">Εδώ ξεκινά η συζήτηση. Πείτε κάτι ωραίο!</string>
     <string name="compose_vcard_label">Κάρτα επαφής</string>
-    <string name="compose_scheduled_for">Προγραμματίστηκε για</string>
-    <string name="compose_scheduled_future">Η χρονική στιγμή πρέπει να βρίσκεται στο μέλλον!</string>
-    <string name="compose_scheduled_toast">Προστέθηκε στα προγραμματισμένα μηνύματα</string>
     <string name="compose_hint">Γράψτε ένα μήνυμα…</string>
     <string name="compose_menu_copy">Αντιγραφή κειμένου</string>
     <string name="compose_menu_forward">Προώθηση</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Προσθήκη συνημμένου</string>
     <string name="compose_gallery_cd">Επισύναψη φωτογραφίας</string>
     <string name="compose_camera_cd">Λήψη φωτογραφίας</string>
-    <string name="compose_schedule_cd">Προγραμματισμός μηνύματος</string>
     <string name="compose_contact_cd">Επισύναψη επαφής</string>
     <string name="compose_contact_error">Πρόβλημα ανάγνωσης επαφής</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Συγχρονισμός μηνυμάτων…</string>
     <string name="backup_progress_finished">Ολοκληρώθηκε!</string>
     <string name="backup_notification_channel_name">Αντίγραφα ασφαλείας και επαναφορά</string>
-    <string name="scheduled_title">Προγραμματισμένα</string>
-    <string name="scheduled_empty_description">Στείλτε μήνυμα αυτόματα, την ακριβή στιγμή που επιθυμείτε</string>
-    <string name="scheduled_empty_message_1">Γεια! Πότε είπαμε ότι έχεις γενέθλια;</string>
-    <string name="scheduled_empty_message_2">Στις 23 Δεκεμβρίου</string>
-    <string name="scheduled_empty_message_3">Χρόνια πολλά! Δες τι καλός φίλος που είμαι και θυμήθηκα τα γενέθλιά σου</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Αποστολή στις 23 Δεκεμβρίου</string>
-    <string name="scheduled_compose_cd">Προγραμματισμός μηνύματος</string>
-    <string name="scheduled_options_title">Προγραμματισμένο μήνυμα</string>
-    <string-array name="scheduled_options">
-        <item>Αποστολή τώρα</item>
-        <item>Αντιγραφή κειμένου</item>
-        <item>Διαγραφή</item>
-    </string-array>
     <string name="settings_category_appearance">Εμφάνιση</string>
     <string name="settings_category_general">Γενικά</string>
     <string name="settings_category_qkreply">Γρήγορη απάντηση</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Αναδυόμενο παράθυρο για νέα μηνύματα</string>
     <string name="settings_qkreply_tap_dismiss_title">Πατήστε για αγνόηση</string>
     <string name="settings_qkreply_tap_dismiss_summary">Πατήστε εκτός του παραθύρου για να το κλείσετε</string>
-    <string name="settings_delayed_title">Καθυστερημένη αποστολή</string>
     <string name="settings_swipe_actions">Ενέργειες συρσίματος στην οθόνη</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
     <string name="settings_swipe_actions_right">Right swipe</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Επανασυγχρονισμός μηνυμάτων με τη βάση δεδομένων SMS του Android</string>
     <string name="settings_logging_enabled">Η καταγραφή σφαλμάτων ενεργοποιήθηκε</string>
     <string name="settings_logging_disabled">Η καταγραφή σφαλμάτων απενεργοποιήθηκε</string>
-    <string name="settings_delay_duration_hint">Εισάγετε τη διάρκεια (δευτερόλεπτα)</string>
     <string name="blocking_title">Φραγή</string>
     <string name="blocking_drop_title">Απόρριψη μηνυμάτων</string>
     <string name="blocking_drop_summary">Απόρριψη αντί για απόκρυψη μηνυμάτων από αποστολείς σε φραγή</string>
@@ -318,12 +298,6 @@
         <item>Normal</item>
         <item>Large</item>
         <item>Larger</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>No delay</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>

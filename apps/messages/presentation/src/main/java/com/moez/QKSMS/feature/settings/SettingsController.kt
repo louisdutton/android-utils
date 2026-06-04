@@ -19,42 +19,28 @@
 package dev.octoshrimpy.quik.feature.settings
 
 import android.animation.ObjectAnimator
-import android.app.TimePickerDialog
 import android.content.Context
-import android.os.Build
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
 import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.view.longClicks
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.MenuItem
 import dev.octoshrimpy.quik.common.QkChangeHandler
 import dev.octoshrimpy.quik.common.QkDialog
 import dev.octoshrimpy.quik.common.base.QkController
-import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.util.extensions.animateLayoutChanges
-import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.common.widget.PreferenceView
 import dev.octoshrimpy.quik.common.widget.TextInputDialog
 import dev.octoshrimpy.quik.databinding.SettingsControllerBinding
 import dev.octoshrimpy.quik.feature.settings.swipe.SwipeActionsController
-import dev.octoshrimpy.quik.feature.themepicker.ThemePickerController
 import dev.octoshrimpy.quik.injection.appComponent
 import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
-import com.google.android.material.R as MaterialR
 
 class SettingsController : QkController<SettingsControllerBinding, SettingsView, SettingsState, SettingsPresenter>(), SettingsView {
 
@@ -62,9 +48,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         SettingsControllerBinding.inflate(inflater, container, false)
 
     @Inject lateinit var context: Context
-    @Inject lateinit var colors: Colors
-    @Inject lateinit var nightModeDialog: QkDialog
-    @Inject lateinit var sendDelayDialog: QkDialog
     @Inject lateinit var mmsSizeDialog: QkDialog
     @Inject lateinit var messageLinkHandlingDialog: QkDialog
 
@@ -74,8 +57,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         TextInputDialog(activity!!, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
     }
 
-    private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
-    private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val signatureSubject: Subject<String> = PublishSubject.create()
 
     private val progressAnimator by lazy { ObjectAnimator.ofInt(binding.syncingProgress, "progress", 0, 0) }
@@ -83,22 +64,11 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     init {
         appComponent.inject(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
-
-        colors.themeObservable()
-                .autoDispose(scope())
-                .subscribe { activity?.recreate() }
     }
 
     override fun onViewCreated() {
         binding.preferences.postDelayed({ binding.preferences.animateLayoutChanges = true }, 100)
 
-        when (Build.VERSION.SDK_INT >= 29) {
-            true -> nightModeDialog.adapter.setData(R.array.night_modes)
-            false -> nightModeDialog.adapter.data = context.resources.getStringArray(R.array.night_modes)
-                    .mapIndexed { index, title -> MenuItem(title, index) }
-                    .drop(1)
-        }
-        sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
         messageLinkHandlingDialog.adapter.setData(R.array.messageLinkHandlings, R.array.messageLinkHandling_ids)
 
@@ -117,14 +87,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
             .map { preference -> preference.clicks().map { preference } }
             .let { preferences -> Observable.merge(preferences) }
 
-    override fun nightModeSelected(): Observable<Int> = nightModeDialog.adapter.menuItemClicks
-
-    override fun nightStartSelected(): Observable<Pair<Int, Int>> = startTimeSelectedSubject
-
-    override fun nightEndSelected(): Observable<Pair<Int, Int>> = endTimeSelectedSubject
-
-    override fun sendDelaySelected(): Observable<Int> = sendDelayDialog.adapter.menuItemClicks
-
     override fun signatureChanged(): Observable<String> = signatureSubject
 
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
@@ -132,19 +94,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     override fun messageLinkHandlingSelected(): Observable<Int> = messageLinkHandlingDialog.adapter.menuItemClicks
 
     override fun render(state: SettingsState) {
-        binding.theme.findViewById<View>(R.id.themePreview)
-            ?.setBackgroundTint(binding.contentView.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary, state.theme))
-        binding.night.summary = state.nightModeSummary
-        nightModeDialog.adapter.selectedItem = state.nightModeId
-        binding.nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
-        binding.nightStart.summary = state.nightStart
-        binding.nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
-        binding.nightEnd.summary = state.nightEnd
-
         binding.autoEmoji.checkbox?.isChecked = state.autoEmojiEnabled
-
-        binding.delayed.summary = state.sendDelaySummary
-        sendDelayDialog.adapter.selectedItem = state.sendDelayId
 
         binding.delivery.checkbox?.isChecked = state.deliveryEnabled
 
@@ -185,23 +135,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         }
     }
 
-    // TODO change this to a PopupWindow
-    override fun showNightModeDialog() = nightModeDialog.show(activity!!)
-
-    override fun showStartTimePicker(hour: Int, minute: Int) {
-        TimePickerDialog(activity, { _, newHour, newMinute ->
-            startTimeSelectedSubject.onNext(Pair(newHour, newMinute))
-        }, hour, minute, DateFormat.is24HourFormat(activity)).show()
-    }
-
-    override fun showEndTimePicker(hour: Int, minute: Int) {
-        TimePickerDialog(activity, { _, newHour, newMinute ->
-            endTimeSelectedSubject.onNext(Pair(newHour, newMinute))
-        }, hour, minute, DateFormat.is24HourFormat(activity)).show()
-    }
-
-    override fun showDelayDurationDialog() = sendDelayDialog.show(activity!!)
-
     override fun showSignatureDialog(signature: String) = signatureDialog.setText(signature).show()
 
     override fun showMmsSizePicker() = mmsSizeDialog.show(activity!!)
@@ -210,12 +143,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun showSwipeActions() {
         router.pushController(RouterTransaction.with(SwipeActionsController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
-    }
-
-    override fun showThemePicker() {
-        router.pushController(RouterTransaction.with(ThemePickerController())
                 .pushChangeHandler(QkChangeHandler())
                 .popChangeHandler(QkChangeHandler()))
     }

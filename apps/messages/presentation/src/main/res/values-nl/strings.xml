@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Toestaan</string>
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archief</string>
-    <string name="drawer_scheduled">Gepland</string>
     <string name="drawer_blocking">Blokkeren</string>
     <string name="drawer_more">Meer</string>
     <string name="drawer_settings">Instellingen</string>
@@ -87,9 +86,6 @@
     <string name="compose_send_group_summary">Ontvangers en antwoorden zijn zichtbaar voor iedereen</string>
     <string name="compose_messages_empty">Dit is het begin van je conversatie. Zeg iets leuks!</string>
     <string name="compose_vcard_label">Contactpersoonkaart</string>
-    <string name="compose_scheduled_for">Geplande tijd:</string>
-    <string name="compose_scheduled_future">De geselecteerde tijd moet in de toekomst liggen!</string>
-    <string name="compose_scheduled_toast">Toegevoegd aan geplande berichten</string>
     <string name="compose_hint">Type een bericht…</string>
     <string name="compose_menu_copy">Tekst kopiëren</string>
     <string name="compose_menu_forward">Doorsturen</string>
@@ -111,7 +107,6 @@
     <string name="compose_attach_cd">Een bijlage toevoegen</string>
     <string name="compose_gallery_cd">Een foto toevoegen</string>
     <string name="compose_camera_cd">Een foto nemen</string>
-    <string name="compose_schedule_cd">Bericht plannen</string>
     <string name="compose_contact_cd">Een contactpersoon toevoegen</string>
     <string name="compose_contact_error">Fout bij het lezen van contact</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -163,20 +158,7 @@
     <string name="backup_progress_syncing">Synchroniseren van berichten…</string>
     <string name="backup_progress_finished">Klaar!</string>
     <string name="backup_notification_channel_name">Back-up en herstel</string>
-    <string name="scheduled_title">Gepland</string>
-    <string name="scheduled_empty_description">Verzend automatisch een bericht, op de door jou ingestelde tijd</string>
-    <string name="scheduled_empty_message_1">Hey! Wanneer was je verjaardag nu weer?</string>
-    <string name="scheduled_empty_message_2">Op 23 december</string>
-    <string name="scheduled_empty_message_3">Gelukkige verjaardag! Zie eens wat voor een vriend ik ben, ik herinner je verjaardag</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Verzenden op 23 december</string>
-    <string name="scheduled_compose_cd">Plan een bericht</string>
-    <string name="scheduled_options_title">Gepland bericht</string>
-    <string-array name="scheduled_options">
-        <item>Nu versturen</item>
-        <item>Tekst kopiëren</item>
-        <item>Verwijderen</item>
-    </string-array>
     <string name="settings_category_appearance">Uiterlijk</string>
     <string name="settings_category_general">Algemeen</string>
     <string name="settings_category_qkreply">QK Reply</string>
@@ -203,7 +185,6 @@
     <string name="settings_qkreply_summary">Popup voor nieuwe berichten</string>
     <string name="settings_qkreply_tap_dismiss_title">Tik om te sluiten</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tik buiten de popup om deze te sluiten</string>
-    <string name="settings_delayed_title">Vertraagd verzenden</string>
     <string name="settings_swipe_actions">Swipe acties</string>
     <string name="settings_swipe_actions_summary">Pas de veeg-acties aan voor conversaties</string>
     <string name="settings_swipe_actions_right">Rechts vegen</string>
@@ -243,7 +224,6 @@
     <string name="settings_sync_summary">Hersynchroniseer jouw berichten vanuit de SMS database op je telefoon</string>
     <string name="settings_logging_enabled">Foutenregistratie ingeschakeld</string>
     <string name="settings_logging_disabled">Foutenregistratie uitgeschakeld</string>
-    <string name="settings_delay_duration_hint">Voer duur (seconden) in</string>
     <string name="blocking_title">Geblokkeerd</string>
     <string name="blocking_drop_title">Berichten weggooien</string>
     <string name="blocking_drop_summary">Verwijder inkomende berichten van geblokkeerde afzenders in plaats van ze te verbergen</string>
@@ -319,12 +299,6 @@
         <item>Groot</item>
         <item>Groot</item>
     </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Geen vertraging</item>
-        <item>3 seconden</item>
-        <item>5 seconden</item>
-        <item>10 seconden</item>
-    </string-array>
     <string-array name="mms_sizes">
         <item>Automatisch</item>
         <item>100kB</item>
@@ -357,8 +331,6 @@
     <string name="main_menu_edit_message">Bewerk bericht</string>
     <string name="main_menu_rename_conversation">Hernoem conversatie</string>
     <string name="main_sender_draft">Concept: %s</string>
-    <string name="scheduled_menu_send_now">Zend nu</string>
-    <string name="scheduled_menu_edit_message">Bewerk bericht</string>
     <plurals name="dialog_delete_chat">
         <item quantity="one">Weet je zeker dat je dit bericht wilt verwijderen?</item>
         <item quantity="other">Weet je zeker dat je %d berichten wilt verwijderen?</item>
@@ -367,30 +339,22 @@
         <item quantity="one">Weet je zeker dat je dit bericht nu wilt versturen?</item>
         <item quantity="other">Weet je zeker dat je %d berichten nu wilt versturen?</item>
     </plurals>
-    <string name="dialog_edit_scheduled_message_title">Bewerk bericht</string>
-    <string name="dialog_edit_scheduled_message">Bewerken van dit bericht zal het verwijderen uit de planner.\n\nControleer en zorg dat het wordt toegevoegd in het volgende scherm, of het gaat verloren.\n\nWilt u doorgaan?</string>
-    <string name="dialog_edit_scheduled_message_positive_button">Ja, bewerk dit bericht</string>
     <string name="dialog_clear_compose_title">Wissen bericht</string>
     <string name="dialog_clear_compose">Wis het bericht? Deze actie kan niet ongedaan worden gemaakt.</string>
-    <string name="compose_scheduled_view">Geplande berichten voor deze conversatie</string>
     <string name="compose_no_valid_recipients">Kan niet versturen naar andere participanten</string>
     <string name="compose_menu_show_status">Toon status</string>
     <string name="compose_attach_file_cd">Bestand toevoegen</string>
     <string name="compose_audio_message_cd">Audio bericht opnemen</string>
-    <string name="compose_schedule_cancel_cd">Annuleer gepland bericht</string>
     <string name="compose_record_audio_msg_cd">Audio bericht opnemen</string>
     <string name="compose_record_audio_msg_abort_cd">Annuleer audio bericht</string>
     <string name="compose_record_audio_msg_attach_cd">Audio bericht toevoegen</string>
     <string name="compose_record_audio_msg_play_pause_cd">Speel of pauzeer audio bericht</string>
-    <string name="compose_message_cancel">Annuleer</string>
-    <string name="compose_message_send_now">Versturen</string>
     <string name="compose_message_sim">SIM nummer</string>
     <string name="compose_message_attachment">Bijlage</string>
     <string name="compose_toast_drag_stt">Verplaats de spraak-naar-tekst knop naar door u gelieve plaats</string>
     <string name="message_body_too_long_to_display">⚠ Bericht is te lang. Kopieer of Bewaar voor de volledige tekst</string>
     <string name="clipboard_too_large_to_copy">Data grote overstijgt kladbord limiet</string>
     <string name="clipboard_unable_to_copy_to">Mislukt te kopiëren naar kladblok</string>
-    <string name="scheduled_send_cd">Plan dit bericht</string>
     <string name="attachment_missing">Ontbreekt</string>
     <string name="settings_system_show_stt_title">Toon de spraak-naar-tekst knop</string>
     <string name="settings_notification_previews_summary">Toon naam en bericht</string>

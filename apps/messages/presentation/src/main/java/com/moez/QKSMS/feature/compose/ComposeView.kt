@@ -51,8 +51,6 @@ interface ComposeView : QkView<ComposeState> {
     val messagePartClickIntent: Subject<Long>
     val messagePartContextMenuRegistrar: Subject<View>
     val messagesSelectedIntent: Observable<List<Long>>
-    val cancelDelayedIntent: Subject<Long>
-    val sendDelayedNowIntent: Subject<Long>
     val resendIntent: Subject<Long>
     val attachmentDeletedIntent: Subject<Attachment>
     val textChangedIntent: Observable<CharSequence>
@@ -60,14 +58,10 @@ interface ComposeView : QkView<ComposeState> {
     val cameraIntent: Observable<*>
     val attachAnyFileIntent: Observable<*>
     val attachImageFileIntent: Observable<*>
-    val scheduleIntent: Observable<*>
-    val scheduleAction: Observable<*>
     val attachContactIntent: Observable<*>
     val attachAnyFileSelectedIntent: Observable<Uri>
     val contactSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
-    val scheduleSelectedIntent: Observable<Long>
-    val scheduleCancelIntent: Observable<*>
     val changeSimIntent: Observable<*>
     val sendIntent: Observable<Unit>
     val backPressedIntent: Observable<Unit>
@@ -97,11 +91,9 @@ interface ComposeView : QkView<ComposeState> {
     fun requestRecordAudioPermission()
     fun requestSmsPermission()
     fun showContacts(sharing: Boolean, chips: List<Recipient>)
-    fun themeChanged()
     fun showKeyboard()
     fun requestCamera()
     fun requestGallery(mimeType: String, requestCode: Int)
-    fun requestDatePicker()
     fun requestContact()
     fun setDraft(draft: String)
     fun scrollToMessage(id: Long)

@@ -157,65 +157,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/send"
         app:layout_constraintStart_toEndOf="@id/attach"
-        app:layout_constraintTop_toTopOf="@id/scheduledCancel" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/scheduledGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="scheduledTitle,scheduledTime,scheduledCancel,scheduledSeparator" />
-
-    <dev.octoshrimpy.quik.common.widget.QkTextView
-        android:id="@+id/scheduledTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="2dp"
-        android:text="@string/compose_scheduled_for"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/scheduledTime"
-        app:layout_constraintEnd_toStartOf="@id/scheduledCancel"
-        app:layout_constraintStart_toStartOf="@id/messageBackground"
-        app:layout_constraintTop_toTopOf="@id/scheduledCancel"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:textSize="secondary" />
-
-    <dev.octoshrimpy.quik.common.widget.QkTextView
-        android:id="@+id/scheduledTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textColor="?android:attr/textColorTertiary"
-        app:layout_constraintBottom_toBottomOf="@id/scheduledCancel"
-        app:layout_constraintEnd_toStartOf="@id/scheduledCancel"
-        app:layout_constraintStart_toStartOf="@id/messageBackground"
-        app:layout_constraintTop_toBottomOf="@id/scheduledTitle"
-        app:textSize="secondary"
-        tools:text="December 23rd at 12:00AM" />
-
-    <ImageView
-        android:id="@+id/scheduledCancel"
-        android:layout_width="44dp"
-        android:layout_height="56dp"
-        android:contentDescription="@string/compose_schedule_cancel_cd"
-        android:padding="10dp"
-        android:src="@drawable/ic_cancel_black_24dp"
-        app:layout_constraintBottom_toTopOf="@id/scheduledSeparator"
-        app:layout_constraintEnd_toEndOf="@id/messageBackground"
-        app:tint="?attr/colorOnSurfaceVariant" />
-
-    <View
-        android:id="@+id/scheduledSeparator"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/divider"
-        app:layout_constraintBottom_toTopOf="@id/messageAttachments"
-        app:layout_constraintEnd_toEndOf="@id/messageBackground"
-        app:layout_constraintStart_toStartOf="@id/messageBackground" />
+        app:layout_constraintTop_toTopOf="@id/messageAttachments" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageAttachments"
@@ -313,21 +255,6 @@
         app:tint="?attr/colorPrimary"
         tools:visibility="visible" />
 
-    <ImageView
-        android:id="@+id/scheduledSend"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/scheduled_send_cd"
-        android:src="@drawable/ic_schedule_send_black_24dp"
-        android:padding="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="?attr/colorPrimary"
-        tools:visibility="visible" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
@@ -384,7 +311,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="contact,contactLabel,schedule,scheduleLabel,attachAFileIcon,attachAFileLabel,attachAnAudioMessageIcon,attachAnAudioMessageLabel,gallery,galleryLabel,camera,cameraLabel" />
+        app:constraint_referenced_ids="contact,contactLabel,attachAFileIcon,attachAFileLabel,attachAnAudioMessageIcon,attachAnAudioMessageLabel,gallery,galleryLabel,camera,cameraLabel" />
 
     <View
         android:id="@+id/shadeBackground"
@@ -411,7 +338,7 @@
         android:padding="10dp"
         android:src="@drawable/ic_person_black_24dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/schedule"
+        app:layout_constraintBottom_toTopOf="@id/attachAFileIcon"
         app:layout_constraintEnd_toEndOf="@id/attach"
         app:layout_constraintStart_toStartOf="@id/attach"
         app:tint="?attr/colorOnPrimaryContainer" />
@@ -432,40 +359,6 @@
         app:layout_constraintBottom_toBottomOf="@id/contact"
         app:layout_constraintStart_toEndOf="@id/contact"
         app:layout_constraintTop_toTopOf="@id/contact" />
-
-    <ImageView
-        android:id="@+id/schedule"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/circle"
-        android:backgroundTint="?attr/colorPrimaryContainer"
-        android:contentDescription="@string/compose_schedule_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_event_black_24dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/attachAFileIcon"
-        app:layout_constraintEnd_toEndOf="@id/attach"
-        app:layout_constraintStart_toStartOf="@id/attach"
-        app:tint="?attr/colorOnPrimaryContainer" />
-
-    <dev.octoshrimpy.quik.common.widget.QkTextView
-        android:id="@+id/scheduleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/rounded_rectangle_4dp"
-        android:backgroundTint="?attr/colorSurfaceContainerHigh"
-        android:elevation="4dp"
-        android:gravity="center_vertical"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="@string/compose_schedule_cd"
-        android:textColor="?attr/colorOnSurface"
-        app:layout_constraintBottom_toBottomOf="@id/schedule"
-        app:layout_constraintStart_toEndOf="@id/schedule"
-        app:layout_constraintTop_toTopOf="@id/schedule" />
 
     <ImageView
         android:id="@+id/attachAFileIcon"

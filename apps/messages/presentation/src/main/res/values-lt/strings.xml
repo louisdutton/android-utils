@@ -63,7 +63,6 @@
     <string name="main_permission_allow">Allow</string>
     <string name="drawer_inbox">Žinutės</string>
     <string name="drawer_archived">Archyvas</string>
-    <string name="drawer_scheduled">Planuota</string>
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">Daugiau</string>
     <string name="drawer_settings">Nustatymai</string>
@@ -89,9 +88,6 @@
     <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
     <string name="compose_messages_empty">Čia jūsų pokalbio pradžios. Pasakykite kažką gražaus!</string>
     <string name="compose_vcard_label">Contact card</string>
-    <string name="compose_scheduled_for">Scheduled for</string>
-    <string name="compose_scheduled_future">Selected time must be in the future!</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
     <string name="compose_hint">Rašyti žinutę...</string>
     <string name="compose_menu_copy">Kopijuoti tekstą</string>
     <string name="compose_menu_forward">Persiųsti</string>
@@ -113,7 +109,6 @@
     <string name="compose_attach_cd">Pridėti priedą</string>
     <string name="compose_gallery_cd">Pridėti nuotrauką</string>
     <string name="compose_camera_cd">Padaryti nuotrauką</string>
-    <string name="compose_schedule_cd">Schedule message</string>
     <string name="compose_contact_cd">Attach a contact</string>
     <string name="compose_contact_error">Error reading contact</string>
     <!-- Example: SIM 1 (Verizon) selected-->
@@ -165,20 +160,7 @@
     <string name="backup_progress_syncing">Syncing messages…</string>
     <string name="backup_progress_finished">Finished!</string>
     <string name="backup_notification_channel_name">Backup and restore</string>
-    <string name="scheduled_title">Scheduled</string>
-    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
-    <string name="scheduled_options_title">Scheduled message</string>
-    <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Copy text</item>
-        <item>Delete</item>
-    </string-array>
     <string name="settings_category_appearance">Išvaizda</string>
     <string name="settings_category_general">Bendra</string>
     <string name="settings_category_qkreply">Greitas atsakas</string>
@@ -205,7 +187,6 @@
     <string name="settings_qkreply_summary">Iššokantis langas naujiems pranešimams</string>
     <string name="settings_qkreply_tap_dismiss_title">Spustelėkite, kad atmestumėte</string>
     <string name="settings_qkreply_tap_dismiss_summary">Spustelėkite bet kur už iššokamo lango, kad išjungtumėte</string>
-    <string name="settings_delayed_title">Delayed sending</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
     <string name="settings_swipe_actions_right">Right swipe</string>
@@ -247,7 +228,6 @@
     <string name="settings_sync_summary">Iš naujo sinchronizuoti Android pranešimų duomenų bazę</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">Įvesti trukmę (sek.)</string>
     <string name="blocking_title">Blocking</string>
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
@@ -328,12 +308,6 @@
         <item>Normalus</item>
         <item>Didelis</item>
         <item>Didžiausias</item>
-    </string-array>
-    <string-array name="delayed_sending_labels">
-        <item>Be delsimo</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>

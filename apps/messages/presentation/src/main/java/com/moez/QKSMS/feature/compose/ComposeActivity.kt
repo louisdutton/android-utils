@@ -21,8 +21,6 @@ package dev.octoshrimpy.quik.feature.compose
 import android.Manifest
 import android.animation.LayoutTransition
 import android.app.Activity
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -31,7 +29,6 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.provider.ContactsContract
 import android.provider.MediaStore
-import android.text.format.DateFormat
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
@@ -59,12 +56,10 @@ import dagger.android.AndroidInjection
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.Navigator
 import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.autoScrollToStart
 import dev.octoshrimpy.quik.common.util.extensions.dpToPx
 import dev.octoshrimpy.quik.common.util.extensions.hideKeyboard
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.common.util.extensions.scrapViews
 import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
@@ -83,7 +78,6 @@ import dev.octoshrimpy.quik.databinding.ComposeActivityBinding
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -96,7 +90,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     @Inject lateinit var composeAttachmentAdapter: ComposeAttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
-    @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var viewModelFactory: ViewModelFactory
@@ -109,13 +102,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val menuReadyIntent: Observable<Unit> = menu.map { }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
     override val contextItemIntent: Subject<MenuItem> = PublishSubject.create()
-    override val scheduleAction: Subject<Boolean> = PublishSubject.create()
     override val sendAsGroupIntent by lazy { binding.sendAsGroupSwitch.clicks() }
     override val messagePartClickIntent: Subject<Long> by lazy { messageAdapter.partClicks }
     override val messagePartContextMenuRegistrar: Subject<View> by lazy { messageAdapter.partContextMenuRegistrar }
     override val messagesSelectedIntent by lazy { messageAdapter.selectionChanges }
-    override val cancelDelayedIntent: Subject<Long> by lazy { messageAdapter.cancelSendingClicks }
-    override val sendDelayedNowIntent: Subject<Long> by lazy { messageAdapter.sendNowClicks }
     override val resendIntent: Subject<Long> by lazy { messageAdapter.resendClicks }
     override val attachmentDeletedIntent: Subject<Attachment> by lazy { composeAttachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { binding.message.textChanges() }
@@ -123,15 +113,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val cameraIntent: Observable<Unit> by lazy { Observable.merge(binding.camera.clicks(), binding.cameraLabel.clicks()) }
     override val attachImageFileIntent: Observable<Unit> by lazy { Observable.merge(binding.gallery.clicks(), binding.galleryLabel.clicks()) }
     override val attachAnyFileIntent: Observable<Unit> by lazy { Observable.merge(binding.attachAFileIcon.clicks(), binding.attachAFileLabel.clicks()) }
-    override val scheduleIntent: Observable<Unit> by lazy { Observable.merge(binding.schedule.clicks(), binding.scheduleLabel.clicks()) }
     override val attachContactIntent: Observable<Unit> by lazy { Observable.merge(binding.contact.clicks(), binding.contactLabel.clicks()) }
     override val attachAnyFileSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val contactSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { binding.message.inputContentSelected }
-    override val scheduleSelectedIntent: Subject<Long> = PublishSubject.create()
     override val changeSimIntent by lazy { binding.sim.clicks() }
-    override val scheduleCancelIntent by lazy { binding.scheduledCancel.clicks() }
-    override val sendIntent by lazy {  Observable.merge(binding.send.clicks(), binding.scheduledSend.clicks()) }
+    override val sendIntent by lazy { binding.send.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
     override val clearCurrentMessageIntent: Subject<Boolean> = PublishSubject.create()
@@ -225,14 +212,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     binding.loading.setTint(primary)
                     binding.messageBackground.setBackgroundTint(surfaceContainerHigh)
                     binding.send.setTint(primary)
-                    binding.scheduledSend.setTint(primary)
                     binding.recordAudioMsg.setTint(primary)
-                    binding.scheduledCancel.setTint(resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant))
 
                     listOf(
                         binding.attach,
                         binding.contact,
-                        binding.schedule,
                         binding.attachAFileIcon,
                         binding.attachAnAudioMessageIcon,
                         binding.gallery,
@@ -244,7 +228,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
                     listOf(
                         binding.contactLabel,
-                        binding.scheduleLabel,
                         binding.attachAFileLabel,
                         binding.attachAnAudioMessageLabel,
                         binding.galleryLabel,
@@ -416,8 +399,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         // Don't set the adapters unless needed
         if (state.editingMode && binding.chips.adapter == null) binding.chips.adapter = chipsAdapter
 
-        binding.toolbar.menu.findItem(R.id.viewScheduledMessages)?.isVisible = !state.editingMode && state.selectedMessages == 0
-                && state.query.isEmpty() && state.hasScheduledMessages
         binding.toolbar.menu.findItem(R.id.select_all)?.isVisible = !state.editingMode && (messageAdapter.itemCount > 1) && state.selectedMessages != 0
         binding.toolbar.menu.findItem(R.id.add)?.isVisible = state.editingMode
         binding.toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0
@@ -451,9 +432,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         messageAdapter.data = state.messages
         messageAdapter.highlight = state.searchSelectionId
 
-        binding.scheduledGroup.isVisible = state.scheduled != 0L
-        binding.scheduledTime.text = dateFormatter.getScheduledTimestamp(state.scheduled)
-
         binding.messageAttachments.setVisible(state.attachments.isNotEmpty())
         composeAttachmentAdapter.data = state.attachments
 
@@ -486,10 +464,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
         binding.simIndex.text = state.subscription?.simSlotIndex?.plus(1)?.toString()
 
-        // show either send, audio msg record, or sendScheduled button
-        binding.send.visibility = if (state.canSend && !state.loading && state.scheduled == 0L) View.VISIBLE else View.INVISIBLE
+        // show either send or audio msg record
+        binding.send.visibility = if (state.canSend && !state.loading) View.VISIBLE else View.INVISIBLE
         binding.recordAudioMsg.visibility = if (state.canSend && !state.loading) View.INVISIBLE else View.VISIBLE
-        binding.scheduledSend.visibility = if (state.canSend && (state.scheduled != 0L) && !state.loading) View.VISIBLE else View.INVISIBLE
 
         // if not in editing mode, and there are no non-me participants that can be sent to,
         // hide controls that allow constructing a reply and inform user no valid recipients
@@ -512,10 +489,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 applyTo(binding.contentView)
             }
         }
-
-        // if scheduling mode is set, show schedule dialog
-        if (state.scheduling)
-            scheduleAction.onNext(true)
 
     }
 
@@ -572,24 +545,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             Manifest.permission.SEND_SMS), 0)
     }
 
-    override fun requestDatePicker() {
-        val calendar = Calendar.getInstance()
-        DatePickerDialog(this, { _, year, month, day ->
-            TimePickerDialog(this, { _, hour, minute ->
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, month)
-                calendar.set(Calendar.DAY_OF_MONTH, day)
-                calendar.set(Calendar.HOUR_OF_DAY, hour)
-                calendar.set(Calendar.MINUTE, minute)
-                scheduleSelectedIntent.onNext(calendar.timeInMillis)
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this))
-                .show()
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
-
-        // On some devices, the keyboard can cover the date picker
-        binding.message.hideKeyboard()
-    }
-
     override fun requestContact() {
         val intent = Intent(Intent.ACTION_PICK)
             .setType(ContactsContract.Contacts.CONTENT_TYPE)
@@ -604,10 +559,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             .putExtra(ContactsActivity.SHARING_KEY, sharing)
             .putExtra(ContactsActivity.CHIPS_KEY, serialized)
         startActivityForResult(intent, ComposeView.SELECT_CONTACT_REQUEST_CODE)
-    }
-
-    override fun themeChanged() {
-        binding.messageList.scrapViews()
     }
 
     override fun showKeyboard() {
