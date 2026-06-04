@@ -246,13 +246,6 @@
     <string name="blocking_drop_title">丢弃信息</string>
     <string name="blocking_drop_summary">丢弃屏蔽的发件人所发送的信息</string>
     <string name="blocking_conversations">已屏蔽的会话</string>
-    <string name="blocking_manager_title">屏蔽管理器</string>
-    <string name="blocking_manager_qksms_summary">QUIK 中内建的屏蔽功能</string>
-    <string name="blocking_manager_call_blocker_summary">屏蔽垃圾信息、号码和未知来电以及黑名单和日程</string>
-    <string name="blocking_manager_call_control_summary">自动在适当的位置过滤您的来电和信息！Community IQ™ 允许您阻止社区中已知的垃圾发件人所发送的垃圾信息</string>
-    <string name="blocking_manager_sia_summary">使用 \"Should I Answer\" 应用过滤未知号码的消息</string>
-    <string name="blocking_manager_copy_title">复制屏蔽的号码</string>
-    <string name="blocking_manager_copy_summary">继续前往%s并复制到您现有的已屏蔽号码</string>
     <string name="blocked_numbers_title">已屏蔽的号码</string>
     <string name="blocked_numbers_empty">您所屏蔽的号码将会在这里显示</string>
     <string name="blocked_numbers_add_cd">屏蔽新的号码</string>

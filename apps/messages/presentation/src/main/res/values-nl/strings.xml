@@ -248,13 +248,6 @@
     <string name="blocking_drop_title">Berichten weggooien</string>
     <string name="blocking_drop_summary">Verwijder inkomende berichten van geblokkeerde afzenders in plaats van ze te verbergen</string>
     <string name="blocking_conversations">Geblokkeerde gesprekken</string>
-    <string name="blocking_manager_title">Blokkeermanager</string>
-    <string name="blocking_manager_qksms_summary">Ingebouwde blokkeerfunctie in QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">Blokkeer spamberichten, nummers &amp; onbekende oproepen met blacklist &amp; Schedule</string>
-    <string name="blocking_manager_call_control_summary">Filter je oproepen en berichten automatisch op één handige plaats! Community IQ™ stelt je in staat om ongewenste berichten van de bij community bekende spammers te blokkeren</string>
-    <string name="blocking_manager_sia_summary">Automatisch filteren van berichten van ongevraagde nummers met behulp van de app \"Should I Answer\"</string>
-    <string name="blocking_manager_copy_title">Kopieer geblokkeerde nummers</string>
-    <string name="blocking_manager_copy_summary">Ga verder naar %s en kopieer je bestaande geblokkeerde nummers</string>
     <string name="blocked_numbers_title">Geblokkeerde nummers</string>
     <string name="blocked_numbers_empty">Je geblokkeerde nummers verschijnen hier</string>
     <string name="blocked_numbers_add_cd">Blokkeer een nieuw nummer</string>

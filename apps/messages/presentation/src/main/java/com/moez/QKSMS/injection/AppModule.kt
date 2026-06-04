@@ -31,7 +31,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dev.octoshrimpy.quik.blocking.BlockingClient
-import dev.octoshrimpy.quik.blocking.BlockingManager
+import dev.octoshrimpy.quik.blocking.QksmsBlockingClient
 import dev.octoshrimpy.quik.common.util.NotificationManagerImpl
 import dev.octoshrimpy.quik.common.util.ShortcutManagerImpl
 import dev.octoshrimpy.quik.database.BlockingDao
@@ -184,7 +184,7 @@ class AppModule(private var application: Application) {
     fun provideAlarmManager(manager: AlarmManagerImpl): AlarmManager = manager
 
     @Provides
-    fun blockingClient(manager: BlockingManager): BlockingClient = manager
+    fun blockingClient(client: QksmsBlockingClient): BlockingClient = client
 
     @Provides
     fun provideKeyManager(manager: KeyManagerImpl): KeyManager = manager

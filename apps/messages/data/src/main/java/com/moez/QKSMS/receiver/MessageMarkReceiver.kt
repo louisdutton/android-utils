@@ -48,17 +48,19 @@ class MessageMarkReceiver : BroadcastReceiver() {
             intent.getIntExtra("type", -1).takeIf { it >= 0 }?.let { type ->
                 val pendingResult = goAsync()
                 when (type) {
-                    MarkType.Seen.ordinal -> markSeen.execute(threadId) {
+                    MarkType.Seen.ordinal -> markSeen.executeFinally(threadId) {
                         pendingResult.finish()
                     }
 
-                    MarkType.Read.ordinal -> markRead.execute(listOf(threadId)) {
+                    MarkType.Read.ordinal -> markRead.executeFinally(listOf(threadId)) {
                         pendingResult.finish()
                     }
 
-                    MarkType.Archived.ordinal -> markArchived.execute(listOf(threadId)) {
+                    MarkType.Archived.ordinal -> markArchived.executeFinally(listOf(threadId)) {
                         pendingResult.finish()
                     }
+
+                    else -> pendingResult.finish()
                 }
             } ?:let { Timber.e("didn't get a valid type") }
         } ?:let { Timber.e("didn't get a valid thread id") }

@@ -246,13 +246,6 @@
     <string name="blocking_drop_title">Tolak pesan</string>
     <string name="blocking_drop_summary">Tolak pesan masuk dari pengirim yang diblokir</string>
     <string name="blocking_conversations">Percakapan diblokir</string>
-    <string name="blocking_manager_title">Pengelola Pemblokiran</string>
-    <string name="blocking_manager_qksms_summary">Fitur pemblokiran pesan di dalam QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">Blokir pesan spam, nomor &amp; panggilan tak dikenal dengan daftar hitam &amp; Jadwal</string>
-    <string name="blocking_manager_call_control_summary">Otomatis menyaring panggilan dan pesan di dalam satu tempat! Community IQ™ memungkinkan anda memblokir pesan yang tidak diinginkan dari daftar spammer</string>
-    <string name="blocking_manager_sia_summary">Secara otomatis menyaring pesan dari nomor yang tidak diinginkan menggunakan aplikasi \"Should I Answer\"</string>
-    <string name="blocking_manager_copy_title">Salin nomor yang diblokir</string>
-    <string name="blocking_manager_copy_summary">Lanjutkan ke %s dan salin semua nomor yang diblokir</string>
     <string name="blocked_numbers_title">Nomor yang diblokir</string>
     <string name="blocked_numbers_empty">Nomor yang anda blokir akan ditampilkan di sini</string>
     <string name="blocked_numbers_add_cd">Blokir nomor baru</string>

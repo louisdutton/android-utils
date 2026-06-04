@@ -176,7 +176,7 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
                                 messageRepo.markRead(listOf(message.threadId))
                                 conversationRepo.markBlocked(
                                     listOf(message.threadId),
-                                    prefs.blockingManager.get(),
+                                    BlockingClient.BUILT_IN_CLIENT_ID,
                                     action.reason
                                 )
                             }

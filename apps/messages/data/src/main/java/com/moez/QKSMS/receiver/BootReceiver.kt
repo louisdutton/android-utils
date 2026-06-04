@@ -33,7 +33,7 @@ class BootReceiver : BroadcastReceiver() {
         AndroidInjection.inject(this, context)
 
         val result = goAsync()
-        updateScheduledMessageAlarms.execute(Unit) { result.finish() }
+        updateScheduledMessageAlarms.executeFinally(Unit) { result.finish() }
     }
 
 }

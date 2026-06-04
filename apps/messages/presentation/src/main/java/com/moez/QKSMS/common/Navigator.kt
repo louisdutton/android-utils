@@ -180,33 +180,6 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
-    /**
-     * Launch the Play Store and display the Call Blocker listing
-     */
-    fun installCallBlocker() {
-        val url = "https://play.google.com/store/apps/details?id=com.cuiet.blockCalls"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivityExternal(intent)
-    }
-
-    /**
-     * Launch the Play Store and display the Call Control listing
-     */
-    fun installCallControl() {
-        val url = "https://play.google.com/store/apps/details?id=com.flexaspect.android.everycallcontrol"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivityExternal(intent)
-    }
-
-    /**
-     * Launch the Play Store and display the Should I Answer? listing
-     */
-    fun installSia() {
-        val url = "https://play.google.com/store/apps/details?id=org.mistergroup.shouldianswer"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivityExternal(intent)
-    }
-
     fun addContact(address: String) {
         val intent = Intent(Intent.ACTION_INSERT)
                 .setType(ContactsContract.Contacts.CONTENT_TYPE)

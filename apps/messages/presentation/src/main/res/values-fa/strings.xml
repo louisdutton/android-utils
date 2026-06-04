@@ -246,13 +246,6 @@
     <string name="blocking_drop_title">پیام‌ها را دور بینداز</string>
     <string name="blocking_drop_summary">دریافتی‌های فرستنده‌های بژکم شده را به جای مخفی کردن، دور بیانداز</string>
     <string name="blocking_conversations">گفتگوهای بژکم شده</string>
-    <string name="blocking_manager_title">راینیدن بژکم شدگان</string>
-    <string name="blocking_manager_qksms_summary">کارکرد بژکم کننده درونی در QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">بژکم کردن پیام‌های هرزنامه، شماره‌ها و زنگ‌های ناشناخته با لیست سیاه اود برنامه‌ریزی</string>
-    <string name="blocking_manager_call_control_summary">زنگ‌ها و پیام‌های خود را خودکار پالایش کنید! Community IQ™ به شما دسترسی می دهد تا از پیام‌های ناخواسته از هرزفرست‌های شناخته شده جلوگیری کنید</string>
-    <string name="blocking_manager_sia_summary">با بکارگیری برنامه «می‌شود پاسخ دهم»، پیام‌ها را از شماره‌های ناخواسته خودکار پالایش کنید</string>
-    <string name="blocking_manager_copy_title">پچین شماره‌های بژکم شده</string>
-    <string name="blocking_manager_copy_summary">به %s ادامه دهید اود شماره‌های بژکم شده‌ی فرتاش خویش را پچین کنید</string>
     <string name="blocked_numbers_title">شماره‌های بژکم شده</string>
     <string name="blocked_numbers_empty">شماره‌های بژکم شده‌ی شما در اینجا نمایان می‌شوند</string>
     <string name="blocked_numbers_add_cd">بژکم کردن شماره‌ای نو</string>

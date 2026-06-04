@@ -300,16 +300,6 @@
     <string name="blocking_drop_title">Supprimer les messages</string>
     <string name="blocking_drop_summary">Supprimer les messages entrants des expéditeurs bloqués au lieu de les masquer</string>
     <string name="blocking_conversations">Conversations bloquées</string>
-    <string name="blocking_manager_title">Gestionnaire de blocage</string>
-    <string name="blocking_manager_qksms_summary">Fonction de blocage intégrée dans QUIK</string>
-    <string name="blocking_manager_call_blocker_title" translatable="false">Call Blocker - Incoming/Outgoing</string>
-    <string name="blocking_manager_call_blocker_summary">Bloquer les spams, les numéros &amp; les appels inconnus avec une liste noire &amp; planifier</string>
-    <string name="blocking_manager_call_control_title" translatable="false">Call Control</string>
-    <string name="blocking_manager_call_control_summary">Filtrez automatiquement vos appels et vos messages dans un seul endroit pratique ! La communauté IQ™ vous permet d’éviter les messages indésirables des spammeurs connus de celle-ci</string>
-    <string name="blocking_manager_sia_title" translatable="false">Should I Answer?</string>
-    <string name="blocking_manager_sia_summary">Filtrer automatiquement les messages de numéros non sollicités à l’aide de l’application « Devrais-je répondre »</string>
-    <string name="blocking_manager_copy_title">Copier les numéros bloqués</string>
-    <string name="blocking_manager_copy_summary">Utiliser %s et écraser vos numéros bloqués existants</string>
     <string name="blocked_numbers_title">Numéros bloqués</string>
     <string name="blocked_numbers_empty">Vos numéros bloqués apparaîtront ici</string>
     <string name="blocked_numbers_add_cd">Bloquer un nouveau numéro</string>

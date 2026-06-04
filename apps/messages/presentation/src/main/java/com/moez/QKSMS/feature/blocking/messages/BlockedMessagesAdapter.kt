@@ -30,7 +30,6 @@ import dev.octoshrimpy.quik.common.util.DateFormatter
 import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
 import dev.octoshrimpy.quik.databinding.BlockedListItemBinding
 import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
@@ -78,11 +77,7 @@ class BlockedMessagesAdapter @Inject constructor(
         binding.title.text = conversation.getTitle()
         binding.date.text = dateFormatter.getConversationTimestamp(conversation.date)
 
-        binding.blocker.text = when (conversation.blockingClient) {
-            Preferences.BLOCKING_MANAGER_CC -> context.getString(R.string.blocking_manager_call_control_title)
-            Preferences.BLOCKING_MANAGER_SIA -> context.getString(R.string.blocking_manager_sia_title)
-            else -> null
-        }
+        binding.blocker.text = null
 
         binding.reason.text = conversation.blockReason
         binding.blocker.isVisible = binding.blocker.text.isNotEmpty()

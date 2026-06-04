@@ -121,7 +121,7 @@ class ConversationInfoController(
     }
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
-        blockingDialog.show(activity!!, conversations, block)
+        blockingDialog.show(conversations, block)
     }
 
     override fun requestDefaultSms() {

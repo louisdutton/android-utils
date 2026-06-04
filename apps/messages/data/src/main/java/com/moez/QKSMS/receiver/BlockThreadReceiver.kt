@@ -26,7 +26,6 @@ import dagger.android.AndroidInjection
 import dev.octoshrimpy.quik.blocking.BlockingClient
 import dev.octoshrimpy.quik.interactor.MarkBlocked
 import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.util.Preferences
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -36,7 +35,6 @@ class BlockThreadReceiver : BroadcastReceiver() {
     @Inject lateinit var blockingClient: BlockingClient
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var markBlocked: MarkBlocked
-    @Inject lateinit var prefs: Preferences
 
     @SuppressLint("CheckResult")
     override fun onReceive(context: Context, intent: Intent) {
@@ -45,6 +43,7 @@ class BlockThreadReceiver : BroadcastReceiver() {
         Timber.v("received")
 
         val threadId = intent.getLongExtra("threadId", 0)
+        val pendingResult = goAsync()
 
         blockingClient
             .block(
@@ -56,16 +55,14 @@ class BlockThreadReceiver : BroadcastReceiver() {
             .subscribeOn(Schedulers.io())
             .andThen(
                 markBlocked.buildObservable(
-                    MarkBlocked.Params(listOf(threadId), prefs.blockingManager.get(), null)
+                    MarkBlocked.Params(listOf(threadId), BlockingClient.BUILT_IN_CLIENT_ID, null)
                 )
             )
+            .doFinally { pendingResult.finish() }
             .subscribe(
-                {
-                    goAsync().finish()
-                },
+                {},
                 { error ->
                     Timber.e("BlockThreadReceiver", "blocking failed")
-                    goAsync().finish()
                 }
             )
     }

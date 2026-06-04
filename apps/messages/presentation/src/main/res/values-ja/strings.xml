@@ -246,13 +246,6 @@
     <string name="blocking_drop_title">メッセージをドロップ</string>
     <string name="blocking_drop_summary">ブロックした送信者からの受信メッセージを非表示にする代わりにドロップします</string>
     <string name="blocking_conversations">ブロックした会話</string>
-    <string name="blocking_manager_title">ブロッキングマネージャー</string>
-    <string name="blocking_manager_qksms_summary">QUIK の内蔵ブロック機能</string>
-    <string name="blocking_manager_call_blocker_summary">ブラックリストにより迷惑メッセージ、番号、不明な通話をブロック</string>
-    <string name="blocking_manager_call_control_summary">1 か所で便利に通話とメッセージを自動的にフィルタリングします! Community IQ™を使用すると、コミュニティで知られているスパマーからの不要なメッセージを防ぐことができます</string>
-    <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルターします</string>
-    <string name="blocking_manager_copy_title">ブロックした番号をコピー</string>
-    <string name="blocking_manager_copy_summary">%s で継続して既存のブロックした番号をコピー</string>
     <string name="blocked_numbers_title">ブロックした番号</string>
     <string name="blocked_numbers_empty">ブロックした番号がここに表示されます</string>
     <string name="blocked_numbers_add_cd">新しい番号をブロック</string>

@@ -21,24 +21,24 @@ package dev.octoshrimpy.quik.feature.blocking.messages
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDispose
 import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.blocking.BlockingClient
 import dev.octoshrimpy.quik.common.Navigator
 import dev.octoshrimpy.quik.common.base.QkPresenter
 import dev.octoshrimpy.quik.interactor.DeleteConversations
 import dev.octoshrimpy.quik.repository.ConversationRepository
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class BlockedMessagesPresenter @Inject constructor(
-    conversationRepo: ConversationRepository,
-    private val blockingClient: BlockingClient,
+    private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
     private val navigator: Navigator
-) : QkPresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState(
-        data = conversationRepo.getBlockedConversations()
-)) {
+) : QkPresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState()) {
 
     override fun bindIntents(view: BlockedMessagesView) {
         super.bindIntents(view)
+
+        loadBlockedConversations(view)
 
         view.menuReadyIntent
                 .autoDispose(view.scope())
@@ -50,6 +50,7 @@ class BlockedMessagesPresenter @Inject constructor(
                         R.id.block -> {
                             view.showBlockingDialog(conversations, false)
                             view.clearSelection()
+                            removeConversations(conversations)
                         }
                         R.id.delete -> {
                             view.showDeleteDialog(conversations)
@@ -65,6 +66,7 @@ class BlockedMessagesPresenter @Inject constructor(
                 .subscribe { conversations ->
                     deleteConversations.execute(conversations)
                     view.clearSelection()
+                    removeConversations(conversations)
                 }
 
         view.conversationClicks
@@ -84,6 +86,22 @@ class BlockedMessagesPresenter @Inject constructor(
                 }
                 .autoDispose(view.scope())
                 .subscribe()
+    }
+
+    private fun loadBlockedConversations(view: BlockedMessagesView) {
+        Observable.fromCallable { conversationRepo.getBlockedConversations() }
+            .subscribeOn(Schedulers.io())
+            .autoDispose(view.scope())
+            .subscribe({ conversations -> newState { copy(data = conversations) } }, {})
+    }
+
+    private fun removeConversations(conversations: List<Long>) {
+        newState {
+            copy(
+                data = data?.filterNot { conversation -> conversation.id in conversations },
+                selected = 0
+            )
+        }
     }
 
 }

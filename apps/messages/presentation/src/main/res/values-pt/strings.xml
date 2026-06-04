@@ -250,13 +250,6 @@
     <string name="blocking_drop_title">Descartar mensagens</string>
     <string name="blocking_drop_summary">Descartar mensagens enviadas pelos remetentes bloqueados em vez de as ocultar</string>
     <string name="blocking_conversations">Conversas bloqueadas</string>
-    <string name="blocking_manager_title">Gestor de bloqueios</string>
-    <string name="blocking_manager_qksms_summary">Funcionalidade de bloqueio, nativa no QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">Bloquear spam, números e chamadas desconhecidas com lista negra e agendamento</string>
-    <string name="blocking_manager_call_control_summary">Filtrar automaticamente as chamadas e as mensagens com a aplicação Community IQ™, com a qual pode descartar as mensagens que forem enviadas pelo \'spammers\' reconhecidos na comunidade</string>
-    <string name="blocking_manager_sia_summary">Filtrar automaticamente as mensagens de números utilizando a aplicação \"Should I Answer\"</string>
-    <string name="blocking_manager_copy_title">Copiar números bloqueados</string>
-    <string name="blocking_manager_copy_summary">Continuar para %s e substituir os números bloqueados</string>
     <string name="blocked_numbers_title">Números bloqueados</string>
     <string name="blocked_numbers_empty">Os números bloqueados aparecerão aqui</string>
     <string name="blocked_numbers_add_cd">Bloquear um novo número</string>

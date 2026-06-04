@@ -22,24 +22,28 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDispose
 import dev.octoshrimpy.quik.common.base.QkPresenter
 import dev.octoshrimpy.quik.repository.MessageContentFilterRepository
+import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MessageContentFiltersPresenter @Inject constructor(
     private val filterRepo: MessageContentFilterRepository,
-) : QkPresenter<MessageContentFiltersView, MessageContentFiltersState>(
-        MessageContentFiltersState(filters = filterRepo.getMessageContentFilters())
-) {
+) : QkPresenter<MessageContentFiltersView, MessageContentFiltersState>(MessageContentFiltersState()) {
 
     override fun bindIntents(view: MessageContentFiltersView) {
         super.bindIntents(view)
 
+        loadFilters(view)
+
         view.removeFilter()
             .observeOn(Schedulers.io())
-            .doOnNext(filterRepo::removeFilter)
+            .map { id ->
+                filterRepo.removeFilter(id)
+                filterRepo.getMessageContentFilters()
+            }
             .subscribeOn(Schedulers.io())
             .autoDispose(view.scope())
-            .subscribe()
+            .subscribe({ filters -> newState { copy(filters = filters) } }, {})
 
         view.addFilter()
             .autoDispose(view.scope())
@@ -47,9 +51,20 @@ class MessageContentFiltersPresenter @Inject constructor(
 
         view.saveFilter()
             .observeOn(Schedulers.io())
+            .map { filterData ->
+                filterRepo.createFilter(filterData)
+                filterRepo.getMessageContentFilters()
+            }
             .subscribeOn(Schedulers.io())
             .autoDispose(view.scope())
-            .subscribe { filterData -> filterRepo.createFilter(filterData) }
+            .subscribe({ filters -> newState { copy(filters = filters) } }, {})
+    }
+
+    private fun loadFilters(view: MessageContentFiltersView) {
+        Observable.fromCallable { filterRepo.getMessageContentFilters() }
+            .subscribeOn(Schedulers.io())
+            .autoDispose(view.scope())
+            .subscribe({ filters -> newState { copy(filters = filters) } }, {})
     }
 
 }

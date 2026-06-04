@@ -248,13 +248,6 @@
     <string name="blocking_drop_title">Üzenetek eldobása</string>
     <string name="blocking_drop_summary">Üzenetek eldobása a tiltott küldőktől az elrejtésük helyett</string>
     <string name="blocking_conversations">Letiltott beszélgetések</string>
-    <string name="blocking_manager_title">Tiltáskezelő</string>
-    <string name="blocking_manager_qksms_summary">A QUIK beépített tiltási funkciója</string>
-    <string name="blocking_manager_call_blocker_summary">Tiltja a kéretlen tartalmú üzeneteket, számokat és ismeretlen hívásokat a tiltólistával és az ütemezéssel</string>
-    <string name="blocking_manager_call_control_summary">Automatikus hívás- és üzenetszűrés egy kényelmes helyen! A Community IQ™ segítségével megakadályozhatja a közösségben ismert kéretlen tartalom küldők üzeneteinek érkezését</string>
-    <string name="blocking_manager_sia_summary">Automatikusan szűrheti az üzeneteket a számok alapján a „Should I Answer” alkalmazás használatával</string>
-    <string name="blocking_manager_copy_title">Tiltott számok másolása</string>
-    <string name="blocking_manager_copy_summary">Folytatás mint: %s, és másolja át a meglévő letiltott számokat</string>
     <string name="blocked_numbers_title">Tiltott számok</string>
     <string name="blocked_numbers_empty">A tiltott számok itt fognak megjelenni</string>
     <string name="blocked_numbers_add_cd">Új szám tiltása</string>

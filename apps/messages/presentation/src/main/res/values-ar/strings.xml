@@ -256,13 +256,6 @@
     <string name="blocking_drop_title">مسح الرسائل</string>
     <string name="blocking_drop_summary">قم بحذف الرسائل الواردة من المرسلين المحظورين بدلاً من إخفائها</string>
     <string name="blocking_conversations">المحادثات المحظورة</string>
-    <string name="blocking_manager_title">مدير المحظورات</string>
-    <string name="blocking_manager_qksms_summary">وظيفة حظر مدمجة في برنامج QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">حظر الرسائل المزعجة والأرقام والمكالمات غير المعروفة باستخدام القائمة السوداء وجدولة المكالمات</string>
-    <string name="blocking_manager_call_control_summary">قم بتصفية مكالماتك ورسائلك تلقائيًا في مكان واحد مناسب! تتيح لك ميزة Community IQ™ منع الرسائل غير المرغوب فيها من مرسلي الرسائل المزعجة المعروفين في مجتمعك</string>
-    <string name="blocking_manager_sia_summary">الترشيح التلقائي للرسائل من الأرقام غير المرغوبة باستخدام تطبيق \"Should I Answer\"</string>
-    <string name="blocking_manager_copy_title">نسخ الارقام المحظورة</string>
-    <string name="blocking_manager_copy_summary">تابع إلى %s وانسخ أرقامك المحظورة الموجودة لديك</string>
     <string name="blocked_numbers_title">الارقام المحظورة</string>
     <string name="blocked_numbers_empty">ارقامك المحظورة سوف تظهر هنا</string>
     <string name="blocked_numbers_add_cd">حظر رقم جديد</string>

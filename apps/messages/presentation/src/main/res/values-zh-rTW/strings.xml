@@ -246,13 +246,6 @@
     <string name="blocking_drop_title">直接刪除</string>
     <string name="blocking_drop_summary">直接刪除封鎖的簡訊，而非只有隱藏簡訊</string>
     <string name="blocking_conversations">封鎖的對話</string>
-    <string name="blocking_manager_title">封鎖管理器</string>
-    <string name="blocking_manager_qksms_summary">QUIK 內建封鎖功能</string>
-    <string name="blocking_manager_call_blocker_summary">使用黑名單與排程封鎖垃圾訊息、號碼和未知來電</string>
-    <string name="blocking_manager_call_control_summary">自動過濾來電與簡訊！Community IQ™ 能讓你遠離不想要的垃圾簡訊</string>
-    <string name="blocking_manager_sia_summary">使用「Should I Answer」應用程式過濾未知號碼的訊息</string>
-    <string name="blocking_manager_copy_title">複製封鎖號碼</string>
-    <string name="blocking_manager_copy_summary">前往 %s 並複製現有的封鎖號碼</string>
     <string name="blocked_numbers_title">封鎖號碼</string>
     <string name="blocked_numbers_empty">封鎖號碼會顯示在這裡</string>
     <string name="blocked_numbers_add_cd">封鎖新號碼</string>

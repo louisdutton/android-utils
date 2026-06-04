@@ -24,6 +24,7 @@ import dev.octoshrimpy.quik.common.base.QkPresenter
 import dev.octoshrimpy.quik.interactor.MarkUnblocked
 import dev.octoshrimpy.quik.repository.BlockingRepository
 import dev.octoshrimpy.quik.repository.ConversationRepository
+import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -31,24 +32,25 @@ class BlockedNumbersPresenter @Inject constructor(
     private val blockingRepo: BlockingRepository,
     private val conversationRepo: ConversationRepository,
     private val markUnblocked: MarkUnblocked
-) : QkPresenter<BlockedNumbersView, BlockedNumbersState>(
-        BlockedNumbersState(numbers = blockingRepo.getBlockedNumbers())
-) {
+) : QkPresenter<BlockedNumbersView, BlockedNumbersState>(BlockedNumbersState()) {
 
     override fun bindIntents(view: BlockedNumbersView) {
         super.bindIntents(view)
 
+        loadBlockedNumbers(view)
+
         view.unblockAddress()
             .observeOn(Schedulers.io())
-            .doOnNext { id ->
+            .map { id ->
                 blockingRepo.getBlockedNumber(id)?.address
                     ?.let { address -> conversationRepo.getConversation(listOf(address)) }
                     ?.let { conversation -> markUnblocked.execute(listOf(conversation.id)) }
+                blockingRepo.unblockNumber(id)
+                blockingRepo.getBlockedNumbers()
             }
-            .doOnNext(blockingRepo::unblockNumber)
             .subscribeOn(Schedulers.io())
             .autoDispose(view.scope())
-            .subscribe()
+            .subscribe({ numbers -> newState { copy(numbers = numbers) } }, {})
 
         view.addAddress()
             .autoDispose(view.scope())
@@ -56,9 +58,20 @@ class BlockedNumbersPresenter @Inject constructor(
 
         view.saveAddress()
             .observeOn(Schedulers.io())
+            .map { address ->
+                blockingRepo.blockNumber(address)
+                blockingRepo.getBlockedNumbers()
+            }
             .subscribeOn(Schedulers.io())
             .autoDispose(view.scope())
-            .subscribe { address -> blockingRepo.blockNumber(address) }
+            .subscribe({ numbers -> newState { copy(numbers = numbers) } }, {})
+    }
+
+    private fun loadBlockedNumbers(view: BlockedNumbersView) {
+        Observable.fromCallable { blockingRepo.getBlockedNumbers() }
+            .subscribeOn(Schedulers.io())
+            .autoDispose(view.scope())
+            .subscribe({ numbers -> newState { copy(numbers = numbers) } }, {})
     }
 
 }

@@ -41,7 +41,7 @@ class SendDelayedMessageReceiver : BroadcastReceiver() {
         intent.extras?.getLong(MESSAGE_ID_EXTRA)?.takeIf { it > 0 }
             ?.let { messageId ->
                 val result = goAsync()
-                actionDelayedMessage.execute(
+                actionDelayedMessage.executeFinally(
                     ActionDelayedMessage.Params(messageId, ActionDelayedMessage.Action.Send)
                 ) { result.finish() }
 

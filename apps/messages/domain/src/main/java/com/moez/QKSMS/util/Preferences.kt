@@ -70,11 +70,6 @@ class Preferences @Inject constructor(
         const val SWIPE_ACTION_UNREAD = 6
         const val SWIPE_ACTION_SPEAK = 7
 
-        const val BLOCKING_MANAGER_QKSMS = 0
-        const val BLOCKING_MANAGER_CC = 1
-        const val BLOCKING_MANAGER_SIA = 2
-        const val BLOCKING_MANAGER_CB = 3
-
         const val MESSAGE_LINK_HANDLING_BLOCK = 0
         const val MESSAGE_LINK_HANDLING_ALLOW = 1
         const val MESSAGE_LINK_HANDLING_ASK = 2
@@ -87,9 +82,6 @@ class Preferences @Inject constructor(
     val version = rxPrefs.getInteger("version", context.versionCode)
     val hasAskedForNotificationPermission = rxPrefs.getBoolean("hasAskedForNotificationPermission", false)
     val backupDirectory = rxPrefs.getObject("backupDirectory", Uri.EMPTY, UriPreferenceConverter())
-    @Deprecated("This should only be accessed when migrating to @blockingManager")
-    val sia = rxPrefs.getBoolean("sia", false)
-
     // User configurable
     val sendAsGroup = rxPrefs.getBoolean("sendAsGroup", true)
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
@@ -98,7 +90,6 @@ class Preferences @Inject constructor(
     })
     val nightStart = rxPrefs.getString("nightStart", "18:00")
     val nightEnd = rxPrefs.getString("nightEnd", "6:00")
-    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
     val drop = rxPrefs.getBoolean("drop", false)
     val silentNotContact = rxPrefs.getBoolean("silentNotContact", false)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)

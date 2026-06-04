@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -646,7 +646,11 @@ private fun SearchResults(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 8.dp),
         ) {
-            itemsIndexed(page.data, key = { index, result -> "search-${result.conversation.id}-$index" }) { _, result ->
+            items(
+                items = page.data,
+                key = { result -> result.conversation.id },
+                contentType = { "search_result" },
+            ) { result ->
                 SearchResultRow(
                     result = result,
                     dateFormatter = dateFormatter,
@@ -678,7 +682,11 @@ private fun ConversationList(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 8.dp),
     ) {
-        itemsIndexed(rows, key = { index, row -> "conversation-${row.id}-$index" }) { _, row ->
+        items(
+            items = rows,
+            key = { row -> row.id },
+            contentType = { "conversation" },
+        ) { row ->
             ConversationRow(
                 row = row,
                 selected = row.id in selectedConversationIds,

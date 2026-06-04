@@ -292,13 +292,6 @@
     <string name="blocking_drop_title">Șterge mesajele</string>
     <string name="blocking_drop_summary">Șterge mesajele primite de la expeditorii blocați în loc să le ascunzi</string>
     <string name="blocking_conversations">Conversații blocate</string>
-    <string name="blocking_manager_title">Manager de blocări</string>
-    <string name="blocking_manager_qksms_summary">Funcționalitate de blocare încorporată în QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">Blocare mesaje spam, numere și apeluri necunoscute din lista neagră și Planificare</string>
-    <string name="blocking_manager_call_control_summary">Filtrează automat apelurile și mesajele într-un loc convenabil! Community IQ™ îți permite să previi mesajele nedorite de la spamerii cunoscuți de comunitate</string>
-    <string name="blocking_manager_sia_summary">Filtrează automat mesajele de la numere nesolicitate folosind aplicația \"Trebuie să răspund\"</string>
-    <string name="blocking_manager_copy_title">Copiază numerele blocate</string>
-    <string name="blocking_manager_copy_summary">Continuă să %s și copiază peste numerele existente blocate</string>
     <string name="blocked_numbers_title">Numere blocate</string>
     <string name="blocked_numbers_empty">Numerele tale blocate vor apărea aici</string>
     <string name="blocked_numbers_add_cd">Blochează un număr nou</string>

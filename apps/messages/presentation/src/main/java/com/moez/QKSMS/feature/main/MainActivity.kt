@@ -82,6 +82,8 @@ class MainActivity : QkThemedActivity(), MainView {
     private var visibleConversationIds: List<Long> = emptyList()
     private var uiState by mutableStateOf(MainState())
     private var conversationRows by mutableStateOf<List<ConversationRowModel>>(emptyList())
+    private var conversationRowsPageKey: String? = null
+    private var conversationRowsSource: List<Conversation>? = null
     private var searchQuery by mutableStateOf("")
     private var swipeRightAction by mutableStateOf(Preferences.SWIPE_ACTION_ARCHIVE)
     private var swipeLeftAction by mutableStateOf(Preferences.SWIPE_ACTION_ARCHIVE)
@@ -217,11 +219,11 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun themeChanged() {
-        refreshConversationRows(uiState.page)
+        refreshConversationRows(uiState.page, force = true)
     }
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
-        blockingDialog.show(this, conversations, block)
+        blockingDialog.show(conversations, block)
     }
 
     override fun showDeleteDialog(conversations: List<Long>) {
@@ -296,21 +298,46 @@ class MainActivity : QkThemedActivity(), MainView {
         conversationsSelectedSubject.onNext(selection)
     }
 
-    private fun refreshConversationRows(page: MainPage) {
-        val conversations = when (page) {
-            is Inbox -> page.data.orEmpty()
-            is Archived -> page.data.orEmpty()
-            else -> emptyList()
+    private fun refreshConversationRows(page: MainPage, force: Boolean = false) {
+        val pageKey: String?
+        val conversations: List<Conversation>
+
+        when (page) {
+            is Inbox -> {
+                pageKey = "inbox"
+                conversations = page.data.orEmpty()
+            }
+
+            is Archived -> {
+                pageKey = "archived"
+                conversations = page.data.orEmpty()
+            }
+
+            else -> {
+                pageKey = null
+                conversations = emptyList()
+            }
         }
+
+        if (!force && pageKey == conversationRowsPageKey && conversations === conversationRowsSource) {
+            return
+        }
+
+        conversationRowsPageKey = pageKey
+        conversationRowsSource = conversations
 
         applyConversationRows(buildConversationRows(conversations))
     }
 
     private fun buildConversationRows(conversations: List<Conversation>): List<ConversationRowModel> {
-        return conversations.map(::conversationRow)
+        return conversations.distinctBy { conversation -> conversation.id }.map(::conversationRow)
     }
 
     private fun applyConversationRows(rows: List<ConversationRowModel>) {
+        if (rows == conversationRows) {
+            return
+        }
+
         conversationRows = rows
         visibleConversationIds = rows.map { it.id }
     }

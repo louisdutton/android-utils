@@ -252,13 +252,6 @@
     <string name="blocking_drop_title">Zahodiť správy</string>
     <string name="blocking_drop_summary">Zahodiť prichádzajúce správy od blokovaných odosielateľov namiesto ich skrytia.</string>
     <string name="blocking_conversations">Blokované konverzácie</string>
-    <string name="blocking_manager_title">Správca blokovaní</string>
-    <string name="blocking_manager_qksms_summary">Vstavané blokovanie v QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
-    <string name="blocking_manager_call_control_summary">Automaticky filtrujte svoje hovory a správy na jednom mieste! Community IQ™ vám poskytuje ochranu pred spamom od komunitou označených spammerov.</string>
-    <string name="blocking_manager_sia_summary">Automaticky filtrovať správy od nevyžiadaných čísiel pomocou aplikácie \"Should I Answer?\"</string>
-    <string name="blocking_manager_copy_title">Kopírovať blokované čísla</string>
-    <string name="blocking_manager_copy_summary">Pokračovať do %s a skopírovať existujúce zablokované čísla</string>
     <string name="blocked_numbers_title">Blokované čísla</string>
     <string name="blocked_numbers_empty">Tu sa objavia vami blokované čísla</string>
     <string name="blocked_numbers_add_cd">Zablokovať nové číslo</string>

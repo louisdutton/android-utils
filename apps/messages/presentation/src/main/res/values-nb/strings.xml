@@ -248,13 +248,6 @@
     <string name="blocking_drop_title">Forkast meldinger</string>
     <string name="blocking_drop_summary">Forkast meldinger fra blokkerte sendere istedenfor å skjule dem</string>
     <string name="blocking_conversations">Blokkerte samtaler</string>
-    <string name="blocking_manager_title">Blokkeringer</string>
-    <string name="blocking_manager_qksms_summary">Innebygd blokkeringsfunksjon i QUIK</string>
-    <string name="blocking_manager_call_blocker_summary">Blokker spammeldinger, numre og ukjente anrop med svarteliste og planlegging</string>
-    <string name="blocking_manager_call_control_summary">Filtrer anrop og meldinger automatisk. Fellesskapets intelligens™ hjelper med å forhindre uønskede henvendelser fra plageånder</string>
-    <string name="blocking_manager_sia_summary">Filtrer meldinger fra ukjente numre automatisk med \"Skal jeg svare\"-appen</string>
-    <string name="blocking_manager_copy_title">Kopier blokkerte numre</string>
-    <string name="blocking_manager_copy_summary">Fortsett med %s og kopier eksisterende blokkerte numre</string>
     <string name="blocked_numbers_title">Blokkerte numre</string>
     <string name="blocked_numbers_empty">Blokkerte numre vil vises her</string>
     <string name="blocked_numbers_add_cd">Blokker et nytt nummer</string>

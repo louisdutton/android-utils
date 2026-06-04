@@ -49,11 +49,11 @@ class MessageDeliveredReceiver : BroadcastReceiver() {
 
                 when (pendingResult.resultCode) {
                     // TODO notify about delivery
-                    Activity.RESULT_OK -> markDelivered.execute(messageId) { pendingResult.finish() }
+                    Activity.RESULT_OK -> markDelivered.executeFinally(messageId) { pendingResult.finish() }
 
                     // TODO notify about delivery failure
                     else ->
-                        markDeliveryFailed.execute(MarkDeliveryFailed.Params(messageId, resultCode)) {
+                        markDeliveryFailed.executeFinally(MarkDeliveryFailed.Params(messageId, resultCode)) {
                             pendingResult.finish()
                         }
                 }

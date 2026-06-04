@@ -33,7 +33,6 @@ import dev.octoshrimpy.quik.common.widget.RadioPreferenceView
 import dev.octoshrimpy.quik.feature.backup.BackupController
 import dev.octoshrimpy.quik.feature.blocking.BlockingController
 import dev.octoshrimpy.quik.feature.blocking.filters.MessageContentFiltersController
-import dev.octoshrimpy.quik.feature.blocking.manager.BlockingManagerController
 import dev.octoshrimpy.quik.feature.blocking.messages.BlockedMessagesController
 import dev.octoshrimpy.quik.feature.blocking.numbers.BlockedNumbersController
 import dev.octoshrimpy.quik.feature.compose.editing.DetailedChipView
@@ -67,7 +66,6 @@ interface AppComponent {
     fun inject(controller: BlockedNumbersController)
     fun inject(controller: MessageContentFiltersController)
     fun inject(controller: BlockingController)
-    fun inject(controller: BlockingManagerController)
     fun inject(controller: MessageUtilsController)
     fun inject(controller: SettingsController)
     fun inject(controller: SwipeActionsController)

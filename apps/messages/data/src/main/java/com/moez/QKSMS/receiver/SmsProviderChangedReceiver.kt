@@ -44,8 +44,9 @@ class SmsProviderChangedReceiver : BroadcastReceiver() {
         AndroidInjection.inject(this, context)
 
         // Sync the message to the local database.
+        val data = intent.data ?: return
         val pendingResult = goAsync()
-        syncMessage.execute(SyncMessage.Params(intent.data ?: return)) {
+        syncMessage.executeFinally(SyncMessage.Params(data)) {
             pendingResult.finish()
         }
     }
