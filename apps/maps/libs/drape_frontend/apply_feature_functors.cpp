@@ -576,7 +576,7 @@ void ApplyPointFeature::ProcessPointRules(SymbolRuleProto const * symbolRule, Ca
     if (region.IsValid())
       m_insertShape(make_unique_dp<PoiSymbolShape>(centerPoint, params, m_tileKey, 0 /* textIndex */));
     else
-      LOG(LERROR, ("Style error. Symbol name must be valid for feature", m_f.GetID()));
+      LOG(LWARNING, ("Style error. Symbol name must be valid for feature", params.m_symbolName, m_f.GetID()));
   }
 
   if (captionRule)

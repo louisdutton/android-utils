@@ -4,7 +4,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 if [[ ! -f "$repo_root/apps/trainer/build.gradle.kts" ]]; then
-  echo "Expected Voice Android app at apps/trainer." >&2
+  echo "Expected Learn Android app at apps/trainer." >&2
   exit 1
 fi
 

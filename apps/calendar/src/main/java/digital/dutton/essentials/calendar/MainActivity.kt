@@ -783,10 +783,10 @@ private fun CalendarScreen(
         val sectionIndex = sections.indexOfFirst { section -> section.date >= date }
             .takeUnless { it == -1 }
             ?: sections.lastIndex
-        val sectionItemIndex =
-            (if (state.error == null) 0 else 1) +
-            sectionIndex +
-            sections.monthJunctionCountThrough(sectionIndex)
+        val sectionItemIndex = sections.agendaListIndexForSection(
+            sectionIndex = sectionIndex,
+            hasError = state.error != null,
+        )
 
         coroutineScope.launch {
             listState.animateScrollToItem(sectionItemIndex)
@@ -967,17 +967,38 @@ private fun CalendarScreen(
                             }
                             previousSectionMonth = sectionMonth
 
-                            item(key = "date-${section.date}") {
-                                AgendaDaySection(
-                                    section = section,
-                                    onEventClick = { event ->
-                                        eventDialog = EventDialogState.Details(event)
-                                    },
-                                    onTaskClick = { task ->
-                                        eventDialog = EventDialogState.TaskDetails(task)
-                                    },
-                                    onSetTaskCompleted = onSetTaskCompleted,
-                                )
+                            if (section.items.isEmpty()) {
+                                item(key = "date-${section.date}-empty") {
+                                    AgendaDayRow(
+                                        date = section.date,
+                                        showDateRail = true,
+                                        item = null,
+                                        onEventClick = { event ->
+                                            eventDialog = EventDialogState.Details(event)
+                                        },
+                                        onTaskClick = { task ->
+                                            eventDialog = EventDialogState.TaskDetails(task)
+                                        },
+                                        onSetTaskCompleted = onSetTaskCompleted,
+                                    )
+                                }
+                            } else {
+                                section.items.forEachIndexed { index, agendaItem ->
+                                    item(key = agendaItem.listItemKey(section.date, index)) {
+                                        AgendaDayRow(
+                                            date = section.date,
+                                            showDateRail = index == 0,
+                                            item = agendaItem,
+                                            onEventClick = { event ->
+                                                eventDialog = EventDialogState.Details(event)
+                                            },
+                                            onTaskClick = { task ->
+                                                eventDialog = EventDialogState.TaskDetails(task)
+                                            },
+                                            onSetTaskCompleted = onSetTaskCompleted,
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -1863,9 +1884,52 @@ private fun AgendaDaySection(
 }
 
 @Composable
-private fun AgendaEmptyDayBlock() {
+private fun AgendaDayRow(
+    date: LocalDate,
+    showDateRail: Boolean,
+    item: AgendaItem?,
+    onEventClick: (CalendarEvent) -> Unit,
+    onTaskClick: (CalendarTask) -> Unit,
+    onSetTaskCompleted: (CalendarTask, Boolean) -> Unit,
+) {
+    val isToday = date == LocalDate.now()
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        if (showDateRail) {
+            DateRail(date = date, isToday = isToday)
+        } else {
+            Box(modifier = Modifier.size(width = 54.dp, height = 58.dp))
+        }
+
+        when (item) {
+            null -> AgendaEmptyDayBlock(modifier = Modifier.weight(1f))
+
+            is AgendaItem.Event -> AgendaEventBlock(
+                event = item.event,
+                onClick = { onEventClick(item.event) },
+                modifier = Modifier.weight(1f),
+            )
+
+            is AgendaItem.Task -> AgendaTaskBlock(
+                task = item.task,
+                onClick = { onTaskClick(item.task) },
+                onSetCompleted = { completed ->
+                    onSetTaskCompleted(item.task, completed)
+                },
+                modifier = Modifier.weight(1f),
+            )
+        }
+    }
+}
+
+@Composable
+private fun AgendaEmptyDayBlock(modifier: Modifier = Modifier) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(58.dp),
         color = MaterialTheme.colorScheme.surfaceContainer,
@@ -1909,6 +1973,7 @@ private fun DateRail(
     Column(
         modifier = Modifier
             .width(54.dp)
+            .height(58.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(containerColor)
             .padding(vertical = 7.dp),
@@ -1932,9 +1997,10 @@ private fun DateRail(
 private fun AgendaEventBlock(
     event: CalendarEvent,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(58.dp)
             .clickable(onClick = onClick),
@@ -1985,9 +2051,10 @@ private fun AgendaTaskBlock(
     task: CalendarTask,
     onClick: () -> Unit,
     onSetCompleted: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(58.dp)
             .clickable(onClick = onClick),
@@ -3750,12 +3817,32 @@ private fun agendaItemsForDate(
         )
 }
 
-private fun List<AgendaSection>.monthJunctionCountThrough(sectionIndex: Int): Int {
-    return take(sectionIndex + 1)
-        .filterIndexed { index, section ->
-            index == 0 || YearMonth.from(section.date) != YearMonth.from(this[index - 1].date)
+private fun List<AgendaSection>.agendaListIndexForSection(
+    sectionIndex: Int,
+    hasError: Boolean,
+): Int {
+    var index = if (hasError) 1 else 0
+    forEachIndexed { currentIndex, section ->
+        if (currentIndex > sectionIndex) return index
+
+        if (currentIndex == 0 || YearMonth.from(section.date) != YearMonth.from(this[currentIndex - 1].date)) {
+            index += 1
         }
-        .size
+        if (currentIndex == sectionIndex) return index
+
+        index += section.items.size.coerceAtLeast(1)
+    }
+    return index
+}
+
+private fun AgendaItem.listItemKey(
+    date: LocalDate,
+    index: Int,
+): String {
+    return when (this) {
+        is AgendaItem.Event -> "event-$date-${event.id}-$sortMillis-$index"
+        is AgendaItem.Task -> "task-$date-${task.id}-$sortMillis-$index"
+    }
 }
 
 private fun CalendarUiState.agendaSubtitle(): String {

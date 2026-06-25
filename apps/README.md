@@ -18,8 +18,7 @@ own APK with a distinct application id.
   files, with on-device OMR entry points for PDF and image score imports.
   Local OMR/debug iteration can be run without an Android device with
   `nix develop --no-write-lock-file --command ./scripts/scores-local-import.sh <pdf-or-image>`.
-- `trainer`: Voice sight-singing trainer with reference tones and on-device
-  pitch detection.
+- `trainer`: Learn flashcard app with Anki package import and offline study.
 - `keyboard`: hard-forked FUTO Keyboard-derived input method replacement with
   its own Android Gradle project under `apps/keyboard`.
 - `vault`: hard-forked KeePassDX-derived local KeePass/KeePassXC-compatible
