@@ -400,6 +400,7 @@
         <item quantity="one">New message</item>
         <item quantity="other">%s new messages</item>
     </plurals>
+    <string name="notification_sender_self">You</string>
     <string name="notification_message_failed_title">Message not sent</string>
     <string name="notification_message_failed_text">The message to %s failed to send</string>
     <string name="notification_foreground_worker_title">Receiving message</string>

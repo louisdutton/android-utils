@@ -20,6 +20,8 @@
 - `apps/trainer` is the local Learn flashcard app with Anki package import.
   Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-trainer-android.sh`
+- `apps/weather` is the local Open-Meteo weather app. Build it with:
+  `nix develop --no-write-lock-file --command ./scripts/build-weather-android.sh`
 - `apps/keyboard` is the hard-forked FUTO Keyboard-derived production Keyboard
   app, imported as normal source with its own Gradle project. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-keyboard-android.sh`

@@ -316,6 +316,12 @@ public enum BookmarkManager {
     return nativeCreateCategory(name);
   }
 
+  @NonNull
+  public BookmarkCategory getLastEditedCategory()
+  {
+    return getCategoryById(nativeGetLastEditedCategory());
+  }
+
   public void showBookmarkOnMap(long bmkId)
   {
     nativeShowBookmarkOnMap(bmkId);
@@ -789,6 +795,8 @@ public enum BookmarkManager {
    * @return category Id
    */
   private native long nativeCreateCategory(@NonNull String name);
+
+  private native long nativeGetLastEditedCategory();
 
   private native void nativeShowBookmarkOnMap(long bmkId);
 

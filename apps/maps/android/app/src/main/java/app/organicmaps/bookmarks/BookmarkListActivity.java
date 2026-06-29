@@ -1,5 +1,6 @@
 package app.organicmaps.bookmarks;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
@@ -38,7 +39,7 @@ public class BookmarkListActivity extends BaseToolbarActivity
   @Override
   protected int getToolbarTitle()
   {
-    return R.string.bookmarks;
+    return R.string.bookmarks_and_tracks;
   }
 
   @Override
@@ -60,5 +61,13 @@ public class BookmarkListActivity extends BaseToolbarActivity
     Intent intent = new Intent(fragment.requireActivity(), BookmarkListActivity.class);
     intent.putExtra(BookmarksListFragment.EXTRA_CATEGORY, category);
     startBookmarkListForResult.launch(intent);
+  }
+
+  public static void start(@NonNull Activity context)
+  {
+    Intent intent = new Intent(context, BookmarkListActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.putExtra(BookmarksListFragment.EXTRA_CATEGORY, BookmarkManager.INSTANCE.getLastEditedCategory());
+    context.startActivity(intent);
   }
 }

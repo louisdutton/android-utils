@@ -203,7 +203,11 @@ class NotificationManagerImpl @Inject constructor(
             notification.setSound(ringtone)
 
     // Tell the notification if it's a group message
-        val messagingStyle = NotificationCompat.MessagingStyle("Me")
+        val selfPerson = Person.Builder()
+                .setName(context.getString(R.string.notification_sender_self))
+                .setKey("self")
+                .build()
+        val messagingStyle = NotificationCompat.MessagingStyle(selfPerson)
         if (conversation.recipients.size >= 2) {
             messagingStyle.isGroupConversation = true
             messagingStyle.conversationTitle = conversation.getTitle()
@@ -211,18 +215,24 @@ class NotificationManagerImpl @Inject constructor(
 
         // Add the messages to the notification
         messages.forEach { message ->
-            val person = Person.Builder()
-
-            if (!message.isMe()) {
+            val person = if (message.isMe()) {
+                selfPerson
+            } else {
+                val sender = Person.Builder()
                 val recipient = conversation.recipients.find { recipient ->
                     phoneNumberUtils.compare(recipient.address, message.address)
                 }
-
-                if(recipient != null)
-                    person.fromRecipient(recipient, context, colors)
+                if (recipient != null) {
+                    sender.fromRecipient(recipient, context, colors)
+                } else {
+                    sender
+                            .setName(message.address.ifBlank { conversation.getTitle() })
+                            .setKey(message.address.ifBlank { conversation.id.toString() })
+                }
+                sender.build()
             }
 
-            NotificationCompat.MessagingStyle.Message(message.getSummary(), message.date, person.build()).apply {
+            NotificationCompat.MessagingStyle.Message(message.getSummary(), message.date, person).apply {
                 message.parts.firstOrNull { it.isImage() }?.let { part ->
                     setData(part.type, ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id))
                 }

@@ -1,17 +1,9 @@
 package app.organicmaps.bookmarks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.view.View;
-import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CallSuper;
@@ -19,7 +11,6 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import app.organicmaps.MwmApplication;
 import app.organicmaps.R;
 import app.organicmaps.adapter.OnItemClickListener;
 import app.organicmaps.base.BaseMwmRecyclerFragment;
@@ -29,21 +20,14 @@ import app.organicmaps.sdk.bookmarks.data.BookmarkManager;
 import app.organicmaps.sdk.bookmarks.data.BookmarkSharingResult;
 import app.organicmaps.sdk.bookmarks.data.DataChangedListener;
 import app.organicmaps.sdk.bookmarks.data.KmlFileType;
-import app.organicmaps.sdk.util.StorageUtils;
-import app.organicmaps.sdk.util.concurrency.ThreadPool;
-import app.organicmaps.sdk.util.concurrency.UiThread;
-import app.organicmaps.sdk.util.log.Logger;
 import app.organicmaps.util.SharingUtils;
 import app.organicmaps.util.Utils;
 import app.organicmaps.util.bottomsheet.MenuBottomSheetFragment;
 import app.organicmaps.util.bottomsheet.MenuBottomSheetItem;
 import app.organicmaps.widget.PlaceholderView;
 import app.organicmaps.widget.recycler.DividerItemDecorationWithPadding;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class BookmarkCategoriesFragment extends BaseMwmRecyclerFragment<BookmarkCategoriesAdapter>
     implements BookmarkManager.BookmarksLoadingListener, CategoryListCallback, OnItemClickListener<BookmarkCategory>,
@@ -77,7 +61,7 @@ public class BookmarkCategoriesFragment extends BaseMwmRecyclerFragment<Bookmark
   private final ActivityResultLauncher<Intent> startImportDirectoryForResult =
       registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), activityResult -> {
         if (activityResult.getResultCode() == Activity.RESULT_OK)
-          onImportDirectoryResult(activityResult.getData());
+          BookmarksImportHelper.onImportDirectoryResult(requireActivity(), activityResult.getData());
       });
 
   private final ActivityResultLauncher<Intent> startBookmarkSettingsForResult =
@@ -243,32 +227,7 @@ public class BookmarkCategoriesFragment extends BaseMwmRecyclerFragment<Bookmark
   @Override
   public void onImportButtonClick()
   {
-    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-
-    // Sic: EXTRA_INITIAL_URI doesn't work
-    // https://stackoverflow.com/questions/65326605/extra-initial-uri-will-not-work-no-matter-what-i-do
-    // intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, initial);
-
-    // Enable "Show SD card option"
-    // http://stackoverflow.com/a/31334967/1615876
-    intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-      intent.putExtra(DocumentsContract.EXTRA_EXCLUDE_SELF, true);
-
-    PackageManager packageManager = requireActivity().getPackageManager();
-    if (intent.resolveActivity(packageManager) != null)
-      startImportDirectoryForResult.launch(intent);
-    else
-      showNoFileManagerError();
-  }
-
-  private void showNoFileManagerError()
-  {
-    new MaterialAlertDialogBuilder(requireActivity())
-        .setMessage(R.string.error_no_file_manager_app)
-        .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
-        .show();
+    BookmarksImportHelper.startImportDirectory(requireActivity(), startImportDirectoryForResult);
   }
 
   @Override
@@ -304,40 +263,6 @@ public class BookmarkCategoriesFragment extends BaseMwmRecyclerFragment<Bookmark
   private void onSettingsActionSelected(@NonNull BookmarkCategory category)
   {
     BookmarkCategorySettingsActivity.startForResult(this, startBookmarkSettingsForResult, category);
-  }
-
-  private void onImportDirectoryResult(Intent data)
-  {
-    if (data == null)
-      throw new AssertionError("Data is null");
-
-    final Context context = requireActivity();
-    final Uri rootUri = data.getData();
-    final ProgressDialog dialog = new ProgressDialog(context, R.style.MwmTheme_ProgressDialog);
-    dialog.setMessage(getString(R.string.wait_several_minutes));
-    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-    dialog.setIndeterminate(true);
-    dialog.setCancelable(false);
-    dialog.show();
-    Logger.d(TAG, "Importing bookmarks from " + rootUri);
-    MwmApplication app = MwmApplication.from(context);
-    final File tempDir = new File(StorageUtils.getTempPath(app));
-    final ContentResolver resolver = context.getContentResolver();
-    ThreadPool.getStorage().execute(() -> {
-      AtomicInteger found = new AtomicInteger(0);
-      StorageUtils.listContentProviderFilesRecursively(resolver, rootUri, uri -> {
-        if (BookmarkManager.INSTANCE.importBookmarksFile(resolver, uri, tempDir))
-          found.incrementAndGet();
-      });
-      UiThread.run(() -> {
-        if (dialog.isShowing())
-          dialog.dismiss();
-        int found_val = found.get();
-        String message =
-            context.getResources().getQuantityString(R.plurals.bookmarks_detect_message, found_val, found_val);
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
-      });
-    });
   }
 
   @Override

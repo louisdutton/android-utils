@@ -19,6 +19,7 @@ own APK with a distinct application id.
   Local OMR/debug iteration can be run without an Android device with
   `nix develop --no-write-lock-file --command ./scripts/scores-local-import.sh <pdf-or-image>`.
 - `trainer`: Learn flashcard app with Anki package import and offline study.
+- `weather`: Open-Meteo weather app with saved city search and forecasts.
 - `keyboard`: hard-forked FUTO Keyboard-derived input method replacement with
   its own Android Gradle project under `apps/keyboard`.
 - `vault`: hard-forked KeePassDX-derived local KeePass/KeePassXC-compatible

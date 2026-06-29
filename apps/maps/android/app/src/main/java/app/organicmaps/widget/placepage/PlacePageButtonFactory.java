@@ -27,12 +27,12 @@ public class PlacePageButtonFactory
       case BOOKMARK_SAVE ->
       {
         titleId = nativeHasRecentlyDeletedBookmark() ? R.string.restore : R.string.save;
-        yield R.drawable.ic_bookmarks_off;
+        yield R.drawable.ic_favorite_border;
       }
       case BOOKMARK_DELETE ->
       {
         titleId = R.string.delete;
-        yield R.drawable.ic_bookmarks_on;
+        yield R.drawable.ic_favorite;
       }
       case TRACK_DELETE ->
       {

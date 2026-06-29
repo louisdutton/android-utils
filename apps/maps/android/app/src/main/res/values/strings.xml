@@ -653,7 +653,7 @@
     <string name="subway">Subway</string>
     <string name="layers_title">Map Styles and Layers</string>
     <string name="bookmarks_empty_list_title">This list is empty</string>
-    <string name="bookmarks_empty_list_message">To save a place, tap a place on the map and then tap the star icon</string>
+    <string name="bookmarks_empty_list_message">To save a place, tap a place on the map and then tap the heart icon</string>
     <string name="category_desc_more">…more</string>
     <string name="export_file">Export KMZ</string>
     <string name="export_file_gpx">Export GPX</string>
