@@ -78,12 +78,17 @@ def inspect_apk(apk: Path, aapt2: Path, apksigner: Path) -> dict[str, object]:
     if label is None or min_sdk is None:
         raise ValueError(f"Unable to read label/minSdk from {apk}")
 
-    signer_output = command_output([apksigner, "verify", "--print-certs", "--verbose", apk])
+    signer_output = subprocess.check_output(
+        [str(apksigner), "verify", "--print-certs", "--verbose", str(apk)],
+        text=True,
+        stderr=subprocess.STDOUT,
+    )
     cert_digest: str | None = None
-    for line in signer_output.splitlines():
+    for output_line in signer_output.splitlines():
+        line = output_line.strip()
         marker = "certificate SHA-256 digest: "
         if line.startswith("Signer ") and marker in line:
-            digest = line.split(marker, 1)[1].strip().lower()
+            digest = line.split(marker, 1)[1].strip().replace(":", "").lower()
             if cert_digest is not None and digest != cert_digest:
                 raise ValueError(f"Multiple APK signers are not supported: {apk}")
             cert_digest = digest
