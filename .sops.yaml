@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: ^signing/.*\.sops\.json$
+    age: age1dt7pkhyd6vhfcvcum6fw4fauf45f2p927ahc2e7qp4dr4uwvrejsm4ydgn
