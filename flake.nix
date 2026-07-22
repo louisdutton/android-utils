@@ -191,25 +191,22 @@ EOF
           includeSources = false;
           includeEmulator = true;
         };
-        androidPkgs = pkgs.androidenv.composeAndroidPackages {
-          inherit
-            (androidSdkArgs)
-            buildToolsVersions
-            platformVersions
-            systemImageTypes
-            abiVersions
-            useGoogleAPIs
-            includeSystemImages
-            includeCmake
-            cmakeVersions
-            includeNDK
-            ndkVersions
-            includeSources
-            includeEmulator
-            ;
+        androidBuildSdkArgs = {
+          inherit buildToolsVersions;
+          platformVersions = [platformVersion];
+          cmakeVersions = [cmakeVersion];
+          includeCmake = true;
+          includeNDK = true;
+          ndkVersions = pkgs.lib.unique [
+            ndkVersion
+            keepassdxNdkVersion
+          ];
+          includeSources = false;
+          includeEmulator = false;
         };
-        androidSdk = androidPkgs.androidsdk;
-        androidHome = "${androidSdk}/libexec/android-sdk";
+        androidBuildPkgs = pkgs.androidenv.composeAndroidPackages androidBuildSdkArgs;
+        androidBuildSdk = androidBuildPkgs.androidsdk;
+        androidBuildHome = "${androidBuildSdk}/libexec/android-sdk";
         androidEmulator = pkgs.androidenv.emulateApp {
           name = "grapheneos-essentials-emulator";
           platformVersion = platformVersion;
@@ -223,67 +220,70 @@ EOF
           };
           androidEmulatorFlags = "-no-snapshot-save";
         };
+        androidShellInputs = with pkgs; [
+          androidBuildSdk
+          android-tools
+          bash
+          coreutils
+          gawk
+          getopt
+          gradle_9
+          git
+          jdk21
+          minisign
+          optipng
+        ];
+        suiteShellInputs = androidShellInputs ++ (with pkgs; [
+          brotli
+          bzip2
+          cmake
+          comapsPython
+          comapsToolShims
+          icu
+          ninja
+          pkg-config
+          protobuf_21
+          uv
+          wget
+        ]);
+        androidShellAttrs = {
+          buildInputs = androidShellInputs;
+          ANDROID_HOME = androidBuildHome;
+          ANDROID_SDK_ROOT = androidBuildHome;
+          ANDROID_NDK_HOME = "${androidBuildHome}/ndk/${ndkVersion}";
+          ANDROID_NDK_ROOT = "${androidBuildHome}/ndk/${ndkVersion}";
+          JAVA_HOME = pkgs.jdk21.home;
+          shellHook = ''
+            unset PYTHONPATH
+          '';
+        };
       in
         with pkgs; {
-          devShells.default = mkShell rec {
-            buildInputs = [
-              androidSdk
-              androidEmulator
-              android-tools
-              bash
-              brotli
-              bzip2
-              cmake
-              comapsPython
-              comapsToolShims
-              coreutils
-              gawk
-              getopt
-              gradle_9
-              git
-              icu
-              jdk21
-              ninja
-              nixd
-              alejandra
-              optipng
-              poppler-utils
-              pkg-config
-              protobuf_21
-              qt6.qtbase
-              qt6.qtpositioning
-              qt6.qtsvg
-              minisign
-              uv
-              wget
-            ];
-
-            ANDROID_HOME = androidHome;
-            ANDROID_SDK_ROOT = androidHome;
-            ANDROID_NDK_HOME = "${androidHome}/ndk/${ndkVersion}";
-            ANDROID_NDK_ROOT = "${androidHome}/ndk/${ndkVersion}";
-            JAVA_HOME = jdk21.home;
-            PYTHON = "${comapsPython}/bin/python3";
-            COMAPS_BORDERS_SRC = comapsThirdParty.borders;
-            COMAPS_BOOST_SRC = comapsThirdParty.boost;
-            COMAPS_EXPAT_SRC = comapsThirdParty.expat;
-            COMAPS_FREETYPE_SRC = comapsThirdParty.freetype;
-            COMAPS_GFLAGS_SRC = comapsThirdParty.gflags;
-            COMAPS_HARFBUZZ_SRC = comapsThirdParty.harfbuzz;
-            COMAPS_ICU_SRC = comapsThirdParty.icu;
-            COMAPS_JANSSON_SRC = comapsThirdParty.jansson;
-            COMAPS_PROTOBUF_SRC = comapsThirdParty.protobuf;
-            COMAPS_PUGIXML_SRC = comapsThirdParty.pugixml;
-            COMAPS_VULKAN_HEADERS_SRC = comapsThirdParty.vulkanHeaders;
-            SCORES_OMR_ASSETS_DIR = scoresOmrAssets;
-            VEROVIO_SRC_DIR = verovioSource;
-            RAIL_SCHEDULE_ASSET_ROOT = "/tmp/grapheneos-essentials-rail-assets";
-            RAIL_SCHEDULE_CACHE_DIR = "/tmp/grapheneos-essentials-rail-cache";
-
-            shellHook = ''
-              unset PYTHONPATH
-              export PATH="${comapsPython}/bin:$PATH"
-            '';
+          devShells = rec {
+            android = mkShell androidShellAttrs;
+            suite = mkShell (androidShellAttrs // {
+              buildInputs = suiteShellInputs;
+              PYTHON = "${comapsPython}/bin/python3";
+              COMAPS_BORDERS_SRC = comapsThirdParty.borders;
+              COMAPS_BOOST_SRC = comapsThirdParty.boost;
+              COMAPS_EXPAT_SRC = comapsThirdParty.expat;
+              COMAPS_FREETYPE_SRC = comapsThirdParty.freetype;
+              COMAPS_GFLAGS_SRC = comapsThirdParty.gflags;
+              COMAPS_HARFBUZZ_SRC = comapsThirdParty.harfbuzz;
+              COMAPS_ICU_SRC = comapsThirdParty.icu;
+              COMAPS_JANSSON_SRC = comapsThirdParty.jansson;
+              COMAPS_PROTOBUF_SRC = comapsThirdParty.protobuf;
+              COMAPS_PUGIXML_SRC = comapsThirdParty.pugixml;
+              COMAPS_VULKAN_HEADERS_SRC = comapsThirdParty.vulkanHeaders;
+              SCORES_OMR_ASSETS_DIR = scoresOmrAssets;
+              VEROVIO_SRC_DIR = verovioSource;
+              RAIL_SCHEDULE_ASSET_ROOT = "/tmp/grapheneos-essentials-rail-assets";
+              RAIL_SCHEDULE_CACHE_DIR = "/tmp/grapheneos-essentials-rail-cache";
+              shellHook = androidShellAttrs.shellHook + ''
+                export PATH="${comapsPython}/bin:$PATH"
+              '';
+            });
+            default = suite;
           };
 
           packages.emulator = androidEmulator;

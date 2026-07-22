@@ -206,7 +206,7 @@ public class TrackRecordingService extends Service implements LocationListener
       return mWarningBuilder;
 
     final int warningColor =
-        UiUtils.getStyledColor(context, com.google.android.material.R.attr.colorError,
+        UiUtils.getStyledColor(context, android.R.attr.colorError,
                                ContextCompat.getColor(context, R.color.md_theme_error));
 
     mWarningBuilder =

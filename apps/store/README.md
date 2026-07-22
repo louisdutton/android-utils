@@ -35,6 +35,21 @@ hostname may resolve exclusively to a WireGuard address.
 
 ## Build a repository
 
+Build or reuse every signed app first:
+
+```sh
+./scripts/build-essentials-apps-android.sh --all
+```
+
+The command fingerprints each app independently, so unchanged APKs are reused.
+Pass app names to build only those apps, or add `--force` to rebuild. Cached APKs,
+fingerprints, and dependency reports live under
+`~/.local/share/grapheneos-essentials/releases` by default.
+
+All Gradle builds consume the shared dependency policy in
+`gradle/essentials-dependency-versions.json`. Every complete suite build then
+fails if the APK reports contain multiple real versions of the same dependency.
+
 Create the repository metadata key once, outside this source checkout:
 
 ```sh
@@ -49,6 +64,7 @@ nix develop --no-write-lock-file --command \
   --private-key /private/backup/essentials-store/apps.0.sec \
   --public-key /private/backup/essentials-store/apps.0.pub \
   --config apps/store/repository-packages.toml \
+  --artifact-cache ~/.cache/grapheneos-essentials/repository \
   --output /tmp/essentials-store-repository \
   /path/to/signed/*.apk
 ```
@@ -67,6 +83,10 @@ serve the signed repository over an Android Debug Bridge reverse tunnel:
 ```sh
 ./scripts/serve-store-repository-over-adb.sh
 ```
+
+This builds only apps whose inputs changed, audits dependency versions, reuses
+compressed repository artifacts, creates the ADB reverse tunnel, and starts the
+local HTTP server. Set `ESSENTIALS_REBUILD_SUITE=1` to force every app to rebuild.
 
 The Store connects to `http://127.0.0.1:8080`, which ADB forwards to the local
 server. Repository metadata remains signature-verified. The tunnel exists only

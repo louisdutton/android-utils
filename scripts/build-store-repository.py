@@ -117,16 +117,46 @@ def load_package_config(path: Path | None) -> dict[str, dict[str, object]]:
     return packages
 
 
-def gzip_apk(source: Path, destination: Path) -> None:
+def hash_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def link_or_copy(source: Path, destination: Path) -> None:
+    try:
+        os.link(source, destination)
+    except OSError:
+        shutil.copy2(source, destination)
+
+
+def gzip_apk(source: Path, destination: Path, cache: Path, apk_hash: str) -> None:
+    cache.mkdir(parents=True, exist_ok=True)
+    cached = cache / f"{apk_hash}.apk.gz"
+    if cached.is_file():
+        link_or_copy(cached, destination)
+        return
+
+    temporary = cache / f".{apk_hash}.{os.getpid()}.tmp"
     with source.open("rb") as input_file, destination.open("wb") as output_file:
         with gzip.GzipFile(
             filename="",
             mode="wb",
             compresslevel=9,
             fileobj=output_file,
-            mtime=int(source.stat().st_mtime),
+            mtime=0,
         ) as compressed_file:
             shutil.copyfileobj(input_file, compressed_file)
+    destination.replace(temporary)
+    try:
+        temporary.replace(cached)
+    except OSError:
+        if not cached.is_file():
+            raise
+        temporary.unlink(missing_ok=True)
+    link_or_copy(cached, destination)
 
 
 def package_metadata(
@@ -134,6 +164,7 @@ def package_metadata(
     destination_root: Path,
     info: dict[str, object],
     config: dict[str, object],
+    artifact_cache: Path,
 ) -> tuple[str, str, dict[str, object], dict[str, object]]:
     package_name = str(info["packageName"])
     version_code = str(info["versionCode"])
@@ -141,10 +172,11 @@ def package_metadata(
     version_dir = package_dir / version_code
     version_dir.mkdir(parents=True, exist_ok=False)
 
+    apk_hash = hash_file(apk)
     copied_apk = version_dir / "base.apk"
-    shutil.copy2(apk, copied_apk)
+    link_or_copy(apk, copied_apk)
     compressed_apk = version_dir / "base.apk.gz"
-    gzip_apk(copied_apk, compressed_apk)
+    gzip_apk(copied_apk, compressed_apk, artifact_cache / "gzip", apk_hash)
 
     variant: dict[str, object] = {
         "versionCode": int(info["versionCode"]),
@@ -153,7 +185,7 @@ def package_metadata(
         "channel": config.get("channel", "stable"),
         "minSdk": int(info["minSdk"]),
         "apks": ["base.apk"],
-        "apkHashes": [hashlib.sha256(copied_apk.read_bytes()).hexdigest()],
+        "apkHashes": [apk_hash],
         "apkSizes": [copied_apk.stat().st_size],
         "apkGzSizes": [compressed_apk.stat().st_size],
     }
@@ -220,6 +252,7 @@ def main() -> None:
     parser.add_argument("--public-key", required=True, type=Path)
     parser.add_argument("--key-version", default=0, type=int)
     parser.add_argument("--config", type=Path)
+    parser.add_argument("--artifact-cache", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("apks", nargs="+", type=Path)
     args = parser.parse_args()
@@ -227,6 +260,7 @@ def main() -> None:
     private_key = args.private_key.expanduser().resolve()
     public_key = args.public_key.expanduser().resolve()
     output = args.output.expanduser().resolve()
+    artifact_cache = args.artifact_cache.expanduser().resolve()
     apk_paths = [apk.expanduser().resolve() for apk in args.apks]
     for path in (private_key, public_key, *apk_paths):
         if not path.is_file():
@@ -252,7 +286,7 @@ def main() -> None:
             if not isinstance(package_config, dict):
                 raise ValueError(f"Invalid configuration for {package_name}")
             name, version, common, variant = package_metadata(
-                apk, staging, info, package_config
+                apk, staging, info, package_config, artifact_cache
             )
             package = packages.setdefault(name, common)
             if package["signatures"] != common["signatures"]:

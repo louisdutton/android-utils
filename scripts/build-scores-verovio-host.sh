@@ -4,7 +4,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 if [[ -z "${VEROVIO_SRC_DIR:-}" || ! -f "${VEROVIO_SRC_DIR:-}/cmake/CMakeLists.txt" ]]; then
-  exec nix develop --no-write-lock-file --command "$0" "$@"
+  exec nix develop .#suite --no-write-lock-file --command "$0" "$@"
 fi
 
 host_dir="${SCORES_VEROVIO_HOST_DIR:-/tmp/grapheneos-essentials-scores-verovio-host}"

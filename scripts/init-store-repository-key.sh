@@ -4,7 +4,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 if [[ -z "${ANDROID_HOME:-}" ]]; then
-  exec nix develop --no-write-lock-file --command "$0" "$@"
+  exec nix develop .#android --no-write-lock-file --command "$0" "$@"
 fi
 
 if [[ "$#" -ne 1 ]]; then

@@ -35,7 +35,7 @@ if [[ -z "${SCORES_LOCAL_IN_NIX:-}" ]]; then
     fi
   done
   if [[ "${#missing[@]}" -gt 0 || -z "${VEROVIO_SRC_DIR:-}" ]]; then
-    exec nix develop --no-write-lock-file --command env SCORES_LOCAL_IN_NIX=1 "$0" "$@"
+    exec nix develop .#suite --no-write-lock-file --command env SCORES_LOCAL_IN_NIX=1 "$0" "$@"
   fi
 fi
 

@@ -10,7 +10,7 @@ if [[ ! -f "$messages_dir/settings.gradle" ]]; then
 fi
 
 if [[ -z "${ANDROID_HOME:-}" ]]; then
-  exec nix develop --no-write-lock-file --command "$0" "$@"
+  exec nix develop .#android --no-write-lock-file --command "$0" "$@"
 fi
 
 export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
