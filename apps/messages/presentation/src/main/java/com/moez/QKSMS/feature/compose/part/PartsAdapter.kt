@@ -19,13 +19,10 @@
 package dev.octoshrimpy.quik.feature.compose.part
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import dev.octoshrimpy.quik.common.base.QkViewHolder
 import dev.octoshrimpy.quik.common.util.Colors
 import dev.octoshrimpy.quik.common.widget.QkContextMenuRecyclerView
-import dev.octoshrimpy.quik.databinding.MessageListItemInBinding
-import dev.octoshrimpy.quik.databinding.MessageListItemOutBinding
 import dev.octoshrimpy.quik.extensions.isSmil
 import dev.octoshrimpy.quik.extensions.isText
 import dev.octoshrimpy.quik.feature.compose.BubbleUtils.canGroup
@@ -64,18 +61,13 @@ class PartsAdapter @Inject constructor(
         message: Message,
         previous: Message?,
         next: Message?,
-        holder: QkViewHolder,
+        bodyVisible: Boolean,
         audioState: MessagesAdapter.AudioState?
     ) {
         this.message = message
         this.previous = previous
         this.next = next
-        // Get body visibility from appropriate binding based on message type
-        this.bodyVisible = if (message.isMe()) {
-            MessageListItemOutBinding.bind(holder.itemView).body.visibility == View.VISIBLE
-        } else {
-            MessageListItemInBinding.bind(holder.itemView).body.visibility == View.VISIBLE
-        }
+        this.bodyVisible = bodyVisible
         this.data = message.parts.filter { !it.isSmil() && !it.isText() }
         this.audioState = audioState
     }

@@ -200,6 +200,21 @@
       </LinearLayout>
     </LinearLayout>
   </LinearLayout>
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/directions_button"
+    style="@style/MwmWidget.M3.Button.Primary"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_base"
+    android:layout_marginTop="@dimen/margin_half"
+    android:layout_marginEnd="@dimen/margin_base"
+    android:layout_marginBottom="@dimen/margin_half_plus"
+    android:text="@string/directions"
+    android:visibility="gone"
+    app:icon="@drawable/ic_route_to"
+    app:iconGravity="textStart"
+    app:iconTint="?colorOnPrimary"
+    tools:visibility="visible" />
   <LinearLayout
     android:id="@+id/category_container"
     android:layout_width="match_parent"

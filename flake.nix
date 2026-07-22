@@ -253,6 +253,7 @@ EOF
               qt6.qtbase
               qt6.qtpositioning
               qt6.qtsvg
+              minisign
               uv
               wget
             ];

@@ -14,6 +14,21 @@ local.properties
 *.dex
 test-artifacts/
 
+# Native Android build output
+.cxx/
+.externalNativeBuild/
+
+# Private Android signing material
+*.jks
+*.keystore
+*.p12
+*.pfx
+keystore.properties
+secure.properties.*
+
+# Deliberately public debug key required by the Keyboard build
+!apps/keyboard/java/shared.keystore
+
 # Nix
 result
 result-*

@@ -1,4 +1,0 @@
-/Users/louis/projects/grapheneos-essentials/apps/assistant/.cxx/Debug/621hv4g6/arm64-v8a/CMakeFiles/assistant_core.dir
-/Users/louis/projects/grapheneos-essentials/apps/assistant/.cxx/Debug/621hv4g6/arm64-v8a/CMakeFiles/assistant_whisper.dir
-/Users/louis/projects/grapheneos-essentials/apps/assistant/.cxx/Debug/621hv4g6/arm64-v8a/CMakeFiles/edit_cache.dir
-/Users/louis/projects/grapheneos-essentials/apps/assistant/.cxx/Debug/621hv4g6/arm64-v8a/CMakeFiles/rebuild_cache.dir

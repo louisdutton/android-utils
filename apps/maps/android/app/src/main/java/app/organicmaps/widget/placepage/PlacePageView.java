@@ -107,6 +107,7 @@ public class PlacePageView extends Fragment
       Arrays.asList(CoordinatesFormat.LatLonDMS, CoordinatesFormat.LatLonDecimal, CoordinatesFormat.OLCFull,
                     CoordinatesFormat.UTM, CoordinatesFormat.MGRS, CoordinatesFormat.OSMLink);
   private final Observer<PlacePageButtons.ButtonType> mBookmarkButtonObserver = this::refreshBookmarkButton;
+  private final Observer<PlacePageButtons.ButtonType> mRouteButtonObserver = this::refreshRouteButton;
   private View mFrame;
 
   // Preview.
@@ -120,6 +121,7 @@ public class PlacePageView extends Fragment
   private MaterialTextView mTvDistance;
   private MaterialTextView mTvAddress;
   private MaterialButton mBookmarkButton;
+  private MaterialButton mRouteButton;
   // Details.
   private MaterialTextView mTvLatlon;
   private View mWifi;
@@ -279,6 +281,8 @@ public class PlacePageView extends Fragment
     shareButton.setOnClickListener(this::shareClickListener);
     mBookmarkButton = mPreview.findViewById(R.id.bookmark_button);
     mBookmarkButton.setOnClickListener((v) -> mPlacePageViewListener.onPlacePageBookmarkClick());
+    mRouteButton = mPreview.findViewById(R.id.directions_button);
+    mRouteButton.setOnClickListener((v) -> mPlacePageViewListener.onPlacePageRouteClick());
 
     final MaterialButton closeButton = mPreview.findViewById(R.id.close_button);
     closeButton.setOnClickListener((v) -> mPlacePageViewListener.onPlacePageRequestClose());
@@ -356,6 +360,7 @@ public class PlacePageView extends Fragment
     super.onStart();
     mViewModel.getMapObject().observe(requireActivity(), this);
     mViewModel.getBookmarkButton().observe(requireActivity(), mBookmarkButtonObserver);
+    mViewModel.getRouteButton().observe(requireActivity(), mRouteButtonObserver);
     BookmarkManager.INSTANCE.addSharingListener(this);
     MwmApplication.from(requireContext()).getLocationHelper().addListener(this);
     MwmApplication.from(requireContext()).getSensorHelper().addListener(this);
@@ -367,6 +372,7 @@ public class PlacePageView extends Fragment
     super.onStop();
     mViewModel.getMapObject().removeObserver(this);
     mViewModel.getBookmarkButton().removeObserver(mBookmarkButtonObserver);
+    mViewModel.getRouteButton().removeObserver(mRouteButtonObserver);
     BookmarkManager.INSTANCE.removeSharingListener(this);
     MwmApplication.from(requireContext()).getLocationHelper().removeListener(this);
     MwmApplication.from(requireContext()).getSensorHelper().removeListener(this);
@@ -531,6 +537,14 @@ public class PlacePageView extends Fragment
         ThemeUtils.getColor(requireContext(), saved ? R.attr.iconTintActive : R.attr.iconTint)));
     mBookmarkButton.setContentDescription(getString(saved ? R.string.saved : R.string.save));
     UiUtils.show(mBookmarkButton);
+  }
+
+  private void refreshRouteButton(@Nullable PlacePageButtons.ButtonType buttonType)
+  {
+    if (mRouteButton == null)
+      return;
+
+    UiUtils.showIf(buttonType == PlacePageButtons.ButtonType.ROUTE_TO, mRouteButton);
   }
 
   void refreshCategoryPreview()
@@ -1169,6 +1183,7 @@ public class PlacePageView extends Fragment
 
     void onPlacePageRequestToggleState();
     void onPlacePageBookmarkClick();
+    void onPlacePageRouteClick();
     void onPlacePageRequestClose();
   }
 }

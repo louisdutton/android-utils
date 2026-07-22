@@ -1,0 +1,59 @@
+[packages."digital.dutton.essentials.store"]
+description = "Installs and automatically updates the GrapheneOS Essentials app suite."
+channel = "stable"
+
+[packages."digital.dutton.essentials.assistant"]
+description = "Private on-device assistant for Android actions."
+channel = "stable"
+
+[packages."digital.dutton.essentials.calendar"]
+description = "Local calendar and event management."
+channel = "stable"
+
+[packages."digital.dutton.essentials.documents"]
+description = "PDF-first local document viewer."
+channel = "stable"
+
+[packages."digital.dutton.essentials.keyboard"]
+description = "Private on-device keyboard."
+channel = "stable"
+
+[packages."digital.dutton.essentials.learn"]
+description = "Offline flashcards with Anki package import."
+channel = "stable"
+
+[packages."digital.dutton.essentials.maps"]
+description = "Private, offline-first maps and navigation."
+channel = "stable"
+
+[packages."digital.dutton.essentials.messages"]
+description = "Private SMS and MMS messaging."
+channel = "stable"
+
+[packages."digital.dutton.essentials.notes"]
+description = "Local markdown text and audio notes."
+channel = "stable"
+
+[packages."digital.dutton.essentials.piano"]
+description = "Piano keyboard, pitch reference, and tuning tools."
+channel = "stable"
+
+[packages."digital.dutton.essentials.recorder"]
+description = "Private local audio recorder."
+channel = "stable"
+
+[packages."digital.dutton.essentials.scores"]
+description = "Offline music score reader and importer."
+channel = "stable"
+
+[packages."digital.dutton.essentials.vault"]
+description = "Local KeePass-compatible password vault."
+channel = "stable"
+
+[packages."digital.dutton.essentials.wallet"]
+description = "Local barcode and membership card wallet."
+channel = "stable"
+
+[packages."digital.dutton.essentials.weather"]
+description = "Private weather forecasts powered by Open-Meteo."
+channel = "stable"

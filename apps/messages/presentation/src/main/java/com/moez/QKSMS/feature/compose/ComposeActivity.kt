@@ -195,6 +195,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             messageAdapter.emptyView = binding.messagesEmpty
 
             binding.messageList.setHasFixedSize(true)
+            binding.messageList.itemAnimator = null
+            binding.messageList.setItemViewCacheSize(24)
             binding.messageList.adapter = messageAdapter
 
             binding.messageAttachments.adapter = composeAttachmentAdapter

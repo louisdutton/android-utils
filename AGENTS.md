@@ -22,6 +22,9 @@
   `nix develop --no-write-lock-file --command ./scripts/build-trainer-android.sh`
 - `apps/weather` is the local Open-Meteo weather app. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-weather-android.sh`
+- `apps/store` is the hard-forked GrapheneOS App Store-derived private
+  Essentials repository client. Build it with:
+  `nix develop --no-write-lock-file --command ./scripts/build-store-android.sh`
 - `apps/keyboard` is the hard-forked FUTO Keyboard-derived production Keyboard
   app, imported as normal source with its own Gradle project. Build it with:
   `nix develop --no-write-lock-file --command ./scripts/build-keyboard-android.sh`

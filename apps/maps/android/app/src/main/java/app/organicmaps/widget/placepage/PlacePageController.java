@@ -379,7 +379,13 @@ public class PlacePageController
   {
     if (mMapObject != null && mMapObject.getOpeningMode() == MapObject.OPENING_MODE_PREVIEW_PLUS)
       return (int) (mCoordinator.getHeight() * PREVIEW_PLUS_RATIO);
-    return mPreviewHeight + mButtonsHeight;
+    return mPreviewHeight + (hasPlacePageButtons() ? mButtonsHeight : 0);
+  }
+
+  private boolean hasPlacePageButtons()
+  {
+    final List<PlacePageButtons.ButtonType> buttons = mViewModel.getCurrentButtons().getValue();
+    return buttons != null && !buttons.isEmpty();
   }
 
   @Override
@@ -419,6 +425,12 @@ public class PlacePageController
   public void onPlacePageBookmarkClick()
   {
     onBookmarkBtnClicked();
+  }
+
+  @Override
+  public void onPlacePageRouteClick()
+  {
+    onRouteToBtnClicked();
   }
 
   @Override
@@ -613,6 +625,7 @@ public class PlacePageController
   {
     List<PlacePageButtons.ButtonType> buttons = new ArrayList<>();
     PlacePageButtons.ButtonType bookmarkButton = null;
+    PlacePageButtons.ButtonType routeButton = null;
     if (mapObject.getRoadWarningMarkType() != RoadWarningMarkType.UNKNOWN)
     {
       RoadWarningMarkType markType = mapObject.getRoadWarningMarkType();
@@ -631,7 +644,7 @@ public class PlacePageController
       boolean needToShowRoutingButtons = RoutingController.get().isPlanning() || showRoutingButton;
 
       if (needToShowRoutingButtons)
-        buttons.add(PlacePageButtons.ButtonType.ROUTE_FROM);
+        routeButton = PlacePageButtons.ButtonType.ROUTE_TO;
 
       // If we can show the add route button, put it in the place of the bookmark button
       // And move the bookmark button at the end
@@ -646,15 +659,9 @@ public class PlacePageController
         if (mapObject.isTrack())
           buttons.add(PlacePageButtons.ButtonType.TRACK_DELETE);
       }
-
-      if (needToShowRoutingButtons)
-      {
-        buttons.add(PlacePageButtons.ButtonType.ROUTE_TO);
-        if (RoutingController.get().isStopPointAllowed())
-          bookmarkButton = getBookmarkButtonType(mapObject);
-      }
     }
     mViewModel.setBookmarkButton(bookmarkButton);
+    mViewModel.setRouteButton(routeButton);
     mViewModel.setCurrentButtons(buttons);
   }
 

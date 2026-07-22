@@ -31,13 +31,14 @@ import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.text.style.URLSpan
 import android.text.util.Linkify
+import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
-import com.jakewharton.rxbinding2.view.clicks
+import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.common.QkMediaPlayer
 import dev.octoshrimpy.quik.R
 import dev.octoshrimpy.quik.common.base.QkListAdapter
@@ -52,6 +53,7 @@ import dev.octoshrimpy.quik.common.util.extensions.setPadding
 import dev.octoshrimpy.quik.common.util.extensions.setTint
 import dev.octoshrimpy.quik.common.util.extensions.setVisible
 import dev.octoshrimpy.quik.common.util.extensions.withAlpha
+import dev.octoshrimpy.quik.common.widget.AvatarView
 import dev.octoshrimpy.quik.compat.SubscriptionManagerCompat
 import dev.octoshrimpy.quik.extensions.isSmil
 import dev.octoshrimpy.quik.extensions.isText
@@ -100,7 +102,41 @@ class MessagesAdapter @Inject constructor(
         private const val VIEW_TYPE_MESSAGE_OUT = 1
 
         private const val MAX_MESSAGE_DISPLAY_LENGTH = 5000
+        private const val MESSAGE_LINK_MASK = Linkify.EMAIL_ADDRESSES or Linkify.PHONE_NUMBERS or Linkify.WEB_URLS
     }
+
+    private data class RowColors(
+        val primary: Int,
+        val primaryContainer: Int,
+        val onPrimaryContainer: Int,
+        val surfaceContainerHigh: Int,
+        val surfaceContainerHighest: Int,
+        val onSurface: Int,
+        val onSurfaceVariant: Int,
+        val outline: Int,
+    )
+
+    private data class MessageText(
+        val text: CharSequence,
+        val isTruncated: Boolean,
+        val emojiOnly: Boolean,
+    )
+
+    private class MessageViewHolder(
+        view: View,
+        val outgoing: Boolean,
+        val timestamp: TextView,
+        val simIndex: TextView,
+        val sim: ImageView,
+        val body: TextView,
+        val parts: RecyclerView,
+        val reactions: View,
+        val reactionText: TextView,
+        val status: TextView,
+        val partsAdapter: PartsAdapter,
+        val avatar: AvatarView? = null,
+        val resendIcon: ImageView? = null,
+    ) : QkViewHolder(view)
 
     // click events passed back to compose view model
     val partClicks: Subject<Long> = PublishSubject.create()
@@ -127,9 +163,19 @@ class MessagesAdapter @Inject constructor(
 
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
+    private val messageTextCache = LruCache<String, MessageText>(256)
+    private var rowColors: RowColors? = null
     private val subs = subscriptionManager.activeSubscriptionInfoList
 
     var theme: Colors.Theme = colors.theme()
+        set(value) {
+            field = value
+            rowColors = null
+        }
+
+    init {
+        setHasStableIds(true)
+    }
 
     private val audioState = AudioState()
 
@@ -137,181 +183,136 @@ class MessagesAdapter @Inject constructor(
         // Use the parent's context to inflate the layout, otherwise link clicks will crash the app
         val inflater = LayoutInflater.from(parent.context)
 
-        val view: View
-        val body: TextView
-        val parts: View
-        val status: View
-        val primary = parent.context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
-        val surfaceContainerHigh = parent.context.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
+        val palette = rowColors(parent.context)
 
         if (viewType == VIEW_TYPE_MESSAGE_OUT) {
             val binding = MessageListItemOutBinding.inflate(inflater, parent, false)
-            view = binding.root
-            body = binding.body
-            parts = binding.parts
-            status = binding.status
-            binding.resendIcon.setTint(primary)
-            binding.resendIcon.setBackgroundTint(surfaceContainerHigh)
+            val partsAdapter = partsAdapterProvider.get().apply {
+                clicks.subscribe(partClicks)
+            }
+            binding.parts.configurePartsList(partsAdapter)
+            binding.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
+            binding.resendIcon.setTint(palette.primary)
+            binding.resendIcon.setBackgroundTint(palette.surfaceContainerHigh)
+            partContextMenuRegistrar.onNext(binding.parts)
+            return MessageViewHolder(
+                view = binding.root,
+                outgoing = true,
+                timestamp = binding.timestamp,
+                simIndex = binding.simIndex,
+                sim = binding.sim,
+                body = binding.body,
+                parts = binding.parts,
+                reactions = binding.reactions,
+                reactionText = binding.reactionText,
+                status = binding.status,
+                partsAdapter = partsAdapter,
+                resendIcon = binding.resendIcon,
+            ).attachRowClicks()
         } else {
             val binding = MessageListItemInBinding.inflate(inflater, parent, false)
-            view = binding.root
-            body = binding.body
-            parts = binding.parts
-            status = binding.status
-        }
-
-        body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
-
-        // register recycler view with compose activity for context menus
-        partContextMenuRegistrar.onNext(parts)
-
-        return QkViewHolder(view).apply {
-            view.setOnClickListener {
-                getItem(adapterPosition)?.let {
-                    when (toggleSelection(it.id, false)) {
-                        true -> view.isActivated = isSelected(it.id)
-                        false -> {
-                            expanded[it.id] = status.visibility != View.VISIBLE
-                            notifyItemChanged(adapterPosition)
-                        }
-                    }
-                }
+            val partsAdapter = partsAdapterProvider.get().apply {
+                clicks.subscribe(partClicks)
             }
-            view.setOnLongClickListener {
-                getItem(adapterPosition)?.let {
-                    toggleSelection(it.id)
-                    view.isActivated = isSelected(it.id)
-                }
-                true
-            }
+            binding.parts.configurePartsList(partsAdapter)
+            binding.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
+            partContextMenuRegistrar.onNext(binding.parts)
+            return MessageViewHolder(
+                view = binding.root,
+                outgoing = false,
+                timestamp = binding.timestamp,
+                simIndex = binding.simIndex,
+                sim = binding.sim,
+                body = binding.body,
+                parts = binding.parts,
+                reactions = binding.reactions,
+                reactionText = binding.reactionText,
+                status = binding.status,
+                partsAdapter = partsAdapter,
+                avatar = binding.avatar,
+            ).attachRowClicks()
         }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+        holder as MessageViewHolder
         val message = getItem(position) ?: return
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
 
         val theme = colors.theme()
-        val itemContext = holder.itemView.context
-        val primary = itemContext.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary)
-        val primaryContainer = itemContext.resolveThemeColor(MaterialR.attr.colorPrimaryContainer)
-        val onPrimaryContainer = itemContext.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer)
-        val surfaceContainerHigh = itemContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh)
-        val surfaceContainerHighest = itemContext.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHighest)
-        val onSurface = itemContext.resolveThemeColor(MaterialR.attr.colorOnSurface)
-        val onSurfaceVariant = itemContext.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant)
-        val outline = itemContext.resolveThemeColor(MaterialR.attr.colorOutline)
+        val palette = rowColors(holder.itemView.context)
 
         // Update the selected state
         holder.itemView.isActivated = isSelected(message.id) || highlight == message.id
 
         // Get views based on message type
         val isOutgoing = message.isMe()
-        val timestamp: TextView
-        val simIndex: TextView
-        val sim: ImageView
-        val body: TextView
-        val parts: androidx.recyclerview.widget.RecyclerView
-        val reactions: View
-        val reactionText: TextView
-        val status: TextView
+        val timestamp = holder.timestamp
+        val simIndex = holder.simIndex
+        val sim = holder.sim
+        val body = holder.body
+        val parts = holder.parts
+        val reactions = holder.reactions
+        val reactionText = holder.reactionText
+        val status = holder.status
 
         if (isOutgoing) {
-            val binding = MessageListItemOutBinding.bind(holder.itemView)
-            timestamp = binding.timestamp
-            simIndex = binding.simIndex
-            sim = binding.sim
-            body = binding.body
-            parts = binding.parts
-            reactions = binding.reactions
-            reactionText = binding.reactionText
-            status = binding.status
-
-            binding.resendIcon.setBackgroundTint(surfaceContainerHigh)
-            binding.resendIcon.setTint(primary)
+            holder.resendIcon?.setBackgroundTint(palette.surfaceContainerHigh)
+            holder.resendIcon?.setTint(palette.primary)
 
             // bind the resend icon view
             if (message.isFailedMessage()) {
-                binding.resendIcon.visibility = View.VISIBLE
-                binding.resendIcon.clicks().subscribe {
+                holder.resendIcon?.visibility = View.VISIBLE
+                holder.resendIcon?.setOnClickListener {
                     resendClicks.onNext(message.id)
-                    binding.resendIcon.visibility = View.GONE
+                    holder.resendIcon.visibility = View.GONE
                 }
             } else {
-                binding.resendIcon.visibility = View.GONE
+                holder.resendIcon?.visibility = View.GONE
+                holder.resendIcon?.setOnClickListener(null)
             }
 
             body.apply {
-                setTextColor(onPrimaryContainer)
-                setBackgroundTint(primaryContainer)
-                highlightColor = primary.withAlpha(0x5d)
+                setTextColor(palette.onPrimaryContainer)
+                setBackgroundTint(palette.primaryContainer)
+                highlightColor = palette.primary.withAlpha(0x5d)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    textSelectHandle?.setTint(primary.withAlpha(0xad))
-                    textSelectHandleLeft?.setTint(primary.withAlpha(0xad))
-                    textSelectHandleRight?.setTint(primary.withAlpha(0xad))
+                    textSelectHandle?.setTint(palette.primary.withAlpha(0xad))
+                    textSelectHandleLeft?.setTint(palette.primary.withAlpha(0xad))
+                    textSelectHandleRight?.setTint(palette.primary.withAlpha(0xad))
                 }
             }
         } else {
-            val binding = MessageListItemInBinding.bind(holder.itemView)
-            timestamp = binding.timestamp
-            simIndex = binding.simIndex
-            sim = binding.sim
-            body = binding.body
-            parts = binding.parts
-            reactions = binding.reactions
-            reactionText = binding.reactionText
-            status = binding.status
-
             // Bind the avatar and bubble colour
-            binding.avatar.apply {
+            holder.avatar?.apply {
                 setRecipient(contactCache[message.address])
                 setVisible(!canGroup(message, next), View.INVISIBLE)
             }
 
             body.apply {
-                setTextColor(onSurface)
-                setBackgroundTint(surfaceContainerHigh)
-                highlightColor = outline.withAlpha(0x5d)
+                setTextColor(palette.onSurface)
+                setBackgroundTint(palette.surfaceContainerHigh)
+                highlightColor = palette.outline.withAlpha(0x5d)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    textSelectHandle?.setTint(outline.withAlpha(0x7d))
-                    textSelectHandleLeft?.setTint(outline.withAlpha(0x7d))
-                    textSelectHandleRight?.setTint(outline.withAlpha(0x7d))
+                    textSelectHandle?.setTint(palette.outline.withAlpha(0x7d))
+                    textSelectHandleLeft?.setTint(palette.outline.withAlpha(0x7d))
+                    textSelectHandleRight?.setTint(palette.outline.withAlpha(0x7d))
                 }
             }
         }
 
-        timestamp.setTextColor(onSurfaceVariant)
-        sim.setTint(onSurfaceVariant)
-        simIndex.setTextColor(onSurfaceVariant)
-        status.setTextColor(onSurfaceVariant)
-        reactionText.setTextColor(onSurface)
-        reactionText.setBackgroundTint(surfaceContainerHighest)
+        timestamp.setTextColor(palette.onSurfaceVariant)
+        sim.setTint(palette.onSurfaceVariant)
+        simIndex.setTextColor(palette.onSurfaceVariant)
+        status.setTextColor(palette.onSurfaceVariant)
+        reactionText.setTextColor(palette.onSurface)
+        reactionText.setBackgroundTint(palette.surfaceContainerHighest)
 
-        val subject = message.getCleansedSubject()
-
-        var isMsgTextTruncated = false
-
-        // get message text to display, which may need to be truncated
-        val displayText = subject.joinTo(message.getText(false), "\n").let {
-            isMsgTextTruncated = (it.length > MAX_MESSAGE_DISPLAY_LENGTH)
-
-            // make subject sub-string bold, if subject is not blank
-            if (subject.isNotBlank())
-                SpannableString(it.truncateWithEllipses(MAX_MESSAGE_DISPLAY_LENGTH)).apply {
-                    setSpan(
-                        StyleSpan(Typeface.BOLD),
-                        0,
-                        subject.length,
-                        Spannable.SPAN_INCLUSIVE_EXCLUSIVE
-                    )
-                }
-            else
-                it.truncateWithEllipses(MAX_MESSAGE_DISPLAY_LENGTH)
-        }
+        val messageText = getMessageText(message)
 
         // Bind the message status
-        bindStatus(status, isMsgTextTruncated, message, next)
+        bindStatus(status, messageText.isTruncated, message, next)
 
         // Bind the timestamp
         val subscription = subs.find { it.subscriptionId == message.subId }
@@ -339,76 +340,153 @@ class MessagesAdapter @Inject constructor(
         )
 
         // Bind the body text
-        val emojiOnly = displayText.isEmojiOnly()
         textViewStyler.setTextSize(
             body,
-            when (emojiOnly) {
+            when (messageText.emojiOnly) {
                 true -> TextViewStyler.SIZE_EMOJI
                 false -> TextViewStyler.SIZE_PRIMARY
             }
         )
 
-        val spanString = SpannableStringBuilder(displayText)
-
         when (prefs.messageLinkHandling.get()) {
-            Preferences.MESSAGE_LINK_HANDLING_BLOCK -> body.autoLinkMask = 0
-            Preferences.MESSAGE_LINK_HANDLING_ASK -> {
-                //  manually handle link clicks if user has set to ask before opening links
-                body.apply {
-                    isClickable = false
-                    linksClickable = false
-                    movementMethod = LinkMovementMethod.getInstance()
-
-                    Linkify.addLinks(spanString, autoLinkMask)
-                }
-
-                spanString.apply {
-                    for (span in getSpans(0, length, URLSpan::class.java)) {
-                        // set handler for when user touches a link into new span
-                        setSpan(
-                            object : ClickableSpan() {
-                                override fun onClick(widget: View) {
-                                    messageLinkClicks.onNext(span.url.toUri())
-                                }
-                            },
-                            getSpanStart(span),
-                            getSpanEnd(span),
-                            getSpanFlags(span)
-                        )
-
-                        // remove original span
-                        removeSpan(span)
-                    }
-                }
+            Preferences.MESSAGE_LINK_HANDLING_BLOCK -> {
+                body.autoLinkMask = 0
+                body.movementMethod = null
             }
-            else -> body.movementMethod = LinkMovementMethod.getInstance()
+            Preferences.MESSAGE_LINK_HANDLING_ASK -> {
+                body.autoLinkMask = 0
+                body.linksClickable = false
+                body.movementMethod = LinkMovementMethod.getInstance()
+            }
+            else -> {
+                body.autoLinkMask = MESSAGE_LINK_MASK
+                body.linksClickable = true
+                body.movementMethod = LinkMovementMethod.getInstance()
+            }
         }
 
         body.apply {
-            text = spanString
-            setVisible(message.isSms() || spanString.isNotBlank())
+            text = messageText.text
+            setVisible(message.isSms() || messageText.text.isNotBlank())
 
             setBackgroundResource(
                 getBubble(
-                    emojiOnly = emojiOnly,
+                    emojiOnly = messageText.emojiOnly,
                     canGroupWithPrevious = canGroup(message, previous) ||
                             message.parts.any { !it.isSmil() && !it.isText() },
                     canGroupWithNext = canGroup(message, next),
                     isMe = message.isMe()
                 )
             )
-            setBackgroundTint(if (message.isMe()) primaryContainer else surfaceContainerHigh)
+            setBackgroundTint(if (message.isMe()) palette.primaryContainer else palette.surfaceContainerHigh)
         }
 
         // Bind the parts
-        parts.adapter = partsAdapterProvider.get().apply {
+        holder.partsAdapter.apply {
             this.theme = theme
-            setData(message, previous, next, holder, audioState)
+            setData(message, previous, next, body.visibility == View.VISIBLE, audioState)
             contextMenuValue = message.id
-            clicks.subscribe(partClicks)    // part clicks gets passed back to compose view model
         }
+        parts.setVisible(holder.partsAdapter.itemCount > 0)
 
         showEmojiReactions(reactions, reactionText, message)
+    }
+
+    private fun MessageViewHolder.attachRowClicks(): MessageViewHolder {
+        itemView.setOnClickListener {
+            val position = bindingAdapterPosition
+            if (position == RecyclerView.NO_POSITION) return@setOnClickListener
+            getItem(position)?.let {
+                when (toggleSelection(it.id, false)) {
+                    true -> itemView.isActivated = isSelected(it.id)
+                    false -> {
+                        expanded[it.id] = status.visibility != View.VISIBLE
+                        notifyItemChanged(position)
+                    }
+                }
+            }
+        }
+        itemView.setOnLongClickListener {
+            val position = bindingAdapterPosition
+            if (position == RecyclerView.NO_POSITION) return@setOnLongClickListener true
+            getItem(position)?.let {
+                toggleSelection(it.id)
+                itemView.isActivated = isSelected(it.id)
+            }
+            true
+        }
+        return this
+    }
+
+    private fun RecyclerView.configurePartsList(adapter: PartsAdapter) {
+        itemAnimator = null
+        setHasFixedSize(false)
+        this.adapter = adapter
+    }
+
+    private fun rowColors(context: Context): RowColors {
+        rowColors?.let { return it }
+        return RowColors(
+            primary = context.resolveThemeColor(androidx.appcompat.R.attr.colorPrimary),
+            primaryContainer = context.resolveThemeColor(MaterialR.attr.colorPrimaryContainer),
+            onPrimaryContainer = context.resolveThemeColor(MaterialR.attr.colorOnPrimaryContainer),
+            surfaceContainerHigh = context.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHigh),
+            surfaceContainerHighest = context.resolveThemeColor(MaterialR.attr.colorSurfaceContainerHighest),
+            onSurface = context.resolveThemeColor(MaterialR.attr.colorOnSurface),
+            onSurfaceVariant = context.resolveThemeColor(MaterialR.attr.colorOnSurfaceVariant),
+            outline = context.resolveThemeColor(MaterialR.attr.colorOutline),
+        ).also { rowColors = it }
+    }
+
+    private fun getMessageText(message: Message): MessageText {
+        val linkHandling = prefs.messageLinkHandling.get()
+        val key = "${message.id}:$linkHandling:${message.emojiReactions.size}"
+        messageTextCache.get(key)?.let { return it }
+
+        val subject = message.getCleansedSubject()
+        val rawText = subject.joinTo(message.getText(false), "\n")
+        val isTruncated = rawText.length > MAX_MESSAGE_DISPLAY_LENGTH
+        val displayText = rawText.truncateWithEllipses(MAX_MESSAGE_DISPLAY_LENGTH)
+        val text = when (linkHandling) {
+            Preferences.MESSAGE_LINK_HANDLING_ASK -> SpannableStringBuilder(displayText).apply {
+                if (subject.isNotBlank()) {
+                    setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        0,
+                        minOf(subject.length, displayText.length),
+                        Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+                    )
+                }
+                Linkify.addLinks(this, MESSAGE_LINK_MASK)
+                for (span in getSpans(0, length, URLSpan::class.java)) {
+                    setSpan(
+                        object : ClickableSpan() {
+                            override fun onClick(widget: View) {
+                                messageLinkClicks.onNext(span.url.toUri())
+                            }
+                        },
+                        getSpanStart(span),
+                        getSpanEnd(span),
+                        getSpanFlags(span)
+                    )
+                    removeSpan(span)
+                }
+            }
+            else -> if (subject.isNotBlank()) SpannableString(displayText).apply {
+                setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    minOf(subject.length, displayText.length),
+                    Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+                )
+            } else displayText
+        }
+
+        return MessageText(
+            text = text,
+            isTruncated = isTruncated,
+            emojiOnly = displayText.isEmojiOnly(),
+        ).also { messageTextCache.put(key, it) }
     }
 
     private fun showEmojiReactions(reactionsContainer: View, reactionTextView: TextView, message: Message) {

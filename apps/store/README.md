@@ -1,0 +1,59 @@
+# Essentials
+
+Essentials is a minimally branded fork of the GrapheneOS App Store. It
+uses the same signed metadata format and Android 12+ unattended update flow,
+but is configured for the private Essentials application repository.
+
+## Debug build
+
+```sh
+./scripts/build-store-android.sh
+```
+
+Debug builds use a deliberately invalid repository endpoint and key unless
+configuration is supplied. They are suitable for UI and installer testing.
+
+## Repository configuration
+
+Set these environment variables or their equivalent Gradle properties:
+
+| Environment variable | Gradle property | Purpose |
+| --- | --- | --- |
+| `ESSENTIALS_REPO_BASE_URL` | `essentialsRepoBaseUrl` | HTTPS base URL reachable over WireGuard |
+| `ESSENTIALS_REPO_PUBLIC_KEY` | `essentialsRepoPublicKey` | Base64 Signify-compatible repository public key |
+| `ESSENTIALS_REPO_KEY_VERSION` | `essentialsRepoKeyVersion` | Repository key generation, initially `0` |
+| `ESSENTIALS_STORE_VERSION_CODE` | `essentialsStoreVersionCode` | Monotonically increasing Android version code |
+| `ESSENTIALS_STORE_VERSION_NAME` | `essentialsStoreVersionName` | Human-readable store version |
+
+Release builds also require a private `keystore.properties` based on
+`keystore.properties.example`. A release build fails rather than falling back
+to debug signing or the placeholder repository configuration.
+
+The repository must use HTTPS with a certificate trusted by Android. The
+hostname may resolve exclusively to a WireGuard address.
+
+## Build a repository
+
+Create the repository metadata key once, outside this source checkout:
+
+```sh
+./scripts/init-store-repository-key.sh /private/backup/essentials-store
+```
+
+Then build a static repository from production-signed APKs:
+
+```sh
+nix develop --no-write-lock-file --command \
+  ./scripts/build-store-repository.py \
+  --private-key /private/backup/essentials-store/apps.0.sec \
+  --public-key /private/backup/essentials-store/apps.0.pub \
+  --config apps/store/repository-packages.toml \
+  --output /tmp/essentials-store-repository \
+  /path/to/signed/*.apk
+```
+
+Publish the generated directory as the exact base URL configured in the Store.
+`repository-packages.toml` contains presentation metadata for the complete
+suite; `repository-packages.example.toml` documents the minimal format. The
+repository private key and APK signing keys are separate and must both be
+backed up.

@@ -10,6 +10,7 @@ public class PlacePageViewModel extends ViewModel
 {
   private final MutableLiveData<List<PlacePageButtons.ButtonType>> mCurrentButtons = new MutableLiveData<>();
   private final MutableLiveData<PlacePageButtons.ButtonType> mBookmarkButton = new MutableLiveData<>();
+  private final MutableLiveData<PlacePageButtons.ButtonType> mRouteButton = new MutableLiveData<>();
   private final MutableLiveData<MapObject> mMapObject = new MutableLiveData<>();
   private final MutableLiveData<Integer> mPlacePageWidth = new MutableLiveData<>();
   private final MutableLiveData<Integer> mPlacePageDistanceToTop = new MutableLiveData<>();
@@ -33,6 +34,16 @@ public class PlacePageViewModel extends ViewModel
   public void setBookmarkButton(PlacePageButtons.ButtonType button)
   {
     mBookmarkButton.setValue(button);
+  }
+
+  public LiveData<PlacePageButtons.ButtonType> getRouteButton()
+  {
+    return mRouteButton;
+  }
+
+  public void setRouteButton(PlacePageButtons.ButtonType button)
+  {
+    mRouteButton.setValue(button);
   }
 
   public MutableLiveData<MapObject> getMapObject()

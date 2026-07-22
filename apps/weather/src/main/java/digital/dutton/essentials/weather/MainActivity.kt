@@ -203,7 +203,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         refreshJob = viewModelScope.launch {
             _uiState.update { it.copy(isRefreshing = true, error = null) }
             val result = runCatching {
-                kotlinx.coroutines.withContext(Dispatchers.Main) {
+                kotlinx.coroutines.withContext(Dispatchers.IO) {
                     currentLocationProvider.currentWeatherLocation()
                 } ?: error("Unable to get current location.")
             }
@@ -520,6 +520,15 @@ private fun CurrentWeatherPanel(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
+                    if (snapshot.location.subtitle.isNotBlank()) {
+                        Text(
+                            text = snapshot.location.subtitle,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.72f),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
                     Text(
                         text = weatherDescription(current.weatherCode),
                         style = MaterialTheme.typography.bodyLarge,

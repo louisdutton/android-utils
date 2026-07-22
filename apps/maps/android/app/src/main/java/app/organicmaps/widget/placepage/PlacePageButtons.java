@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import app.organicmaps.R;
 import app.organicmaps.util.Graphics;
+import app.organicmaps.util.UiUtils;
 import app.organicmaps.util.WindowInsetUtils.PaddingInsetsListener;
 import app.organicmaps.util.bottomsheet.MenuBottomSheetFragment;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -96,8 +97,12 @@ public final class PlacePageButtons extends Fragment implements Observer<List<Pl
   private void createButtons(@Nullable List<ButtonType> buttons)
   {
     if (buttons == null)
+    {
+      UiUtils.hide(requireView());
       return;
+    }
     List<PlacePageButton> shownButtons = collectButtons(buttons);
+    UiUtils.showIf(!shownButtons.isEmpty(), requireView());
     mButtonsContainer.removeAllViews();
     for (PlacePageButton button : shownButtons)
       mButtonsContainer.addView(createButton(button));

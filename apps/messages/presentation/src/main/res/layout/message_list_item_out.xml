@@ -125,8 +125,7 @@
                         android:background="@drawable/message_only"
                         android:backgroundTint="?attr/colorPrimaryContainer"
                         android:gravity="start|center_vertical"
-                        android:minHeight="36dp"
-                        android:textIsSelectable="true" />
+                        android:minHeight="36dp" />
 
                     <LinearLayout
                         android:id="@+id/reactions"
