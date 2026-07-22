@@ -29,7 +29,7 @@ private const val KEY_VERSION = BuildConfig.REPO_KEY_VERSION
 private val cacheFile = AtomicFile2("repo")
 
 fun fetchRepo(currentRepo: Repo): Repo {
-    val url = "$REPO_BASE_URL/metadata.$METADATA_VERSION.$KEY_VERSION.sjson"
+    val url = "${repositoryBaseUrl()}/metadata.$METADATA_VERSION.$KEY_VERSION.sjson"
 
     return if (!currentRepo.isDummy) {
         openConnection(null, url) {

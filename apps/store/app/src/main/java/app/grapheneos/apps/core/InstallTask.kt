@@ -331,7 +331,7 @@ class InstallTask(
             val downloadProgress = AtomicLong()
 
             httpDownloadSemaphore.withPermit {
-                val url = "$REPO_BASE_URL/packages/${rPackage.manifestPackageName}/${rPackage.versionCode}/$downloadName"
+                val url = "${repositoryBaseUrl()}/packages/${rPackage.manifestPackageName}/${rPackage.versionCode}/$downloadName"
 
                 openConnection(params.network, url) {
                     if (disableCompression) {

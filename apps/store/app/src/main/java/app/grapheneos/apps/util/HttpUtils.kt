@@ -11,14 +11,16 @@ private val tlsSocketFactory = ModernTLSSocketFactory()
 
 fun openConnection(network: Network?, urlString: String, configure: HttpURLConnection.() -> Unit): ScopedHttpConnection {
     val url = URL(urlString)
-    val connection = if (network != null) {
+    val connection = (if (network != null) {
         network.openConnection(url)
     } else {
         url.openConnection()
-    } as HttpsURLConnection
+    }) as HttpURLConnection
 
     connection.apply {
-        sslSocketFactory = tlsSocketFactory
+        if (this is HttpsURLConnection) {
+            sslSocketFactory = tlsSocketFactory
+        }
         connectTimeout = 10_000
         readTimeout = 30_000
     }

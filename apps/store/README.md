@@ -27,7 +27,7 @@ Set these environment variables or their equivalent Gradle properties:
 
 Release builds also require a private `keystore.properties` based on
 `keystore.properties.example`, or the equivalent `ESSENTIALS_STORE_KEYSTORE_*`
-environment variables used by CI. A release build fails rather than falling
+environment variables used by local automation. A release build fails rather than falling
 back to debug signing or the placeholder repository configuration.
 
 The repository must use HTTPS with a certificate trusted by Android. The
@@ -59,9 +59,16 @@ suite; `repository-packages.example.toml` documents the minimal format. The
 repository private key and APK signing keys are separate and must both be
 backed up.
 
-## Hosting
+## Local USB hosting
 
-The `Publish Essentials repository` GitHub Actions workflow builds the Store,
-signs its repository metadata, and deploys the result to GitHub Pages. Its
-private inputs are SOPS-encrypted under `signing/`; only the dedicated age
-decryption key is stored as the `SOPS_AGE_KEY` GitHub Actions secret.
+For development and household deployment before the home server is available,
+serve the signed repository over an Android Debug Bridge reverse tunnel:
+
+```sh
+./scripts/serve-store-repository-over-adb.sh
+```
+
+The Store connects to `http://127.0.0.1:8080`, which ADB forwards to the local
+server. Repository metadata remains signature-verified. The tunnel exists only
+while USB debugging is connected; the generated static directory can later be
+served unchanged by the home server.

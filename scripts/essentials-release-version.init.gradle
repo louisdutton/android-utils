@@ -1,0 +1,31 @@
+def essentialsVersionCode = System.getenv('ESSENTIALS_VERSION_CODE')
+def essentialsVersionName = System.getenv('ESSENTIALS_VERSION_NAME')
+def essentialsAbi = System.getenv('ESSENTIALS_ABI')
+
+if (!essentialsVersionCode || !essentialsVersionName) {
+    throw new GradleException('ESSENTIALS_VERSION_CODE and ESSENTIALS_VERSION_NAME must be set')
+}
+
+gradle.beforeProject { project ->
+    project.plugins.withId('com.android.library') {
+        if (essentialsAbi) {
+            def android = project.extensions.getByName('android')
+            android.defaultConfig.ndk.abiFilters.clear()
+            android.defaultConfig.ndk.abiFilters.add(essentialsAbi)
+        }
+    }
+    project.plugins.withId('com.android.application') {
+        if (essentialsAbi) {
+            def android = project.extensions.getByName('android')
+            android.defaultConfig.ndk.abiFilters.clear()
+            android.defaultConfig.ndk.abiFilters.add(essentialsAbi)
+        }
+        def androidComponents = project.extensions.getByName('androidComponents')
+        androidComponents.onVariants(androidComponents.selector().all()) { variant ->
+            variant.outputs.each { output ->
+                output.versionCode.set(essentialsVersionCode.toInteger())
+                output.versionName.set(essentialsVersionName)
+            }
+        }
+    }
+}

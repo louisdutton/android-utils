@@ -4,6 +4,18 @@
     <PreferenceCategory
         app:allowDividerAbove="false"
         app:allowDividerBelow="true"
+        app:title="@string/pref_repository">
+
+        <EditTextPreference
+            app:key="@string/pref_key_repository_url"
+            app:singleLineTitle="false"
+            app:title="@string/pref_repository_url" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
         app:title="@string/updates_screen_title">
 
         <SwitchPreferenceCompat

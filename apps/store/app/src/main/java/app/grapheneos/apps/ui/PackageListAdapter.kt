@@ -77,24 +77,25 @@ fun PackageListItemBinding.set(fragment: Fragment, pkgState: PackageState) {
     val rPackage = pkgState.rPackage
 
     val iconUrl = rPackage.common.iconUrl
-    if (iconUrl != null && pkgIcon.tag != iconUrl) {
+    val iconModel: Any? = iconUrl ?: runCatching {
+        fragment.requireContext().packageManager.getApplicationIcon(pkgState.pkgName)
+    }.getOrNull()
+    if (iconModel != null && pkgIcon.tag != iconModel) {
         Glide.with(fragment)
-            .load(iconUrl)
+            .load(iconModel)
             .placeholder(R.drawable.ic_placeholder_app_icon)
             .centerInside()
             .transform(RoundedCorners(20))
             .into(pkgIcon)
     }
 
-    if (iconUrl == null) {
+    if (iconModel == null) {
         pkgIcon.setImageResource(R.drawable.ic_placeholder_app_icon)
     }
 
-    pkgIcon.tag = iconUrl
+    pkgIcon.tag = iconModel
 
     this.pkgName.maybeSetText(rPackage.label)
-
-    publisher.maybeSetText(rPackage.source.uiName)
 
     val releaseChannel = pkgState.preferredReleaseChannel()
     val isStable = releaseChannel == ReleaseChannel.stable

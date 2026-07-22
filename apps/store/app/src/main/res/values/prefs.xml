@@ -3,6 +3,11 @@
 <!-- camelcase key and file names are leftovers from the initial version-->
     <string name="pref_file_settings" translatable="false">seamlessUpdate</string>
 
+    <string name="pref_key_repository_url" translatable="false">repositoryUrl</string>
+    <string name="pref_repository">Repository</string>
+    <string name="pref_repository_url">Repository URL</string>
+    <string name="pref_repository_url_invalid">Enter a valid HTTP or HTTPS repository URL</string>
+
     <string name="pref_key_background_update_check" translatable="false">seamlessUpdateEnabled</string>
     <bool name="pref_def_background_update_check" translatable="false">true</bool>
 

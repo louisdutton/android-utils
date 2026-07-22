@@ -22,6 +22,7 @@ import app.grapheneos.apps.PackageStates
 import app.grapheneos.apps.R
 import app.grapheneos.apps.util.asStringList
 import app.grapheneos.apps.util.checkMainThread
+import app.grapheneos.apps.util.getSharedPreferences
 import app.grapheneos.apps.util.getPackageInfoOrNull
 import app.grapheneos.apps.util.isEven
 import app.grapheneos.apps.util.maybeGetSystemFeatureInfo
@@ -33,9 +34,29 @@ import org.json.JSONObject
 import java.io.ByteArrayInputStream
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import java.net.URI
 import java.util.Locale
 
-const val REPO_BASE_URL = BuildConfig.REPO_BASE_URL
+fun normalizeRepositoryUrl(value: String): String? {
+    val normalized = value.trim().trimEnd('/')
+    val uri = runCatching { URI(normalized) }.getOrNull() ?: return null
+    if (uri.scheme !in setOf("http", "https") || uri.host.isNullOrBlank()) {
+        return null
+    }
+    if (uri.userInfo != null || uri.query != null || uri.fragment != null) {
+        return null
+    }
+    return normalized
+}
+
+fun repositoryBaseUrl(): String {
+    val preferences = getSharedPreferences(R.string.pref_file_settings)
+    val configured = preferences.getString(
+        appResources.getString(R.string.pref_key_repository_url),
+        BuildConfig.REPO_BASE_URL,
+    ) ?: BuildConfig.REPO_BASE_URL
+    return normalizeRepositoryUrl(configured) ?: BuildConfig.REPO_BASE_URL
+}
 
 class Repo(json: JSONObject, val eTag: String, val isDummy: Boolean = false) {
     val timestamp = json.getLong("time")
@@ -190,14 +211,11 @@ class RPackageContainer(val repo: Repo, val packageName: String,
         arr
     }.toTypedArray()
 
-    val iconUrl: String? = run {
-        val iconType = json.opt("iconType") as String?
-        if (iconType != null) {
-            "$REPO_BASE_URL/packages/$manifestPackageName/icon.$iconType"
-        } else {
-            null
+    private val iconType = json.opt("iconType") as String?
+    val iconUrl: String?
+        get() = iconType?.let {
+            "${repositoryBaseUrl()}/packages/$manifestPackageName/icon.$it"
         }
-    }
 
     // Used for setting release channel for packages that are closely linked together.
     // This allows to significantly simplify the dependency resolution process (otherwise release
@@ -501,7 +519,7 @@ class Apk(
         }
     }
 
-    fun downloadUrl() = "$REPO_BASE_URL/packages/${pkg.manifestPackageName}/${pkg.versionCode}/$name.gz"
+    fun downloadUrl() = "${repositoryBaseUrl()}/packages/${pkg.manifestPackageName}/${pkg.versionCode}/$name.gz"
 
     enum class Type {
         UNCONDITIONAL,

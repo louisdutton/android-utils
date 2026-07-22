@@ -1,59 +1,74 @@
 [packages."digital.dutton.essentials.store"]
 description = "Installs and automatically updates the GrapheneOS Essentials app suite."
 channel = "stable"
+icon = "apps/store/repository-icons/essentials.webp"
 
 [packages."digital.dutton.essentials.assistant"]
 description = "Private on-device assistant for Android actions."
 channel = "stable"
+icon = "apps/store/repository-icons/assistant.webp"
 
 [packages."digital.dutton.essentials.calendar"]
 description = "Local calendar and event management."
 channel = "stable"
+icon = "apps/store/repository-icons/calendar.webp"
 
 [packages."digital.dutton.essentials.documents"]
 description = "PDF-first local document viewer."
 channel = "stable"
+icon = "apps/store/repository-icons/documents.webp"
 
 [packages."digital.dutton.essentials.keyboard"]
 description = "Private on-device keyboard."
 channel = "stable"
+icon = "apps/store/repository-icons/keyboard.webp"
 
 [packages."digital.dutton.essentials.learn"]
 description = "Offline flashcards with Anki package import."
 channel = "stable"
+icon = "apps/store/repository-icons/learn.webp"
 
 [packages."digital.dutton.essentials.maps"]
 description = "Private, offline-first maps and navigation."
 channel = "stable"
+icon = "apps/store/repository-icons/maps.webp"
 
 [packages."digital.dutton.essentials.messages"]
 description = "Private SMS and MMS messaging."
 channel = "stable"
+icon = "apps/store/repository-icons/messages.webp"
 
 [packages."digital.dutton.essentials.notes"]
 description = "Local markdown text and audio notes."
 channel = "stable"
+icon = "apps/store/repository-icons/notes.webp"
 
 [packages."digital.dutton.essentials.piano"]
 description = "Piano keyboard, pitch reference, and tuning tools."
 channel = "stable"
+icon = "apps/store/repository-icons/piano.webp"
 
 [packages."digital.dutton.essentials.recorder"]
 description = "Private local audio recorder."
 channel = "stable"
+icon = "apps/store/repository-icons/recorder.webp"
 
 [packages."digital.dutton.essentials.scores"]
 description = "Offline music score reader and importer."
 channel = "stable"
+icon = "apps/store/repository-icons/scores.webp"
 
 [packages."digital.dutton.essentials.vault"]
 description = "Local KeePass-compatible password vault."
 channel = "stable"
+icon = "apps/store/repository-icons/vault.webp"
 
 [packages."digital.dutton.essentials.wallet"]
 description = "Local barcode and membership card wallet."
 channel = "stable"
+icon = "apps/store/repository-icons/wallet.webp"
 
 [packages."digital.dutton.essentials.weather"]
 description = "Private weather forecasts powered by Open-Meteo."
 channel = "stable"
+icon = "apps/store/repository-icons/weather.webp"
