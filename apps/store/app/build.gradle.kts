@@ -7,6 +7,18 @@ val keystoreProperties = Properties()
 if (useKeystoreProperties) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
+val environmentKeystoreFile = providers.environmentVariable("ESSENTIALS_STORE_KEYSTORE_FILE")
+    .orNull
+    ?.let(::file)
+val useEnvironmentKeystore = environmentKeystoreFile?.canRead() == true
+val useReleaseSigning = useKeystoreProperties || useEnvironmentKeystore
+
+fun signingValue(property: String, environmentVariable: String): String =
+    if (useEnvironmentKeystore) {
+        providers.environmentVariable(environmentVariable).get()
+    } else {
+        keystoreProperties[property] as String
+    }
 
 fun configuredValue(gradleProperty: String, environmentVariable: String, fallback: String): String =
     providers.gradleProperty(gradleProperty)
@@ -41,8 +53,8 @@ val storeVersionName = configuredValue(
 val releaseRequested = gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }
 
 if (releaseRequested) {
-    require(useKeystoreProperties) {
-        "Release signing requires apps/store/keystore.properties"
+    require(useReleaseSigning) {
+        "Release signing requires apps/store/keystore.properties or ESSENTIALS_STORE_KEYSTORE_FILE"
     }
     require(repoBaseUrl != "https://essentials-store.invalid") {
         "Release builds require essentialsRepoBaseUrl or ESSENTIALS_REPO_BASE_URL"
@@ -66,13 +78,20 @@ java {
 }
 
 android {
-    if (useKeystoreProperties) {
+    if (useReleaseSigning) {
         signingConfigs {
             create("release") {
-                storeFile = rootProject.file(keystoreProperties["storeFile"]!!)
-                storePassword = keystoreProperties["storePassword"] as String
-                keyAlias = keystoreProperties["keyAlias"] as String
-                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = environmentKeystoreFile
+                    ?: rootProject.file(keystoreProperties["storeFile"]!!)
+                storePassword = signingValue(
+                    "storePassword",
+                    "ESSENTIALS_STORE_KEYSTORE_PASSWORD",
+                )
+                keyAlias = signingValue("keyAlias", "ESSENTIALS_STORE_KEY_ALIAS")
+                keyPassword = signingValue(
+                    "keyPassword",
+                    "ESSENTIALS_STORE_KEY_PASSWORD",
+                )
                 enableV4Signing = true
             }
         }
@@ -104,7 +123,7 @@ android {
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            if (useKeystoreProperties) {
+            if (useReleaseSigning) {
                 signingConfig = signingConfigs.getByName("release")
             }
         }

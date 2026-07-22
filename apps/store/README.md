@@ -26,8 +26,9 @@ Set these environment variables or their equivalent Gradle properties:
 | `ESSENTIALS_STORE_VERSION_NAME` | `essentialsStoreVersionName` | Human-readable store version |
 
 Release builds also require a private `keystore.properties` based on
-`keystore.properties.example`. A release build fails rather than falling back
-to debug signing or the placeholder repository configuration.
+`keystore.properties.example`, or the equivalent `ESSENTIALS_STORE_KEYSTORE_*`
+environment variables used by CI. A release build fails rather than falling
+back to debug signing or the placeholder repository configuration.
 
 The repository must use HTTPS with a certificate trusted by Android. The
 hostname may resolve exclusively to a WireGuard address.
@@ -57,3 +58,10 @@ Publish the generated directory as the exact base URL configured in the Store.
 suite; `repository-packages.example.toml` documents the minimal format. The
 repository private key and APK signing keys are separate and must both be
 backed up.
+
+## Hosting
+
+The `Publish Essentials repository` GitHub Actions workflow builds the Store,
+signs its repository metadata, and deploys the result to GitHub Pages. Its
+private inputs are SOPS-encrypted under `signing/`; only the dedicated age
+decryption key is stored as the `SOPS_AGE_KEY` GitHub Actions secret.
