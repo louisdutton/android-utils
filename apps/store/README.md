@@ -3,6 +3,8 @@
 Essentials is a minimally branded fork of the GrapheneOS App Store. It
 uses the same signed metadata format and Android 12+ unattended update flow,
 but is configured for the private Essentials application repository.
+The build, metadata-generation, signing, and deployment pipeline is driven by
+shell scripts and standard command-line tools.
 
 ## Debug build
 
@@ -19,7 +21,7 @@ Set these environment variables or their equivalent Gradle properties:
 
 | Environment variable | Gradle property | Purpose |
 | --- | --- | --- |
-| `ESSENTIALS_REPO_BASE_URL` | `essentialsRepoBaseUrl` | HTTPS base URL reachable over WireGuard |
+| `ESSENTIALS_REPO_BASE_URL` | `essentialsRepoBaseUrl` | Repository base URL reachable over WireGuard |
 | `ESSENTIALS_REPO_PUBLIC_KEY` | `essentialsRepoPublicKey` | Base64 Signify-compatible repository public key |
 | `ESSENTIALS_REPO_KEY_VERSION` | `essentialsRepoKeyVersion` | Repository key generation, initially `0` |
 | `ESSENTIALS_STORE_VERSION_CODE` | `essentialsStoreVersionCode` | Monotonically increasing Android version code |
@@ -30,8 +32,10 @@ Release builds also require a private `keystore.properties` based on
 environment variables used by local automation. A release build fails rather than falling
 back to debug signing or the placeholder repository configuration.
 
-The repository must use HTTPS with a certificate trusted by Android. The
-hostname may resolve exclusively to a WireGuard address.
+HTTPS with an Android-trusted certificate is preferred on general networks.
+HTTP is also safe for the private deployment when bound exclusively to
+WireGuard: WireGuard encrypts transport and the Store independently verifies
+the signed repository metadata and APK signatures.
 
 ## Build a repository
 
@@ -60,18 +64,18 @@ Then build a static repository from production-signed APKs:
 
 ```sh
 nix develop --no-write-lock-file --command \
-  ./scripts/build-store-repository.py \
+  ./scripts/build-store-repository.sh \
   --private-key /private/backup/essentials-store/apps.0.sec \
   --public-key /private/backup/essentials-store/apps.0.pub \
-  --config apps/store/repository-packages.toml \
+  --config apps/manifest.json \
   --artifact-cache ~/.cache/grapheneos-essentials/repository \
   --output /tmp/essentials-store-repository \
   /path/to/signed/*.apk
 ```
 
 Publish the generated directory as the exact base URL configured in the Store.
-`repository-packages.toml` contains presentation metadata for the complete
-suite; `repository-packages.example.toml` documents the minimal format. The
+`apps/manifest.json` is the single source of truth for suite identity, build
+inputs, build commands, and repository presentation metadata. The
 repository private key and APK signing keys are separate and must both be
 backed up.
 
@@ -92,3 +96,16 @@ The Store connects to `http://127.0.0.1:8080`, which ADB forwards to the local
 server. Repository metadata remains signature-verified. The tunnel exists only
 while USB debugging is connected; the generated static directory can later be
 served unchanged by the home server.
+
+## Deploy to Mini
+
+Mini serves the repository only on its WireGuard address. After enabling its
+NixOS `essentials-repository.nix` module, publish atomically from this laptop:
+
+```sh
+./scripts/deploy-store-repository.sh
+```
+
+The stable Store URL is `http://10.70.0.1:8080`. Each deployment creates an
+immutable release on Mini and switches the `current` symlink only after the
+upload finishes.

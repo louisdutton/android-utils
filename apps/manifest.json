@@ -1,0 +1,276 @@
+{
+  "sourceGroups": {
+    "rootShared": [
+      "build.gradle.kts",
+      "settings.gradle.kts",
+      "gradle.properties",
+      "core/locations"
+    ]
+  },
+  "apps": [
+    {
+      "id": "assistant",
+      "package": "digital.dutton.essentials.assistant",
+      "sources": ["apps/assistant"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:assistant:assembleRelease",
+        "stageRoot": "apps/assistant"
+      },
+      "repository": {
+        "description": "Private on-device assistant for Android actions.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/assistant.webp"
+      }
+    },
+    {
+      "id": "calendar",
+      "package": "digital.dutton.essentials.calendar",
+      "sources": ["apps/calendar"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:calendar:assembleRelease",
+        "stageRoot": "apps/calendar"
+      },
+      "repository": {
+        "description": "Local calendar and event management.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/calendar.webp"
+      }
+    },
+    {
+      "id": "documents",
+      "package": "digital.dutton.essentials.documents",
+      "sources": ["apps/documents"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:documents:assembleRelease",
+        "stageRoot": "apps/documents"
+      },
+      "repository": {
+        "description": "PDF-first local document viewer.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/documents.webp"
+      }
+    },
+    {
+      "id": "keyboard",
+      "package": "digital.dutton.essentials.keyboard",
+      "sources": ["apps/keyboard"],
+      "build": {
+        "type": "standalone",
+        "script": "scripts/build-keyboard-android.sh",
+        "arguments": [":assembleStableRelease"],
+        "stageRoot": "apps/keyboard",
+        "reclaim": ["apps/keyboard/build", "apps/keyboard/.cxx"]
+      },
+      "repository": {
+        "description": "Private on-device keyboard.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/keyboard.webp"
+      }
+    },
+    {
+      "id": "learn",
+      "package": "digital.dutton.essentials.learn",
+      "sources": ["apps/trainer"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:trainer:assembleRelease",
+        "stageRoot": "apps/trainer"
+      },
+      "repository": {
+        "description": "Offline flashcards with Anki package import.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/learn.webp"
+      }
+    },
+    {
+      "id": "maps",
+      "shell": "suite",
+      "package": "digital.dutton.essentials.maps",
+      "sources": ["apps/maps"],
+      "build": {
+        "type": "standalone",
+        "script": "scripts/build-comaps-android.sh",
+        "arguments": [":app:assembleRelease", "-x", ":app:lintVitalRelease", "-Parm64"],
+        "parallelism": {
+          "environment": "COMAPS_NJOBS",
+          "property": "njobs",
+          "default": "4"
+        },
+        "stageRoot": "apps/maps",
+        "reclaim": ["apps/maps/android/app/build"]
+      },
+      "repository": {
+        "description": "Private, offline-first maps and navigation.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/maps.webp"
+      }
+    },
+    {
+      "id": "messages",
+      "package": "digital.dutton.essentials.messages",
+      "sources": ["apps/messages"],
+      "build": {
+        "type": "standalone",
+        "script": "scripts/build-messages-android.sh",
+        "arguments": [":presentation:assembleRelease", "-x", ":presentation:lintVitalRelease"],
+        "stageRoot": "apps/messages",
+        "reclaim": [
+          "apps/messages/android-smsmms/build",
+          "apps/messages/common/build",
+          "apps/messages/data/build",
+          "apps/messages/domain/build",
+          "apps/messages/presentation/build"
+        ]
+      },
+      "repository": {
+        "description": "Private SMS and MMS messaging.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/messages.webp"
+      }
+    },
+    {
+      "id": "notes",
+      "package": "digital.dutton.essentials.notes",
+      "sources": ["apps/notes"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:notes:assembleRelease",
+        "stageRoot": "apps/notes"
+      },
+      "repository": {
+        "description": "Local markdown text and audio notes.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/notes.webp"
+      }
+    },
+    {
+      "id": "piano",
+      "package": "digital.dutton.essentials.piano",
+      "sources": ["apps/pitch"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:pitch:assembleRelease",
+        "stageRoot": "apps/pitch"
+      },
+      "repository": {
+        "description": "Piano keyboard, pitch reference, and tuning tools.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/piano.webp"
+      }
+    },
+    {
+      "id": "recorder",
+      "package": "digital.dutton.essentials.recorder",
+      "sources": ["apps/recorder"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:recorder:assembleRelease",
+        "stageRoot": "apps/recorder"
+      },
+      "repository": {
+        "description": "Private local audio recorder.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/recorder.webp"
+      }
+    },
+    {
+      "id": "scores",
+      "shell": "suite",
+      "package": "digital.dutton.essentials.scores",
+      "sources": ["apps/scores"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:scores:assembleRelease",
+        "stageRoot": "apps/scores"
+      },
+      "repository": {
+        "description": "Offline music score reader and importer.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/scores.webp"
+      }
+    },
+    {
+      "id": "vault",
+      "package": "digital.dutton.essentials.vault",
+      "sources": ["apps/vault"],
+      "build": {
+        "type": "standalone",
+        "script": "scripts/build-vault-android.sh",
+        "arguments": [":app:assembleLibreRelease"],
+        "stageRoot": "apps/vault",
+        "reclaim": ["apps/vault/app/build"]
+      },
+      "repository": {
+        "description": "Local KeePass-compatible password vault.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/vault.webp"
+      }
+    },
+    {
+      "id": "wallet",
+      "package": "digital.dutton.essentials.wallet",
+      "sources": ["apps/wallet"],
+      "build": {
+        "type": "standalone",
+        "script": "scripts/build-wallet-android.sh",
+        "arguments": [":app:assembleRelease"],
+        "stageRoot": "apps/wallet",
+        "reclaim": ["apps/wallet/app/build"]
+      },
+      "repository": {
+        "description": "Local barcode and membership card wallet.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/wallet.webp"
+      }
+    },
+    {
+      "id": "weather",
+      "package": "digital.dutton.essentials.weather",
+      "sources": ["apps/weather"],
+      "sourceGroups": ["rootShared"],
+      "build": {
+        "type": "root",
+        "task": ":apps:weather:assembleRelease",
+        "stageRoot": "apps/weather"
+      },
+      "repository": {
+        "description": "Private weather forecasts powered by Open-Meteo.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/weather.webp"
+      }
+    },
+    {
+      "id": "store",
+      "package": "digital.dutton.essentials.store",
+      "sources": [
+        "apps/store/app",
+        "apps/store/build.gradle.kts",
+        "apps/store/settings.gradle.kts",
+        "apps/store/gradle.properties",
+        "apps/store/gradle",
+        "apps/store/gradlew"
+      ],
+      "build": {
+        "type": "store",
+        "script": "scripts/build-store-android.sh",
+        "output": "apps/store/app/build/outputs/apk/release/app-release.apk"
+      },
+      "repository": {
+        "description": "Installs and automatically updates the GrapheneOS Essentials app suite.",
+        "channel": "stable",
+        "icon": "apps/store/repository-icons/essentials.webp"
+      }
+    }
+  ]
+}

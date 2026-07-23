@@ -9,6 +9,7 @@ fi
 
 signing_base="${XDG_DATA_HOME:-${HOME}/.local/share}"
 signing_dir="${ESSENTIALS_SIGNING_DIR:-$signing_base/grapheneos-essentials/signing}"
+manifest="$repo_root/apps/manifest.json"
 keystore="$signing_dir/essentials-store.keystore"
 password_file="$signing_dir/store-password.txt"
 apk_output="${ESSENTIALS_APK_OUTPUT:-/tmp/grapheneos-essentials-suite-apks}"
@@ -24,12 +25,13 @@ gradle_limits=(
   --max-workers="${ESSENTIALS_GRADLE_WORKERS:-4}"
 )
 
-for required_file in "$keystore" "$password_file" "$init_script" "$dependency_init_script" "$dependency_policy"; do
+for required_file in "$manifest" "$keystore" "$password_file" "$init_script" "$dependency_init_script" "$dependency_policy"; do
   if [[ ! -f "$required_file" ]]; then
     echo "Missing release input: $required_file" >&2
     exit 1
   fi
 done
+command -v jq >/dev/null || { echo "Missing build command: jq" >&2; exit 1; }
 
 if [[ ! "$version_code" =~ ^[1-9][0-9]*$ ]] || ((version_code > 2147483647)); then
   echo "ESSENTIALS_VERSION_CODE must be a positive signed 32-bit integer." >&2
@@ -61,10 +63,21 @@ if [[ "${ESSENTIALS_KEEP_STAGED:-0}" != 1 ]]; then
 fi
 password="$(tr -d '\r\n' < "$password_file")"
 target_app="${ESSENTIALS_TARGET_APP:-}"
-known_apps=(assistant calendar documents keyboard learn maps messages notes piano recorder scores vault wallet weather)
-if [[ -n "$target_app" ]] && [[ ! " ${known_apps[*]} " =~ " $target_app " ]]; then
-  echo "Unknown ESSENTIALS_TARGET_APP: $target_app" >&2
-  exit 2
+mapfile -t known_apps < <(
+  jq -r '.apps[] | select(.build.type != "store") | .id' "$manifest"
+)
+if [[ -n "$target_app" ]]; then
+  target_known=0
+  for app in "${known_apps[@]}"; do
+    if [[ "$app" == "$target_app" ]]; then
+      target_known=1
+      break
+    fi
+  done
+  if ((target_known == 0)); then
+    echo "Unknown ESSENTIALS_TARGET_APP: $target_app" >&2
+    exit 2
+  fi
 fi
 
 is_selected() {
@@ -118,66 +131,79 @@ reclaim_build_space() {
 
 echo "Building Essentials suite $version_name ($version_code)"
 
+root_apps=()
 root_tasks=()
-is_selected assistant && root_tasks+=(:apps:assistant:assembleRelease)
-is_selected calendar && root_tasks+=(:apps:calendar:assembleRelease)
-is_selected documents && root_tasks+=(:apps:documents:assembleRelease)
-is_selected learn && root_tasks+=(:apps:trainer:assembleRelease)
-is_selected notes && root_tasks+=(:apps:notes:assembleRelease)
-is_selected piano && root_tasks+=(:apps:pitch:assembleRelease)
-is_selected recorder && root_tasks+=(:apps:recorder:assembleRelease)
-is_selected scores && root_tasks+=(:apps:scores:assembleRelease)
-is_selected weather && root_tasks+=(:apps:weather:assembleRelease)
+while IFS= read -r app; do
+  if is_selected "$app"; then
+    root_apps+=("$app")
+    root_tasks+=("$(
+      jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.task' "$manifest"
+    )")
+  fi
+done < <(jq -r '.apps[] | select(.build.type == "root") | .id' "$manifest")
+
 if [[ "${ESSENTIALS_SKIP_ROOT_BUILD:-0}" != 1 ]] && ((${#root_tasks[@]} > 0)); then
   gradle -I "$init_script" -I "$dependency_init_script" "${gradle_limits[@]}" "${root_tasks[@]}"
-  is_selected assistant && stage_package digital.dutton.essentials.assistant "$repo_root/apps/assistant"
-  is_selected calendar && stage_package digital.dutton.essentials.calendar "$repo_root/apps/calendar"
-  is_selected documents && stage_package digital.dutton.essentials.documents "$repo_root/apps/documents"
-  is_selected learn && stage_package digital.dutton.essentials.learn "$repo_root/apps/trainer"
-  is_selected notes && stage_package digital.dutton.essentials.notes "$repo_root/apps/notes"
-  is_selected piano && stage_package digital.dutton.essentials.piano "$repo_root/apps/pitch"
-  is_selected recorder && stage_package digital.dutton.essentials.recorder "$repo_root/apps/recorder"
-  is_selected scores && stage_package digital.dutton.essentials.scores "$repo_root/apps/scores"
-  is_selected weather && stage_package digital.dutton.essentials.weather "$repo_root/apps/weather"
+  for app in "${root_apps[@]}"; do
+    package="$(
+      jq -r --arg app "$app" '.apps[] | select(.id == $app) | .package' "$manifest"
+    )"
+    stage_root="$(
+      jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.stageRoot' "$manifest"
+    )"
+    stage_package "$package" "$repo_root/$stage_root"
+  done
 fi
 
-if is_selected keyboard && [[ "${ESSENTIALS_SKIP_KEYBOARD_BUILD:-0}" != 1 ]]; then
-  "$repo_root/scripts/build-keyboard-android.sh" -I "$init_script" -I "$dependency_init_script" "${gradle_limits[@]}" :assembleStableRelease
-  stage_package digital.dutton.essentials.keyboard "$repo_root/apps/keyboard"
-  reclaim_build_space "$repo_root/apps/keyboard/build" "$repo_root/apps/keyboard/.cxx"
-fi
+while IFS= read -r app; do
+  is_selected "$app" || continue
+  skip_variable="ESSENTIALS_SKIP_${app^^}_BUILD"
+  [[ "${!skip_variable:-0}" != 1 ]] || continue
 
-if is_selected messages && [[ "${ESSENTIALS_SKIP_MESSAGES_BUILD:-0}" != 1 ]]; then
-  "$repo_root/scripts/build-messages-android.sh" -I "$init_script" -I "$dependency_init_script" "${gradle_limits[@]}" :presentation:assembleRelease -x :presentation:lintVitalRelease
-  stage_package digital.dutton.essentials.messages "$repo_root/apps/messages"
-  reclaim_build_space \
-    "$repo_root/apps/messages/android-smsmms/build" \
-    "$repo_root/apps/messages/common/build" \
-    "$repo_root/apps/messages/data/build" \
-    "$repo_root/apps/messages/domain/build" \
-    "$repo_root/apps/messages/presentation/build"
-fi
+  build_script="$(
+    jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.script' "$manifest"
+  )"
+  mapfile -t build_arguments < <(
+    jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.arguments[]' "$manifest"
+  )
+  parallel_environment="$(
+    jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.parallelism.environment // empty' "$manifest"
+  )"
+  if [[ -n "$parallel_environment" ]]; then
+    parallel_property="$(
+      jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.parallelism.property' "$manifest"
+    )"
+    parallel_default="$(
+      jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.parallelism.default' "$manifest"
+    )"
+    build_arguments+=("-P$parallel_property=${!parallel_environment:-$parallel_default}")
+  fi
 
-if is_selected vault && [[ "${ESSENTIALS_SKIP_VAULT_BUILD:-0}" != 1 ]]; then
-  "$repo_root/scripts/build-vault-android.sh" -I "$init_script" -I "$dependency_init_script" "${gradle_limits[@]}" :app:assembleLibreRelease
-  stage_package digital.dutton.essentials.vault "$repo_root/apps/vault"
-  reclaim_build_space "$repo_root/apps/vault/app/build"
-fi
+  "$repo_root/$build_script" \
+    -I "$init_script" \
+    -I "$dependency_init_script" \
+    "${gradle_limits[@]}" \
+    "${build_arguments[@]}"
 
-if is_selected wallet && [[ "${ESSENTIALS_SKIP_WALLET_BUILD:-0}" != 1 ]]; then
-  "$repo_root/scripts/build-wallet-android.sh" -I "$init_script" -I "$dependency_init_script" "${gradle_limits[@]}" :app:assembleRelease
-  stage_package digital.dutton.essentials.wallet "$repo_root/apps/wallet"
-  reclaim_build_space "$repo_root/apps/wallet/app/build"
-fi
+  package="$(
+    jq -r --arg app "$app" '.apps[] | select(.id == $app) | .package' "$manifest"
+  )"
+  stage_root="$(
+    jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.stageRoot' "$manifest"
+  )"
+  stage_package "$package" "$repo_root/$stage_root"
 
-if is_selected maps && [[ "${ESSENTIALS_SKIP_MAPS_BUILD:-0}" != 1 ]]; then
-  "$repo_root/scripts/build-comaps-android.sh" -I "$init_script" -I "$dependency_init_script" "${gradle_limits[@]}" :app:assembleRelease -x :app:lintVitalRelease -Parm64 -Pnjobs="${COMAPS_NJOBS:-4}"
-  stage_package digital.dutton.essentials.maps "$repo_root/apps/maps"
-  reclaim_build_space "$repo_root/apps/maps/android/app/build"
-fi
+  reclaim_paths=()
+  while IFS= read -r path; do
+    reclaim_paths+=("$repo_root/$path")
+  done < <(
+    jq -r --arg app "$app" '.apps[] | select(.id == $app) | .build.reclaim[]?' "$manifest"
+  )
+  reclaim_build_space "${reclaim_paths[@]}"
+done < <(jq -r '.apps[] | select(.build.type == "standalone") | .id' "$manifest")
 
 if [[ "${ESSENTIALS_SKIP_DEPENDENCY_VERIFY:-0}" != 1 ]]; then
-  "$repo_root/scripts/verify-suite-dependency-versions.py" \
+  "$repo_root/scripts/verify-suite-dependency-versions.sh" \
     --policy "$dependency_policy" \
     "$apk_output"
 fi

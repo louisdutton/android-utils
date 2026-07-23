@@ -225,13 +225,18 @@ EOF
           android-tools
           bash
           coreutils
+          darkhttpd
+          findutils
           gawk
           getopt
+          gzip
           gradle_9
           git
           jdk21
+          jq
           minisign
           optipng
+          unzip
         ];
         suiteShellInputs = androidShellInputs ++ (with pkgs; [
           brotli
